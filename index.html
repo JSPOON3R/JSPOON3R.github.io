@@ -23,208 +23,16 @@ WORKFLOW OF PAGE
 
 -->
 
-
-
-
-
 <!doctype html>
 <html>
+    <script src="surfly.js"></script>
+  <!-- <link rel="stylesheet" href="surfly.css"> -->
 
 <head>
-   <!-- <link rel="stylesheet" href="surfly.css"> -->
-
-    <title>EMBED API</title>
+ 
 
 
-    <!--JS CODE-->
-
-    <!--STARTING UP: START-->
-    <!--reveal the api builder button start-->
-    <script>
-        function Expose_api_view() {
-            document.getElementById('api_builder').style.display = "block";
-        }
-    </script>
-    <!--reveal the api builder button end-->
-    <!--STARTING UP: END-->
-
-    <!--API BUILDER: START-->
-    <!--who are you dropdown start-->
-    <script>
-        /* When the user clicks on the button,
-        toggle between hiding and showing the dropdown content */
-        function dropdown() {
-            document.getElementById("myDropdown").classList.toggle("show");
-        }
-
-        // Close the dropdown menu if the user clicks outside of it
-        window.onclick = function (event) {
-            if (!event.target.matches('.dropbtn')) {
-                var dropdowns = document.getElementsByClassName("dropdown-content");
-                var i;
-                for (i = 0; i < dropdowns.length; i++) {
-                    var openDropdown = dropdowns[i];
-                    if (openDropdown.classList.contains('show')) {
-                        openDropdown.classList.remove('show');
-                    }
-                }
-            }
-        }
-    </script>
-    <!--who are you dropdown end-->
-    <!--store api key entry/update display start-->
-    <script>
-        function collectApiKey() {
-            var key_input = document.getElementById("apikey_input_box").value
-            localStorage.setItem('stored_key', key_input)
-            console.log("API_KEY submitted: " + key_input)
-            console.log("Key stored locally: " + localStorage.getItem('stored_key'))
-        }
-    </script>
-  <!--ADD LIST ITEM UPDATE TO THE ABOVE-->
-
-
-    <!--store api key entry/update display end-->
-
-
-
-
-
-
-<!-- function to detect both api key and body have been added to request and expose call api button-->
-
-
-    <!--call api start-->
-    <script>
-        let stored_key = localStorage.getItem('stored_key')
-
-        function callAPI() {
-            const response = fetch("https://surfly.com/v2/agents/access-token/?api_key=" + stored_key, {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: `{
-    "agent_id": 321854,
-    "email": "john@surfly.com",
-    "name": "John",
-    "role": "admin",
-    "force_new": false
-}`,
-            })
-                .then(response => response.json())
-                .then(response => console.log(JSON.stringify(response)))
-
-        }
-    </script>
-    <!--call api end-->
-    <!--API BUILDER: END-->
-
-    <!--STEP 2. EMBED URLS-->
-    <!-- expose urls with blank tokens start-->
-
-    <!-- expose urls with blank tokens end-->
-
-
-
-    <!--EXPOSE TOKEN INPUT-->
-    <script>
-        function Exposetokenbutton() {
-            document.getElementById('token_button_div').style.display = "block";
-        }
-    </script>
-
-    <!--ONCE TOKEN IS RECIEVED:-->
-
-    <!--STORE AGENT_TOKEN-->
-    <script>
-
-
-        function returntoken() {
-            var token_input = document.getElementById("token_input_box").value
-            localStorage.setItem('stored_token', token_input)
-            console.log("AGENT_TOKEN submitted: " + token_input)
-            console.log("Token stored locally: " + localStorage.getItem('stored_token'))
-        }
-    </script>
-
-
-    <!--'APPLY AGENT_TOKEN TO IFRAME' FUNCTIONS-->
-    <script>
-
-        let stored_token = localStorage.getItem('stored_token')
-
-        function updateurl_startsession() {
-            let start_session = document.getElementById("start_session");
-            let url_string = "https://app.surfly.com/embed/start/";
-            var url_token = localStorage.getItem('stored_token')
-            let adsURL = url_string + "?agent_token=" + url_token;
-            console.log("iFrame URL = " + adsURL);
-            start_session.src = adsURL;
-        }
-
-        function updateurl_supportqueue() {
-            let start_session = document.getElementById("support_queue");
-            let url_string = "https://app.surfly.com/embed/queue/";
-            var url_token = localStorage.getItem('stored_token')
-            let adsURL = url_string + "?agent_token=" + url_token;
-            console.log("iFrame URL = " + adsURL);
-            start_session.src = adsURL;
-        }
-
-        function updateurl_sessionhistory() {
-            let start_session = document.getElementById("session_history");
-            let url_string = "https://app.surfly.com/embed/history/";
-            var url_token = localStorage.getItem('stored_token')
-            let adsURL = url_string + "?agent_token=" + url_token;
-            console.log("iFrame URL = " + adsURL);
-            start_session.src = adsURL;
-        }
-
-        function updateurl_companyoptions() {
-            let start_session = document.getElementById("company_options");
-            let url_string = "https://app.surfly.com/embed/options/";
-            var url_token = localStorage.getItem('stored_token')
-            let adsURL = url_string + "?agent_token=" + url_token;
-            console.log("iFrame URL = " + adsURL);
-            start_session.src = adsURL;
-        }
-    </script>
-
-    <!--EXPOSE EMBED URL SECTION-->
-    <script>
-        function ExposeEmbedUrls() {
-            document.getElementById('generate_urls_div').style.display = "block";
-        }
-    </script>
-    <!--EXPOSE IFRAME-->
-    <!--EXPOSE IFRAME FUNCTIONS START-->
-    <!--EXPOSE SESSION iFRAME-->
-    <script>
-        function Exposeiframes_session() {
-            document.getElementById('iframe_div_session').style.display = "block";
-        }
-    </script>
-    <!--EXPOSE SUPPORT iFRAME-->
-    <script>
-        function Exposeiframes_support() {
-            document.getElementById('iframe_div_support').style.display = "block";
-        }
-    </script>
-    <!--EXPOSE HISTORY iFRAME-->
-    <script>
-        function Exposeiframes_history() {
-            document.getElementById('iframe_div_history').style.display = "block";
-        }
-    </script>
-    <!--EXPOSE COMPANY iFRAME-->
-    <script>
-        function Exposeiframes_company() {
-            document.getElementById('iframe_div_company').style.display = "block";
-        }
-    </script>
-    <!--EXPOSE IFRAME FUNCTIONS END-->
+    <title>SURFLY TESTING</title>
 </head>
 
 
@@ -233,6 +41,7 @@ WORKFLOW OF PAGE
 
 <body>
     <div class="maxpagewidth">
+
     <!--STARTING UP: START-->
     <h1>Implementing Surfly's Embedded iFrames</h1>
     <h2>Steps to Implementation</h2>
@@ -250,77 +59,98 @@ Explain how we get an access token: api
 
 
     <!--Get started button start (clicking this will expose the API builder)-->
-    <button class="button" onclick=Expose_api_view()><span>Create an API Request</span></button>
+    <button class="button"  onclick=Expose_api_view()><span>Create an API Request</span></button>
     <!--Get started button start-->
 
 
     <!--API builder: start-->
     <!--API div start-->
     <div id="api_builder" style="display:none;">
+
+
+
+   <!--Call API button-->
+   <div id="inputs_complete">
+    <p>When you have constructed the API call, you can click this button</p>
+    <button class="button" onclick=collectApiKey();callAPI()>Call the API</button>
+<!--show response so they can copy/paste the agent token-->
+</div>
        
 <div id="api_request_and_response" class="api_request_and_response">
+    <p>The box on the left shows the API request. The box on the right will show the API response</p>
 <div id="entire_api_request" class="api_call">
     <h3>Request</h3>
     <div class="api_url">
         <ul>
-            <li class="post">POST </li>
-            <li class="api_url">https://surfly.com/v2/agents/access-token/?</li>
-            <li class="api_url_key">YOUR_API_KEY_GOES_HERE</li>
+            <li id="post">POST </li>
+            <li id="api_url">https://surfly.com/v2/agents/access-token/?</li>
+            <li id="api_url_key">API_KEY</li>
+        </ul>
         </div>
         <div class="api_body">
-            <p>{
-                "agent_id": ,
-                "email": "",
-                "name": "",
-                "role": "",
-                "force_new": false
-                }</p>
-          </ul>
+            <p>{</p>
+            <p id="request_body_agent_id"></p>
+            <p id="request_body_email"></p>
+            <p id="request_body_name"></p>
+            <p id="request_body_role"></p>
+            <p id="request_body_force_new"></p>
+            <p>}</p>
         </div>
         </div>
     <div id="entire_api_response" class="api_call">
         <h3>Response</h3>
+        <p id="api_response_body">
+            {
+                "user_created": 
+                "agent_token": 
+                "agent_role":
+                "expires_in": 
+                "agent_id": 
+                "last_login": 
+            }
+
+
+        </p>
     </div>
 </div>
 <div id="all_api_input" class="all_api_input">
-        <p>To generate it, you need to call the REST API. The call needed is above, we just need some details:</p>
+        <p>When the API receives the correct request, it will respond with your ACCESS_TOKEN. The request needs you to tell it which agent needs and access token and prove you have authorisation to request one:</p>
 
         <!--Who are you?-->
-        <!--Create a drop down of the whole team and apply their values in a body-->
-        <h2>Who are you?</h2>
-        <p>The body of the request requires your email address, name, role and agent ID. Select your name to populate
-            automatically</p>
+        <!--Allow visitors to populate the variables-->
+        <h2>Who is the ACCESS_TOKEN for?</h2>
+        <p>The access token will contain information relating to a specific Surfly agent. The iframes loaded with this token will show content relevant to that agent</p>
 
-        <div class="dropdown">
+        <input id="agent_id_input_box" type="text" placeholder="Enter your agent_id">
+        <button class="button" onclick=update_agent_id()>Submit</button>
 
-            <button class="button" onclick="" class="dropbtn">Who are you?</button>
-            <div id="myDropdown" class="dropdown-content">
-                <a href="#">Tom</a>
-                <a href="#">Ayush</a>
-                <a href="#">Filipa</a>
-                <a href="#">Keith</a>
+        <input id="email_input_box" type="text" placeholder="Enter your email">
+        <button class="button" onclick=update_email()>Submit</button>
 
-            </div>
-        </div>
+        <input id="name_input_box" type="text" placeholder="Enter your full name">
+        <button class="button" onclick=update_name()>Submit</button>
+
+        <input id="role_input_box" type="text">
+        <button class="button" onclick=update_role()>Submit</button>
+
+        <input id="force_new_input_box" type="dropdown">
+        <button class="button" onclick=update_force_new()>Submit</button>
+
+
+
         <!--Get token-->
         <!--key-->
         <h2>Enter your API Key</h2>
         <p>We need your API Key to authenticate the request. Find it on the Surfly dashboard and enter it below.</p>
 
         <input id="apikey_input_box" type="text" placeholder="Enter API Key here...">
-        <button class="button" onclick=collectApiKey()>Apply API Key to Request</button>
-    </div>
-</div><!--API div end-->
-
-   <!--when all inputs are completed, we can expose the button to call the API-->
-<div id="inputs_complete" style="display:none;">
-        <h2>Looks like we have everythng we need. The API request is now ready to go. </h2>
-        <p>Click to send a request to the REST API for your AGENT_TOKEN</p>
-        <button class="button" onclick=collectApiKey();callAPI()>Call the API</button>
-  <!--show response so they can copy/paste the agent token-->
+        <button class="button" onclick=collectApiKey();update_api_display()>Apply API Key to Request</button>
     </div>
 
 
+
+</div>
+<!--API div end-->
 
 
   <!--Upon 200 response, show button to begin the next stage (Exposetokenbutton)-->
@@ -432,6 +262,10 @@ Explain how we get an access token: api
     <!--EMBED URLS AND BUTTONS: END-->
 
 </div>
+
+<!--Javascript down here becase it needs to load after the elements it targets-->
+<script>window.onload = request_json() </script>
+
 </body>
 
 </html>
