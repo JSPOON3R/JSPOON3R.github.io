@@ -1,17 +1,199 @@
-{\rtf1\ansi\ansicpg1252\cocoartf2639
-\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\froman\fcharset0 Times-Roman;}
-{\colortbl;\red255\green255\blue255;\red234\green233\blue111;}
-{\*\expandedcolortbl;;\cssrgb\c93333\c92157\c50980;}
-\paperw11900\paperh16840\margl1440\margr1440\vieww11520\viewh8400\viewkind0
-\deftab720
-\pard\pardeftab720\partightenfactor0
+<!doctype html>
+<html>
+<head>
+<title>TESTING</title>
 
-\f0\fs34 \cf2 \expnd0\expndtw0\kerning0
-\outl0\strokewidth0 \strokec2 <!DOCTYPE html>\
-<html>\
-<body>\
-<h1>Hello World</h1>\
-<p>I'm hosted with GitHub Pages.</p>\
-</body>\
-</html>\
+
+<!--JS CODE-->
+
+
+
+<!--STORE API KEY-->
+<script>
+    function returnApiKey(){
+        var key_input = document.getElementById("apikey_input_box").value
+        localStorage.setItem('stored_key', key_input)
+        console.log("API_KEY submitted: "+key_input)
+        console.log("Key stored locally: "+localStorage.getItem('stored_key'))
+    }
+    </script>
+<!--APPLY API KEY TO ENDPOINT-->
+<script>
+    let stored_key = localStorage.getItem('stored_key')
+
+    function callAPI(){
+        const response = fetch("https://surfly.com/v2/agents/access-token/?api_key="+stored_key, {
+method: 'POST',
+headers: {
+  'Accept': 'application/json',
+  'Content-Type': 'application/json'
+},
+body: `{
+    "agent_id": 321854,
+    "email": "john@surfly.com",
+    "name": "John",
+    "role": "admin",
+    "force_new": false
+}`,
+})
+.then(response=> response.json())
+.then(response => console.log(JSON.stringify(response)))
+
+fetch('response.json')
+  .then(data => {
+    console.log(data.agent_token);
+  })
+
 }
+
+</script>
+ <!--STORE AGENT_TOKEN-->
+ <script>
+
+
+    function returntoken(){
+        var token_input = document.getElementById("token_input_box").value
+        localStorage.setItem('stored_token', token_input)
+        console.log("AGENT_TOKEN submitted: "+token_input)
+        console.log("Token stored locally: "+localStorage.getItem('stored_token'))
+    }
+    </script>
+
+<!--APPLY AGENT_TOKEN TO IFRAMES-->
+<script>
+
+let stored_token = localStorage.getItem('stored_token')
+
+    function updateurl_startsession(){
+    let start_session = document.getElementById("start_session");
+    let url_string = "https://app.surfly.com/embed/start/";
+    var url_token = localStorage.getItem('stored_token')
+    let adsURL = url_string+"?agent_token="+url_token;
+    console.log("iFrame URL = "+adsURL);
+    start_session.src = adsURL;
+    }
+
+    function updateurl_supportqueue(){
+    let start_session = document.getElementById("support_queue");
+    let url_string = "https://app.surfly.com/embed/queue/";
+    var url_token = localStorage.getItem('stored_token')
+    let adsURL = url_string+"?agent_token="+url_token;
+    console.log("iFrame URL = "+adsURL);
+    start_session.src = adsURL;
+    }
+
+    function updateurl_sessionhistory(){
+    let start_session = document.getElementById("session_history");
+    let url_string = "https://app.surfly.com/embed/history/";
+    var url_token = localStorage.getItem('stored_token')
+    let adsURL = url_string+"?agent_token="+url_token;
+    console.log("iFrame URL = "+adsURL);
+    start_session.src = adsURL;
+    }
+
+    function updateurl_companyoptions(){
+    let start_session = document.getElementById("company_options");
+    let url_string = "https://app.surfly.com/embed/options/";
+    var url_token = localStorage.getItem('stored_token')
+    let adsURL = url_string+"?agent_token="+url_token;
+    console.log("iFrame URL = "+adsURL);
+    start_session.src = adsURL;
+    }
+</script>
+<!--EXPOSE IFRAME BUTTON-->
+<script>
+    function Exposetokenbutton() {
+        document.getElementById('token_button_div').style.display = "block";
+     }
+    </script>
+<!--EXPOSE IFRAME BUTTON-->
+<script>
+    function Exposeiframebutton() {
+        document.getElementById('iframe_button_div').style.display = "block";
+     }
+    </script>
+<!--EXPOSE IFRAMES-->
+<script>
+function Exposeiframes() {
+    document.getElementById('iframe_div').style.display = "block";
+ }
+</script>
+
+
+</head>
+<body>
+
+    <h1>Testing Surfly Embed iFrames</h1>
+    <h2>1. Retrieve your agent token with the REST API</h2>
+    <input id="apikey_input_box" type="text" placeholder="Enter API Key here...">
+    <button onclick=returnApiKey();callAPI();Exposetokenbutton()>Generate my Access Token</button>
+
+
+    <div id="token_button_div"  style="display:none;">
+    <h2>2. Set your AGENT_TOKEN</h2>
+
+    <p>Enter your AGENT_TOKEN and submit to update the AGENT_TOKEN value in the URL of every iFrame below:</p>
+   
+    <input id="token_input_box" type="text" placeholder="Enter token here...">
+    <button onclick=returntoken();updateurl_startsession();updateurl_supportqueue();updateurl_sessionhistory();updateurl_companyoptions();Exposeiframebutton()>Submit</button>
+</div>
+
+
+<div id="iframe_button_div"  style="display:none;">
+<h2>2. Explore the Different Embedded the iFrames</h2>
+<div></div>
+<button onclick=Exposeiframes()>Generate iFrames</button>
+</div>
+<!--start of ifrmae div--><div id="iframe_div"  style="display:none;">
+
+
+<h3>1. Start a Session (Outbound)</h3>
+
+    <iframe
+    id="start_session"
+    width="1024"
+    height="768"
+    src="https://app.surfly.com/embed/start/?agent_token=`AGENT_TOKEN`"
+    allow="autoplay *; camera *; microphone *; display-capture *; geolocation *;"
+>
+</iframe>
+
+<h3>2. View Support Queue</h3>
+
+    <iframe
+    id="support_queue"
+    width="1024"
+    height="768"
+    src="https://app.surfly.com/embed/queue/?agent_token=`AGENT_TOKEN`"
+    allow="autoplay *; camera *; microphone *; display-capture *; geolocation *;"
+>
+</iframe>
+
+<h3>2. View Session History</h3>
+
+    <iframe
+    id="session_history"
+    width="1024"
+    height="768"
+    src="https://app.surfly.com/embed/queue/?agent_token=`AGENT_TOKEN`"
+    allow="autoplay *; camera *; microphone *; display-capture *; geolocation *;"
+>
+</iframe>
+
+<h3>4. View Company Options</h3>
+
+    <iframe
+    id="company_options"
+    width="1024"
+    height="768"
+    src="https://app.surfly.com/embed/options/?agent_token=`AGENT_TOKEN`"
+    allow="autoplay *; camera *; microphone *; display-capture *; geolocation *;"
+>
+</iframe>
+
+
+
+
+<!--end of ifrmae div--></div>
+</body>
+</html>
