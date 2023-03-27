@@ -13248,7 +13248,7 @@
     
 <div>
  <!-- Button that will trigger the popup -->
- <button class="demo_button">
+ <button class="btn-request-session">
   <img src="https://www.johnnytwospoons.com/cobro_eye.png" alt="Image">
 </button>
 
@@ -17137,7 +17137,7 @@
     Surfly.init(settings, function(init) {
         if (init.success && !Surfly.isInsideSession) {
             // If API is initialized successfully, show the start button
-            var startButton = document.querySelector("#demo_button");
+            var startButton = document.querySelector("#btn-request-session");
             startButton.classList.remove("hidden");
             startButton.addEventListener("click", function() {
                 // when a user clicks the start button, show the start popup
