@@ -17101,17 +17101,20 @@
 
         // Surfly.init() must be called before any other API call //custom function cobrowsetime() to be used in HTML onclick
 
-        function cobrowsetime() {
-        Surfly.init(settings, function(init) {
+
+     Surfly.init(settings, function(init) {
         if (init.success && !Surfly.isInsideSession) {
+
+          function cobrowsetime() {
             Surfly.session()
             .on("session_created", function(session, event) {
                 // display the PIN of the current session
                 document.querySelector("#sessidtarget").innerText = session.pin;
             })
             .startLeader();
+          }
         }
-        });}
+        });
   </script>
 
 
