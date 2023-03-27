@@ -140,6 +140,37 @@ https://www.javascripttutorial.net/javascript-fetch-api/
 let request_body = "{\"agent_id\":"+ agent_id+","+"\"email\":"+"\""+email+"\""+","+"\"name\":"+"\""+namee+"\""+","+"\"role\":"+"\""+role+"\""+","+"\"force_new\":"+force_new+"}";
             console.log("request body log"+request_body);
 
+//for testing
+let request_body_testing = "{\"agent_id\":"+ "321854"+","+"\"email\":"+"\""+"john@surfly.com"+"\""+","+"\"name\":"+"\""+"John"+"\""+","+"\"role\":"+"\""+"admin"+"\""+","+"\"force_new\":"+"false"+"}";
+console.log("request body testing log"+request_body_testing);
+
+let api_key_test = "a69e09988d8d46a1a6b11ad7245eb023";
+
+
+
+           async function get_access_toekn() {
+            
+            let response = await fetch("https://surfly.com/v2/agents/access-token/?api_key=" + api_key_test, { //change back to stored_key
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: request_body_testing, //changeback to request_body
+            })
+            .then((response) => Promise.all([response.status, response.json()]))
+            .then(([status, data]) => console.log({status, data}))
+
+        
+                    
+                }
+            
+
+            get_access_toekn();
+               
+        }
+
+/*
            fetch("https://surfly.com/v2/agents/access-token/?api_key=" + stored_key, {
                 method: 'POST',
                 headers: {
@@ -150,10 +181,13 @@ let request_body = "{\"agent_id\":"+ agent_id+","+"\"email\":"+"\""+email+"\""+"
             })
                 .then(response => response.json())
                 .then(response => console.log(JSON.stringify(response)))
-              
-               
+       
 
         }
+*/
+
+
+
 //all api end
 //API BUILDER: END
 
@@ -232,7 +266,7 @@ let request_body = "{\"agent_id\":"+ agent_id+","+"\"email\":"+"\""+email+"\""+"
 
 //EXPOSE IFRAME
 //EXPOSE IFRAME FUNCTIONS START
-//XPOSE SESSION iFRAME
+//EXPOSE SESSION iFRAME
 
         function Exposeiframes_session() {
             document.getElementById('iframe_div_session').style.display = "block";
