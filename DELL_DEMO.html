@@ -17138,7 +17138,7 @@
         if (init.success && !Surfly.isInsideSession) {
             // If API is initialized successfully, show the start button
             var startButton = document.querySelector("#demo_button");
-            //startButton.classList.remove("hidden");
+            startButton.classList.remove("hidden");
             startButton.addEventListener("click", function() {
                 // when a user clicks the start button, show the start popup
                 var popup = document.querySelector("#surfly-session-modal").classList.remove("hidden");

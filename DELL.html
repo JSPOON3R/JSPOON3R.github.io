@@ -13235,7 +13235,16 @@
                   margin-bottom: -30px;
                 }
   </style>
-    
+  <script>
+  function cobrowsetime(){
+    Surfly.session()
+                .on("session_created", function(session, event) {
+                    // display the PIN of the current session
+                    document.querySelector("#sessidtarget").innerText = session.pin;
+                })
+                .startLeader();
+              }
+            </script>
 
 
               <button class="demo_button" onclick="cobrowsetime()">
