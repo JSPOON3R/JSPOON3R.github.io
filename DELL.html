@@ -1,5 +1,9 @@
 ﻿<!DOCTYPE html>
 <html class="no-js" lang="en-IN">
+  <!--DEMO STUFF HTML TAGS TO AVOID SEEING CACHED PAGE VERSIONS-->
+  <meta http-equiv='cache-control' content='no-cache'> 
+<meta http-equiv='expires' content='0'> 
+<meta http-equiv='pragma' content='no-cache'>
 
 <head>
   <link rel="icon" data-savepage-href="https://www.dell.com/favicon.ico"
@@ -17102,19 +17106,18 @@
         // Surfly.init() must be called before any other API call //custom function cobrowsetime() to be used in HTML onclick
 
 
-     Surfly.init(settings, function(init) {
-        if (init.success && !Surfly.isInsideSession) {
+     Surfly.init(settings, function(init) {}
+);
 
-          function cobrowsetime() {
-            Surfly.session()
+function cobrowsetime(){
+Surfly.session()
             .on("session_created", function(session, event) {
                 // display the PIN of the current session
                 document.querySelector("#sessidtarget").innerText = session.pin;
             })
             .startLeader();
           }
-        }
-        });
+
   </script>
 
 
