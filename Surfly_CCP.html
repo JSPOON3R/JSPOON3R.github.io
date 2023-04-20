@@ -23,7 +23,7 @@
               'menu'
               'main';
             grid-template-rows: 10% 17% 73%;
-            grid-gap: 10px;
+            grid-gap: 1px;
         }
         .grid-container > div {
             font-size: 16px;
@@ -35,7 +35,7 @@
             text-align: center;
             justify-content: center;
             padding-top: 20px;
-            background-color: #4a4a4a;
+            background-color: #e54748ff;
             color: white;
             box-shadow: 0 8px 16px 0 rgba(0,0,0,0.1), 0 6px 20px 0 rgba(0,0,0,0.1);
         }
@@ -81,8 +81,8 @@
             float: left;
         }
         #startSurfly {
-            background-color: #00abba;
-            border: 2px solid #00abba;
+            background-color: #e54748ff;
+            border: 2px solid #e54748ff;
         }
         #startSurfly:hover {
             background-color: white;
@@ -90,8 +90,8 @@
             border: 2px solid #00abba;
         }
         #goAvailable {
-            background-color: #00abba;
-            border: 2px solid #00abba;
+            background-color: #e54748ff;
+            border: 2px solid #e54748ff;
         }
         #goAvailable:hover {
             background-color: white;
@@ -113,7 +113,7 @@
 <body>
     <div class="grid-container">
         <div class="header">
-            <p>Custom CCP with Surfly co-browsing</p>
+            <p>Amazon Connect Custom CCP with Surfly Co-Browsing</p>
         </div>
         <div class="ccpContainer">
             
@@ -126,7 +126,7 @@
             </div>
 
             <div class="grid-item" id="newContactDiv">
-                <span>Contact: <span id="newContact"></span></span>
+                <span>Co-Browsing: <span id="newContact"></span></span>
             </div>
 
             <div class="grid-item">
@@ -138,16 +138,24 @@
             </div>
            
             <div class="grid-item">
-                <button id="startSurfly">Co-browsing</button>
+                <button id="startSurfly" onclick="document.getElementById('start_session').style.display='block'">Start New Session</button>
+                <button id="startSurfly" onclick="document.getElementById('session_queue').style.display='block'">Open Agent Queue</button>
             </div>
+         
 
         </div>  
 
-        <iframe id="start_session" width="900" height="500"
-        src="https://app.surfly.com/embed/start/?agent_token=ta397790a9ddd423aa939bde382dc5fcd"
+        <iframe style="display:none" id="start_session" width="900" height="500"
+        src="https://app.surfly.com/embed/start/?agent_token=t5689b43cc713407eb5eaa23947282636"
         allow="autoplay *; camera *; microphone *; display-capture *; geolocation *;"
         class="myiframe">
     </iframe>
+
+    <iframe style="display:none" id="session_queue" width="900" height="500"
+    src="https://app.surfly.com/embed/queue/?agent_token=t5689b43cc713407eb5eaa23947282636"
+    allow="autoplay *; camera *; microphone *; display-capture *; geolocation *;"
+    class="myiframe">
+</iframe>
 
 
     </div>
