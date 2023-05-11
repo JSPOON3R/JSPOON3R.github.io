@@ -23,10 +23,10 @@
         password_required: false,
         start_with_videochat_on: true,
         videochat_enabled: true,
-        start_with_fullscreen_videochat: false,
+        start_with_fullscreen_videochat: true,
         videochat: true,
-        videochat_autostart: false,
-        videochat_start_fullscreen: false
+        videochat_autostart: true,
+        videochat_start_fullscreen: true
     };
 
     Surfly.init(settings, function (initResult) {
@@ -38,10 +38,10 @@
 
                 SurflySession=Surfly.session({start_with_chat_open: false,         start_with_videochat_on: true,
         videochat_enabled: true,
-        start_with_fullscreen_videochat: false,
+        start_with_fullscreen_videochat: true,
         videochat: true,
-        videochat_autostart: false,
-        videochat_start_fullscreen: false}).on("session_created", function(session, event) {
+        videochat_autostart: true,
+        videochat_start_fullscreen: true}).on("session_created", function(session, event) {
                 // display the PIN of the current session
                 console.log("Session_PIN "+session.pin);
                 session_pin=session.pin;
@@ -61,10 +61,10 @@
         SurflySession = Surfly.session({ start_with_chat_open: false, 
         start_with_videochat_on: true,
         videochat_enabled: true,
-        start_with_fullscreen_videochat: false,
+        start_with_fullscreen_videochat: true,
         videochat: true,
-        videochat_autostart: false,
-        videochat_start_fullscreen: false }).startLeader();
+        videochat_autostart: true,
+        videochat_start_fullscreen: true }).startLeader();
     }
 </script>
 
