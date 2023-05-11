@@ -21,6 +21,12 @@
         widget_key: '134f5fd2ac8842c0a1cd6062818eee74',
         private_session: true, // to make sure only logged in agents can join the call
         password_required: false,
+        start_with_videochat_on: true,
+        videochat_enabled: true,
+        start_with_fullscreen_videochat: false,
+        videochat: true,
+        videochat_autostart: false,
+        videochat_start_fullscreen: false
     };
 
     Surfly.init(settings, function (initResult) {
@@ -30,7 +36,12 @@
 
       
 
-                SurflySession=Surfly.session({start_with_chat_open: false, start_with_videochat_on: true}).on("session_created", function(session, event) {
+                SurflySession=Surfly.session({start_with_chat_open: false,         start_with_videochat_on: true,
+        videochat_enabled: true,
+        start_with_fullscreen_videochat: false,
+        videochat: true,
+        videochat_autostart: false,
+        videochat_start_fullscreen: false}).on("session_created", function(session, event) {
                 // display the PIN of the current session
                 console.log("Session_PIN "+session.pin);
                 session_pin=session.pin;
@@ -47,7 +58,13 @@
         SurflySession = Surfly.session({ start_with_chat_open: false }).startLeader();
     }
     function callme2() {
-        SurflySession = Surfly.session({ start_with_chat_open: false, start_with_videochat_on: true }).startLeader();
+        SurflySession = Surfly.session({ start_with_chat_open: false, 
+        start_with_videochat_on: true,
+        videochat_enabled: true,
+        start_with_fullscreen_videochat: false,
+        videochat: true,
+        videochat_autostart: false,
+        videochat_start_fullscreen: false }).startLeader();
     }
 </script>
 
