@@ -30,7 +30,7 @@
 
       
 
-                SurflySession=Surfly.session({start_with_chat_open: false}).on("session_created", function(session, event) {
+                SurflySession=Surfly.session({start_with_chat_open: false, start_with_videochat_on: true}).on("session_created", function(session, event) {
                 // display the PIN of the current session
                 console.log("Session_PIN "+session.pin);
                 session_pin=session.pin;
