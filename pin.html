@@ -47,7 +47,7 @@
                 // When the session is started, show the session PIN so that it can be passed to the helpdesk agent
                 .on("session_created", function (session, event) {
                     // display the session PIN
-                    var showId = showId.textContent = session.pin;
+                    var showId = session.pin;
 
                 })
                 // Start the session immediately
