@@ -43,17 +43,18 @@
         function sessionStart() {
 
             // Create a co-browsing session
-            Surfly.session()
+            Surfly.session.startLeader()
                 // When the session is started, show the session PIN so that it can be passed to the helpdesk agent
                 .on("session_created", function (session, event) {
                     // display the session PIN
-                    var showId = session.pin;
+                    var showId = SurflySession.Pin;
+                    console.log(SurflySession.Pin);
+                    Console.log(showId);
+                    document.getElementById('pin').innerHTML = showId;
 
                 })
-                // Start the session immediately
-                .startLeader();
-
-                document.getElementById('pin').innerHTML = showId;
+            
+                
         }
     </script>
     <!--SURFLY SCRIPT-->
