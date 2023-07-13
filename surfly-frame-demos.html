@@ -1731,7 +1731,9 @@
        Surfly.on('session_created', function(session, event) {
        console.log('Session', session.leaderLink, 'has just started for the leader');
        var iframe2 = document.getElementById("leader");
-       iframe2.src = session.leaderLink; });
+       iframe2.src = session.leaderLink;
+       iframe2.allow = 'autoplay';
+     });
 
 
    });
@@ -1761,7 +1763,7 @@ var isControlRequested = false;
                 <div class="w-full mx-auto px-8 md:px-0 flex flex-col space-y-6 ib-block cw-wide md:pt-2 pt-10 md:pb-20 pb-10">
                     <h2 class="has-text-align-center">Try it Yourself</h2>
                     <div class="has-text-align-center wp-block-button has-custom-font-size mt-8 md:mt-14 has-14-font-size">
-                        <a class="wp-block-button__link has-white-color has-red-background-color has-text-color has-background wp-element-button button" onclick="startSurflySession()">Start Session</a>
+                        <a class="wp-block-button__link has-white-color has-red-background-color has-text-color has-background wp-element-button button" onclick="startSurflySession()">Starttt Session</a>
                     </div>
                     <div id="dual-frames">
                     <div class="features grid md:grid-cols-2 with-backgrounds">
