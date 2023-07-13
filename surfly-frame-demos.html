@@ -3,61 +3,6 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-        <script>
-            var SurflySession;
-            function startSurflySession() {
-           (function(s,u,r,f,l,y){s[f]=s[f]||{init:function(){s[f].q=arguments}};
-           l=u.createElement(r);y=u.getElementsByTagName(r)[0];l.async=1;
-           l.src='https://surfly.com/surfly.js';y.parentNode.insertBefore(l,y);})
-           (window,document,'script','Surfly');
-           var settings = {
-           // Surfly session options can be set here, or at the Company/Plan levels.
-           widget_key: '513065a5492743e6a6340aec09b7e4d1',
-           private_session: false, // to make sure only logged in agents can join the call
-           password_required: false,
-           host_switching_allowed: true,
-           block_until_agent_joins: false
-           };
-          
-           Surfly.init(settings, function(initResult) {
-               if (initResult.success) {
-                   // API calls can now be made!
-                   if (!Surfly.isInsideSession) {
-                      
-                       SurflySession=Surfly.session({start_with_chat_open: false,start_with_videochat_on: false,url: "https://www.wikipedia.org/"}).startLeader("#leader");
-                   }
-               }
-               else{
-                   console.log("Surfly was unable to initialize properly.")
-               }
-               Surfly.on('session_created', function(session, event) {
-                   console.log('Session', session.followerLink, 'has just started');
-                   var iframe = document.getElementById("follower");
-                   iframe.src = session.followerLink;
-               });
-           });
-           
-       }
-   
-       function endSurflySession() {
-           SurflySession.end();
-   
-       }
-   
-       var isControlRequested = false;
-   
-         function toggleControlSession() {
-           if (isControlRequested) {
-             SurflySession.giveControl(1);
-             document.getElementById("toggleButton").innerText = "Give Control";
-             isControlRequested = false;
-           } else {
-             SurflySession.requestControl();
-             document.getElementById("toggleButton").innerText = "Request Control";
-             isControlRequested = true;
-           }
-         }
-       </script>
         <!-- / Yoast SEO plugin. -->
         <link rel="dns-prefetch" href="//cdn.iubenda.com">
         <link rel="dns-prefetch" href="//www.google.com">
@@ -1748,6 +1693,67 @@
             </section>
             
 <!--SURFLY SESSION DEMO-->
+<script>
+    var SurflySession;
+    function startSurflySession() {
+   (function(s,u,r,f,l,y){s[f]=s[f]||{init:function(){s[f].q=arguments}};
+   l=u.createElement(r);y=u.getElementsByTagName(r)[0];l.async=1;
+   l.src='https://surfly.com/surfly.js';y.parentNode.insertBefore(l,y);})
+   (window,document,'script','Surfly');
+   var settings = {
+   // Surfly session options can be set here, or at the Company/Plan levels.
+   widget_key: '513065a5492743e6a6340aec09b7e4d1',
+   private_session: false, // to make sure only logged in agents can join the call
+   password_required: false,
+   host_switching_allowed: true,
+   block_until_agent_joins: false
+   };
+  
+   Surfly.init(settings, function(initResult) {
+       if (initResult.success) {
+           // API calls can now be made!
+           if (!Surfly.isInsideSession) {
+              
+               SurflySession=Surfly.session({start_with_chat_open: false,start_with_videochat_on: false,url: "https://www.wikipedia.org/"}).startLeader("#leader");
+           }
+       }
+       else{
+           console.log("Surfly was unable to initialize properly.")
+       }
+
+       Surfly.on('session_created', function(session, event) {
+           console.log('Session', session.followerLink, 'has just started for the follower');
+           console.log('Session', session.leaderLink, 'has just started for the leader');
+           var iframe = document.getElementById("follower");
+           iframe.src = session.followerLink;
+           var iframe = document.getElementById("leader");
+           iframe.src = session.leaderLink;
+       });
+
+        
+   });
+   
+}
+
+function endSurflySession() {
+   SurflySession.end();
+
+}
+
+var isControlRequested = false;
+
+ function toggleControlSession() {
+   if (isControlRequested) {
+     SurflySession.giveControl(1);
+     document.getElementById("toggleButton").innerText = "Give Control";
+     isControlRequested = false;
+   } else {
+     SurflySession.requestControl();
+     document.getElementById("toggleButton").innerText = "Request Control";
+     isControlRequested = true;
+   }
+ }
+</script>
             <section id="block_cb8c156e30a12559db6accba27785b78" class="component-wrapper bg-white">
                 <div class="w-full mx-auto px-8 md:px-0 flex flex-col space-y-6 ib-block cw-wide md:pt-2 pt-10 md:pb-20 pb-10">
                     <h2 class="has-text-align-center">Try it Yourself</h2>
@@ -1771,11 +1777,6 @@
                 </div>
             </div>
                 </div>
-                <div class="button-container">
-                    <button class="button" onclick="startSurflySession()">Start Surfly Session</button>
-                    <button class="button" onclick="endSurflySession()">End Surfly Session</button>
-                    <button id="toggleButton" class="button" onclick="toggleControlSession()">Give Control</button>
-                  </div>
             </section>
 
 
