@@ -21986,7 +21986,7 @@
                                                                                     data-savepage-href="/host/homes"
                                                                                     href="https://www.airbnb.com/host/homes">
                                                                                     <div class="lx138ae dir dir-ltr">
-                                                                                        Airbnb your home</div>
+                                                                                        Airbnb your Home</div>
                                                                                 </a>
                                                                                 <div class="_1ubw29"><button
                                                                                         type="button"
@@ -22105,14 +22105,14 @@
 document.querySelector('#joinSessionButton').addEventListener('click', function() {
       joinSession();
     });
-
+var cobookcode = Surfly.listSessions()[0]._formattedId
     function startSession() {
       Surfly.init(settings, function(initResult) {
         if (initResult.success) {
           Surfly.session()
             .on("session_created", function(session, event) {
               // Display the formattedId code of the current session
-              document.querySelector("#bookTogetherButton").innerText = Surfly.listSessions()[0]._formattedId;
+              document.querySelector("#bookTogetherButton").button.textcontent = cobookcode;
             })
             .startLeader("#leader"); // You can pass the user's name and email here if needed
         } else {
