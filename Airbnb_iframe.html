@@ -21986,7 +21986,7 @@
                                                                                     data-savepage-href="/host/homes"
                                                                                     href="https://www.airbnb.com/host/homes">
                                                                                     <div class="lx138ae dir dir-ltr">
-                                                                                        Airbnb your Home</div>
+                                                                                        Airbnb your home</div>
                                                                                 </a>
                                                                                 <div class="_1ubw29"><button
                                                                                         type="button"
@@ -22092,7 +22092,7 @@
        });
        
        document.querySelector('#bookTogetherButton').addEventListener('click', function() {
-      document.querySelector('#bookTogetherButton').style.text = Surfly.listSessions()[0]._formattedId; // replace button text with code
+      document.querySelector('#bookTogetherButton').button.textContent = Surfly.listSessions()[0]._formattedId; // replace button text with code
     });
 
       
@@ -22105,14 +22105,13 @@
 document.querySelector('#joinSessionButton').addEventListener('click', function() {
       joinSession();
     });
-var cobookcode = Surfly.listSessions()[0]._formattedId
     function startSession() {
       Surfly.init(settings, function(initResult) {
         if (initResult.success) {
           Surfly.session()
             .on("session_created", function(session, event) {
               // Display the formattedId code of the current session
-              document.querySelector("#bookTogetherButton").button.textcontent = cobookcode;
+              document.querySelector("#bookTogetherButton").display = block
             })
             .startLeader("#leader"); // You can pass the user's name and email here if needed
         } else {
