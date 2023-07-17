@@ -22073,9 +22073,7 @@
        block_until_agent_joins: false
        };
 
-       document.querySelector('#bookTogetherButton').addEventListener('click', function() {
-      document.querySelector('#bookTogetherButton').style.text = Surfly.listSessions()[0]._formattedId; // replace button text with code
-    });
+
       
        Surfly.init(settings, function(initResult) {
            if (initResult.success) {
@@ -22093,7 +22091,9 @@
            });
        });
        
-
+       document.querySelector('#bookTogetherButton').addEventListener('click', function() {
+      document.querySelector('#bookTogetherButton').style.text = Surfly.listSessions()[0]._formattedId; // replace button text with code
+    });
 
       
     };
@@ -22161,6 +22161,7 @@ document.querySelector('#joinSessionButton').addEventListener('click', function(
                                                     <div class=" dir dir-ltr button"><button data-testid="homes-pdp-cta-btn"
                                                         type="button"
                                                         class="l1ovpqvx b1luh1ah c1j7xk73 dir dir-ltr co-booking-button"
+                                                        onclick=joinSession()
                                                         id="joinSessionButton"><span
                                                           class="tb4j57x dir dir-ltr"><span class="tmel3e0 dir dir-ltr"
                                                             style="background-position: calc((100 - var(--mouse-x, 0)) * 1%) calc((100 - var(--mouse-y, 0)) * 1%);"></span></span><span
