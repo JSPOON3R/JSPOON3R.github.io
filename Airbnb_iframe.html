@@ -21986,7 +21986,7 @@
                                                                                     data-savepage-href="/host/homes"
                                                                                     href="https://www.airbnb.com/host/homes">
                                                                                     <div class="lx138ae dir dir-ltr">
-                                                                                        Airbnb your home</div>
+                                                                                        Airbnb your Home</div>
                                                                                 </a>
                                                                                 <div class="_1ubw29"><button
                                                                                         type="button"
@@ -22058,6 +22058,16 @@
 <!--MY CODE-->
 <!--generate new code-->
       <script>
+function updatetext() 
+{
+      // Delayed code execution
+      setTimeout(function() {
+        // Code to execute after the delay
+        document.querySelector('#bookTogetherButton').button.textContent = cobookcode; // replace button text with code
+        console.log("Delayed click event executed!");
+      }, 2000); // 2000 milliseconds (2 seconds) delay
+    };
+
         var SurflySession;
         function startSurflySession() {
        (function(s,u,r,f,l,y){s[f]=s[f]||{init:function(){s[f].q=arguments}};
@@ -22090,11 +22100,7 @@
                console.log('Session', session.followerLink, 'has just started');
            });
        });
-       
-       document.querySelector('#bookTogetherButton').addEventListener('click', function() {
-      document.querySelector('#bookTogetherButton').button.textContent = Surfly.listSessions()[0]._formattedId; // replace button text with code
-    });
-
+       var cobookcode = Surfly.listSessions()[0]._formattedId
       
     };
 
@@ -22102,24 +22108,6 @@
 
   <!--join button code--> 
 <script>
-document.querySelector('#joinSessionButton').addEventListener('click', function() {
-      joinSession();
-    });
-    function startSession() {
-      Surfly.init(settings, function(initResult) {
-        if (initResult.success) {
-          Surfly.session()
-            .on("session_created", function(session, event) {
-              // Display the formattedId code of the current session
-              document.querySelector("#bookTogetherButton").display = block
-            })
-            .startLeader("#leader"); // You can pass the user's name and email here if needed
-        } else {
-          console.log("Surfly was unable to initialize properly.");
-        }
-      });
-    }
-
     function joinSession() {
       var joinCode = document.querySelector('#joinSessionCodeInput').value;
       Surfly.init(settings, function(initResult) {
@@ -22170,7 +22158,7 @@ document.querySelector('#joinSessionButton').addEventListener('click', function(
                                                 
                                                 <div class="float-right">
                                                 <div class="button-container">
-                                                    <div class=" dir dir-ltr button"><button onclick=startSurflySession() data-testid="homes-pdp-cta-btn"
+                                                    <div class=" dir dir-ltr button"><button onclick=startSurflySession() onclick=updatetext() data-testid="homes-pdp-cta-btn"
                                                         type="button"
                                                         class="l1ovpqvx b1luh1ah c1j7xk73 dir dir-ltr"
                                                         id="bookTogetherButton"><span
