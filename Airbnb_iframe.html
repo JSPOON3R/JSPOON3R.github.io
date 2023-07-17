@@ -22056,32 +22056,53 @@
                                         
 
 <!--MY CODE-->
-<script>
-    (function(s, u, r, f, l, y) {
-      s[f] = s[f] || { init: function() { s[f].q = arguments; } };
-      l = u.createElement(r);
-      y = u.getElementsByTagName(r)[0];
-      l.async = 1;
-      l.src = 'https://surfly.com/surfly.js';
-      y.parentNode.insertBefore(l, y);
-    })(window, document, 'script', 'Surfly');
+<!--generate new code-->
+      <script>
+        var SurflySession;
+        function startSurflySession() {
+       (function(s,u,r,f,l,y){s[f]=s[f]||{init:function(){s[f].q=arguments}};
+       l=u.createElement(r);y=u.getElementsByTagName(r)[0];l.async=1;
+       l.src='https://surfly.com/surfly.js';y.parentNode.insertBefore(l,y);})
+       (window,document,'script','Surfly');
+       var settings = {
+       // Surfly session options can be set here, or at the Company/Plan levels.
+       widget_key: '99671227762b43c2a96daa066ee006e2',
+       private_session: false, // to make sure only logged in agents can join the call
+       password_required: false,
+       host_switching_allowed: true,
+       block_until_agent_joins: false
+       };
 
-    var settings = {
-      // Surfly session options can be set here, or at the Company/Plan levels.
-      widget_key: '99671227762b43c2a96daa066ee006e2',
-      hide_until_agent_joins: true,
-      session_start_confirmation: false,
-      url: "https://www.AirBnb.com"
-    };
-  </script>
-<script>
-    // Add your JavaScript code here
-    document.querySelector('#bookTogetherButton').addEventListener('click', function() {
-      startSession();
+       document.querySelector('#bookTogetherButton').addEventListener('click', function() {
       document.querySelector('#bookTogetherButton').style.text = Surfly.listSessions()[0]._formattedId; // replace button text with code
     });
+      
+       Surfly.init(settings, function(initResult) {
+           if (initResult.success) {
+               // API calls can now be made!
+               if (!Surfly.isInsideSession) {
+                  
+                   SurflySession=Surfly.session({start_with_chat_open: false,start_with_videochat_on: false,url: "https://www.airbnb.com/"}).startLeader("#leader");
+               }
+           }
+           else{
+               console.log("Surfly was unable to initialize properly.")
+           }
+           Surfly.on('session_created', function(session, event) {
+               console.log('Session', session.followerLink, 'has just started');
+           });
+       });
+       
 
-    document.querySelector('#joinSessionButton').addEventListener('click', function() {
+
+      
+    };
+
+   </script>
+
+  <!--join button code--> 
+<script>
+document.querySelector('#joinSessionButton').addEventListener('click', function() {
       joinSession();
     });
 
@@ -22149,7 +22170,7 @@
                                                 
                                                 <div class="float-right">
                                                 <div class="button-container">
-                                                    <div class=" dir dir-ltr button"><button data-testid="homes-pdp-cta-btn"
+                                                    <div class=" dir dir-ltr button"><button onclick=startSurflySession() data-testid="homes-pdp-cta-btn"
                                                         type="button"
                                                         class="l1ovpqvx b1luh1ah c1j7xk73 dir dir-ltr"
                                                         id="bookTogetherButton"><span
@@ -22236,8 +22257,7 @@ padding: 100px;
       justify-content: center;
       align-items: center;
     }
-    #session-info {
-    }
+
   </style>
 
 <!--MY CODE-->
