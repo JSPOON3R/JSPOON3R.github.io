@@ -37,6 +37,8 @@
 
 
                         SurflySession = Surfly.session({ start_with_chat_open: false, start_with_videochat_on: false, url: urlinput }).startLeader("#leader");
+                        var errorMessage = document.getElementById('errorMessage');
+                        errorMessage.style.display = 'none';
                     }
                 }
                 else {
@@ -87,20 +89,20 @@
     <!--ERRORS-->
     <script>
         function validateURL() {
-          var urlInput = document.getElementById('session_url_input').value;
-          var urlRegex = /^(https?:\/\/)?([\w.]+)\.([a-z]{2,6}\.?)(\/[\w.]*)*\/?$/;
-    
-          if (urlRegex.test(urlInput)) {
-            // Valid URL, execute button action
-            startSurflySession();
-            show_session_buttons();
-          } else {
-            // Invalid URL, display error message
-            var errorMessage = document.getElementById('errorMessage');
-            errorMessage.style.display = 'block';
-          }
+            var urlInput = document.getElementById('session_url_input').value;
+            var urlRegex = /^(https?:\/\/)?([\w.]+)\.([a-z]{2,6}\.?)(\/[\w.]*)*\/?$/;
+
+            if (urlRegex.test(urlInput)) {
+                // Valid URL, execute button action
+                startSurflySession();
+                show_session_buttons();
+            } else {
+                // Invalid URL, display error message
+                var errorMessage = document.getElementById('errorMessage');
+                errorMessage.style.display = 'block';
+            }
         }
-      </script>
+    </script>
 
     <style>
         body {
@@ -122,14 +124,14 @@
 
         .left-header {
             margin-left: auto;
-            position:relative;
+            position: relative;
             padding-right: 45%;
 
         }
 
         .right-header {
             margin-right: auto;
-            position:relative;
+            position: relative;
             padding-left: 40%;
         }
 
@@ -164,6 +166,7 @@
             border-radius: 8px;
             padding: 5px;
         }
+
         .button-header {
             background-color: #eedddd;
             color: #cf2e2e;
@@ -178,9 +181,11 @@
             border-radius: 8px;
             padding: 5px;
         }
+
         .button:hover {
             box-shadow: #eedddd 0 0 0 3px, transparent 0 0 0 0;
         }
+
         .button-row {
             display: flex;
             justify-content: center;
@@ -267,11 +272,11 @@
         .block {
             display: none !important;
         }
+
         .errormess {
-            
-            color: red; 
+
+            color: red;
             display: none;
-            display: inline-flex;
             font-family: nunito, sans-serif;
             font-size: 1rem;
             font-weight: 100;
@@ -286,7 +291,6 @@
             border: 0;
             touch-action: manipulation;
         }
-
     </style>
 </head>
 
@@ -296,7 +300,8 @@
             <img src="https://www.surfly.com/wp-content/uploads/2022/04/logo-white.svg" alt="Logo" class="logo">
         </div>
         <div class="right-header">
-            <button class="button-header" onclick="window.location.href = 'https://www.surfly.com/request-a-demo'">Talk to
+            <button class="button-header" onclick="window.location.href = 'https://www.surfly.com/request-a-demo'">Talk
+                to
                 us</button>
         </div>
     </div>
