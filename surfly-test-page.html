@@ -84,6 +84,23 @@
             document.getElementById("session_active_footer_text").className = "block";
         }
     </script>
+    <!--ERRORS-->
+    <script>
+        function validateURL() {
+          var urlInput = document.getElementById('session_url_input').value;
+          var urlRegex = /^(https?:\/\/)?([\w.]+)\.([a-z]{2,6}\.?)(\/[\w.]*)*\/?$/;
+    
+          if (urlRegex.test(urlInput)) {
+            // Valid URL, execute button action
+            startSurflySession();
+            show_session_buttons();
+          } else {
+            // Invalid URL, display error message
+            var errorMessage = document.getElementById('errorMessage');
+            errorMessage.style.display = 'block';
+          }
+        }
+      </script>
 
     <style>
         body {
@@ -250,6 +267,25 @@
         .block {
             display: none !important;
         }
+        .errormess {
+            
+            color: red; 
+            display: none;
+            display: inline-flex;
+            font-family: nunito, sans-serif;
+            font-size: 1rem;
+            font-weight: 100;
+            justify-content: center;
+            line-height: 1;
+            margin: 3;
+            outline: none;
+            text-align: center;
+            text-decoration: none;
+            transition: box-shadow .2s, -webkit-box-shadow .2s;
+            white-space: nowrap;
+            border: 0;
+            touch-action: manipulation;
+        }
 
     </style>
 </head>
@@ -274,12 +310,14 @@
     <div id="session_inactive_buttons" class="button-row">
         <input type="text" class="input-box" id="session_url_input" placeholder="Enter the website you want to browse"
             required>
-        <button class="button" onclick="show_session_buttons();startSurflySession()">Start Session</button>
+        <button class="button" onclick="validateURL()">Start Session</button>
     </div>
     <div id="session_active_buttons" class="block">
         <button class="button" onclick="toggleControlSession()">Change Host</button>
         <button class="button" onclick="show_inactive_buttons();endSurflySession()">End Session</button>
     </div>
+    <p id="errorMessage" class="errormess">Please enter a valid URL</p>
+
 
     <div class="footer" id="session_inactive_footer_text">
         <p>Enter a URL and click on the "Start Session" button to begin. Make sure that the URL is formatted
