@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Website with Scaling iframes and Fixed Footer</title>
+  <script>
+    (function(s,u,r,f,l,y){s[f]=s[f]||{init:function(){s[f].q=arguments}};
+    l=u.createElement(r);y=u.getElementsByTagName(r)[0];l.async=1;
+    l.src='https://surfly.com/surfly.js';y.parentNode.insertBefore(l,y);})
+    (window,document,'script','Surfly');
+    
+    var settings = {
+        // Surfly session options can be set here, or at the Company/Plan levels.
+        widget_key: '99671227762b43c2a96daa066ee006e2',
+    };
+    
+    Surfly.init(settings, function(initResult) {
+        if (initResult.success) {
+            // API calls can now be made!
+            if (!Surfly.isInsideSession) {
+            }
+        }
+        else{
+            console.log("Surfly was unable to initialize properly.")
+        }
+    });
+    </script>
+
+
+
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background-color: white;
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      padding: 20px;
+      background-color: #f2f2f2;
+    }
+
+    .logo {
+      width: fit-content;
+      height: 40px;
+      margin-right: 10px;
+    }
+
+    .iframes-container {
+      flex: 1;
+      display: flex;
+      overflow: hidden;
+    }
+
+    .iframe {
+      flex: 1;
+      border: none;
+    }
+    .button {
+    background-color: #d14141;;
+    color: #eedddd;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 8px 4px;
+    cursor: pointer;
+    border: 2px solid#eedddd;
+    border-radius: 8px;
+    padding: 5px;
+}
+
+.button-row {
+      display: flex;
+      justify-content: center;
+      padding: 100px;
+    }
+
+.button {
+  align-items: center;
+  margin-right: 10px;
+  background-color: #d14141;
+  border-radius: 40px;
+  box-shadow: transparent 0 0 0 3px, rgba(18, 18, 18, .1) 0 6px 20px;
+  box-sizing: border-box;
+  width: 170px;
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: nunito, sans-serif;
+  font-size: 1rem;
+  font-weight: 100;
+  justify-content: center;
+  line-height: 1;
+  margin: 0;
+  outline: none;
+  padding: 1.2rem 1.2rem;
+  text-align: center;
+  text-decoration: none;
+  transition: box-shadow .2s, -webkit-box-shadow .2s;
+  white-space: nowrap;
+  border: 0;
+  touch-action: manipulation;
+}
+
+.button:hover {
+  box-shadow: #cf2e2e 0 0 0 3px, transparent 0 0 0 0;
+}
+
+
+
+
+
+
+  </style>
+</head>
+<body>
+  <div class="header">
+    <img src="https://www.surfly.com/wp-content/uploads/2022/04/surfly-logo.svg" alt="Logo" class="logo">
+  </div>
+
+  <div class="iframes-container">
+    <iframe src="https://www.surfly.com" class="iframe"></iframe>
+    <iframe src="https://www.surfly.com" class="iframe"></iframe>
+  </div>
+
+  <div class="button-row">
+    <button class="button" onclick= "Surfly.session().startLeader()">Start Session</button>
+    <button class="button">Pass Control</button>
+    <button class="button">End Session</button>
+  </div>
+
+  <div class="footer">
+    <p>Instructions and Context</p>
+  </div>
+</body>
+</html>
