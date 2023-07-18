@@ -6,19 +6,24 @@
   <title>Website with Scaling iframes and Fixed Footer</title>
   <!--Surfly JS-->
   <script>
-    var SurflySession;
-    function startSurflySession() {
    (function(s,u,r,f,l,y){s[f]=s[f]||{init:function(){s[f].q=arguments}};
    l=u.createElement(r);y=u.getElementsByTagName(r)[0];l.async=1;
    l.src='https://surfly.com/surfly.js';y.parentNode.insertBefore(l,y);})
    (window,document,'script','Surfly');
+  </script>
+  <script>
+    var SurflySession;
+
+    function startSurflySession() {
    var settings = {
    // Surfly session options can be set here, or at the Company/Plan levels.
    widget_key: '99671227762b43c2a96daa066ee006e2',
    private_session: false, // to make sure only logged in agents can join the call
    password_required: false,
    host_switching_allowed: true,
-   block_until_agent_joins: false
+   block_until_agent_joins: false,
+   leader_redirect_url: "https://jspoon3r.github.io/surfly-test-page.html",
+   follower_redirect_url: "https://jspoon3r.github.io/surfly-test-page.html"
    };
    var urlinput = document.querySelector('#session_url_input').value;
   
@@ -27,6 +32,7 @@
            // API calls can now be made!
            if (!Surfly.isInsideSession) {
               
+            
                SurflySession=Surfly.session({start_with_chat_open: false,start_with_videochat_on: false,url: urlinput}).startLeader("#leader");
            }
        }
@@ -228,7 +234,7 @@ content: "https://";
     <button class="button" onclick="show_session_buttons();startSurflySession()">Start Session</button>
   </div>
   <div id="session_active_buttons" class="block">
-    <button class="button" onclick="toggleControlSession()">Pass Control</button>
+    <button class="button" onclick="toggleControlSession()">Change Host</button>
     <button class="button" onclick="show_inactive_buttons();endSurflySession()">End Session</button>
   </div>
 
