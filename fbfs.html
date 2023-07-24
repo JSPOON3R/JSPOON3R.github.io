@@ -15,7 +15,60 @@
 
                     brandembassy('init', 1022, 'chat_66370294-009c-46c6-8460-b1986d72b2b6');
     </script>
-        <script>
+
+
+
+<script type="text/javascript">
+    var SurflySession;
+    var session_pin;
+    (function (s, u, r, f, l, y) {
+        s[f] = s[f] || { init: function () { s[f].q = arguments } };
+        l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+        l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+    })
+        (window, document, 'script', 'Surfly');
+
+
+    var settings = {
+        // Surfly session options can be set here, or at the Company/Plan levels.
+        widget_key: '134f5fd2ac8842c0a1cd6062818eee74',
+        private_session: true, // to make sure only logged in agents can join the call
+        password_required: false,
+    };
+
+    Surfly.init(settings, function (initResult) {
+        if (initResult.success) {
+            // API calls can now be made!
+            if (!Surfly.isInsideSession) {
+
+      
+
+                SurflySession=Surfly.session({start_with_chat_open: false}).on("session_created", function(session, event) {
+                // display the PIN of the current session
+                console.log("Session_PIN "+session.pin);
+                session_pin=session.pin;
+            });
+               // Surfly.session().startLeader();
+            }
+        }
+        else {
+            console.log("Surfly was unable to initialize properly.")
+        }
+    });
+
+    function callme() {
+        SurflySession = Surfly.session({ start_with_chat_open: false }).startLeader();
+    }
+</script>
+
+
+
+
+
+
+
+
+
       (function(s,u,r,f,l,y){s[f]=s[f]||{init:function(){s[f].q=arguments}};
 l=u.createElement(r);y=u.getElementsByTagName(r)[0];l.async=1;
 l.src='https://surfly.com/surfly.js';y.parentNode.insertBefore(l,y);})
@@ -36,6 +89,10 @@ Surfly.init(settings, function(initResult) {
         console.log("Surfly was unable to initialize properly.")
     }
 });
+
+function callme() {
+        SurflySession = Surfly.session({ start_with_chat_open: false }).startLeader();
+    }
         </script>
 
 
@@ -22163,7 +22220,7 @@ Surfly.init(settings, function(initResult) {
                 </a>
               </li>
               <li class="footer-meta-list-item cobroeye">
-                <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/cobro-eye-black-thick.png?raw=true" onclick= "Surfly.session().startLeader()">
+                <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/cobro-eye-black-thick.png?raw=true" onclick= "callme()">
               </li>
             </ul>
           </div>
