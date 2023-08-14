@@ -26,8 +26,8 @@
                 host_switching_allowed: true,
                 block_until_agent_joins: false,
                 videochat: false,
-                leader_redirect_url: "https://jspoon3r.github.io/surfly-test-page.html",
-                follower_redirect_url: "https://jspoon3r.github.io/surfly-test-page.html"
+                leader_redirect_url: "https://jspoon3r.github.io/surfly.html",
+                follower_redirect_url: "https://jspoon3r.github.io/surfly.html"
             };
             var urlinput = document.querySelector('#session_url_input').value;
 
@@ -75,12 +75,17 @@
     <script>
         function validateURL() {
             var urlInput = document.getElementById('session_url_input').value;
-            var urlRegex = /^(https?:\/\/)?([\w.]+)\.([a-z]{2,6}\.?)(\/[\w.]*)*\/?$/;
+            var urlRegex = /^(?:(?:https?|ftp):\/\/)?(?:www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\/[^\s]*)?$/;
+/;
 
             if (urlRegex.test(urlInput)) {
                 // Valid URL, execute button action
                 startSurflySession();
                 show_session_buttons();
+                var windowdesc1 = document.getElementById("window-description1");
+                windowdesc1.style.visibility = 'hidden';
+                var windowdesc2 = document.getElementById("window-description2");
+                windowdesc2.style.visibility = 'hidden';
             } else {
                 // Invalid URL, display error message
                 var errorMessage = document.getElementById('errorMessage');
@@ -353,8 +358,8 @@
                 <div class="traffic-light red"></div>
                 <div class="traffic-light amber"></div>
                 <div class="traffic-light green"></div>
-                <div class="window-description"></div>
-                <div class="window-title">User A</div>
+                <div class="window-description" id="window-description1">This window will be your view</div>
+                <div class="window-title">You</div>
             </div>
             <iframe src="https://jspoon3r.github.io/iframe-instructions-1.html" class="iframe-content"
                 id="leader"></iframe>
@@ -365,8 +370,8 @@
                 <div class="traffic-light red"></div>
                 <div class="traffic-light amber"></div>
                 <div class="traffic-light green"></div>
-                <div class="window-description"></div>
-                <div class="window-title">User B</div>
+                <div class="window-description" id="window-description2">This window will the other person's view</div>
+                <div class="window-title">Them</div>
             </div>
             <iframe src="https://jspoon3r.github.io/iframe-instructions-2.html" class="iframe-content"
                 id="follower"></iframe>
