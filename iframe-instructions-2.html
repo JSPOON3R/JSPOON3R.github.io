@@ -4,60 +4,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Clean Web Page</title>
+    <title>Instructions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <style>
         body {
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
             background-color: white;
-            ;
+            background-image:
+                url('https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/facing%20left.png');
+            background-size: 90% 100%;
+            background-repeat: no-repeat;
+            background-position: 180px center;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-
         }
 
         .instructions {
             text-align: left;
             padding: 20px;
-            border: 1px solid #ccc;
+            border: 0px solid #fadcdc;
             border-radius: 5px;
-            background-color: #fff6f6;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            background-color: none;
         }
 
         ol {
-            padding-left: 20px;
+            padding-left: 0;
+            list-style-type: none;
         }
 
         li {
+            display: flex;
+            align-items: flex-start;
             margin-bottom: 10px;
-            background-color: white;
-            /* Light blue background color */
             color: #e54748;
-            /* Dark blue text color */
-            border-radius: 5px;
-            overflow: auto;
-            white-space: pre-wrap;
-            margin-top: 20px;
-            font-size: 15px;
-            font-weight: light;
-            padding: 5px 10px;
-
+            font-size: 30px;
+            font-weight: normal;
         }
-        h2{
-            /* Light blue background color */
+
+        .icon {
+            margin-right: 10px;
+            font-size: 34px;
             color: #e54748;
-            /* Dark blue text color */
-            border-radius: 5px;
-            overflow: auto;
-            white-space: pre-wrap;
-            margin-top: 20px;
-            font-size: 15px;
-            font-weight:light;
-            padding: 5px 10px;
+        }
+
+        .text {
+            margin-left: 70px;
+            margin-bottom: 5px;
+        }
+
+        .icon-container {
+            display: flex;
+            align-items: center;
+            align-content: center;
+            position: fixed;
 
         }
     </style>
@@ -65,12 +68,27 @@
 
 <body>
     <div class="instructions">
-        <h2>This windows will display what the other person sees
-        </h2>
         <ol>
-            <li>1. Enter a website URL</li>
-            <li>2. Click "Start Session"</li>
-            <li>3. Collaboratively browse the web!</li>
+            <li>
+                <div class="icon-container">
+                    <span class="icon"><i class="fas fa-globe"></i></span>
+                </div>
+                <span class="text">Enter a website URL</span>
+            </li>
+            <br><br>
+            <li>
+                <div class="icon-container">
+                    <span class="icon"><i class="fas fa-mouse-pointer"></i></span>
+                </div>
+                <span class="text">Click "Start Session"</span>
+            </li>
+            <br><br>
+            <li>
+                <div class="icon-container">
+                    <span class="icon"><i class="fas fa-users"></i></span>
+                </div>
+                <span class="text">Collaboratively browse the web!</span>
+            </li>
         </ol>
     </div>
 </body>
