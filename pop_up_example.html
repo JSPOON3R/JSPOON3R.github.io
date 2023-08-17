@@ -17,33 +17,48 @@
         // The preferred way is to set session options from the Surfly web interface,
         // so in most cases you only need to provide a widget key below,
         // but you can also override any options here
-        var settings = {
-            widget_key: "99671227762b43c2a96daa066ee006e2",
-            hide_until_agent_joins: true,
-            start_with_videochat_on: true,
-            videochat_enabled: true,
-            start_with_fullscreen_videochat: true,
-            url: "https://www.triglav.eu/en", 
-            follower_redirect_url: "https://www.triglav.eu/en",
-        };
-
 
         function startSurflySession() {
-        // Surfly.init() must be called before any other API call
-        Surfly.init(settings, function (init) {
-            if (init.success && !Surfly.isInsideSession) {
-                Surfly.session()
-                    .on("session_created", function (session, event) {
-                        // display the PIN of the current session
+            var settings = {
+                // Surfly session options can be set here, or at the Company/Plan levels.
+                widget_key: '99671227762b43c2a96daa066ee006e2',
+                private_session: false, // to make sure only logged in agents can join the call
+                password_required: false,
+                host_switching_allowed: true,
+                block_until_agent_joins: false,
+                videochat: false,
+                leader_redirect_url: "https://www.google.com",
+                follower_redirect_url: "https://www.google.com"
+            };
+            var urlinput = document.querySelector('#session_url_input').value;
+
+            Surfly.init(settings, function (initResult) {
+                if (initResult.success) {
+                    // API calls can now be made!
+                    if (!Surfly.isInsideSession) {
+
+
+                        SurflySession = Surfly.session({ start_with_chat_open: false, start_with_videochat_on: false, url: urlinput }).startLeader();
                         document.querySelector("#sessidtarget").innerText = session.pin;
-                    })
-                    .startLeader();
-            }
-        });}
-        function endSurflySession() {
-            Surfly.session()
-            .endSurflySession;
+                        
+                    }
+                    
+                }
+                else {
+                    console.log("Surfly was unable to initialize properly.")
+                }
+            });
+
         }
+
+        function endSurflySession() {
+            SurflySession.end();
+
+        }
+
+
+
+
     </script>
     <style>
         body {
