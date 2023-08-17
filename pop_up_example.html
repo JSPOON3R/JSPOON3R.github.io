@@ -39,7 +39,7 @@
             }
         });
         function endSurflySession() {
-            SurflySession.end();
+      sessionEnd();
         }
     </script>
     <style>
@@ -131,8 +131,8 @@
             <h2>Session Started</h2>
             <p>Please share your pin with the Agent. Press "End Session" to cancel.</p>
             <h3>Session Pin: <span id="sessidtarget">...</span></h3>
-            <button class="closeButton" id="closeButton" onclick="endSurflySession()">Go to Session</button>
-            <button class="endsessionbutton" onclick="endSurflySession()">End Session</button>
+            <button class="closeButton" id="closeButton">Go to Session</button>
+            <button class="endsessionbutton" id="closeButton" onclick="endSurflySession()">End Session</button>
         </div>
     </div>
 
@@ -149,9 +149,9 @@
             modal.style.display = "none";
         });
 
-        SurflySession.addEventListener("viewer_joined", function() {
-            modal.style.display = "none";
-                });
+        Surfly.on('session_ended', function(session) {
+  console.log(session, 'has ended');
+});
     </script>
 </body>
 
