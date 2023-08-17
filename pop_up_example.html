@@ -30,25 +30,24 @@
                 leader_redirect_url: "https://www.google.com",
                 follower_redirect_url: "https://www.google.com"
             };
-            var urlinput = document.querySelector('#session_url_input').value;
 
             Surfly.init(settings, function (initResult) {
                 if (initResult.success) {
                     // API calls can now be made!
                     if (!Surfly.isInsideSession) {
 
+                        SurflySession = Surfly.session().startLeader();
 
-                        SurflySession = Surfly.session({ start_with_chat_open: false, start_with_videochat_on: false, url: urlinput }).startLeader();
-                        document.querySelector("#sessidtarget").innerText = session.pin;
-                        
+
                     }
-                    
+
                 }
                 else {
                     console.log("Surfly was unable to initialize properly.")
                 }
-            });
 
+            });
+            document.querySelector("#sessidtarget").innerText = session.pin;
         }
 
         function endSurflySession() {
