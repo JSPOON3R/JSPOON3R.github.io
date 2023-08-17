@@ -27,6 +27,8 @@
             follower_redirect_url: "https://www.triglav.eu/en",
         };
 
+
+        function startSurflySession() {
         // Surfly.init() must be called before any other API call
         Surfly.init(settings, function (init) {
             if (init.success && !Surfly.isInsideSession) {
@@ -37,7 +39,7 @@
                     })
                     .startLeader();
             }
-        });
+        });}
         function endSurflySession() {
       sessionEnd();
         }
@@ -124,7 +126,7 @@
 </head>
 
 <body>
-    <button class="button" id="startButton">Start Session</button>
+    <button class="button" id="startButton" onclick="startSurflySession()">Start Session</button>
 
     <div class="modal-overlay" id="modal">
         <div class="modal-content">
