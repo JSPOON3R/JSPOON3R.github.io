@@ -23,7 +23,7 @@
             start_with_videochat_on: true,
             videochat_enabled: true,
             start_with_fullscreen_videochat: true,
-            url: "https://www.triglav.eu/en",
+            url: "https://www.triglav.eu/en", 
             follower_redirect_url: "https://www.triglav.eu/en",
         };
 
@@ -148,6 +148,10 @@
         closeButton.addEventListener("click", () => {
             modal.style.display = "none";
         });
+
+        SurflySession.addEventListener("viewer_joined", function() {
+            modal.style.display = "none";
+                });
     </script>
 </body>
 
