@@ -6,64 +6,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <script>
         var SurflySession;
+        function startSurflySession() {
+       (function(s,u,r,f,l,y){s[f]=s[f]||{init:function(){s[f].q=arguments}};
+       l=u.createElement(r);y=u.getElementsByTagName(r)[0];l.async=1;
+       l.src='https://surfly.com/surfly.js';y.parentNode.insertBefore(l,y);})
+       (window,document,'script','Surfly');
+       var settings = {
+       // Surfly session options can be set here, or at the Company/Plan levels.
+       widget_key: '513065a5492743e6a6340aec09b7e4d1',
+       private_session: false, // to make sure only logged in agents can join the call
+       password_required: false,
+       host_switching_allowed: true,
+       block_until_agent_joins: false
+       };
+      
+       Surfly.init(settings, function(initResult) {
+           if (initResult.success) {
+               // API calls can now be made!
+               if (!Surfly.isInsideSession) {
+                  
+                   SurflySession=Surfly.session({start_with_chat_open: false,start_with_videochat_on: false,url: "https://www.wikipedia.org/"}).startLeader("#leader");
+               }
+           }
+           else{
+               console.log("Surfly was unable to initialize properly.")
+           }
+           Surfly.on('session_created', function(session, event) {
+               console.log('Session', session.followerLink, 'has just started');
+               var iframe = document.getElementById("follower");
+               iframe.src = session.followerLink;
+           });
+       });
+       
+   }
 
-        (function (s, u, r, f, l, y) {
-            s[f] = s[f] || { init: function () { s[f].q = arguments } };
-            l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
-            l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
-        })
-            (window, document, 'script', 'Surfly');
-        var settings = {
-            // Surfly session options can be set here, or at the Company/Plan levels.
-            widget_key: '513065a5492743e6a6340aec09b7e4d1',
-            private_session: false, // to make sure only logged in agents can join the call
-            password_required: false,
-            host_switching_allowed: true,
-            block_until_agent_joins: false
-        };
+   function endSurflySession() {
+       SurflySession.end();
 
-        Surfly.init(settings, function (initResult) {
-            if (initResult.success) {
-                // API calls can now be made!
-                if (!Surfly.isInsideSession)
-                    function startSurflySession() {
+   }
 
+   var isControlRequested = false;
 
-
-
-                        SurflySession = Surfly.session({ start_with_chat_open: false, start_with_videochat_on: false, url: "https://www.wikipedia.org/" }).startLeader("#leader")
-
-
-
-                        Surfly.on('session_created', function (session, event) {
-                            console.log('Session', session.followerLink, 'has just started');
-                            var iframe = document.getElementById("follower");
-                            iframe.src = session.followerLink;
-                        });
-                    };
-
-            }
-
-            function endSurflySession() {
-                SurflySession.end();
-
-            }
-
-            var isControlRequested = false;
-
-            function toggleControlSession() {
-                if (isControlRequested) {
-                    SurflySession.giveControl(1);
-                    document.getElementById("toggleButton").innerText = "Give Control";
-                    isControlRequested = false;
-                } else {
-                    SurflySession.requestControl();
-                    document.getElementById("toggleButton").innerText = "Request Control";
-                    isControlRequested = true;
-                }
-            }
-        })
-    </script>
+     function toggleControlSession() {
+       if (isControlRequested) {
+         SurflySession.giveControl(1);
+         document.getElementById("toggleButton").innerText = "Give Control";
+         isControlRequested = false;
+       } else {
+         SurflySession.requestControl();
+         document.getElementById("toggleButton").innerText = "Request Control";
+         isControlRequested = true;
+       }
+     }
+   </script>
     <!-- / Yoast SEO plugin. -->
     <link rel="dns-prefetch" href="//cdn.iubenda.com">
     <link rel="dns-prefetch" href="//www.google.com">
@@ -961,7 +956,7 @@
             height: 100%;
         }
     </style>
-    <!--DEMO STYLE ABOVE-->
+    <!--script STYLE ABOVE-->
     <link rel="stylesheet" id="eb-reusable-block-style-13606-css"
         href="https://www.surfly.com/wp-content/uploads/eb-style/reusable-blocks/eb-reusable-13606.min.css?ver=20f679767c"
         type="text/css" media="all">
@@ -1569,7 +1564,7 @@
                                         </li>
                                         <li id="menu-item-13528"
                                             class="branded-button menu-item menu-item-type-post_type menu-item-object-page menu-item-13528">
-                                            <a href="https://www.surfly.com/request-a-demo/">Talk to us</a>
+                                            <a href="https://www.surfly.com/request-a-script/">Talk to us</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -2026,7 +2021,7 @@
                                         </li>
                                         <li
                                             class="branded-button menu-item menu-item-type-post_type menu-item-object-page menu-item-13528">
-                                            <a href="https://www.surfly.com/request-a-demo/">Talk to us</a>
+                                            <a href="https://www.surfly.com/request-a-script/">Talk to us</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -2056,11 +2051,11 @@
                         Unlock seamless collaboration with Surfly &rsquo;s cobrowsing API</h1>
                     <p class="py-3 max-w-[27rem] has-gray-color has-text-color has-20-font-size">
                         Take your application to the next level with real-time co-browsing that is robust, scalable,
-                        fully customizable, and easy to integrate. <a href="https://www.surfly.com/request-a-demo"></a>
+                        fully customizable, and easy to integrate. <a href="https://www.surfly.com/request-a-script"></a>
                     </p>
                     <div class="wp-block-button has-custom-font-size mt-8 md:mt-14 has-14-font-size">
                         <a class="wp-block-button__link has-white-color has-red-background-color has-text-color has-background wp-element-button"
-                            href="https://www.surfly.com/request-a-demo/">Talk to our experts</a>
+                            href="https://www.surfly.com/request-a-script/">Talk to our experts</a>
                     </div>
                 </div>
                 <div class="md:col-span-7 relative mt-10 md:mt-0 z-20">
@@ -2178,7 +2173,7 @@
             </div>
         </section>
 
-        <!--SURFLY SESSION DEMO-->
+        <!--SURFLY SESSION script-->
         <section id="block_cb8c156e30a12559db6accba27785b78" class="component-wrapper bg-white">
             <div
                 class="w-full mx-auto px-8 md:px-0 flex flex-col space-y-6 ib-block cw-wide md:pt-2 pt-10 md:pb-20 pb-10">
@@ -2207,7 +2202,7 @@
             </div>
         </section>
 
-        <!--SURFLY SESSION DEMO-->
+        <!--SURFLY SESSION script-->
 
         <section id="block_858c360dc65c376fb0ed8e8da39b5f6e" class="component-wrapper bg-white">
             <div
@@ -2382,10 +2377,10 @@
                     style="line-height:1.3">Create better digital experiences. Without boundaries.</h2>
                 <div class="wp-block-button aligncenter has-custom-font-size has-14-font-size">
                     <a class="wp-block-button__link has-blue-color has-white-background-color has-text-color has-background"
-                        href="https://www.surfly.com/request-a-demo/">Talk to our experts</a>
+                        href="https://www.surfly.com/request-a-script/">Talk to our experts</a>
                 </div>
                 <p>
-                    <a href="https://www.surfly.com/request-a-demo/"></a>
+                    <a href="https://www.surfly.com/request-a-script/"></a>
                 </p>
             </div>
         </section>

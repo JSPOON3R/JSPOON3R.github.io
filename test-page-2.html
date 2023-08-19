@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surfly Test</title>
+    <!--Surfly JS-->
+    <script>
+        (function (s, u, r, f, l, y) {
+            s[f] = s[f] || { init: function () { s[f].q = arguments } };
+            l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+            l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+        })
+            (window, document, 'script', 'Surfly');
+    </script>
+    <script>
+        var SurflySession;
+
+        function startSurflySession() {
+            var settings = {
+                // Surfly session options can be set here, or at the Company/Plan levels.
+                widget_key: '99671227762b43c2a96daa066ee006e2',
+                private_session: false, // to make sure only logged in agents can join the call
+                password_required: false,
+                host_switching_allowed: true,
+                block_until_agent_joins: false,
+                leader_redirect_url: "https://jspoon3r.github.io/surfly-test-page.html",
+                follower_redirect_url: "https://jspoon3r.github.io/surfly-test-page.html"
+            };
+            var urlinput = document.querySelector('#session_url_input').value;
+
+            Surfly.init(settings, function (initResult) {
+                if (initResult.success) {
+                    // API calls can now be made!
+                    if (!Surfly.isInsideSession) {
+
+
+                        SurflySession = Surfly.session({ start_with_chat_open: false, start_with_videochat_on: false, url: urlinput }).startLeader("#leader");
+                        var errorMessage = document.getElementById('errorMessage');
+                        errorMessage.style.display = 'none';
+                    }
+                }
+                else {
+                    console.log("Surfly was unable to initialize properly.")
+                }
+                Surfly.on('session_created', function (session, event) {
+                    console.log('Session', session.followerLink, 'has just started');
+                    var iframe = document.getElementById("follower");
+                    iframe.src = session.followerLink;
+                });
+            });
+
+        }
+
+        function endSurflySession() {
+            SurflySession.end();
+
+        }
+
+        var isControlRequested = false;
+
+        function toggleControlSession() {
+            if (isControlRequested) {
+                SurflySession.giveControl(1);
+                isControlRequested = false;
+            } else {
+                SurflySession.requestControl();
+                isControlRequested = true;
+            }
+        }
+    </script>
+    <!--DISPLAY FUNCTIONS-->
+    <script>
+        function show_session_buttons() {
+            document.getElementById("session_inactive_buttons").className = "block";
+            document.getElementById("session_active_buttons").className = "button-row";
+            document.getElementById("session_inactive_footer_text").className = "block";
+            document.getElementById("session_active_footer_text").className = "footer";
+        }
+
+        function show_inactive_buttons() {
+            document.getElementById("session_active_buttons").className = "block";
+            document.getElementById("session_inactive_buttons").className = "button-row";
+            document.getElementById("session_inactive_footer_text").className = "footer";
+            document.getElementById("session_active_footer_text").className = "block";
+        }
+    </script>
+    <!--ERRORS-->
+    <script>
+        function validateURL() {
+            var urlInput = document.getElementById('session_url_input').value;
+            var urlRegex = /^(https?:\/\/)?([\w.]+)\.([a-z]{2,6}\.?)(\/[\w.]*)*\/?$/;
+
+            if (urlRegex.test(urlInput)) {
+                // Valid URL, execute button action
+                startSurflySession();
+                show_session_buttons();
+            } else {
+                // Invalid URL, display error message
+                var errorMessage = document.getElementById('errorMessage');
+                errorMessage.style.display = 'block';
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: white;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background-color: #cf2e2e;
+        }
+
+        .left-header {
+            margin-left: auto;
+            position: relative;
+            padding-right: 45%;
+
+        }
+
+        .right-header {
+            margin-right: auto;
+            position: relative;
+            padding-left: 40%;
+        }
+
+        .logo {
+            width: fit-content;
+            height: 40px;
+            margin-right: 10px;
+        }
+
+        .iframes-container {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+            padding: 2%;
+        }
+
+        .iframe {
+            flex: 1;
+            border: none;
+        }
+
+        .button {
+            background-color: #cf2e2e;
+            color: #eedddd;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 8px 4px;
+            cursor: pointer;
+            border: 2px solid#ffffff;
+            border-radius: 8px;
+            padding: 5px;
+        }
+
+        .button-header {
+            background-color: #ffffff;
+            color: #cf2e2e;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            width: 90px;
+            cursor: pointer;
+            border: 2px solid#eedddd;
+            border-radius: 8px;
+            padding: 5px;
+        }
+
+        .button:hover {
+            box-shadow: #eedddd 0 0 0 3px, transparent 0 0 0 0;
+        }
+
+        .button-row {
+            display: flex;
+            justify-content: center;
+            padding: 30px;
+            align-items: center;
+        }
+
+        .button {
+            align-items: center;
+            margin-right: 10px;
+            background-color: #cf2e2e;
+            border-radius: 40px;
+            box-shadow: transparent 0 0 0 3px, rgba(18, 18, 18, .1) 0 6px 20px;
+            box-sizing: border-box;
+            width: 170px;
+            color: #ffffff;
+            cursor: pointer;
+            display: inline-flex;
+            font-family: nunito, sans-serif;
+            font-size: 1rem;
+            font-weight: 100;
+            justify-content: center;
+            line-height: 1;
+            margin: 3;
+            outline: none;
+            padding: 1.2rem 1.2rem;
+            text-align: center;
+            text-decoration: none;
+            transition: box-shadow .2s, -webkit-box-shadow .2s;
+            white-space: nowrap;
+            border: 0;
+            touch-action: manipulation;
+        }
+
+        .button:hover {
+            box-shadow: #cf2e2e 0 0 0 3px, transparent 0 0 0 0;
+        }
+
+        .footer {
+            background-color: #cf2e2e;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            flex-shrink: 0;
+            font-family: nunito, sans-serif;
+            font-size: 1rem;
+            font-weight: 100;
+
+        }
+
+        .input-box {
+            margin-right: 10px;
+            background-color: #ffffff;
+            border-radius: 5px;
+            width: 170px;
+            color: #cf2e2e;
+            display: inline-flex;
+            font-family: nunito, sans-serif;
+            font-size: 1rem;
+            font-weight: 100;
+            line-height: 1;
+            margin: 3;
+            outline: 10rem;
+            padding: 1rem 1rem;
+            text-align: left;
+            text-decoration: none;
+            border-color: #eeeeeeff;
+            width: 20%;
+            height: 5%;
+
+        }
+
+        .input-box::before {
+            content: "https://";
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #ffffff;
+            font-size: 14px;
+            color: #cf2e2e;
+        }
+
+        .block {
+            display: none !important;
+        }
+
+        .errormess {
+
+            color: red;
+            display: none;
+            font-family: nunito, sans-serif;
+            font-size: 1rem;
+            font-weight: 100;
+            justify-content: center;
+            line-height: 1;
+            margin: 3;
+            outline: none;
+            text-align: center;
+            text-decoration: none;
+            white-space: nowrap;
+            border: 0;
+            touch-action: manipulation;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="left-header">
+            <img src="https://www.surfly.com/wp-content/uploads/2022/04/logo-white.svg" alt="Logo" class="logo">
+        </div>
+        <div class="right-header">
+            <button class="button-header" onclick="window.location.href = 'https://www.surfly.com/request-a-demo'">Talk
+                to
+                us</button>
+        </div>
+    </div>
+
+
+    <div class="iframes-container">
+        <iframe src="https://www.surfly.com" class="iframe" id="leader"></iframe>
+        <iframe src="https://www.surfly.com" class="iframe" id="follower"></iframe>
+    </div>
+
+    <div id="session_inactive_buttons" class="button-row">
+        <input type="text" class="input-box" id="session_url_input" placeholder="Enter the website you want to browse"
+            required>
+        <button class="button" onclick="validateURL()">Start Session</button>
+    </div>
+    <div id="session_active_buttons" class="block">
+        <button class="button" onclick="toggleControlSession()">Change Host</button>
+        <button class="button" onclick="show_inactive_buttons();endSurflySession()">End Session</button>
+    </div>
+    <p id="errorMessage" class="errormess">Please enter a valid URL</p>
+
+
+    <div class="footer" id="session_inactive_footer_text">
+        <p>Enter a URL and click on the "Start Session" button to begin. Make sure that the URL is formatted
+            www.yourwebsite.com</p>
+    </div>
+    <div class="block" id="session_active_footer_text">
+        <p>Clcik "Change Host" to hand control to the other window. Click "End Session" to finish</p>
+    </div>
+</body>
+
+</html>
