@@ -25,9 +25,7 @@
                 password_required: false,
                 host_switching_allowed: true,
                 block_until_agent_joins: false,
-                videochat: false,
-                leader_redirect_url: "https://jspoon3r.github.io/surfly.html",
-                follower_redirect_url: "https://jspoon3r.github.io/surfly.html"
+                videochat: false
             };
             var urlinput = document.querySelector('#session_url_input').value;
 
@@ -64,11 +62,15 @@
         function show_session_buttons() {
             document.getElementById("session_inactive_button").className = "block";
             document.getElementById("session_active_button").className = "submit-button";
+            document.getElementById('you').style.color = '#f7fff6';
+            document.getElementById('you').style.backgroundColor = '#92e683';
         }
 
         function show_inactive_buttons() {
             document.getElementById("session_active_button").className = "block";
             document.getElementById("session_inactive_button").className = "submit-button";
+            document.getElementById('you').style.color = '#e54748';
+            document.getElementById('you').style.backgroundColor = '#fdeced';
         }
     </script>
     <!--ERRORS-->
@@ -89,6 +91,7 @@
                 // Invalid URL, display error message
                 var errorMessage = document.getElementById('errorMessage');
                 errorMessage.style.display = 'block';
+
             }
         }
     </script>
@@ -96,7 +99,8 @@
         body {
             margin: 0;
             padding: 0;
-            width: 100%;
+            width: 100vw;
+            height: 100vh;
             font-family: Arial, sans-serif;
             background-color: white;
             background-image:
@@ -106,9 +110,9 @@
             background-size: cover;
             /* Adjust as needed */
             background-attachment: fixed;
-            overflow: hidden;
-            display: flex;
+            overflow: scroll;
             flex-wrap: wrap;
+            display: flex;
         }
 
 
@@ -116,36 +120,29 @@
             content: '';
             display: block;
             position: fixed;
-            top: 65%;
+            top: 650px;
             left: 0;
-            width: 100%;
+            width: 100vw;
             height: 2px;
             background-color: #f0f0f0;
+            z-index: -1;
+            color: #f7fff6;
         }
 
         .iframe-container {
-            position: fixed;
-            top: 550px;
-            left: 50%;
-            transform: translate(-50%, -30%);
             display: flex;
-            align-items: center;
-            justify-content: space-between;
-            width: 92%;
-            overflow: hidden;
-            padding: 0;
+            justify-content: center;
+            width: 100vw;
+            margin-bottom: 1px;
         }
 
         .top-container {
-            position: fixed;
-            top: 190px;
-            left: 50%;
-            transform: translate(-50%, -50%);
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            width: 90%;
-            overflow: hidden;
+            padding-top: 6vh;
+            padding-left: 4vw;
+            padding-right: 4vw;
+            padding-bottom: 3vh;
         }
 
 
@@ -153,45 +150,33 @@
             display: flex;
             flex-direction: column;
             justify-content: left;
-            width: 95%;
-            left: 7%;
-            text-align: left;
-            overflow: hidden;
-
-
+            width: 30vw;
+            padding-right: 4vw;
         }
 
         .input-url-div {
-            display: contents;
-
-            float: right;
-
-            width: 95%;
-            overflow: hidden;
-
+            display: flex;
+            flex-direction: row;
+            padding-left: 16vw;
         }
 
 
-
         .logo {
-            width: 120px;
-            /* Set the width of your logo image */
+            width: 8vw;
             height: auto;
-            /* Set the height of your logo image */
         }
 
         .heading {
             font-weight: normal;
-            font-size: 35px;
-            margin-top: 15px;
+            font-size: 2vw;
+            margin-top: 2vh;
+            margin-bottom: 0vh;
         }
 
         .subheading {
-            font-size: 18px;
+            font-size: 1vw;
             font-weight: lighter;
             color: #999;
-            /* Lighter subheading color */
-            margin-top: -0.5%;
         }
 
 
@@ -201,52 +186,41 @@
             border-radius: 12px;
             color: #cf2e2e;
             font-family: nunito, sans-serif;
-            font-size: 1rem;
+            font-size: 1vw;
             font-weight: 300;
-            /* Decrease font-weight for a more flattened appearance */
-            line-height: 1;
-            outline: none;
             padding: 1rem;
             text-align: center;
-            text-decoration: none;
-            width: 25%;
+            width: 24vw;
+            margin-right: 1vw;
+        }
+        .input-field:focus {
+            border-color:#cf2e2e;
         }
 
         .submit-button {
-            align-items: center;
             background-color: #cf2e2e;
             box-sizing: border-box;
             border-radius: 12px;
             color: #ffffff;
             cursor: pointer;
-            display: inline-flex;
             font-family: nunito, sans-serif;
             font-size: 1rem;
             font-weight: 100;
-            justify-content: center;
-            line-height: 1;
-            margin-left: 12px;
-            padding: 1.2rem 1.2rem;
-            text-align: center;
-            text-decoration: none;
-            white-space: nowrap;
+            padding: 1rem 1.2rem;
             border: 0;
             touch-action: manipulation;
         }
 
 
         .osx-window {
-            width: 800px;
-            height: 550px;
+            width: 45vw;
+            height: 60vh;
             background-color: #ffffff;
             border: 1px solid #ccc;
             border-radius: 8px;
-            overflow: hidden;
-
             display: flex;
             flex-direction: column;
-
-            justify-content: space-between;
+            margin: 1vw;
         }
 
         .traffic-lights {
@@ -284,72 +258,143 @@
 
         .window-title {
             background-color: #fdeced;
-            /* Light blue background color */
             color: #e54748;
-            /* Dark blue text color */
             border-radius: 5px;
-            overflow: auto;
-            white-space: pre-wrap;
             margin-top: 20px;
-            font-size: 15px;
-            font-weight: light;
             padding: 5px 10px;
-            /* Adjust padding to add extra space */
-            flex: right;
-            transform: translate(-40%, 0%);
+            margin-right: 1vw;
         }
 
         .window-description {
-
-            font-size: 16px;
             color: #848484;
             font-weight: normal;
             text-align: center;
             flex: 1;
-            transform: translate(0%, 80%);
+            padding-top: 4vh;
         }
 
         .errormess {
-            background-color: none;
             color: #e54748;
-            text-align: center;
-            flex-shrink: 0;
+            border-radius: 10px;
             font-family: nunito, sans-serif;
-            font-size: 1rem;
-            font-weight: 100;
-            position: fixed;
-            top: 50px;
-            right: 90px;
-            width: 100%;
-            text-align: right;
-            padding: 3px 0;
+            font-size: 15px;
+            font-weight: 300;
+            padding: 1px 10px;
+            position: absolute;
+            right: 4vw;
+            top: 2vh;
+            margin-right: 1px;
+            margin-top: 1px;
             display: none;
+            
         }
+
         .block {
             display: none !important;
+        }
+
+
+        /* MOBILE VIEW */
+        /* WIDTH*/
+        @media screen and (max-width: 1300px) {
+            .top-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .info-text {
+                width: 70vw;
+                text-align: center;
+                margin-top: 45px;
+                margin-bottom: 20px;
+                align-items: center;
+                padding-right: 0;
+            }
+
+            .input-url-div {
+                width: 70vw;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding-left: 0vw;
+            }
+
+            .logo {
+                width: 110px;
+                height: auto;
+                margin-bottom: 15px;
+            }
+
+            .heading {
+                font-size: 30px;
+            }
+
+            .subheading {
+                font-size: 20px;
+            }
+
+            .iframe-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .osx-window {
+                width: 90%;
+                height: 600px;
+            }
+
+            .input-field {
+                font-size: 15px;
+                width: 450px;
+                margin-bottom: 20px;
+                margin-left: 20px;
+                margin-right: 20px;
+            }
+            .submit-button {
+                margin-bottom:30px;
+            }
+            .errormess {
+            top: 0vh;
+            text-align: center;
+            align-items: center;
+            right:0;
+            margin-top:0;
+
+            
+        }
+        }
+        /* HEIGHT*/
+        @media screen and (max-height: 600px) {
+            .osx-window {
+            height: 400px;
+        }
         }
     </style>
 </head>
 
 
 <main>
-
+    <div class="errormess" id="errorMessage">
+        <p><b>OOPS! </b>Make sure that the URL is formatted
+            <i>www.yourwebsite.com</i> and try again
+        </p>
+    </div>
 
     <div class="top-container">
         <div class="info-text">
             <img src="https://logos-download.com/wp-content/uploads/2018/09/Surfly_Logo.png" alt="Logo" class="logo">
-            <h1 class="heading">Experience Collaborative <br> Web Browsing in Real-Time</h1>
-            <h2 class="subheading">Surfly enables users to securely and <br>collaboratively surf the full web together
+            <h1 class="heading">Experience Collaborative Web Browsing in Real-Time</h1>
+            <h2 class="subheading">Surfly enables users to securely and collaboratively surf the full web together
                 within a session.</h2>
         </div>
         <div class="input-url-div">
-            <input type="text" placeholder="Enter a valid URL" class="input-field" id="session_url_input">
-            <button id="session_inactive_button" type="submit" class="submit-button" onclick="validateURL()">Start Session</button>
-            <button id="session_active_button" type="submit" class="block" onclick="show_inactive_buttons();endSurflySession()">End Session</button>
+            <input type="text" placeholder="Enter any valid URL" class="input-field" id="session_url_input">
+            <button id="session_inactive_button" type="submit" class="submit-button" onclick="validateURL()">Start
+                Session</button>
+            <button id="session_active_button" type="submit" class="block"
+                onclick="show_inactive_buttons();endSurflySession()">End Session</button>
         </div>
     </div>
-
-
     <div class="iframe-container">
 
         <div class="osx-window">
@@ -358,7 +403,7 @@
                 <div class="traffic-light amber"></div>
                 <div class="traffic-light green"></div>
                 <div class="window-description" id="window-description1">This window will be your view</div>
-                <div class="window-title">You</div>
+                <div class="window-title" id="you">You</div>
             </div>
             <iframe src="https://jspoon3r.github.io/iframe-instructions-1.html" class="iframe-content"
                 id="leader"></iframe>
@@ -380,11 +425,6 @@
 
 
 </main>
-<div class="errormess" id="errorMessage">
-    <p><b>Oops!</b> That's not a valid URL<br><br> Make sure that the URL is formatted
-        <i>www.yourwebsite.com</i> and try again</p>
-    </div>
-
 </body>
 
 </html>
