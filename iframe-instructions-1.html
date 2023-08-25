@@ -41,18 +41,29 @@
             align-items: flex-start;
             margin-bottom: 10px;
             color: #e54748;
-            font-size: 30px;
+            font-size: 20px;
             font-weight: normal;
         }
 
         .icon {
-            margin-right: 10px;
-            font-size: 34px;
-            color: #e54748;
+            margin-right: 5px;
+            font-size: 20px;
+            color: #595959;
+        }
+        .title-text {
+            margin-left: 1px;
+            margin-bottom: 5px;
+            font-size: 40px;
+        }
+        .instruction-title-text {
+            margin-left: 1px;
+            margin-bottom: 5px;
+            font-size: 30px;
         }
 
         .text {
-            margin-left: 70px;
+            margin-left: 50px;
+            color: #e54748;
             margin-bottom: 5px;
         }
 
@@ -63,6 +74,9 @@
             position: fixed;
 
         }
+        .bold {
+            color: #595959;
+        }
     </style>
 </head>
 
@@ -70,19 +84,30 @@
     <div class="instructions">
         <ol>
             <li>
+                <span class="title-text">When the session begins,</span>
+            </li>
+            <li>
+                <span class="title-text">This will be <b class="bold">your</b> browser window</span>
+            </li>
+            <br><br>
+            <li>
+                <span class="instruction-title-text"><b>To get started:</b></span>
+            </li>
+            <br>
+            <li>
                 <div class="icon-container">
                     <span class="icon"><i class="fas fa-globe"></i></span>
                 </div>
                 <span class="text">Enter a website URL</span>
             </li>
-            <br><br>
+            <br>
             <li>
                 <div class="icon-container">
                     <span class="icon"><i class="fas fa-mouse-pointer"></i></span>
                 </div>
                 <span class="text">Click "Start Session"</span>
             </li>
-            <br><br>
+            <br>
             <li>
                 <div class="icon-container">
                     <span class="icon"><i class="fas fa-users"></i></span>

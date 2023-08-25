@@ -41,18 +41,29 @@
             align-items: flex-start;
             margin-bottom: 10px;
             color: #e54748;
-            font-size: 30px;
+            font-size: 20px;
             font-weight: normal;
         }
 
         .icon {
-            margin-right: 10px;
-            font-size: 34px;
-            color: #e54748;
+            margin-right: 5px;
+            font-size: 20px;
+            color: #595959;
+        }
+        .title-text {
+            margin-left: 1px;
+            margin-bottom: 5px;
+            font-size: 40px;
+        }
+        .instruction-title-text {
+            margin-left: 1px;
+            margin-bottom: 5px;
+            font-size: 30px;
         }
 
         .text {
-            margin-left: 70px;
+            margin-left: 50px;
+            color: #e54748;
             margin-bottom: 5px;
         }
 
@@ -63,6 +74,9 @@
             position: fixed;
 
         }
+        .bold {
+            color: #595959;
+        }
     </style>
 </head>
 
@@ -70,24 +84,7 @@
     <div class="instructions">
         <ol>
             <li>
-                <div class="icon-container">
-                    <span class="icon"><i class="fas fa-globe"></i></span>
-                </div>
-                <span class="text">Enter a website URL</span>
-            </li>
-            <br><br>
-            <li>
-                <div class="icon-container">
-                    <span class="icon"><i class="fas fa-mouse-pointer"></i></span>
-                </div>
-                <span class="text">Click "Start Session"</span>
-            </li>
-            <br><br>
-            <li>
-                <div class="icon-container">
-                    <span class="icon"><i class="fas fa-users"></i></span>
-                </div>
-                <span class="text">Collaboratively browse the web!</span>
+                <span class="title-text">This will show you what<br> <b class="bold">the other participant</b><br> will experience when the<br> session begins</span>
             </li>
         </ol>
     </div>
