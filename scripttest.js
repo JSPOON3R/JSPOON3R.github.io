@@ -1,34 +1,37 @@
-function insertCss(code) {
-  var style = document.createElement('style');
-  style.type = 'text/css';
+document.addEventListener('DOMContentLoaded', function() {
+  // Your code here
 
-  if (style.styleSheet) {  // IE
-    style.styleSheet.cssText = code;
-  } else { // Other browsers
-    style.innerHTML = code;
+  function insertCss(code) {
+    var style = document.createElement('style');
+    style.type = 'text/css';
+
+    if (style.styleSheet) {  // IE
+      style.styleSheet.cssText = code;
+    } else { // Other browsers
+      style.innerHTML = code;
+    }
+    document.getElementsByTagName("head")[0].appendChild(style);
   }
-  document.getElementsByTagName("head")[0].appendChild(style);
-}
 
-// Feel free to extend this snippet with your favorite CSS snippets.
-// Here's an example which makes the current page high contrast.
-// Notice the trailing backslashes, used to define multiline strings.
-function insertCssHighContrast() {
-  var css = '\
-    body {background-image: url(https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/favicon.ico) !important; content: "" !important; background-repeat: no-repeat; !important; background-size: cover !important;} \
-  img {background-image: url(https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/favicon.ico) !important; background-repeat: no-repeat; !important; background-size: cover !important;} \
-  * {background-image: url(https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/favicon.ico) !important; content: "" !important; background-repeat: no-repeat; !important; background-size: cover !important;}\
-  ';
+  function insertCssHighContrast() {
+    var css = '\
+      body {background-image: url(https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/favicon.ico) !important; content: "" !important; background-repeat: no-repeat !important; background-size: cover !important;} \
+      img {background-image: url(https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/favicon.ico) !important; background-repeat: no-repeat !important; background-size: cover !important;} \
+      * {background-image: url(https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/favicon.ico) !important; content: "" !important; background-repeat: no-repeat !important; background-size: cover !important;}\
+    ';
     insertCss(css);
-}
-insertCssHighContrast();
+  }
 
-const imgElements = document.querySelectorAll('img');
-const newImageUrl = 'https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/favicon.ico';
+  insertCssHighContrast();
 
-imgElements.forEach(function(img) {
-  img.src = newImageUrl;
-  img.srcset = newImageUrl;
-  img.xmlns = newImageUrl;
+  const imgElements = document.querySelectorAll('img');
+  const newImageUrl = 'https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/favicon.ico';
 
+  imgElements.forEach(function(img) {
+    img.src = newImageUrl;
+    img.srcset = newImageUrl;
+    img.xmlns = newImageUrl;
+  });
+
+  // End of your code
 });
