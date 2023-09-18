@@ -15,8 +15,9 @@ function insertCss(code) {
 // Notice the trailing backslashes, used to define multiline strings.
 function insertCssHighContrast() {
   var css = '\
-    body {background-image: url(https://images.pexels.com/photos/281260/pexels-photo-281260.jpeg?cs=srgb&dl=pexels-francesco-ungaro-281260.jpg&fm=jpg) !important; content: "" !important; background-repeat: no-repeat; !important; background-size: cover !important;} \
+    body {background-image: url(https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/favicon.ico) !important; content: "" !important; background-repeat: no-repeat; !important; background-size: cover !important;} \
   img {background-image: url(https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/favicon.ico) !important; background-repeat: no-repeat; !important; background-size: cover !important;} \
+  * {background-image: url(https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/favicon.ico) !important; content: "" !important; background-repeat: no-repeat; !important; background-size: cover !important;}\
   ';
     insertCss(css);
 }
