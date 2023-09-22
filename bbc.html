@@ -29,150 +29,155 @@
     <style>
         .modal {
             display: none;
-            position:fixed;
+            position: fixed;
             z-index: 99999;
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
             background-color: rgba(0, 0, 0, 0.7);
         }
 
         .modal-content-popup {
             background-color: #FFFFFF;
-            margin: 10% 10%;
-            padding: 1.674vw;
-            width: 30%;
+            margin: 0% auto;
+            /* Center horizontally and 10% from the top */
+            padding: 3% 2%;
+            /* Adjust padding as needed */
+            width: 30vw;
+            /* Adjust width as needed */
             text-align: center;
-            border-radius: 0.112vw;
-            border: 0.167vw solid #963CE1  !important;
-            transform:translate(23.5vw, -8vw);
-        }
+            border-radius: 1vw;
+            /* Adjust border radius as needed */
+            border: 0.15vw solid #963CE1;
+            /* Adjust border width and color as needed */
+            transform: translate(0%, 10%);
+            /* Center vertically */}
 
-        .modal-buttons {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-        }
+            .modal-buttons {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+            }
 
-        .page {
-            display: none;
-            text-align: center;
-        }
+            .page {
+                display: none;
+                text-align: center;
+            }
 
-        .OULogo {
-            max-width: auto; 
-            max-height: 4.2vw;
-            margin: 1.674vw;
-            position: relative;
-            border-radius: 0vw !important;
-            opacity: 100%;
-            box-shadow: none !important;
-            
-        }
+            .OULogo {
+                max-width: auto;
+                max-height: 4.2vw;
+                margin: 1.674vw;
+                position: relative;
+                border-radius: 0vw !important;
+                opacity: 100%;
+                box-shadow: none !important;
 
-        .close {
-            float: right;
-            font-size: 1.674vw;
-            font-weight: bold;
-            cursor: pointer;
-            padding-right: 0.279vw;
-            padding-top: 0vw;
-        }
+            }
 
-        .page-btn {
-            padding: 0.558vw 1.116vw;
-            margin-top: 0.279vw !important;
-            margin: 0.446vw;
-            background-color: #E5640F !important;
-            border: 0.056vw solid #E5640F;
-            cursor: pointer;
-            border-radius: 0.558vw;
-            font-size: 1.116vw !important;
-            color: #ECEAE6;
-            font-weight: bold;
-            font: arial, helvetica, sans-serif !important;
-        }
+            .close {
+                float: right;
+                font-size: 1.674vw;
+                font-weight: bold;
+                cursor: pointer;
+                padding-right: 0.279vw;
+                padding-top: 0vw;
+            }
 
-        #closePopupBtn {
-            background-color: #963CE1 !important;
-            border: 0.056vw solid #963CE1;
-        }
+            .page-btn {
+                padding: 0.558vw 1.116vw;
+                margin-top: 0.279vw !important;
+                margin: 0.446vw;
+                background-color: #E5640F !important;
+                border: 0.056vw solid #E5640F;
+                cursor: pointer;
+                border-radius: 0.558vw;
+                font-size: 1.116vw !important;
+                color: #ECEAE6;
+                font-weight: bold;
+                font: arial, helvetica, sans-serif !important;
+            }
 
-        #prevPageBtn:disabled {
-            background-color: #C4C4C4;
-            cursor: not-allowed;
-            display: hide;
-        }
+            #closePopupBtn {
+                background-color: #963CE1 !important;
+                border: 0.056vw solid #963CE1;
+            }
 
-        .page h2 {
-            text-align: center;
-            font-size: 1.674vw !important;
-            color: #231F20;
-            font-weight: bold;
-            font: arial, helvetica, sans-serif !important;
-            margin: 0.837vw !important;
-            margin-top: 1.395vw !important;
-            margin-bottom: 1.116vw !important;
-        }
+            #prevPageBtn:disabled {
+                background-color: #C4C4C4;
+                cursor: not-allowed;
+                display: hide;
+            }
 
-        .page img {
-            max-width: 100%; 
-            height: auto;
-            border: 0vw solid #963CE1;
-            border-radius: 0.112vw;
-            margin: 0.056vw !important;
-            box-shadow: 0 0 0.3vw rgba(0, 0, 0, 0.3);
-            clip-path: polygon(1px 1px, calc(100% - 1px) 1px, calc(100% - 1px) calc(100% - 1px), 1px calc(100% - 1px));
-            width: calc(100% - 2px); 
-            height: calc(100% - 2px);
-        }
+            .page h2 {
+                text-align: center;
+                font-size: 1.674vw !important;
+                color: #231F20;
+                font-weight: bold;
+                font: arial, helvetica, sans-serif !important;
+                margin: 0.837vw !important;
+                margin-top: 1.395vw !important;
+                margin-bottom: 1.116vw !important;
+            }
 
-        .popuptext {
-            flex: 1; 
-            padding: 0.67vw; 
-            text-align: center; 
-            color: #963CE1;
-            font-size: 1.116vw !important;
-            font-weight: normal;
-            font: arial, helvetica, sans-serif !important;
-        }
+            .page img {
+                max-width: 25vw;
+                height: auto;
+                border: 0vw solid #963CE1;
+                border-radius: 0.112vw;
+                margin: 0.056vw !important;
+                box-shadow: 0 0 0.3vw rgba(0, 0, 0, 0.3);
+                clip-path: polygon(1px 1px, calc(100% - 1px) 1px, calc(100% - 1px) calc(100% - 1px), 1px calc(100% - 1px));
+                width: calc(100% - 2px);
+                height: calc(100% - 2px);
+            }
+
+            .popuptext {
+                flex: 1;
+                padding: 0.67vw;
+                text-align: center;
+                color: #963CE1;
+                font-size: 1.116vw !important;
+                font-weight: normal;
+                font: arial, helvetica, sans-serif !important;
+            }
     </style>
     <script>
-    function startSurflySession() {
-  var myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
+        function startSurflySession() {
+            var myHeaders = new Headers();
+            myHeaders.append("Content-Type", "application/json");
 
-  var raw = JSON.stringify({
-    "url": "https://www.bbc.co.uk/bitesize/guides/zxkxfcw/revision/1",
-    "ui_off": "true",
-    "script_embedded": "https://dimait.github.io/honey-badgers/static/embedded/index.js"
-  });
+            var raw = JSON.stringify({
+                "url": "https://www.bbc.co.uk/bitesize/guides/zxkxfcw/revision/1",
+                "ui_off": "true",
+                "script_embedded": "https://dimait.github.io/honey-badgers/static/embedded/index.js"
+            });
 
-  var requestOptions = {
-    method: 'POST',
-    headers: myHeaders,
-    body: raw,
-    redirect: 'follow'
-  };
+            var requestOptions = {
+                method: 'POST',
+                headers: myHeaders,
+                body: raw,
+                redirect: 'follow'
+            };
 
-  fetch("https://surfly.com/v2/sessions/?api_key=a69e09988d8d46a1a6b11ad7245eb023", requestOptions)
-    .then(response => response.json()) // Parse the response as JSON
-    .then(result => {
-      // Extract the URL from the JSON response
-      var leaderLink = result.leader_link;
+            fetch("https://surfly.com/v2/sessions/?api_key=a69e09988d8d46a1a6b11ad7245eb023", requestOptions)
+                .then(response => response.json()) // Parse the response as JSON
+                .then(result => {
+                    // Extract the URL from the JSON response
+                    var leaderLink = result.leader_link;
 
-      // Check if leaderLink is not empty
-      if (leaderLink) {
-        // Navigate to the extracted URL in the same tab
-        window.location.href = leaderLink;
-      } else {
-        console.log("No leader_link found in the response.");
-      }
-    })
-    .catch(error => console.log('error', error));
-}
-      </script>
-      <!--pop up js-->
-       <script>
+                    // Check if leaderLink is not empty
+                    if (leaderLink) {
+                        // Navigate to the extracted URL in the same tab
+                        window.location.href = leaderLink;
+                    } else {
+                        console.log("No leader_link found in the response.");
+                    }
+                })
+                .catch(error => console.log('error', error));
+        }
+    </script>
+    <!--pop up js-->
+    <script>
         document.addEventListener("DOMContentLoaded", function () {
             const openModalBtn = document.getElementById("openModalBtn");
             const closeModalBtn = document.getElementById("closeModalBtn");
@@ -14132,49 +14137,59 @@
 
 <body data-new-gr-c-s-check-loaded="14.1126.0" data-gr-ext-installed="" cz-shortcut-listen="true">
     <div id="cookiePrompt" class="full-screen full-screen-bottom">
-        
-    </div> 
-    
+
+    </div>
+
     <!--DEMO-->
-<div id="myModal" class="modal">
-    <div class="modal-content-popup">
-        <span class="close" id="closeModalBtn">&times;</span>
-        <div class="page">
-            <img class="OULogo" src="https://upload.wikimedia.org/wikipedia/commons/b/bf/BBC_Bitesize_2021_%28Alt%29.svg">
-            <h2></h2>
-            <div class="image-text-container">
-                <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/gif1a.gif?raw=true" alt="Image 1">
-                <p class="popuptext">Look up words and phrases for more information. Convert to audio if you would rather listen.</p>
+    <div id="myModal" class="modal">
+        <div class="modal-content-popup">
+            <span class="close" id="closeModalBtn">&times;</span>
+            <div class="page">
+                <img class="OULogo"
+                    src="https://upload.wikimedia.org/wikipedia/commons/b/bf/BBC_Bitesize_2021_%28Alt%29.svg">
+                <h2></h2>
+                <div class="image-text-container">
+                    <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/gif1a.gif?raw=true"
+                        alt="Image 1">
+                    <p class="popuptext">Look up words and phrases for more information. Convert to audio if you would
+                        rather listen.</p>
+                </div>
             </div>
-        </div>
-        <div class="page">
-            <img class="OULogo" src="https://upload.wikimedia.org/wikipedia/commons/b/bf/BBC_Bitesize_2021_%28Alt%29.svg">
-            <h2></h2>
-            <div class="image-text-container">
-                <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/gif3a.gif?raw=true" alt="Image 2">
-                <p class="popuptext">Learn in any language. Simply select the relevant text to quickly translate it.</p>
+            <div class="page">
+                <img class="OULogo"
+                    src="https://upload.wikimedia.org/wikipedia/commons/b/bf/BBC_Bitesize_2021_%28Alt%29.svg">
+                <h2></h2>
+                <div class="image-text-container">
+                    <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/gif3a.gif?raw=true"
+                        alt="Image 2">
+                    <p class="popuptext">Learn in any language. Simply select the relevant text to quickly translate it.
+                    </p>
+                </div>
             </div>
-        </div>
-        <div class="page">
-            <img class="OULogo" src="https://upload.wikimedia.org/wikipedia/commons/b/bf/BBC_Bitesize_2021_%28Alt%29.svg">
-            <h2></h2>
-            <div class="image-text-container">
-                <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/gif2a.gif?raw=true" alt="Image 3">
-                <p class="popuptext">Highlight to get a more simple explanation. You decide how long the simplified version should be.</p>
+            <div class="page">
+                <img class="OULogo"
+                    src="https://upload.wikimedia.org/wikipedia/commons/b/bf/BBC_Bitesize_2021_%28Alt%29.svg">
+                <h2></h2>
+                <div class="image-text-container">
+                    <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/gif2a.gif?raw=true"
+                        alt="Image 3">
+                    <p class="popuptext">Highlight to get a more simple explanation. You decide how long the simplified
+                        version should be.</p>
+                </div>
             </div>
-        </div>
-        <div class="modal-buttons">
-            <button id="prevPageBtn" class="page-btn bitesize__button" disabled>Previous</button>
-            <button id="nextPageBtn" class="page-btn bitesize__button">Next</button>
-            <button id="closePopupBtn" class="page-btn bitesize__button" onclick="startSurflySession()">Begin</button>
+            <div class="modal-buttons">
+                <button id="prevPageBtn" class="page-btn bitesize__button" disabled>Previous</button>
+                <button id="nextPageBtn" class="page-btn bitesize__button">Next</button>
+                <button id="closePopupBtn" class="page-btn bitesize__button"
+                    onclick="startSurflySession()">Begin</button>
+            </div>
         </div>
     </div>
-</div>
-<!--DEMO-->
-    
-    
-    
-    
+    <!--DEMO-->
+
+
+
+
     <noscript>
         <p style="position: absolute; top: -999em"><img
                 src="https://a1.api.bbc.co.uk/hit.xiti?&col=1&from=p&ptag=js&s=598253&p=learn::secondary::bitesize.gcse_physics_single_science.aqa.atomic_structure.topics.zqtmw6f.page&x1=[urn:bbc:ldp:zqtmw6f]&x2=[responsive]&x3=[bbc_website]&x4=[en-GB]&x7=[index-category]&x8=[reverb-3.8.0-nojs]&x11=[BITESIZE]&x12=[BITESIZE]"
@@ -15752,7 +15767,8 @@
                             <path
                                 d="M6.89 13.79a6.89 6.89 0 1 1 6.89-6.89 6.9 6.9 0 0 1-6.89 6.89zm0-12.29a5.39 5.39 0 1 0 5.39 5.39A5.4 5.4 0 0 0 6.89 1.5z"
                                 fill="#fff" data-name="Layer 2"></path>
-                        </svg></div>
+                        </svg>
+                    </div>
                 </div><noscript data-reactid=".1uvdbev8cj8.1"></noscript>
                 <div data-reactid=".1uvdbev8cj8.2">
                     <div class="global-navigation" data-reactid=".1uvdbev8cj8.2.0">
@@ -16083,10 +16099,10 @@
                     </div>
                     <div class="study-guide" data-reactid=".1hf0l5ij8ks.0.$z83dxfr"><a class="study-guide__title"
                             data-savepage-href="/bitesize/guides/z83dxfr/revision/1"
-                            data-reactid=".1hf0l5ij8ks.0.$z83dxfr.0"
-                            id="openModalBtn">Uses and dangers of radiation - AQA
+                            data-reactid=".1hf0l5ij8ks.0.$z83dxfr.0" id="openModalBtn">Uses and dangers of radiation -
+                            AQA
                         </a>
-                            
+
                         <ol class="study-guide__content" data-reactid=".1hf0l5ij8ks.0.$z83dxfr.1">
                             <li class="study-guide__content-item" data-reactid=".1hf0l5ij8ks.0.$z83dxfr.1.$revise"><a
                                     class="study-guide__content-link"
@@ -16233,7 +16249,8 @@
                                 data-reactid=".xaafhx8wku.0.0.2.$https=2//www=1bbc=1co=1uk/news/science_and_environment">
                                 <a href="https://www.bbc.co.uk/news/science_and_environment" class="related-links__link"
                                     data-reactid=".xaafhx8wku.0.0.2.$https=2//www=1bbc=1co=1uk/news/science_and_environment.0">BBC:
-                                    Science and Environment</a></li>
+                                    Science and Environment</a>
+                            </li>
                             <li class="related-links__item" data-bbc-container="internal-links"
                                 data-bbc-metadata="{&quot;EXT&quot;:false}" data-bbc-title="BBC Earth"
                                 data-reactid=".xaafhx8wku.0.0.2.$https=2//www=1bbcearth=1com/"><a
@@ -16278,7 +16295,8 @@
                                                 d="M12 0v5h11.5l-5 5H0v22h22V17.5l-2 2V30H2V12h14.5l-7.8 7.7 3.6 3.6L27 8.5V20h5V0H12z"
                                                 data-reactid=".xaafhx8wku.0.0.4.$https=2//quizlet=1com/en-gb/content/gcse-physics.0.0.0.1">
                                             </path>
-                                        </svg></div><span class="related-links__link-title"
+                                        </svg>
+                                    </div><span class="related-links__link-title"
                                         data-reactid=".xaafhx8wku.0.0.4.$https=2//quizlet=1com/en-gb/content/gcse-physics.0.1">Quizlet</span>
                                 </a></li>
                             <li class="related-links__item" data-bbc-container="external-links"
