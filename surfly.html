@@ -99,6 +99,47 @@
             }
         }
     </script>
+     <!--pop up js-->
+     <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const openModalBtn = document.getElementById("openModalBtn");
+            const closeModalBtn = document.getElementById("closeModalBtn");
+            const closePopupBtn = document.getElementById("closePopupBtn");
+            const prevPageBtn = document.getElementById("prevPageBtn");
+            const nextPageBtn = document.getElementById("nextPageBtn");
+            const pages = document.querySelectorAll(".page");
+            let currentPage = 0;
+
+            openModalBtn.addEventListener("click", function () {
+                document.getElementById("myModal").style.display = "block";
+                showPage(currentPage);
+            });
+
+            closeModalBtn.addEventListener("click", function () {
+                document.getElementById("myModal").style.display = "none";
+            });
+
+            closePopupBtn.addEventListener("click", function () {
+                document.getElementById("myModal").style.display = "none";
+            });
+
+            prevPageBtn.addEventListener("click", function () {
+                showPage(currentPage - 1);
+            });
+
+            nextPageBtn.addEventListener("click", function () {
+                showPage(currentPage + 1);
+            });
+
+            function showPage(pageIndex) {
+                pages[currentPage].style.display = "none";
+                currentPage = pageIndex;
+                pages[currentPage].style.display = "block";
+                prevPageBtn.disabled = currentPage === 0;
+                nextPageBtn.disabled = currentPage === pages.length - 1;
+            }
+        });
+    </script>
     <style>
         body {
             margin: 0;
@@ -132,20 +173,125 @@
             z-index: -1;
             color: #f7fff6;
         }
+        .modal {
+            display:none;
+            position: fixed;
+            z-index: 99999;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+
+        .modal-content-popup {
+            margin: 2% auto;
+            padding: 2% 2%;
+            width: 37vw;
+            text-align: center;
+            border-radius: .5vw;
+            border: 0;
+            background-color: #fdeced;
+        }
+
+            .modal-buttons {
+                display: flex;
+                flex-direction: row;
+                justify-content: center;
+            }
+
+            .page {
+                display: none; 
+                text-align: center;
+            }
+
+            .close {
+                float: right;
+                font-size: 1.674vw;
+                font-weight: bold;
+                cursor: pointer;
+                padding-right: 0.279vw;
+                padding-top: 0vw;
+            }
+
+
+
+            #prevPageBtn:disabled, #nextPageBtn:disabled {
+                background-color: #ececec;
+                cursor: not-allowed;
+                display: hide;
+            }
+
+            .page h1 {
+                text-align: center;
+                font-size: 1.5vw !important;
+                color: #848484;
+                font-weight: lighter;
+                font: nunito, sans-serif !important;
+                margin: 0.837vw !important;
+                margin-top: .9vw !important;
+                margin-bottom: .1vw !important;
+            }
+
+            .page h2 {
+                text-align: left;
+                font-size: 1vw !important;
+                color: #cf2e2e;
+                font-weight: 400;
+                font: nunito, sans-serif !important;
+                margin: 0.837vw !important;
+                margin-top: 1vw !important;
+                margin-bottom: .05vw !important;
+            }
+
+            .page img {
+                max-width: 35vw;
+                height: auto;
+                border: 0vw solid #f0f0f0;
+                border-radius: 6%;
+                margin: 0.056vw !important;
+                clip-path: inset(26px 7px 26px 7px);
+                opacity: 45%;
+
+            }
+
+            .popuptext {
+                flex: 1;
+                padding: .5vw;
+                margin-bottom: 1.5vw;
+                text-align: center;
+                background-color: #ffe7e8;
+                border-radius: 4%;
+                color: #434343;
+                font-size: .7vw !important;
+                font-weight: 100;
+                font: nunito, sans-serif !important;
+                width:25vw;
+            }
+
+            .image-text-container {
+                justify-content: center;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
+
+
+
+            .surflylogo {
+                max-width: 6vw !important;
+                max-height: auto !important;
+                margin: 1vw !important;
+                position: relative !important;
+                border-radius: 0vw !important;
+                opacity: 100% !important;
+                box-shadow: none !important;
+                clip-path: none !important;
+
+            }
 
 
 
 
 
-
-
-
-
-
-
-
-
-        
         .iframe-container {
             display: flex;
             justify-content: center;
@@ -209,6 +355,7 @@
             text-align: center;
             width: 24vw;
             margin-right: 1vw;
+            margin-left: 1vw;
         }
         .input-field:focus {
             border-color:#cf2e2e;
@@ -226,7 +373,25 @@
             padding: 1rem 1.2rem;
             border: 0;
             touch-action: manipulation;
+            margin-left:0.5vw;
         }
+
+        .instructions-button {
+            border: .05vw solid #cf2e2e;
+            background-color: #ffffff;
+            box-sizing: border-box;
+            border-radius: 12px;
+            color: #cf2e2e;
+            cursor: pointer;
+            font-family: nunito, sans-serif;
+            font-size: 1rem;
+            font-weight: 100;
+            padding: 0rem 1.2rem;
+            touch-action: manipulation;
+            margin-left: .5vw;
+            letter-spacing: .035vw;
+        }
+
 
 
         .osx-window {
@@ -382,8 +547,9 @@
             align-items: center;
             right:0;
             margin-top:0;
-
-            
+        }
+        .instructions-button {
+            display:none;
         }
         }
         /* HEIGHT*/
@@ -397,6 +563,57 @@
 
 
 <main>
+
+    <!--INSTRUCTIONS-->
+    <div id="myModal" class="modal">
+        <div class="modal-content-popup">
+            <span class="close" id="closeModalBtn">&times;</span>
+            <div class="page">
+                <img class="surflylogo"
+                src="https://logos-download.com/wp-content/uploads/2018/09/Surfly_Logo.png">
+                <div class="image-text-container">
+                    <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/you-them.gif?raw=true"
+                        alt="Image 2">
+                        <h2>Why can I see two windows?</h2>
+                    <p class="popuptext">This page displays both your screen and the screen of your guest.<br><br> In a normal session, these windows would be on two different computers<br><br> For demo purposes, we have put them side by side.<br><br> The window on the left is you. The window on the right is your guest.
+                    </p>
+                </div>
+            </div>
+            <div class="page">
+                <img class="surflylogo"
+                src="https://logos-download.com/wp-content/uploads/2018/09/Surfly_Logo.png">
+                <div class="image-text-container">
+                    <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/you-them2.gif?raw=true"
+                        alt="Image 3">
+                        <h2>How can I test to co-browsing experience?</h2>
+                    <p class="popuptext">The left page is your window and is a regular browsing session<br><br>Treat the left window like your own browser explore the web<br><br> The right window is your guest's window<br><br>Your guest can see what you are doing and annotate</p>
+                </div>
+            </div>
+            <div class="page">
+                <img class="surflylogo"
+                src="https://logos-download.com/wp-content/uploads/2018/09/Surfly_Logo.png">
+                <div class="image-text-container">
+                    <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/control.gif?raw=true"
+                        alt="Image 3">
+                        <h2>What if my guest wants to take control?</h2>
+                    <p class="popuptext">To begin with you (left window) are in control of the session<br><br>Your guest can ask to take control<br><br>You can approve or reject this request<br><br>If approved, your guest will now lead navigation. You can watch and annotate.</p>
+                </div>
+            </div>
+            <div class="modal-buttons">
+                <button id="prevPageBtn" class="instructions-button" disabled>Previous</button>
+                <button id="nextPageBtn" class="instructions-button">Next</button>
+                <button id="closePopupBtn" class="submit-button"
+                    onclick="startSurflySession()">Try it</button>
+            </div>
+        </div>
+    </div>
+    <!--INSTRUCTIONS END-->
+
+
+
+
+
+
     <div class="errormess" id="errorMessage">
         <p><b>OOPS! </b>Make sure that the URL is formatted
             <i>www.yourwebsite.com</i> and try again
@@ -416,6 +633,7 @@
                 Session</button>
             <button id="session_active_button" type="submit" class="block"
                 onclick="show_inactive_buttons();endSurflySession()">End Session</button>
+                <button id="openModalBtn" class="instructions-button">Open Tutorial</button>
         </div>
     </div>
     <div class="iframe-container">
@@ -445,7 +663,6 @@
         </div>
 
     </div>
-
 
 </main>
 </body>
