@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surfly: Ayush</title>
+    <script>
+        (function (s, u, r, f, l, y) {
+            s[f] = s[f] || { init: function () { s[f].q = arguments } };
+            l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+            l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+        })
+            (window, document, 'script', 'Surfly');
+    </script>
+    <script>
+    var urlValue; // Declare urlValue in the global scope
+    
+    document.addEventListener('DOMContentLoaded', function () {
+        function capitalizeFirstLetter(str) {
+            return str.charAt(0).toUpperCase() + str.slice(1);
+        }
+    
+        // Function to get the value of a query parameter from the URL
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        function removeWwwPrefix(text) {
+    return text.replace(/^www\./, '');
+}
+        // Get and store the values of query parameters as variables
+        const nameValue = getQueryParam("name");
+        urlValue = getQueryParam("url"); // Assign urlValue in the global scope
+    
+        // Check if the parameters exist and are not empty
+        if (nameValue && urlValue) {
+            // You can use the values of nameValue and urlValue here
+            const capitalizedName = capitalizeFirstLetter(nameValue);
+    
+            const greeting = "Hi " + capitalizedName + ",";
+            console.log("Value of greeting: " + greeting);
+            console.log("Value of url: " + urlValue);
+            const outputTextElement = document.getElementById("customer-name");
+            outputTextElement.textContent = greeting;
+            const websitename = document.getElementById("website");
+            const websitename2 = document.getElementById("website-subheading");
+            websitename.textContent = urlValue;
+            const newurlvalue = removeWwwPrefix(urlValue);
+            websitename2.textContent = newurlvalue;
+
+            
+
+    
+            // Now you can run the second script here
+            // Include the second script's content here
+        } else {
+            console.log("One or both query parameters are missing.");
+        }
+
+    });
+
+
+    </script>
+<!--Structure-->
+    <style> 
+        /* Reset some default margin and padding */
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Set the width and height of HTML and body to 100% */
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            min-height: 1000px;
+            background-image:
+                url('https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/dd38063da1c717c1742cd91347cb104156ea6644/Mask%20group.svg');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+            /* Adjust as needed */
+            background-attachment: fixed;
+            font-family : Arial, sans-serif;
+            flex-wrap: wrap;
+            display: flex;
+            overflow:scroll;
+        }
+
+        /* Create a container for the top and bottom rows */
+        .container {
+            max-width: 60%;
+            min-width:60%;
+
+            margin: 0 auto;
+            /* Center horizontally by setting left and right margin to auto */
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            /* Enable vertical centering */
+            flex-direction: column;
+            /* Stack children vertically */
+            align-items: center;
+            /* Center horizontally */
+            justify-content: center;
+            /* Center vertically */
+        }
+
+        /* Style the top row with three columns */
+        .top-row {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            height: 25% !important;
+        }
+
+        .column-top {
+            /* Three columns with spacing */
+            padding: 0px;
+            box-sizing: content-box;
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        #top-left {
+width:71%;
+        }
+        #top-middle {
+width:2%;
+border-radius: 10px;
+        }
+        #top-right {
+width:25%;
+        }
+
+        /* Style the bottom row with two columns */
+        .bottom-row {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            height: 75%;
+        }
+
+        .column-bottom {
+            padding-right: 20px;
+            box-sizing: content-box;
+            display: flex;
+            flex-direction: column;
+            margin-top:15px;
+        }
+
+        #bottom-right {
+            width: 28%;
+        }
+
+        #bottom-left {
+            width: 70%;
+                }
+    </style>
+    <!--Style-->
+    <style>
+.backdrop {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Adjust the values for your desired effect */
+            background-color:#fcf5f6;
+    background-color: #fff; /* Background color of the element */
+    padding: 2px; /* Add some padding to see the shadow clearly */
+    border-radius: 20px;
+    box-sizing: content-box;
+            border: 1px solid #ccc;
+}
+
+#button-backdrop {
+    margin-top:0px !important;
+}
+.send-link {
+            display:flex;
+            flex-direction: row;
+            width: 100%;
+            margin-top:20px;
+            margin-left:5%;
+            align-items: center;
+        }
+        .heading {
+            font-weight: normal;
+            font-size: 2rem;
+            margin-bottom: 2vh;
+            margin-left:5%;
+            color:#959292;
+        }
+
+        .subheading {
+            font-size: 1.5rem;
+            font-weight: lighter;
+            color: #999;
+            margin-left:5%;
+        }
+        .subheading2 {
+            font-size: 1.2rem;
+            font-weight: lighter;
+            color: #999;
+            margin-bottom:1%;
+        }
+
+        #website-subheading {
+            font-weight: bold;
+        }
+
+
+        .osx-window {
+            aspect-ratio: 4/3; /* Set the desired aspect ratio (width / height) */
+    height: 100%;
+    max-height: 700px;
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+
+        }
+
+        .traffic-lights {
+            display: flex;
+            align-items: center;
+        }
+
+        .traffic-light {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .red {
+            background-color: #ff5f57;
+            margin-left: 15px;
+        }
+
+        .amber {
+            background-color: #ffbd2e;
+        }
+
+        .green {
+            background-color: #28c940;
+        }
+
+        .iframe-content {
+            padding-top: 2%;
+            padding-bottom: 2%;
+            width: auto;
+            height: 100%;
+            border: none;
+        }
+
+        .window-title {
+            background-color: #fdeced;
+            color: #e54748;
+            border-radius: 5px;
+            margin-top: 20px;
+            padding: 5px 10px;
+            margin-right: 1vw;
+        }
+
+        .window-description {
+            color: #848484;
+            font-weight: normal;
+            text-align: center;
+            flex: 1;
+            padding-top: 4vh;
+        }
+
+
+        .image-holder  img{
+            width: 8vw;
+            height: 8vw;
+        }
+        .contact-details {
+            align-self: center;
+            display:flex;
+            text-align: right;
+            margin-left:10%;
+            margin-right: 2%;
+        }
+        .contact-div {
+            display: flex;
+            flex-direction: row;
+            justify-content: right;
+        }
+       
+       .button-container {
+            display: flex;
+            flex-direction: column;
+            align-items:center;
+            width: 100%;
+            height: 100%;
+    max-height: 700px;
+        }
+
+        .button-row {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-bottom: 40px;
+            margin-top:10px;
+        }
+
+        .image-button {
+            cursor: pointer;
+        }
+
+        .button {
+            border: .05vw solid #cf2e2e;
+            background-color: #ffffff;
+            box-sizing: border-box;
+            border-radius: 12px;
+            color: #cf2e2e;
+            cursor: pointer;
+            font-family: nunito, sans-serif;
+            font-size: 1rem;
+            font-weight: 100;
+            padding: 0rem .8rem;
+            touch-action: manipulation;
+            margin-left: .5vw;
+            letter-spacing: .035vw;
+        }
+        .link-button {
+width:25%;
+margin-left:0px;
+padding:1rem;
+        }
+        .button-heading {
+            margin:10px;
+            text-align: right;
+            font-size: .8vw;
+            font-weight: lighter;
+            color: #999;
+        }
+        .red-text {
+            color:#cf2e2e;
+        }
+
+    </style>
+       <script>
+        // Your second script content here
+        var SurflySession;
+
+        var settings = {
+            // Surfly session options can be set here, or at the Company/Plan levels.
+            widget_key: 'd97af65cf4d24a7f86783f8cd38cfe8e',
+            private_session: false, // to make sure only logged-in agents can join the call
+            password_required: false,
+            host_switching_allowed: true,
+            block_until_agent_joins: false,
+            videochat: false,
+            follower_redirect_url: "https://jspoon3r.github.io/surfly.html",
+            leader_redirect_url: "https://jspoon3r.github.io/surfly.html"
+        };
+
+        Surfly.init(settings, function (initResult) {
+            if (initResult.success) {
+                // API calls can now be made!
+                if (!Surfly.isInsideSession) {
+                    console.log("Surfly loaded successfully!");
+                }
+            } else {
+                console.log("Surfly was unable to initialize properly.");
+            }
+
+            SurflySession = Surfly.session({ start_with_chat_open: false, start_with_videochat_on: false, url: urlValue }).startLeader("#iframe");
+
+            Surfly.on('session_created', function (session, event) {
+                console.log('Session', session.followerLink, 'has just started');
+            });
+        });
+
+        const iframe = document.getElementById('iframe');
+    
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="top-row backdrop" id="button-backdrop">
+            <div class="column-top" id="top-left">
+                <!-- Content for the first column in the top row -->
+                <h2 class="heading" id="customer-name">Hey</h2>
+                <p class="subheading">Instantly start a collaborative browing experience on <a class="red-text" id="website-subheading">your own website.</a><br>
+                    & <a class="red-text"> invite others</a>  to join you with a single click</p>
+                <div class="send-link">
+                <button class="button link-button">Copy Share Link</button>
+                    </div>
+
+                        <ul class="subheading">
+                            <li>Zero Implementation</li>
+                            <li>No Downloads</li>
+                            <li>All Devices</li>
+                        </ul>
+      
+            </div>
+            <div class="column-top" id="top-middle">
+            </div>
+            <div class="column-top" id="top-right">
+                <!-- Content for the third column in the top row -->
+                <div class="contact-div">
+                        <h3 class="contact-details">
+                            Ayush<br><br>
+                            Schedule a demo<a href=https://calendly.com/surfly-yes-we-ken target="_blank"
+                                style="cursor:pointer"></a>
+                        </h3>
+                        <div class="image-holder">
+                            <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/ayush-demo-img.png?raw=true" />
+                    </div>
+    
+            </div>
+            </div>
+        </div>
+
+        <div class="bottom-row">
+            <div class="column-bottom" id="bottom-left">
+                <!-- Content for the first column in the bottom row -->
+                <div class="osx-window">
+                    <div class="traffic-lights">
+                        <div class="traffic-light red"></div>
+                        <div class="traffic-light amber"></div>
+                        <div class="traffic-light green"></div>
+                        <div class="window-description" id="window-description1">Surfly Session</div>
+                        <div class="window-title" id="website">www.website.com</div>
+                    </div>
+                    <iframe src="https://jspoon3r.github.io/iframe-instructions-1.html" class="iframe-content"
+                        id="iframe"></iframe>
+                </div>
+            </div>
+            <div class="column-bottom" id="bottom-right">
+                <!-- Content for the second column in the bottom row -->
+                <div class="button-container backdrop">
+                    <h2>More about Surfly:</h2>
+                    <h2 class="button-heading">Row 1</h2>
+                    <div class="button-row">
+                        <a href="your_link1.html">
+                            <img class="image-button" src="image1.jpg" alt="Image 1">
+                        </a>
+                        <a href="your_link2.html">
+                            <img class="image-button" src="image2.jpg" alt="Image 2">
+                        </a>
+                        <a href="your_link3.html">
+                            <img class="image-button" src="image3.jpg" alt="Image 3">
+                        </a>
+                    </div>
+                    <h2 class="button-heading">Row 2</h2>
+                    <div class="button-row">
+                        <a href="your_link4.html">
+                            <img class="image-button" src="image4.jpg" alt="Image 4">
+                        </a>
+                        <a href="your_link5.html">
+                            <img class="image-button" src="image5.jpg" alt="Image 5">
+                        </a>
+                        <a href="your_link6.html">
+                            <img class="image-button" src="image6.jpg" alt="Image 6">
+                        </a>
+                    </div>
+                    <h2 class="button-heading">Row 3</h2>
+                    <div class="button-row">
+                        <a href="your_link7.html">
+                            <img class="image-button" src="image7.jpg" alt="Image 7">
+                        </a>
+                        <a href="your_link8.html">
+                            <img class="image-button" src="image8.jpg" alt="Image 8">
+                        </a>
+                        <a href="your_link9.html">
+                            <img class="image-button" src="image9.jpg" alt="Image 9">
+                        </a>
+                    </div>
+                    <h2 class="button-heading">Row 4</h2>
+                    <div class="button-row">
+                        <a href="your_link10.html">
+                            <img class="image-button" src="image10.jpg" alt="Image 10">
+                        </a>
+                        <a href="your_link11.html">
+                            <img class="image-button" src="image11.jpg" alt="Image 11">
+                        </a>
+                        <a href="your_link12.html">
+                            <img class="image-button" src="image12.jpg" alt="Image 12">
+                        </a>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
