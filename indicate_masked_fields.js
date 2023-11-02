@@ -48,7 +48,7 @@ function insertFixedTextBox() {
   textBox.style.boxShadow = '0 0 5px rgba(0, 0, 0, 0.2)';
   textBox.style.color = 'white';
   textBox.style.fontWeight = 'bold';
-  textBox.innerText = 'Red borders indicate masked fields';
+  textBox.innerText = 'Red borders indicate an absolute hottie';
 
   document.body.appendChild(textBox);
 }
