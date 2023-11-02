@@ -1,15 +1,13 @@
 const apiKey = 'a69e09988d8d46a1a6b11ad7245eb023';
 const url = `https://surfly.com/v2/company/options/?api_key=${apiKey}`;
 
-let hideSelector; // Define hideSelector as a global variable
-
+let hideSelector; 
 fetch(url)
   .then(response => response.json())
   .then(data => {
-    hideSelector = data.hide_selector; // Assign the value from the API response to hideSelector
+    hideSelector = data.hide_selector; 
     console.log('Value from hide_selector:', hideSelector);
 
-    // Call the functions after you have the hideSelector value
     insertCssHighContrast();
     insertFixedTextBox();
   })
@@ -31,7 +29,7 @@ function insertCss(code) {
 }
 
 function insertCssHighContrast() {
-  var css = hideSelector + ' { border: 2px solid red; }'; // Use hideSelector here
+  var css = hideSelector + ' { border: 2px solid red; }'; 
   insertCss(css);
 }
 
@@ -48,7 +46,7 @@ function insertFixedTextBox() {
   textBox.style.boxShadow = '0 0 5px rgba(0, 0, 0, 0.2)';
   textBox.style.color = 'white';
   textBox.style.fontWeight = 'bold';
-  textBox.innerText = 'Red borders indicate an absolute hottie';
+  textBox.innerText = 'Red borders indicate masked areas';
 
   document.body.appendChild(textBox);
 }
