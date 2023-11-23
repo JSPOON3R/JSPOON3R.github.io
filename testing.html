@@ -16,10 +16,7 @@
         var settings = {
             // Surfly session options can be set here, or at the Company/Plan levels.
             widget_key: '99671227762b43c2a96daa066ee006e2',
-            meta: "",
-
         };
-
         Surfly.init(settings, function (initResult) {
         if (initResult.success) {
             // API calls can now be made!
@@ -37,22 +34,16 @@
         } else {
             console.log("Surfly was unable to initialize properly.");
         }
-
         Surfly.on('session_created', function (session, event) {
             console.log('Session', session.followerLink, 'has just started');
         });
     });
 </script>
-
 </head>
-
 <body>
-
     <header>
         <h1>Surfly Testing</h1>
     </header>
-
-
 </body>
 
 </html>
