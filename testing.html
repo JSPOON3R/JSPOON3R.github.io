@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple HTML Template</title>
+    <script>
+        (function (s, u, r, f, l, y) {
+            s[f] = s[f] || { init: function () { s[f].q = arguments } };
+            l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+            l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+        })
+            (window, document, 'script', 'Surfly');
+
+        var settings = {
+            // Surfly session options can be set here, or at the Company/Plan levels.
+            widget_key: '99671227762b43c2a96daa066ee006e2',
+            meta: "",
+
+        };
+
+        Surfly.init(settings, function (initResult) {
+        if (initResult.success) {
+            // API calls can now be made!
+            if (!Surfly.isInsideSession) {
+                Surfly.session({ start_with_chat_open: false }).startLeader(null, {
+                    name: 'TEST',
+                    email: 'test@test.com',
+                    agent_id: '1234',
+                    metatag1: "TEST"
+                });
+                Surfly.session().on("session_created", function (session, event) {
+                    console.log("Session PIN: " + session.pin);
+                });
+            }
+        } else {
+            console.log("Surfly was unable to initialize properly.");
+        }
+
+        Surfly.on('session_created', function (session, event) {
+            console.log('Session', session.followerLink, 'has just started');
+        });
+    });
+</script>
+
+</head>
+
+<body>
+
+    <header>
+        <h1>Surfly Testing</h1>
+    </header>
+
+
+</body>
+
+</html>
