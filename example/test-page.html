@@ -63,7 +63,7 @@
 
                 //log session_created event info
                 Surfly.on("session_created", function (session, event) {
-                    addLogLine('Session', session._sessionId, 'has just started');
+                    addLogLine('Session'+ session._sessionId + 'has just started');
                     addLogLine('Join link:', session.followerLink);
                     addLogLine('Session', session._sessionId, 'has just started');
                     addLogLine('Session Pin:', session.pin, '(share with Agent)');
@@ -129,10 +129,10 @@
         }
 
         // Function to add a line of text to log
-        function addLogLine(text) {
+        function addLogLine(t) {
             const outputElement = document.getElementById('surfly_log');
             if (outputElement) {
-                outputElement.innerHTML += text;
+                outputElement.innerHTML += t;
             } else {
                 console.error('surfly_log not found');
             }
