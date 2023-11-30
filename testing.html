@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Landing Page</title>
     <script>
-        // Surfly snippet
+        // Surfly snippet must be on any page that must start a session 
         (function (s, u, r, f, l, y) {
             s[f] = s[f] || { init: function () { s[f].q = arguments } };
             l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
@@ -18,13 +18,16 @@
         // so in most cases you only need to provide a widget key below,
         // but you can also override any options here
         var settings = {
+            //Provide widget key
             widget_key: "638a1769085c43029306423920b7ed59",
+            //Hide all Surfly UI until somebody else joins
             hide_until_agent_joins: true,
-            start_with_videochat_on: true,
-            videochat_enabled: true,
-            start_with_fullscreen_videochat: true,
-            url: "https://www.adidas.com/",
-            hide_element_by_selector: ""
+            //Mask elements
+            hide_element_by_selector: "",
+            //Do not require a consent pop up
+            session_start_confirmation: false,
+            //Start a new session if the page is refreshed
+            session_autorestore_enabled: false
 
         };
 
@@ -38,22 +41,27 @@
                     })
                     .startLeader();
             } else {
-            console.log("Surfly was unable to initialize properly.");
+                console.log("Surfly was unable to initialize properly.");
+            }
+        });
+        </script>
+
+
+<script>
+        function logEvent(event) {
+            const eventLog = document.getElementById('event_logger');
+            eventLog.innerHTML += event + '' + '<br>';
         }
+        document.addEventListener('session_started', function (session) {
+            logEvent('A session has started: ', session);
+        });
+        document.addEventListener('participant_joined', function (session, event) {
+            logEvent('Participant ', event.clientIndex, 'joined the session');
         });
 
-        function logEvent(event) {
-        const eventLog = document.getElementById('event_logger');
-        eventLog.innerHTML += event + '' + '<br>';
-    }
-  document.addEventListener('session_started', function (session) {
-        logEvent('A session has started: ', session);
-    });
-
-    // You can add more event listeners for other events
-
-</script>
+    </script>
 </head>
+
 <body>
     <header>
         <h1>Surfly Testing</h1>
