@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Landing Page</title>
     <script>
+        // Surfly snippet
         (function (s, u, r, f, l, y) {
             s[f] = s[f] || { init: function () { s[f].q = arguments } };
             l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
@@ -13,33 +14,33 @@
         })
             (window, document, 'script', 'Surfly');
 
+        // The preferred way is to set session options from the Surfly web interface,
+        // so in most cases you only need to provide a widget key below,
+        // but you can also override any options here
         var settings = {
-            // Surfly session options can be set here, or at the Company/Plan levels.
-            widget_key: '99671227762b43c2a96daa066ee006e2',
-            localhost_requests_allowed: true,
-            session_start_confirmation: false
+            widget_key: "638a1769085c43029306423920b7ed59",
+            hide_until_agent_joins: true,
+            start_with_videochat_on: true,
+            videochat_enabled: true,
+            start_with_fullscreen_videochat: true,
+            url: "https://www.adidas.com/",
+            hide_element_by_selector: ""
 
         };
-        Surfly.init(settings, function (initResult) {
-        if (initResult.success) {
-            // API calls can now be made!
-            if (!Surfly.isInsideSession) {
+
+        // Surfly.init() must be called before any other API call
+        Surfly.init(settings, function (init) {
+            if (init.success && !Surfly.isInsideSession) {
                 Surfly.session()
-                .on('session_created', function (session, event) {
-            console.log('Session', session.followerLink, 'has just started');
-            document.querySelector("#session_pin").innerText = session.pin;
-            document.querySelector("#client_info").innerText = clientInformation;
-                })
-                .startLeader(null, {
-                    name: 'TEST',
-                    email: 'test@test.com',
-                    agent_id: '1234',
-                    metatag1: "TEST"
-                });
-            }} else {
+                    .on("session_created", function (session, event) {
+                        // display the PIN of the current session
+                        document.querySelector("#session_pin").innerText = session.pin;
+                    })
+                    .startLeader();
+            } else {
             console.log("Surfly was unable to initialize properly.");
         }
-         });
+        });
 
 </script>
 </head>
