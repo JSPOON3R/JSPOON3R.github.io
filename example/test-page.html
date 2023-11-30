@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Scalable HTML Page</title>
+    <title>Surfly JS Examples</title>
 </head>
 <body style="margin: 0; padding: 0; display: flex; flex-direction: column; height: 100vh;">
-
+<h1>Surfly Javascript Examples</h1>
     <!-- Event Logger Window -->
     <div style="flex: 1; border: 1px solid #ccc; overflow: auto; padding: 10px;">
         <h2>Event Logger</h2>
@@ -14,7 +14,7 @@
     </div>
 
     <!-- Iframe Section -->
-    <iframe src="https://www.example.com" frameborder="0" style="flex: 2; border: none; width: 100%; height: 100%;"></iframe>
+    <iframe src="https://demo.surfly.com/example/test-page-iframe" frameborder="0" style="flex: 2; border: none; width: 100%; height: 100%;"></iframe>
 
     <!-- Panel of Buttons -->
     <div style="flex: 1; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #ccc; padding: 10px;">
@@ -25,10 +25,14 @@
 
     <!-- Script for Logging Events -->
     <script>
-        function logEvent(eventText) {
-            const eventLogger = document.getElementById('eventLogger');
-            eventLogger.innerHTML += eventText + '<br>';
+        function logEvent(event) {
+            const eventLog = document.getElementById('event_logger');
+            eventLog.innerHTML += '&bull; ' + event + ' logged' + '<br>';
         }
+        document.addEventListener('participant_joined', function (session, event) {
+            logEvent('Participant ', event.clientIndex, 'joined the session');
+        });
+
     </script>
 
 </body>
