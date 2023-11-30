@@ -70,7 +70,7 @@
                     console.log('Session created', event);
                     document.querySelector("#session_pin").innerText = session.pin;
                 })
-
+//log session_started event info
                     .on('session_started', function (session, event) {
                         console.log('session_started_event:', event);
                         console.log('session_started_session:', session);
@@ -80,6 +80,8 @@
                         addLogLine('session in queue: ' +session.queued);
                         addLogLine('you are tab owner: ', +session._isLeader);
                     })
+
+                    //log participant_joined event info
                     .on('participant_joined', function (session, event) {
                         console.log('participant joined:', event);
                         console.log('participant joined:', session);
@@ -87,6 +89,8 @@
                         console.log('Participant count updated to:', event.count);
                         addLogLine('participant ' + event.clientIndex + ' joined');
                     })
+
+                    //log participant_left event info
                     .on('participant_left', function (session, event) {
                         console.log('participant_left:', event);
                         console.log('participant_left:', session);
@@ -120,6 +124,13 @@
         function toggleHostSession() {
             if (isControlRequested) {
                 SurflySession.giveControl(1);
+                isControlRequested = false;
+            } else {
+                SurflySession.requestControl();
+                isControlRequested = true;
+            }
+            if (isControlRequested) {
+                SurflySession.giveControl(0);
                 isControlRequested = false;
             } else {
                 SurflySession.requestControl();
