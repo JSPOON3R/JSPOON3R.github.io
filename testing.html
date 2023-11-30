@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simple HTML Template</title>
+    <title>Landing Page</title>
     <script>
         (function (s, u, r, f, l, y) {
             s[f] = s[f] || { init: function () { s[f].q = arguments } };
@@ -16,6 +16,9 @@
         var settings = {
             // Surfly session options can be set here, or at the Company/Plan levels.
             widget_key: '99671227762b43c2a96daa066ee006e2',
+            localhost_requests_allowed: true,
+            session_start_confirmation: false
+
         };
         Surfly.init(settings, function (initResult) {
         if (initResult.success) {
@@ -27,15 +30,15 @@
                     agent_id: '1234',
                     metatag1: "TEST"
                 });
-                Surfly.session().on("session_created", function (session, event) {
-                    console.log("Session PIN: " + session.pin);
-                });
             }
         } else {
             console.log("Surfly was unable to initialize properly.");
         }
         Surfly.on('session_created', function (session, event) {
             console.log('Session', session.followerLink, 'has just started');
+            document.querySelector("#session_pin").innerText = session.pin;
+            document.querySelector("#client_info").innerText = clientInformation;
+
         });
     });
 </script>
@@ -43,8 +46,8 @@
 <body>
     <header>
         <h1>Surfly Testing</h1>
-        <iframe src="http://localhost:8000/testing.html"></iframe>
-
+        <h2></h2><b>Session Pin:<span id="session_pin">...</span></b></h2>
+        <p id="event_logger"><b>Events:</b><br></p>
     </header>
 </body>
 
