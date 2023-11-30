@@ -105,7 +105,6 @@
                     console.log(session, 'has ended');
                 });
             });
-        }
 
         function endSurflySession() {
             SurflySession.end();
@@ -128,7 +127,7 @@
         function addLogLine(text) {
             const outputElement = document.getElementById('surfly_log');
             if (outputElement) {
-                outputElement.innerHTML += text + '<br>';
+                outputElement.innerHTML += text;
             } else {
                 console.error('surfly_log not found');
             }
