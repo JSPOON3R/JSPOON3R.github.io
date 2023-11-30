@@ -11,14 +11,27 @@
     <script>
         var SurflySession;
 
-                    // Surfly snippet must be on any page that must start a session 
-                    (function (s, u, r, f, l, y) {
+        function LoadSurfly() {
+                                // Surfly snippet must be on any page that must start a session 
+                                (function (s, u, r, f, l, y) {
                 s[f] = s[f] || { init: function () { s[f].q = arguments } };
                 l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
                 l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
             })
                 (window, document, 'script', 'Surfly');
+                                //log agent_status event info
+                                Surfly.on('agent_status', function (api, event) {
+                    console.log('agent_status events:', event);
+                    console.log('agent_status api:', api);
+                    if (event.available) {
+                        console.log('There is an available support agent');
+                    } else {
+                        console.log('There is no support agents available at the moment');
+                    }
+                })
+            }
 
+            function StartSession() {
             // Surfly.init() must be called before any other API call
             Surfly.init(settings, function (init) {
                 if (init.success && !Surfly.isInsideSession) {
@@ -27,18 +40,7 @@
                     console.log("Surfly was unable to initialize properly.");
                 }
 
-                //log agent_status event info
-                Surfly.on('agent_status', function (api, event) {
-                    console.log('agent_status events:', event);
-                    console.log('agent_status api:', api);
-                    if (event.available) {
-                        console.log('There is an available support agent');
-                    } else {
-                        console.log('There is no support agents available at the moment');
-                    }
-                })},
 
-        function startSurflySession() {
 
 
             // The preferred way is to set session options from the Surfly web interface,
@@ -105,6 +107,7 @@
                     console.log(session, 'has ended');
                 });
             });
+        }
 
         function endSurflySession() {
             SurflySession.end();
@@ -139,7 +142,8 @@
 
 <body style="margin: 0; padding: 0; display: flex; flex-direction: column; height: 100vh;">
     <h1>Using Surfly Javascript</h1>
-    <button onclick="startSurflySession()">Load Surfly</button>
+    <button onclick="LoadSurfly()">Load Surfly</button>
+    <button onclick="StartSession()">Start Session</button>
     <!-- Event Logger Window -->
     <div style="flex: 1; border: 1px solid #ccc; display: flex; overflow: auto; padding: 10px;">
         <!-- Two Side-by-Side Divs -->
