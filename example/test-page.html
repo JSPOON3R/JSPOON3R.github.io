@@ -76,14 +76,15 @@
                     .on('session_started', function (session, event) {
                         console.log('session_started_event:', event);
                         console.log('session_started_session:', session);
-                        console.log('session is queued:', session.queue);
-                        console.log('Leader Link:', session.leaderLink);
-                        console.log('Follower Link:', session.followerLink);
+                        console.log('session is queued:' + session.queued);
+                        console.log('Leader Link:' + session.leaderLink);
+                        console.log('Follower Link:' + session.followerLink);
                     })
                     .on('participant_joined', function (session, event) {
                         console.log('participant joined:', event);
                         console.log('participant joined:', session);
-                        console.log('Participant index:', event.clientIndex, 'joined the session');
+                        console.log('Participant:', event.clientIndex, 'joined the session');
+                        addLogLine('Participant:', event.clientIndex, 'joined the session');
                         console.log('Participant data:', event.userData, 'joined the session');
                         console.log('Participant count updated to:', event.count);
                     })
