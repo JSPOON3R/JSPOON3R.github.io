@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scalable HTML Page</title>
+</head>
+<body style="margin: 0; padding: 0; display: flex; flex-direction: column; height: 100vh;">
+
+    <!-- Event Logger Window -->
+    <div style="flex: 1; border: 1px solid #ccc; overflow: auto; padding: 10px;">
+        <h2>Event Logger</h2>
+        <p id="eventLogger"></p>
+    </div>
+
+    <!-- Iframe Section -->
+    <iframe src="https://www.example.com" frameborder="0" style="flex: 2; border: none; width: 100%; height: 100%;"></iframe>
+
+    <!-- Panel of Buttons -->
+    <div style="flex: 1; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #ccc; padding: 10px;">
+        <button onclick="logEvent('Button 1 Clicked')">Button 1</button>
+        <button onclick="logEvent('Button 2 Clicked')">Button 2</button>
+        <button onclick="logEvent('Button 3 Clicked')">Button 3</button>
+    </div>
+
+    <!-- Script for Logging Events -->
+    <script>
+        function logEvent(eventText) {
+            const eventLogger = document.getElementById('eventLogger');
+            eventLogger.innerHTML += eventText + '<br>';
+        }
+    </script>
+
+</body>
+</html>
