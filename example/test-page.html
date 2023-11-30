@@ -37,7 +37,6 @@
             start_with_videochat_on: false,
             //select starting URL when agent joins
             url: "www.wikipedia.com"
-
         };
 
         // Surfly.init() must be called before any other API call
@@ -111,10 +110,10 @@ function ShowInfo() {
     </div>
 
     <!-- Iframe Section -->
-    <iframe id="#leader" src="https://www.example.com" frameborder="0" style="flex: 2; border: none; width: 100%; height: 100%;"></iframe>
+    <iframe id="leader" src="https://www.example.com" frameborder="0" style="flex: 2; border: none; width: 100%; height: 100%;"></iframe>
 
     <!-- Panel of Buttons -->
-    <div style="flex: .7; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #ccc; padding: 10px;">
+    <div style="flex: 1; width: 80%; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #ccc; padding: 10px;">
         <button onclick="toggleControlSession()">Toggle Control</button>
         <button>Button 2</button>
         <button onclick="endSurflySession()">End Session</button>
