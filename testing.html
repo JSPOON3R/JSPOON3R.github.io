@@ -42,12 +42,23 @@
         }
         });
 
+        function logEvent(event) {
+        const eventLog = document.getElementById('event_logger');
+        eventLog.innerHTML += event + '' + '<br>';
+    }
+  document.addEventListener('session_started', function (session) {
+        logEvent('A session has started: ', session);
+    });
+
+    // You can add more event listeners for other events
+
 </script>
 </head>
 <body>
     <header>
         <h1>Surfly Testing</h1>
-        <h2></h2><b>Session Pin:<span id="session_pin">...</span></b></h2>
+        <p>This page starts a Surfly session as soon as the page is loaded</p>
+        <h2></h2><b>Session Pin:&nbsp;<span id="session_pin">...</span></b></h2>
         <p id="event_logger"><b>Events:</b><br></p>
     </header>
 </body>
