@@ -42,13 +42,13 @@
             //log agent_status event info
             if (!Surfly.agentAvailable) {
                 console.log(Surfly);
-                console.log(Surfly.agentAvailable);
-                console.log('no agent available');
+                addLogLine('no agents are available');
+                
             }
             if (Surfly.agentAvailable) {
                 console.log(Surfly);
-                console.log(Surfly.agentAvailable);
-                console.log('agent available');
+                addLogLine(Surfly.agentAvailable);
+                addLogLine('agents are available');
             }
         }
 
@@ -63,8 +63,12 @@
 
                 //log session_created event info
                 Surfly.on("session_created", function (session, event) {
-                    console.log('Session', session.followerLink, 'has just started');
-                    console.log('Session created', session);
+                    addLogLine('Session', session._sessionId, 'has just started');
+                    addLogLine('Join link:', session.followerLink);
+                    addLogLine('Session', session._sessionId, 'has just started');
+                    addLogLine('Session Pin:', session.pin, '(share with Agent)');
+                    addLogLine('You are the Tab Owner:', session._isLeader);
+                    console.log('Session created', session.pin);
                     console.log('Session created', event);
                     document.querySelector("#session_pin").innerText = session.pin;
                 })
@@ -139,28 +143,26 @@
 
 <body style="margin: 0; padding: 0; display: flex; flex-direction: column; height: 100vh;">
     <h1>Using Surfly Javascript</h1>
+    <div
+    style="width: 100vw; display: flex; justify-content:space-evenly; align-items: center; border-top: 1px solid #ccc; padding: 10px;">
     <button onclick="LoadSurfly()">Load Surfly</button>
     <button onclick="StartSession()">Start Session</button>
+</div>
     <!-- Event Logger Window -->
-    <div style="flex: 1; border: 1px solid #ccc; display: flex; overflow: auto; padding: 10px;">
-        <!-- Two Side-by-Side Divs -->
-        <div style="flex: 1; padding-right: 10px;overflow:scroll">
+    <div style="height:80vh;flex: 1; border: 1px solid #ccc; display: flex; overflow: scroll; padding: 10px;">
+        <div style="flex: .3; padding-right: 10px;overflow:scroll">
             <h2>Log:</h2>
             <p id="surfly_log"></p>
         </div>
         <div style="flex: 1; padding-left: 10px;">
-            <h2>What is this page</h2>
-            <p>bla bla bla</p>
+            <iframe id="leader" src="https://www.example.com" frameborder="0"
+            style="flex: 2; border: none; width: 100%; height: 100%;"></iframe>
         </div>
     </div>
 
-    <!-- Iframe Section -->
-    <iframe id="leader" src="https://www.example.com" frameborder="0"
-        style="flex: 2; border: none; width: 100%; height: 100%;"></iframe>
-
     <!-- Panel of Buttons -->
     <div
-        style="flex: 1; width: 80vw; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #ccc; padding: 10px;">
+        style="width: 100vw; display: flex; justify-content: space-evenly; align-items: center; border-top: 1px solid #ccc; padding: 10px;">
         <button id="toggleButton" onclick="toggleHostSession()">Switch Host</button>
         <button>Button 2</button>
         <button onclick="endSurflySession()">End Session</button>
