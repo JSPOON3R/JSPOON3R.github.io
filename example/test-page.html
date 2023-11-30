@@ -50,7 +50,7 @@
             Surfly.on("session_created", function (session, event) {
                 console.log('Session', session.followerLink, 'has just started');
                         document.querySelector("#session_pin").innerText = session.pin;
-                        logEvent('A session has started: ', session);
+                        logEvent('Session', session.followerLink, 'has just started');
                     })
         });
 }
@@ -73,6 +73,19 @@ var isControlRequested = false;
       isControlRequested = true;
     }
   }
+
+
+//Script for Logging Events
+
+        function logEvent(event) {
+            const eventLog = document.getElementById('event_logger');
+            eventLog.innerHTML += '&bull; ' + event + '<br>';
+        }
+        document.addEventListener('participant_joined', function (session, event) {
+            logEvent('Participant ', event.clientIndex, 'joined the session');
+        });
+
+    </script>
 </script>
 
 </head>
@@ -88,23 +101,11 @@ var isControlRequested = false;
     <iframe id="#leader" src="www.example.com" frameborder="0" style="flex: 2; border: none; width: 100%; height: 100%;"></iframe>
 
     <!-- Panel of Buttons -->
-    <div style="flex: 1; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #ccc; padding: 10px;">
+    <div style="flex: .7; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #ccc; padding: 10px;">
         <button onclick="toggleControlSession()">Toggle Control</button>
         <button>Button 2</button>
         <button onclick="endSurflySession()">End Session</button>
     </div>
-
-    <!-- Script for Logging Events -->
-    <script>
-        function logEvent(event) {
-            const eventLog = document.getElementById('event_logger');
-            eventLog.innerHTML += '&bull; ' + event + ' logged' + '<br>';
-        }
-        document.addEventListener('participant_joined', function (session, event) {
-            logEvent('Participant ', event.clientIndex, 'joined the session');
-        });
-
-    </script>
 
 </body>
 </html>
