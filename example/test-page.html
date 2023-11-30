@@ -41,13 +41,12 @@
                 (window, document, 'script', 'Surfly');
             //log agent_status event info
             if (!Surfly.agentAvailable) {
-                console.log(Surfly);
+                console.log(event);
                 addLogLine('no agents are available');
-                
             }
             if (Surfly.agentAvailable) {
                 console.log(Surfly);
-                addLogLine(Surfly.agentAvailable);
+                addLogLine(Surfly.agent);
                 addLogLine('agents are available');
             }
         }
@@ -64,11 +63,10 @@
                 //log session_created event info
                 Surfly.on("session_created", function (session, event) {
                     addLogLine('Session '+ session._sessionId + ' has just started');
-                    addLogLine('Join link:', session.followerLink);
+                    addLogLine('Join link: '+ session.followerLink);
                     addLogLine('Session Pin: ' + session.pin);
                     console.log('Session pin', session.pin);
                     console.log('Session created', event);
-                    document.querySelector("#session_pin").innerText = session.pin;
                 })
 //log session_started event info
                     .on('session_started', function (session, event) {
@@ -78,7 +76,7 @@
                         console.log('Leader Link:' + session.leaderLink);
                         console.log('Follower Link:' + session.followerLink);
                         addLogLine('session in queue: ' +session.queued);
-                        addLogLine('you are tab owner: ', +session._isLeader);
+                        addLogLine('you are tab owner: '+ +session._isLeader);
                     })
 
                     //log participant_joined event info
@@ -86,8 +84,14 @@
                         console.log('participant joined:', event);
                         console.log('participant joined:', session);
                         console.log('Participant:', event.clientIndex, 'joined the session');
-                        console.log('Participant count updated to:', event.count);
                         addLogLine('participant ' + event.clientIndex + ' joined');
+                    })
+
+                    .on('viewer_joined', function (session, event) {
+                        console.log('viewer_joined_e:', event);
+                        console.log('viewer_joined_s:', session);
+                        console.log('Participant count updated to:', event.count);
+                        addLogLine('participant count updated to: '+ event.count);
                     })
 
                     //log participant_left event info
@@ -95,6 +99,12 @@
                         console.log('participant_left:', event);
                         console.log('participant_left:', session);
                         addLogLine('participant ' + event.clientIndex + ' left');
+                    })
+                    .on('viewer_left', function (session, event) {
+                        console.log('viewer_left_e:', event);
+                        console.log('viewer_left_s:', session);
+                        console.log('Participant count updated to:', event.count);
+                        addLogLine('Participant count updated to: '+ event.count);
                     })
                     .on('relocate_start', function (session, event) {
                         console.log('relocate_start:', event);
@@ -104,13 +114,14 @@
                         console.log('error:', event);
                         console.log('error:', session);
                     })
-                    .on('tab_control_requested', function (session, event) {
-                        console.log('tab_control_requested:', event);
-                        console.log('tab_control_requested:', session);
+                    .on('tab_control', function (session, event) {
+                        console.log('tab_control:', event);
+                        console.log('tab_control:', session);
                     })
 
                 Surfly.on('session_ended', function (session) {
                     console.log(session, 'has ended');
+                    addLogLine('Session ended at: '+ session._openTs);
                 });
             });
         }
@@ -132,6 +143,11 @@
             }
         }
 
+function TakeBackControl() {
+    SurflySession.revokeTabControl();
+}
+
+
         // Function to add a line of text to log
         function addLogLine(t) {
             const outputElement = document.getElementById('surfly_log');
@@ -148,6 +164,7 @@
 
 <body style="margin: 0; padding: 0; display: flex; flex-direction: column; height: 100vh;">
     <h1>Using Surfly Javascript</h1>
+    <p>Click "Load Surfly to boot up Surfly JS. Click "Start Session" to load a Surfly session in the iFrame below.<br>The functionas called by the buttons exist outide of the session. The loggins is pulled from events.</p>
     <div
     style="width: 100vw; display: flex; justify-content:space-evenly; align-items: center; border-top: 1px solid #ccc; padding: 10px;">
     <button onclick="LoadSurfly()">Load Surfly</button>
@@ -161,7 +178,7 @@
         </div>
         <div style="flex: 1; padding-left: 10px;">
             <iframe id="leader" src="https://www.example.com" frameborder="0"
-            style="flex: 2; border: none; width: 100%; height: 100%;"></iframe>
+            style="flex: 2; border: 1px solid gray; width: 100%; height: 100%;"></iframe>
         </div>
     </div>
 
@@ -169,10 +186,8 @@
     <div
         style="width: 100vw; display: flex; justify-content: space-evenly; align-items: center; border-top: 1px solid #ccc; padding: 10px;">
         <button id="toggleButton" onclick="toggleHostSession()">Switch Host</button>
-        <button onclick="SurflySession.requestTabControl()">Request Tab Control</button>
-        <button onclick="SurflySession.revokeTabControl()">Revoke Tab Control</button>
+        <button style="display:none" onclick="TakeBackControl()">Take Control</button>
         <button onclick="endSurflySession()">End Session</button>
-
     </div>
 
 </body>
