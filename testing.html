@@ -27,7 +27,10 @@
             //Do not require a consent pop up
             session_start_confirmation: false,
             //Start a new session if the page is refreshed
-            session_autorestore_enabled: false
+            session_autorestore_enabled: false,
+            //disable video for landing page but keep it avaialble in the UI
+            videochat: true,
+            start_with_videochat_on: false
 
         };
 
@@ -38,6 +41,7 @@
                     .on("session_created", function (session, event) {
                         // display the PIN of the current session
                         document.querySelector("#session_pin").innerText = session.pin;
+                        logEvent('A session has started: ', session);
                     })
                     .startLeader();
             } else {
@@ -52,9 +56,6 @@
             const eventLog = document.getElementById('event_logger');
             eventLog.innerHTML += event + '' + '<br>';
         }
-        document.addEventListener('session_started', function (session) {
-            logEvent('A session has started: ', session);
-        });
         document.addEventListener('participant_joined', function (session, event) {
             logEvent('Participant ', event.clientIndex, 'joined the session');
         });
