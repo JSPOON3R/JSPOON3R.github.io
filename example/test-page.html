@@ -131,7 +131,7 @@
         function addLogLine(t) {
             const outputElement = document.getElementById('surfly_log');
             if (outputElement) {
-                outputElement.innerHTML += t + '<br>';
+                outputElement.innerHTML += '&bull; '+ t + '<br>';
             } else {
                 console.error('surfly_log not found');
             }
@@ -152,7 +152,7 @@
     <div style="height:80vh;flex: 1; border: 1px solid #ccc; display: flex; overflow: scroll; padding: 10px;">
         <div style="flex: .3; padding-right: 10px;overflow:scroll">
             <h2>Log:</h2>
-            <p id="surfly_log"></p>
+            <p id="surfly_log" style="font-size:.1rem";></p>
         </div>
         <div style="flex: 1; padding-left: 10px;">
             <iframe id="leader" src="https://www.example.com" frameborder="0"
