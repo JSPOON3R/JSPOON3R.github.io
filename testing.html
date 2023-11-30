@@ -43,7 +43,6 @@
                         document.querySelector("#session_pin").innerText = session.pin;
                     })
                     .startLeader();
-                    logEvent('A session has started: ', session);
             } else {
                 console.log("Surfly was unable to initialize properly.");
             }
@@ -51,16 +50,6 @@
         </script>
 
 
-<script>
-        function logEvent(event) {
-            const eventLog = document.getElementById('event_logger');
-            eventLog.innerHTML += event + '' + '<br>';
-        }
-        document.addEventListener('participant_joined', function (session, event) {
-            logEvent('Participant ', event.clientIndex, 'joined the session');
-        });
-
-    </script>
 </head>
 
 <body>
