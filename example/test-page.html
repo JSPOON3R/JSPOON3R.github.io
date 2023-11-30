@@ -94,6 +94,7 @@
                     .on('participant_left', function (session, event) {
                         console.log('participant_left:', event);
                         console.log('participant_left:', session);
+                        addLogLine('participant ' + event.clientIndex + ' left');
                     })
                     .on('relocate_start', function (session, event) {
                         console.log('relocate_start:', event);
@@ -124,13 +125,6 @@
         function toggleHostSession() {
             if (isControlRequested) {
                 SurflySession.giveControl(1);
-                isControlRequested = false;
-            } else {
-                SurflySession.requestControl();
-                isControlRequested = true;
-            }
-            if (isControlRequested) {
-                SurflySession.giveControl(0);
                 isControlRequested = false;
             } else {
                 SurflySession.requestControl();
@@ -175,8 +169,10 @@
     <div
         style="width: 100vw; display: flex; justify-content: space-evenly; align-items: center; border-top: 1px solid #ccc; padding: 10px;">
         <button id="toggleButton" onclick="toggleHostSession()">Switch Host</button>
-        <button>Button 2</button>
+        <button onclick="SurflySession.requestTabControl()">Request Tab Control</button>
+        <button onclick="SurflySession.revokeTabControl()">Revoke Tab Control</button>
         <button onclick="endSurflySession()">End Session</button>
+
     </div>
 
 </body>
