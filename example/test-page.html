@@ -50,10 +50,15 @@
                 //log session_created event info
                 Surfly.on("session_created", function (session, event) {
                     console.log('Session', session.followerLink, 'has just started');
-
+                    console.log('Session created', session);
+                    console.log('Session created', event);
                     document.querySelector("#session_pin").innerText = session.pin;
                 })
+
+                    //log agent_status event info
                     .on('agent_status', function (api, event) {
+                        console.log('agent_status events:', event);
+                        console.log('agent_status api:', api);
                         if (event.available) {
                             console.log('There is an available support agent');
                         } else {
@@ -61,18 +66,39 @@
                         }
                     })
                     .on('session_started', function (session, event) {
+                        console.log('session_started_event:', event);
+                        console.log('session_started_session:', session);
                         console.log('session is queued:', session.queue);
                         console.log('Leader Link:', session.leaderLink);
                         console.log('Follower Link:', session.followerLink);
                     })
                     .on('participant_joined', function (session, event) {
+                        console.log('participant joined:', event);
+                        console.log('participant joined:', session);
                         console.log('Participant index:', event.clientIndex, 'joined the session');
                         console.log('Participant data:', event.userData, 'joined the session');
                         console.log('Participant count updated to:', event.count);
                     })
-                    Surfly.on('session_ended', function(session) {
-  console.log(session, 'has ended');
-});
+                    .on('participant_left', function (session, event) {
+                        console.log('participant_left:', event);
+                        console.log('participant_left:', session);
+                    })
+                    .on('relocate_start', function (session, event) {
+                        console.log('relocate_start:', event);
+                        console.log('relocate_start:', session);
+                    })
+                    .on('error', function (session, event) {
+                        console.log('error:', event);
+                        console.log('error:', session);
+                    })
+                    .on('tab_control_requested', function (session, event) {
+                        console.log('tab_control_requested:', event);
+                        console.log('tab_control_requested:', session);
+                    })
+
+                Surfly.on('session_ended', function (session) {
+                    console.log(session, 'has ended');
+                });
             });
         }
 
