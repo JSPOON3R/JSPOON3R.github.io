@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,93 +8,106 @@
 
 
 
-<script>
+    <script>
         var SurflySession;
         function startSurflySession() {
             // Surfly snippet must be on any page that must start a session 
             (function (s, u, r, f, l, y) {
-            s[f] = s[f] || { init: function () { s[f].q = arguments } };
-            l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
-            l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
-        })
-            (window, document, 'script', 'Surfly');
+                s[f] = s[f] || { init: function () { s[f].q = arguments } };
+                l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+                l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+            })
+                (window, document, 'script', 'Surfly');
 
-        // The preferred way is to set session options from the Surfly web interface,
-        // so in most cases you only need to provide a widget key below,
-        // but you can also override any options here
-        var settings = {
-            //Provide widget key
-            widget_key: "99671227762b43c2a96daa066ee006e2",
-            //Hide all Surfly UI until somebody else joins
-            hide_until_agent_joins: true,
-            //Mask elements
-            hide_element_by_selector: "",
-            //Do not require a consent pop up
-            session_start_confirmation: false,
-            //Start a new session if the page is refreshed
-            session_autorestore_enabled: false,
-            //disable video for landing page but keep it avaialble in the UI
-            videochat: true,
-            start_with_videochat_on: false,
-            //select starting URL when agent joins
-            url: "www.wikipedia.com"
-        };
+            // The preferred way is to set session options from the Surfly web interface,
+            // so in most cases you only need to provide a widget key below,
+            // but you can also override any options here
+            var settings = {
+                //Provide widget key
+                widget_key: "99671227762b43c2a96daa066ee006e2",
+                //Hide all Surfly UI until somebody else joins
+                hide_until_agent_joins: true,
+                //Mask elements
+                hide_element_by_selector: "",
+                //Do not require a consent pop up
+                session_start_confirmation: false,
+                //Start a new session if the page is refreshed
+                session_autorestore_enabled: false,
+                //disable video for landing page but keep it avaialble in the UI
+                videochat: true,
+                start_with_videochat_on: false,
+                //select starting URL when agent joins
+                url: "www.wikipedia.com"
+            };
 
-        // Surfly.init() must be called before any other API call
-        Surfly.init(settings, function (init) {
-            if (init.success && !Surfly.isInsideSession) {
-                SurflySession=Surfly.session().startLeader("#leader")
-            } else {
-                console.log("Surfly was unable to initialize properly.");
-            }
-            Surfly.on("session_created", function (session, event) {
-                console.log('Session', session.followerLink, 'has just started');
-                        document.querySelector("#session_pin").innerText = session.pin;
+            // Surfly.init() must be called before any other API call
+            Surfly.init(settings, function (init) {
+                if (init.success && !Surfly.isInsideSession) {
+                    SurflySession = Surfly.session().startLeader("#leader")
+                } else {
+                    console.log("Surfly was unable to initialize properly.");
+                }
+                //log session_created event info
+                Surfly.on("session_created", function (session, event) {
+                    console.log('Session', session.followerLink, 'has just started');
+
+                    document.querySelector("#session_pin").innerText = session.pin;
+                })
+                    .on('agent_status', function (api, event) {
+                        if (event.available) {
+                            console.log('There is an available support agent');
+                        } else {
+                            console.log('There is no support agents available at the moment');
+                        }
                     })
-                    .on('session_started', function(session) {
-      console.log(session, 'is fully initiated');
-    })
-    .on('participant_joined', function(session, event) {
-      console.log('Participant ', event.clientIndex, 'joined the session');
-    })
-                    Surfly.listSessions().forEach(function(session) {
-  console.log('test:', session.followerLink, session.pin, session.answered, session.sessionId);
+                    .on('session_started', function (session, event) {
+                        console.log('session is queued:', session.queue);
+                        console.log('Leader Link:', session.leaderLink);
+                        console.log('Follower Link:', session.followerLink);
+                    })
+                    .on('participant_joined', function (session, event) {
+                        console.log('Participant index:', event.clientIndex, 'joined the session');
+                        console.log('Participant data:', event.userData, 'joined the session');
+                        console.log('Participant count updated to:', event.count);
+                    })
+                    Surfly.on('session_ended', function(session) {
+  console.log(session, 'has ended');
 });
-        });
-}
+            });
+        }
 
-function endSurflySession() {
-    SurflySession.end();
+        function endSurflySession() {
+            SurflySession.end();
 
-}
+        }
 
-var isControlRequested = false;
+        var isControlRequested = false;
 
-  function toggleControlSession() {
-    if (isControlRequested) {
-      SurflySession.giveControl(1);
-      document.getElementById("toggleButton").innerText = "Give Control";
-      isControlRequested = false;
-    } else {
-      SurflySession.requestControl();
-      document.getElementById("toggleButton").innerText = "Request Control";
-      isControlRequested = true;
-    }
-  }
+        function toggleHostSession() {
+            if (isControlRequested) {
+                SurflySession.giveControl(1);
+                isControlRequested = false;
+            } else {
+                SurflySession.requestControl();
+                isControlRequested = true;
+            }
+        }
 
     </script>
-</script>
+    </script>
 
 </head>
+
 <body style="margin: 0; padding: 0; display: flex; flex-direction: column; height: 100vh;">
-<h1>Using Surfly Javascript</h1>
-<button onclick="startSurflySession()">Load Surfly</button>
+    <h1>Using Surfly Javascript</h1>
+    <button onclick="startSurflySession()">Load Surfly</button>
     <!-- Event Logger Window -->
     <div style="flex: 1; border: 1px solid #ccc; display: flex; overflow: auto; padding: 10px;">
         <!-- Two Side-by-Side Divs -->
         <div style="flex: 1; padding-right: 10px;">
             <h2>Available Information:</h2>
-            <p>Session Pin:</p><span id="session_pin"></span>
+            <p>Session Pin:<span id="session_pin"></span></p>
+            <p>Participant Index:<span id="session_pin"></span></p>
         </div>
         <div style="flex: 1; padding-left: 10px;">
             <h2>Live Event Logger:</h2>
@@ -102,14 +116,17 @@ var isControlRequested = false;
     </div>
 
     <!-- Iframe Section -->
-    <iframe id="leader" src="https://www.example.com" frameborder="0" style="flex: 2; border: none; width: 100%; height: 100%;"></iframe>
+    <iframe id="leader" src="https://www.example.com" frameborder="0"
+        style="flex: 2; border: none; width: 100%; height: 100%;"></iframe>
 
     <!-- Panel of Buttons -->
-    <div style="flex: 1; width: 80vw; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #ccc; padding: 10px;">
-        <button id="toggleButton" onclick="toggleControlSession()">Switch Control</button>
+    <div
+        style="flex: 1; width: 80vw; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #ccc; padding: 10px;">
+        <button id="toggleButton" onclick="toggleHostSession()">Switch Host</button>
         <button>Button 2</button>
         <button onclick="endSurflySession()">End Session</button>
     </div>
 
 </body>
+
 </html>
