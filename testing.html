@@ -30,7 +30,9 @@
             session_autorestore_enabled: false,
             //disable video for landing page but keep it avaialble in the UI
             videochat: true,
-            start_with_videochat_on: false
+            start_with_videochat_on: false,
+            //select starting URL when agent joins
+            url: "www.wikipedia.com"
 
         };
 
@@ -66,9 +68,9 @@
 <body>
     <header>
         <h1>Surfly Testing</h1>
-        <p>This page starts a Surfly session as soon as the page is loaded</p>
+        <p>The session takes place inside of this iframe</p>
         <h2></h2><b>Session Pin:&nbsp;<span id="session_pin">...</span></b></h2>
-        <p id="event_logger"><b>Events:</b><br></p>
+        <p>Provide the pin the the agent to get started</p>
     </header>
 </body>
 
