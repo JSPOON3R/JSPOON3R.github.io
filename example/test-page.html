@@ -63,11 +63,10 @@
 
                 //log session_created event info
                 Surfly.on("session_created", function (session, event) {
-                    addLogLine('Session'+ session._sessionId + 'has just started');
+                    addLogLine('Session '+ session._sessionId + ' has just started');
                     addLogLine('Join link:', session.followerLink);
-                    addLogLine('Session', session._sessionId, 'has just started');
-                    addLogLine('Session Pin:', session.pin, '(share with Agent)');
-                    addLogLine('You are the Tab Owner:', session._isLeader);
+                    addLogLine('Session Pin: ' + session.pin);
+                    addLogLine('tabn owner:', session._isLeader);
                     console.log('Session created', session.pin);
                     console.log('Session created', event);
                     document.querySelector("#session_pin").innerText = session.pin;
@@ -132,7 +131,7 @@
         function addLogLine(t) {
             const outputElement = document.getElementById('surfly_log');
             if (outputElement) {
-                outputElement.innerHTML += t;
+                outputElement.innerHTML += t + '<br>';
             } else {
                 console.error('surfly_log not found');
             }
