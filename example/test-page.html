@@ -66,8 +66,7 @@
                     addLogLine('Session '+ session._sessionId + ' has just started');
                     addLogLine('Join link:', session.followerLink);
                     addLogLine('Session Pin: ' + session.pin);
-                    addLogLine('tabn owner:', session._isLeader);
-                    console.log('Session created', session.pin);
+                    console.log('Session pin', session.pin);
                     console.log('Session created', event);
                     document.querySelector("#session_pin").innerText = session.pin;
                 })
@@ -78,14 +77,15 @@
                         console.log('session is queued:' + session.queued);
                         console.log('Leader Link:' + session.leaderLink);
                         console.log('Follower Link:' + session.followerLink);
+                        addLogLine('session in queue: ' +session.queued);
+                        addLogLine('you are tab owner: ', +session._isLeader);
                     })
                     .on('participant_joined', function (session, event) {
                         console.log('participant joined:', event);
                         console.log('participant joined:', session);
                         console.log('Participant:', event.clientIndex, 'joined the session');
-                        addLogLine('Participant:', event.clientIndex, 'joined the session');
-                        console.log('Participant data:', event.userData, 'joined the session');
                         console.log('Participant count updated to:', event.count);
+                        addLogLine('participant ' + event.clientIndex + ' joined');
                     })
                     .on('participant_left', function (session, event) {
                         console.log('participant_left:', event);
