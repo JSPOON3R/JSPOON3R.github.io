@@ -10,14 +10,36 @@
 
     <script>
         var SurflySession;
-        function startSurflySession() {
-            // Surfly snippet must be on any page that must start a session 
-            (function (s, u, r, f, l, y) {
+
+                    // Surfly snippet must be on any page that must start a session 
+                    (function (s, u, r, f, l, y) {
                 s[f] = s[f] || { init: function () { s[f].q = arguments } };
                 l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
                 l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
             })
                 (window, document, 'script', 'Surfly');
+
+            // Surfly.init() must be called before any other API call
+            Surfly.init(settings, function (init) {
+                if (init.success && !Surfly.isInsideSession) {
+                    SurflySession = Surfly.session().startLeader("#leader")
+                } else {
+                    console.log("Surfly was unable to initialize properly.");
+                }
+
+                //log agent_status event info
+                Surfly.on('agent_status', function (api, event) {
+                    console.log('agent_status events:', event);
+                    console.log('agent_status api:', api);
+                    if (event.available) {
+                        console.log('There is an available support agent');
+                    } else {
+                        console.log('There is no support agents available at the moment');
+                    }
+                })
+
+        function startSurflySession() {
+
 
             // The preferred way is to set session options from the Surfly web interface,
             // so in most cases you only need to provide a widget key below,
@@ -40,31 +62,14 @@
                 url: "www.wikipedia.com"
             };
 
-            // Surfly.init() must be called before any other API call
-            Surfly.init(settings, function (init) {
-                if (init.success && !Surfly.isInsideSession) {
-                    SurflySession = Surfly.session().startLeader("#leader")
-                } else {
-                    console.log("Surfly was unable to initialize properly.");
-                }
-                //log session_created event info
-                Surfly.on("session_created", function (session, event) {
-                    console.log('Session', session.followerLink, 'has just started');
-                    console.log('Session created', session);
-                    console.log('Session created', event);
-                    document.querySelector("#session_pin").innerText = session.pin;
-                })
-
-                    //log agent_status event info
-                    .on('agent_status', function (api, event) {
-                        console.log('agent_status events:', event);
-                        console.log('agent_status api:', api);
-                        if (event.available) {
-                            console.log('There is an available support agent');
-                        } else {
-                            console.log('There is no support agents available at the moment');
-                        }
+                    //log session_created event info
+                    Surfly.on("session_created", function (session, event) {
+                        console.log('Session', session.followerLink, 'has just started');
+                        console.log('Session created', session);
+                        console.log('Session created', event);
+                        document.querySelector("#session_pin").innerText = session.pin;
                     })
+
                     .on('session_started', function (session, event) {
                         console.log('session_started_event:', event);
                         console.log('session_started_session:', session);
@@ -119,8 +124,17 @@
             }
         }
 
+        // Function to add a line of text to log
+        function addLogLine(text) {
+            const outputElement = document.getElementById('surfly_log');
+            if (outputElement) {
+                outputElement.innerHTML += text + '<br>';
+            } else {
+                console.error('surfly_log not found');
+            }
+        }
     </script>
-    </script>
+
 
 </head>
 
@@ -131,9 +145,8 @@
     <div style="flex: 1; border: 1px solid #ccc; display: flex; overflow: auto; padding: 10px;">
         <!-- Two Side-by-Side Divs -->
         <div style="flex: 1; padding-right: 10px;overflow:scroll">
-            <h2>Surfly Log:</h2>
-            <p>Session Pin:<span id="session_pin"></span></p>
-            <p>Participant Index:<span id="session_pin"></span></p>
+            <h2>Log:</h2>
+            <p id="surfly_log"></p>
         </div>
         <div style="flex: 1; padding-left: 10px;">
             <h2>What is this page</h2>
