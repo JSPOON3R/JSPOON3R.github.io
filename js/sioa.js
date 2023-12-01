@@ -25,8 +25,8 @@ function hasQueryParam(param) {
   //if no, create event listner to do these things when name button clicked
 
   //Thomas
-  if (!hasQueryParam("john") && !hasQueryParam("thomas") && !hasQueryParam("mihai") && !hasQueryParam("ayush")) {
-    tomButton.addEventListener("click", function () {
+  const lowerCaseParam = (param) => param.toLowerCase();
+  if (!hasQueryParam(lowerCaseParam("john")) && !hasQueryParam(lowerCaseParam("thomas")) && !hasQueryParam(lowerCaseParam("mihai")) && !hasQueryParam(lowerCaseParam("ayush"))) {    tomButton.addEventListener("click", function () {
         //load widget key
       widgetkey = "4af7f6620fbb4ab58d2c70f5d4fee0e6";
       shouldLoadScript = true;
@@ -160,17 +160,18 @@ function loadSurfly() {
   })
     (window, document, 'script', 'Surfly');
 
-  var settings = {
-    widget_key: widgetkey,
-    hide_element_by_selector: "#InsuredAddress,#HasAcceptedDisclaimer-checkbox-group > label > div > div > span",
-    region: "us-east",
-    queued: true,
-    leader_redirect_url: "https://demo.surfly.com/sioa",
-    follower_redirect_url: "https://www.surfly.com",
-    videochat_enabled: true,
-    start_with_videochat_on: false,
-    session_autorestore_enabled: false
-  };
+    var settings = {
+        widget_key: widgetkey,
+        hide_element_by_selector: "#InsuredAddress,#HasAcceptedDisclaimer-checkbox-group > label > div > div > span",
+        region: "us-east",
+        queued: true,
+        leader_redirect_url: teamname !== null ? `https://demo.surfly.com/sioa?${teamname}` : "https://demo.surfly.com/sioa",
+        follower_redirect_url: "https://www.surfly.com",
+        videochat_enabled: true,
+        start_with_videochat_on: false,
+        session_autorestore_enabled: false,
+        url: "https://www.simplyioa.com/"
+    };
 
   Surfly.init(settings, function (initResult) {
     if (initResult.success) {
