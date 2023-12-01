@@ -10,57 +10,142 @@ var hasSentAgentMessage = false;
 
 //Activate Surfly for correct person
 
-//If loading demo.surfly.com, buttons must be clicked. 
-//The functions below load the correct widget key into Surfly when a selection is made
+//Can load user settings using query Params
+//If loading demo.surfly.com without query params then add event listenrs for buttons
 
-//Thomas
-tomButton.addEventListener("click", function () {
-  widgetkey = "4af7f6620fbb4ab58d2c70f5d4fee0e6";
-  shouldLoadScript = true;
-  console.log("shouldloadscript is: " + shouldLoadScript + " and new widget key is " + widgetkey);
-  loadSurfly();
-  teamname = "Thomas";
-});
+// Function to check if the URL contains the a query parameter
+function hasQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const hasParam = urlParams.has(param);
+    console.log(`Query parameter "${param}" is ${hasParam ? 'present' : 'not present'}`);
+    return hasParam;
+}
+  
+  // Check if the URL contains the "?name" query parameter
+  //if no, create event listner to do these things when name button clicked
 
-//Ayush
-ayushButton.addEventListener("click", function () {
-  widgetkey = "8816869ecf624d4483f6befd75cb2a1f";
-  shouldLoadScript = true;
-  console.log("shouldloadscript is: " + shouldLoadScript + " and new widget key is " + widgetkey);
-  loadSurfly();
-  teamname = "Ayush";
-});
-
-//John
-johnButton.addEventListener("click", function () {
-  widgetkey = "99671227762b43c2a96daa066ee006e2";
-  shouldLoadScript = true;
-  console.log("shouldloadscript is: " + shouldLoadScript + " and new widget key is " + widgetkey);
-  loadSurfly();
-  teamname = "John";
-});
-
-//Mihai
-mihaiButton.addEventListener("click", function () {
-  widgetkey = "638a1769085c43029306423920b7ed59";
-  shouldLoadScript = true;
-  console.log("shouldloadscript is: " + shouldLoadScript + " and new widget key is " + widgetkey);
-  loadSurfly();
-  teamname = "Mihai";
-});
-
-//When button is clicked: hide "activte surfly" and display custom chat widget
-function buttonClicked(buttonNumber) {
-  const popupContainer = document.getElementById("selectnamepopup");
+  //Thomas
+  if (!hasQueryParam("thomas")) {
+    tomButton.addEventListener("click", function () {
+        //load widget key
+      widgetkey = "4af7f6620fbb4ab58d2c70f5d4fee0e6";
+      shouldLoadScript = true;
+      console.log("shouldloadscript is: " + shouldLoadScript + " and new widget key is " + widgetkey);
+      //boot up surfly
+      loadSurfly();
+      //name for chat agent
+      teamname = "Thomas";
+      //hide "Activate Surfly"
+        const popupContainer = document.getElementById("selectnamepopup");
+        popupContainer.style.display = "none";
+        console.log(`Thomas settings Loaded`);
+        //show chat
+        var chatIcon = document.getElementById("chat-icon");
+      chatIcon.style.opacity = "1";
+    });
+  }
+  // Trigger the same actions if the query parameter is present
+  if (hasQueryParam("thomas")) {
+    widgetkey = "4af7f6620fbb4ab58d2c70f5d4fee0e6";
+    shouldLoadScript = true;
+    console.log("shouldloadscript is: " + shouldLoadScript + " and new widget key is " + widgetkey);
+    loadSurfly();
+    teamname = "Thomas";
+    const popupContainer = document.getElementById("selectnamepopup");
   popupContainer.style.display = "none";
-  console.log(`Button ${buttonNumber} clicked`);
+  console.log(`Thomas settings Loaded`);
   var chatIcon = document.getElementById("chat-icon");
 chatIcon.style.opacity = "1";
+  }
 
-}
+//Ayush
+if (!hasQueryParam("ayush")) {
+    tomButton.addEventListener("click", function () {
+      widgetkey = "8816869ecf624d4483f6befd75cb2a1f";
+      shouldLoadScript = true;
+      console.log("shouldloadscript is: " + shouldLoadScript + " and new widget key is " + widgetkey);
+      loadSurfly();
+      teamname = "Ayush";
+        const popupContainer = document.getElementById("selectnamepopup");
+        popupContainer.style.display = "none";
+        console.log(`Ayush settings Loaded`);
+        var chatIcon = document.getElementById("chat-icon");
+      chatIcon.style.opacity = "1";
+    });
+  }
+  // Trigger the same actions if the query parameter is present
+  if (hasQueryParam("ayush")) {
+    widgetkey = "8816869ecf624d4483f6befd75cb2a1f";
+    shouldLoadScript = true;
+    console.log("shouldloadscript is: " + shouldLoadScript + " and new widget key is " + widgetkey);
+    loadSurfly();
+    teamname = "Ayush";
+    const popupContainer = document.getElementById("selectnamepopup");
+  popupContainer.style.display = "none";
+  console.log(`Ayush settings Loaded`);
+  var chatIcon = document.getElementById("chat-icon");
+chatIcon.style.opacity = "1";
+  }
 
 
+//John
+if (!hasQueryParam("john")) {
+    tomButton.addEventListener("click", function () {
+      widgetkey = "99671227762b43c2a96daa066ee006e2";
+      shouldLoadScript = true;
+      console.log("shouldloadscript is: " + shouldLoadScript + " and new widget key is " + widgetkey);
+      loadSurfly();
+      teamname = "John";
+        const popupContainer = document.getElementById("selectnamepopup");
+        popupContainer.style.display = "none";
+        console.log(`John settings Loaded`);
+        var chatIcon = document.getElementById("chat-icon");
+      chatIcon.style.opacity = "1";
+    });
+  }
+  // Trigger the same actions if the query parameter is present
+  if (hasQueryParam("john")) {
+    widgetkey = "99671227762b43c2a96daa066ee006e2";
+    shouldLoadScript = true;
+    console.log("shouldloadscript is: " + shouldLoadScript + " and new widget key is " + widgetkey);
+    loadSurfly();
+    teamname = "John";
+    const popupContainer = document.getElementById("selectnamepopup");
+  popupContainer.style.display = "none";
+  console.log(`John settings Loaded`);
+  var chatIcon = document.getElementById("chat-icon");
+chatIcon.style.opacity = "1";
+  }
 
+
+//Mihai
+if (!hasQueryParam("mihai")) {
+    tomButton.addEventListener("click", function () {
+      widgetkey = "638a1769085c43029306423920b7ed59";
+      shouldLoadScript = true;
+      console.log("shouldloadscript is: " + shouldLoadScript + " and new widget key is " + widgetkey);
+      loadSurfly();
+      teamname = "Mihai";
+        const popupContainer = document.getElementById("selectnamepopup");
+        popupContainer.style.display = "none";
+        console.log(`Mihai settings Loaded`);
+        var chatIcon = document.getElementById("chat-icon");
+      chatIcon.style.opacity = "1";
+    });
+  }
+  // Trigger the same actions if the query parameter is present
+  if (hasQueryParam("mihai")) {
+    widgetkey = "638a1769085c43029306423920b7ed59";
+    shouldLoadScript = true;
+    console.log("shouldloadscript is: " + shouldLoadScript + " and new widget key is " + widgetkey);
+    loadSurfly();
+    teamname = "Mihai";
+    const popupContainer = document.getElementById("selectnamepopup");
+  popupContainer.style.display = "none";
+  console.log(`Mihai settings Loaded`);
+  var chatIcon = document.getElementById("chat-icon");
+chatIcon.style.opacity = "1";
+  }
 
 
 //LOAD SURFLY
