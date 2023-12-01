@@ -17,7 +17,7 @@ var hasSentAgentMessage = false;
 function hasQueryParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
     const lowerCaseParam = param.toLowerCase();
-    const hasParam = urlParams.has(lowerCaseParam);
+    const hasParam = urlParams.has(lowerCaseParam) || urlParams.has(param);
     console.log(`Query parameter "${lowerCaseParam}" is ${hasParam ? 'present' : 'not present'}`);
     return hasParam;
   }
