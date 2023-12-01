@@ -13,21 +13,27 @@ var hasSentAgentMessage = false;
 //Can load user settings using query Params
 //If loading demo.surfly.com without query params then add event listenrs for buttons
 
-// Function to check if the URL contains the a query parameter
+// Function to check if the URL contains the a query parameter and handle case
 function hasQueryParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
     const lowerCaseParam = param.toLowerCase();
-    const hasParam = urlParams.has(lowerCaseParam) || urlParams.has(param);
-    console.log(`Query parameter "${lowerCaseParam}" is ${hasParam ? 'present' : 'not present'}`);
-    return hasParam;
+    
+    for (const key of urlParams.keys()) {
+      if (key.toLowerCase() === lowerCaseParam) {
+        console.log(`Query parameter "${param}" is present`);
+        return true;
+      }
+    }
+    
+    console.log(`Query parameter "${param}" is not present`);
+    return false;
   }
   
   // Check if the URL contains the "?name" query parameter
   // If no, create an event listener to do these things when the name button is clicked
   
   // Thomas
-  if (!hasQueryParam("john") && !hasQueryParam("thomas") && !hasQueryParam("mihai") && !hasQueryParam("ayush")) {
-    tomButton.addEventListener("click", function () {
+  if (!hasQueryParam("john") && !hasQueryParam("thomas") && !hasQueryParam("mihai") && !hasQueryParam("ayush")) {    tomButton.addEventListener("click", function () {
       // Your event handler logic here
       widgetkey = "4af7f6620fbb4ab58d2c70f5d4fee0e6";
       shouldLoadScript = true;
