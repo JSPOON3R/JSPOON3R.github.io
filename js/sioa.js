@@ -166,7 +166,7 @@ function loadSurfly() {
 
     var settings = {
         widget_key: widgetkey,
-        hide_element_by_selector: "#InsuredAddress,#HasAcceptedDisclaimer-checkbox-group > label > div > div > span",
+        hide_element_by_selector: "#InsuredAddress,#HasAcceptedDisclaimer-checkbox-group > label > div > div > span,body > div.L3eUgb > div.o3j99.ikrT4e.om7nvf > form > div:nth-child(1) > div.A8SBwf > div.RNNXgb > div,#input_7_3,#input_7_5",
         region: "us-east",
         queued: true,
         leader_redirect_url: `https://demo.surfly.com/sioa?`+teamname,
