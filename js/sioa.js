@@ -182,12 +182,6 @@ function loadSurfly() {
   });
 }
 
-
-// Function to end an active Surfly session
-function endSurflySession() {
-  Surfly.session().currentSession.end();
-    }
-
 //Reveal Custom Bottoms
 function showeye() {
     var firstPara = document.getElementById("firstPara");
@@ -256,6 +250,15 @@ function SendAgentMessage() {
         }
       }
 
+    //hide widget
+
+    function hideChatWidget() {
+    const chatWidget = document.getElementById("chat-widget");
+    const chatIcon = document.getElementById("chat-icon");
+    chatIcon.style.display = "none";
+    chatWidget.style.display = "none";
+    }
+
 //start Surfly session for chat widget text command
 function startCobrowsingtext() {
     Surfly.session({
@@ -308,6 +311,7 @@ function startCobrowsingbutton1() {
     blocklist: "[{\"pattern\": \"^https?://[\\\\w\\\\.]*facebook\\\\.com\",\"redirect\": \"https://demo.surfly.com/blocked.html\"}]"
 
   }).startLeader();
+  hideChatWidget();
 }
 
 
@@ -347,6 +351,7 @@ function startCobrowsingbutton2() {
     "Name": customerName,
     "Question": customerQuestion
   });
+  hideChatWidget();
 }
 
 
@@ -370,10 +375,22 @@ if (modal.style.opacity === "1" || modal.style.visibility === "visible") {
     }, 10); // Delay to ensure the display property is applied first
 }
 }
-//Trigger function when the 
+//Trigger function when the custom flow button is clicked
 showpopup.addEventListener("click", loadpinflow);
 startCobrowsingbutton3();
+
+closeButton.addEventListener("click", function () {
+    modal.style.display = "none";
+  });
+
+  endsessionbutton.addEventListener("click", function () {
+    if (!Surfly.isInsideSession) {
+        Surfly.session().end();
+    }
+});
   }
+
+
    
 //Start the custom pin flow Surfly session
 function startCobrowsingbutton3() {
@@ -386,6 +403,7 @@ function startCobrowsingbutton3() {
     videochat_enabled: true,
     start_with_videochat_on: false,
     start_with_fullscreen_videochat: false,
+    hide_until_agent_joins: true,
     session_start_confirmation: false,
     script_embedded:"https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/script/masking-visuals-sioa.js",
     tags: [
@@ -404,22 +422,13 @@ function startCobrowsingbutton3() {
                         });} else {
                     console.log("Surfly was unable to initialize properly.")
                 }
-                hideSurflyElements();
+                hideChatWidget();
             };
 
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////--FLOWS--///////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
 
- //TBD: make sure this is added to all functions that don't require the chat widget to remain visible
-  const chatwidget = document.getElementById("chat-input");
-chatwidget.style.zIndex = 2147483549;
-
-const chatwidgeticon = document.getElementById("chat-icon");
-chatwidgeticon.style.zIndex = 2147483549;
-
-const chatwidgetimg = document.getElementById("chat-icon-img");
-chatwidgetimg.style.zIndex = 2147483549;
 
 // startCobrowsingbutton3(); is called in the pop up JS and by the on-click HTML
 // custim pin buttons do nothing
