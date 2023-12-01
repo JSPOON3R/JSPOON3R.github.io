@@ -16,34 +16,31 @@ var hasSentAgentMessage = false;
 // Function to check if the URL contains the a query parameter
 function hasQueryParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
-    const hasParam = urlParams.has(param);
+    const lowerCaseParam = (param) => param.toLowerCase();
+    const hasParam = urlParams.has(lowerCaseParam(param));
     console.log(`Query parameter "${param}" is ${hasParam ? 'present' : 'not present'}`);
     return hasParam;
-}
+  }
   
   // Check if the URL contains the "?name" query parameter
-  //if no, create event listner to do these things when name button clicked
-
-  //Thomas
-  const lowerCaseParam = (param) => param.toLowerCase();
-  if (!hasQueryParam(lowerCaseParam("john")) && !hasQueryParam(lowerCaseParam("thomas")) && !hasQueryParam(lowerCaseParam("mihai")) && !hasQueryParam(lowerCaseParam("ayush"))) {    tomButton.addEventListener("click", function () {
-        //load widget key
+  // If no, create an event listener to do these things when the name button is clicked
+  
+  // Thomas
+  if (!hasQueryParam("john") && !hasQueryParam("thomas") && !hasQueryParam("mihai") && !hasQueryParam("ayush")) {
+    tomButton.addEventListener("click", function () {
+      // Your event handler logic here
       widgetkey = "4af7f6620fbb4ab58d2c70f5d4fee0e6";
       shouldLoadScript = true;
       console.log("shouldloadscript is: " + shouldLoadScript + " and new widget key is " + widgetkey);
-      //name for chat agent
       teamname = "Thomas";
-      //hide "Activate Surfly"
-        const popupContainer = document.getElementById("selectnamepopup");
-        popupContainer.style.display = "none";
-        //boot up surfly
+      const popupContainer = document.getElementById("selectnamepopup");
+      popupContainer.style.display = "none";
       loadSurfly();
-        console.log(`Thomas settings Loaded`);
-        //show chat
-        var chatIcon = document.getElementById("chat-icon");
+      console.log("Thomas settings Loaded");
+      var chatIcon = document.getElementById("chat-icon");
       chatIcon.style.opacity = "1";
     });
-}
+  }
   
   // Trigger the same actions if the query parameter is present
   if (hasQueryParam("thomas")) {
