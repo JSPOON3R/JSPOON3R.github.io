@@ -25,22 +25,25 @@ function hasQueryParam(param) {
   //if no, create event listner to do these things when name button clicked
 
   //Thomas
+  if (!hasQueryParam("john") && !hasQueryParam("thomas") && !hasQueryParam("mihai") && !hasQueryParam("ayush")) {
     tomButton.addEventListener("click", function () {
         //load widget key
       widgetkey = "4af7f6620fbb4ab58d2c70f5d4fee0e6";
       shouldLoadScript = true;
       console.log("shouldloadscript is: " + shouldLoadScript + " and new widget key is " + widgetkey);
-      //boot up surfly
       //name for chat agent
       teamname = "Thomas";
       //hide "Activate Surfly"
         const popupContainer = document.getElementById("selectnamepopup");
         popupContainer.style.display = "none";
+        //boot up surfly
+      loadSurfly();
         console.log(`Thomas settings Loaded`);
         //show chat
         var chatIcon = document.getElementById("chat-icon");
       chatIcon.style.opacity = "1";
-    }, loadSurfly());
+    });
+}
   
   // Trigger the same actions if the query parameter is present
   if (hasQueryParam("thomas")) {
@@ -57,7 +60,7 @@ chatIcon.style.opacity = "1";
   }
 
 //Ayush
-if (!hasQueryParam("ayush")) {
+if (!hasQueryParam("john") && !hasQueryParam("thomas") && !hasQueryParam("mihai") && !hasQueryParam("ayush")) {
     ayushButton.addEventListener("click", function () {
       widgetkey = "8816869ecf624d4483f6befd75cb2a1f";
       shouldLoadScript = true;
@@ -87,7 +90,7 @@ chatIcon.style.opacity = "1";
 
 
 //John
-if (!hasQueryParam("john")) {
+if (!hasQueryParam("john") && !hasQueryParam("thomas") && !hasQueryParam("mihai") && !hasQueryParam("ayush")) {
     johnButton.addEventListener("click", function () {
       widgetkey = "99671227762b43c2a96daa066ee006e2";
       shouldLoadScript = true;
@@ -117,7 +120,7 @@ chatIcon.style.opacity = "1";
 
 
 //Mihai
-if (!hasQueryParam("mihai")) {
+if (!hasQueryParam("john") && !hasQueryParam("thomas") && !hasQueryParam("mihai") && !hasQueryParam("ayush")) {
     mihaiButton.addEventListener("click", function () {
       widgetkey = "638a1769085c43029306423920b7ed59";
       shouldLoadScript = true;
