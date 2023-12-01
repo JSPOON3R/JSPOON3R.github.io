@@ -175,7 +175,7 @@ function loadSurfly() {
         start_with_videochat_on: false,
         session_autorestore_enabled: false,
         url: "https://www.simplyioa.com/",
-        script_embedded: "https://demo.surfly.com/script/masking-visuals-sioa.js"
+        script_embedded: "https://demo.surfly.com/script/masking-visuals-sioa.js",
     };
 
     Surfly.init(settings, function (initResult) {
@@ -412,7 +412,7 @@ function startCobrowsingbutton3() {
             start_with_fullscreen_videochat: false,
             hide_until_agent_joins: true,
             session_start_confirmation: false,
-            script_embedded: "https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/script/masking-visuals-sioa.js",
+            script_embedded: "https://demo.surfly.com/script/masking-visuals-sioa.js",
             tags: [
                 "custom-pin-button"
             ],
