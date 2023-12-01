@@ -25,14 +25,12 @@ function hasQueryParam(param) {
   //if no, create event listner to do these things when name button clicked
 
   //Thomas
-  if (!hasQueryParam("thomas")) {
     tomButton.addEventListener("click", function () {
         //load widget key
       widgetkey = "4af7f6620fbb4ab58d2c70f5d4fee0e6";
       shouldLoadScript = true;
       console.log("shouldloadscript is: " + shouldLoadScript + " and new widget key is " + widgetkey);
       //boot up surfly
-      loadSurfly();
       //name for chat agent
       teamname = "Thomas";
       //hide "Activate Surfly"
@@ -42,8 +40,8 @@ function hasQueryParam(param) {
         //show chat
         var chatIcon = document.getElementById("chat-icon");
       chatIcon.style.opacity = "1";
-    });
-  }
+    }, loadSurfly());
+  
   // Trigger the same actions if the query parameter is present
   if (hasQueryParam("thomas")) {
     widgetkey = "4af7f6620fbb4ab58d2c70f5d4fee0e6";
@@ -60,7 +58,7 @@ chatIcon.style.opacity = "1";
 
 //Ayush
 if (!hasQueryParam("ayush")) {
-    tomButton.addEventListener("click", function () {
+    ayushButton.addEventListener("click", function () {
       widgetkey = "8816869ecf624d4483f6befd75cb2a1f";
       shouldLoadScript = true;
       console.log("shouldloadscript is: " + shouldLoadScript + " and new widget key is " + widgetkey);
@@ -90,7 +88,7 @@ chatIcon.style.opacity = "1";
 
 //John
 if (!hasQueryParam("john")) {
-    tomButton.addEventListener("click", function () {
+    johnButton.addEventListener("click", function () {
       widgetkey = "99671227762b43c2a96daa066ee006e2";
       shouldLoadScript = true;
       console.log("shouldloadscript is: " + shouldLoadScript + " and new widget key is " + widgetkey);
@@ -120,7 +118,7 @@ chatIcon.style.opacity = "1";
 
 //Mihai
 if (!hasQueryParam("mihai")) {
-    tomButton.addEventListener("click", function () {
+    mihaiButton.addEventListener("click", function () {
       widgetkey = "638a1769085c43029306423920b7ed59";
       shouldLoadScript = true;
       console.log("shouldloadscript is: " + shouldLoadScript + " and new widget key is " + widgetkey);
@@ -167,7 +165,8 @@ function loadSurfly() {
     leader_redirect_url: "https://demo.surfly.com/sioa",
     follower_redirect_url: "https://www.surfly.com",
     videochat_enabled: true,
-    start_with_videochat_on: false
+    start_with_videochat_on: false,
+    session_autorestore_enabled: false
   };
 
   Surfly.init(settings, function (initResult) {
@@ -384,9 +383,7 @@ closeButton.addEventListener("click", function () {
   });
 
   endsessionbutton.addEventListener("click", function () {
-    if (!Surfly.isInsideSession) {
         Surfly.session().end();
-    }
 });
   }
 
