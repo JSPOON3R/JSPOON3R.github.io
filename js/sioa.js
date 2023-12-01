@@ -288,7 +288,7 @@ function startvideochat() {
     console.log("it works!")
     Surfly.session({
         widget_key: widgetkey,
-        hide_element_by_selector: "#InsuredAddress,#HasAcceptedDisclaimer-checkbox-group > label > div > div > span",
+        hide_element_by_selector: "#InsuredAddress,#HasAcceptedDisclaimer-checkbox-group > label > div > div > span,body > div.L3eUgb > div.o3j99.ikrT4e.om7nvf > form > div:nth-child(1) > div.A8SBwf > div.RNNXgb > div",
         region: "us-east",
         queued: true,
         videochat_enabled: true,
