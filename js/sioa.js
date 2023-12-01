@@ -169,7 +169,7 @@ function loadSurfly() {
         hide_element_by_selector: "#InsuredAddress,#HasAcceptedDisclaimer-checkbox-group > label > div > div > span",
         region: "us-east",
         queued: true,
-        leader_redirect_url: `https://demo.surfly.com/sioa?${teamname}`,
+        leader_redirect_url: `https://demo.surfly.com/sioa?`+teamname,
         follower_redirect_url: "https://www.surfly.com",
         videochat_enabled: true,
         start_with_videochat_on: false,
