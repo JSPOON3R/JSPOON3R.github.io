@@ -16,9 +16,9 @@ var hasSentAgentMessage = false;
 // Function to check if the URL contains the a query parameter
 function hasQueryParam(param) {
     const urlParams = new URLSearchParams(window.location.search);
-    const lowerCaseParam = (param) => param.toLowerCase();
-    const hasParam = urlParams.has(lowerCaseParam(param));
-    console.log(`Query parameter "${param}" is ${hasParam ? 'present' : 'not present'}`);
+    const lowerCaseParam = param.toLowerCase();
+    const hasParam = urlParams.has(lowerCaseParam);
+    console.log(`Query parameter "${lowerCaseParam}" is ${hasParam ? 'present' : 'not present'}`);
     return hasParam;
   }
   
