@@ -35,8 +35,15 @@
         };
 
 
-            function LoadSurfly() {
+        function LoadSurfly() {
     const widgetInput = document.getElementById("widgetkey");
+
+    // Check if widgetInput is null
+    if (!widgetInput) {
+        alert("Widget Key input element not found.");
+        return;
+    }
+
     var widgetKey = widgetInput.value;
 
     // Check if input value is empty
