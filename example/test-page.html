@@ -18,7 +18,7 @@
         // but you can also override any options here
         var settings = {
             //Provide widget key
-            widget_key: widgetkey,
+            widget_key: "",
             //Hide all Surfly UI until somebody else joins
             hide_until_agent_joins: true,
             //Mask elements
@@ -43,14 +43,8 @@
         alert("Widget Key input element not found.");
         return;
     }
+    settings.widget_key = widgetInput.value;
 
-    var widgetKey = widgetInput.value;
-
-    // Check if input value is empty
-    if (!widgetKey) {
-        alert("Please enter a Widget Key.");
-        return; // Exit the function if no input value
-    }
 
     // Surfly snippet must be on any page that must start a session 
     (function (s, u, r, f, l, y) {
