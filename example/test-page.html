@@ -4,18 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap">
     <title>Surfly JS Examples</title>
 
 
 
     <script>
+        var widgetkey;
+        //to store the widget key entered
         var SurflySession;
         // The preferred way is to set session options from the Surfly web interface,
         // so in most cases you only need to provide a widget key below,
         // but you can also override any options here
         var settings = {
             //Provide widget key
-            widget_key: "99671227762b43c2a96daa066ee006e2",
+            widget_key: widgetkey,
             //Hide all Surfly UI until somebody else joins
             hide_until_agent_joins: true,
             //Mask elements
@@ -31,25 +34,37 @@
             url: "www.wikipedia.com"
         };
 
-        function LoadSurfly() {
-            // Surfly snippet must be on any page that must start a session 
-            (function (s, u, r, f, l, y) {
-                s[f] = s[f] || { init: function () { s[f].q = arguments } };
-                l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
-                l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
-            })
-                (window, document, 'script', 'Surfly');
-            //log agent_status event info
-            if (!Surfly.agentAvailable) {
-                console.log(event);
-                addLogLine('no agents are available');
-            }
-            if (Surfly.agentAvailable) {
-                console.log(Surfly);
-                addLogLine(Surfly.agent);
-                addLogLine('agents are available');
-            }
-        }
+
+            function LoadSurfly() {
+    const widgetInput = document.getElementById("widgetkey");
+    var widgetKey = widgetInput.value;
+
+    // Check if input value is empty
+    if (!widgetKey) {
+        alert("Please enter a Widget Key.");
+        return; // Exit the function if no input value
+    }
+
+    // Surfly snippet must be on any page that must start a session 
+    (function (s, u, r, f, l, y) {
+        s[f] = s[f] || { init: function () { s[f].q = arguments } };
+        l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+        l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+    })
+        (window, document, 'script', 'Surfly');
+
+    // Log agent_status event info
+    if (!Surfly.agentAvailable) {
+        console.log(event);
+        addLogLine('No agents are available');
+    }
+
+    if (Surfly.agentAvailable) {
+        console.log(Surfly.agent);
+        addLogLine('Agents are available');
+    }
+}
+
 
         function StartSession() {
             // Surfly.init() must be called before any other API call
@@ -165,18 +180,31 @@ function TakeBackControl() {
 
 </head>
 
-<body style="margin: 0; padding: 0; display: flex; flex-direction: column; height: 100vh;">
-    <h1>Using Surfly Javascript</h1>
-    <p>Click "Load Surfly to boot up Surfly JS. Click "Start Session" to load a Surfly session in the iFrame below.<br>The functionas called by the buttons exist outide of the session. The logs are pulled from events.</p>
-    <div
-    style="width: 100vw; display: flex; justify-content:space-evenly; align-items: center; border-top: 1px solid #ccc; padding: 10px;">
-    <button onclick="LoadSurfly()">Load Surfly</button>
-    <button onclick="StartSession()">Start Session</button>
-</div>
+<body style="font-family: 'Nunito', sans-serif;margin: 0px; padding: 0px; display: flex; flex-direction: column; height: 100vh;align-content:center;">
+    <h1 style="margin-left: 10px;">Using Surfly Javascript</h1>
+    <p style="margin: 10px;"><b>1.</b> Enter your Widget Key<br>
+        <span style="font-size:.9rem;color:gray;">Integrations > Widget Key<br></span>
+        <b>2.</b> Click <b>Load Surfly</b> to boot up Surfly JS.<br>
+        <span style="font-size:.9rem;color:gray">This loads Surfly JS on the page<br></span>
+        <b>3.</b> Click <b>Start Session</b> to begin<br>
+        <span style="font-size:.9rem;color:gray">The Surfly session URL will be loaded into the iframe below<br></span>
+    </p>
+    <div style="width: 100vw; display: flex; justify-content: center; align-items: center; border-top: 1px solid #ccc; padding: 10px;">
+
+        <input type="text" id="widgetKey" placeholder="Enter your Widget Key..." style="max-width: 300px; flex-grow: 1; margin-right: 5px;">
+    
+        <button onclick="LoadSurfly()" style="margin-right: 30px;">Load Surfly</button>
+    
+        <button onclick="StartSession()">Start Session</button>
+    
+    </div>
+    
+    
+    
     <!-- Event Logger Window -->
     <div style="height:80vh;flex: 1; border: 1px solid #ccc; display: flex; overflow: scroll; padding: 2px;">
         <div style="flex: .3; padding-right: 10px;overflow:scroll">
-            <h2>Log:</h2>
+            <h2 style="margin-left: 10px;">Log:</h2>
             <p id="surfly_log" style="font-size:.8rem";></p>
         </div>
         <div style="flex: 1; padding-left: 10px;">
@@ -187,10 +215,10 @@ function TakeBackControl() {
 
     <!-- Panel of Buttons -->
     <div
-        style="width: 100vw; display: flex; justify-content: space-evenly; align-items: center; border-top: 1px solid #ccc; padding: 10px;">
+    style="width: 100vw; display: flex; justify-content: center; align-items: center; border-top: 1px solid #ccc; padding: 10px;">
         <button style="display:none" onclick="toggleHostSession()">Switch Host</button>
-        <button onclick="TakeBackControl()">Take Control</button>
-        <button onclick="endSurflySession()">End Session</button>
+        <button style="margin-right: 30px;" onclick="TakeBackControl()">Take Control</button>
+        <button style="margin-right: 30px;" onclick="endSurflySession()">End Session</button>
     </div>
 
 </body>
