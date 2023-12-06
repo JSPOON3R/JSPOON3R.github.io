@@ -41,7 +41,12 @@
             url: `${queryParameter}`,
             session_autorestore_enabled: false,
             videochat_enabled: true,
-        start_with_videochat_on: true
+        start_with_videochat_on: true,
+        tags: [
+            "custom-website-landing-page"
+        ],
+        blocklist: "[{\"pattern\": \"^https?://[\\\\w\\\\.]*facebook\\\\.com\",\"redirect\": \"https://demo.surfly.com/blocked.html\"}]"
+
         };
 
         // Surfly.init() must be called before any other API call
