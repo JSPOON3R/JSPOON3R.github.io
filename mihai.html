@@ -25,7 +25,7 @@
         // Surfly snippet
         (function(s,u,r,f,l,y){s[f]=s[f]||{init:function(){s[f].q=arguments}};
         l=u.createElement(r);y=u.getElementsByTagName(r)[0];l.async=1;
-        l.src='https://surfly.online/surfly.js';y.parentNode.insertBefore(l,y);})
+        l.src='https://surfly.com/surfly.js';y.parentNode.insertBefore(l,y);})
         (window,document,'script','Surfly');
 
         // The preferred way is to set session options from the Surfly web interface,
@@ -39,7 +39,9 @@
             start_with_loading_screen: false,
             hide_session_ui: true,
             url: `${queryParameter}`,
-            session_autorestore_enabled: false
+            session_autorestore_enabled: false,
+            videochat_enabled: true,
+        start_with_videochat_on: true
         };
 
         // Surfly.init() must be called before any other API call
