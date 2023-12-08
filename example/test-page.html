@@ -35,7 +35,7 @@
         };
 
 
-        function LoadSurfly() {
+        function LoadSurflyProd() {
     const widgetInput = document.getElementById("widgetKey");
 
     // Check if widgetInput is null
@@ -51,6 +51,39 @@
         s[f] = s[f] || { init: function () { s[f].q = arguments } };
         l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
         l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+    })
+        (window, document, 'script', 'Surfly');
+
+    // Log agent_status event info
+    if (!Surfly.agentAvailable) {
+        console.log(event);
+        addLogLine('No agents are available');
+    }
+
+    if (Surfly.agentAvailable) {
+        console.log(Surfly.agent);
+        addLogLine('Agents are available');
+    }
+}
+
+
+
+function LoadSurflyUat() {
+    const widgetInput = document.getElementById("widgetKey");
+
+    // Check if widgetInput is null
+    if (!widgetInput) {
+        alert("Widget Key input element not found.");
+        return;
+    }
+    settings.widget_key = widgetInput.value;
+
+
+    // Surfly snippet must be on any page that must start a session 
+    (function (s, u, r, f, l, y) {
+        s[f] = s[f] || { init: function () { s[f].q = arguments } };
+        l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+        l.src = 'https://uat.surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
     })
         (window, document, 'script', 'Surfly');
 
@@ -159,6 +192,12 @@
             }
         }
 
+function shareScreen() {
+    SurflySession.startScreensharing();
+}
+
+
+
 function TakeBackControl() {
     SurflySession.revokeTabControl();
 }
@@ -194,8 +233,8 @@ function TakeBackControl() {
 
         <input type="text" id="widgetKey" placeholder="Enter your Widget Key..." style="max-width: 300px; flex-grow: 1; margin-right: 5px;">
     
-        <button onclick="LoadSurfly()" style="margin-right: 30px;">Load Surfly</button>
-    
+        <button onclick="LoadSurflyProd()" style="margin-right: 30px;">Load Surfly Production</button>
+        <button onclick="LoadSurflyUat()" style="margin-right: 30px;">Load Surfly UAT</button>
         <button onclick="StartSession()">Start Session</button>
     
     </div>
@@ -219,6 +258,7 @@ function TakeBackControl() {
     style="width: 100vw; display: flex; justify-content: center; align-items: center; border-top: 1px solid #ccc; padding: 10px;">
         <button style="display:none" onclick="toggleHostSession()">Switch Host</button>
         <button style="margin-right: 30px;" onclick="TakeBackControl()">Take Control</button>
+        <button style="margin-right: 30px;" onclick="shareScreen()">Share Screen</button>
         <button style="margin-right: 30px;" onclick="endSurflySession()">End Session</button>
     </div>
 
