@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function shareScreen() {
     SurflySession.startScreensharing();
+    console.log('testtt');
 }
 
     var cssKeyframes = `
