@@ -32,7 +32,7 @@
             start_with_videochat_on: false,
             //select starting URL when agent joins
             url: "www.wikipedia.com",
-            script_embedded:""
+            script_embedded: ""
         };
 
 
@@ -68,6 +68,7 @@
 }
 
 document.addEventListener('DOMContentLoaded', function () {
+    checkboxEmbed.addEventListener('change', function () {
     var checkboxEmbed = document.getElementById('checkboxEmbed');
 
     if (checkboxEmbed) {
