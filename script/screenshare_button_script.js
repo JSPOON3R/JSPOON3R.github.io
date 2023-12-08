@@ -62,11 +62,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     
       document.body.appendChild(textBox);
+      textBox.addEventListener('click', function () {
+        shareScreen();
+      });
     }
 
-    textBox.addEventListener('click', function () {
-      shareScreen();
-    });
+
 
     insertFixedTextBox();
     });
