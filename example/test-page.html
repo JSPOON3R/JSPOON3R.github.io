@@ -68,16 +68,16 @@
     }
 }
 
-var checkboxEmbed = document.getElementById('checkboxEmbed');
+document.addEventListener('DOMContentLoaded', function () {
 
-checkboxEmbed.addEventListener('change', function () {
-    // Update the settings based on the checkbox state
-    settings.script_embedded = checkboxEmbed.checked
+    if (checkboxEmbed) {
+        checkboxEmbed.addEventListener('change', function () {
+            settings.script_embedded = checkboxEmbed.checked
         ? 'https://demo.surfly.com/script/screenshare_button_script.js'
-        : '';
-
-    // Log the updated value to the console
-    console.log('New value of settings.script_embedded:', settings.script_embedded);
+        : '';        });
+    } else {
+        console.error('Element with ID "checkboxEmbed" not found.');
+    }
 });
 
 
