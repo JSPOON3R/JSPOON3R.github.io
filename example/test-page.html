@@ -68,14 +68,16 @@
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    checkboxEmbed.addEventListener('change', function () {
+    // Move the variable declaration to the top
     var checkboxEmbed = document.getElementById('checkboxEmbed');
 
     if (checkboxEmbed) {
         checkboxEmbed.addEventListener('change', function () {
+            // Use checkboxEmbed.checked directly without redeclaring the variable
             settings.script_embedded = checkboxEmbed.checked
-        ? 'https://demo.surfly.com/script/screenshare_button_script.js'
-        : '';        });
+                ? 'https://demo.surfly.com/script/screenshare_button_script.js'
+                : '';
+        });
     } else {
         console.error('Element with ID "checkboxEmbed" not found.');
     }
