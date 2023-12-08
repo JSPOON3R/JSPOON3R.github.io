@@ -68,12 +68,17 @@
     }
 }
 
+var checkboxEmbed = document.getElementById('checkboxEmbed');
+
 checkboxEmbed.addEventListener('change', function () {
     // Update the settings based on the checkbox state
     settings.script_embedded = checkboxEmbed.checked
         ? 'https://demo.surfly.com/script/screenshare_button_script.js'
         : '';
-    });
+
+    // Log the updated value to the console
+    console.log('New value of settings.script_embedded:', settings.script_embedded);
+});
 
 
 function LoadSurflyUat() {
