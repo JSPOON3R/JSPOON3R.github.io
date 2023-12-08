@@ -42,10 +42,10 @@ var checkboxEmbed = document.getElementById('checkboxEmbed');
         checkboxEmbed.addEventListener('change', function () {
             if (checkboxEmbed.checked) {
                 settings.script_embedded = 'https://demo.surfly.com/script/screenshare_button_script.js';
-                // Additional code when checkbox is checked...
+                addLogLine('floating screenshare button will be added to the session');
             } else {
-                settings.script_embedded = ''; // Handle the case when checkbox is unchecked
-                // Additional code when checkbox is unchecked...
+                settings.script_embedded = "";
+                addLogLine('floating screenshare button will not be added to the session');
             }
         });
     } else {
