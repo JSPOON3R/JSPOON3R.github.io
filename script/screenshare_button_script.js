@@ -5,8 +5,13 @@ document.addEventListener('DOMContentLoaded', function() {
     
 
   function shareScreen() {
-    SurflySession.startScreensharing();
-    console.log('testtt');
+    // Access SurflySession from the parent window
+    if (window.parent && window.parent.SurflySession) {
+        window.parent.SurflySession.startScreensharing();
+        console.log('testtt');
+    } else {
+        console.error('SurflySession not found in the parent window.');
+    }
 }
 
     var cssKeyframes = `
