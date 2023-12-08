@@ -10,6 +10,7 @@
 
 
     <script>
+        var checkboxEmbed;
         var widgetkey;
         //to store the widget key entered
         var SurflySession;
@@ -67,10 +68,7 @@
     }
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-    // Move the variable declaration to the top
-    var checkboxEmbed = document.getElementById('checkboxEmbed');
-
+var checkboxEmbed = document.getElementById('checkboxEmbed');
     if (checkboxEmbed) {
         checkboxEmbed.addEventListener('change', function () {
             if (checkboxEmbed.checked) {
@@ -83,8 +81,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     } else {
         console.error('Element with ID "checkboxEmbed" not found.');
-    }
-});
+    };
 
 
 function LoadSurflyUat() {
