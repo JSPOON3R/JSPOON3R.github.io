@@ -73,10 +73,13 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (checkboxEmbed) {
         checkboxEmbed.addEventListener('change', function () {
-            // Use checkboxEmbed.checked directly without redeclaring the variable
-            settings.script_embedded = checkboxEmbed.checked
-                ? 'https://demo.surfly.com/script/screenshare_button_script.js'
-                : '';
+            if (checkboxEmbed.checked) {
+                settings.script_embedded = 'https://demo.surfly.com/script/screenshare_button_script.js';
+                // Additional code when checkbox is checked...
+            } else {
+                settings.script_embedded = ''; // Handle the case when checkbox is unchecked
+                // Additional code when checkbox is unchecked...
+            }
         });
     } else {
         console.error('Element with ID "checkboxEmbed" not found.');
