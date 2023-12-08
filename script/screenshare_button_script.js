@@ -40,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function() {
     insertCss(cssKeyframes);
     
     function insertFixedTextBox() {
-      var textBox = document.createElement('div');
+      var textBox = document.createElement('button');
     
       textBox.style.position = 'fixed';
       textBox.style.bottom = '20px';
