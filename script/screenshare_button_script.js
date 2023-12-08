@@ -1,11 +1,13 @@
 
-function shareScreen() {
-    SurflySession.startScreensharing();
-}
 
 
 document.addEventListener('DOMContentLoaded', function() {
     
+
+  function shareScreen() {
+    SurflySession.startScreensharing();
+}
+
     var cssKeyframes = `
       @keyframes glow {
         0% {
@@ -59,13 +61,12 @@ document.addEventListener('DOMContentLoaded', function() {
       textBox.style.animation = 'glow 3s infinite alternate';
     
     
-      // Reset styles on mouse leave
-      textBox.addEventListener('click', function () {
-        shareScreen();
-      });
-    
       document.body.appendChild(textBox);
     }
+
+    textBox.addEventListener('click', function () {
+      shareScreen();
+    });
 
     insertFixedTextBox();
     });
