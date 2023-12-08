@@ -10,7 +10,6 @@
 
 
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
         var checkboxEmbed;
         var widgetkey;
         //to store the widget key entered
@@ -37,6 +36,21 @@
             script_embedded: ""
         };
 
+        function SScheckBox() {
+var checkboxEmbed = document.getElementById('checkboxEmbed');
+    if (checkboxEmbed) {
+        checkboxEmbed.addEventListener('change', function () {
+            if (checkboxEmbed.checked) {
+                settings.script_embedded = 'https://demo.surfly.com/script/screenshare_button_script.js';
+                // Additional code when checkbox is checked...
+            } else {
+                settings.script_embedded = ''; // Handle the case when checkbox is unchecked
+                // Additional code when checkbox is unchecked...
+            }
+        });
+    } else {
+        console.error('Element with ID "checkboxEmbed" not found.');
+    };}
 
         function LoadSurflyProd() {
     const widgetInput = document.getElementById("widgetKey");
@@ -67,22 +81,8 @@
         console.log(Surfly.agent);
         addLogLine('Agents are available');
     }
+    SScheckBox();
 }
-
-var checkboxEmbed = document.getElementById('checkboxEmbed');
-    if (checkboxEmbed) {
-        checkboxEmbed.addEventListener('change', function () {
-            if (checkboxEmbed.checked) {
-                settings.script_embedded = 'https://demo.surfly.com/script/screenshare_button_script.js';
-                // Additional code when checkbox is checked...
-            } else {
-                settings.script_embedded = ''; // Handle the case when checkbox is unchecked
-                // Additional code when checkbox is unchecked...
-            }
-        });
-    } else {
-        console.error('Element with ID "checkboxEmbed" not found.');
-    };
 
 
 function LoadSurflyUat() {
@@ -114,6 +114,7 @@ function LoadSurflyUat() {
         console.log(Surfly.agent);
         addLogLine('Agents are available');
     }
+    SScheckBox();
 }
 
 
@@ -232,7 +233,6 @@ function TakeBackControl() {
                 console.error('surfly_log not found');
             }
         }
-    });
     </script>
 
 
