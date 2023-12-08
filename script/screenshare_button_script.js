@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
 
   function shareScreen() {
+    console.log('SurflySession:', window.parent.SurflySession);
+
     // Access SurflySession from the parent window
     if (window.parent && window.parent.SurflySession) {
         window.parent.SurflySession.startScreensharing();
