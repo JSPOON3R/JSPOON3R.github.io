@@ -37,110 +37,111 @@
         };
 
         function SScheckBox() {
-var checkboxEmbed = document.getElementById('checkboxEmbed');
-    if (checkboxEmbed) {
-        checkboxEmbed.addEventListener('change', function () {
-            if (checkboxEmbed.checked) {
-                settings.script_embedded = 'https://demo.surfly.com/script/screenshare_button_script.js';
-                addLogLine('floating screenshare button will be added to the session');
+            var checkboxEmbed = document.getElementById('checkboxEmbed');
+            if (checkboxEmbed) {
+                checkboxEmbed.addEventListener('change', function () {
+                    if (checkboxEmbed.checked) {
+                        settings.script_embedded = 'https://demo.surfly.com/script/screenshare_button_script.js';
+                        addLogLine('floating screenshare button will be added to the session');
+                    } else {
+                        settings.script_embedded = "";
+                        addLogLine('floating screenshare button will not be added to the session');
+                    }
+                });
             } else {
-                settings.script_embedded = "";
-                addLogLine('floating screenshare button will not be added to the session');
-            }
-        });
-    } else {
-        console.error('Element with ID "checkboxEmbed" not found.');
-    };}
+                console.error('Element with ID "checkboxEmbed" not found.');
+            };
+        }
 
         function LoadSurflyProd() {
-    const widgetInput = document.getElementById("widgetKey");
+            const widgetInput = document.getElementById("widgetKey");
 
-    // Check if widgetInput is null
-    if (!widgetInput) {
-        alert("Widget Key input element not found.");
-        return;
-    }
-    settings.widget_key = widgetInput.value;
-
-
-    // Surfly snippet must be on any page that must start a session 
-    (function (s, u, r, f, l, y) {
-        s[f] = s[f] || { init: function () { s[f].q = arguments } };
-        l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
-        l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
-    })
-        (window, document, 'script', 'Surfly');
-
-    // Log agent_status event info
-    if (!Surfly.agentAvailable) {
-        console.log(event);
-        addLogLine('Availability: no agents are available');
-    }
-
-    if (Surfly.agentAvailable) {
-        console.log(Surfly.agent);
-        addLogLine('Availability: no agents are available');
-    }
-    SScheckBox();
-}
-
-
-function LoadSurflyUat() {
-    const widgetInput = document.getElementById("widgetKey");
-
-    // Check if widgetInput is null
-    if (!widgetInput) {
-        alert("Widget Key input element not found.");
-        return;
-    }
-    settings.widget_key = widgetInput.value;
-
-
-    // Surfly snippet must be on any page that must start a session 
-    (function (s, u, r, f, l, y) {
-        s[f] = s[f] || { init: function () { s[f].q = arguments } };
-        l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
-        l.src = 'https://uat.surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
-    })
-        (window, document, 'script', 'Surfly');
-
-    // Log agent_status event info
-    if (!Surfly.agentAvailable) {
-        console.log(event);
-        addLogLine('Availability: no agents are available');
-    }
-
-    if (Surfly.agentAvailable) {
-        console.log(Surfly.agent);
-        addLogLine('Availability: agents are available');
-    }
-    SScheckBox();
-}
-
-
-function validateURL() {
-            var urlInput = document.getElementById('session_url_input').value;
-            var urlRegex = /^(?:(?:https?|ftp):\/\/)?(?:www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\/[^\s]*)?$/;
-            if (urlRegex.test(urlInput)) {
-                settings.url = urlinput;
-                StartSession();
-            } else {
-                urlinput = "www.wikipedia.com";
-                console.log('No input value found. Using default:', urlinput);
-                StartSession();
+            // Check if widgetInput is null
+            if (!widgetInput) {
+                alert("Widget Key input element not found.");
+                return;
             }
-           
+            settings.widget_key = widgetInput.value;
+
+
+            // Surfly snippet must be on any page that must start a session 
+            (function (s, u, r, f, l, y) {
+                s[f] = s[f] || { init: function () { s[f].q = arguments } };
+                l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+                l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+            })
+                (window, document, 'script', 'Surfly');
+
+            // Log agent_status event info
+            if (!Surfly.agentAvailable) {
+                console.log(event);
+                addLogLine('Availability: no agents are available');
+            }
+
+            if (Surfly.agentAvailable) {
+                console.log(Surfly.agent);
+                addLogLine('Availability: no agents are available');
+            }
+            SScheckBox();
         }
+
+
+        function LoadSurflyUat() {
+            const widgetInput = document.getElementById("widgetKey");
+
+            // Check if widgetInput is null
+            if (!widgetInput) {
+                alert("Widget Key input element not found.");
+                return;
+            }
+            settings.widget_key = widgetInput.value;
+
+
+            // Surfly snippet must be on any page that must start a session 
+            (function (s, u, r, f, l, y) {
+                s[f] = s[f] || { init: function () { s[f].q = arguments } };
+                l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+                l.src = 'https://uat.surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+            })
+                (window, document, 'script', 'Surfly');
+
+            // Log agent_status event info
+            if (!Surfly.agentAvailable) {
+                console.log(event);
+                addLogLine('Availability: no agents are available');
+            }
+
+            if (Surfly.agentAvailable) {
+                console.log(Surfly.agent);
+                addLogLine('Availability: agents are available');
+            }
+            SScheckBox();
+        }
+
+
+        function validateURL() {
+    var urlInput = document.getElementById('session_url_input').value;
+    var urlRegex = /^(?:(?:https?|ftp):\/\/)?(?:www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\/[^\s]*)?$/;
+
+    if (urlRegex.test(urlInput)) {
+        settings.url = urlInput;
+    } else {
+        urlInput = "www.wikipedia.com";
+        console.log('No valid input URL found. Using default:', urlInput);
+        settings.url = urlInput;
+    }
+    StartSession();
+}
 
 
         var urlinput = document.querySelector('#session_url_input').value;
 
-if (urlinput.trim() !== '') {
-   
-  console.log('Start URL:', urlinput);
-} else {
-  
-}
+        if (urlinput.trim() !== '') {
+
+            console.log('Start URL:', urlinput);
+        } else {
+
+        }
 
         function StartSession() {
             // Surfly.init() must be called before any other API call
@@ -153,21 +154,21 @@ if (urlinput.trim() !== '') {
 
                 //log session_created event info
                 Surfly.on("session_created", function (session, event) {
-                    addLogLine('session '+ session._sessionId + ' has just started');
-                    addLogLine('join link: '+ session.followerLink);
+                    addLogLine('session ' + session._sessionId + ' has just started');
+                    addLogLine('join link: ' + session.followerLink);
                     addLogLine('session Pin: ' + session.pin);
                     console.log('session pin', session.pin);
                     console.log('session created', event);
                 })
-//log session_started event info
+                    //log session_started event info
                     .on('session_started', function (session, event) {
                         console.log('session_started_event:', event);
                         console.log('session_started_session:', session);
                         console.log('session is queued:' + session.queued);
                         console.log('Leader Link:' + session.leaderLink);
                         console.log('Follower Link:' + session.followerLink);
-                        addLogLine('session in queue: ' +session.queued);
-                        addLogLine('you are tab owner: '+ +session._isLeader);
+                        addLogLine('session in queue: ' + session.queued);
+                        addLogLine('you are tab owner: ' + +session._isLeader);
                     })
 
                     //log participant_joined event info
@@ -182,7 +183,7 @@ if (urlinput.trim() !== '') {
                         console.log('viewer_joined_e:', event);
                         console.log('viewer_joined_s:', session);
                         console.log('Participant count updated to:', event.count);
-                        addLogLine('participant count updated to: '+ event.count);
+                        addLogLine('participant count updated to: ' + event.count);
                     })
 
                     //log participant_left event info
@@ -195,7 +196,7 @@ if (urlinput.trim() !== '') {
                         console.log('viewer_left_e:', event);
                         console.log('viewer_left_s:', session);
                         console.log('Participant count updated to:', event.count);
-                        addLogLine('participant count updated to: '+ event.count);
+                        addLogLine('participant count updated to: ' + event.count);
                     })
                     .on('relocate_start', function (session, event) {
                         console.log('relocate_start:', event);
@@ -212,7 +213,7 @@ if (urlinput.trim() !== '') {
 
                 Surfly.on('session_ended', function (session) {
                     console.log(session, 'has ended');
-                    addLogLine('session ended at: '+ session._openTs);
+                    addLogLine('session ended at: ' + session._openTs);
                 });
             });
         }
@@ -234,34 +235,33 @@ if (urlinput.trim() !== '') {
             }
         }
 
-function shareScreen() {
-    SurflySession.startScreensharing();
-}
+        function shareScreen() {
+            SurflySession.startScreensharing();
+        }
 
 
+        function TakeBackControl() {
+            SurflySession.revokeTabControl();
+        }
 
-function TakeBackControl() {
-    SurflySession.revokeTabControl();
-}
-
-function ToggleVideochatFullscreen() {
-        SurflySession.toggleVideochatFullscreen();
-}
-function ToggleVideochatMicrophone() {
-        SurflySession.toggleVideochatMicrophone();
-}
-function ToggleDrawing() {
-        SurflySession.toggleDrawing();
-}      
-//add relocate function
-//add host function
+        function ToggleVideochatFullscreen() {
+            SurflySession.toggleVideochatFullscreen();
+        }
+        function ToggleVideochatMicrophone() {
+            SurflySession.toggleVideochatMicrophone();
+        }
+        function ToggleDrawing() {
+            SurflySession.toggleDrawing();
+        }
+        //add relocate function
+        //add host function
 
 
         // Function to add a line of text to log
         function addLogLine(t) {
             const outputElement = document.getElementById('surfly_log');
             if (outputElement) {
-                outputElement.innerHTML += '&bull; '+ t + '<br>';
+                outputElement.innerHTML += '&bull; ' + t + '<br>';
             } else {
                 console.error('surfly_log not found');
             }
@@ -271,77 +271,75 @@ function ToggleDrawing() {
 
 </head>
 
-<body style="font-family: 'Nunito', sans-serif; font-size: smaller; margin: 0px; padding: 0px; display: flex; flex-direction: column; height: 100vh;align-content:center;">
+<body
+    style="font-family: 'Nunito', sans-serif; font-size: smaller; margin: 0px; padding: 0px; display: flex; flex-direction: column; height: 100vh;align-content:center;">
     <h1 style="margin-left: 10px;font-size: large;">Using Surfly Javascript</h1>
 
     <!--INSTRUCTIONS-->
     <div style="width: 100vw; justify-content: center; align-items: center; border-top: 1px solid #ccc; padding: 2px;">
-    <!--STEP 1-->
-<div id="step1" style="width: 100vw; display:flex; justify-content: left; align-items: center; border-bottom: 1px dotted #ccc; margin-left: 10px;">
-    <div id="step1-left" style="width: 20vw;">
-        <p><b>1.</b> Enter your Widget Key &<br> Load Surfly JS from Selected Environment<br>
-            <span style="font-size:x-small;color:gray;">Integrations > Widget Key<br></span>
-        </p>
-    </div>
-    <div id="step1-right" style="width: 80vw;">
-        <input type="text" id="widgetKey" placeholder="Enter your Widget Key..." style="width: 300px; flex-grow: 1; margin-right: 5px;">
-        <button onclick="LoadSurflyProd()" style="margin-right: 5px;">Load Surfly Production</button>
-        <button onclick="LoadSurflyUat()" style="margin-right: 5px;">Load Surfly UAT</button>
-    </div>
-    </div>
-    <!--STEP 2-->
-    <div id="step2" style="width: 100vw; display:flex; justify-content: left; align-items: center; border-bottom: 1px dotted #ccc; margin-left: 10px;">
-        <div id="step2-left" style="width: 20vw;">
-            <p>
-                <b>2.</b> Select Additional Options<br>
-                <span style="font-size:x-small;color:gray">View the Page Source to see the JS used<br></span>
-            </p>
+        <!--STEP 1-->
+        <div id="step1"
+            style="width: 100vw; display:flex; justify-content: left; align-items: center; border-bottom: 1px dotted #ccc; margin-left: 10px;">
+            <div id="step1-left" style="width: 20vw;">
+                <p><b>1.</b> Enter your Widget Key &<br> Load Surfly JS from Selected Environment<br>
+                    <span style="font-size:x-small;color:gray;">Integrations > Widget Key<br></span>
+                </p>
+            </div>
+            <div id="step1-right" style="width: 80vw;">
+                <input type="text" id="widgetKey" placeholder="Enter your Widget Key..."
+                    style="width: 300px; flex-grow: 1; margin-right: 5px;">
+                <button onclick="LoadSurflyProd()" style="margin-right: 5px;">Load Surfly Production</button>
+                <button onclick="LoadSurflyUat()" style="margin-right: 5px;">Load Surfly UAT</button>
+            </div>
         </div>
-        <div id="step2-right" style="width: 80vw;">
-            <p style="font-size:.9rem;color:gray"><input type="checkbox" id="checkboxEmbed" style="margin-right: 10px;">add floating "share screen" button</p>
+        <!--STEP 2-->
+        <div id="step2"
+            style="width: 100vw; display:flex; justify-content: left; align-items: center; border-bottom: 1px dotted #ccc; margin-left: 10px;">
+            <div id="step2-left" style="width: 20vw;">
+                <p>
+                    <b>2.</b> Select Additional Options<br>
+                    <span style="font-size:x-small;color:gray">View the Page Source to see the JS used<br></span>
+                </p>
+            </div>
+            <div id="step2-right" style="width: 80vw;">
+                <p style="font-size:.9rem;color:gray"><input type="checkbox" id="checkboxEmbed"
+                        style="margin-right: 10px;">add floating "share screen" button</p>
+            </div>
         </div>
-    </div>
         <!--STEP 3-->
-    <div id="step3" style="width: 100vw; display:flex; justify-content: left; align-items: center; border-bottom: 1px dotted #ccc; margin-left: 10px;">
-        <div id="step3-left" style="width: 20vw;">
-            <p>
-                <b>3.</b> Click <b>Start Session</b> to begin<br>
-                <span style="font-size:x-small;color:gray">The Surfly session URL will be loaded into the iframe below.<br> Use the footer buttons to control the session with JS.<br></span>
-            </p>
+        <div id="step3"
+            style="width: 100vw; display:flex; justify-content: left; align-items: center; border-bottom: 1px dotted #ccc; margin-left: 10px;">
+            <div id="step3-left" style="width: 20vw;">
+                <p>
+                    <b>3.</b> Click <b>Start Session</b> to begin<br>
+                    <span style="font-size:x-small;color:gray">The Surfly session URL will be loaded into the iframe
+                        below.<br> Use the footer buttons to control the session with JS.<br></span>
+                </p>
+            </div>
+            <div id="step3-right" style="width: 80vw;">
+                <input type="text" placeholder="Enter any valid URL" id="session_url_input"
+                    style="width: 300px; flex-grow: 1; margin-right: 5px;">
+                <button onclick="validateURL()">Start Session</button>
+            </div>
         </div>
-        <div id="step3-right" style="width: 80vw;">
-            <input type="text" placeholder="Enter any valid URL" id="session_url_input" style="width: 300px; flex-grow: 1; margin-right: 5px;">
-            <button onclick="validateURL()">Start Session</button>
-        </div>
 
-
-
-
-
-
-
-
-
-    
     </div>
 
-    </div>
-    
     <!-- Event Logger Window -->
     <div style="height:80vh;flex: 1; border: 1px solid #ccc; display: flex; overflow: scroll; padding: 2px;">
         <div style="flex: .22; padding-right: 10px;overflow:scroll">
             <h2 style="margin-left: 10px;font-size:medium">Log:</h2>
-            <p id="surfly_log" style="font-size:.8rem";></p>
+            <p id="surfly_log" style="font-size:.8rem" ;></p>
         </div>
         <div style="flex: 1; padding-left: 10px;">
             <iframe id="leader" src="https://www.example.com" frameborder="0"
-            style="flex: 2; border: 1px solid gray; width: 100%; height: 100%;"></iframe>
+                style="flex: 2; border: 1px solid gray; width: 100%; height: 100%;"></iframe>
         </div>
     </div>
 
     <!-- Panel of Buttons -->
     <div
-    style="width: 100vw; display: flex; justify-content: center; align-items: center; border-top: 1px solid #ccc; padding: 10px;">
+        style="width: 100vw; display: flex; justify-content: center; align-items: center; border-top: 1px solid #ccc; padding: 10px;">
         <button style="display:none" onclick="toggleHostSession()">Switch Host</button>
         <button style="margin-right: 30px;" onclick="TakeBackControl()">Take Control</button>
         <button style="margin-right: 30px;" onclick="ToggleVideochatFullscreen()">Toggle Videochat Full Screen</button>
