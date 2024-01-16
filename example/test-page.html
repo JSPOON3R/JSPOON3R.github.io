@@ -74,12 +74,12 @@ var checkboxEmbed = document.getElementById('checkboxEmbed');
     // Log agent_status event info
     if (!Surfly.agentAvailable) {
         console.log(event);
-        addLogLine('No agents are available');
+        addLogLine('Availability: no agents are available');
     }
 
     if (Surfly.agentAvailable) {
         console.log(Surfly.agent);
-        addLogLine('Agents are available');
+        addLogLine('Availability: no agents are available');
     }
     SScheckBox();
 }
@@ -107,12 +107,12 @@ function LoadSurflyUat() {
     // Log agent_status event info
     if (!Surfly.agentAvailable) {
         console.log(event);
-        addLogLine('No agents are available');
+        addLogLine('Availability: no agents are available');
     }
 
     if (Surfly.agentAvailable) {
         console.log(Surfly.agent);
-        addLogLine('Agents are available');
+        addLogLine('Availability: agents are available');
     }
     SScheckBox();
 }
@@ -122,6 +122,7 @@ function LoadSurflyUat() {
             var urlinput = document.querySelector('#session_url_input').value;
 
 if (urlinput.trim() !== '') {
+    settings.url = urlinput;
   console.log('Start URL:', urlinput);
 } else {
   urlinput = "www.wikipedia.com";
@@ -130,7 +131,7 @@ if (urlinput.trim() !== '') {
             // Surfly.init() must be called before any other API call
             Surfly.init(settings, function (init) {
                 if (init.success && !Surfly.isInsideSession) {
-                    SurflySession = Surfly.session({url: urlinput}).startLeader("#leader")
+                    SurflySession = Surfly.session().startLeader("#leader")
                 } else {
                     console.log("Surfly was unable to initialize properly.");
                 }
@@ -255,7 +256,7 @@ function ToggleDrawing() {
 
 </head>
 
-<body style="font-family: 'Nunito', sans-serif;margin: 0px; padding: 0px; display: flex; flex-direction: column; height: 100vh;align-content:center;">
+<body style="font-family: 'Nunito', sans-serif; font-size: smaller; margin: 0px; padding: 0px; display: flex; flex-direction: column; height: 100vh;align-content:center;">
     <h1 style="margin-left: 10px;">Using Surfly Javascript</h1>
 
     <!--INSTRUCTIONS-->
@@ -264,7 +265,7 @@ function ToggleDrawing() {
 <div id="step1" style="width: 100vw; display:flex; justify-content: left; align-items: center; border-bottom: 1px dotted #ccc; margin-left: 10px;">
     <div id="step1-left" style="width: 25vw;">
         <p><b>1.</b> Enter your Widget Key &<br> Load Surfly JS from Selected Environment<br>
-            <span style="font-size:.9rem;color:gray;">Integrations > Widget Key<br></span>
+            <span style="font-size:x-small;color:gray;">Integrations > Widget Key<br></span>
         </p>
     </div>
     <div id="step1-right" style="width: 75vw;">
@@ -278,7 +279,7 @@ function ToggleDrawing() {
         <div id="step2-left" style="width: 25vw;">
             <p>
                 <b>2.</b> Select Additional Options<br>
-                <span style="font-size:.9rem;color:gray">View the Page Source to see the JS used<br></span>
+                <span style="font-size:x-small;color:gray">View the Page Source to see the JS used<br></span>
             </p>
         </div>
         <div id="step2-right" style="width: 75vw;">
@@ -290,7 +291,7 @@ function ToggleDrawing() {
         <div id="step3-left" style="width: 25vw;">
             <p>
                 <b>3.</b> Click <b>Start Session</b> to begin<br>
-                <span style="font-size:.9rem;color:gray">The Surfly session URL will be loaded into the iframe below.<br> Use the footer buttons to control the session with JS.<br></span>
+                <span style="font-size:x-small;color:gray">The Surfly session URL will be loaded into the iframe below.<br> Use the footer buttons to control the session with JS.<br></span>
             </p>
         </div>
         <div id="step3-right" style="width: 75vw;">
