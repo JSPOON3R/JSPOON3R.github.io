@@ -33,7 +33,7 @@
             start_with_videochat_on: false,
             //select starting URL when agent joins
             url: "",
-            script_embedded: ""
+            script_embedded: " "
         };
 
         function SScheckBox() {
@@ -124,7 +124,7 @@
     var urlRegex = /^(?:(?:https?|ftp):\/\/)?(?:www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\/[^\s]*)?$/;
 
     if (urlInput.trim() !== '' && urlRegex.test(urlInput)) {
-        settings.url = "https://"+urlInput;
+        settings.url = urlInput;
         console.log('Valid URL found. Session will load ',urlInput);
     } else {
         settings.url = "www.wikipedia.com";
