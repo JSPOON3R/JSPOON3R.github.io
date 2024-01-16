@@ -125,9 +125,10 @@
 
     if (urlInput.trim() !== '' && urlRegex.test(urlInput)) {
         settings.url = urlInput;
+        console.log('Input URL found. Session will load ',urlInput);
     } else {
         settings.url = "www.wikipedia.com";
-        console.log('No valid input URL found. Using default:', urlInput);
+        console.log('No valid input URL found. Session will load Wikipedia');
     }
     StartSession();
 }
