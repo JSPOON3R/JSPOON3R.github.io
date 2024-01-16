@@ -257,18 +257,18 @@ function ToggleDrawing() {
 </head>
 
 <body style="font-family: 'Nunito', sans-serif; font-size: smaller; margin: 0px; padding: 0px; display: flex; flex-direction: column; height: 100vh;align-content:center;">
-    <h1 style="margin-left: 10px;">Using Surfly Javascript</h1>
+    <h1 style="margin-left: 10px;font-size: large;">Using Surfly Javascript</h1>
 
     <!--INSTRUCTIONS-->
     <div style="width: 100vw; justify-content: center; align-items: center; border-top: 1px solid #ccc; padding: 2px;">
     <!--STEP 1-->
 <div id="step1" style="width: 100vw; display:flex; justify-content: left; align-items: center; border-bottom: 1px dotted #ccc; margin-left: 10px;">
-    <div id="step1-left" style="width: 25vw;">
+    <div id="step1-left" style="width: 20vw;">
         <p><b>1.</b> Enter your Widget Key &<br> Load Surfly JS from Selected Environment<br>
             <span style="font-size:x-small;color:gray;">Integrations > Widget Key<br></span>
         </p>
     </div>
-    <div id="step1-right" style="width: 75vw;">
+    <div id="step1-right" style="width: 80vw;">
         <input type="text" id="widgetKey" placeholder="Enter your Widget Key..." style="width: 300px; flex-grow: 1; margin-right: 5px;">
         <button onclick="LoadSurflyProd()" style="margin-right: 5px;">Load Surfly Production</button>
         <button onclick="LoadSurflyUat()" style="margin-right: 5px;">Load Surfly UAT</button>
@@ -276,25 +276,25 @@ function ToggleDrawing() {
     </div>
     <!--STEP 2-->
     <div id="step2" style="width: 100vw; display:flex; justify-content: left; align-items: center; border-bottom: 1px dotted #ccc; margin-left: 10px;">
-        <div id="step2-left" style="width: 25vw;">
+        <div id="step2-left" style="width: 20vw;">
             <p>
                 <b>2.</b> Select Additional Options<br>
                 <span style="font-size:x-small;color:gray">View the Page Source to see the JS used<br></span>
             </p>
         </div>
-        <div id="step2-right" style="width: 75vw;">
+        <div id="step2-right" style="width: 80vw;">
             <p style="font-size:.9rem;color:gray"><input type="checkbox" id="checkboxEmbed" style="margin-right: 10px;">Add floating "share screen" button</p>
         </div>
     </div>
         <!--STEP 3-->
     <div id="step3" style="width: 100vw; display:flex; justify-content: left; align-items: center; border-bottom: 1px dotted #ccc; margin-left: 10px;">
-        <div id="step3-left" style="width: 25vw;">
+        <div id="step3-left" style="width: 20vw;">
             <p>
                 <b>3.</b> Click <b>Start Session</b> to begin<br>
                 <span style="font-size:x-small;color:gray">The Surfly session URL will be loaded into the iframe below.<br> Use the footer buttons to control the session with JS.<br></span>
             </p>
         </div>
-        <div id="step3-right" style="width: 75vw;">
+        <div id="step3-right" style="width: 80vw;">
             <input type="text" placeholder="Enter any valid URL" id="session_url_input" style="width: 300px; flex-grow: 1; margin-right: 5px;">
             <button onclick="StartSession()">Start Session</button>
         </div>
@@ -314,8 +314,8 @@ function ToggleDrawing() {
     
     <!-- Event Logger Window -->
     <div style="height:80vh;flex: 1; border: 1px solid #ccc; display: flex; overflow: scroll; padding: 2px;">
-        <div style="flex: .3; padding-right: 10px;overflow:scroll">
-            <h2 style="margin-left: 10px;">Log:</h2>
+        <div style="flex: .22; padding-right: 10px;overflow:scroll">
+            <h2 style="margin-left: 10px;font-size:medium">Log:</h2>
             <p id="surfly_log" style="font-size:.8rem";></p>
         </div>
         <div style="flex: 1; padding-left: 10px;">
