@@ -6,7 +6,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap">
     <title>Surfly JS Examples</title>
+<style>
+            .button {
+            background-color: #fff;
+            box-sizing: border-box;
+            border-radius: 8px;
+            color: #434343;
+            cursor: pointer;
+            font-family: nunito, sans-serif;
+            font-size: .90rem;
+            font-weight: 70;
+            padding: 4px;
+            border: 1px solid #cf2e2e;
+            touch-action: manipulation;
+            margin-left:0.5vw;
+        }
 
+        .input {
+            background-color: #fff;
+            box-sizing: border-box;
+            border-radius: 8px;
+            color: #cf2e2e;
+            font-family: nunito, sans-serif;
+            font-size: .90rem;
+            font-weight: 70;
+            padding: 4px;
+            border: 1px solid #848484;
+        }
+</style>
 
 
     <script>
@@ -280,9 +307,9 @@
             </div>
             <div id="step1-right" style="width: 80vw;">
                 <input type="text" id="widgetKey" placeholder="Enter your Widget Key..."
-                    style="width: 300px; flex-grow: 1; margin-right: 5px;">
-                <button onclick="LoadSurflyProd()" style="margin-right: 5px;">Load Surfly Production</button>
-                <button onclick="LoadSurflyUat()" style="margin-right: 5px;">Load Surfly UAT</button>
+                    style="width: 300px; flex-grow: 1; margin-right: 5px;" class="input">
+                <button onclick="LoadSurflyProd()" style="margin-right: 5px;" class="button">Load Surfly Production</button>
+                <button onclick="LoadSurflyUat()" style="margin-right: 5px;" class="button">Load Surfly UAT</button>
             </div>
         </div>
         <!--STEP 2-->
@@ -304,15 +331,15 @@
             style="width: 100vw; display:flex; justify-content: left; align-items: center; border-bottom: 1px dotted #ccc; margin-left: 10px;">
             <div id="step3-left" style="width: 20vw;">
                 <p>
-                    <b>3.</b> Click <b>Start Session</b> to begin<br>
+                    <b>3.</b> Enter a valid URL &<br>Click <b>Start Session</b> to begin<br>
                     <span style="font-size:x-small;color:gray">The Surfly session URL will be loaded into the iframe
                         below.<br> Use the footer buttons to control the session with JS.<br></span>
                 </p>
             </div>
             <div id="step3-right" style="width: 80vw;">
                 <input type="text" placeholder="Enter any valid URL" id="session_url_input"
-                    style="width: 300px; flex-grow: 1; margin-right: 5px;">
-                <button onclick="validateURL()">Start Session</button>
+                    style="width: 300px; flex-grow: 1; margin-right: 5px;" class="input">
+                <button onclick="validateURL()" class="button">Start Session</button>
             </div>
         </div>
 
@@ -333,13 +360,13 @@
     <!-- Panel of Buttons -->
     <div
         style="width: 100vw; display: flex; justify-content: center; align-items: center; border-top: 1px solid #ccc; padding: 10px;">
-        <button style="display:none" onclick="toggleHostSession()">Switch Host</button>
-        <button style="margin-right: 30px;" onclick="TakeBackControl()">Take Control</button>
-        <button style="margin-right: 30px;" onclick="ToggleVideochatFullscreen()">Toggle Videochat Full Screen</button>
-        <button style="margin-right: 30px;" onclick="ToggleVideochatMicrophone()">Mute/Unmute</button>
-        <button style="margin-right: 30px;" onclick="ToggleDrawing()">Toggle Drawing</button>
-        <button style="margin-right: 30px;" onclick="shareScreen()">Share Screen</button>
-        <button style="margin-right: 30px;" onclick="endSurflySession()">End Session</button>
+        <button style="display:none" onclick="toggleHostSession()" class="button">Switch Host</button>
+        <button style="margin-right: 30px;" onclick="TakeBackControl()" class="button">Take Control</button>
+        <button style="margin-right: 30px;" onclick="ToggleVideochatFullscreen()" class="button">Toggle Videochat Full Screen</button>
+        <button style="margin-right: 30px;" onclick="ToggleVideochatMicrophone()" class="button">Mute/Unmute</button>
+        <button style="margin-right: 30px;" onclick="ToggleDrawing()" class="button">Toggle Drawing</button>
+        <button style="margin-right: 30px;" onclick="shareScreen()" class="button">Share Screen</button>
+        <button style="margin-right: 30px;" onclick="endSurflySession()" class="button">End Session</button>
     </div>
 
 </body>
