@@ -32,7 +32,7 @@
             videochat: true,
             start_with_videochat_on: false,
             //select starting URL when agent joins
-            url: "www.wikipedia.com",
+            url: "",
             script_embedded: ""
         };
 
@@ -119,10 +119,18 @@ function LoadSurflyUat() {
 
 
         function StartSession() {
+            var urlinput = document.querySelector('#session_url_input').value;
+
+if (urlinput.trim() !== '') {
+  console.log('Start URL:', urlinput);
+} else {
+  urlinput = "www.wikipedia.com";
+  console.log('No input value found. Using default:', urlinput);
+}
             // Surfly.init() must be called before any other API call
             Surfly.init(settings, function (init) {
                 if (init.success && !Surfly.isInsideSession) {
-                    SurflySession = Surfly.session().startLeader("#leader")
+                    SurflySession = Surfly.session({url: urlinput}).startLeader("#leader")
                 } else {
                     console.log("Surfly was unable to initialize properly.");
                 }
@@ -249,25 +257,59 @@ function ToggleDrawing() {
 
 <body style="font-family: 'Nunito', sans-serif;margin: 0px; padding: 0px; display: flex; flex-direction: column; height: 100vh;align-content:center;">
     <h1 style="margin-left: 10px;">Using Surfly Javascript</h1>
-    <p style="margin: 10px;"><b>1.</b> Enter your Widget Key<br>
-        <span style="font-size:.9rem;color:gray;">Integrations > Widget Key<br></span>
-        <b>2.</b> Click <b>Load Surfly</b> to boot up Surfly JS.<br>
-        <span style="font-size:.9rem;color:gray">This loads Surfly JS on the page<br></span>
-        <b>3.</b> Click <b>Start Session</b> to begin<br>
-        <span style="font-size:.9rem;color:gray">The Surfly session URL will be loaded into the iframe below<br></span>
-    </p>
-    <div style="width: 100vw; display: flex; justify-content: center; align-items: center; border-top: 1px solid #ccc; padding: 10px;">
 
-        <input type="text" id="widgetKey" placeholder="Enter your Widget Key..." style="max-width: 300px; flex-grow: 1; margin-right: 5px;">
-    
-        <button onclick="LoadSurflyProd()" style="margin-right: 30px;">Load Surfly Production</button>
-        <button onclick="LoadSurflyUat()" style="margin-right: 30px;">Load Surfly UAT</button>
-        <p>Add hovering button to start Screen Share: <input type="checkbox" id="checkboxEmbed"></p>
-        <button onclick="StartSession()">Start Session</button>
+    <!--INSTRUCTIONS-->
+    <div style="width: 100vw; justify-content: center; align-items: center; border-top: 1px solid #ccc; padding: 2px;">
+    <!--STEP 1-->
+<div id="step1" style="width: 100vw; display:flex; justify-content: left; align-items: center; border-bottom: 1px dotted #ccc; margin-left: 10px;">
+    <div id="step1-left" style="width: 25vw;">
+        <p><b>1.</b> Enter your Widget Key &<br> Load Surfly JS from Selected Environment<br>
+            <span style="font-size:.9rem;color:gray;">Integrations > Widget Key<br></span>
+        </p>
+    </div>
+    <div id="step1-right" style="width: 75vw;">
+        <input type="text" id="widgetKey" placeholder="Enter your Widget Key..." style="width: 300px; flex-grow: 1; margin-right: 5px;">
+        <button onclick="LoadSurflyProd()" style="margin-right: 5px;">Load Surfly Production</button>
+        <button onclick="LoadSurflyUat()" style="margin-right: 5px;">Load Surfly UAT</button>
+    </div>
+    </div>
+    <!--STEP 2-->
+    <div id="step2" style="width: 100vw; display:flex; justify-content: left; align-items: center; border-bottom: 1px dotted #ccc; margin-left: 10px;">
+        <div id="step2-left" style="width: 25vw;">
+            <p>
+                <b>2.</b> Select Additional Options<br>
+                <span style="font-size:.9rem;color:gray">View the Page Source to see the JS used<br></span>
+            </p>
+        </div>
+        <div id="step2-right" style="width: 75vw;">
+            <p style="font-size:.9rem;color:gray"><input type="checkbox" id="checkboxEmbed" style="margin-right: 10px;">Add floating "share screen" button</p>
+        </div>
+    </div>
+        <!--STEP 3-->
+    <div id="step3" style="width: 100vw; display:flex; justify-content: left; align-items: center; border-bottom: 1px dotted #ccc; margin-left: 10px;">
+        <div id="step3-left" style="width: 25vw;">
+            <p>
+                <b>3.</b> Click <b>Start Session</b> to begin<br>
+                <span style="font-size:.9rem;color:gray">The Surfly session URL will be loaded into the iframe below.<br> Use the footer buttons to control the session with JS.<br></span>
+            </p>
+        </div>
+        <div id="step3-right" style="width: 75vw;">
+            <input type="text" placeholder="Enter any valid URL" id="session_url_input" style="width: 300px; flex-grow: 1; margin-right: 5px;">
+            <button onclick="StartSession()">Start Session</button>
+        </div>
+
+
+
+
+
+
+
+
+
     
     </div>
-    
-    
+
+    </div>
     
     <!-- Event Logger Window -->
     <div style="height:80vh;flex: 1; border: 1px solid #ccc; display: flex; overflow: scroll; padding: 2px;">
