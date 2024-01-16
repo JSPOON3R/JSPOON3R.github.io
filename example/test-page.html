@@ -124,8 +124,8 @@
     var urlRegex = /^(?:(?:https?|ftp):\/\/)?(?:www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\/[^\s]*)?$/;
 
     if (urlInput.trim() !== '' && urlRegex.test(urlInput)) {
-        settings.url = urlInput;
-        console.log('Input URL found. Session will load ',urlInput);
+        settings.url = "https://"+urlInput;
+        console.log('Valid URL found. Session will load ',urlInput);
     } else {
         settings.url = "www.wikipedia.com";
         console.log('No valid input URL found. Session will load Wikipedia');
