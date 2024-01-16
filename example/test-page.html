@@ -133,16 +133,6 @@
     StartSession();
 }
 
-
-        var urlinput = document.querySelector('#session_url_input').value;
-
-        if (urlinput.trim() !== '') {
-
-            console.log('Start URL:', urlinput);
-        } else {
-
-        }
-
         function StartSession() {
             // Surfly.init() must be called before any other API call
             Surfly.init(settings, function (init) {
@@ -273,7 +263,7 @@
 
 <body
     style="font-family: 'Nunito', sans-serif; font-size: smaller; margin: 0px; padding: 0px; display: flex; flex-direction: column; height: 100vh;align-content:center;">
-    <h1 style="margin-left: 10px;font-size: large;">Using Surfly Javascript</h1>
+    <h1 style="margin-left: 10px;font-size: large;">Surfly Javascript Examples</h1>
 
     <!--INSTRUCTIONS-->
     <div style="width: 100vw; justify-content: center; align-items: center; border-top: 1px solid #ccc; padding: 2px;">
