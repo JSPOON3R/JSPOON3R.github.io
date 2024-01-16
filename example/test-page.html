@@ -32,26 +32,29 @@
             videochat: true,
             start_with_videochat_on: false,
             //select starting URL when agent joins
-            url: "",
-            script_embedded: " "
+            url: ""
         };
 
         function SScheckBox() {
-            var checkboxEmbed = document.getElementById('checkboxEmbed');
-            if (checkboxEmbed) {
-                checkboxEmbed.addEventListener('change', function () {
-                    if (checkboxEmbed.checked) {
-                        settings.script_embedded = 'https://demo.surfly.com/script/screenshare_button_script.js';
-                        addLogLine('floating screenshare button will be added to the session');
-                    } else {
-                        settings.script_embedded = "";
-                        addLogLine('floating screenshare button will not be added to the session');
-                    }
-                });
+    var checkboxEmbed = document.getElementById('checkboxEmbed');
+
+    if (checkboxEmbed) {
+        checkboxEmbed.addEventListener('change', function () {
+            if (!settings.hasOwnProperty('script_embedded')) {
+                settings.script_embedded = '';
+            }
+            if (checkboxEmbed.checked) {
+                settings.script_embedded = 'https://demo.surfly.com/script/screenshare_button_script.js';
+                addLogLine('floating screenshare button will be added to the session');
             } else {
-                console.error('Element with ID "checkboxEmbed" not found.');
-            };
-        }
+                settings.script_embedded = '';
+                addLogLine('floating screenshare button will not be added to the session');
+            }
+        });
+    } else {
+        console.error('Element with ID "checkboxEmbed" not found.');
+    }
+}
 
         function LoadSurflyProd() {
             const widgetInput = document.getElementById("widgetKey");
