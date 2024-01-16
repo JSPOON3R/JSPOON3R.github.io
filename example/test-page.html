@@ -220,6 +220,15 @@ function TakeBackControl() {
     SurflySession.revokeTabControl();
 }
 
+function ToggleVideochatFullscreen() {
+        SurflySession.toggleVideochatFullscreen();
+}
+function ToggleVideochatMicrophone() {
+        SurflySession.toggleVideochatMicrophone();
+}
+function ToggleDrawing() {
+        SurflySession.toggleDrawing();
+}      
 //add relocate function
 //add host function
 
@@ -277,6 +286,9 @@ function TakeBackControl() {
     style="width: 100vw; display: flex; justify-content: center; align-items: center; border-top: 1px solid #ccc; padding: 10px;">
         <button style="display:none" onclick="toggleHostSession()">Switch Host</button>
         <button style="margin-right: 30px;" onclick="TakeBackControl()">Take Control</button>
+        <button style="margin-right: 30px;" onclick="ToggleVideochatFullscreen()">Toggle Videochat Full Screen</button>
+        <button style="margin-right: 30px;" onclick="ToggleVideochatMicrophone()">Mute/Unmute</button>
+        <button style="margin-right: 30px;" onclick="ToggleDrawing()">Toggle Drawing</button>
         <button style="margin-right: 30px;" onclick="shareScreen()">Share Screen</button>
         <button style="margin-right: 30px;" onclick="endSurflySession()">End Session</button>
     </div>
