@@ -20,6 +20,8 @@
                         if (event.data === YT.PlayerState.ENDED) {
                             // Send a message to the parent page when the video ends
                             window.parent.postMessage('videoFinished', 'https://demo.surfly.com/example/test-page');
+                            console.log('Embedded YouTube video has finished');
+
                         }
                     }
                 }
