@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', function() {
       textBox.style.color = 'white';
       textBox.style.fontWeight = 'bold';
       textBox.style.fontSize = '10px';
-      textBox.style.opacity = '0.7';
+      textBox.style.opacity = '1';
       textBox.style.borderRadius = '50%';
       textBox.innerText = 'SS';
       textBox.style.animation = 'glow 3s infinite alternate';
@@ -74,7 +74,6 @@ document.addEventListener('DOMContentLoaded', function() {
         shareScreen();
       });
     }
-
 
 
     insertFixedTextBox();
