@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Message to Parent Page</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .button {
+            background-color: #cf2e2e;
+            box-sizing: border-box;
+            border-radius: 8px;
+            color: #eff0f0;
+            cursor: pointer;
+            font-family: nunito, sans-serif;
+            font-size: .90rem;
+            font-weight: bolder;
+            padding: 4px;
+            border: 1px solid #b2b2b2;
+            touch-action: manipulation;
+            width: fit-content;
+            padding: 8px;
+        }
+    </style>
+</head>
+<body>
+
+    <button id="sendMessageBtn">Send Message to Parent Page</button>
+
+    <script>
+        document.getElementById('sendMessageBtn').addEventListener('click', function () {
+            // Send a message to the parent page
+            window.parent.postMessage('Hello from the iframe!', '*');
+        });
+    </script>
+
+</body>
+</html>
