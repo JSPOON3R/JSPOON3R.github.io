@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap">
     <title>Surfly JS Examples</title>
-<style>
-            .button {
+    <style>
+        .button-white {
             background-color: #fff;
             box-sizing: border-box;
             border-radius: 8px;
@@ -19,7 +19,23 @@
             padding: 4px;
             border: 1px solid #cf2e2e;
             touch-action: manipulation;
-            margin-left:0.5vw;
+            width: fit-content;
+        }
+
+        .button-red {
+            background-color: #cf2e2e;
+            box-sizing: border-box;
+            border-radius: 8px;
+            color: #eff0f0;
+            cursor: pointer;
+            font-family: nunito, sans-serif;
+            font-size: .90rem;
+            font-weight: bolder;
+            padding: 4px;
+            border: 1px solid #b2b2b2;
+            touch-action: manipulation;
+            width: fit-content;
+            padding: 8px;
         }
 
         .input {
@@ -33,7 +49,7 @@
             padding: 4px;
             border: 1px solid #848484;
         }
-</style>
+    </style>
 
 
     <script>
@@ -63,25 +79,25 @@
         };
 
         function SScheckBox() {
-    var checkboxEmbed = document.getElementById('checkboxEmbed');
+            var checkboxEmbed = document.getElementById('checkboxEmbed');
 
-    if (checkboxEmbed) {
-        checkboxEmbed.addEventListener('change', function () {
-            if (!settings.hasOwnProperty('script_embedded')) {
-                settings.script_embedded = '';
-            }
-            if (checkboxEmbed.checked) {
-                settings.script_embedded = 'https://demo.surfly.com/script/screenshare_button_script.js';
-                addLogLine('floating screenshare button will be added to the session');
+            if (checkboxEmbed) {
+                checkboxEmbed.addEventListener('change', function () {
+                    if (!settings.hasOwnProperty('script_embedded')) {
+                        settings.script_embedded = '';
+                    }
+                    if (checkboxEmbed.checked) {
+                        settings.script_embedded = 'https://demo.surfly.com/script/screenshare_button_script.js';
+                        addLogLine('floating screenshare button will be added to the session');
+                    } else {
+                        settings.script_embedded = '';
+                        addLogLine('floating screenshare button will not be added to the session');
+                    }
+                });
             } else {
-                settings.script_embedded = '';
-                addLogLine('floating screenshare button will not be added to the session');
+                console.error('Element with ID "checkboxEmbed" not found.');
             }
-        });
-    } else {
-        console.error('Element with ID "checkboxEmbed" not found.');
-    }
-}
+        }
 
         function LoadSurflyProd() {
             const widgetInput = document.getElementById("widgetKey");
@@ -150,18 +166,18 @@
 
 
         function validateURL() {
-    var urlInput = document.getElementById('session_url_input').value;
-    var urlRegex = /^(?:(?:https?|ftp):\/\/)?(?:www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\/[^\s]*)?$/;
+            var urlInput = document.getElementById('session_url_input').value;
+            var urlRegex = /^(?:(?:https?|ftp):\/\/)?(?:www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\/[^\s]*)?$/;
 
-    if (urlInput.trim() !== '' && urlRegex.test(urlInput)) {
-        settings.url = urlInput;
-        console.log('Valid URL found. Session will load ',urlInput);
-    } else {
-        settings.url = "www.wikipedia.com";
-        console.log('No valid input URL found. Session will load Wikipedia');
-    }
-    StartSession();
-}
+            if (urlInput.trim() !== '' && urlRegex.test(urlInput)) {
+                settings.url = urlInput;
+                console.log('Valid URL found. Session will load ', urlInput);
+            } else {
+                settings.url = "www.wikipedia.com";
+                console.log('No valid input URL found. Session will load Wikipedia');
+            }
+            StartSession();
+        }
 
         function StartSession() {
             // Surfly.init() must be called before any other API call
@@ -286,87 +302,156 @@
                 console.error('surfly_log not found');
             }
         }
+
+
+//Cross origin comunication
+var video = document.getElementById('countdown-video');
+        video.addEventListener('ended', function() {
+            console.log('Video has finished!');
+        });
+
+
+
     </script>
 
 
 </head>
 
 <body
-    style="font-family: 'Nunito', sans-serif; font-size: smaller; margin: 0px; padding: 0px; display: flex; flex-direction: column; height: 100vh;align-content:center;">
-    <h1 style="margin-left: 10px;font-size: large;">Surfly Javascript Examples</h1>
+    style="font-family: 'Nunito', sans-serif; font-size: smaller; margin: 0px; padding: 0px; display: flex; flex-direction: column; height: 100vh;width:100vw;position:fixed;">
+    <header style="background-color:#e54747;height:5%;width:100vw;position:fixed;border: 1px solid #e54747;">
+        <h1 style="margin-left: 10px;font-size: large; color:#eff0f0;">Implementing Surfly Javascript</h1>
+    </header>
 
-    <!--INSTRUCTIONS-->
-    <div style="width: 100vw; justify-content: center; align-items: center; border-top: 1px solid #ccc; padding: 2px;">
-        <!--STEP 1-->
-        <div id="step1"
-            style="width: 100vw; display:flex; justify-content: left; align-items: center; border-bottom: 1px dotted #ccc; margin-left: 10px;">
-            <div id="step1-left" style="width: 20vw;">
-                <p><b>1.</b> Enter your Widget Key &<br> Load Surfly JS from Selected Environment<br>
-                    <span style="font-size:x-small;color:gray;">Integrations > Widget Key<br></span>
-                </p>
+    <!--DASHBOARD-->
+    <div
+        style="position:fixed;top:5%;display:flex; height:25%;width: 100vw; justify-content: center; border-top: 1px solid #ccc;">
+        <!--LEFT-->
+        <div
+            style="position:fixed;width: 50vw;left:0; height:100%; justify-content: center; align-items: center; padding-right: 2vw; background-color:#fafafa; border: 1px solid #b2b2b2;overflow:scroll;">
+            <!--STEP 1-->
+            <div id="step1"
+                style="width: 100%; display:flex; justify-content: left; align-items: center; border-bottom: 1px dotted #ccc; margin-left: 10px;">
+                <div id="step1-left" style="width: 50%;">
+                    <p><b>1.</b> Enter your Widget Key &<br> Load Surfly JS from Selected Environment<br>
+                        <span style="font-size:x-small;color:gray;">Integrations > Widget Key<br></span>
+                    </p>
+                </div>
+                <div id="step1-right" style="width: 50%; display:flex; flex-direction: column;">
+                    <input type="text" id="widgetKey" placeholder="Enter your Widget Key..."
+                        style="width: auto; flex-grow: 1; margin-right: 5px;" class="input">
+                    <div id="load-buttons"
+                        style="display:flex; flex-direction:row; justify-content:flex-start;margin-right: 5px; margin-top: 5px;">
+                        <button onclick="LoadSurflyProd()" style="margin-right: 5px;" class="button-white">Load Surfly
+                            Production</button>
+                        <button onclick="LoadSurflyUat()" style="margin-right: 5px;" class="button-white">Load Surfly
+                            UAT</button>
+                    </div>
+                </div>
             </div>
-            <div id="step1-right" style="width: 80vw;">
-                <input type="text" id="widgetKey" placeholder="Enter your Widget Key..."
-                    style="width: 300px; flex-grow: 1; margin-right: 5px;" class="input">
-                <button onclick="LoadSurflyProd()" style="margin-right: 5px;" class="button">Load Surfly Production</button>
-                <button onclick="LoadSurflyUat()" style="margin-right: 5px;" class="button">Load Surfly UAT</button>
+            <!--STEP 2-->
+
+            <div id="step2"
+                style="width: 100%; display:flex; justify-content: left; align-items: center; border-bottom: 1px dotted #ccc; margin-left: 10px;">
+                <div id="step2-left" style="width: 50%;">
+                    <p>
+                        <b>2.</b> Select Additional Options<br>
+                        <span style="font-size:x-small;color:gray">View the Page Source to see the JS used<br></span>
+                    </p>
+                </div>
+                <div id="step2-right" style="width: 50%; display:flex; flex-direction: column;">
+                    <p style="font-size:.9rem;color:gray"><input type="checkbox" id="checkboxEmbed"
+                            style="margin-right: 10px;">add floating "share screen" button</p>
+                </div>
             </div>
+            <!--STEP 3-->
+            <div id="step3"
+                style="width: 100%; display:flex; justify-content: left; align-items: center; margin-left: 10px;">
+                <div id="step3-left" style="width: 50%">
+                    <p>
+                        <b>3.</b> Enter a valid URL &<br>Click <b>Start Session</b> to begin<br>
+                        <span style="font-size:x-small;color:gray">The Surfly session URL will be loaded into the iframe
+                            below.<br> Use the footer buttons to control the session with JS.<br></span>
+                    </p>
+                </div>
+
+                <div id="step3-right" style="width: 50%; display:flex; flex-direction: column;">
+                    <input type="text" placeholder="Enter any valid URL" id="session_url_input"
+                        style="width: 3auto; flex-grow: 1; margin-right: 5px;" class="input">
+                    <div id="start-session-button"
+                        style="display:flex; flex-direction:row; justify-content:flex-start;margin-right: 5px;margin-top: 5px;">
+                        <button onclick="validateURL()" class="button-white">Start Session</button>
+                    </div>
+                </div>
+            </div>
+
         </div>
-        <!--STEP 2-->
-        <div id="step2"
-            style="width: 100vw; display:flex; justify-content: left; align-items: center; border-bottom: 1px dotted #ccc; margin-left: 10px;">
-            <div id="step2-left" style="width: 20vw;">
+
+        <!--RIGHT-->
+        <div
+            style="position:fixed;left: 51vw;width: 49vw;height:100%; justify-content: center; align-items:start; background-color:#eff0f0;border: 1px solid #b2b2b2;overflow:scroll;display:flex;">
+            <div id="right-notes"
+                style="width: 30vw; height:25vh; display:flex; flex-direction:column;margin-left: 10px;margin-right:10px;overflow:scroll;">
                 <p>
-                    <b>2.</b> Select Additional Options<br>
-                    <span style="font-size:x-small;color:gray">View the Page Source to see the JS used<br></span>
+                    <b>Cross-Origin Messages</b><br><br> Click to play the 10 second countdown<br><br>The session will <b>end</b> once the video has finished<br><br>
+                    <span style="font-size:small;color:gray">This function is useful when you need to establish a communication channel between your JS code on the original page and the Surfly session iframe<br></span>
                 </p>
             </div>
-            <div id="step2-right" style="width: 80vw;">
-                <p style="font-size:.9rem;color:gray"><input type="checkbox" id="checkboxEmbed"
-                        style="margin-right: 10px;">add floating "share screen" button</p>
+
+
+            <div id="video-container"
+                style="width: 65%; height:25vh;display:flex; justify-content: left; align-items: center; border-bottom: 1px dotted #ccc;">
+                <iframe id="countdown-video" width="100%" height="100%" src="https://www.youtube.com/embed/FUKmyRLOlAA?si=Sc1ngJL7GE2YHpqt"
+                    title="YouTube video player" frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
             </div>
         </div>
-        <!--STEP 3-->
-        <div id="step3"
-            style="width: 100vw; display:flex; justify-content: left; align-items: center; border-bottom: 1px dotted #ccc; margin-left: 10px;">
-            <div id="step3-left" style="width: 20vw;">
-                <p>
-                    <b>3.</b> Enter a valid URL &<br>Click <b>Start Session</b> to begin<br>
-                    <span style="font-size:x-small;color:gray">The Surfly session URL will be loaded into the iframe
-                        below.<br> Use the footer buttons to control the session with JS.<br></span>
-                </p>
-            </div>
-            <div id="step3-right" style="width: 80vw;">
-                <input type="text" placeholder="Enter any valid URL" id="session_url_input"
-                    style="width: 300px; flex-grow: 1; margin-right: 5px;" class="input">
-                <button onclick="validateURL()" class="button">Start Session</button>
-            </div>
-        </div>
+
 
     </div>
+    </div>
 
-    <!-- Event Logger Window -->
-    <div style="height:80vh;flex: 1; border: 1px solid #ccc; display: flex; overflow: scroll; padding: 2px;">
-        <div style="flex: .22; padding-right: 10px;overflow:scroll">
-            <h2 style="margin-left: 10px;font-size:medium">Log:</h2>
-            <p id="surfly_log" style="font-size:.8rem" ;></p>
+    <!-- Event log & iFrame -->
+    <div style="position:fixed;height:65%;width:100%;top:30%;bottom:5%; display: flex; background-color: #7cadbf;">
+        <!--logger-->
+        <div style="height:100%;width:25%;left:0;overflow:scroll;">
+            <div id="log-box" style="border: 1px solid #166e8e;height:100%;">
+                <h2
+                    style="position:fixed;width:20%;margin:0;padding:0;font-size:medium; font-weight:lighter;color:#eff0f0; background-color:#166e8e;">
+                    &nbsp;Event logger:</h2>
+                <p id="surfly_log" style="font-size:.8rem;color:#eff0f0"></p>
+            </div>
         </div>
-        <div style="flex: 1; padding-left: 10px;">
-            <iframe id="leader" src="https://www.example.com" frameborder="0"
-                style="flex: 2; border: 1px solid gray; width: 100%; height: 100%;"></iframe>
+        <!--iframe-->
+        <div style="height:100%;width:100%; display: flex; flex-direction:column;background-color: #fafafa;">
+            <div id="iframe-container" style="display:flex; flex-direction:column;height:100%;">
+                <h2
+                    style="font-size:medium; font-weight:lighter; background-color:#e54747;color:#eff0f0;margin:0;border: 1px solid #e54747;">
+                    &nbsp;Session iFrame:</h2>
+                <iframe id="leader" src="https://www.example.com" frameborder="0"
+                    style="height:100%;border: 1px solid #e54747;"></iframe>
+            </div>
         </div>
     </div>
 
     <!-- Panel of Buttons -->
     <div
-        style="width: 100vw; display: flex; justify-content: center; align-items: center; border-top: 1px solid #ccc; padding: 10px;">
-        <button style="display:none" onclick="toggleHostSession()" class="button">Switch Host</button>
-        <button style="margin-right: 30px;" onclick="TakeBackControl()" class="button">Take Control</button>
-        <button style="margin-right: 30px;" onclick="ToggleVideochatFullscreen()" class="button">Toggle Videochat Full Screen</button>
-        <button style="margin-right: 30px;" onclick="ToggleVideochatMicrophone()" class="button">Mute/Unmute</button>
-        <button style="margin-right: 30px;" onclick="ToggleDrawing()" class="button">Toggle Drawing</button>
-        <button style="margin-right: 30px;" onclick="shareScreen()" class="button">Share Screen</button>
-        <button style="margin-right: 30px;" onclick="endSurflySession()" class="button">End Session</button>
+        style="position:fixed;width: 100%; top:95%;height:5%; border-top: 1px solid #e54747;background-color:#eff0f0;display: flex; justify-content: space-evenly; align-items: center;">
+        <div id="note-container" style="align-items: flex-start;font-size:normal">
+            <p style="color:#757575;">Call Sufly functions from the parent page:</p>
+        </div>
+        <div id="button-container" style="display:flex;">
+            <button style="margin-right: 30px;display:none" onclick="toggleHostSession()" class="button">Switch
+                Host</button>
+            <button style="margin-right: 30px;" onclick="TakeBackControl()" class="button-red">Take Control</button>
+            <button style="margin-right: 30px;" onclick="ToggleVideochatFullscreen()" class="button-red">Toggle
+                Videochat Full Screen</button>
+            <button style="margin-right: 30px;" onclick="ToggleVideochatMicrophone()"
+                class="button-red">Mute/Unmute</button>
+            <button style="margin-right: 30px;" onclick="ToggleDrawing()" class="button-red">Toggle Drawing</button>
+            <button style="margin-right: 30px;" onclick="shareScreen()" class="button-red">Share Screen</button>
+            <button style="margin-right: 30px;" onclick="endSurflySession()" class="button-red">End Session</button>
+        </div>
     </div>
 
 </body>
