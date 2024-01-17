@@ -306,37 +306,10 @@
 
 //Cross origin comunication
 window.addEventListener('message', function (event) {
-            // Check if the origin of the message is from the embedded YouTube iframe
-            if (event.origin === 'https://www.youtube.com') {
-                // Check if the event data indicates the video has finished
-                if (event.data === 'videoFinished') {
-                    // Video has finished playing
-                    console.log('Embedded YouTube video has finished!');
-                }
+            if (event.origin === 'https://demo.surfly.com/resources/youtube-iframe.html' && event.data === 'videoFinished') {
+                console.log('Embedded YouTube video has finished on the parent page!');
             }
         });
-
-        // Inject YouTube Iframe API script
-        var tag = document.createElement('script');
-        tag.src = 'https://www.youtube.com/iframe_api';
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-        // YouTube API callback function
-        function onYouTubeIframeAPIReady() {
-            // Create a new YouTube player
-            var player = new YT.Player('youtubeIframe', {
-                events: {
-                    'onStateChange': function (event) {
-                        // Check if the video has ended
-                        if (event.data === YT.PlayerState.ENDED) {
-                            // Send a message to the parent document
-                            window.parent.postMessage('videoFinished', 'https://www.youtube.com');
-                        }
-                    }
-                }
-            });
-        }
 
     </script>
 
@@ -427,7 +400,7 @@ window.addEventListener('message', function (event) {
 
             <div id="video-container"
                 style="width: 65%; height:25vh;display:flex; justify-content: left; align-items: center; border-bottom: 1px dotted #ccc;">
-                <iframe id="youtubeIframe" width="560" height="315" src="https://www.youtube.com/embed/FUKmyRLOlAA?si=Sc1ngJL7GE2YHpqt?enablejsapi=1" frameborder="0" allowfullscreen></iframe>
+                <iframe id="youtubeIframe" width="100%" height="100%" src="https://demo.surfly.com/resources/youtube-iframe.html" frameborder="0" allowfullscreen></iframe>
             </div>
         </div>
 
