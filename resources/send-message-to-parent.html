@@ -35,10 +35,24 @@
     <button class="button" id="sendMessageBtn">Send Message to Parent Page</button>
 
     <script>
-        document.getElementById('sendMessageBtn').addEventListener('click', function () {
-            // Send a message to the parent page
-            window.parent.postMessage('Hello from the iframe!', '*');
-        });
+if (!Surfly.isInsideSession) {
+  // From inside a co-browsing window, send a message to the parent window
+  var endBtn = document.getElementById('sendMessageBtn');
+  endBtn.addEventListener('click', function() {
+    console.log('button clicked');
+    Surfly.listSessions()[0].sendMessage({message: 'end'}, window.location.origin);
+  });
+}
+else {
+// Check the cobrowsing session and set the message event listener
+  Surfly.currentSession
+  .on('message', function(session, event) {
+    if (event.data.message === 'end') {
+      // reply to the message
+      sessionEnd();
+    }
+  });
+}
     </script>
 
 </body>
