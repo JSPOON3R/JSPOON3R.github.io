@@ -305,21 +305,11 @@
 
 
 //Cross origin comunication
-  window.addEventListener('message', function (event) {
-            if (event.origin === 'https://www.youtube.com') {
-                if (event.data === 'onStateChange') {
-                    var youtubeIframe = document.getElementById('youtubeIframe');
-                    youtubeIframe.contentWindow.postMessage('getCurrentTime', 'https://www.youtube.com');
-                } else if (event.data === 'videoFinished') {
-                    console.log('Embedded YouTube video has finished!');
-                }
+        window.addEventListener('message', function (event) {
+            if (event.origin === 'https://www.youtube.com' && event.data === 'videoFinished') {
+                console.log('Embedded YouTube video has finished!');
             }
         });
-
-        window.onload = function () {
-            var youtubeIframe = document.getElementById('youtubeIframe');
-            youtubeIframe.contentWindow.postMessage('addEventListener', 'https://www.youtube.com');
-        };
 
     </script>
 
