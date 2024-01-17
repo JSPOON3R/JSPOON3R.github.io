@@ -305,12 +305,21 @@
 
 
 //Cross origin comunication
-var video = document.getElementById('countdown-video');
-        video.addEventListener('ended', function() {
-            console.log('Video has finished!');
+  window.addEventListener('message', function (event) {
+            if (event.origin === 'https://www.youtube.com') {
+                if (event.data === 'onStateChange') {
+                    var youtubeIframe = document.getElementById('youtubeIframe');
+                    youtubeIframe.contentWindow.postMessage('getCurrentTime', 'https://www.youtube.com');
+                } else if (event.data === 'videoFinished') {
+                    console.log('Embedded YouTube video has finished!');
+                }
+            }
         });
 
-
+        window.onload = function () {
+            var youtubeIframe = document.getElementById('youtubeIframe');
+            youtubeIframe.contentWindow.postMessage('addEventListener', 'https://www.youtube.com');
+        };
 
     </script>
 
@@ -393,7 +402,7 @@ var video = document.getElementById('countdown-video');
             <div id="right-notes"
                 style="width: 30vw; height:25vh; display:flex; flex-direction:column;margin-left: 10px;margin-right:10px;overflow:scroll;">
                 <p>
-                    <b>Cross-Origin Messages</b><br><br> Click to play the 10 second countdown<br><br>The session will <b>end</b> once the video has finished<br><br>
+                    <b>Cross-Origin Messages</b><br><br> Click to play the 10 second countdown<br><br>A JS event handler will <b>end the session</b> once the video has finished<br><br>
                     <span style="font-size:small;color:gray">This function is useful when you need to establish a communication channel between your JS code on the original page and the Surfly session iframe<br></span>
                 </p>
             </div>
@@ -401,7 +410,7 @@ var video = document.getElementById('countdown-video');
 
             <div id="video-container"
                 style="width: 65%; height:25vh;display:flex; justify-content: left; align-items: center; border-bottom: 1px dotted #ccc;">
-                <iframe id="countdown-video" width="100%" height="100%" src="https://www.youtube.com/embed/FUKmyRLOlAA?si=Sc1ngJL7GE2YHpqt"
+                <iframe id="youtubeIframe" width="100%" height="100%" src="https://www.youtube.com/embed/FUKmyRLOlAA?si=Sc1ngJL7GE2YHpqt"
                     title="YouTube video player" frameborder="0"
                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
             </div>
