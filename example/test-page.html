@@ -303,7 +303,24 @@
             }
         }
 
-
+//parent/child communication
+if (!Surfly.isInsideSession) {
+  // From outside a co-browsing window, send a message to the co-browsing window
+  var endBtn = document.getElementById('btn-end-queued-session');
+  endBtn.addEventListener('click', function() {
+    Surfly.listSessions()[0].sendMessage({message: 'end'}, window.location.origin);
+  });
+}
+else {
+// Check the cobrowsing session and set the message event listener
+  Surfly.currentSession
+  .on('message', function(session, event) {
+    if (event.data.message === 'end') {
+      // reply to the message
+      sessionEnd();
+    }
+  });
+}
 
 
     </script>
@@ -387,15 +404,14 @@
             <div id="right-notes"
                 style="width: 30vw; height:25vh; display:flex; flex-direction:column;margin-left: 10px;margin-right:10px;overflow:scroll;">
                 <p>
-                    <b>Cross-Origin Messages</b><br><br> Click to play the 10 second countdown<br><br>A JS event handler will <b>end the session</b> once the video has finished<br><br>
-                    <span style="font-size:small;color:gray">This function is useful when you need to establish a communication channel between your JS code on the original page and the Surfly session iframe<br></span>
+                    <b>Communicating with the Surfly iFrame</b><br><br> To test communication between the Surfly iframe and the parent page. Load the URL below and click the button<br><br><b>https://demo.surfly.com/resources/send-message-to-parent.html</b><br><br>
+                    <span style="font-size:small;color:gray">A line will post in the log to confirm the click. This function is useful when you need to establish a communication channel between your JS code on the original page and the Surfly session iframe<br></span>
                 </p>
             </div>
 
 
-            <div id="video-container"
+            <div id=""
                 style="width: 65%; height:25vh;display:flex; justify-content: left; align-items: center; border-bottom: 1px dotted #ccc;">
-                <iframe id="youtubeIframe" width="100%" height="100%" src="https://demo.surfly.com/resources/youtube-iframe.html" frameborder="0" allowfullscreen></iframe>
             </div>
         </div>
 
