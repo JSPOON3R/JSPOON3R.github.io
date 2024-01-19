@@ -30,16 +30,27 @@
         }
     </style>
 
+<script>
+    Surfly.currentSession
+    .on('message', function(session, event)  {
+        // Check if the origin of the sender is allowed
+        if (event.origin !== 'https://demo.surfly.com') {
+            console.error('Message received from an untrusted origin:', event.origin);
+            return;
+        }
+    
+        // Check the content of the message
+        if (event.data.message === 'HELLO!') {
+            console.log('Message Received in iframe:', event.data.message);
+        }
+    });
+        </script>
 </head>
 <body>
 
     <button class="button" id="sendMessageBtn">Send Message to Parent Page</button>
 
-    <script>
-//send message to parent page when button is clicked
 
-
-    </script>
 
 </body>
 </html>
