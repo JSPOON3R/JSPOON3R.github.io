@@ -304,22 +304,23 @@
         }
 
 //parent/child communication
-if (!Surfly.isInsideSession) {
-  var sendMessageBtn = document.getElementById('sendMessageBtn');
-  endBtn.addEventListener('click', function() {
-    console.log("Message Sent from iframe");
-    Surfly.listSessions()[0].sendMessage({message: 'HELLO!'}, 'https://demo.surfly.com', window.location.origin);
-});
-}
-else {
-  Surfly.currentSession
-  .on('message', function(session, event) {
-    if (event.data.message === 'HELLO!') {
-        addLogLine('MESSAGE: Hello from inside the session!');
-      console.log("Message Recieved: "+event.data.message);
+document.addEventListener('DOMContentLoaded', function () {
+    if (!Surfly.isInsideSession) {
+        var sendMessageBtn = document.getElementById('sendMessageBtn');
+        sendMessageBtn.addEventListener('click', function () {
+            console.log("Message Sent from iframe");
+            Surfly.listSessions()[0].sendMessage({ message: 'HELLO!' }, 'https://demo.surfly.com', window.location.origin);
+        });
+    } else {
+        Surfly.currentSession
+            .on('message', function (session, event) {
+                if (event.data.message === 'HELLO!') {
+                    addLogLine('MESSAGE: Hello from inside the session!');
+                    console.log("Message Received: " + event.data.message);
+                }
+            });
     }
-  });
-} 
+});
 
 Surfly.currentSession
   .on('message', function(session, event) {
