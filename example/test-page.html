@@ -209,11 +209,6 @@
                         addLogLine('you are tab owner: ' + +session._isLeader);
                     })
 
-                    //message reciever 
-                    .on('message', function (session, event) {
-            console.log("Message received:" + event.data.message);
-        })
-
                     //log participant_joined event info
                     .on('participant_joined', function (session, event) {
                         console.log('participant joined:', event);
@@ -258,6 +253,12 @@
                     console.log(session, 'has ended');
                     addLogLine('session ended at: ' + session._openTs);
                 });
+
+
+                //message reciever 
+                 Surfly.currentSession.on('message', function (session, event) {
+            console.log("Message received:" + event.data.message);
+        })
             });
         
         }
