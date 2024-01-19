@@ -32,8 +32,8 @@
 
 <script>
 
-    
-    Surfly.currentSession
+
+    Surfly.listSessions()[0].currentSession
     .on('message', function(session, event)  {
         // Check if the origin of the sender is allowed
         if (event.origin !== 'https://demo.surfly.com') {
