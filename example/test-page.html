@@ -265,14 +265,13 @@
         }
     });
 
-Surfly.on('session_loaded', function () {
     console.log("session loaded works");
         var sendMessageBtn = document.getElementById('sendMessageBtn');
         sendMessageBtn.addEventListener('click', function () {
             Surfly.listSessions()[0].sendMessage({ message: 'HELLO!' }, 'https://demo.surfly.com', window.location.origin);
             console.log("Message Sent from parent");
         });
-});
+
 
             });
         
