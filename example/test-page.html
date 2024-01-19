@@ -189,11 +189,6 @@
                 }
 
 
-                //listen for messages from parent page
-                Surfly.on('session_started', function () {
-
-});
-
 
                 //log session_created event info
                 Surfly.on("session_created", function (session, event) {
@@ -212,14 +207,12 @@
                         console.log('Follower Link:' + session.followerLink);
                         addLogLine('session in queue: ' + session.queued);
                         addLogLine('you are tab owner: ' + +session._isLeader);
-                        if (Surfly.Session) {
-        Surfly.Session.on('message', function (session, event) {
-            console.log("Message received:" + event.data.message);
-        });
-    } else {
-        console.error('Surfly.Session is not defined :(');
-    }
                     })
+
+                    //message reciever 
+                    .on('message', function (session, event) {
+            console.log("Message received:" + event.data.message);
+        })
 
                     //log participant_joined event info
                     .on('participant_joined', function (session, event) {
