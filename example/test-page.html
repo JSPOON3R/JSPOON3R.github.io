@@ -311,7 +311,6 @@ if (!Surfly.isInsideSession) {
 });
 }
 else {
-// Check the cobrowsing session and set the message event listener
   Surfly.currentSession
   .on('message', function(session, event) {
     if (event.data.message === 'HELLO!') {
@@ -328,7 +327,7 @@ Surfly.currentSession
       console.log("Message Recieved: "+event.data.message);
     }
   });
-  
+
 //recieve message from https://demo.surfly.com/resources/send-message-to-parent.html button
 
 
