@@ -251,12 +251,10 @@
                     console.log(session, 'has ended');
                     addLogLine('session ended at: ' + session._openTs);
                 });
-            });
 
-            //parent/child communication
+   //parent/child communication
 
-            Surfly.currentSession
-    .on('message', function(session, event)  {
+   Surfly.currentSession.on('message', function(session, event)  {
         // Check if the origin of the sender is allowed
         if (event.origin !== 'https://demo.surfly.com') {
             console.error('Message received from an untrusted origin:', event.origin);
@@ -267,20 +265,17 @@
         }
     });
 
-
-
-
-
 Surfly.on('session_loaded', function () {
-    if (!Surfly.isInsideSession) {
+    console.log("session loaded works");
         var sendMessageBtn = document.getElementById('sendMessageBtn');
         sendMessageBtn.addEventListener('click', function () {
             Surfly.listSessions()[0].sendMessage({ message: 'HELLO!' }, 'https://demo.surfly.com', window.location.origin);
             console.log("Message Sent from parent");
         });
-    } 
 });
 
+            });
+        
         }
 
         function endSurflySession() {
