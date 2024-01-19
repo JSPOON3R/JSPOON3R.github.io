@@ -62,6 +62,9 @@
      });
           
        });
+
+
+
        function sendToParent() {
     console.log("Send Message to Parent Page button clicked");
 
@@ -69,13 +72,17 @@
 
     if (Session) {
         console.log('Sending message...');
-        Session.sendMessage({ message: 'ALL good' }, window.location.origin, function (error) {
-            if (error) {
-                console.error('Error sending message:', error);
-            } else {
-                console.log('Message sent successfully.');
-            }
-        });
+        try {
+            Session.sendMessage({ message: 'ALL good' }, window.location.origin, function (error) {
+                if (error) {
+                    console.error('Error sending message:', error);
+                } else {
+                    console.log('Message sent successfully.');
+                }
+            });
+        } catch (exception) {
+            console.error('Exception in sendMessage callback:', exception);
+        }
     } else {
         console.error('No active sessions');
     }
