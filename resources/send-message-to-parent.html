@@ -68,6 +68,7 @@
     var Session = Surfly.listSessions()[0];
 
     if (Session) {
+        console.log('Sending message...');
         Session.sendMessage({ message: 'ALL good' }, window.location.origin, function (error) {
             if (error) {
                 console.error('Error sending message:', error);
