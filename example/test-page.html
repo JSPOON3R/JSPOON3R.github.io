@@ -321,6 +321,14 @@ else {
   });
 } 
 
+Surfly.currentSession
+  .on('message', function(session, event) {
+    if (event.data.message === 'HELLO!') {
+        addLogLine('MESSAGE: Hello from inside the session!');
+      console.log("Message Recieved: "+event.data.message);
+    }
+  });
+  
 //recieve message from https://demo.surfly.com/resources/send-message-to-parent.html button
 
 
