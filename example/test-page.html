@@ -304,7 +304,7 @@
         }
 
 //parent/child communication
-document.addEventListener('DOMContentLoaded', function () {
+Surfly.on('session_started', function () {
     if (!Surfly.isInsideSession) {
         var sendMessageBtn = document.getElementById('sendMessageBtn');
         sendMessageBtn.addEventListener('click', function () {
