@@ -190,9 +190,16 @@
 
 
                 //listen for messages from parent page
-                Surfly.currentSession.on('message', function(session, event) {
-      console.log("Message received:" + event.data.message);
-    });
+                Surfly.on('session_started', function () {
+    if (Surfly.currentSession) {
+        Surfly.currentSession.on('message', function (session, event) {
+            console.log("Message received:" + event.data.message);
+        });
+    } else {
+        console.error('Surfly.currentSession is not defined.');
+    }
+});
+
 
                 //log session_created event info
                 Surfly.on("session_created", function (session, event) {
