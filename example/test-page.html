@@ -304,7 +304,22 @@
         }
 
 //parent/child communication
-
+if (!Surfly.isInsideSession) {
+  var sendMessageBtn = document.getElementById('sendMessageBtn');
+  endBtn.addEventListener('click', function() {
+    Surfly.listSessions()[0].sendMessage({message: 'HELLO!'}, 'https://demo.surfly.com', window.location.origin);
+});
+}
+else {
+// Check the cobrowsing session and set the message event listener
+  Surfly.currentSession
+  .on('message', function(session, event) {
+    if (event.data.message === 'HELLO!') {
+        addLogLine('MESSAGE: Hello from inside the session!');
+      console.log("Message Recieved: "+event.data.message);
+    }
+  });
+} 
 
 //recieve message from https://demo.surfly.com/resources/send-message-to-parent.html button
 
@@ -394,6 +409,8 @@
                     <b style="font-size:small;color:#166e8e">Communicating with the Surfly iFrame</b><br><br> To test communication between the Surfly iframe and the parent page. Load the URL below and click the button<br><br><b>https://demo.surfly.com/resources/send-message-to-parent.html</b><br><br>
                     <span style="color:#166e8e">A line will post in the log to confirm the click. This function is useful when you need to establish a communication channel between your JS code on the original page and the Surfly session iframe<br></span>
                 </p>
+                <button class="button-white" id="sendMessageBtn">Send Message to Session</button>
+
             </div>
 
 
