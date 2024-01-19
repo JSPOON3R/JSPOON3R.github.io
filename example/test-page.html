@@ -191,13 +191,7 @@
 
                 //listen for messages from parent page
                 Surfly.on('session_started', function () {
-    if (Surfly.currentSession) {
-        Surfly.currentSession.on('message', function (session, event) {
-            console.log("Message received:" + event.data.message);
-        });
-    } else {
-        console.error('Surfly.currentSession is not defined.');
-    }
+
 });
 
 
@@ -218,6 +212,13 @@
                         console.log('Follower Link:' + session.followerLink);
                         addLogLine('session in queue: ' + session.queued);
                         addLogLine('you are tab owner: ' + +session._isLeader);
+                        if (Surfly.Session) {
+        Surfly.Session.on('message', function (session, event) {
+            console.log("Message received:" + event.data.message);
+        });
+    } else {
+        console.error('Surfly.Session is not defined :(');
+    }
                     })
 
                     //log participant_joined event info
