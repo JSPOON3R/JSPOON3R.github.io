@@ -63,6 +63,7 @@
           
        });
      function sendToParent() {
+        console.log("Send Message to Parent Page button clicked");
       Surfly.listSessions()[0].sendMessage({message: 'ALL good'}, window.location.origin);
      }
        </script>
