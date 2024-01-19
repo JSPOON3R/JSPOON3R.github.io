@@ -33,19 +33,7 @@
 <script>
 
 
-    Surfly.listSessions()[0].currentSession
-    .on('message', function(session, event)  {
-        // Check if the origin of the sender is allowed
-        if (event.origin !== 'https://demo.surfly.com') {
-            console.error('Message received from an untrusted origin:', event.origin);
-            return;
-        }
     
-        // Check the content of the message
-        if (event.data.message === 'HELLO!') {
-            console.log('Message Received in iframe:', event.data.message);
-        }
-    });
         </script>
 </head>
 <body>
