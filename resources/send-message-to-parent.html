@@ -62,17 +62,23 @@
      });
           
        });
-     function sendToParent() {
-        console.log("Send Message to Parent Page button clicked");
-      Surfly.listSessions()[0].sendMessage({message: 'ALL good'}, window.location.origin);
-      Surfly.listSessions()[0].sendMessage({ message: 'ALL good' }, window.location.origin, function(error) {
-    if (error) {
-        console.error('Error sending message:', error);
+       function sendToParent() {
+    console.log("Send Message to Parent Page button clicked");
+
+    var Session = Surfly.listSessions()[0];
+
+    if (Session) {
+        Session.sendMessage({ message: 'ALL good' }, window.location.origin, function (error) {
+            if (error) {
+                console.error('Error sending message:', error);
+            } else {
+                console.log('Message sent successfully.');
+            }
+        });
     } else {
-        console.log('Message sent successfully.');
+        console.error('No active sessions');
     }
-});
-     }
+}
        </script>
 </head>
 <body>
