@@ -48,7 +48,7 @@
              }
            else {
          Surfly.currentSession.on('message', function(session, event) {
-           console.log("HHH "+event.data.message);
+           console.log("Init success "+event.data.message);
             Surfly.currentSession.sendMessage({message: 'Recvd'}, window.location.origin);
          });
        }
