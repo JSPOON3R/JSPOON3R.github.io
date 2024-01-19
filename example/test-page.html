@@ -304,23 +304,7 @@
         }
 
 //parent/child communication
-if (!Surfly.isInsideSession) {
-  // From outside a co-browsing window, send a message to the co-browsing window
-  var endBtn = document.getElementById('btn-end-queued-session');
-  endBtn.addEventListener('click', function() {
-    Surfly.listSessions()[0].sendMessage({message: 'end'}, window.location.origin);
-  });
-}
-else {
-// Check the cobrowsing session and set the message event listener
-  Surfly.currentSession
-  .on('message', function(session, event) {
-    if (event.data.message === 'end') {
-      // reply to the message
-      sessionEnd();
-    }
-  });
-}
+
 
 //recieve message from https://demo.surfly.com/resources/send-message-to-parent.html button
 
