@@ -259,7 +259,7 @@ Surfly.on('session_loaded', function () {
         var sendMessageBtn = document.getElementById('sendMessageBtn');
         sendMessageBtn.addEventListener('click', function () {
             Surfly.listSessions()[0].sendMessage({ message: 'HELLO!' }, 'https://demo.surfly.com', window.location.origin);
-            console.log("Message Sent from parent", event.data.message);
+            console.log("Message Sent from parent");
         });
     } 
 });
