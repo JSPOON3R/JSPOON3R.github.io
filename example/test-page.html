@@ -307,6 +307,7 @@
 if (!Surfly.isInsideSession) {
   var sendMessageBtn = document.getElementById('sendMessageBtn');
   endBtn.addEventListener('click', function() {
+    console.log("Message Sent from iframe");
     Surfly.listSessions()[0].sendMessage({message: 'HELLO!'}, 'https://demo.surfly.com', window.location.origin);
 });
 }
