@@ -256,9 +256,16 @@
 
 
                 //message reciever 
-                 Surfly.currentSession.on('message', function (session, event) {
-            console.log("Message received:" + event.data.message);
-        })
+                Surfly.on('session_started', function () {
+    if (Surfly.currentSession) {
+        Surfly.currentSession.on('message', function (session, event) {
+            console.log("Message received: " + event.data.message);
+            // Add logic to handle the received message as needed
+        });
+    } else {
+        console.error('Surfly.currentSession is not defined. :(');
+    }
+});
             });
         
         }
