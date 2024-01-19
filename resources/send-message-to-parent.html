@@ -68,22 +68,9 @@
        
        function sendToParent() {
     console.log("Send Message to Parent Page button clicked");
+    Surfly.listSessions()[0].sendMessage({message: 'ALL good'}, window.location.origin);
+       }
 
-    var Session = Surfly.listSessions()[0];
-
-    if (Session) {
-        console.log('Sending message...');
-        Session.sendMessage({ message: 'ALL good' }, window.location.origin, function (error) {
-            if (error) {
-                console.error('Error sending message:', error);
-            } else {
-                console.log('Message sent successfully.');
-            }
-        });
-    } else {
-        console.error('No active sessions');
-    }
-}
        </script>
 </head>
 <body>
