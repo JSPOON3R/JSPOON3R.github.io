@@ -276,6 +276,7 @@
 
         function sendMessage() {
             SurflySession.sendMessage({ message: 'HELLO from outside!' }, 'https://demo.surfly.com', window.location.origin);
+            iframe.contentWindow.postMessage({ message: 'HELLO from outside!' }, 'https://demo.surfly.com/resources/send-message-to-parent.html');
             console.log("Message Sent from parent");
         }
 
