@@ -32,13 +32,16 @@
 
 <script>
 
-
+function sendMessage() {
+            Surfly.listSessions()[0].sendMessage({ message: 'HELLO!' }, 'https://demo.surfly.com', window.location.origin);
+            console.log("Message Sent from child page");
+}
     
         </script>
 </head>
 <body>
 
-    <button class="button" id="sendMessageBtn">Send Message to Parent Page</button>
+    <button class="button" id="sendMessageBtn" onclick="sendMessage()">Send Message to Parent Page</button>
 
 
 
