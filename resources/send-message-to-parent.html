@@ -58,6 +58,21 @@
         console.log("Message Sent from child page");
     };
     
+
+
+    window.addEventListener('message', function (event) {
+    // Check if the origin of the sender is allowed
+    if (event.origin !== 'https://demo.surfly.com') {
+        console.error('2. Message received from an untrusted origin:', event.origin);
+        return;
+    }
+
+    // Check the content of the message
+    if (event.data.message === 'HELLO from outside!') {
+        console.log('2. Message Received in iframe:', event.data.message);
+    }
+});
+
         </script>
 </head>
 <body>
