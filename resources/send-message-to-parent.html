@@ -37,7 +37,7 @@ window.onload = function() {
     function sendMessage() {
         Surfly.listSessions()[0].sendMessage({ message: 'HELLO from inside!' }, 'https://demo.surfly.com', window.location.origin);
         console.log("Message Sent from child page");
-    }
+    };
 
     Surfly.on('session_started', function () {
                     SurflySession.on('message', function (session, event) {
