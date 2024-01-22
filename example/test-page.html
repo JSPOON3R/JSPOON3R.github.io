@@ -257,13 +257,13 @@
 
                 //message reciever 
                 Surfly.on('session_started', function () {
-    if (Surfly.currentSession) {
-        Surfly.currentSession.on('message', function (session, event) {
+    if ( Surfly.listSessions()[0]) {
+        Surfly.listSessions()[0].on('message', function (session, event) {
             console.log("Message received: " + event.data.message);
             // Add logic to handle the received message as needed
         });
     } else {
-        console.error('Surfly.currentSession is not defined. :(');
+        console.error('Surfly.listSessions()[0] is not defined. :(');
     }
 });
             });
