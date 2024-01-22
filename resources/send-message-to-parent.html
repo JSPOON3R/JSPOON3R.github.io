@@ -38,6 +38,18 @@ window.onload = function() {
         Surfly.listSessions()[0].sendMessage({ message: 'HELLO!' }, 'https://demo.surfly.com', window.location.origin);
         console.log("Message Sent from child page");
     }
+
+    Surfly.on('session_started', function () {
+                    SurflySession.on('message', function (session, event) {
+                        if (event.origin !== 'https://demo.surfly.com') {
+                            console.error('Message received from an untrusted origin:', event.origin);
+                            return;
+                        }
+                        if (event.data.message === 'HELLO!') {
+                            console.log('Message Received:', event.data.message);
+                        }
+                    });
+                });
 };
     
         </script>
