@@ -31,15 +31,17 @@
     </style>
 
 <script>
+ (function(s,u,r,f,l,y){s[f]=s[f]||{init:function(){s[f].q=arguments}};
+  l=u.createElement(r);y=u.getElementsByTagName(r)[0];l.async=1;
+  l.src='https://surfly.com/surfly.js';y.parentNode.insertBefore(l,y);})
+  (window,document,'script','Surfly');
 
 
-window.onload = function() {
-    function sendMessage() {
-        Surfly.listSessions()[0].sendMessage({ message: 'HELLO from inside!' }, 'https://demo.surfly.com', window.location.origin);
-        console.log("Message Sent from child page");
-    };
+  Surfly.init(settings, function(initResult) {
+    if (initResult.success) {
+      console.log('Surfly loaded on child page')
+    }});
 
-    Surfly.on('session_started', function () {
                     SurflySession.on('message', function (session, event) {
                         if (event.origin !== 'https://demo.surfly.com') {
                             console.error('Message received from an untrusted origin:', event.origin);
@@ -49,8 +51,12 @@ window.onload = function() {
                             console.log('Message Received inside session:', event.data.message);
                         }
                     });
-                });
-};
+           
+
+                    function sendMessage() {
+        Surfly.listSessions()[0].sendMessage({ message: 'HELLO from inside!' }, 'https://demo.surfly.com', window.location.origin);
+        console.log("Message Sent from child page");
+    };
     
         </script>
 </head>
