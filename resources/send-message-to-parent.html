@@ -42,7 +42,7 @@
         console.log('Surfly loaded on child page');
       if (!Surfly.isInsideSession) {
         Surfly.on('message', function (session, event) {
-                        if (event.origin !== 'https://demo.surfly.com') {
+                        if (event.origin) {
                             console.error('Message received from an untrusted origin:', event.origin);
                             return;
                         }
