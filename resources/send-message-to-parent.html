@@ -115,6 +115,7 @@ window.addEventListener('message', function (event) {
     // Check if the origin of the sender is allowed
     if (event.origin) {
         console.log('anything');
+        console.log(event)
         console.log('3. Message received from '+ event.origin +': '+ event.data);
         addLogLine('4. Message received from '+ event.origin +': '+ MessageEvent.event.data.message);
         return;
@@ -126,7 +127,23 @@ window.addEventListener('message', function (event) {
     }
 });
 
-
+window.addEventListener('message', function(event) {
+  try {
+    // Check if the message is from the expected origin
+    if (event.origin === 'https://demo.surfly.com') {
+      // Log the entire event object
+      console.log('Received postMessage from the outer window:', event);
+      
+      // Try to parse and log the message data
+      const messageData = JSON.parse(event.data);
+      console.log('Message data:', messageData);
+    } else {
+      console.warn('Received postMessage from an unexpected origin:', event.origin);
+    }
+  } catch (error) {
+    console.error('Error handling postMessage:', error);
+  }
+});
 
 function addLogLine(t) {
             const outputElement = document.getElementById('surfly_log');
