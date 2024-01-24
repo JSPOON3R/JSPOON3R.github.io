@@ -82,8 +82,8 @@
 
     window.addEventListener('message', function (event) {
     // Check if the origin of the sender is allowed
-    if (event.origin !== 'https://demo.surfly.com') {
-        console.error('2. Message received from an untrusted origin:', event.origin);
+    if (event.origin !== 'https://surfly.com') {
+        console.error('2. Message received from an untrusted origin:', event.data.message);
         return;
     }
 
@@ -96,7 +96,8 @@
 window.addEventListener('message', function (event) {
     // Check if the origin of the sender is allowed
     if (event.origin) {
-        console.log('2. Message from origin:', event.origin);
+        console.log('2. Message received from '+ event.origin +': '+event.data.message);
+        addLogLine('2. Message received from '+ event.origin +': '+event.data.message);
         return;
     }
 
