@@ -264,6 +264,7 @@
                         }
                         if (event.data.message) {
                             console.log('Message Received outside session:', event.data.message);
+                            addLogLine('Message from Session: ' + event.data.message);
                         }
                     });
                 });
