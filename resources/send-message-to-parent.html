@@ -47,7 +47,7 @@
       
 //send message to parent page
         function sendMessage() {
-        Surfly.listSessions()[0].sendMessage({ message: 'Child Page: hello' }, 'https://demo.surfly.com', window.location.origin);
+        Surfly.listSessions()[0].sendMessage({ message: 'Hello there' }, 'https://demo.surfly.com', window.location.origin);
         addLogLine('Message sent to Parent Page');
         console.log("Message sent to Parent Page");
     };
