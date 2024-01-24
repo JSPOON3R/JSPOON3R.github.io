@@ -258,7 +258,7 @@
                 //message reciever 
                 Surfly.on('session_started', function () {
                     SurflySession.on('message', function (session, event) {
-                        if (event.origin !== 'https://surfly.com') {
+                        if (event.origin !== 'https://demo.surfly.com') {
                             console.error('Message received from an untrusted origin:', event.origin);
                             return;
                         }
