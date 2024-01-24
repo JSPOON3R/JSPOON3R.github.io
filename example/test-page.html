@@ -294,7 +294,7 @@
     var iframe = document.getElementById('leader');
 
     if (iframe) {
-        iframe.contentWindow.postMessage({ message: 'HELLO from outside!' }, "https://surfly.com", window.location.origin);
+        iframe.contentWindow.postMessage({message:'HELLO from outside!'}, "https://surfly.com", window.location.origin);
         console.log("Message Sent from parent 2");
     } else {
         console.error('Iframe not found.');
