@@ -63,7 +63,7 @@
 
                     function sendMessage() {
         Surfly.listSessions()[0].sendMessage({ message: 'HELLO from inside!' }, 'https://demo.surfly.com', window.location.origin);
-        addLogLine('Message sent to Parent Page: ' + event.data.message);
+        addLogLine('Message sent to Parent Page' + message);
         console.log("Message Sent from child page");
     };
     
