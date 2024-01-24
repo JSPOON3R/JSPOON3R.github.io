@@ -57,7 +57,7 @@ window.addEventListener('message', function (event) {
     // Check if the origin of the sender is allowed
     if (event.origin) {
         console.log(event.data.params.msg.message);
-        console.log('Message received from Parent Page: '+ event.data.params.msg.message);
+        console.log('Message received from Parent Page: '+ event.data.message);
         addLogLine('Message received from Parent Page: '+ event.data.params.msg.message);
         return;
     }
