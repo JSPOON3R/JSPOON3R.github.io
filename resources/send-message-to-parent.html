@@ -40,53 +40,11 @@
   Surfly.init( function(initResult) {
     if (initResult.success) {
         console.log('Surfly loaded on child page');
-      if (!Surfly.isInsideSession) {
-        Surfly.on('message', function (session, event) {
-                        if (event.origin) {
-                            console.error('Message received from an untrusted origin:', event.origin);
-                            return;
-                        }
-                        if (event.data.message) {
-                            console.log('Message Received inside session:', event.data.message);
-                        }
-                        if (event.origin !== 'https://surfly.com') {
-                            console.error('Message received from an untrusted origin:', event.origin);
-                            return;
-                        }
-                        if (event.data.message) {
-                            console.log('Message Received inside session:', event.data.message);
-                        }
-                        if (event.origin) {
-                            console.log('Message received from :', event.origin);
-                            console.log('Message Received inside session:', event.data.message);
-                        }
-                    });
-
-                    Surfly.currentSession.on('message', function (session, event) {
-    // Check if the origin of the sender is allowed
-    if (event.origin !== 'https://demo.surfly.com') {
-        console.error('Message received from an untrusted origin:', event.origin);
-        return;
-    }
-
-    // Check if event.data is defined before accessing its 'message' property
-    if (event.data && event.data.message) {
-        console.log('confirm');
-        addLogLine('1. Message received from ' + event.origin + ': ' + event.data.message);
-    } else {
-        console.error('Received message with undefined or missing "message" property.');
-    }
-});
-      }
     } else {
       console.log('Surfly init failed in iFrame');
     }
   });
-
-
-
-            
-           
+      
 
                     function sendMessage() {
         Surfly.listSessions()[0].sendMessage({ message: 'HELLO from inside!' }, 'https://demo.surfly.com', window.location.origin);
@@ -95,58 +53,16 @@
     };
     
 
-
-    window.addEventListener('MessageEvent', function (event) {
-        console.log(event);
-    // Check if the origin of the sender is allowed
-    if (event.origin !== 'https://*.surfly.com') {
-
-        console.error('2. Message received from an untrusted origin:', event.data.message);
-        return;
-    }
-
-    // Check the content of the message
-    if (event.data.message === 'HELLO from outside!') {
-        console.log('2. Message Received in iframe:', event.data.message);
-    }
-});
-
 window.addEventListener('message', function (event) {
     // Check if the origin of the sender is allowed
     if (event.origin) {
-        console.log('anything');
-        console.log(event);
         console.log(event.data.params.msg.message);
-        console.log(event.data.message);
-        console.log(event.data.params.msg);
-        console.log('3. Message received from '+ event.origin +': '+ event.data);
-        addLogLine('4. Message received from '+ event.origin +': '+ event.data.params.msg.message);
+        console.log('3. Message received from '+ event.origin +': '+ event.data.params.msg.message);
+        addLogLine('Message received from Parent Page: '+ event.data.params.msg.message);
         return;
     }
-
-    // Check the content of the message
-    if (event.data.message === 'HELLO from outside!') {
-        console.log('2. Message Received in iframe:', event.data.params.msg.message);
-    }
 });
 
-window.addEventListener('message', function(event) {
-  try {
-    // Check if the message is from the expected origin
-    if (event.origin === 'https://surfly.com') {
-      // Log the entire event object
-      console.log('Received postMessage from the outer window:', event);
-      
-      // Try to parse and log the message data
-      const messageData = JSON.parse(event.data.params.msg.message);
-      console.log('Message data:', messageData);
-    } else {
-      console.warn('Received postMessage from an unexpected origin:', event.origin);
-    }
-  } catch (error) {
-    console.error('Error handling postMessage:', error);
-  }
-});
 
 function addLogLine(t) {
             const outputElement = document.getElementById('surfly_log');
