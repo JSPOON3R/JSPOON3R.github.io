@@ -63,7 +63,7 @@
 
                     function sendMessage() {
         Surfly.listSessions()[0].sendMessage({ message: 'HELLO from inside!' }, 'https://demo.surfly.com', window.location.origin);
-        addLogLine('Message sent to Parent Page' + message);
+        addLogLine('Message sent to Parent Page');
         console.log("Message Sent from child page");
     };
     
@@ -77,7 +77,7 @@
     }
 
     // Check the content of the message
-    if (event.data.message === 'HELLO from outside!') {
+    if (event.data.message === 'HELLO from outside 2!') {
         console.log('2. Message Received in iframe:', event.data.message);
     }
 });
