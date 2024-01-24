@@ -45,19 +45,19 @@
     }
   });
       
-
-                    function sendMessage() {
-        Surfly.listSessions()[0].sendMessage({ message: 'HELLO from inside!' }, 'https://demo.surfly.com', window.location.origin);
+//send message to parent page
+        function sendMessage() {
+        Surfly.listSessions()[0].sendMessage({ message: 'Child Page: hello' }, 'https://demo.surfly.com', window.location.origin);
         addLogLine('Message sent to Parent Page');
-        console.log("Message Sent from child page");
+        console.log("Message sent to Parent Page");
     };
     
-
+//listen for message from parent page
 window.addEventListener('message', function (event) {
     // Check if the origin of the sender is allowed
     if (event.origin) {
         console.log(event.data.params.msg.message);
-        console.log('3. Message received from '+ event.origin +': '+ event.data.params.msg.message);
+        console.log('Message received from Parent Page: '+ event.data.params.msg.message);
         addLogLine('Message received from Parent Page: '+ event.data.params.msg.message);
         return;
     }
