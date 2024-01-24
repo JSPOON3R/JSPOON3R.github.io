@@ -198,7 +198,7 @@
                     console.log('session pin', session.pin);
                     console.log('session created', event);
                 })
-                    //log session_started event info
+                    //log session_started event info & listen for messages from session iframe
                     .on('session_started', function (session, event) {
                         console.log('session_started_event:', event);
                         console.log('session_started_session:', session);
@@ -207,6 +207,16 @@
                         console.log('Follower Link:' + session.followerLink);
                         addLogLine('session in queue: ' + session.queued);
                         addLogLine('you are tab owner: ' + +session._isLeader);
+                        SurflySession.on('message', function (session, event) {
+                        if (event.origin !== 'https://demo.surfly.com') {
+                            console.error('Message received from an untrusted origin:', event.origin);
+                            return;
+                        }
+                        if (event.data.message) {
+                            console.log('Message Received from Child Page:', event.data.message);
+                            addLogLine('Message Received from Child Page:' + event.data.message);
+                        }
+                    });
                     })
 
                     //log participant_joined event info
@@ -273,19 +283,13 @@
         };
 
 
-
-
-        function sendMessage() {
-            SurflySession.sendMessage({ message: 'HELLO from outside!' }, window.location.origin);
-            console.log("Message Sent from parent");
-        }
-
+//send message to session
         function sendMessageToIframe() {
     var iframe = document.getElementById('leader');
 
     if (iframe) {
-        iframe.contentWindow.postMessage({ message: 'HELLO from outside!' }, "https://surfly.com");
-        console.log("Message Sent from parent 2");
+        iframe.contentWindow.postMessage({ message: 'Parent Page: Hello' }, "https://*.surfly.com");
+        console.log("Message Sent to Child Page");
     } else {
         console.error('Iframe not found.');
     }
@@ -432,7 +436,7 @@
                         useful when you need to establish a communication channel between your JS code on the original
                         page and the Surfly session iframe<br></span>
                 </p>
-                <button class="button-white" id="sendMessageBtn" onclick="sendMessage(),sendMessageToIframe()">Send Message to
+                <button class="button-white" id="sendMessageBtn" onclick="sendMessageToIframe()">Send Message to
                     Session</button>
 
             </div>
