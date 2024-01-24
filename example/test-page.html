@@ -258,7 +258,7 @@
                 //message reciever 
                 Surfly.on('session_started', function () {
                     SurflySession.on('message', function (session, event) {
-                        if (event.origin !== 'https://demo.surfly.com') {
+                        if (event.origin !== 'https://surfly.com') {
                             console.error('Message received from an untrusted origin:', event.origin);
                             return;
                         }
@@ -276,7 +276,7 @@
 
 
         function sendMessage() {
-            SurflySession.sendMessage({ message: 'HELLO from outside!' }, 'https://demo.surfly.com', window.location.origin);
+            SurflySession.sendMessage({ message: 'HELLO from outside!' }, 'https://surfly.com', window.location.origin);
             console.log("Message Sent from parent");
         }
 
@@ -284,8 +284,8 @@
     var iframe = document.getElementById('leader');
 
     if (iframe) {
-        iframe.contentWindow.postMessage({ message: 'HELLO from outside!' }, 'https://demo.surfly.com/resources/send-message-to-parent.html');
-        console.log("Message Sent from parent to iframe");
+        iframe.contentWindow.postMessage({ message: 'HELLO from outside 2!' }, 'https://surfly.com');
+        console.log("Message Sent from parent 2");
     } else {
         console.error('Iframe not found.');
     }
