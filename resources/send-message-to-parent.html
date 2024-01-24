@@ -116,7 +116,8 @@ window.addEventListener('message', function (event) {
     if (event.origin) {
         console.log('anything');
         console.log(event);
-        console.log(event.data);
+        console.log(event.data.params.msg);
+        console.log(event.data.message);
         console.log(event.data.message);
         console.log('3. Message received from '+ event.origin +': '+ event.data);
         addLogLine('4. Message received from '+ event.origin +': '+ MessageEvent.event.data.message);
@@ -137,7 +138,7 @@ window.addEventListener('message', function(event) {
       console.log('Received postMessage from the outer window:', event);
       
       // Try to parse and log the message data
-      const messageData = JSON.parse(event.data);
+      const messageData = JSON.parse(event.data.params.msg);
       console.log('Message data:', messageData);
     } else {
       console.warn('Received postMessage from an unexpected origin:', event.origin);
