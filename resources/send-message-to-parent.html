@@ -40,24 +40,62 @@
   Surfly.init( function(initResult) {
     if (initResult.success) {
         console.log('Surfly loaded on child page');
+      if (!Surfly.isInsideSession) {
+        Surfly.on('message', function (session, event) {
+                        if (event.origin) {
+                            console.error('Message received from an untrusted origin:', event.origin);
+                            return;
+                        }
+                        if (event.data.message) {
+                            console.log('Message Received inside session:', event.data.message);
+                        }
+                        if (event.origin !== 'https://surfly.com') {
+                            console.error('Message received from an untrusted origin:', event.origin);
+                            return;
+                        }
+                        if (event.data.message) {
+                            console.log('Message Received inside session:', event.data.message);
+                        }
+                        if (event.origin) {
+                            console.log('Message received from :', event.origin);
+                            console.log('Message Received inside session:', event.data.message);
+                        }
+                    });
+
+                    Surfly.currentSession.on('message', function (session, event) {
+    // Check if the origin of the sender is allowed
+    if (event.origin !== 'https://demo.surfly.com') {
+        console.error('Message received from an untrusted origin:', event.origin);
+        return;
+    }
+
+    // Check if event.data is defined before accessing its 'message' property
+    if (event.data && event.data.message) {
+        console.log('confirm');
+        addLogLine('1. Message received from ' + event.origin + ': ' + event.data.message);
+    } else {
+        console.error('Received message with undefined or missing "message" property.');
+    }
+});
+      }
     } else {
       console.log('Surfly init failed in iFrame');
     }
   });
       
-//send message to parent page
-        function sendMessage() {
-        Surfly.listSessions()[0].sendMessage({ message: 'Hello there' }, 'https://demo.surfly.com', window.location.origin);
+
+                    function sendMessage() {
+        Surfly.listSessions()[0].sendMessage({ message: 'HELLO from inside!' }, 'https://demo.surfly.com', window.location.origin);
         addLogLine('Message sent to Parent Page');
-        console.log("Message sent to Parent Page");
+        console.log("Message Sent from child page");
     };
     
-//listen for message from parent page
+
 window.addEventListener('message', function (event) {
     // Check if the origin of the sender is allowed
     if (event.origin) {
         console.log(event.data.params.msg.message);
-        console.log('Message received from Parent Page: '+ event.data.message);
+        console.log('3. Message received from '+ event.origin +': '+ event.data.params.msg.message);
         addLogLine('Message received from Parent Page: '+ event.data.params.msg.message);
         return;
     }
