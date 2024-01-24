@@ -93,6 +93,19 @@
     }
 });
 
+window.addEventListener('message', function (event) {
+    // Check if the origin of the sender is allowed
+    if (event.origin) {
+        console.log('2. Message from origin:', event.origin);
+        return;
+    }
+
+    // Check the content of the message
+    if (event.data.message === 'HELLO from outside!') {
+        console.log('2. Message Received in iframe:', event.data.message);
+    }
+});
+
 function addLogLine(t) {
             const outputElement = document.getElementById('surfly_log');
             if (outputElement) {
