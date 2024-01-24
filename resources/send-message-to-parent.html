@@ -71,7 +71,8 @@
 
     // Check if event.data is defined before accessing its 'message' property
     if (event.data && event.data.message) {
-        addLogLine('2. Message received from ' + event.origin + ': ' + event.data.message);
+        console.log('confirm');
+        addLogLine('1. Message received from ' + event.origin + ': ' + event.data.message);
     } else {
         console.error('Received message with undefined or missing "message" property.');
     }
@@ -96,8 +97,10 @@
 
 
     window.addEventListener('MessageEvent', function (event) {
+        console.log(event);
     // Check if the origin of the sender is allowed
-    if (event.origin !== 'https://surfly.com') {
+    if (event.origin !== 'https://*.surfly.com') {
+
         console.error('2. Message received from an untrusted origin:', event.data.message);
         return;
     }
@@ -111,8 +114,9 @@
 window.addEventListener('message', function (event) {
     // Check if the origin of the sender is allowed
     if (event.origin) {
-        console.log('2. Message received from '+ event.origin +': '+ event.data.message);
-        addLogLine('2. Message received from '+ event.origin +': '+ MessageEvent.event.data.message);
+        console.log('anything');
+        console.log('3. Message received from '+ event.origin +': '+ event.data.message);
+        addLogLine('4. Message received from '+ event.origin +': '+ MessageEvent.event.data.message);
         return;
     }
 
