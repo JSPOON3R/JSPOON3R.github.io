@@ -115,7 +115,7 @@ window.addEventListener('message', function (event) {
     // Check if the origin of the sender is allowed
     if (event.origin) {
         console.log('anything');
-        console.log('3. Message received from '+ event.origin +': '+ event);
+        console.log('3. Message received from '+ event.origin +': '+ event.data);
         addLogLine('4. Message received from '+ event.origin +': '+ MessageEvent.event.data.message);
         return;
     }
