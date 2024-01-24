@@ -25,8 +25,9 @@
             padding: 4px;
             border: 1px solid #b2b2b2;
             touch-action: manipulation;
-            width: fit-content;
+            width: 20vw;
             padding: 8px;
+            margin-top: 7px;
         }
     </style>
 
@@ -62,6 +63,7 @@
 
                     function sendMessage() {
         Surfly.listSessions()[0].sendMessage({ message: 'HELLO from inside!' }, 'https://demo.surfly.com', window.location.origin);
+        addLogLine('Message sent to Parent Page: ' + event.data.message);
         console.log("Message Sent from child page");
     };
     
@@ -80,11 +82,27 @@
     }
 });
 
+function addLogLine(t) {
+            const outputElement = document.getElementById('surfly_log');
+            if (outputElement) {
+                outputElement.innerHTML += '&bull; ' + t + '<br>';
+            } else {
+                console.error('surfly_log not found');
+            }
+        }
+
         </script>
 </head>
 <body>
 
-    <button class="button" id="sendMessageBtn" onclick="sendMessage()">Send Message to Parent Page</button>
+    <div style="height:100%;width:60%;overflow:scroll;display:flex;flex-direction: column;align-items: center;justify-content: center;">
+
+    
+        <div id="log-box" style="border: 1px solid #cf2e2e;height:10vw;width:20vw;background-color: #4b7d8f;border-radius:8px;">
+            <p id="surfly_log" style="font-size:.8rem;color:#eff0f0"></p>
+        </div>
+        <button class="button" id="sendMessageBtn" onclick="sendMessage()">Send Message to Parent Page</button>
+    </div>
 
 
 
