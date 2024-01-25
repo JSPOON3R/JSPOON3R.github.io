@@ -154,12 +154,12 @@
             // Log agent_status event info
             if (!Surfly.agentAvailable) {
                 console.log(event);
-                addLogLine('Availability: no agents are available');
+                addLogLine('<span style="color: #166e8e; font-weight: bold;">Availability:</span> ' + 'no agents are available');
             }
 
             if (Surfly.agentAvailable) {
                 console.log(Surfly.agent);
-                addLogLine('Availability: agents are available');
+                addLogLine('<span style="color: #166e8e; font-weight: bold;">Availability:</span> ' + 'agents are available');
             }
             SScheckBox();
         }
@@ -192,7 +192,7 @@
 
                 //log session_created event info
                 Surfly.on("session_created", function (session, event) {
-                    addLogLine('session ' + session._sessionId + ' has just started');
+                    addLogLine('<span style="color: #166e8e; font-weight: bold;">Session ID:</span> ' + session._sessionId + ' started');
                     addLogLine('join link: ' + session.followerLink);
                     addLogLine('session Pin: ' + session.pin);
                     console.log('session pin', session.pin);
@@ -420,14 +420,14 @@
                     <input type="text" id="messageToChild" placeholder="Message to child page..."
                         style="width: 12vw; margin-top: 1vh;" class="input">
                     <button style="width: 12vw; margin-top: 1vh;" class="button-white" id="sendMessageBtn"
-                        onclick="sendMessage(),sendMessageToIframe()">Send Message to
+                        onclick="sendMessage()">Send Message to
                         Session</button>
                 </p>
             </div>
 
 
             <div id=""
-                style="width: 10vw; height:24vh;display:flex; overflow:scroll;justify-content: center; align-items: center; border-radius: 8px;margin:2px;">
+                style="display:none;width: 10vw; height:24vh;display:flex; overflow:scroll;justify-content: center; align-items: center; border-radius: 8px;margin:2px;">
 
             </div>
 
