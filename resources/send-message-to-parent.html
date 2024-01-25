@@ -29,6 +29,18 @@
             padding: 8px;
             margin-top: 7px;
         }
+
+        .input {
+            background-color: #fff;
+            box-sizing: border-box;
+            border-radius: 8px;
+            color: #cf2e2e;
+            font-family: nunito, sans-serif;
+            font-size: .90rem;
+            font-weight: 70;
+            padding: 4px;
+            border: 1px solid #848484;
+        }
     </style>
 
 <script>
@@ -83,9 +95,12 @@
     }
   });
       
-
-                    function sendMessage() {
-        Surfly.listSessions()[0].sendMessage({ message: 'HELLO from inside!' }, 'https://demo.surfly.com', window.location.origin);
+//send message to parent page
+        function sendMessage() {
+            const input = document.getElementById("messageToParent");
+    const messageinput = input.value;
+    input.value = "";
+        Surfly.listSessions()[0].sendMessage({ message:messageinput}, 'https://demo.surfly.com', window.location.origin);
         addLogLine('Message sent to Parent Page');
         console.log("Message Sent from child page");
     };
@@ -96,7 +111,7 @@ window.addEventListener('message', function (event) {
     if (event.origin) {
         console.log(event.data.params.msg.message);
         console.log('3. Message received from '+ event.origin +': '+ event.data.params.msg.message);
-        addLogLine('Message received from Parent Page: '+ event.data.params.msg.message);
+        addLogLine('Parent Page: '+ event.data.params.msg.message);
         return;
     }
 });
@@ -115,12 +130,14 @@ function addLogLine(t) {
 </head>
 <body>
 
-    <div style="height:100%;width:60%;overflow:scroll;display:flex;flex-direction: column;align-items: center;justify-content: center;">
+    <div style="height:100%;width:60%;overflow:scroll;display:flex;flex-direction: column;align-items: center;justify-content: center;font-family: 'Nunito', sans-serif;">
 
     
         <div id="log-box" style="border: 1px solid #cf2e2e;height:10vw;width:20vw;background-color: #4b7d8f;border-radius:8px;">
-            <p id="surfly_log" style="font-size:.8rem;color:#eff0f0"></p>
+            <p id="surfly_log" style="font-size:.8rem;color:#eff0f0;overflow:scroll;"></p>
         </div>
+        <input type="text" id="messageToParent" placeholder="Message to parent page..."
+                        style="width: 20vw; margin-top: 1vh;" class="input">
         <button class="button" id="sendMessageBtn" onclick="sendMessage()">Send Message to Parent Page</button>
     </div>
 
