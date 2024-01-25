@@ -4,18 +4,6 @@
 document.addEventListener('DOMContentLoaded', function() {
     
 
-  function shareScreen() {
-    console.log('SurflySession:', window.parent.SurflySession);
-
-    // Access SurflySession from the parent window
-    if (window.parent && window.parent.SurflySession) {
-        window.parent.SurflySession.startScreensharing();
-        console.log('testtt');
-    } else {
-        console.error('SurflySession not found in the parent window.');
-    }
-}
-
     var cssKeyframes = `
       @keyframes glow {
         0% {
@@ -67,11 +55,12 @@ document.addEventListener('DOMContentLoaded', function() {
       textBox.style.borderRadius = '50%';
       textBox.innerText = 'SS';
       textBox.style.animation = 'glow 3s infinite alternate';
+      textBox.style.cursor = 'pointer';
     
     
       document.body.appendChild(textBox);
       textBox.addEventListener('click', function () {
-        SurflySession.startScreensharing();
+        window.parent.SurflySession.startScreensharing();
       });
     }
 
