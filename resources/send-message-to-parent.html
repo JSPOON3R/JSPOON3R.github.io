@@ -71,7 +71,7 @@
 window.addEventListener('message', function (event) {
     if (event.origin) {
         console.log('Message received from '+ event.origin +': '+ event.data.params.msg.message);
-        addLogLine('<span style="color: #166e8e; font-weight: bold;">Parent Page:</span> '+ event.data.params.msg.message);
+        addLogLine('<span style="color: #fd942a; font-weight: bold;">Parent Page:</span> '+ event.data.params.msg.message);
         return;
     }
 });
@@ -80,7 +80,7 @@ window.addEventListener('message', function (event) {
 function addLogLine(t) {
             const outputElement = document.getElementById('surfly_log');
             if (outputElement) {
-                outputElement.innerHTML += '&bull; ' + t + '<br>';
+                outputElement.innerHTML += '<span style="color: #c72323; font-weight: bold;">&bull; </span>' + t + '<br>';
             } else {
                 console.error('surfly_log not found');
             }
