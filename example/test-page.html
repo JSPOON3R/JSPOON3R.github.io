@@ -121,6 +121,7 @@
                 (window, document, 'script', 'Surfly');
 
             // Log agent_status event info
+            console.log(Surfly);
             if (!Surfly.agentAvailable) {
                 console.log(event);
                 addLogLine('<span style="color: #166e8e; font-weight: bold;">Agents Available: </span> ' + Surfly._agentAvailable);
@@ -227,14 +228,14 @@
                     .on('participant_joined', function (session, event) {
                         console.log('participant joined:', event);
                         console.log('participant joined:', session);
-                        console.log('Participant:', event.clientIndex, 'joined the session');
-                        addLogLine('<span style="color: #166e8e; font-weight: bold;">Participant </span> ' + event.clientIndex + ' joined');
+                        console.log('Participant Joined Session:', event.clientIndex);
+                        addLogLine('<span style="color: #166e8e; font-weight: bold;">Participant: </span> ' + event.clientIndex + ' joined');
                     })
 
                     .on('viewer_joined', function (session, event) {
                         console.log('viewer_joined_e:', event);
                         console.log('viewer_joined_s:', session);
-                        console.log('Participant count updated to:', event.count);
+                        console.log('Participant count:', event.count);
                         addLogLine('<span style="color: #166e8e; font-weight: bold;">Participant count: </span> ' + event.count);
                     })
 
@@ -247,20 +248,8 @@
                     .on('viewer_left', function (session, event) {
                         console.log('viewer_left_e:', event);
                         console.log('viewer_left_s:', session);
-                        console.log('Participant count updated to:', event.count);
+                        console.log('Participant count:', event.count);
                         addLogLine('<span style="color: #166e8e; font-weight: bold;">Participant count: </span> ' + event.count);
-                    })
-                    .on('relocate_start', function (session, event) {
-                        console.log('relocate_start:', event);
-                        console.log('relocate_start:', session);
-                    })
-                    .on('error', function (session, event) {
-                        console.log('error:', event);
-                        console.log('error:', session);
-                    })
-                    .on('tab_control', function (session, event) {
-                        console.log('tab_control:', event);
-                        console.log('tab_control:', session);
                     })
 
                 Surfly.on('session_ended', function (session) {
