@@ -192,9 +192,9 @@
 
                 //log session_created event info
                 Surfly.on("session_created", function (session, event) {
-                    addLogLine('<span style="color: #166e8e; font-weight: bold;">Session ID:</span> ' + session._sessionId + ' started');
-                    addLogLine('join link: ' + session.followerLink);
-                    addLogLine('session Pin: ' + session.pin);
+                    addLogLine('<span style="color: #166e8e; font-weight: bold;">Session ID:</span> ' + '<b>' + session._sessionId + '</b>' + ' started');
+                    addLogLine('<span style="color: #166e8e; font-weight: bold;">Join Link:</span> ' + session.followerLink);
+                    addLogLine('<span style="color: #166e8e; font-weight: bold;">Session Pin:</span> ' + session.pin);
                     console.log('session pin', session.pin);
                     console.log('session created', event);
                 })
@@ -205,8 +205,8 @@
                         console.log('session is queued:' + session.queued);
                         console.log('Leader Link:' + session.leaderLink);
                         console.log('Follower Link:' + session.followerLink);
-                        addLogLine('session in queue: ' + session.queued);
-                        addLogLine('you are tab owner: ' + +session._isLeader);
+                        addLogLine('<span style="color: #166e8e; font-weight: bold;">Session in Queue:</span> ' + session.queued);
+                        addLogLine('<span style="color: #166e8e; font-weight: bold;">You are Leader:</span> ' + +session._isLeader);
                         SurflySession.on('message', function (session, event) {
                             if (event.origin !== 'https://demo.surfly.com') {
                                 console.error('Message received from an untrusted origin:', event.origin);
@@ -274,7 +274,7 @@
     const messageinput = input.value;
     input.value = "";
             SurflySession.sendMessage({ message: messageinput }, window.location.origin);
-            console.log("Message Sent from parent");
+            console.log("Message Sent");
         }
 
         
