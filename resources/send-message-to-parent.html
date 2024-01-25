@@ -105,13 +105,13 @@
         console.log("Message Sent from child page");
     };
     
-
+//listen for messages from parent page
 window.addEventListener('message', function (event) {
     // Check if the origin of the sender is allowed
     if (event.origin) {
         console.log(event.data.params.msg.message);
         console.log('3. Message received from '+ event.origin +': '+ event.data.params.msg.message);
-        addLogLine('Parent Page: '+ event.data.params.msg.message);
+        addLogLine('<span style="color: #cf2e2e; font-weight: bold;">Child Page:</span> '+ event.data.params.msg.message);
         return;
     }
 });
