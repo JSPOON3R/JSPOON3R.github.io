@@ -214,7 +214,7 @@
                             }
                             if (event.data.message) {
                                 console.log('Message Received outside session 2:', event.data.message);
-                                addLogLine('Message from Session 2: ' + event.data.message);
+                                addLogLine('<span style="color: red; font-weight: bold;">Child Page:</span> ' + event.data.message);
                             }
                         });
                     })
@@ -446,7 +446,7 @@
                     onclick="copyToClipboard()">Copy Test URL</button><br><br>
                     <span style="color:#166e8e"><b>2.</b> Start a Session<br><br></span>
                     <span style="color:#166e8e"><b>2.</b> Send a Message to the Surfly iFrame</span>
-                    <input type="text" id="messageToChild" placeholder="Type a message..."
+                    <input type="text" id="messageToChild" placeholder="Message to child page..."
                         style="width: 12vw; margin-top: 1vh;" class="input">
                     <button style="width: 12vw; margin-top: 1vh;" class="button-white" id="sendMessageBtn"
                         onclick="sendMessage(),sendMessageToIframe()">Send Message to
