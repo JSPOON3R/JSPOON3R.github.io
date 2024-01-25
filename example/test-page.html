@@ -214,7 +214,7 @@
                             }
                             if (event.data.message) {
                                 console.log('Message Received outside session 2:', event.data.message);
-                                addLogLine('<span style="color: #cf2e2e; font-weight: bold;">Child Page:</span> ' + event.data.message);
+                                addLogLine('<span style="color: #166e8e; font-weight: bold;">Child Page:</span> ' + event.data.message);
                             }
                         });
                     })
@@ -277,24 +277,13 @@
             console.log("Message Sent from parent");
         }
 
-        function sendMessageToIframe() {
-            var iframe = document.getElementById('leader');
-
-            if (iframe) {
-                iframe.contentWindow.postMessage({ message: 'HELLO from outside!' }, "https://surfly.com", window.location.origin);
-                console.log("Message Sent from parent 2");
-            } else {
-                console.error('Iframe not found.');
-            }
-        }
-
+        
         function endSurflySession() {
             SurflySession.end();
 
         }
 
         var isControlRequested = false;
-
         function toggleHostSession() {
             if (isControlRequested) {
                 SurflySession.giveControl(1);
