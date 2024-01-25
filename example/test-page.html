@@ -77,7 +77,7 @@
             //select starting URL when agent joins
             url: ""
         };
-
+  //Function to include the embedded script for a screenshare button if the checkbox is marked
         function SScheckBox() {
             var checkboxEmbed = document.getElementById('checkboxEmbed');
 
@@ -88,10 +88,11 @@
                     }
                     if (checkboxEmbed.checked) {
                         settings.script_embedded = 'https://demo.surfly.com/script/screenshare_button_script.js';
-                        addLogLine('floating screenshare button will be added to the session');
+                        addLogLine('<span style="color: #166e8e; font-weight: bold;">Floating ScreenShare button added</span> ');
                     } else {
                         settings.script_embedded = '';
-                        addLogLine('floating screenshare button will not be added to the session');
+                        addLogLine('<span style="color: #166e8e; font-weight: bold;">Floating ScreenShare button removed</span> ');
+
                     }
                 });
             } else {
@@ -99,6 +100,7 @@
             }
         }
 
+//Load PROD Sufly JS lib
         function LoadSurflyProd() {
             const widgetInput = document.getElementById("widgetKey");
 
@@ -121,17 +123,17 @@
             // Log agent_status event info
             if (!Surfly.agentAvailable) {
                 console.log(event);
-                addLogLine('Availability: no agents are available');
+                addLogLine('<span style="color: #166e8e; font-weight: bold;">Agents Available: </span> ' + Surfly._agentAvailable);
             }
 
             if (Surfly.agentAvailable) {
                 console.log(Surfly.agent);
-                addLogLine('Availability: no agents are available');
+                addLogLine('<span style="color: #166e8e; font-weight: bold;">Agents Available: </span> ' + Surfly._agentAvailable);
             }
             SScheckBox();
         }
 
-
+//Load UAT Sufly JS lib for early testing
         function LoadSurflyUat() {
             const widgetInput = document.getElementById("widgetKey");
 
@@ -154,17 +156,18 @@
             // Log agent_status event info
             if (!Surfly.agentAvailable) {
                 console.log(event);
-                addLogLine('<span style="color: #166e8e; font-weight: bold;">Availability:</span> ' + 'no agents are available');
+                addLogLine('<span style="color: #166e8e; font-weight: bold;">Agents Available: </span> ' + Surfly._agentAvailable);
             }
 
             if (Surfly.agentAvailable) {
                 console.log(Surfly.agent);
-                addLogLine('<span style="color: #166e8e; font-weight: bold;">Availability:</span> ' + 'agents are available');
+                addLogLine('<span style="color: #166e8e; font-weight: bold;">Agents Available: </span> ' + Surfly._agentAvailable);
             }
             SScheckBox();
         }
 
 
+        //check the URL entered is valid before starting a session. Otherwise load Wikipedia
         function validateURL() {
             var urlInput = document.getElementById('session_url_input').value;
             var urlRegex = /^(?:(?:https?|ftp):\/\/)?(?:www\.)?[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(?:\/[^\s]*)?$/;
@@ -179,6 +182,7 @@
             StartSession();
         }
 
+        //function to start session. Events to trigger log lines
         function StartSession() {
             // Surfly.init() must be called before any other API call
             Surfly.init(settings, function (init) {
@@ -192,8 +196,8 @@
 
                 //log session_created event info
                 Surfly.on("session_created", function (session, event) {
-                    addLogLine('<span style="color: #166e8e; font-weight: bold;">Session ID:</span> ' + '<b>' + session._sessionId + '</b>' + ' started');
-                    addLogLine('<span style="color: #166e8e; font-weight: bold;">Join Link:</span> ' + session.followerLink);
+                    addLogLine('<span style="color: #166e8e; font-weight: bold;">Session ID:</span> ' + session._sessionId);
+                    addLogLine('<span style="color: #166e8e; font-weight: bold;">Participant Join Link:</span> ' + session.followerLink);
                     addLogLine('<span style="color: #166e8e; font-weight: bold;">Session Pin:</span> ' + session.pin);
                     console.log('session pin', session.pin);
                     console.log('session created', event);
@@ -206,7 +210,7 @@
                         console.log('Leader Link:' + session.leaderLink);
                         console.log('Follower Link:' + session.followerLink);
                         addLogLine('<span style="color: #166e8e; font-weight: bold;">Session in Queue:</span> ' + session.queued);
-                        addLogLine('<span style="color: #166e8e; font-weight: bold;">You are Leader:</span> ' + +session._isLeader);
+                        addLogLine('<span style="color: #166e8e; font-weight: bold;">You are Leader:</span> ' + session._isLeader);
                         SurflySession.on('message', function (session, event) {
                             if (event.origin !== 'https://demo.surfly.com') {
                                 console.error('Message received from an untrusted origin:', event.origin);
@@ -214,7 +218,7 @@
                             }
                             if (event.data.message) {
                                 console.log('Message Received outside session 2:', event.data.message);
-                                addLogLine('<span style="color: #166e8e; font-weight: bold;">Child Page:</span> ' + event.data.message);
+                                addLogLine('<span style="color: #fd942a; font-weight: bold;">Child Page:</span> ' + event.data.message);
                             }
                         });
                     })
@@ -224,27 +228,27 @@
                         console.log('participant joined:', event);
                         console.log('participant joined:', session);
                         console.log('Participant:', event.clientIndex, 'joined the session');
-                        addLogLine('participant ' + event.clientIndex + ' joined');
+                        addLogLine('<span style="color: #166e8e; font-weight: bold;">Participant </span> ' + event.clientIndex + ' joined');
                     })
 
                     .on('viewer_joined', function (session, event) {
                         console.log('viewer_joined_e:', event);
                         console.log('viewer_joined_s:', session);
                         console.log('Participant count updated to:', event.count);
-                        addLogLine('participant count updated to: ' + event.count);
+                        addLogLine('<span style="color: #166e8e; font-weight: bold;">Participant count: </span> ' + event.count);
                     })
 
                     //log participant_left event info
                     .on('participant_left', function (session, event) {
                         console.log('participant_left:', event);
                         console.log('participant_left:', session);
-                        addLogLine('participant ' + event.clientIndex + ' left');
+                        addLogLine('<span style="color: #166e8e; font-weight: bold;">Participant Left Session: </span> ' + event.clientIndex);
                     })
                     .on('viewer_left', function (session, event) {
                         console.log('viewer_left_e:', event);
                         console.log('viewer_left_s:', session);
                         console.log('Participant count updated to:', event.count);
-                        addLogLine('participant count updated to: ' + event.count);
+                        addLogLine('<span style="color: #166e8e; font-weight: bold;">Participant count: </span> ' + event.count);
                     })
                     .on('relocate_start', function (session, event) {
                         console.log('relocate_start:', event);
@@ -269,15 +273,16 @@
         };
 
 
+
         function sendMessage() {
             const input = document.getElementById("messageToChild");
-    const messageinput = input.value;
-    input.value = "";
+            const messageinput = input.value;
+            input.value = "";
             SurflySession.sendMessage({ message: messageinput }, window.location.origin);
             console.log("Message Sent");
         }
 
-        
+
         function endSurflySession() {
             SurflySession.end();
 
@@ -312,27 +317,24 @@
         function ToggleDrawing() {
             SurflySession.toggleDrawing();
         }
-        //add relocate function
-        //add host function
-
 
         // Function to add a line of text to log
         function addLogLine(t) {
             const outputElement = document.getElementById('surfly_log');
             if (outputElement) {
-                outputElement.innerHTML += '&bull; ' + t + '<br>';
+                outputElement.innerHTML += '<span style="color: #c72323; font-weight: bold;">&bull; </span>' + t + '<br>';
             } else {
                 console.error('surfly_log not found');
             }
         }
-//copy messaging url to clipboard
-    function copyToClipboard() {
-    var urlToCopy = 'https://demo.surfly.com/resources/send-message-to-parent.html';
-    navigator.clipboard.writeText(urlToCopy)
-        .catch(function(err) {
-            console.error('Unable to copy to clipboard', err);
-        });
-}
+        //copy messaging url to clipboard
+        function copyToClipboard() {
+            var urlToCopy = 'https://demo.surfly.com/resources/send-message-to-parent.html';
+            navigator.clipboard.writeText(urlToCopy)
+                .catch(function (err) {
+                    console.error('Unable to copy to clipboard', err);
+                });
+        }
     </script>
 
 
@@ -414,7 +416,7 @@
                     <b style="font-size:small;color:#166e8e">Communicating with the Surfly iFrame</b><br>Try it out
                     with our test page<br><br><b>1.</b> Copy the start URL:
                     <button style="width: 12vw; margin-top: 1vh;" class="button-white" id="copyurl"
-                    onclick="copyToClipboard()">Copy Test URL</button><br><br>
+                        onclick="copyToClipboard()">Copy Test URL</button><br><br>
                     <span style="color:#166e8e"><b>2.</b> Start a Session<br><br></span>
                     <span style="color:#166e8e"><b>2.</b> Send a Message to the Surfly iFrame</span>
                     <input type="text" id="messageToChild" placeholder="Message to child page..."
@@ -463,9 +465,6 @@
     <!-- Panel of Buttons -->
     <div
         style="position:fixed;width: 100%; top:95%;height:5%; border-top: 1px solid #e54747;background-color:#eff0f0;display: flex; justify-content: space-evenly; align-items: center;">
-        <div id="note-container" style="align-items: flex-start;font-size:normal">
-            <p style="color:#757575;">Call Sufly functions from the parent page:</p>
-        </div>
         <div id="button-container" style="display:flex;">
             <button style="margin-right: 30px;display:none" onclick="toggleHostSession()" class="button">Switch
                 Host</button>
