@@ -214,7 +214,7 @@
                             }
                             if (event.data.message) {
                                 console.log('Message Received outside session 2:', event.data.message);
-                                addLogLine('<span style="color: red; font-weight: bold;">Child Page:</span> ' + event.data.message);
+                                addLogLine('<span style="color: #cf2e2e; font-weight: bold;">Child Page:</span> ' + event.data.message);
                             }
                         });
                     })
@@ -264,20 +264,6 @@
                     addLogLine('session ended at: ' + session._openTs);
                 });
 
-
-                //message reciever 
-                Surfly.on('session_started', function () {
-                    SurflySession.on('message', function (session, event) {
-                        if (event.origin !== 'https://demo.surfly.com') {
-                            console.error('Message received from an untrusted origin:', event.origin);
-                            return;
-                        }
-                        if (event.data.message) {
-                            console.log('Message Received outside session:', event.data.message);
-                            addLogLine('Message from Session: ' + event.data.message);
-                        }
-                    });
-                });
             }
             );
         };
