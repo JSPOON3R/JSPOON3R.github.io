@@ -63,7 +63,7 @@
     const messageinput = input.value;
     input.value = "";
         Surfly.listSessions()[0].sendMessage({ message:messageinput}, 'https://demo.surfly.com', window.location.origin);
-        addLogLine('Message sent to Parent Page');
+        addLogLine('Message sent');
         console.log("Message Sent from child page");
     };
     
