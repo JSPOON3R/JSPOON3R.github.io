@@ -262,7 +262,7 @@
         };
 
 
-
+//send message to child page iframe function
         function sendMessage() {
             const input = document.getElementById("messageToChild");
             const messageinput = input.value;
@@ -271,12 +271,13 @@
             console.log("Message Sent");
         }
 
-
+//footer end session button
         function endSurflySession() {
             SurflySession.end();
 
         }
 
+        //footer host toggle
         var isControlRequested = false;
         function toggleHostSession() {
             if (isControlRequested) {
@@ -288,21 +289,27 @@
             }
         }
 
+        //footer screenshare button
         function shareScreen() {
             SurflySession.startScreensharing();
         }
 
-
+//footer control toggle
         function TakeBackControl() {
             SurflySession.revokeTabControl();
         }
 
+        //footer video chat full screen toggle
         function ToggleVideochatFullscreen() {
             SurflySession.toggleVideochatFullscreen();
         }
+
+        //footer microphone toggle
         function ToggleVideochatMicrophone() {
             SurflySession.toggleVideochatMicrophone();
         }
+
+        //footer drawing toggle
         function ToggleDrawing() {
             SurflySession.toggleDrawing();
         }
