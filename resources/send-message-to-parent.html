@@ -52,44 +52,6 @@
   Surfly.init( function(initResult) {
     if (initResult.success) {
         console.log('Surfly loaded on child page');
-      if (!Surfly.isInsideSession) {
-        Surfly.on('message', function (session, event) {
-                        if (event.origin) {
-                            console.error('Message received from an untrusted origin:', event.origin);
-                            return;
-                        }
-                        if (event.data.message) {
-                            console.log('Message Received inside session:', event.data.message);
-                        }
-                        if (event.origin !== 'https://surfly.com') {
-                            console.error('Message received from an untrusted origin:', event.origin);
-                            return;
-                        }
-                        if (event.data.message) {
-                            console.log('Message Received inside session:', event.data.message);
-                        }
-                        if (event.origin) {
-                            console.log('Message received from :', event.origin);
-                            console.log('Message Received inside session:', event.data.message);
-                        }
-                    });
-
-                    Surfly.currentSession.on('message', function (session, event) {
-    // Check if the origin of the sender is allowed
-    if (event.origin !== 'https://demo.surfly.com') {
-        console.error('Message received from an untrusted origin:', event.origin);
-        return;
-    }
-
-    // Check if event.data is defined before accessing its 'message' property
-    if (event.data && event.data.message) {
-        console.log('confirm');
-        addLogLine('1. Message received from ' + event.origin + ': ' + event.data.message);
-    } else {
-        console.error('Received message with undefined or missing "message" property.');
-    }
-});
-      }
     } else {
       console.log('Surfly init failed in iFrame');
     }
@@ -131,7 +93,7 @@ function addLogLine(t) {
     <div style="height:100%;width:60%;overflow:scroll;display:flex;flex-direction: column;align-items: center;justify-content: center;font-family: 'Nunito', sans-serif;">
 
     
-        <div id="log-box" style="border: 1px solid #cf2e2e;height:10vw;width:20vw;background-color: #4b7d8f;border-radius:8px;">
+        <div id="log-box" style="border: 1px solid #cf2e2e;height:10vw;width:20vw;background-color: #7cadbf;border-radius:8px;">
             <p id="surfly_log" style="font-size:.8rem;color:#eff0f0;overflow:scroll;"></p>
         </div>
         <input type="text" id="messageToParent" placeholder="Message to parent page..."
