@@ -5,12 +5,22 @@ document.addEventListener('DOMContentLoaded', function() {
     l.src='https://surfly.com/surfly.js';y.parentNode.insertBefore(l,y);})
     (window,document,'script','Surfly');
 
+    SurflySession = Surfly.listSessions()[0];
+
     Surfly.init( function(initResult) {
         if (initResult.success) {
             console.log('Surfly loaded on child page');
         } else {
             console.log('Surfly init failed in iFrame');
         }
+
+        SurflySession.on('message', function (session, event) {
+            if (event.origin) {
+                console.error('Message received from: ', event.origin);
+                console.log('Message Received outside session baby:', event.data.message);
+                addLogLine('<span style="color: #fd942a; font-weight: bold;">Child Page:</span> ' + event.data.message);
+            }
+        });
     });
 
     // Function to add HTML to the DOM
@@ -91,13 +101,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
         });
+
+        //listen for messages from parent page
+window.addEventListener('message', function (event) {
+    if (event.origin) {
+        console.log('Message received from '+ event.origin +': '+ event.data.params.msg.message);
+        return;
+    }
+});
     }
 
     //listen for messages from parent page
 window.addEventListener('message', function (event) {
     if (event.origin) {
         console.log('Message received from '+ event.origin +': '+ event.data.params.msg.message);
-        addLogLine('<span style="color: #fd942a; font-weight: bold;">Parent Page:</span> '+ event.data.params.msg.message);
         return;
     }
 });
