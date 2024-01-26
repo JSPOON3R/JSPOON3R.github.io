@@ -77,7 +77,7 @@
             //select starting URL when agent joins
             url: ""
         };
-  //Function to include the embedded script for a screenshare button if the checkbox is marked
+        //Function to include the embedded script for a screenshare button if the checkbox is marked
         function SScheckBox() {
             var checkboxEmbed = document.getElementById('checkboxEmbed');
 
@@ -100,7 +100,29 @@
             }
         }
 
-//Load PROD Sufly JS lib
+        function MWcheckBox() {
+            var checkboxEmbed = document.getElementById('messagewidgetEmbed');
+
+            if (checkboxEmbed) {
+                checkboxEmbed.addEventListener('change', function () {
+                    if (!settings.hasOwnProperty('script_embedded')) {
+                        settings.script_embedded = '';
+                    }
+                    if (checkboxEmbed.checked) {
+                        settings.script_embedded = 'https://demo.surfly.com/script/inject-messaging.js';
+                        addLogLine('<span style="color: #166e8e; font-weight: bold;">Messaging Widget added</span> ');
+                    } else {
+                        settings.script_embedded = '';
+                        addLogLine('<span style="color: #166e8e; font-weight: bold;">Messaging Widget removed</span> ');
+
+                    }
+                });
+            } else {
+                console.error('Element with ID "checkboxEmbed" not found.');
+            }
+        }
+
+        //Load PROD Sufly JS lib
         function LoadSurflyProd() {
             const widgetInput = document.getElementById("widgetKey");
 
@@ -133,7 +155,7 @@
             }
         }
 
-//Load UAT Sufly JS lib for early testing
+        //Load UAT Sufly JS lib for early testing
         function LoadSurflyUat() {
             const widgetInput = document.getElementById("widgetKey");
 
@@ -220,6 +242,26 @@
                                 addLogLine('<span style="color: #fd942a; font-weight: bold;">Child Page:</span> ' + event.data.message);
                             }
                         });
+
+
+
+
+                        SurflySession.on('message', function (session, event) {
+                            if (event.origin) {
+                                console.error('Message received from: ', event.origin);
+                                return;
+                            }
+                            if (event.data.message) {
+                                console.log('Message Received outside session baby:', event.data.message);
+                                addLogLine('<span style="color: #fd942a; font-weight: bold;">Child Page:</span> ' + event.data.message);
+                            }
+                        });
+
+
+
+
+
+
                     })
 
                     //log participant_joined event info
@@ -260,7 +302,7 @@
         };
 
 
-//send message to child page iframe function
+        //send message to child page iframe function
         function sendMessage() {
             const input = document.getElementById("messageToChild");
             const messageinput = input.value;
@@ -269,7 +311,7 @@
             console.log("Message Sent");
         }
 
-//footer end session button
+        //footer end session button
         function endSurflySession() {
             SurflySession.end();
 
@@ -292,7 +334,7 @@
             SurflySession.startScreensharing();
         }
 
-//footer control toggle
+        //footer control toggle
         function TakeBackControl() {
             SurflySession.revokeTabControl();
         }
@@ -342,7 +384,7 @@
         style="position:fixed;top:0;display:flex; height:25%;width: 100vw; justify-content: center; border-top: 1px solid #ccc;">
         <!--LEFT-->
         <div
-            style="position:fixed;width: 50vw;left:0; height:100%; justify-content: center; align-items: center; padding-right: 2vw; background-color:#fafafa; border: 1px solid #b2b2b2;overflow:scroll;">
+            style="position:fixed;width: 50vw;left:0; height:25%; padding-right: 2vw; background-color:#fafafa; border: 1px solid #b2b2b2;overflow:scroll;">
             <!--STEP 1-->
             <div id="step1"
                 style="width: 100%; display:flex; justify-content: left; align-items: center; border-bottom: 1px dotted #ccc; margin-left: 10px;">
@@ -373,9 +415,11 @@
                         <span style="font-size:x-small;color:gray">View the Page Source to see the JS used<br></span>
                     </p>
                 </div>
-                <div id="step2-right" style="width: 50%; display:flex; flex-direction: column;">
-                    <p style="font-size:.9rem;color:gray"><input onclick="SScheckBox()" type="checkbox" id="checkboxEmbed"
-                            style="margin-right: 10px;">add floating "share screen" button</p>
+                <div id="step2-right" style="width: 50%;">
+                    <p style="font-size:.9rem;color:gray"><input onclick="SScheckBox()" type="checkbox"
+                            id="checkboxEmbed" style="margin-right: 10px;">Add floating "share screen" button</p>
+                    <p style="font-size:.9rem;color:gray"><input onclick="MWcheckBox()" type="checkbox"
+                            id="messagewidgetEmbed" style="margin-right: 10px;">Add message widget to connect to parent page</p>
                 </div>
             </div>
             <!--STEP 3-->
