@@ -81,10 +81,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Event listener for send button click
         sendButton = document.getElementById('surfly-send-button')
         sendButton.addEventListener('click', function() {
-            var message = messageInput.value.trim();
-            if (message !== '') {
                 sendMessage();
-            }
         });
 
         // Listen for messages from parent page
@@ -95,6 +92,17 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    //listen for messages from parent page
+window.addEventListener('message', function (event) {
+    if (event.origin) {
+        console.log('Message received from '+ event.origin +': '+ event.data.params.msg.message);
+        addLogLine('<span style="color: #fd942a; font-weight: bold;">Parent Page:</span> '+ event.data.params.msg.message);
+        return;
+    }
+});
+
+
 
            
 });
