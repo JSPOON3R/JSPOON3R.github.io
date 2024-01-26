@@ -244,7 +244,7 @@
                         });
 
 
-//testing
+
 
                         SurflySession.on('message', function (session, event) {
                             if (event.origin) {
@@ -254,20 +254,17 @@
                             }
                         });
 
-
                         Surfly.on("session_started", ()=> {
-        Surfly.listSessions()[0].on('message', function(session, event) {
-                  console.log("HELLO: "+event.data.message);
-        });
-        Surfly.on("session_restored", ()=> {
             Surfly.listSessions()[0].on('message', function(session, event) {
                       console.log("HELLO: "+event.data.message);
             });
-});
+        
+    });});
 
 
 
                     })
+
 
                     //log participant_joined event info
                     .on('participant_joined', function (session, event) {
