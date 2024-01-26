@@ -75,7 +75,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const messageinput = input.value;
             input.value = "";
             Surfly.listSessions()[0].sendMessage({ message: messageinput }, 'https://surfly.com', window.location.origin);
-            console.log("Message Sent from Surfly widget");
+            console.log("Message Sent from Surfly widget: " + message);
         }
 
         // Event listener for send button click
