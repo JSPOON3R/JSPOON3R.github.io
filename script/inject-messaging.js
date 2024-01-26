@@ -21,10 +21,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         Surfly.on("session_started", ()=> {
-            Surfly.listSessions()[0].on('message', function(event) {
+            Surfly.listSessions()[0].on('message', function(session, event) {
                       console.log("HELLO: "+event.data.message);
             });
-    });
+        
+    });});
+
 
     // Function to add HTML to the DOM
     function insertFixedWidgetSurfly(callback) {
