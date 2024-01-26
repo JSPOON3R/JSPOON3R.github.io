@@ -5,8 +5,6 @@ document.addEventListener('DOMContentLoaded', function() {
     l.src='https://surfly.com/surfly.js';y.parentNode.insertBefore(l,y);})
     (window,document,'script','Surfly');
 
-    SurflySession = Surfly.listSessions()[0]
-
     Surfly.init( function(initResult) {
         if (initResult.success) {
             console.log('Surfly loaded on child page');
@@ -14,13 +12,18 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Surfly init failed in iFrame');
         }
 
-        SurflySession.on('message', function (session, event) {
+        Surfly.on('message', function (session, event) {
             if (event.origin) {
                 console.error('Message received from: ', event.origin);
                 console.log('Message Received outside session baby:', event.data.message);
                 addLogLine('<span style="color: #fd942a; font-weight: bold;">Child Page:</span> ' + event.data.message);
             }
         });
+
+        Surfly.on("session_started", ()=> {
+            Surfly.listSessions()[0].on('message', function(event) {
+                      console.log("HELLO: "+event.data.message);
+            });
     });
 
     // Function to add HTML to the DOM
