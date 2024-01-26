@@ -79,6 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Event listener for send button click
+        sendButton = document.getElementById('surfly-send-button')
         sendButton.addEventListener('click', function() {
             var message = messageInput.value.trim();
             if (message !== '') {
