@@ -1,21 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Load Surfly
-    (function(s,u,r,f,l,y){
-        s[f]=s[f]||{init:function(){s[f].q=arguments}};
-        l=u.createElement(r);y=u.getElementsByTagName(r)[0];l.async=1;
-        l.src='https://surfly.com/surfly.js';y.parentNode.insertBefore(l,y);
-    })(window,document,'script','Surfly');
+    //Load Surfly
+    (function(s,u,r,f,l,y){s[f]=s[f]||{init:function(){s[f].q=arguments}};
+    l=u.createElement(r);y=u.getElementsByTagName(r)[0];l.async=1;
+    l.src='https://surfly.com/surfly.js';y.parentNode.insertBefore(l,y);})
+    (window,document,'script','Surfly');
 
-    Surfly.init(function(initResult) {
+    Surfly.init( function(initResult) {
         if (initResult.success) {
             console.log('Surfly loaded on child page');
-
-            // Call the function to insert the fixed widget
-            insertFixedWidgetSurfly(function() {
-                // Callback function to execute after insertFixedWidgetSurfly completes
-                setupMessageAndListener();
-            });
-
         } else {
             console.log('Surfly init failed in iFrame');
         }
@@ -65,16 +57,20 @@ document.addEventListener('DOMContentLoaded', function() {
         sendButton.style.cursor = 'pointer';
         widgetContainer.appendChild(sendButton);
 
-        // Check if callback is provided and call it
         if (typeof callback === 'function') {
             callback();
         }
     }
 
-    // Function to set up message sending and listening
-    function setupMessageAndListener() {
-        // Function to send message to parent page
-        function sendMessage() {
+    // Call the function to insert the fixed widget
+    insertFixedWidgetSurfly(onInsertFixedWidgetSurflyCompleted);
+
+    function onInsertFixedWidgetSurflyCompleted() {
+        // This function will be executed when insertFixedWidgetSurfly() has fully executed
+        console.log('insertFixedWidgetSurfly has fully executed');
+
+         // Function to send message to parent page
+         function sendMessage() {
             const input = document.getElementById("surfly-message-input");
             const messageinput = input.value;
             input.value = "";
@@ -83,8 +79,8 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Event listener for send button click
-        document.getElementById('surfly-send-button').addEventListener('click', function() {
-            var message = document.getElementById("surfly-message-input").value.trim();
+        sendButton.addEventListener('click', function() {
+            var message = messageInput.value.trim();
             if (message !== '') {
                 sendMessage();
             }
@@ -98,4 +94,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+           
 });
