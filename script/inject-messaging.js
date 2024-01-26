@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', function() {
     l.src='https://surfly.com/surfly.js';y.parentNode.insertBefore(l,y);})
     (window,document,'script','Surfly');
 
-    SurflySession = Surfly.listSessions()[0];
+    SurflySession = Surfly.listSessions()[0]
 
     Surfly.init( function(initResult) {
         if (initResult.success) {
