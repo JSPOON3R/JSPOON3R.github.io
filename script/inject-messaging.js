@@ -12,15 +12,14 @@ document.addEventListener('DOMContentLoaded', function() {
             console.log('Surfly init failed in iFrame');
         }
 
-        Surfly.on('message', function (session, event) {
-            if (event.origin) {
-                console.error('Message received from: ', event.origin);
-                console.log('Message Received outside session baby:', event.data.message);
-                addLogLine('<span style="color: #fd942a; font-weight: bold;">Child Page:</span> ' + event.data.message);
-            }
-        });
 
         Surfly.on("session_started", ()=> {
+            Surfly.on('message', function (session, event) {
+                if (event.origin) {
+                    console.error('Message received inside from: ', event.origin);
+                    console.log('Message Received inside session:', event.data.message);
+                }
+            });
             Surfly.listSessions()[0].on('message', function(session, event) {
                       console.log("HELLO: "+event.data.message);
             });
