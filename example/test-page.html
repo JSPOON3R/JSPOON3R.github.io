@@ -249,17 +249,12 @@
                         SurflySession.on('message', function (session, event) {
                             if (event.origin) {
                                 console.error('Message received from: ', event.origin);
-                                console.log('Message Received outside session baby:', event.data.message);
+                                console.log('Message Received outside session:', event.data.message);
                                 addLogLine('<span style="color: #fd942a; font-weight: bold;">Child Page:</span> ' + event.data.message);
                             }
                         });
 
-                        Surfly.on("session_started", ()=> {
-            Surfly.listSessions()[0].on('message', function(session, event) {
-                      console.log("HELLO: "+event.data.message);
-            });
-        
-    });
+
 
 
 
