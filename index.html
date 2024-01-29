@@ -160,6 +160,10 @@
             display: flex;
         }
 
+        a {
+            text-decoration: none;
+        }
+
 
         body::before {
             content: '';
@@ -324,6 +328,18 @@
             padding-left: 16vw;
         }
 
+        .more-info-container {
+            display: flex;
+            flex-direction: row;
+            padding-left: 16vw;
+            margin-bottom:5vh;
+        }
+
+        .button-container{
+            display:flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
 
         .logo {
             width: 8vw;
@@ -355,11 +371,11 @@
             padding: 1rem;
             text-align: center;
             width: 24vw;
-            margin-right: 1vw;
+            margin-right: .2vw;
             margin-left: 1vw;
         }
-        .input-field:focus {
-            border-color:#cf2e2e;
+        .input:focus {
+            border: 1px solid #cf2e2e !important;
         }
 
         .submit-button {
@@ -375,6 +391,44 @@
             border: 0;
             touch-action: manipulation;
             margin-left:0.5vw;
+        }
+
+        .more-info-button {
+            background-color: #fff;
+            border: 1px solid #dddddd;
+            box-sizing: border-box;
+            border-radius: 12px;
+            color: #999;
+            cursor: pointer;
+            font-family: nunito, sans-serif;
+            font-size: .90rem;
+            font-weight: 70;
+            padding: 1rem 1.2rem;
+            touch-action: manipulation;
+            margin-left:0.5vw;
+            height:2vh;
+            display:flex;
+            flex-wrap: wrap;
+            align-content: center;
+            opacity:70%;
+        }
+
+        .more-info-button:hover {
+            border: 0.05rem solid #cf2e2e;
+            color: #cf2e2e;
+            opacity:100%;
+        }
+
+        #sales-button {
+            background-color: #7cadbf;
+            font-weight: 70;
+            color: #ffffff;
+        }
+
+        #sales-button:hover {
+            border: 0.05rem solid #2288ad;
+            color: #ffffff;
+            opacity:100%;
         }
 
         .instructions-button {
@@ -520,6 +574,7 @@
             .iframe-container {
                 flex-direction: column;
                 align-items: center;
+                width:auto;
             }
             .window-description {
             visibility:hidden;
@@ -533,6 +588,10 @@
                 height: 600px;
             }
 
+            .input-url-div {
+                width:auto;
+            }
+
             .input-field {
                 font-size: 15px;
                 width: 450px;
@@ -543,6 +602,13 @@
             .submit-button {
                 margin-bottom:30px;
             }
+
+            .more-info-container {
+                padding-left: 0;
+                align-self:center;
+            }
+
+
             .errormess {
             top: 0vh;
             text-align: center;
@@ -629,14 +695,26 @@
             <h2 class="subheading">Surfly enables users to securely and collaboratively surf the full web together
                 within a session.</h2>
         </div>
+        <div class="button-container">
+            <div class="more-info-container">
+                <a href="https://www.surfly.com/blog/">
+                <button id="blog-button" type="submit" class="more-info-button">Surfly Blog</button> </a>
+                <a href="https://help.surfly.com/">
+                <button id="tech-docs-button" type="submit" class="more-info-button">Technical Docs</button> </a>
+                <a href="https://help.surfly.com/">
+                <button id="help-portal-button" type="submit" class="more-info-button">Help Portal</button> </a>
+                <a href="https://www.surfly.com/request-a-demo/">
+                <button id="sales-button" type="submit" class="more-info-button">Contact Sales</button> </a>
+            </div>
         <div class="input-url-div">
-            <input type="text" placeholder="Enter any valid URL" class="input-field" id="session_url_input">
+            <input type="text" placeholder="Enter any valid URL..." class="input-field" id="session_url_input">
             <button id="session_inactive_button" type="submit" class="submit-button" onclick="validateURL()">Start
                 Session</button>
             <button id="session_active_button" type="submit" class="block"
                 onclick="show_inactive_buttons();endSurflySession()">End Session</button>
                 <button id="openModalBtn" class="instructions-button">Open Tutorial</button>
         </div>
+    </div>
     </div>
     <div class="iframe-container">
 
