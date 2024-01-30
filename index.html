@@ -379,7 +379,7 @@
         }
 
         .submit-button {
-            background-color: #cf2e2e;
+            background-color: #7cadbf;
             box-sizing: border-box;
             border-radius: 12px;
             color: #ffffff;
@@ -393,12 +393,15 @@
             margin-left:0.5vw;
         }
 
+        .submit-button:hover {
+            background-color: #2288ad;
+        }
+
         .more-info-button {
             background-color: #fff;
-            border: 1px solid #dddddd;
             box-sizing: border-box;
             border-radius: 12px;
-            color: #999;
+            color: #757575;
             cursor: pointer;
             font-family: nunito, sans-serif;
             font-size: .90rem;
@@ -411,22 +414,21 @@
             flex-wrap: wrap;
             align-content: center;
             opacity:70%;
+            border: 0;
+
         }
 
         .more-info-button:hover {
-            border: 0.05rem solid #cf2e2e;
             color: #cf2e2e;
             opacity:100%;
         }
 
         #sales-button {
-            background-color: #7cadbf;
-            font-weight: 70;
+            background-color: #cf2e2e;
             color: #ffffff;
         }
 
         #sales-button:hover {
-            border: 0.05rem solid #2288ad;
             color: #ffffff;
             opacity:100%;
         }
@@ -697,12 +699,14 @@
         </div>
         <div class="button-container">
             <div class="more-info-container">
+                <a href="https://www.surfly.com/co-browsing/">
+                <button id="about-button" type="submit" class="more-info-button">About Co-browsing</button> </a>
+                <a href="https://docs.surfly.com/">
+                <button id="tech-docs-button" type="submit" class="more-info-button">Tech Docs</button> </a>
+                <a href="https://help.surfly.com/en/features">
+                <button id="help-portal-button" type="submit" class="more-info-button">Features</button> </a>
                 <a href="https://www.surfly.com/blog/">
-                <button id="blog-button" type="submit" class="more-info-button">Surfly Blog</button> </a>
-                <a href="https://help.surfly.com/">
-                <button id="tech-docs-button" type="submit" class="more-info-button">Technical Docs</button> </a>
-                <a href="https://help.surfly.com/">
-                <button id="help-portal-button" type="submit" class="more-info-button">Help Portal</button> </a>
+                <button id="blog-button" type="submit" class="more-info-button">Blog</button> </a>
                 <a href="https://www.surfly.com/request-a-demo/">
                 <button id="sales-button" type="submit" class="more-info-button">Contact Sales</button> </a>
             </div>
