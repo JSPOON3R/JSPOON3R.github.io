@@ -23,7 +23,7 @@
         }
 
         #view2 {
-            background-color:#dc7d7d;
+            background-color: #dc7d7d;
         }
 
         /* Loading bar styles */
@@ -35,6 +35,7 @@
             height: 5px; /* Height of the loading bar */
             background-color: white; /* Background color of the loading bar */
             overflow: hidden;
+            z-index: 999;
         }
 
         #loaded-progress {
@@ -70,11 +71,12 @@
             var views = document.querySelectorAll('.view');
             var currentIndex = 0;
             var interval = 20000; // Interval between view changes (in milliseconds)
+            var transitionDuration = 2000; // Duration of the loading bar transition (in milliseconds)
 
             setInterval(function () {
                 // Reset loading progress
                 document.getElementById('loaded-progress').style.width = '0';
-
+                
                 // Fade out current view
                 views[currentIndex].style.opacity = 0;
                 setTimeout(function() {
@@ -86,12 +88,22 @@
                     // Fade in next view
                     setTimeout(function() {
                         views[currentIndex].style.opacity = 1;
+                        // Smoothly transition loading bar to blue
+                        setTimeout(function() {
+                            document.getElementById('loaded-progress').style.width = '100%';
+                        }, 100); // Delay to ensure smooth transition starts immediately
                     }, 50); // Delay to ensure the view is visible before fading in
-                }, 1000); // Delay to complete the fade-out transition
-            }, interval);
+                }, transitionDuration); // Delay to complete the fade-out transition
+            }, interval + transitionDuration); // Add transition duration to interval for the first view
         }
 
         window.onload = function () {
+            // Initially display the loading bar and first view
+            document.getElementById('loaded-progress').style.width = '100%';
+            document.getElementById('loaded-progress').style.transition = 'width 20s linear'; // Restore transition
+            document.getElementById('view1').style.display = 'block';
+            document.getElementById('view1').style.opacity = 1;
+            // Start cycling views
             cycleViews();
         };
     </script>
