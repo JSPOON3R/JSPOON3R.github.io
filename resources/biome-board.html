@@ -139,11 +139,11 @@
 
     <script>
         //Cycle between views
+        //Cycle between views
         function cycleViews() {
             var views = document.querySelectorAll('.view');
             var currentIndex = 0;
             var interval = 20000; // Interval between view changes (in milliseconds)
-            var totalTime = 20000; // Total time for each view (in milliseconds)
 
             setInterval(function () {
                 // Reset loading progress
@@ -162,19 +162,6 @@
                         views[currentIndex].style.opacity = 1;
                     }, 50); // Delay to ensure the view is visible before fading in
                 }, 1000); // Delay to complete the fade-out transition
-
-                // Start loading progress for next view
-                var loadedProgress = document.getElementById('loaded-progress');
-                loadedProgress.style.width = '0';
-                var progressInterval = setInterval(function() {
-                    var loadedWidth = parseFloat(loadedProgress.style.width);
-                    if (loadedWidth >= 100) {
-                        clearInterval(progressInterval);
-                    } else {
-                        loadedWidth += 100 / (totalTime / 1000); // Update loading progress
-                        loadedProgress.style.width = loadedWidth + '%';
-                    }
-                }, 100); // Update progress every 100 milliseconds
             }, interval);
         }
 
