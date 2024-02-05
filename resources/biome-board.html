@@ -29,10 +29,7 @@
 
 <body>
     <div id="view1" class="view">
-        <iframe width="100%" height="100%"
-        src="https://lookerstudio.google.com/embed/reporting/1bb83e73-4aef-4e2b-9023-02ba09bdb9cd/page/p_x1ug00adcd"
-        frameborder="0" style="border:0" allowfullscreen
-        sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+       
 </div>
     <div id="view2" class="view">
         <iframe width="100%" height="100%"
@@ -40,6 +37,7 @@
             frameborder="0" style="border:0" allowfullscreen
             sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
     </div>
+
 
     <script>
         //Cycle between views
@@ -49,9 +47,19 @@
             var interval = 20000;
 
             setInterval(function () {
-                views[currentIndex].style.display = 'none';
-                currentIndex = (currentIndex + 1) % views.length;
-                views[currentIndex].style.display = 'block';
+                // Fade out current view
+                views[currentIndex].style.opacity = 0;
+                setTimeout(function() {
+                    views[currentIndex].style.display = 'none';
+                    // Increment index and handle wrap-around
+                    currentIndex = (currentIndex + 1) % views.length;
+                    // Display next view
+                    views[currentIndex].style.display = 'block';
+                    // Fade in next view
+                    setTimeout(function() {
+                        views[currentIndex].style.opacity = 1;
+                    }, 50); // Delay to ensure the view is visible before fading in
+                }, 1000); // Delay to complete the fade-out transition
             }, interval);
         }
         window.onload = function () {
@@ -60,4 +68,119 @@
     </script>
 </body>
 
+</html>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Slideshow with Loading Bar</title>
+    <style>
+        /* Style your dashboard views here */
+        .view {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: none;
+            opacity: 0; /* Initial opacity */
+            transition: opacity 1s ease; /* Smooth transition */
+        }
+
+        /* Customize each view */
+        #view1 {
+            background-color: #eff0f0;
+        }
+
+        #view2 {
+            background-color:#dc7d7d;
+        }
+
+        /* Loading bar styles */
+        #loading-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 5px; /* Height of the loading bar */
+            background-color: white; /* Background color of the loading bar */
+            overflow: hidden;
+        }
+
+        #loaded-progress {
+            height: 100%;
+            width: 0; /* Initial width (0% loaded) */
+            background-color: blue; /* Color of the loaded progress */
+            transition: width 1s linear; /* Smooth transition */
+        }
+    </style>
+</head>
+<body>
+    <!-- Define your dashboard views -->
+    <div id="view1" class="view">
+        <!-- Content for view 1 -->
+        <iframe width="100%" height="100%"
+        src="https://lookerstudio.google.com/embed/reporting/1bb83e73-4aef-4e2b-9023-02ba09bdb9cd/page/p_x1ug00adcd"
+        frameborder="0" style="border:0" allowfullscreen
+        sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+    </div>
+    <div id="view2" class="view">
+        <!-- Content for view 2 -->
+        <h1>View 2</h1>
+    </div>
+
+    <!-- Loading bar -->
+    <div id="loading-bar">
+        <div id="loaded-progress"></div>
+    </div>
+
+    <script>
+        //Cycle between views
+        function cycleViews() {
+            var views = document.querySelectorAll('.view');
+            var currentIndex = 0;
+            var interval = 20000; // Interval between view changes (in milliseconds)
+            var totalTime = 20000; // Total time for each view (in milliseconds)
+
+            setInterval(function () {
+                // Reset loading progress
+                document.getElementById('loaded-progress').style.width = '0';
+
+                // Fade out current view
+                views[currentIndex].style.opacity = 0;
+                setTimeout(function() {
+                    views[currentIndex].style.display = 'none';
+                    // Increment index and handle wrap-around
+                    currentIndex = (currentIndex + 1) % views.length;
+                    // Display next view
+                    views[currentIndex].style.display = 'block';
+                    // Fade in next view
+                    setTimeout(function() {
+                        views[currentIndex].style.opacity = 1;
+                    }, 50); // Delay to ensure the view is visible before fading in
+                }, 1000); // Delay to complete the fade-out transition
+
+                // Start loading progress for next view
+                var loadedProgress = document.getElementById('loaded-progress');
+                loadedProgress.style.width = '0';
+                var progressInterval = setInterval(function() {
+                    var loadedWidth = parseFloat(loadedProgress.style.width);
+                    if (loadedWidth >= 100) {
+                        clearInterval(progressInterval);
+                    } else {
+                        loadedWidth += 100 / (totalTime / 1000); // Update loading progress
+                        loadedProgress.style.width = loadedWidth + '%';
+                    }
+                }, 100); // Update progress every 100 milliseconds
+            }, interval);
+        }
+
+        window.onload = function () {
+            cycleViews();
+        };
+    </script>
+</body>
 </html>
