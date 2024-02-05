@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -14,19 +15,40 @@
             height: 100%;
             display: none;
         }
-        #overview { background-color: #ff0000; }
-        #direct-pipeline { background-color: #00ff00; }
-        #partner-pipeline { background-color: #0000ff; }
-        #customer-health { background-color: #ffff00; }
-        #team-goals { background-color: #00ffff; }
+
+        #overview {
+            background-color: #eff0f0;
+        }
+
+        #direct-pipeline {
+            background-color:#dc7d7d;
+        }
+
+        #partner-pipeline {
+            background-color: #7cadbf;
+        }
+
+        #customer-health {
+            background-color: #eff0f0;
+        }
+
+        #team-goals {
+            background-color: #dc7d7d;
+        }
+
     </style>
 </head>
+
 <body>
     <div id="overview" class="view">
         <h1>Comercial Overview</h1>
     </div>
     <div id="direct-pipeline" class="view">
         <h1>Direct Sales</h1>
+        <iframe width="600" height="450"
+            src="https://lookerstudio.google.com/embed/reporting/1bb83e73-4aef-4e2b-9023-02ba09bdb9cd/page/p_x1ug00adcd"
+            frameborder="0" style="border:0" allowfullscreen
+            sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
     </div>
     <div id="partner-pipeline" class="view">
         <h1>Partner Channel</h1>
@@ -43,17 +65,18 @@
         function cycleViews() {
             var views = document.querySelectorAll('.view');
             var currentIndex = 0;
-            var interval = 20000; 
+            var interval = 20000;
 
-            setInterval(function() {
+            setInterval(function () {
                 views[currentIndex].style.display = 'none';
                 currentIndex = (currentIndex + 1) % views.length;
                 views[currentIndex].style.display = 'block';
             }, interval);
         }
-        window.onload = function() {
+        window.onload = function () {
             cycleViews();
         };
     </script>
 </body>
+
 </html>
