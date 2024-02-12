@@ -252,26 +252,26 @@ border-radius: 10px;
         </div>
         <form>
             <label for="name">Name</label>
-            <input type="text" id="name" name="name" required>
+            <input type="text" id="name-mask" name="name" required>
 
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
+            <input type="email" id="email-mask" name="email" required>
 
             <label for="phone">Phone</label>
-            <input type="text" id="phone" name="phone">
+            <input type="text" id="phon-maske" name="phone">
 
             <label for="message">Message</label>
-            <textarea id="message" name="message" rows="5"></textarea>
+            <textarea id="message-mask" name="message" rows="5"></textarea>
 
             <label for="gender">Gender</label>
-            <input type="radio" id="male" name="gender" value="male">
+            <input type="radio" id="male-mask" name="gender" value="male">
             <label for="male">Male</label>
-            <input type="radio" id="female" name="gender" value="female">
+            <input type="radio" id="female-mask" name="gender" value="female">
             <label for="female">Female</label>
             <br>
 
             <label for="country">Country</label>
-            <select id="country" name="country">
+            <select id="country-mask" name="country">
                 <option value="USA">USA</option>
                 <option value="UK">UK</option>
                 <option value="Canada">Canada</option>
@@ -279,10 +279,10 @@ border-radius: 10px;
             </select>
 
             <label for="subscribe">Subscribe to Newsletter</label>
-            <input type="checkbox" id="subscribe" name="subscribe" value="yes">
+            <input type="checkbox" id="subscribe-mask" name="subscribe" value="yes">
             <button type="submit">Submit</button>
             <h3>Embedded Content</h3>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2461.5342082087122!2d4.883496841423703!3d52.3690829310251!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c609a2632fb6dd%3A0x371cef43631b08f5!2sSurfly%20B.V.!5e0!3m2!1sen!2snl!4v1707747307206!5m2!1sen!2snl" width="100%" height="300"></iframe>
+            <iframe id="iframe-mask" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2461.5342082087122!2d4.883496841423703!3d52.3690829310251!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c609a2632fb6dd%3A0x371cef43631b08f5!2sSurfly%20B.V.!5e0!3m2!1sen!2snl!4v1707747307206!5m2!1sen!2snl" width="100%" height="300"></iframe>
         </form>
 
     </div>
@@ -369,7 +369,7 @@ border-radius: 10px;
 
             <label for="subscribe">Subscribe to Newsletter</label>
             <input type="checkbox" id="subscribe" name="subscribe" value="yes">
-            <button type="submit">Submit</button>
+            <button type="submit" id="control_submit">Submit</button>
             <h3>Embedded Content</h3>
             <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2461.5342082087122!2d4.883496841423703!3d52.3690829310251!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c609a2632fb6dd%3A0x371cef43631b08f5!2sSurfly%20B.V.!5e0!3m2!1sen!2snl!4v1707747307206!5m2!1sen!2snl" width="100%" height="300"></iframe>
         </form>
