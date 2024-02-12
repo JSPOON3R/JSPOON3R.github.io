@@ -28,15 +28,19 @@ function hasQueryParam(param) {
 if (hasQueryParam("john")) {
     widgetkey = "99671227762b43c2a96daa066ee006e2";
     var session_ready = true;
+    loadSurfly();
 } else if (hasQueryParam("thomas")) {
     widgetkey = "4af7f6620fbb4ab58d2c70f5d4fee0e6";
     var session_ready = true;
+    loadSurfly();
 } else if (hasQueryParam("mihai")) {
     widgetkey = "638a1769085c43029306423920b7ed59";
     var session_ready = true;
+    loadSurfly();
 } else if (hasQueryParam("ayush")) {
     widgetkey = "8816869ecf624d4483f6befd75cb2a1f";
     var session_ready = true;
+    loadSurfly();
 } else {
     // Default widget key if no specific parameter is detected
     window.alert("Please provide a widget key");
@@ -50,7 +54,7 @@ function loadSurfly() {
 
 }
 
-function startsession() {
+function loadSurfly() {
     if (session_ready === true) {
         (function (s, u, r, f, l, y) {
         s[f] = s[f] || { init: function () { s[f].q = arguments } };
@@ -63,9 +67,10 @@ function startsession() {
         widget_key: widgetkey,
         hide_element_by_selector: "#name,#email,#phone,#message,#male,#female,#country,#country > option:nth-child,#subscribe,#c_2 > form > iframe",
         queued: true,
-        videochat_enabled: true,
+        videochat_enabled: false,
         start_with_videochat_on: false,
         session_autorestore_enabled: false,
+        block_until_agent_joins: false
     };
 
     Surfly.init(settings, function (initResult) {
@@ -78,12 +83,14 @@ function startsession() {
             console.log("Surfly was unable to initialize properly.")
         }
     });
-        Surfly.session().startLeader();
     } else {
         window.alert("Please provide a widget key");
     }
 }
 
+function startSession() {
+    Surfly.session().startLeader();
+}
 
     </script>
     <style>
@@ -189,7 +196,7 @@ border-radius: 10px;
         <h1>Surfly Masking</h1>
         <h2>What's possible?</h2>
         <h3>This page aims to showcase the different masking possibilities offered by Surfly. Each entry includes an overview of how it works and an outline what is required to get started</h3>
-        <button onclick="startsession()">Start Demo</button>
+        <button onclick="startSession()">Start Demo</button>
         <div class="sub-container" id="c_1">
             <div class="masking-header">
         <h2>Field Masking</h2>
