@@ -91,6 +91,10 @@ function loadSurfly() {
 function startSession() {
     Surfly.session().startLeader();
     Surfly.session().on("tab_control", function (session, event) {
+var element = document.getElementById("control_submit");
+if (element) {
+    element.classList.add("control-block");
+}
         console.log("hello")
     })
 }
