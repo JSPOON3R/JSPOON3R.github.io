@@ -137,6 +137,12 @@ function startSession() {
             display: block;
             margin-bottom: 10px;
         }
+
+        .radio-btn-container {
+            display:flex;
+            flex-direction: row;
+        }
+
         input[type="text"],
         input[type="email"],
         select,
@@ -228,10 +234,12 @@ border-radius: 10px;
             <textarea id="message" name="message" rows="5" surfly_private></textarea>
 
             <label for="gender">Gender</label>
+            <div class="radio-btn-container">
             <input type="radio" id="male" name="gender" value="male">
             <label for="male">Male</label>
             <input type="radio" id="female" name="gender" value="female">
             <label for="female">Female</label>
+        </div>
             <br>
 
             <label for="country">Country</label>
