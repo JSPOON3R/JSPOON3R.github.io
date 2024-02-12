@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Form</title>
+    <script>
+var widgetkey;
+var session_ready = false;
+var tomButton = document.getElementById("tomButton");
+var ayushButton = document.getElementById("ayushButton");
+var johnButton = document.getElementById("johnButton");
+var mihaiButton = document.getElementById("mihaiButton");
+
+function hasQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    const lowerCaseParam = param.toLowerCase();
+
+    for (const key of urlParams.keys()) {
+        if (key.toLowerCase() === lowerCaseParam) {
+            console.log(`Query parameter "${param}" is present`);
+            return true;
+        }
+    }
+    return false;
+}
+
+if (hasQueryParam("john")) {
+    widgetkey = "99671227762b43c2a96daa066ee006e2";
+    var session_ready = true;
+} else if (hasQueryParam("thomas")) {
+    widgetkey = "4af7f6620fbb4ab58d2c70f5d4fee0e6";
+    var session_ready = true;
+} else if (hasQueryParam("mihai")) {
+    widgetkey = "638a1769085c43029306423920b7ed59";
+    var session_ready = true;
+} else if (hasQueryParam("ayush")) {
+    widgetkey = "8816869ecf624d4483f6befd75cb2a1f";
+    var session_ready = true;
+} else {
+    // Default widget key if no specific parameter is detected
+    window.alert("Please provide a widget key");
+}
+
+
+
+// Function to load Surfly
+function loadSurfly() {
+    console.log('surfly triggered following widget key declaration');
+
+}
+
+function startsession() {
+    if (session_ready === true) {
+        (function (s, u, r, f, l, y) {
+        s[f] = s[f] || { init: function () { s[f].q = arguments } };
+        l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+        l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+    })
+        (window, document, 'script', 'Surfly');
+
+    var settings = {
+        widget_key: widgetkey,
+        hide_element_by_selector: "#name,#email,#phone,#message,#male,#female,#country,#country > option:nth-child,#subscribe,#c_2 > form > iframe",
+        queued: true,
+        videochat_enabled: true,
+        start_with_videochat_on: false,
+        session_autorestore_enabled: false,
+        script_embedded: "https://demo.surfly.com/script/masking-visuals-sioa.js",
+    };
+
+    Surfly.init(settings, function (initResult) {
+        if (initResult.success) {
+            if (!Surfly.isInsideSession) {
+                console.log("Surfly is InsideSession.")
+            }
+        }
+        else {
+            console.log("Surfly was unable to initialize properly.")
+        }
+    });
+        Surfly.session().startLeader();
+    } else {
+        window.alert("Please provide a widget key");
+    }
+}
+
+
+    </script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .sub-container {
+            margin-top: 80px;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        #c_1{
+            background-color: #f0dca9;
+        }
+        #c_2{
+            background-color: #97b0b9;
+        }
+        #c_3{
+            background-color: #97be82;
+        }
+        #c_4{
+            background-color: #e47f7f;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+        input[type="text"],
+        input[type="email"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        input[type="radio"],
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .masking-header {
+            background-color: #fff;
+            padding:20px;
+            margin-bottom:40px;
+            border-radius: 10px;
+        }
+        .masking-header h2 {
+color: #4d4d4d;
+        }
+        .masking-header h3 {
+color: #757575;
+        }
+        .masking-header p {
+color: #757575;
+background-color: #eff0f0;
+padding:10px;
+border-radius: 10px;
+        }
+
+        .customizedContainer {
+      display: block;
+      margin: 10px auto;
+      width: 50%;
+      text-align: center;
+      padding: 20px;
+      color: red;
+    }
+
+    .customizedContainer.surfly-masked {
+      filter: none !important;
+      box-shadow: 0 0 2px 2px red !important;
+      background-image: linear-gradient(108deg, #e3d24f 25%, #000000 25%, #000000 50%, #e3d24f 50%, #e3d24f 75%, #000000 75%, #000000 100%);
+      background-size: 70.00px 215.44px;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Surfly Masking</h1>
+        <h2>What's possible?</h2>
+        <h3>This page aims to showcase the different masking possibilities offered by Surfly. Each entry includes an overview of how it works and an outline what is required to get started</h3>
+        <button onclick="startsession()">Start Demo</button>
+        <div class="sub-container" id="c_1">
+            <div class="masking-header">
+        <h2>Field Masking</h2>
+        <h3>Ensure text entered into a specified field is not visisble to other participants</h3>
+        <p>Required changes to website code? <b>Yes</b><br><br>
+         Effort required? <b>Low</b><br><br>
+         What can it mask? <b>Text input fields</b><br>
+        </p>
+    </div>
+        <form>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required surfly_private>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required surfly_private>
+
+            <label for="phone">Phone</label>
+            <input type="text" id="phone" name="phone" surfly_private>
+
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" surfly_private></textarea>
+
+            <label for="gender">Gender</label>
+            <input type="radio" id="male" name="gender" value="male">
+            <label for="male">Male</label>
+            <input type="radio" id="female" name="gender" value="female">
+            <label for="female">Female</label>
+            <br>
+
+            <label for="country">Country</label>
+            <select id="country" name="country">
+                <option value="USA">USA</option>
+                <option value="UK">UK</option>
+                <option value="Canada">Canada</option>
+                <option value="Australia">Australia</option>
+            </select>
+
+            <label for="subscribe">Subscribe to Newsletter</label>
+            <input type="checkbox" id="subscribe" name="subscribe" value="yes" surfly_private>
+            <button type="submit">Submit</button>
+            <h3>Embedded Content</h3>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2461.5342082087122!2d4.883496841423703!3d52.3690829310251!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c609a2632fb6dd%3A0x371cef43631b08f5!2sSurfly%20B.V.!5e0!3m2!1sen!2snl!4v1707747307206!5m2!1sen!2snl" width="100%" height="300"></iframe>
+        </form>
+    </div>
+    <div class="sub-container" id="c_2">
+        <div class="masking-header">
+        <h2>Basic Element Masking</h2>
+        <h3>Easily mask any page elements with Surfly's default masking colors</h3>
+        <p>Required changes to website code: <b>No</b><br><br>
+         Effort required: <b>Very Low</b><br><br>
+         What can it mask?: <b>All page elements (e.g. Text, Buttons, Images, iFrames, etc)</b><br>
+        </p>
+        </div>
+        <form>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Phone</label>
+            <input type="text" id="phone" name="phone">
+
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5"></textarea>
+
+            <label for="gender">Gender</label>
+            <input type="radio" id="male" name="gender" value="male">
+            <label for="male">Male</label>
+            <input type="radio" id="female" name="gender" value="female">
+            <label for="female">Female</label>
+            <br>
+
+            <label for="country">Country</label>
+            <select id="country" name="country">
+                <option value="USA">USA</option>
+                <option value="UK">UK</option>
+                <option value="Canada">Canada</option>
+                <option value="Australia">Australia</option>
+            </select>
+
+            <label for="subscribe">Subscribe to Newsletter</label>
+            <input type="checkbox" id="subscribe" name="subscribe" value="yes">
+            <button type="submit">Submit</button>
+            <h3>Embedded Content</h3>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2461.5342082087122!2d4.883496841423703!3d52.3690829310251!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c609a2632fb6dd%3A0x371cef43631b08f5!2sSurfly%20B.V.!5e0!3m2!1sen!2snl!4v1707747307206!5m2!1sen!2snl" width="100%" height="300"></iframe>
+        </form>
+
+    </div>
+    <div class="sub-container" id="c_3">
+        <div class="masking-header">
+        <h2>Custom-Look Element Masking</h2>
+        <h3>Easily mask any page elements with your own graphic</h3>
+        <p>Required changes to website code: <b>Yes</b><br><br>
+         Effort required: <b>Low</b><br><br>
+         What can it mask?: <b>All page elements (e.g. Text, Buttons, Images, iFrames, etc)</b><br>
+        </p>
+        </div>
+        <form>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Phone</label>
+            <input type="text" id="phone" name="phone">
+
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5"></textarea>
+
+            <label for="gender">Gender</label>
+            <input type="radio" id="male" name="gender" value="male">
+            <label for="male">Male</label>
+            <input type="radio" id="female" name="gender" value="female">
+            <label for="female">Female</label>
+            <br>
+
+            <label for="country">Country</label>
+            <select id="country" name="country">
+                <option value="USA">USA</option>
+                <option value="UK">UK</option>
+                <option value="Canada">Canada</option>
+                <option value="Australia">Australia</option>
+            </select>
+
+            <label for="subscribe">Subscribe to Newsletter</label>
+            <input type="checkbox" id="subscribe" name="subscribe" value="yes">
+            <button type="submit">Submit</button>
+            <h3>Embedded Content</h3>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2461.5342082087122!2d4.883496841423703!3d52.3690829310251!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c609a2632fb6dd%3A0x371cef43631b08f5!2sSurfly%20B.V.!5e0!3m2!1sen!2snl!4v1707747307206!5m2!1sen!2snl" width="100%" height="300"></iframe>
+        </form>
+    </div>
+    <div class="sub-container" id="c_4">
+        <div class="masking-header">
+        <h2>Intelligent Control Switching</h2>
+        <h3>Change the page and its elements based on who is in control at any given time</h3>
+        <p>Required changes to website code: <b>Yes</b><br><br>
+         Effort required: <b>Medium</b><br><br>
+         What can it mask?: <b>All page elements (e.g. Text, Buttons, Images, iFrames, etc)</b><br>
+        </p>
+        </div>
+        <form>
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="phone">Phone</label>
+            <input type="text" id="phone" name="phone">
+
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5"></textarea>
+
+            <label for="gender">Gender</label>
+            <input type="radio" id="male" name="gender" value="male">
+            <label for="male">Male</label>
+            <input type="radio" id="female" name="gender" value="female">
+            <label for="female">Female</label>
+            <br>
+
+            <label for="country">Country</label>
+            <select id="country" name="country">
+                <option value="USA">USA</option>
+                <option value="UK">UK</option>
+                <option value="Canada">Canada</option>
+                <option value="Australia">Australia</option>
+            </select>
+
+            <label for="subscribe">Subscribe to Newsletter</label>
+            <input type="checkbox" id="subscribe" name="subscribe" value="yes">
+            <button type="submit">Submit</button>
+            <h3>Embedded Content</h3>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2461.5342082087122!2d4.883496841423703!3d52.3690829310251!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c609a2632fb6dd%3A0x371cef43631b08f5!2sSurfly%20B.V.!5e0!3m2!1sen!2snl!4v1707747307206!5m2!1sen!2snl" width="100%" height="300"></iframe>
+        </form>
+    </div>
+
+
+
+
+
+    </div>
+</body>
+</html>
