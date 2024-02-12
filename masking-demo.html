@@ -90,6 +90,9 @@ function loadSurfly() {
 
 function startSession() {
     Surfly.session().startLeader();
+    Surfly.session().on("tab_control", function (session, event) {
+        console.log("hello")
+    })
 }
 
     </script>
@@ -231,6 +234,12 @@ border-radius: 10px;
       background-image: linear-gradient(108deg, #e3d24f 25%, #000000 25%, #000000 50%, #e3d24f 50%, #e3d24f 75%, #000000 75%, #000000 100%);
       background-size: 70.00px 215.44px;
     }
+
+.control-block {
+    display:none;
+}
+
+
     </style>
 </head>
 <body>
