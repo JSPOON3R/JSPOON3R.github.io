@@ -148,19 +148,18 @@ function startSession() {
 
         h1 {
             font-weight: normal;
-            font-size: 2vw;
-            margin-top: 2vh;
-            margin-bottom: 0vh;
+            font-size: 2.2rem;
+            margin-bottom: 26px;
         }
 
         h2 {
-            font-size: 1vw;
+            font-size: 1.8rem;
             font-weight: lighter;
             color: #4d4d4d;
         }
 
         h3 {
-            font-size: 1vw;
+            font-size: 1.2rem;
             font-weight: lighter;
             color: #757575;
         }
@@ -203,12 +202,14 @@ function startSession() {
             font-size: 1.8rem;
     font-weight: normal;
     color: black;
+
         }
 
-        .masking-header h2 {
+        .masking-header, ul, li {
             font-size: 1.5rem;
     font-weight: normal;
     color: #4d4d4d;
+    margin-top:10px;
         }
 
         .masking-header h3 {
@@ -242,9 +243,14 @@ border-radius: 10px;
 </head>
 <body>
     <div class="container">
-        <h1>Surfly Masking</h1>
-        <h2>What's possible?</h2>
-        <h3>Surfly offers different types of masking to keep your web sessions secure and compliant</h3>
+        <h1><b>Masking</b> - Demo Page</h1>
+        <ul>
+            <li>Field Masking</li>
+            <li>Element Masking</li>
+            <li>Smart Control Switching</li>
+        </ul>
+        
+        <h3>Different ways of keeping content hidden from other participants</h3>
         <button onclick="startSession()">Start Demo</button>
         <div class="sub-container" id="c_1">
             <div class="masking-header" id="mh_1">
