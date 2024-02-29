@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disclosure and Barring Service</title>
+    <style>
+        body {
+            font-family: "GDS Transport", arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; 
+        }
+        .header {
+            background-color: #0b0c0c;
+            color: #fff;
+            padding: 1vh 1vw;
+            text-align: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5%;
+            z-index: 999;
+        }
+        .header h1 {
+            margin: 0;
+        }
+        .main-content {
+            max-width: 50%;
+            margin: 10vh auto; 
+            background-color: #fff; 
+            position: relative; 
+        }
+        .logo {
+            max-width: 10vw; 
+            min-width:100px;
+            height: auto; 
+            margin-bottom:1px;
+            margin-top: 0; 
+        }
+        .intro-text {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-top: 10vh; 
+        }
+        .contact-info {
+            padding: 2%;
+            background-color: #1d70b8;
+            margin-top:5vh;
+            line-height: 1.6;
+            color:#fff;
+        }
+        .contact-info h2 {
+            margin-top: 0;
+        }
+        .contact-info p {
+            margin: 0;
+        }
+
+.pin-code {
+    color:#0b0c0c;
+    font-size: 4rem;
+    font-weight:bolder;
+    text-align: center;
+    letter-spacing: 2vw;
+    margin:5%;
+}
+
+.line {
+            background-color: #9440b2; 
+            height: 2px; 
+            width: 100%; 
+            margin-top: 5vh; 
+        }
+
+        .line-2 {
+            background-color: #9440b2; 
+            height: 2px; 
+            width: 100%; 
+            margin-bottom: 2vh; 
+        }
+
+        .footer {
+            background-color: #0b0c0c;
+            color: #fff;
+            padding: 1vh 1vw;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 5%;
+            z-index: 999;
+        }
+
+        .hide {
+            display:none;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1></h1>
+    </div>
+    <div class="main-content">
+        <img class="logo" src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/071f00ea3c2ea4baf4c0b23718341b0283b76aff/resources/disclosure-and-barring-service-logo.svg" alt="Disclosure & Barring Service Logo">
+        <div class="intro-text">
+            <h1>Secure Browsing</h1>
+            <p>Please relay the 4-digit pin below to your representative.</p>
+            <div class="line"></div>
+            <p class="pin-code">1234</p>
+            <div class="line-2"></div>
+        </div>
+        <div class="contact-info hide">
+            <h2>Extra Informtion?</h2>
+            <p>Telephone: 03000 200 190</p>
+            <p>Email: customerservices@dbs.gov.uk</p>
+            <p>Address: Disclosure and Barring Service, PO Box 110, Liverpool, L69 3JD</p>
+        </div>
+    </div>
+    <div class="footer">
+        <p></p>
+    </div>
+</body>
+</html>
