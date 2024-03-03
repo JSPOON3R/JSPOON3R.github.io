@@ -77,8 +77,9 @@
 
             setInterval(function () {
                 // Reset loading progress
-                document.getElementById('loaded-progress').style.width = '0';
-                
+                document.getElementById('loaded-progress').style.transition = 'none';
+                document.getElementById('loaded-progress').style.width = '0%';
+
                 // Fade out current view
                 views[currentIndex].style.opacity = 0;
                 setTimeout(function() {
@@ -92,6 +93,7 @@
                         views[currentIndex].style.opacity = 1;
                         // Smoothly transition loading bar to blue
                         setTimeout(function() {
+                            document.getElementById('loaded-progress').style.transition = 'width 20s linear'; // Restore transition
                             document.getElementById('loaded-progress').style.width = '100%';
                         }, 100); // Delay to ensure smooth transition starts immediately
                     }, 50); // Delay to ensure the view is visible before fading in
@@ -101,8 +103,6 @@
 
         window.onload = function () {
             // Initially display the loading bar and first view
-            document.getElementById('loaded-progress').style.width = '100%';
-            document.getElementById('loaded-progress').style.transition = 'width 20s linear'; // Restore transition
             document.getElementById('view1').style.display = 'block';
             document.getElementById('view1').style.opacity = 1;
             // Start cycling views
