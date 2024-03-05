@@ -102,6 +102,7 @@ if (element) {
     </script>
     <!--change masking style-->
      <script>
+        document.addEventListener("DOMContentLoaded", function() {
         let currentStyle = 0;
         const styles = [
           {
@@ -116,7 +117,7 @@ if (element) {
             backgroundImage: 'linear-gradient(90deg, #000000 50%, #ffffff 50%)',
             backgroundSize: '100px 100px'
           }
-        ];
+        ];});
     
         function changeStyle() {
           const element = document.querySelector('.surfly-masked');
