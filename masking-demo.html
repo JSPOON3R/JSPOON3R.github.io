@@ -120,34 +120,38 @@ if (element) {
 
     </script>
     <!--change masking style-->
-     <script>
+    <script>
         var currentStyle;
+        var styles; // Declare styles array outside the event listener function
+    
         document.addEventListener("DOMContentLoaded", function() {
-        let currentStyle = 0;
-        const styles = [
-          {
-            filter: 'none !important',
-            boxShadow: '0 0 2px 2px red !important',
-            backgroundImage: 'linear-gradient(108deg, #e3d24f 25%, #000000 25%, #000000 50%, #e3d24f 50%, #e3d24f 75%, #000000 75%, #000000 100%)',
-            backgroundSize: '70.00px 215.44px'
-          },
-          {
-            filter: 'grayscale(100%) !important',
-            boxShadow: '0 0 2px 2px blue !important',
-            backgroundImage: 'linear-gradient(90deg, #000000 50%, #ffffff 50%)',
-            backgroundSize: '100px 100px'
-          }
-        ];});
+            let currentStyle = 0;
+            styles = [
+                {
+                    filter: 'none !important',
+                    boxShadow: '0 0 2px 2px red !important',
+                    backgroundImage: 'linear-gradient(108deg, #e3d24f 25%, #000000 25%, #000000 50%, #e3d24f 50%, #e3d24f 75%, #000000 75%, #000000 100%)',
+                    backgroundSize: '70.00px 215.44px'
+                },
+                {
+                    filter: 'grayscale(100%) !important',
+                    boxShadow: '0 0 2px 2px blue !important',
+                    backgroundImage: 'linear-gradient(90deg, #000000 50%, #ffffff 50%)',
+                    backgroundSize: '100px 100px'
+                }
+            ];
+        });
     
         function changeStyle() {
-          const element = document.querySelector('.surfly-masked');
-          currentStyle = (currentStyle + 1) % styles.length;
-          const style = styles[currentStyle];
-          Object.keys(style).forEach(property => {
-            element.style[property] = style[property];
-          });
+            const element = document.querySelector('.surfly-masked');
+            currentStyle = (currentStyle + 1) % styles.length;
+            const style = styles[currentStyle];
+            Object.keys(style).forEach(property => {
+                element.style[property] = style[property];
+            });
         }
-      </script>
+    </script>
+    
     <style>
         body {
             font-family: Arial, sans-serif;
