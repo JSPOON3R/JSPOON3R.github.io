@@ -121,11 +121,11 @@ if (element) {
     </script>
     <!--change masking style-->
     <script>
-        var currentStyle;
-        var styles; // Declare styles array outside the event listener function
+        var currentStyle = 0;
+        var styles = [];
     
         document.addEventListener("DOMContentLoaded", function() {
-            let currentStyle = 0;
+            // Define styles array with presets
             styles = [
                 {
                     filter: 'none !important',
@@ -144,13 +144,19 @@ if (element) {
     
         function changeStyle() {
             const element = document.querySelector('.surfly-masked');
-            currentStyle = (currentStyle + 1) % styles.length;
-            const style = styles[currentStyle];
-            Object.keys(style).forEach(property => {
-                element.style[property] = style[property];
-            });
+            
+            if (element && styles.length > 0) {
+                currentStyle = (currentStyle + 1) % styles.length;
+                const style = styles[currentStyle];
+                
+                // Apply style properties to the element
+                Object.keys(style).forEach(property => {
+                    element.style[property] = style[property];
+                });
+            }
         }
     </script>
+    
     
     <style>
         body {
