@@ -237,6 +237,7 @@ border-radius: 10px;
       box-shadow: 0 0 2px 2px red !important;
       background-image: linear-gradient(108deg, #e3d24f 25%, #000000 25%, #000000 50%, #e3d24f 50%, #e3d24f 75%, #000000 75%, #000000 100%);
       background-size: 70.00px 215.44px;
+      z-index: 999;
     }
 
 .control-block {
@@ -361,7 +362,7 @@ border-radius: 10px;
             <input type="text" id="name" name="name" class="surfly-masked" required>
 
             <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
+            <input type="email" id="email" name="email" class="surfly-masked" required>
 
             <label for="phone">Phone</label>
             <input type="text" id="phone" name="phone" class="surfly-masked">
@@ -370,14 +371,14 @@ border-radius: 10px;
             <textarea id="message" name="message" rows="5" class="surfly-masked"></textarea>
 
             <label for="gender">Gender</label>
-            <input type="radio" id="male" name="gender" value="male">
+            <input type="radio" id="male" name="gender" class="surfly-masked" value="male">
             <label for="male">Male</label>
             <input type="radio" id="female" name="gender" value="female">
             <label for="female">Female</label>
             <br>
 
             <label for="country">Country</label>
-            <select id="country" name="country">
+            <select id="country" name="country" class="surfly-masked">
                 <option value="USA">USA</option>
                 <option value="UK">UK</option>
                 <option value="Canada">Canada</option>
@@ -386,7 +387,7 @@ border-radius: 10px;
 
             <label for="subscribe">Subscribe to Newsletter</label>
             <input type="checkbox" id="subscribe" name="subscribe" value="yes">
-            <button type="submit">Submit</button>
+            <button type="submit" class="surfly-masked">Submit</button>
             <label>Embedded Content</label>
             <iframe class="surfly-masked" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2461.5342082087122!2d4.883496841423703!3d52.3690829310251!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c609a2632fb6dd%3A0x371cef43631b08f5!2sSurfly%20B.V.!5e0!3m2!1sen!2snl!4v1707747307206!5m2!1sen!2snl" width="100%" height="300"></iframe>
         </form>
