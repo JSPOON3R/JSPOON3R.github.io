@@ -86,19 +86,7 @@ function loadSurfly() {
     } else {
         window.alert("Please provide a widget key");
     }
-}
-
-function startSession() {
-    Surfly.session().startLeader();
-    Surfly.session().on("tab_control", function (session, event) {
-var element = document.getElementById("control_submit");
-if (element) {
-    element.classList.add("control-block");
-}
-        console.log("hello")
-    })
-
-    Surfly.currentSession.on('tab_control', function (session, event) {
+    Surfly.on('tab_control', function (session, event) {
                 var element = document.getElementById('veryImportantButton');
                 // Specify that you DON'T want the limitations to apply to the leader
                 if (event.leaderIndex === event.controlIndex) {
@@ -110,7 +98,11 @@ if (element) {
                     element.disabled = true;
                     element.style.backgroundColor = '#e6fff2';
                 }
-            });
+            })
+}
+
+function startSession() {
+    Surfly.session().startLeader();
 }
 
     </script>
