@@ -122,11 +122,7 @@ if (element) {
     <!--change masking style-->
     <script>
         var currentStyle = 0;
-        var styles = [];
-    
-        document.addEventListener("DOMContentLoaded", function() {
-            // Define styles array with presets
-            styles = [
+        var styles = [
                 {
                     filter: 'none !important',
                     boxShadow: '0 0 2px 2px red !important',
@@ -140,7 +136,7 @@ if (element) {
                     backgroundSize: '100px 100px'
                 }
             ];
-        });
+     
     
         function changeStyle() {
             const element = document.querySelector('.surfly-masked');
@@ -326,7 +322,7 @@ border-radius: 10px;
     </div>
         <form>
             <label for="name">Name</label>
-            <input type="text" id="name" name="name" required surfly_private>
+            <input type="text" id="name" name="name" class="surfly-masked" required surfly_private>
 
             <label for="email">Email</label>
             <input type="email" id="email" name="email" required surfly_private>
