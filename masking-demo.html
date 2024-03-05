@@ -66,7 +66,7 @@
 
                 var settings = {
                     widget_key: widgetkey,
-                    hide_element_by_selector: "#name-mask,#email-mask,#phone-mask,#message-mask,#female-mask,#male-mask,#country-mask,#button-mask,#iframe-mask,#subscribe-mask",
+                    hide_element_by_selector: "#name-mask,#email-mask,#phone-mask,#message-mask,#female-mask,#male-mask,#country-mask,#button-mask,#iframe-mask,#subscribe-mask,.mask1,.mask2,.mask3,.mask4,.mask5",
                     queued: true,
                     videochat_enabled: false,
                     start_with_videochat_on: false,
@@ -87,7 +87,11 @@
             } else {
                 window.alert("Please provide a widget key");
             }
-            Surfly.session().on('tab_control', function (session, event) {
+        }
+
+        function startSession() {
+            Surfly.session().startLeader()
+            .on('tab_control', function (session, event) {
                 var element = document.getElementById('veryImportantButton');
                 console.log("control switched")
                 if (event.leaderIndex === event.controlIndex) {
@@ -101,11 +105,7 @@
                     element.style.backgroundColor = '#e6fff2';
                     console.log("element disabled")
                 }
-            })
-        }
-
-        function startSession() {
-            Surfly.session().startLeader();
+            });
         }
 
     </script>
