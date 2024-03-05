@@ -1,112 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Basic Form</title>
     <script>
-var widgetkey;
-var session_ready = false;
-var tomButton = document.getElementById("tomButton");
-var ayushButton = document.getElementById("ayushButton");
-var johnButton = document.getElementById("johnButton");
-var mihaiButton = document.getElementById("mihaiButton");
+        var widgetkey;
+        var session_ready = false;
+        var tomButton = document.getElementById("tomButton");
+        var ayushButton = document.getElementById("ayushButton");
+        var johnButton = document.getElementById("johnButton");
+        var mihaiButton = document.getElementById("mihaiButton");
 
-function hasQueryParam(param) {
-    const urlParams = new URLSearchParams(window.location.search);
-    const lowerCaseParam = param.toLowerCase();
+        function hasQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            const lowerCaseParam = param.toLowerCase();
 
-    for (const key of urlParams.keys()) {
-        if (key.toLowerCase() === lowerCaseParam) {
-            console.log(`Query parameter "${param}" is present`);
-            return true;
-        }
-    }
-    return false;
-}
-
-if (hasQueryParam("john")) {
-    widgetkey = "99671227762b43c2a96daa066ee006e2";
-    var session_ready = true;
-    loadSurfly();
-} else if (hasQueryParam("thomas")) {
-    widgetkey = "4af7f6620fbb4ab58d2c70f5d4fee0e6";
-    var session_ready = true;
-    loadSurfly();
-} else if (hasQueryParam("mihai")) {
-    widgetkey = "638a1769085c43029306423920b7ed59";
-    var session_ready = true;
-    loadSurfly();
-} else if (hasQueryParam("ayush")) {
-    widgetkey = "8816869ecf624d4483f6befd75cb2a1f";
-    var session_ready = true;
-    loadSurfly();
-} else {
-    // Default widget key if no specific parameter is detected
-    window.alert("Please provide a widget key");
-}
-
-
-
-// Function to load Surfly
-function loadSurfly() {
-    console.log('surfly triggered following widget key declaration');
-
-}
-
-function loadSurfly() {
-    if (session_ready === true) {
-        (function (s, u, r, f, l, y) {
-        s[f] = s[f] || { init: function () { s[f].q = arguments } };
-        l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
-        l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
-    })
-        (window, document, 'script', 'Surfly');
-
-    var settings = {
-        widget_key: widgetkey,
-        hide_element_by_selector: "#name-mask,#email-mask,#phone-mask,#message-mask,#female-mask,#male-mask,#country-mask,#button-mask,#iframe-mask,#subscribe-mask",
-        queued: true,
-        videochat_enabled: false,
-        start_with_videochat_on: false,
-        session_autorestore_enabled: false,
-        block_until_agent_joins: false
-    };
-
-    Surfly.init(settings, function (initResult) {
-        if (initResult.success) {
-            if (!Surfly.isInsideSession) {
-                console.log("Surfly is InsideSession.")
+            for (const key of urlParams.keys()) {
+                if (key.toLowerCase() === lowerCaseParam) {
+                    console.log(`Query parameter "${param}" is present`);
+                    return true;
+                }
             }
+            return false;
         }
-        else {
-            console.log("Surfly was unable to initialize properly.")
+
+        if (hasQueryParam("john")) {
+            widgetkey = "99671227762b43c2a96daa066ee006e2";
+            var session_ready = true;
+            loadSurfly();
+        } else if (hasQueryParam("thomas")) {
+            widgetkey = "4af7f6620fbb4ab58d2c70f5d4fee0e6";
+            var session_ready = true;
+            loadSurfly();
+        } else if (hasQueryParam("mihai")) {
+            widgetkey = "638a1769085c43029306423920b7ed59";
+            var session_ready = true;
+            loadSurfly();
+        } else if (hasQueryParam("ayush")) {
+            widgetkey = "8816869ecf624d4483f6befd75cb2a1f";
+            var session_ready = true;
+            loadSurfly();
+        } else {
+            // Default widget key if no specific parameter is detected
+            window.alert("Please provide a widget key");
         }
-    });
-    } else {
-        window.alert("Please provide a widget key");
-    }
-    Surfly.on('tab_control', function (session, event) {
+
+
+
+        // Function to load Surfly
+        function loadSurfly() {
+            console.log('surfly triggered following widget key declaration');
+
+        }
+
+        function loadSurfly() {
+            if (session_ready === true) {
+                (function (s, u, r, f, l, y) {
+                    s[f] = s[f] || { init: function () { s[f].q = arguments } };
+                    l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+                    l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+                })
+                    (window, document, 'script', 'Surfly');
+
+                var settings = {
+                    widget_key: widgetkey,
+                    hide_element_by_selector: "#name-mask,#email-mask,#phone-mask,#message-mask,#female-mask,#male-mask,#country-mask,#button-mask,#iframe-mask,#subscribe-mask",
+                    queued: true,
+                    videochat_enabled: false,
+                    start_with_videochat_on: false,
+                    session_autorestore_enabled: false,
+                    block_until_agent_joins: false
+                };
+
+                Surfly.init(settings, function (initResult) {
+                    if (initResult.success) {
+                        if (!Surfly.isInsideSession) {
+                            console.log("Surfly is InsideSession.")
+                        }
+                    }
+                    else {
+                        console.log("Surfly was unable to initialize properly.")
+                    }
+                });
+            } else {
+                window.alert("Please provide a widget key");
+            }
+            Surfly.on('tab_control', function (session, event) {
                 var element = document.getElementById('veryImportantButton');
-                // Specify that you DON'T want the limitations to apply to the leader
+                console.log("control switched")
                 if (event.leaderIndex === event.controlIndex) {
                     element.disabled = false;
                     element.style.backgroundColor = '#87cefa';
+                    console.log("element not disabled")
                 }
                 // Apply the limitations to everyone else when they are in control
                 else {
                     element.disabled = true;
                     element.style.backgroundColor = '#e6fff2';
+                    console.log("element disabled")
                 }
             })
-}
+        }
 
-function startSession() {
-    Surfly.session().startLeader();
-}
+        function startSession() {
+            Surfly.session().startLeader();
+        }
 
     </script>
-    
+
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -129,22 +132,26 @@ function startSession() {
             margin: 0 auto;
             padding: 20px;
         }
+
         .sub-container {
             margin-top: 80px;
             padding: 20px;
             border-radius: 10px;
         }
 
-        #c_1{
+        #c_1 {
             background-color: #f0dca9;
         }
-        #c_2{
+
+        #c_2 {
             background-color: #97b0b9;
         }
-        #c_3{
+
+        #c_3 {
             background-color: #97be82;
         }
-        #c_4{
+
+        #c_4 {
             background-color: #e47f7f;
         }
 
@@ -155,7 +162,7 @@ function startSession() {
         }
 
         .radio-btn-container {
-            display:flex;
+            display: flex;
             flex-direction: row;
             align-items: flex-start;
         }
@@ -189,10 +196,12 @@ function startSession() {
             border-radius: 5px;
             box-sizing: border-box;
         }
+
         input[type="radio"],
         input[type="checkbox"] {
             margin-right: 10px;
         }
+
         button {
             padding: 10px 20px;
             background-color: #e54747;
@@ -200,59 +209,61 @@ function startSession() {
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            margin-bottom:20px;
+            margin-bottom: 20px;
         }
+
         button:hover {
             background-color: #c72323;
         }
 
         .masking-header {
             background-color: #fff;
-            padding:20px;
-            margin-bottom:40px;
+            padding: 20px;
+            margin-bottom: 40px;
             border-radius: 10px;
         }
 
         .masking-header h1 {
             font-size: 1.8rem;
-    font-weight: normal;
-    color: black;
+            font-weight: normal;
+            color: black;
 
         }
 
-        .masking-header ul, li {
+        .masking-header ul,
+        li {
             font-size: 1.5rem;
-    font-weight: normal;
-    color: #4d4d4d;
-    margin-top:10px;
+            font-weight: normal;
+            color: #4d4d4d;
+            margin-top: 10px;
         }
 
         .masking-header h3 {
-    font-size: 1.4rem;
-    font-weight: lighter;
-    color: #757575;
+            font-size: 1.4rem;
+            font-weight: lighter;
+            color: #757575;
         }
+
         .masking-header p {
-color: #757575;
-background-color: #eff0f0;
-padding:10px;
-border-radius: 10px;
+            color: #757575;
+            background-color: #eff0f0;
+            padding: 10px;
+            border-radius: 10px;
         }
 
-.surfly-masked.test {
-      filter: none !important;
-      box-shadow: 0 0 2px 2px red !important;
-      background-image: linear-gradient(108deg, #e3d24f 25%, #000000 25%, #000000 50%, #e3d24f 50%, #e3d24f 75%, #000000 75%, #000000 100%);
-      background-size: 70.00px 215.44px;
-    }
+        .surfly-masked.test {
+            filter: none !important;
+            box-shadow: 0 0 2px 2px red !important;
+            background-image: linear-gradient(108deg, #e3d24f 25%, #000000 25%, #000000 50%, #e3d24f 50%, #e3d24f 75%, #000000 75%, #000000 100%);
+            background-size: 70.00px 215.44px;
+        }
 
-.control-block {
-    display:none;
-}
-
-
+        .control-block {
+            display: none;
+        }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1><b>Masking</b> - Demo Page</h1>
@@ -261,145 +272,152 @@ border-radius: 10px;
             <li>Element Masking</li>
             <li>Smart Control Switching</li>
         </ul>
-        
+
         <h3>Different ways of keeping content hidden from other participants</h3>
         <button onclick="startSession()">Start Demo</button>
         <div class="sub-container" id="c_1">
             <div class="masking-header" id="mh_1">
-        <h2>Field Masking</h2>
-        <h3>Ensure text entered into a specified field is not visisble to other participants</h3>
-        <p>Required changes to website code? <b>Yes</b><br><br>
-         What can it mask? <b>Text input fields</b><br>
-        </p>
-    </div>
-        <form>
-            <label for="name">Name</label>
-            <input type="text" class="test" id="name" name="name" required surfly_private>
+                <h2>Field Masking</h2>
+                <h3>Ensure text entered into a specified field is not visisble to other participants</h3>
+                <p>Required changes to website code? <b>Yes</b><br><br>
+                    What can it mask? <b>Text input fields</b><br>
+                </p>
+            </div>
+            <form>
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required surfly_private>
 
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required surfly_private>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required surfly_private>
 
-            <label for="phone">Phone</label>
-            <input type="text" id="phone" name="phone" surfly_private>
+                <label for="phone">Phone</label>
+                <input type="text" id="phone" name="phone" surfly_private>
 
-            <label for="message">Message</label>
-            <textarea id="message" name="message" rows="5" surfly_private></textarea>
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="5" surfly_private></textarea>
 
-            <label for="gender">Gender</label>
-            <div class="radio-btn-container">
-            <input type="radio" id="male" name="gender" value="male">
-            <label for="male">Male</label>
-            <input type="radio" id="female" name="gender" value="female">
-            <label for="female">Female</label>
+                <label for="gender">Gender</label>
+                <div class="radio-btn-container">
+                    <input type="radio" id="male" name="gender" value="male">
+                    <label for="male">Male</label>
+                    <input type="radio" id="female" name="gender" value="female">
+                    <label for="female">Female</label>
+                </div>
+                <br>
+
+                <label for="country">Country</label>
+                <select id="country" name="country">
+                    <option value="USA">USA</option>
+                    <option value="UK">UK</option>
+                    <option value="Canada">Canada</option>
+                    <option value="Australia">Australia</option>
+                </select>
+
+                <label for="subscribe">Subscribe to Newsletter</label>
+                <input type="checkbox" id="subscribe" name="subscribe" value="yes" surfly_private>
+                <button type="submit">Submit</button>
+                <label>Embedded Content</label>
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2461.5342082087122!2d4.883496841423703!3d52.3690829310251!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c609a2632fb6dd%3A0x371cef43631b08f5!2sSurfly%20B.V.!5e0!3m2!1sen!2snl!4v1707747307206!5m2!1sen!2snl"
+                    width="100%" height="300"></iframe>
+            </form>
         </div>
-            <br>
+        <div class="sub-container" id="c_2">
+            <div class="masking-header" id="mh_2">
+                <h2>Element Masking</h2>
+                <h3>Easily mask any page elements with Surfly's default masking colors</h3>
+                <p>Required changes to website code: <b>No</b><br><br>
+                    What can it mask?: <b>All page elements (e.g. Text, Buttons, Images, iFrames, etc)</b><br>
+                </p>
+            </div>
+            <form>
+                <label for="name">Name</label>
+                <input type="text" id="name-mask" name="name" class="test" required>
 
-            <label for="country">Country</label>
-            <select id="country" name="country">
-                <option value="USA">USA</option>
-                <option value="UK">UK</option>
-                <option value="Canada">Canada</option>
-                <option value="Australia">Australia</option>
-            </select>
+                <label for="email">Email</label>
+                <input type="email" id="email-mask" name="email" required>
 
-            <label for="subscribe">Subscribe to Newsletter</label>
-            <input type="checkbox" id="subscribe" name="subscribe" value="yes" surfly_private>
-            <button type="submit">Submit</button>
-            <label>Embedded Content</label>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2461.5342082087122!2d4.883496841423703!3d52.3690829310251!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c609a2632fb6dd%3A0x371cef43631b08f5!2sSurfly%20B.V.!5e0!3m2!1sen!2snl!4v1707747307206!5m2!1sen!2snl" width="100%" height="300"></iframe>
-        </form>
-    </div>
-    <div class="sub-container" id="c_2">
-        <div class="masking-header" id="mh_2">
-        <h2>Element Masking</h2>
-        <h3>Easily mask any page elements with Surfly's default masking colors</h3>
-        <p>Required changes to website code: <b>No</b><br><br>
-         What can it mask?: <b>All page elements (e.g. Text, Buttons, Images, iFrames, etc)</b><br>
-        </p>
+                <label for="phone">Phone</label>
+                <input type="text" id="phone-mask" name="phone">
+
+                <label for="message">Message</label>
+                <textarea id="message-mask" name="message" rows="5"></textarea>
+
+                <label for="gender">Gender</label>
+                <input type="radio" id="male-mask" name="gender" value="male">
+                <label for="male">Male</label>
+                <input type="radio" id="female-mask" name="gender" value="female">
+                <label for="female">Female</label>
+                <br>
+
+                <label for="country">Country</label>
+                <select id="country-mask" name="country">
+                    <option value="USA">USA</option>
+                    <option value="UK">UK</option>
+                    <option value="Canada">Canada</option>
+                    <option value="Australia">Australia</option>
+                </select>
+
+                <label for="subscribe">Subscribe to Newsletter</label>
+                <input type="checkbox" id="subscribe-mask" name="subscribe" value="yes">
+                <button type="submit" id="button-mask">Submit</button>
+                <label>Embedded Content</label>
+                <div id="iframe-mask">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2461.5342082087122!2d4.883496841423703!3d52.3690829310251!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c609a2632fb6dd%3A0x371cef43631b08f5!2sSurfly%20B.V.!5e0!3m2!1sen!2snl!4v1707747307206!5m2!1sen!2snl"
+                        width="100%" height="300"></iframe>
+                </div>
+            </form>
+
         </div>
-        <form>
-            <label for="name">Name</label>
-            <input type="text" id="name-mask" name="name" required>
+        <div class="sub-container" id="c_3">
+            <div class="masking-header" id="mh_3">
+                <h2>Control Dependent Appearance</h2>
+                <h3>Remove elements depending on who is in control</h3>
+                <p>Required changes to website code: <b>Yes</b><br><br>
+                    What can it mask?: <b>All page elements (e.g. Text, Buttons, Images, iFrames, etc)</b><br>
+                </p>
+            </div>
+            <form>
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" required>
 
-            <label for="email">Email</label>
-            <input type="email" id="email-mask" name="email" required>
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" required>
 
-            <label for="phone">Phone</label>
-            <input type="text" id="phone-mask" name="phone">
+                <label for="phone">Phone</label>
+                <input type="text" id="phone" name="phone">
 
-            <label for="message">Message</label>
-            <textarea id="message-mask" name="message" rows="5"></textarea>
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="5"></textarea>
 
-            <label for="gender">Gender</label>
-            <input type="radio" id="male-mask" name="gender" value="male">
-            <label for="male">Male</label>
-            <input type="radio" id="female-mask" name="gender" value="female">
-            <label for="female">Female</label>
-            <br>
+                <label for="gender">Gender</label>
+                <input type="radio" id="male" name="gender" value="male">
+                <label for="male">Male</label>
+                <input type="radio" id="female" name="gender" value="female">
+                <label for="female">Female</label>
+                <br>
 
-            <label for="country">Country</label>
-            <select id="country-mask" name="country">
-                <option value="USA">USA</option>
-                <option value="UK">UK</option>
-                <option value="Canada">Canada</option>
-                <option value="Australia">Australia</option>
-            </select>
+                <label for="country">Country</label>
+                <select id="country" name="country">
+                    <option value="USA">USA</option>
+                    <option value="UK">UK</option>
+                    <option value="Canada">Canada</option>
+                    <option value="Australia">Australia</option>
+                </select>
 
-            <label for="subscribe">Subscribe to Newsletter</label>
-            <input type="checkbox" id="subscribe-mask" name="subscribe" value="yes">
-            <button type="submit" id="button-mask" >Submit</button>
-            <label>Embedded Content</label>
-            <div id="iframe-mask">
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2461.5342082087122!2d4.883496841423703!3d52.3690829310251!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c609a2632fb6dd%3A0x371cef43631b08f5!2sSurfly%20B.V.!5e0!3m2!1sen!2snl!4v1707747307206!5m2!1sen!2snl" width="100%" height="300"></iframe>
+                <label for="subscribe">Subscribe to Newsletter</label>
+                <input type="checkbox" id="subscribe" name="subscribe" value="yes">
+                <button type="submit" id="veryImportantButton">Very Important Button</button>
+                <label>Embedded Content</label>
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2461.5342082087122!2d4.883496841423703!3d52.3690829310251!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c609a2632fb6dd%3A0x371cef43631b08f5!2sSurfly%20B.V.!5e0!3m2!1sen!2snl!4v1707747307206!5m2!1sen!2snl"
+                    width="100%" height="300"></iframe>
+            </form>
         </div>
-        </form>
-
-    </div>
-    <div class="sub-container" id="c_3">
-        <div class="masking-header" id="mh_3">
-        <h2>Compliant Control Switching</h2>
-        <h3>Remove elements depending on who is in control</h3>
-        <p>Required changes to website code: <b>Yes</b><br><br>
-         What can it mask?: <b>All page elements (e.g. Text, Buttons, Images, iFrames, etc)</b><br>
-        </p>
-        </div>
-        <form>
-            <label for="name">Name</label>
-            <input type="text" id="name" name="name" required>
-
-            <label for="email">Email</label>
-            <input type="email" id="email" name="email" required>
-
-            <label for="phone">Phone</label>
-            <input type="text" id="phone" name="phone" >
-
-            <label for="message">Message</label>
-            <textarea id="message" name="message" rows="5" ></textarea>
-
-            <label for="gender">Gender</label>
-            <input type="radio" id="male" name="gender"  value="male">
-            <label for="male">Male</label>
-            <input type="radio" id="female" name="gender" value="female">
-            <label for="female">Female</label>
-            <br>
-
-            <label for="country">Country</label>
-            <select id="country" name="country">
-                <option value="USA">USA</option>
-                <option value="UK">UK</option>
-                <option value="Canada">Canada</option>
-                <option value="Australia">Australia</option>
-            </select>
-
-            <label for="subscribe">Subscribe to Newsletter</label>
-            <input type="checkbox" id="subscribe" name="subscribe" value="yes">
-            <button type="submit" id="veryImportantButton">Very Important Button</button>
-            <label>Embedded Content</label>
-            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2461.5342082087122!2d4.883496841423703!3d52.3690829310251!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c609a2632fb6dd%3A0x371cef43631b08f5!2sSurfly%20B.V.!5e0!3m2!1sen!2snl!4v1707747307206!5m2!1sen!2snl" width="100%" height="300"></iframe>
-        </form>
-    </div>
 
 
     </div>
 </body>
+
 </html>
