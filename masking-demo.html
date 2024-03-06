@@ -90,9 +90,9 @@
         }
 
         function startSession() {
+            document.addEventListener('DOMContentLoaded', function() {
             Surfly.session().startLeader()
             .on('tab_control', function (session, event) {
-                console.log("control switched. masking button")
                 if (event.leaderIndex === event.controlIndex) {
                     document.getElementById("veryImportantButton").style.display = "inline";
                     console.log("element enabled");
@@ -106,6 +106,7 @@
                     console.log("control index: "+event.controlIndex);
                 }
             });
+        });
         }
 
     </script>
@@ -122,7 +123,6 @@
             font-family: Arial, sans-serif;
             background-position: center;
             background-size: cover;
-            /* Adjust as needed */
             background-attachment: fixed;
             overflow: scroll;
         }
