@@ -93,13 +93,12 @@
             Surfly.session().startLeader()
             .on('tab_control', function (session, event) {
                 var element = document.getElementById('veryImportantButton');
-                console.log("control switched")
+                console.log("control switched. masking element: "+element)
                 if (event.leaderIndex === event.controlIndex) {
                     element.disabled = false;
                     element.style.backgroundColor = '#87cefa';
                     console.log("element not disabled")
                 }
-                // Apply the limitations to everyone else when they are in control
                 else {
                     element.disabled = true;
                     element.style.backgroundColor = '#e6fff2';
