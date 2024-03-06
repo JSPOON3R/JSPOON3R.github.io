@@ -93,16 +93,16 @@
             Surfly.session().startLeader()
             .on('tab_control', function (session, event) {
                 var element = document.getElementById('veryImportantButton');
-                console.log("control switched. masking element: "+element.id + event)
+                console.log("control switched. masking element: "+element.id)
                 if (event.leaderIndex === event.controlIndex) {
-                    element.display = "none";
-                    element.style.backgroundColor = '#87cefa';
-                    console.log("element not disabled")
+                    element.style.display = "none";
+                    element.style.backgroundColor = 'white';
+                    console.log("element not disabled");
                 }
                 else {
-                    element.display = "inline"
-                    element.style.backgroundColor = '#e6fff2';
-                    console.log("element disabled")
+                    element.style.display = "inline"
+                    element.style.backgroundColor = 'black';
+                    console.log("element disabled");
                 }
             });
         }
@@ -274,6 +274,7 @@
 
         .surfly-masked.mask3 {
             filter: none !important;
+            background-color: whitesmoke;
     background-image: url("https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/resources/block.png?raw=true");
     background-position:center;
     background-repeat:no-repeat;
