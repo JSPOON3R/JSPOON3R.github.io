@@ -256,35 +256,46 @@
             box-shadow: 0 0 2px 2px red !important;
             background-image: linear-gradient(108deg, #e3d24f 25%, #000000 25%, #000000 50%, #e3d24f 50%, #e3d24f 75%, #000000 75%, #000000 100%);
             background-size: 70.00px 215.44px;
+            cursor: not-allowed;
         }
 
         .surfly-masked.mask2 {
-            filter: none !important;
-            box-shadow: 0 0 2px 2px red !important;
-            background-image: linear-gradient(108deg, #e3d24f 25%, #000000 25%, #000000 50%, #e3d24f 50%, #e3d24f 75%, #000000 75%, #000000 100%);
-            background-size: 70.00px 215.44px;
+
+            transition: transform 0.3s ease;
+            width: 15px; 
+    height: 15px; 
+            cursor: not-allowed;
+
         }
 
-        .surfly-masked.mask3 {
+        .surfly-masked.mask2:hover {
+            transform: scale(0);
+        }
+
+        .surfly-masked.mask3:hover {
             filter: none !important;
-            box-shadow: 0 0 2px 2px red !important;
-            background-image: linear-gradient(108deg, #e3d24f 25%, #000000 25%, #000000 50%, #4fe363 50%, #e3d24f 75%, #000000 75%, #000000 100%);
-            background-size: 70.00px 215.44px;
+    background-image: url("https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/resources/block.png?raw=true");
+    background-position:center;
+    background-repeat:no-repeat;
+    background-size: 27px 27px;
+    cursor: not-allowed;
         }
 
         .surfly-masked.mask4 {
             filter: none !important;
-            box-shadow: 0 0 2px 2px red !important;
-            background-image: linear-gradient(108deg, #e34fc8 25%, #000000 25%, #000000 50%, #e3d24f 50%, #e3d24f 75%, #000000 75%, #000000 100%);
-            background-size: 70.00px 215.44px;
+            background-color: #eff0f0;
+            background-image:radial-gradient(#e3514f 50%, #000000 50%);
+            background-size: 13px 13px;
+            cursor: not-allowed;
         }
 
         .surfly-masked.mask5 {
-            filter:blur();
+            filter:blur(30px) !important;
+            cursor: not-allowed;
+            height:auto;
+            width:auto;
         }
-        .control-block {
-            display: none;
-        }
+
     </style>
 </head>
 
@@ -396,8 +407,8 @@
         </div>
         <div class="sub-container" id="c_3">
             <div class="masking-header" id="mh_3">
-                <h2>Control Dependent Appearance</h2>
-                <h3>Remove elements depending on who is in control</h3>
+                <h2>Custom Style Element Masking</h2>
+                <h3>Create your own styles for masked page content</h3>
                 <p>Required changes to website code: <b>Yes</b><br><br>
                     What can it mask?: <b>All page elements (e.g. Text, Buttons, Images, iFrames, etc)</b><br>
                 </p>
@@ -413,12 +424,12 @@
                 <input type="text" id="phone" name="phone" class="mask1">
 
                 <label for="message">Message</label>
-                <textarea id="message" name="message" rows="5" class="mask2"></textarea>
+                <textarea id="message" name="message" rows="5" class="mask3"></textarea>
 
                 <label for="gender">Gender</label>
-                <input type="radio" id="male" name="gender" value="male" class="mask3">
+                <input type="radio" id="male" name="gender" value="male" class="mask2">
                 <label for="male">Male</label>
-                <input type="radio" id="female" name="gender" value="female" class="mask3">
+                <input type="radio" id="female" name="gender" value="female" class="mask2">
                 <label for="female">Female</label>
                 <br>
 
@@ -431,8 +442,8 @@
                 </select>
 
                 <label for="subscribe">Subscribe to Newsletter</label>
-                <input type="checkbox" id="subscribe" name="subscribe" value="yes" class="mask4">
-                <button type="submit">Submit</button>
+                <input type="checkbox" id="subscribe" name="subscribe" value="yes" class="mask2">
+                <button type="submit" class="mask3">Submit</button>
                 <label>Embedded Content</label>
                 <iframe
                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2461.5342082087122!2d4.883496841423703!3d52.3690829310251!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47c609a2632fb6dd%3A0x371cef43631b08f5!2sSurfly%20B.V.!5e0!3m2!1sen!2snl!4v1707747307206!5m2!1sen!2snl"
