@@ -90,7 +90,7 @@
         }
 
         function startSession() {
-            document.addEventListener('DOMContentLoaded', function() {
+
             Surfly.session().startLeader()
             .on('tab_control', function (session, event) {
                 if (event.leaderIndex === event.controlIndex) {
@@ -106,7 +106,6 @@
                     console.log("control index: "+event.controlIndex);
                 }
             });
-        });
         }
 
     </script>
