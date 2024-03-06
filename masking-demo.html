@@ -93,7 +93,7 @@
             Surfly.session().startLeader()
             .on('tab_control', function (session, event) {
                 var element = document.getElementById('veryImportantButton');
-                console.log("control switched. masking element: "+element.id)
+                console.log("control switched. masking element: "+element.id + event)
                 if (event.leaderIndex === event.controlIndex) {
                     element.display = "none";
                     element.style.backgroundColor = '#87cefa';
