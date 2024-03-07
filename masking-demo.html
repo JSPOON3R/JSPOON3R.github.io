@@ -76,11 +76,25 @@
                 };
 
                 Surfly.init(settings, function (initResult) {
-                    if (initResult.success) {
-                        if (!Surfly.isInsideSession) {
-                            console.log("Surfly is InsideSession.")
-                        }
-                    }
+                    if (init.success) {
+            var sess;
+            if (!Surfly.currentSession) {
+                sess = Surfly.session();
+            } else {
+                sess = Surfly.currentSession;
+            }
+            sess.on('tab_control', function (session, event) {
+                var element = document.getElementById('veryImportantButton');
+                if (event.leaderIndex === event.controlIndex) {
+                    element.disabled = false;
+                    element.style.backgroundColor = '#87cefa';
+                }
+                else {
+                    element.disabled = true;
+                    element.style.backgroundColor = '#e6fff2';
+                }
+            });
+        }
                     else {
                         console.log("Surfly was unable to initialize properly.")
                     }
