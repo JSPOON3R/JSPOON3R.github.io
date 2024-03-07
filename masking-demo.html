@@ -101,9 +101,9 @@
         }
 
         function startSession() {
-            var veryImportantButton = document.getElementById("veryImportantButton");
             Surfly.session().startLeader()
             .on('tab_control', function (session, event) {
+                var veryImportantButton = document.getElementById("veryImportantButton");
                 if (event.leaderIndex === event.controlIndex) {
                     veryImportantButton.style.display = "inline";
                     console.log("element enabled");
