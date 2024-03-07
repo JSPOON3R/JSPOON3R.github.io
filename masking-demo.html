@@ -101,18 +101,16 @@
         }
 
         function startSession() {
-    var veryImportantButton = document.getElementById("veryImportantButton");
-
     Surfly.session().startLeader()
     .on('tab_control', function (session, event) {
         try {
             if (event.leaderIndex === event.controlIndex) {
-                show(veryImportantButton);
+                show();
                 console.log("Element enabled");
                 console.log("Leader index: " + event.leaderIndex);
                 console.log("Control index: " + event.controlIndex);
             } else {
-                hide(veryImportantButton);
+                hide();
                 console.log("Element disabled");
                 console.log("Leader index: " + event.leaderIndex);
                 console.log("Control index: " + event.controlIndex);
@@ -123,17 +121,19 @@
     });
 }
 
-function hide(element) {
-    if (element) {
-        element.style.display = "none";
+function hide() {
+    var veryImportantButton = document.getElementById("veryImportantButton");
+    if (veryImportantButton) {
+        veryImportantButton.style.display = "none";
     } else {
         throw new Error("Element is null or undefined in hide()");
     }
 }
 
-function show(element) {
-    if (element) {
-        element.style.display = "inline";
+function show() {
+    var veryImportantButton = document.getElementById("veryImportantButton");
+    if (veryImportantButton) {
+        veryImportantButton.style.display = "inline";
     } else {
         throw new Error("Element is null or undefined in show()");
     }
