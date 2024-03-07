@@ -75,7 +75,7 @@
                     block_until_agent_joins: false
                 };
 
-                Surfly.init(settings, function (initResult) {
+                Surfly.init(settings, function (init) {
                     if (init.success) {
             var sess;
             if (!Surfly.currentSession) {
