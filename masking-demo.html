@@ -91,6 +91,7 @@
         }
 
         function startSession() {
+            var veryImportantButton = document.getElementById("veryImportantButton");
             Surfly.session().startLeader()
             .on('tab_control', function (session, event) {
                 if (event.leaderIndex === event.controlIndex) {
