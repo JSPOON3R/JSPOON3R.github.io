@@ -90,23 +90,24 @@
         }
 
         function startSession() {
-
-            Surfly.session().startLeader()
-            .on('tab_control', function (session, event) {
-                if (event.leaderIndex === event.controlIndex) {
-                    document.getElementById("veryImportantButton").style.display = "inline";
-                    console.log("element enabled");
-                    console.log("leader index: "+event.leaderIndex);
-                    console.log("control index: "+event.controlIndex);
-                }
-                else {
-                    document.getElementById("veryImportantButton").style.display = "none";
-                    console.log("element disabled");
-                    console.log("leader index: "+event.leaderIndex);
-                    console.log("control index: "+event.controlIndex);
-                }
-            });
-        }
+    Surfly.session().startLeader()
+    .on('session_loaded', function() {
+        console.log('Session loaded');
+                Surfly.session().on('tab_control', function (session, event) {
+            if (event.leaderIndex === event.controlIndex) {
+                document.getElementById("veryImportantButton").style.display = "inline";
+                console.log("Element enabled");
+                console.log("Leader index: " + event.leaderIndex);
+                console.log("Control index: " + event.controlIndex);
+            } else {
+                document.getElementById("veryImportantButton").style.display = "none";
+                console.log("Element disabled");
+                console.log("Leader index: " + event.leaderIndex);
+                console.log("Control index: " + event.controlIndex);
+            }
+        });
+    });
+}
 
     </script>
 
