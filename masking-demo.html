@@ -105,13 +105,13 @@
             Surfly.session().startLeader()
             .on('tab_control', function (session, event) {
                 if (event.leaderIndex === event.controlIndex) {
-                    veryImportantButton.style.display = "inline";
+                    show();
                     console.log("element enabled");
                     console.log("leader index: "+event.leaderIndex);
                     console.log("control index: "+event.controlIndex);
                 }
                 else {
-                    veryImportantButton.style.display = "none";
+                    hide();
                     console.log("element disabled");
                     console.log("leader index: "+event.leaderIndex);
                     console.log("control index: "+event.controlIndex);
@@ -122,6 +122,10 @@
         function hide() {
             var veryImportantButton = document.getElementById("veryImportantButton");
             veryImportantButton.style.display = "none";
+        }
+        function show() {
+            var veryImportantButton = document.getElementById("veryImportantButton");
+            veryImportantButton.style.display = "inline";
         }
 
     </script>
