@@ -105,13 +105,15 @@
             .on('tab_control', function (session, event) {
                 var veryImportantButton = document.getElementById("veryImportantButton");
                 if (event.leaderIndex === event.controlIndex) {
-                    veryImportantButton.style.display = "inline";
+                    var veryImportantButton = document.getElementById("veryImportantButton");
+                    veryImportantButton.style.display = "'inline'";
                     console.log("element enabled");
                     console.log("leader index: "+event.leaderIndex);
                     console.log("control index: "+event.controlIndex);
                 }
                 else {
-                    veryImportantButton.style.display = "none";
+                    var veryImportantButton = document.getElementById("veryImportantButton");
+                    veryImportantButton.style.display = "'none'";
                     console.log("element disabled");
                     console.log("leader index: "+event.leaderIndex);
                     console.log("control index: "+event.controlIndex);
