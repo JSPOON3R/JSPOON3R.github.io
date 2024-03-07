@@ -101,32 +101,44 @@
         }
 
         function startSession() {
-            var veryImportantButton = document.getElementById("veryImportantButton");
-            Surfly.session().startLeader()
-            .on('tab_control', function (session, event) {
-                if (event.leaderIndex === event.controlIndex) {
-                    show();
-                    console.log("element enabled");
-                    console.log("leader index: "+event.leaderIndex);
-                    console.log("control index: "+event.controlIndex);
-                }
-                else {
-                    hide();
-                    console.log("element disabled");
-                    console.log("leader index: "+event.leaderIndex);
-                    console.log("control index: "+event.controlIndex);
-                }
-            });
-        }
+    var veryImportantButton = document.getElementById("veryImportantButton");
 
-        function hide() {
-            var veryImportantButton = document.getElementById("veryImportantButton");
-            veryImportantButton.style.display = "none";
+    Surfly.session().startLeader()
+    .on('tab_control', function (session, event) {
+        try {
+            if (event.leaderIndex === event.controlIndex) {
+                show(veryImportantButton);
+                console.log("Element enabled");
+                console.log("Leader index: " + event.leaderIndex);
+                console.log("Control index: " + event.controlIndex);
+            } else {
+                hide(veryImportantButton);
+                console.log("Element disabled");
+                console.log("Leader index: " + event.leaderIndex);
+                console.log("Control index: " + event.controlIndex);
+            }
+        } catch (error) {
+            console.error("An error occurred:", error.message);
         }
-        function show() {
-            var veryImportantButton = document.getElementById("veryImportantButton");
-            veryImportantButton.style.display = "inline";
-        }
+    });
+}
+
+function hide(element) {
+    if (element) {
+        element.style.display = "none";
+    } else {
+        throw new Error("Element is null or undefined in hide()");
+    }
+}
+
+function show(element) {
+    if (element) {
+        element.style.display = "inline";
+    } else {
+        throw new Error("Element is null or undefined in show()");
+    }
+}
+
 
     </script>
 
