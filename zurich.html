@@ -60,6 +60,16 @@
 
         }
     </script>
+<!--START WITH ENTER KEY-->
+<script>
+    var inputField = document.getElementById("session_url_input");
+    inputField.addEventListener("keypress", function(event) {
+        if (event.keyCode === 13) {
+            validateURL();
+        }
+    });
+</script>
+
     <!--DISPLAY FUNCTIONS-->
     <script>
         function show_session_buttons() {
