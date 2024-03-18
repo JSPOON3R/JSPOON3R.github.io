@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function() {
   function insertFixedTextBox() {
-    var textBox = document.createElement('div');
+    var textBoxSurfly = document.createElement('div');
 
     textBox.style.position = 'fixed';
     textBox.style.top = '50%';
@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
     textBox.style.fontWeight = 'bold';
     textBox.innerText = 'Add anything you like to any website';
 
-    document.body.appendChild(textBox);
+    document.body.appendChild(textBoxSurfly);
   }
 
   insertFixedTextBox();
