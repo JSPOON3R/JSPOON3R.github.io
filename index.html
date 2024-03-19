@@ -24,7 +24,7 @@
                 password_required: false,
                 host_switching_allowed: true,
                 block_until_agent_joins: false,
-                videochat: true,
+                videochat: false,
                 follower_redirect_url: "https://demo.surfly.com",
                 leader_redirect_url: "https://demo.surfly.com",
             };
@@ -45,7 +45,7 @@
 
         function startSurflySession() {
             var urlinput = document.querySelector('#session_url_input').value;
-            SurflySession = Surfly.session({ start_with_chat_open: false, start_with_videochat_on: true, url: urlinput }).startLeader("#leader");
+            SurflySession = Surfly.session({ start_with_chat_open: false, start_with_videochat_on: false, url: urlinput }).startLeader("#leader");
                         var errorMessage = document.getElementById('errorMessage');
                         errorMessage.style.display = 'none';
                         Surfly.on('session_created', function (session, event) {
