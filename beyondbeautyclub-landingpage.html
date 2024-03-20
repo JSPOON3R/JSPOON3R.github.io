@@ -166,13 +166,15 @@
                 "Name": "Mrs Customer",
                 "Identifier": "1234"
             });
-            SurflySession.on('session_started', function (SurflySession) {
-                customerLink = SurflySession.followerLink;
-                console.log(SurflySession, 'is fully initiated. Follower link =' + customerLink);
+            SurflySession.on('session_created', function (SurflySession) {
                 //prompt ios devices for camera usage
                 document.getElementById('cameraButton').addEventListener('click', function () {
                     navigator.mediaDevices.getUserMedia({video: true})
                 });
+            })
+            SurflySession.on('session_started', function (SurflySession) {
+                customerLink = SurflySession.followerLink;
+                console.log(SurflySession, 'is fully initiated. Follower link =' + customerLink);
             })
             SurflySession.on('create_failed', function () {
                 console.log("Surfly session failed to create successfully");
