@@ -167,8 +167,8 @@ function toggleFullscreen() {
 }
 
 
-function copyFollowerLink() {
-    // Get the follower link
+function buttonClick() {
+    // Get the follower link straight to the clipboard
     var followerLink = SurflySession.followerLink();
         navigator.clipboard.writeText(followerLink)
         .then(function() {
@@ -177,6 +177,7 @@ function copyFollowerLink() {
         .catch(function(error) {
             console.error('Failed to copy follower link to clipboard:', error);
         });
+        startSurflySession();
 }
 
 function toggleDrawingn() {
@@ -218,9 +219,13 @@ function startCoBrowsingSession() {
     <iframe src="" class="iframe-content"
     id="sessionIframe"></iframe>
     <div class="bottomNav">
-        <button class="bottomNavBtn" onclick="copyFollowerLink()">Copy Link</button>
+        <!--another copy link for comfort-->
+        <button class="bottomNavBtn" onclick="buttonClick()">Copy Link</button>
+        <!--easy video toggle-->
         <button class="bottomNavBtn" onclick="toggleFullscreen()">Fullscreen Video</button>
+        <!--easily drive and annotate-->
         <button class="bottomNavBtn" onclick="toggleDrawingn()">Draw</button>
+        <!--end session easily so they dont forget-->
         <button class="bottomNavBtn" style="background:#c66c50;" onclick="endSurflySession()">End Session</button>
     </div>
 </div>
