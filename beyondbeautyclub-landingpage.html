@@ -168,7 +168,7 @@
             });
             SurflySession.on('session_created', function (SurflySession) {
                 //prompt ios devices for camera usage
-                document.getElementById('cameraButton').addEventListener('click', function () {
+                document.getElementById('startButton').addEventListener('click', function () {
                     navigator.mediaDevices.getUserMedia({video: true})
                 });
             })
@@ -242,7 +242,7 @@
             </div>
             <div class="stacked-div" style="color:#47403B">The session will immediately</div>
             <div class="stacked-div" style="text-align: center;">
-                <button class="btn" onclick="buttonClick(),exposeIframe()">Start Co-Browsing Session</button>
+                <button class="btn" id="startButton" onclick="buttonClick(),exposeIframe()">Start Co-Browsing Session</button>
                 <div class="stacked-div" style="color:rgb(182, 128, 118)"><i>(please wait until both you and your
                         customer are ready to begin)</i></div>
             </div>
