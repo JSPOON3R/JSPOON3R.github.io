@@ -170,6 +170,11 @@
                 //prompt ios devices for camera usage
                 document.getElementById('startButton').addEventListener('click', function () {
                     navigator.mediaDevices.getUserMedia({video: true})
+                    .catch(function(err) {
+            // Access denied or other error occurred
+            console.error('Error accessing camera: ', err);
+            alert('Error accessing camera. Please ensure camera access is enabled.');
+        });
                 });
             })
             SurflySession.on('session_started', function (SurflySession) {
