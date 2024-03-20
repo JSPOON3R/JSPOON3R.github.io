@@ -152,7 +152,7 @@ Surfly.init(settings, function (initResult) {
 });
 
 function startSurflySession() {
-    SurflySession = Surfly.session().startLeader(("#sessionIframe"), {
+    SurflySession = Surfly.session().startLeader("#sessionIframe", {
         "Name": "Mrs Customer",
         "Identifier": "1234"
     }); 
@@ -168,6 +168,7 @@ function toggleFullscreen() {
 
 
 function buttonClick() {
+    console.log("button clicked!");
     startSurflySession();
     SurflySession.on('session_loaded', function(session) {
      // Get the follower link straight to the clipboard
