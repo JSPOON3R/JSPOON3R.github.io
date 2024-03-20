@@ -118,6 +118,7 @@ h2 {
 </script>
 <script>
 var SurflySession;
+var customerLink
 var settings = {
     // Surfly session options can be set here, or at the Company/Plan levels.
     widget_key: 'd97af65cf4d24a7f86783f8cd38cfe8e',
@@ -125,9 +126,12 @@ var settings = {
     password_required: false,
     host_switching_allowed: true,
     block_until_agent_joins: false,
-    start_with_chat_open: true, 
+    start_with_chat_open: false, 
+    videochat: true,
     start_with_videochat_on: true,
     start_with_fullscreen_videochat: true,
+    default_videochat_fullscreen_mode: 'spotlight',
+    default_videochat_mode: 'floating',
     url: "https://member.beyondbeautyclub.com/",
     follower_redirect_url: "https://member.beyondbeautyclub.com/",
     leader_redirect_url: "https://member.beyondbeautyclub.com/",
@@ -156,7 +160,11 @@ function startSurflySession() {
     SurflySession = Surfly.session().startLeader("#sessionIframe", {
         "Name": "Mrs Customer",
         "Identifier": "1234"
-    }); 
+    });
+    SurflySession.on('session_loaded', function(session) {
+        var customerLink = SurflySession.followerLink;
+        console.log(session, 'is fully initiated. Follower link ='+ customerLink);
+    })
     SurflySession.on('create_failed', function() {
         console.log("Surfly session failed to create successfully");
     });
@@ -177,8 +185,7 @@ function toggleFullscreen() {
 }
 
 function copyLink() {
-    var followerLink = SurflySession.followerLink();
-        navigator.clipboard.writeText(followerLink)
+        navigator.clipboard.writeText(customerLink)
         .then(function() {
             console.log('Follower link copied to clipboard successfully');
         })
@@ -190,11 +197,6 @@ function copyLink() {
 function buttonClick() {
     console.log("button clicked!");
     startSurflySession();
-    SurflySession.on('session_loaded', function(session) {
-     // Get the follower link straight to the clipboard
-    
-      console.log(session, 'is fully initiated');
-    })
 }
 
 function toggleDrawingn() {
