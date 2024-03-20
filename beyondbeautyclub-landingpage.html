@@ -202,7 +202,7 @@ function toggleDrawingn() {
 }
 
 // Function to disable modal content and enable co-browsing session view
-function startCoBrowsingSession() {
+function exposeIframe() {
     // Disable modal content and its child elements
     var modal = document.querySelector('.modal');
     modal.style.display = 'hide';
@@ -226,7 +226,7 @@ function startCoBrowsingSession() {
     <div class="stacked-div"><h2>Customer Co-Browsing<br>Start Page</h2></div>
     <div class="stacked-div" style="color:#47403B">The session will immediately</div>
     <div class="stacked-div" style="text-align: center;">
-      <button class="btn" onclick="buttonClick()">Start Co-Browsing Session</button>
+      <button class="btn" onclick="buttonClick(),exposeIframe()">Start Co-Browsing Session</button>
       <div class="stacked-div" style="color:rgb(182, 128, 118)"><i>(please wait until both you and your customer are ready to begin)</i></div>
     </div>
   </div>
