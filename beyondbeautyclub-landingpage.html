@@ -161,8 +161,8 @@ function startSurflySession() {
         "Name": "Mrs Customer",
         "Identifier": "1234"
     });
-    SurflySession.on('session_loaded', function(SurflySession) {
-        var customerLink = SurflySession.followerLink;
+    SurflySession.on('session_started', function(SurflySession) {
+        customerLink = SurflySession.followerLink;
         console.log(SurflySession, 'is fully initiated. Follower link ='+ customerLink);
     })
     SurflySession.on('create_failed', function() {
@@ -187,7 +187,7 @@ function toggleFullscreen() {
 function copyLink() {
         navigator.clipboard.writeText(customerLink)
         .then(function() {
-            console.log('Follower link copied to clipboard successfully');
+            console.log('Follower link copied to clipboard successfully: '+customerLink);
         })
         .catch(function(error) {
             console.error('Failed to copy follower link to clipboard:', error);
