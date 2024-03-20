@@ -163,7 +163,7 @@ function startSurflySession() {
     });
     SurflySession.on('session_loaded', function(SurflySession) {
         var customerLink = SurflySession.followerLink;
-        console.log(session, 'is fully initiated. Follower link ='+ customerLink);
+        console.log(SurflySession, 'is fully initiated. Follower link ='+ customerLink);
     })
     SurflySession.on('create_failed', function() {
         console.log("Surfly session failed to create successfully");
