@@ -1,261 +1,267 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BeyondBeauty Start Page</title>
-<style>
-body {
-    background-image: url("https://member.beyondbeautyclub.com/_next/image?url=%2Fassets%2Fimages%2Fbbc-background.jpg&w=3840&q=75");
-}
-.modal {
-    display: none;
-    background-size: cover;
-    background-position: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 9999;
-    overflow: auto;
-    font-family: Figtree, sans-serif;
-    text-align: center;
-
-}
-.modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 80%;
-    max-width: 600px;
-    border-radius: 1em;
-}
-.stacked-div {
-    width: 100%;
-    padding: 10px;
-    box-sizing: border-box;
-}
-
-h2 {
-    font-size: x-large;
-    font-weight: bold;
-    color: #47403B;
-}
-
-.btn {
-    display: inline-block;
-    color: #fff;
-    cursor: pointer;
-    background: rgb(182, 128, 118);
-    width: 100%;
-    height: fit-content;
-    text-transform: uppercase;
-    padding: 0.75rem;
-    border-radius: 6px;
-    border: 1px solid rgb(182, 128, 118);
-    transition: all 0.3s ease 0s;
-    outline: none;
-    margin-bottom: 1%;
-}
-
-.co-browsing-session {
-    display: none; 
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 9999;
-    overflow: none;
-    z-index: 2147483548 !important;
-}
-
-.iframe-content {
-    height:94%;
-    width:100%;
-    top:0;
-}
-
-.bottomNav {
-    display: flex;
-    position:fixed;
-    justify-content: space-evenly; 
-    background:#fff;
-    align-items: center; 
-    height: 6%;
-    width: 100%;
-    bottom: 0;
-}
-
-.bottomNavBtn {
-    display: inline-block;
-    color: #fff;
-    cursor: pointer;
-    background: rgb(182, 128, 118);
-    width:fit-content;
-    text-transform: uppercase;
-    padding: 0.5rem;
-    border-radius: 6px;
-    border: 1px solid rgb(182, 128, 118);
-    transition: all 0.3s ease 0s;
-    vertical-align: middle; /* Align text vertically */
-    white-space: nowrap; /* Prevent text wrapping */
-    height: fit-content;
-    margin: 1px;
-}
-
-
-</style>
- <!--Surfly JS-->
-<script>
-(function (s, u, r, f, l, y) {
-    s[f] = s[f] || { init: function () { s[f].q = arguments } };
-    l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
-    l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
-})
-(window, document, 'script', 'Surfly');
-</script>
-<script>
-var SurflySession;
-var customerLink
-var settings = {
-    // Surfly session options can be set here, or at the Company/Plan levels.
-    widget_key: 'd97af65cf4d24a7f86783f8cd38cfe8e',
-    private_session: false, // to make sure only logged in agents can join the call
-    password_required: false,
-    host_switching_allowed: true,
-    block_until_agent_joins: false,
-    start_with_chat_open: false, 
-    videochat: true,
-    start_with_videochat_on: true,
-    start_with_fullscreen_videochat: true,
-    default_videochat_fullscreen_mode: 'spotlight',
-    default_videochat_mode: 'floating',
-    url: "https://member.beyondbeautyclub.com/",
-    follower_redirect_url: "https://member.beyondbeautyclub.com/",
-    leader_redirect_url: "https://member.beyondbeautyclub.com/",
-    tags: [
-        "tag1",
-        "tag2"
-    ]
-    //we could also use agent_id for reporting but the id must match the id of a Surfly agent
-};
-
-Surfly.init(settings, function (initResult) {
-    if (initResult.success) {
-        // API calls can now be made!
-        if (!Surfly.isInsideSession) {
-            console.log("Surfly loaded successfully!")
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeyondBeauty Start Page</title>
+    <style>
+        body {
+            background-image: url("https://member.beyondbeautyclub.com/_next/image?url=%2Fassets%2Fimages%2Fbbc-background.jpg&w=3840&q=75");
         }
-    }
-    else {
-        console.log("Surfly was unable to initialize properly.")
-    }
-    
-});
 
-function startSurflySession() {
-    console.log("start session activated");
-    SurflySession = Surfly.session().startLeader("#sessionIframe", {
-        "Name": "Mrs Customer",
-        "Identifier": "1234"
-    });
-    SurflySession.on('session_started', function(SurflySession) {
-        customerLink = SurflySession.followerLink;
-        console.log(SurflySession, 'is fully initiated. Follower link ='+ customerLink);
-    })
-    SurflySession.on('create_failed', function() {
-        console.log("Surfly session failed to create successfully");
-    });
-    SurflySession.on('start_failed', function() {
-        console.log("Surfly session failed to start successfully");
-    });
-    SurflySession.on('session_start_failed', function() {
-        console.error("Failed to start Surfly session!"); 
-    });
-}
+        .modal {
+            display: none;
+            background-size: cover;
+            background-position: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            overflow: auto;
+            font-family: Figtree, sans-serif;
+            text-align: center;
 
-function endSurflySession() { 
-    SurflySession.end();
-}
+        }
 
-function toggleFullscreen() {
-    SurflySession.toggleVideochatFullscreen();
-}
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 1em;
+        }
 
-function copyLink() {
-        navigator.clipboard.writeText(customerLink)
-        .then(function() {
-            console.log('Follower link copied to clipboard successfully: '+customerLink);
+        .stacked-div {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        h2 {
+            font-size: x-large;
+            font-weight: bold;
+            color: #47403B;
+        }
+
+        .btn {
+            display: inline-block;
+            color: #fff;
+            cursor: pointer;
+            background: rgb(182, 128, 118);
+            width: 100%;
+            height: fit-content;
+            text-transform: uppercase;
+            padding: 0.75rem;
+            border-radius: 6px;
+            border: 1px solid rgb(182, 128, 118);
+            transition: all 0.3s ease 0s;
+            outline: none;
+            margin-bottom: 1%;
+        }
+
+        .co-browsing-session {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 9999;
+            overflow: none;
+            z-index: 2147483548 !important;
+        }
+
+        .iframe-content {
+            height: 94%;
+            width: 100%;
+            top: 0;
+        }
+
+        .bottomNav {
+            display: flex;
+            position: fixed;
+            justify-content: space-evenly;
+            background: #fff;
+            align-items: center;
+            height: 6%;
+            width: 100%;
+            bottom: 0;
+        }
+
+        .bottomNavBtn {
+            display: inline-block;
+            color: #fff;
+            cursor: pointer;
+            background: rgb(182, 128, 118);
+            width: fit-content;
+            text-transform: uppercase;
+            padding: 0.5rem;
+            border-radius: 6px;
+            border: 1px solid rgb(182, 128, 118);
+            transition: all 0.3s ease 0s;
+            vertical-align: middle;
+            /* Align text vertically */
+            white-space: nowrap;
+            /* Prevent text wrapping */
+            height: fit-content;
+            margin: 1px;
+        }
+    </style>
+    <!--Surfly JS-->
+    <script>
+        (function (s, u, r, f, l, y) {
+            s[f] = s[f] || { init: function () { s[f].q = arguments } };
+            l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+            l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
         })
-        .catch(function(error) {
-            console.error('Failed to copy follower link to clipboard:', error);
+            (window, document, 'script', 'Surfly');
+    </script>
+    <script>
+        var SurflySession;
+        var customerLink
+        var settings = {
+            // Surfly session options can be set here, or at the Company/Plan levels.
+            widget_key: 'd97af65cf4d24a7f86783f8cd38cfe8e',
+            private_session: false, // to make sure only logged in agents can join the call
+            password_required: false,
+            host_switching_allowed: true,
+            block_until_agent_joins: false,
+            start_with_chat_open: false,
+            videochat: true,
+            start_with_videochat_on: true,
+            start_with_fullscreen_videochat: true,
+            default_videochat_fullscreen_mode: 'spotlight',
+            default_videochat_mode: 'floating',
+            url: "https://member.beyondbeautyclub.com/",
+            follower_redirect_url: "https://member.beyondbeautyclub.com/",
+            leader_redirect_url: "https://member.beyondbeautyclub.com/",
+            tags: [
+                "tag1",
+                "tag2"
+            ]
+            //we could also use agent_id for reporting but the id must match the id of a Surfly agent
+        };
+
+        Surfly.init(settings, function (initResult) {
+            if (initResult.success) {
+                // API calls can now be made!
+                if (!Surfly.isInsideSession) {
+                    console.log("Surfly loaded successfully!")
+                }
+            }
+            else {
+                console.log("Surfly was unable to initialize properly.")
+            }
+
         });
-}
 
-function buttonClick() {
-    console.log("button clicked!");
-    startSurflySession();
-}
+        function startSurflySession() {
+            console.log("start session activated");
+            SurflySession = Surfly.session().startLeader("#sessionIframe", {
+                "Name": "Mrs Customer",
+                "Identifier": "1234"
+            });
+            SurflySession.on('session_started', function (SurflySession) {
+                customerLink = SurflySession.followerLink;
+                console.log(SurflySession, 'is fully initiated. Follower link =' + customerLink);
+                //prompt ios devices for camera usage
+                document.getElementById('cameraButton').addEventListener('click', function () {
+                    navigator.mediaDevices.getUserMedia({video: true})
+                });
+            })
+            SurflySession.on('create_failed', function () {
+                console.log("Surfly session failed to create successfully");
+            });
+            SurflySession.on('start_failed', function () {
+                console.log("Surfly session failed to start successfully");
+            });
+            SurflySession.on('session_start_failed', function () {
+                console.error("Failed to start Surfly session!");
+            });
+        }
 
-function toggleDrawingn() {
-    SurflySession.toggleDrawing();
-}
+        function endSurflySession() {
+            SurflySession.end();
+        }
 
-// Function to disable modal content and enable co-browsing session view
-function exposeIframe() {
-    // Disable modal content and its child elements
-    var modal = document.querySelector('.modal');
-    modal.style.display = 'hide';
-    var modalChildren = modal.querySelectorAll('*');
-    modalChildren.forEach(function(child) {
-        child.style.display = 'hide'; 
-    });
+        function toggleFullscreen() {
+            SurflySession.toggleVideochatFullscreen();
+        }
 
-    // Enable session iframe
-    var coBrowsingSession = document.querySelector('.co-browsing-session');
-    coBrowsingSession.style.display = 'block';
-}
-</script>
+        function copyLink() {
+            navigator.clipboard.writeText(customerLink)
+                .then(function () {
+                    console.log('Follower link copied to clipboard successfully: ' + customerLink);
+                })
+                .catch(function (error) {
+                    console.error('Failed to copy follower link to clipboard:', error);
+                });
+        }
+
+        function buttonClick() {
+            console.log("button clicked!");
+            startSurflySession();
+        }
+
+        function toggleDrawingn() {
+            SurflySession.toggleDrawing();
+        }
+
+        // Function to disable modal content and enable co-browsing session view
+        function exposeIframe() {
+            // Disable modal content and its child elements
+            var modal = document.querySelector('.modal');
+            modal.style.display = 'hide';
+            var modalChildren = modal.querySelectorAll('*');
+            modalChildren.forEach(function (child) {
+                child.style.display = 'hide';
+            });
+
+            // Enable session iframe
+            var coBrowsingSession = document.querySelector('.co-browsing-session');
+            coBrowsingSession.style.display = 'block';
+        }
+    </script>
 </head>
+
 <body>
 
-<!-- Modal -->
-<div id="myModal" class="modal">
-  <!-- Modal content -->
-  <div class="modal-content">
-    <div class="stacked-div"><h2>Customer Co-Browsing<br>Start Page</h2></div>
-    <div class="stacked-div" style="color:#47403B">The session will immediately</div>
-    <div class="stacked-div" style="text-align: center;">
-      <button class="btn" onclick="buttonClick(),exposeIframe()">Start Co-Browsing Session</button>
-      <div class="stacked-div" style="color:rgb(182, 128, 118)"><i>(please wait until both you and your customer are ready to begin)</i></div>
+    <!-- Modal -->
+    <div id="myModal" class="modal">
+        <!-- Modal content -->
+        <div class="modal-content">
+            <div class="stacked-div">
+                <h2>Customer Co-Browsing<br>Start Page</h2>
+            </div>
+            <div class="stacked-div" style="color:#47403B">The session will immediately</div>
+            <div class="stacked-div" style="text-align: center;">
+                <button class="btn" onclick="buttonClick(),exposeIframe()">Start Co-Browsing Session</button>
+                <div class="stacked-div" style="color:rgb(182, 128, 118)"><i>(please wait until both you and your
+                        customer are ready to begin)</i></div>
+            </div>
+        </div>
     </div>
-  </div>
-</div>
 
-<div class="co-browsing-session">
-    <iframe src="" class="iframe-content"
-    id="sessionIframe"></iframe>
-    <div class="bottomNav">
-        <!--another copy link for comfort-->
-        <button class="bottomNavBtn" onclick="copyLink()">Copy Link</button>
-        <!--easy video toggle-->
-        <button class="bottomNavBtn" onclick="toggleFullscreen()">Fullscreen Video</button>
-        <!--easily drive and annotate-->
-        <button class="bottomNavBtn" onclick="toggleDrawingn()">Draw</button>
-        <!--end session easily so they dont forget-->
-        <button class="bottomNavBtn" style="background:#c66c50;" onclick="endSurflySession()">End Session</button>
+    <div class="co-browsing-session">
+        <iframe src="" class="iframe-content" id="sessionIframe"
+            allow="autoplay *; camera *; microphone *; display-capture *; geolocation *;"></iframe>
+        <div class="bottomNav">
+            <!--another copy link for comfort-->
+            <button class="bottomNavBtn" onclick="copyLink()">Copy Link</button>
+            <!--easy video toggle-->
+            <button class="bottomNavBtn" onclick="toggleFullscreen()">Fullscreen Video</button>
+            <!--easily drive and annotate-->
+            <button class="bottomNavBtn" onclick="toggleDrawingn()">Draw</button>
+            <!--end session easily so they dont forget-->
+            <button class="bottomNavBtn" style="background:#c66c50;" onclick="endSurflySession()">End Session</button>
+        </div>
     </div>
-</div>
-
-
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  document.getElementById('myModal').style.display = "block";
-});
-</script>
 
 </body>
+
 </html>
