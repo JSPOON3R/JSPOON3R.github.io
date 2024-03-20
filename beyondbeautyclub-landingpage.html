@@ -152,10 +152,20 @@ Surfly.init(settings, function (initResult) {
 });
 
 function startSurflySession() {
+    console.log("start session activated");
     SurflySession = Surfly.session().startLeader("#sessionIframe", {
         "Name": "Mrs Customer",
         "Identifier": "1234"
     }); 
+    SurflySession.on('create_failed', function() {
+        console.log("Surfly session failed to create successfully");
+    });
+    SurflySession.on('start_failed', function() {
+        console.log("Surfly session failed to start successfully");
+    });
+    SurflySession.on('session_start_failed', function() {
+        console.error("Failed to start Surfly session!"); 
+    });
 }
 
 function endSurflySession() {
@@ -166,12 +176,7 @@ function toggleFullscreen() {
     SurflySession.toggleVideochatFullscreen();
 }
 
-
-function buttonClick() {
-    console.log("button clicked!");
-    startSurflySession();
-    SurflySession.on('session_loaded', function(session) {
-     // Get the follower link straight to the clipboard
+function copyLink() {
     var followerLink = SurflySession.followerLink();
         navigator.clipboard.writeText(followerLink)
         .then(function() {
@@ -180,6 +185,14 @@ function buttonClick() {
         .catch(function(error) {
             console.error('Failed to copy follower link to clipboard:', error);
         });
+}
+
+function buttonClick() {
+    console.log("button clicked!");
+    startSurflySession();
+    SurflySession.on('session_loaded', function(session) {
+     // Get the follower link straight to the clipboard
+    
       console.log(session, 'is fully initiated');
     })
 }
@@ -192,10 +205,10 @@ function toggleDrawingn() {
 function startCoBrowsingSession() {
     // Disable modal content and its child elements
     var modal = document.querySelector('.modal');
-    modal.style.display = 'none';
+    modal.style.display = 'hide';
     var modalChildren = modal.querySelectorAll('*');
     modalChildren.forEach(function(child) {
-        child.style.display = 'none'; 
+        child.style.display = 'hide'; 
     });
 
     // Enable session iframe
@@ -213,7 +226,7 @@ function startCoBrowsingSession() {
     <div class="stacked-div"><h2>Customer Co-Browsing<br>Start Page</h2></div>
     <div class="stacked-div" style="color:#47403B">The session will immediately</div>
     <div class="stacked-div" style="text-align: center;">
-      <button class="btn" onclick="startCoBrowsingSession()">Start Co-Browsing Session</button>
+      <button class="btn" onclick="buttonClick()">Start Co-Browsing Session</button>
       <div class="stacked-div" style="color:rgb(182, 128, 118)"><i>(please wait until both you and your customer are ready to begin)</i></div>
     </div>
   </div>
@@ -224,7 +237,7 @@ function startCoBrowsingSession() {
     id="sessionIframe"></iframe>
     <div class="bottomNav">
         <!--another copy link for comfort-->
-        <button class="bottomNavBtn" onclick="buttonClick()">Copy Link</button>
+        <button class="bottomNavBtn" onclick="copyLink()">Copy Link</button>
         <!--easy video toggle-->
         <button class="bottomNavBtn" onclick="toggleFullscreen()">Fullscreen Video</button>
         <!--easily drive and annotate-->
