@@ -161,7 +161,7 @@ function startSurflySession() {
         "Name": "Mrs Customer",
         "Identifier": "1234"
     });
-    SurflySession.on('session_loaded', function(session) {
+    SurflySession.on('session_loaded', function(SurflySession) {
         var customerLink = SurflySession.followerLink;
         console.log(session, 'is fully initiated. Follower link ='+ customerLink);
     })
