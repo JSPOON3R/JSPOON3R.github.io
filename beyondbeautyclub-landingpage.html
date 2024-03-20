@@ -168,7 +168,9 @@ function toggleFullscreen() {
 
 
 function buttonClick() {
-    // Get the follower link straight to the clipboard
+    startSurflySession();
+    SurflySession.on('session_loaded', function(session) {
+     // Get the follower link straight to the clipboard
     var followerLink = SurflySession.followerLink();
         navigator.clipboard.writeText(followerLink)
         .then(function() {
@@ -177,7 +179,8 @@ function buttonClick() {
         .catch(function(error) {
             console.error('Failed to copy follower link to clipboard:', error);
         });
-        startSurflySession();
+      console.log(session, 'is fully initiated');
+    })
 }
 
 function toggleDrawingn() {
