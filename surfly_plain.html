@@ -73,11 +73,11 @@ window.startCobrowse = async () => {
         return
     }
 
-    if (!window.SESSION_ID) {
-        // This log should show up inside iframe#surfly-iframe after pressing the button in the iframe, but it does not
-        console.log('COBROWSE:SCRIPT:ALREADY_IN_SESSION: '+SESSION_ID)
-        return
-    }
+    if (typeof window.SESSION_ID === 'undefined') {
+    console.log("No Session Found");
+} else {
+    console.log('COBROWSE:SCRIPT:ALREADY_IN_SESSION: ' + SESSION_ID);
+}
 
 
 
