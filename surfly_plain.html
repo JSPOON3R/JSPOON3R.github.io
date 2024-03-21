@@ -56,7 +56,8 @@ window.startCobrowse = async () => {
 
     const settings = {
         widget_key: '99671227762b43c2a96daa066ee006e2',
-        require_password: false
+        require_password: false,
+        session_autorestore_enabled: true
     }
 
     window.Surfly.init(settings, ({
@@ -84,10 +85,9 @@ window.startCobrowse = async () => {
         //check for a session if
         if (!window.SESSION_ID) {
     console.log("JSTEST - No Session Found");
-    //log & abort of a session exists
-} else {
+    //log & original session will be rejoined so no need to abord
+} if (window.SESSION_ID){
     console.log('COBROWSE:SCRIPT:ALREADY_IN_SESSION: ' + SESSION_ID);
-    return; 
 }
 
         window.Surfly.on('session_restored', (api, event) => {
