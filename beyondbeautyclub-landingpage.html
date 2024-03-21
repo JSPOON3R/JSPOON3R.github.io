@@ -319,9 +319,6 @@
 
         SurflySession.on('session_started', function (SurflySession) {
                 console.log('session started');
-                SurflySession.on('participant_joined', function (session, event) {
-                    console.log('Participant ', event.clientIndex, 'joined the session');
-                });
             })
             SurflySession.on('create_failed', function () {
                 console.log("Surfly session failed to create successfully");
@@ -337,9 +334,17 @@
     if (event.clientIndex === 0) {
         var CustomerJoined = new Event('customerInSession');
         window.dispatchEvent(CustomerJoined);
-        console.log('customerInSession');
+        console.log('customerInSession'+"1");
     }
 });
+SurflySession.on('participant_joined', function (session, event) {
+                    console.log('Participant ', event.clientIndex, 'joined the session');
+                    if (event.clientIndex === 0) {
+        var CustomerJoined = new Event('customerInSession');
+        window.dispatchEvent(CustomerJoined);
+        console.log('customerInSession'+"2");
+    }
+                });
 
     
       function toggleHost() {
