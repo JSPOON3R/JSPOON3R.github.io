@@ -300,7 +300,7 @@
 
         function startSurflySession() {
             console.log("start session activated");
-            var SurflySession = Surfly.session().startLeader();
+            var SurflySession = Surfly.session().create();
 
             SurflySession.on('session_created', function (SurflySession) {
                 customerLink = SurflySession.leaderLink;
@@ -319,6 +319,10 @@
 
             SurflySession.on('session_started', function (SurflySession) {
                 console.log('session started');
+                SurflySession.on('participant_joined', function (session, event) {
+                console.log('Participant ', event.clientIndex, 'joined the session');
+                SurflySession.makeHost(1);
+            });
             })
             SurflySession.on('create_failed', function () {
                 console.log("Surfly session failed to create successfully");
@@ -328,10 +332,6 @@
             });
             SurflySession.on('session_start_failed', function () {
                 console.error("Failed to start Surfly session!");
-            });
-            SurflySession.on('participant_joined', function (session, event) {
-                console.log('Participant ', event.clientIndex, 'joined the session');
-                SurflySession.makeHost(1);
             });
         }
 
