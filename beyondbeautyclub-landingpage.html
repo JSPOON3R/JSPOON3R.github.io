@@ -249,11 +249,11 @@
                 });
 
             SurflySession.on('session_created', function (SurflySession) {
-            //prompt ios devices for camera usage
-            document.getElementById('startButton').addEventListener('click', function () {
+                console.log( "Follower link =", memberLink," Leader link =",customerLink);
             })
+
             SurflySession.on('session_started', function (SurflySession) {
-                console.log(SurflySession, 'is fully initiated. Follower link =' + customerLink);
+                console.log('session started');
             })
             SurflySession.on('create_failed', function () {
                 console.log("Surfly session failed to create successfully");
@@ -268,7 +268,6 @@
                 console.log('Participant ', event.clientIndex, 'joined the session');
                 SurflySession.makeHost(1);
             });
-        })
         }
 
         function showPopup() {
