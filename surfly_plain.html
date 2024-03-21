@@ -68,8 +68,21 @@ window.startCobrowse = async () => {
             return
         }
 
+        if (!window.Surfly) {
+        console.error('COBROWSE:SCRIPT:SCRIPT_LOAD_FAILED')
 
-        
+        return
+    }
+
+    if (!window.SESSION_ID) {
+        // This log should show up inside iframe#surfly-iframe after pressing the button in the iframe, but it does not
+        console.log('COBROWSE:SCRIPT:ALREADY_IN_SESSION')
+
+        return
+    }
+
+
+
         window.Surfly.on('session_restored', (api, event) => {
             // This log should show up after user refresh then press the button, but it does not. If we take it outside of the init callback, we receive error complaining ".on()" function does not exist on window.Surfly object
             console.log('COBROWSE:GLOBAL_EVENT:RESTORE_SESSION:DONE', api, event)
