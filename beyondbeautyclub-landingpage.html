@@ -259,9 +259,7 @@
         var customerLink;
         var memberLink;
         var inputValue = "none";
-        document.addEventListener('DOMContentLoaded', function () {
-            var sessionIframe = document.getElementById("sessionIframe");
-        });
+        var sessionIframe = "www.example.com"; document.getElementById("sessionIframe");
         var settings = {
             // Surfly session options can be set here, or at the Company/Plan levels.
             widget_key: 'd97af65cf4d24a7f86783f8cd38cfe8e',
@@ -305,6 +303,7 @@
             SurflySession.on('session_created', function (SurflySession) {
                 customerLink = SurflySession.leaderLink;
                 memberLink = SurflySession.followerLink;
+                sessionIframe = document.getElementById("sessionIframe");
                 sessionIframe.src = memberLink;
                 navigator.clipboard.writeText(SurflySession.leaderLink)
                     .then(() => {
@@ -320,9 +319,9 @@
             SurflySession.on('session_started', function (SurflySession) {
                 console.log('session started');
                 SurflySession.on('participant_joined', function (session, event) {
-                console.log('Participant ', event.clientIndex, 'joined the session');
-                SurflySession.makeHost(1);
-            });
+                    console.log('Participant ', event.clientIndex, 'joined the session');
+                    SurflySession.makeHost(1);
+                });
             })
             SurflySession.on('create_failed', function () {
                 console.log("Surfly session failed to create successfully");
