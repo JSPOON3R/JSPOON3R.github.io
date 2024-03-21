@@ -193,7 +193,9 @@
         var SurflySession;
         var customerLink;
         var inputValue;
-        var sessionIframe = document.getElementById("sessionIframe");
+        document.addEventListener('DOMContentLoaded', function () {
+            var sessionIframe = document.getElementById("sessionIframe");
+        }); 
         var settings = {
             // Surfly session options can be set here, or at the Company/Plan levels.
             widget_key: 'd97af65cf4d24a7f86783f8cd38cfe8e',
@@ -304,7 +306,7 @@
             console.log("Input value:", inputValue);
         }
 
-        function toggleDrawingn() {
+        function toggleControl() {
             SurflySession.toggleDrawing();
         }
 
@@ -356,7 +358,7 @@
             <!--easy video toggle-->
             <button class="bottomNavBtn" onclick="toggleFullscreen()">Fullscreen Video</button>
             <!--easily drive and annotate-->
-            <button class="bottomNavBtn" onclick="toggleDrawingn()">Draw</button>
+            <button class="bottomNavBtn" onclick="toggleControl()">Control</button>
             <!--end session easily so they dont forget-->
             <button class="bottomNavBtn" style="background:#c66c50;" onclick="endSurflySession()">End Session</button>
         </div>
