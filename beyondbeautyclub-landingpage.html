@@ -316,12 +316,17 @@
                 console.log("Follower link =", memberLink, " Leader link =", customerLink);
             })
         }
-        
+
         SurflySession.on('session_started', function (SurflySession) {
                 console.log('session started');
+                SurflySession.on('viewer_joined', function (session, event) {
+                    console.log('Viewer',event.clientIndex,'joined the session');
+                    var CustomerJoined = new Event('customerInSession');
+                    window.dispatchEvent(CustomerJoined);
+                    console.log('customerInSession',customerInSession);
+                });
                 SurflySession.on('participant_joined', function (session, event) {
                     console.log('Participant ', event.clientIndex, 'joined the session');
-                    SurflySession.makeHost(1);
                 });
             })
             SurflySession.on('create_failed', function () {
@@ -333,6 +338,12 @@
             SurflySession.on('session_start_failed', function () {
                 console.error("Failed to start Surfly session!");
             });
+
+    
+      function toggleHost() {
+        SurflySession.makeHost(1);
+      }
+      window.addEventListener('customerInSession', toggleHost, { once: true });
 
         function showPopup() {
             const popup = document.getElementById('link-copied-popup');
