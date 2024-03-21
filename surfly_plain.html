@@ -54,19 +54,6 @@ const loadScriptAsync = () => {
 window.startCobrowse = async () => {
     await loadScriptAsync()
 
-    if (!window.Surfly) {
-        console.error('COBROWSE:SCRIPT:SCRIPT_LOAD_FAILED')
-
-        return
-    }
-
-    if (window.Surfly.isInsideSession) {
-        // This log should show up inside iframe#surfly-iframe after pressing the button in the iframe, but it does not
-        console.log('COBROWSE:SCRIPT:ALREADY_IN_SESSION')
-
-        return
-    }
-
     const settings = {
         widget_key: '99671227762b43c2a96daa066ee006e2',
         require_password: false
@@ -81,6 +68,8 @@ window.startCobrowse = async () => {
             return
         }
 
+
+        
         window.Surfly.on('session_restored', (api, event) => {
             // This log should show up after user refresh then press the button, but it does not. If we take it outside of the init callback, we receive error complaining ".on()" function does not exist on window.Surfly object
             console.log('COBROWSE:GLOBAL_EVENT:RESTORE_SESSION:DONE', api, event)
