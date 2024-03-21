@@ -304,8 +304,8 @@
             SurflySession.on('session_created', function (SurflySession) {
                 customerLink = SurflySession.leaderLink;
                 memberLink = SurflySession.followerLink;
-                //sessionIframe = document.getElementById("sessionIframe");
-                //sessionIframe.src = memberLink;
+                sessionIframe = document.getElementById("sessionIframe");
+                sessionIframe.src = memberLink;
                 navigator.clipboard.writeText(SurflySession.leaderLink)
                     .then(() => {
                         showPopup();
