@@ -260,7 +260,6 @@
         var customerLink;
         var memberLink;
         var inputValue = "none";
-        var sessionIframe = "www.example.com"; 
         var settings = {
             // Surfly session options can be set here, or at the Company/Plan levels.
             widget_key: 'd97af65cf4d24a7f86783f8cd38cfe8e',
@@ -304,7 +303,7 @@
             SurflySession.on('session_created', function (SurflySession) {
                 customerLink = SurflySession.leaderLink;
                 memberLink = SurflySession.followerLink;
-                sessionIframe = document.getElementById("sessionIframe");
+                var sessionIframe = document.getElementById("sessionIframe");
                 sessionIframe.src = memberLink;
                 navigator.clipboard.writeText(SurflySession.leaderLink)
                     .then(() => {
