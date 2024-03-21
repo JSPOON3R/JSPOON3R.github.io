@@ -62,24 +62,33 @@ window.startCobrowse = async () => {
     window.Surfly.init(settings, ({
         success
     } = {}) => {
+        //check for init errors & abort if failed
         if (!success) {
             console.error('COBROWSE:INTI:ESTABLISH_SESSION:FAILED')
             return
         }
-
+        //log line if success
+        if (success) {
+            console.log("JSTEST - Surfly init successfully")
+        }
+        //check if Surfly object exists & abort if failed
         if (!window.Surfly) {
         console.error('COBROWSE:SCRIPT:SCRIPT_LOAD_FAILED')
-
         return
     }
+    //log line if true
+    if (window.Surfly) {
+            console.log("JSTEST - window.Surfly returns true")
+        }
 
-    if (typeof window.SESSION_ID === 'undefined') {
-    console.log("No Session Found");
+        //check for a session if
+        if (!window.SESSION_ID) {
+    console.log("JSTEST - No Session Found");
+    //log & abort of a session exists
 } else {
     console.log('COBROWSE:SCRIPT:ALREADY_IN_SESSION: ' + SESSION_ID);
+    return; 
 }
-
-
 
         window.Surfly.on('session_restored', (api, event) => {
             // This log should show up after user refresh then press the button, but it does not. If we take it outside of the init callback, we receive error complaining ".on()" function does not exist on window.Surfly object
