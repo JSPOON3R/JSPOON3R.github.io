@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<title>Surfly Demo</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="icon" href="https://capacity.com/wp-content/uploads/2019/08/favicon.ico" sizes="192x192" />
+<script
+  src="https://code.jquery.com/jquery-3.5.0.min.js"
+  integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ="
+  crossorigin="anonymous"></script>
+<script
+  src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+  crossorigin="anonymous"></script>
+<style>
+body,h1 {font-family: "Raleway", sans-serif}
+body, html {height: 100%}
+.bgimg {
+  background-image: url('https://capacity.com/wp-content/uploads/2021/09/2021-Homepage-Header-02.png');
+  min-height: 100%;
+  background-position: center;
+  background-size: cover;
+  background-color: #333;
+  filter: blur(10px) brightness(0.5);
+}
+
+.color-white {
+  color: white;
+}
+</style>
+<body>
+<script>
+const loadScriptAsync = () => {
+    return new Promise(resolve => {
+        window.Surfly = window.Surfly || {
+            init: function() {
+                window.Surfly.q = arguments
+            }
+        }
+
+        const surflyScript = document.createElement('script')
+        const mountingNode = document.body
+
+        surflyScript.async = true
+        surflyScript.src = 'https://surfly.com/surfly.js'
+        surflyScript.onload = resolve
+        mountingNode.appendChild(surflyScript)
+    })
+}
+
+window.startCobrowse = async () => {
+    await loadScriptAsync()
+
+    if (!window.Surfly) {
+        console.error('COBROWSE:SCRIPT:SCRIPT_LOAD_FAILED')
+
+        return
+    }
+
+    if (window.Surfly.isInsideSession) {
+        // This log should show up inside iframe#surfly-iframe after pressing the button in the iframe, but it does not
+        console.log('COBROWSE:SCRIPT:ALREADY_IN_SESSION')
+
+        return
+    }
+
+    const settings = {
+        widget_key: '144b60c81b0446cfb3b4549c9d9f425e',
+        require_password: false
+    }
+
+    window.Surfly.init(settings, ({
+        success
+    } = {}) => {
+        if (!success) {
+            console.error('COBROWSE:INTI:ESTABLISH_SESSION:FAILED')
+
+            return
+        }
+
+        window.Surfly.on('session_restored', (api, event) => {
+            // This log should show up after user refresh then press the button, but it does not. If we take it outside of the init callback, we receive error complaining ".on()" function does not exist on window.Surfly object
+            console.log('COBROWSE:GLOBAL_EVENT:RESTORE_SESSION:DONE', api, event)
+        })
+
+        window.Surfly.session()
+            .on('session_started', (session) => {
+                console.log('COBROWSE:SESSION_EVENT:ESTABLISH_SESSION:DONE', {
+                    link: session.followerLink,
+                    pin: session.pin
+                })
+            })
+            .on('session_ended', () => {
+                console.log('COBROWSE:SESSION_EVENT:END_SESSION:DONE')
+            })
+            .on('session_loaded', () => {
+                console.log('COBROWSE:SESSION_EVENT:LOAD_SESSION:DONE')
+            })
+            .startLeader()
+    })
+}
+
+if (window.Surfly?.isInsideSession) {
+    // This log should show up inside iframe#surfly-iframe but it does not
+    console.log('COBROWSE:ON_LOAD:IN_SESSION')
+}
+</script>
+<div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
+</div>
+<div class="w3-display-middle color-white" style="text-align: center;">
+  <h1 class="w3-jumbo w3-animate-top">Cobrowse Demo</h1>
+  <hr class="w3-border-grey" style="margin:auto;width:40%">
+  <p id="button-display" class="w3-large w3-center"><button type="button" onclick="window.startCobrowse()">Start Cobrowse</button></p>
+</div>
+<div class="w3-display-bottomleft w3-padding-large color-white">
+  Surfly script trial
+</div>
+</body>
+</html>
