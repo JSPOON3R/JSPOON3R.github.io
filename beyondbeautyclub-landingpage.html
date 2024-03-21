@@ -278,6 +278,7 @@
             url: "https://member.beyondbeautyclub.com/",
             follower_redirect_url: "https://member.beyondbeautyclub.com/",
             leader_redirect_url: "https://member.beyondbeautyclub.com/",
+            block_until_agent_joins: false,
             tags: [
                 inputValue
             ]
@@ -300,19 +301,19 @@
         function startSurflySession() {
             console.log("start session activated");
             var SurflySession = Surfly.session().startLeader();
-            customerLink = SurflySession.leaderLink;
-            memberLink = SurflySession.followerLink;
-            sessionIframe.src = memberLink;
-            navigator.clipboard.writeText(SurflySession.leaderLink)
-                .then(() => {
-                    showPopup();
-                    console.log('Output copied to clipboard:', memberLink);
-                })
-                .catch(err => {
-                    console.error('Failed to copy output to clipboard:', err);
-                });
 
             SurflySession.on('session_created', function (SurflySession) {
+                customerLink = SurflySession.leaderLink;
+                memberLink = SurflySession.followerLink;
+                sessionIframe.src = memberLink;
+                navigator.clipboard.writeText(SurflySession.leaderLink)
+                    .then(() => {
+                        showPopup();
+                        console.log('Output copied to clipboard:', memberLink);
+                    })
+                    .catch(err => {
+                        console.error('Failed to copy output to clipboard:', err);
+                    });
                 console.log("Follower link =", memberLink, " Leader link =", customerLink);
             })
 
