@@ -298,7 +298,7 @@
 
         function startSurflySession() {
             console.log("start session activated");
-            var SurflySession = Surfly.session().create().startFolllower('#sessionIframe');
+            SurflySession = Surfly.session().create();
 
             SurflySession.on('session_created', function (SurflySession) {
                 customerLink = SurflySession.leaderLink;
