@@ -303,8 +303,8 @@
             SurflySession.on('session_created', function (SurflySession) {
                 customerLink = SurflySession.leaderLink;
                 memberLink = SurflySession.followerLink;
-                var sessionIframe = document.getElementById("sessionIframe");
-                sessionIframe.src = memberLink;
+               // var sessionIframe = document.getElementById("sessionIframe");
+               // sessionIframe.src = memberLink;
                 navigator.clipboard.writeText(SurflySession.leaderLink)
                     .then(() => {
                         showPopup();
@@ -315,8 +315,9 @@
                     });
                 console.log("Follower link =", memberLink, " Leader link =", customerLink);
             })
-
-            SurflySession.on('session_started', function (SurflySession) {
+        }
+        
+        SurflySession.on('session_started', function (SurflySession) {
                 console.log('session started');
                 SurflySession.on('participant_joined', function (session, event) {
                     console.log('Participant ', event.clientIndex, 'joined the session');
@@ -332,7 +333,6 @@
             SurflySession.on('session_start_failed', function () {
                 console.error("Failed to start Surfly session!");
             });
-        }
 
         function showPopup() {
             const popup = document.getElementById('link-copied-popup');
@@ -363,7 +363,7 @@
         function copyLeaderLink() {
             navigator.clipboard.writeText(customerLink)
                 .then(function () {
-                    console.log('Follower link copied to clipboard successfully: ' + customerLink);
+                    console.log('Customer(leader) link copied to clipboard successfully: ' + customerLink);
                 })
                 .catch(function (error) {
                     console.error('Failed to copy follower link to clipboard:', error);
@@ -373,7 +373,7 @@
         function copyFollowerLink() {
             navigator.clipboard.writeText(memberLink)
                 .then(function () {
-                    console.log('Follower link copied to clipboard successfully: ' + memberLink);
+                    console.log('Member(follower) link copied to clipboard successfully: ' + memberLink);
                 })
                 .catch(function (error) {
                     console.error('Failed to copy follower link to clipboard:', error);
@@ -392,7 +392,7 @@
         }
 
         function toggleControl() {
-            SurflySession.toggleDrawing();
+           // SurflySession.toggleDrawing();
         }
 
         // Function to disable modal content and enable co-browsing session view
