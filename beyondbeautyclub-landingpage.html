@@ -235,7 +235,7 @@
 
         function startSurflySession() {
             console.log("start session activated");
-            const SurflySession = Surfly.session().startLeader();
+            var SurflySession = Surfly.session().startLeader();
             customerLink = SurflySession.leaderLink;
             memberLink = SurflySession.followerLink;
             iframe.src = memberLink;
@@ -247,17 +247,8 @@
                 .catch(err => {
                     console.error('Failed to copy output to clipboard:', err);
                 });
-        }
 
-        function showPopup() {
-            const popup = document.getElementById('popup');
-            popup.classList.remove('hidden');
-            setTimeout(() => {
-                popup.classList.add('hidden');
-            }, 1000);
-        }
-
-        SurflySession.on('session_created', function (SurflySession) {
+            SurflySession.on('session_created', function (SurflySession) {
             //prompt ios devices for camera usage
             document.getElementById('startButton').addEventListener('click', function () {
             })
@@ -277,8 +268,16 @@
                 console.log('Participant ', event.clientIndex, 'joined the session');
                 SurflySession.makeHost(1);
             });
-
         })
+        }
+
+        function showPopup() {
+            const popup = document.getElementById('popup');
+            popup.classList.remove('hidden');
+            setTimeout(() => {
+                popup.classList.add('hidden');
+            }, 1000);
+        }
 
         function endSurflySession() {
             SurflySession.end();
@@ -288,10 +287,20 @@
             SurflySession.toggleVideochatFullscreen();
         }
 
-        function copyLink() {
+        function copyLeaderLink() {
             navigator.clipboard.writeText(customerLink)
                 .then(function () {
                     console.log('Follower link copied to clipboard successfully: ' + customerLink);
+                })
+                .catch(function (error) {
+                    console.error('Failed to copy follower link to clipboard:', error);
+                });
+        }
+
+        function copyFollowerLink() {
+            navigator.clipboard.writeText(memberLink)
+                .then(function () {
+                    console.log('Follower link copied to clipboard successfully: ' + memberLink);
                 })
                 .catch(function (error) {
                     console.error('Failed to copy follower link to clipboard:', error);
@@ -357,7 +366,7 @@
             allow="autoplay *; camera *; microphone *; display-capture *; geolocation *;"></iframe>
         <div class="bottomNav">
             <!--another copy link for comfort-->
-            <button class="bottomNavBtn" onclick="copyLink()">Copy Link</button>
+            <button class="bottomNavBtn">Share Link</button>
             <!--easy video toggle-->
             <button class="bottomNavBtn" onclick="toggleFullscreen()">Fullscreen Video</button>
             <!--easily drive and annotate-->
