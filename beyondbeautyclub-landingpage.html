@@ -193,6 +193,7 @@
     <script>
         var SurflySession;
         var customerLink;
+        var memberLink;
         var inputValue;
         document.addEventListener('DOMContentLoaded', function () {
             var sessionIframe = document.getElementById("sessionIframe");
@@ -235,8 +236,9 @@
         function startSurflySession() {
             console.log("start session activated");
             const SurflySession = Surfly.session().startLeader();
-            customerLink = SurflySession.followerLink;
-            iframe.src = customerLink;
+            customerLink = SurflySession.leaderLink;
+            memberLink = SurflySession.followerLink;
+            iframe.src = memberLink;
             navigator.clipboard.writeText(SurflySession.leaderLink)
                 .then(() => {
                     console.log('Output copied to clipboard:', SurflySession.leaderLink);
