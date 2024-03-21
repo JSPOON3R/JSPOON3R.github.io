@@ -8,10 +8,11 @@
     <style>
         body {
             background-image: url("https://member.beyondbeautyclub.com/_next/image?url=%2Fassets%2Fimages%2Fbbc-background.jpg&w=3840&q=75");
+            position: fixed;
         }
 
         .modal {
-            display:block;
+            display: block;
             background-size: cover;
             background-position: center;
             position: fixed;
@@ -28,7 +29,7 @@
 
         .modal-content {
             background-color: #fefefe;
-            margin: 15% auto;
+            margin: 5% auto;
             padding: 20px;
             border: 1px solid #888;
             width: 80%;
@@ -43,9 +44,26 @@
         }
 
         h2 {
-            font-size: x-large;
+            font-size: large;
+            color: rgb(182, 128, 118);
+            text-align: start;
+            display: flex;
+            justify-content: center;
+            font-weight: lighter;
+            width: 100%;
+            margin-bottom: 0;
+            margin-top: 3%;
+            justify-content: flex-start;
+            margin-left: 3%;
+        }
+
+        .header {
+            color: #45362F;
+            font-size: xx-large;
+            text-align: center;
             font-weight: bold;
-            color: #47403B;
+            display: contents;
+            margin-bottom: 20%;
         }
 
         .btn {
@@ -111,6 +129,56 @@
             height: fit-content;
             margin: 1px;
         }
+
+        .input-field {
+            background-color: #fff;
+            box-sizing: unset;
+            box-shadow: inset 0 0 0 1px rgb(182, 128, 118);
+            border: none;
+            border-radius: 8px;
+            color: rgb(182, 128, 118);
+            font-family: Figtree, sans-serif;
+            font-size: 2rem;
+            font-weight: 300;
+            padding: 0.6rem;
+            text-align: center;
+            width: 97%;
+            height: 10%;
+            text-transform: uppercase;
+        }
+
+        .input-field::placeholder {
+            color: rgb(182, 128, 118);
+            opacity: 40%;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+        .input-field:focus {
+            outline: none;
+            box-shadow: inset 0 0 0 2px rgb(182, 128, 118);
+        }
+
+        .input-field:focus::placeholder {
+            color: transparent;
+        }
+
+        .popup {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            border-radius: 5px;
+            opacity: 1;
+            transition: display 0.5s ease-in-out;
+        }
+
+        .popup.hidden {
+            display: none;
+        }
     </style>
     <!--Surfly JS-->
     <script>
@@ -123,7 +191,8 @@
     </script>
     <script>
         var SurflySession;
-        var customerLink
+        var customerLink;
+        var inputValue;
         var settings = {
             // Surfly session options can be set here, or at the Company/Plan levels.
             widget_key: 'd97af65cf4d24a7f86783f8cd38cfe8e',
@@ -141,8 +210,7 @@
             follower_redirect_url: "https://member.beyondbeautyclub.com/",
             leader_redirect_url: "https://member.beyondbeautyclub.com/",
             tags: [
-                "tag1",
-                "tag2"
+                inputvalue
             ]
             //we could also use agent_id for reporting but the id must match the id of a Surfly agent
         };
@@ -162,20 +230,28 @@
 
         function startSurflySession() {
             console.log("start session activated");
-            SurflySession = Surfly.session().startLeader("#sessionIframe", {
-                "Name": "Mrs Customer",
-                "Identifier": "1234"
-            });
-            SurflySession.on('session_created', function (SurflySession) {
-                //prompt ios devices for camera usage
-                document.getElementById('startButton').addEventListener('click', function () {
-                    navigator.mediaDevices.getUserMedia({video: true})
-                    .catch(function(err) {
-            // Access denied or other error occurred
-            console.error('Error accessing camera: ', err);
-            alert('Error accessing camera. Please ensure camera access is enabled.');
-        });
+            const SurflySession = Surfly.session().startLeader();
+            navigator.clipboard.writeText(SurflySession.leaderLink)
+                .then(() => {
+                    console.log('Output copied to clipboard:', SurflySession.leaderLink);
+                    showPopup();
+                })
+                .catch(err => {
+                    console.error('Failed to copy output to clipboard:', err);
                 });
+        }
+
+        function showPopup() {
+            const popup = document.getElementById('popup');
+            popup.classList.remove('hidden');
+            setTimeout(() => {
+                popup.classList.add('hidden');
+            }, 1000);
+        }
+
+        SurflySession.on('session_created', function (SurflySession) {
+            //prompt ios devices for camera usage
+            document.getElementById('startButton').addEventListener('click', function () {
             })
             SurflySession.on('session_started', function (SurflySession) {
                 customerLink = SurflySession.followerLink;
@@ -190,7 +266,11 @@
             SurflySession.on('session_start_failed', function () {
                 console.error("Failed to start Surfly session!");
             });
-        }
+            SurflySession.on('participant_joined', function (session, event) {
+                console.log('Participant ', event.clientIndex, 'joined the session');
+            });
+
+        })
 
         function endSurflySession() {
             SurflySession.end();
@@ -213,6 +293,12 @@
         function buttonClick() {
             console.log("button clicked!");
             startSurflySession();
+        }
+
+        //fetch input value when button is clicked
+        function fetchInput() {
+            inputValue = document.getElementById("member_id_input").value;
+            console.log("Input value:", inputValue);
         }
 
         function toggleDrawingn() {
@@ -242,14 +328,18 @@
     <div id="myModal" class="modal">
         <!-- Modal content -->
         <div class="modal-content">
-            <div class="stacked-div">
-                <h2>Customer Co-Browsing<br>Start Page</h2>
+            <div class="stacked-div" style="margin-bottom:10%;">
+                <h2 class="header">Customer<br>Co-Browsing</h2>
             </div>
-            <div class="stacked-div" style="color:#47403B">The session will immediately</div>
+            <h2>Enter your Member ID</h2>
+
+            <div class="stacked-div">
+                <input type="text" placeholder="e.g. H6F6" class="input-field" id="member_id_input" maxlength="4">
+            </div>
+            <h2>Click to start</h2>
             <div class="stacked-div" style="text-align: center;">
-                <button class="btn" id="startButton" onclick="buttonClick(),exposeIframe()">Start Co-Browsing Session</button>
-                <div class="stacked-div" style="color:rgb(182, 128, 118)"><i>(please wait until both you and your
-                        customer are ready to begin)</i></div>
+                <button class="btn" id="startButton" onclick="buttonClick(),exposeIframe()">Start Co-Browsing
+                    Session</button>
             </div>
         </div>
     </div>
