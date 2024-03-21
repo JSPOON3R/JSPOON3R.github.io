@@ -238,7 +238,7 @@
             var SurflySession = Surfly.session().startLeader();
             customerLink = SurflySession.leaderLink;
             memberLink = SurflySession.followerLink;
-            iframe.src = memberLink;
+            sessionIframe.src = memberLink;
             navigator.clipboard.writeText(SurflySession.leaderLink)
                 .then(() => {
                     console.log('Output copied to clipboard:', SurflySession.leaderLink);
