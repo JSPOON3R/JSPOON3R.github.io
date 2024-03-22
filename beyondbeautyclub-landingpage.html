@@ -21,7 +21,7 @@
             width: 100%;
             height: 100%;
             z-index: 9999;
-            overflow: auto;
+            overflow: hidden;
             font-family: Figtree, sans-serif;
             text-align: center;
 
@@ -298,7 +298,7 @@
         function startSurflySession() {
             console.log("start session activated");
             SurflySession = Surfly.session().startFollower("#sessionIframe");
-
+            window.addEventListener('customerInSession', toggleHost, { once: true });
             SurflySession.on('session_created', function (SurflySession) {
                 customerLink = SurflySession.leaderLink;
                 memberLink = SurflySession.followerLink;
@@ -314,7 +314,6 @@
                     });
                 console.log("Follower link =", memberLink, " Leader link =", customerLink);
             })
-
             SurflySession.on('session_started', function (SurflySession) {
                 console.log('session started');
             })
@@ -332,7 +331,7 @@
                 if (event.clientIndex === 0) {
                     var CustomerJoined = new Event('customerInSession');
                     window.dispatchEvent(CustomerJoined);
-                    console.log('customerInSession' + "1");
+                    console.log("CustomerJoined event dispatched to window from viewer joined");
                 }
             });
             SurflySession.on('participant_joined', function (session, event) {
@@ -340,16 +339,14 @@
                 if (event.clientIndex === 0) {
                     var CustomerJoined = new Event('customerInSession');
                     window.dispatchEvent(CustomerJoined);
-                    console.log('customerInSession' + "2");
+                    console.log("CustomerJoined event dispatched to window from participant joined");
                 }
             });
         }
 
-
         function toggleHost() {
             SurflySession.makeHost(1);
         }
-        window.addEventListener('customerInSession', toggleHost, { once: true });
 
         function showPopup() {
             const popup = document.getElementById('link-copied-popup');
