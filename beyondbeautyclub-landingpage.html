@@ -319,13 +319,13 @@
             })
             SurflySession.on('create_failed', function () {
                 console.log("Surfly session failed to create successfully");
-            });
+            })
             SurflySession.on('start_failed', function () {
                 console.log("Surfly session failed to start successfully");
-            });
+            })
             SurflySession.on('session_start_failed', function () {
                 console.error("Failed to start Surfly session!");
-            });
+            })
             SurflySession.on('viewer_joined', function (session, event) {
                 console.log('Viewer' + event.clientIndex + 'joined the session');
                 if (event.clientIndex === 0) {
@@ -333,7 +333,7 @@
                     window.dispatchEvent(CustomerJoined);
                     console.log("CustomerJoined event dispatched to window from viewer joined");
                 }
-            });
+            })
             SurflySession.on('participant_joined', function (session, event) {
                 console.log('Participant ', event.clientIndex, 'joined the session');
                 if (event.clientIndex === 0) {
@@ -341,7 +341,7 @@
                     window.dispatchEvent(CustomerJoined);
                     console.log("CustomerJoined event dispatched to window from participant joined");
                 }
-            });
+            })
         }
 
         function toggleHost() {
