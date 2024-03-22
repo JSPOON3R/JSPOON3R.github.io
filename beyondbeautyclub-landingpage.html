@@ -302,8 +302,8 @@
             SurflySession.on('session_created', function (SurflySession) {
                 customerLink = SurflySession.leaderLink;
                 memberLink = SurflySession.followerLink;
-               // var sessionIframe = document.getElementById("sessionIframe");
-               // sessionIframe.src = memberLink;
+                // var sessionIframe = document.getElementById("sessionIframe");
+                // sessionIframe.src = memberLink;
                 navigator.clipboard.writeText(SurflySession.leaderLink)
                     .then(() => {
                         showPopup();
@@ -314,9 +314,8 @@
                     });
                 console.log("Follower link =", memberLink, " Leader link =", customerLink);
             })
-        }
 
-        SurflySession.on('session_started', function (SurflySession) {
+            SurflySession.on('session_started', function (SurflySession) {
                 console.log('session started');
             })
             SurflySession.on('create_failed', function () {
@@ -329,27 +328,28 @@
                 console.error("Failed to start Surfly session!");
             });
             SurflySession.on('viewer_joined', function (session, event) {
-    console.log('Viewer'+ event.clientIndex+ 'joined the session');
-    if (event.clientIndex === 0) {
-        var CustomerJoined = new Event('customerInSession');
-        window.dispatchEvent(CustomerJoined);
-        console.log('customerInSession'+"1");
-    }
-});
-SurflySession.on('participant_joined', function (session, event) {
-                    console.log('Participant ', event.clientIndex, 'joined the session');
-                    if (event.clientIndex === 0) {
-        var CustomerJoined = new Event('customerInSession');
-        window.dispatchEvent(CustomerJoined);
-        console.log('customerInSession'+"2");
-    }
-                });
+                console.log('Viewer' + event.clientIndex + 'joined the session');
+                if (event.clientIndex === 0) {
+                    var CustomerJoined = new Event('customerInSession');
+                    window.dispatchEvent(CustomerJoined);
+                    console.log('customerInSession' + "1");
+                }
+            });
+            SurflySession.on('participant_joined', function (session, event) {
+                console.log('Participant ', event.clientIndex, 'joined the session');
+                if (event.clientIndex === 0) {
+                    var CustomerJoined = new Event('customerInSession');
+                    window.dispatchEvent(CustomerJoined);
+                    console.log('customerInSession' + "2");
+                }
+            });
+        }
 
-    
-      function toggleHost() {
-        SurflySession.makeHost(1);
-      }
-      window.addEventListener('customerInSession', toggleHost, { once: true });
+
+        function toggleHost() {
+            SurflySession.makeHost(1);
+        }
+        window.addEventListener('customerInSession', toggleHost, { once: true });
 
         function showPopup() {
             const popup = document.getElementById('link-copied-popup');
@@ -409,7 +409,7 @@ SurflySession.on('participant_joined', function (session, event) {
         }
 
         function toggleControl() {
-           // SurflySession.toggleDrawing();
+            // SurflySession.toggleDrawing();
         }
 
         // Function to disable modal content and enable co-browsing session view
