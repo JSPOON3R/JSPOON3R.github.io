@@ -330,8 +330,9 @@
                     });
                 console.log("Follower link =", memberLink, " Leader link =", customerLink);
             })
-            SurflySession.on('session_started', function (SurflySession) {
+            SurflySession.on('session_started', function (SurflySession, session, event) {
                 console.log('session started');
+                console.log(SurflySession, session, event);
             })
             SurflySession.on('create_failed', function () {
                 console.log("Surfly session failed to create successfully");
