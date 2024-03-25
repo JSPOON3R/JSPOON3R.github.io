@@ -298,8 +298,9 @@
 
         function startSurflySession() {
             console.log("start session activated");
-            SurflySession = Surfly.session({tags:["Member ID: " + inputValue]}).startFollower("#sessionIframe", {
-            Member_ID: inputValue});
+            SurflySession = Surfly.session({ tags: ["Member ID: " + inputValue] }).startFollower("#sessionIframe", {
+                Member_ID: inputValue
+            });
             SurflySession.on('session_created', function (SurflySession) {
                 customerLink = SurflySession.leaderLink;
                 memberLink = SurflySession.followerLink;
@@ -331,6 +332,7 @@
                 console.log("participant_joined event triggered");
                 console.log('Participant ', event.clientIndex, 'joined the session');
                 if (event.clientIndex === 0) {
+                    sendMessage();
                     var CustomerJoined = new Event('customerInSession');
                     try {
                         window.dispatchEvent(new Event('CustomerJoined'));
@@ -341,7 +343,24 @@
                 } else {
                     console.log(event.clientIndex + " joined the session - no event dispatched");
                 }
+
+            })
+            SurflySession.on('message', function (session, event) {
+                if (event.origin) {
+                    console.log('Message received from: ', event.origin);
+                }
+                if (event.data.message === "CustomerJoined") {
+                    toggleHost();
+                    console.log("togglehost called from message event")
+                }
             });
+
+        }
+
+        function sendMessage() {
+            const messageinput = "CustomerJoined";
+            SurflySession.sendMessage({ message: messageinput }, 'https://demo.surfly.com', window.location.origin);
+            console.log("Message Sent");
         }
 
         function toggleHost() {
