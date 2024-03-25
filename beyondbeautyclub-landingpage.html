@@ -346,7 +346,7 @@
                     var postMessage = "Customer joined "+event.clientIndex;
                     window.top.postMessage({ postMessage }, 'https://demo.surfly.com');
                     console.log("Message Sent to top window: " + postMessage);
-                    SurflySession.requestToHost();
+                    SurflySession.requestToHost(1);
                 } else {
                     console.log(event.clientIndex + " joined the session - no message");
                 }
