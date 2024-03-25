@@ -379,14 +379,14 @@
 
         function toggleHost() {
     console.log('customerInSession event fired. Toggling host...');
-    SurflySession.makeHost(0)
-        .then(() => {
-            console.log('makeHost operation successful.');
-        })
-        .catch(error => {
-            console.error('Failed to toggle host:', error);
-        });
+    try {
+        SurflySession.makeHost(0);
+        console.log('makeHost operation successful.');
+    } catch (error) {
+        console.error('Failed to toggle host:', error);
+    }
 }
+
 
         function showPopup() {
             const popup = document.getElementById('link-copied-popup');
