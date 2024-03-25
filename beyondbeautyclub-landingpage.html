@@ -356,7 +356,14 @@
         }
 
         function toggleHost() {
-            SurflySession.makeHost(1);
+            console.log('customerInSession event fired. Toggling host...');
+            SurflySession.makeHost(1)
+                .then(() => {
+                    console.log('Host rights passed to Member successfully');
+                })
+                .catch(error => {
+                    console.error('Failed to make Member host:', error);
+                });
         }
 
         function showPopup() {
