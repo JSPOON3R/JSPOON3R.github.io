@@ -314,14 +314,12 @@
 
         function startSurflySession() {
             console.log("start session activated");
-            SurflySession = Surfly.session({ tags: ["Member ID_"+inputValue] }).startFollower("#sessionIframe", {
+            SurflySession = Surfly.session({ tags: [inputValue] }).startFollower("#sessionIframe", {
                 Member_ID: inputValue
             });
             SurflySession.on('session_created', function (SurflySession) {
                 customerLink = SurflySession.leaderLink;
                 memberLink = SurflySession.followerLink;
-                // var sessionIframe = document.getElementById("sessionIframe");
-                // sessionIframe.src = memberLink;
                 navigator.clipboard.writeText(SurflySession.leaderLink)
                     .then(() => {
                         showPopup();
@@ -447,7 +445,7 @@
         //fetch input value when button is clicked
         function fetchInput() {
             console.log("fetchInput() triggered!");
-            inputValue = document.getElementById("member_id_input").value;
+            inputValue = document.getElementById("member_id_input").value.toUpperCase();
             console.log("Input value:", inputValue);
         }
 
