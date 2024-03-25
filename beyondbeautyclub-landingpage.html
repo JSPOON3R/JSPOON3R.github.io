@@ -335,7 +335,7 @@
             })
             SurflySession.on('session_started', function (SurflySession, session, event) {
                 console.log('session started');
-                console.log(event.clientIndex);
+                console.log(event);
             })
             SurflySession.on('create_failed', function () {
                 console.log("Surfly session failed to create successfully");
