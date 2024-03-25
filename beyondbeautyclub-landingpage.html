@@ -414,11 +414,14 @@
 
         function buttonClick() {
             console.log("button clicked!");
+            fetchInput();
+            exposeIframe();
             startSurflySession();
         }
 
         //fetch input value when button is clicked
         function fetchInput() {
+            console.log("fetchInput() triggered!");
             inputValue = document.getElementById("member_id_input").value;
             console.log("Input value:", inputValue);
         }
@@ -429,6 +432,7 @@
 
         // Function to disable modal content and enable co-browsing session view
         function exposeIframe() {
+            console.log("exposeIframe() triggered! Changing to Surfly Session view");
             // Disable modal content and its child elements
             var modal = document.querySelector('.modal');
             modal.style.display = 'hide';
@@ -460,7 +464,7 @@
             </div>
             <h2>Click to start</h2>
             <div class="stacked-div" style="text-align: center;">
-                <button class="btn" id="startButton" onclick="buttonClick(),exposeIframe()">Start Co-Browsing
+                <button class="btn" id="startButton" onclick="buttonClick()">Start Co-Browsing
                     Session</button>
             </div>
         </div>
