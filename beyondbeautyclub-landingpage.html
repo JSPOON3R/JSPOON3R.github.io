@@ -296,13 +296,11 @@
 
         });
 
-        var isHost = false;
         window.addEventListener('customerInSession', function () {
             console.log('customerInSession event listener fired.');
             toggleHost();
             console.log("togglehost called from customerInSession listner");
         });
-
 
         window.addEventListener('message', function (event) {
             console.log('message event listener triggered');
