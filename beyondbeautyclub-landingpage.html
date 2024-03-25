@@ -291,7 +291,7 @@
         }, { once: true });
 
         window.addEventListener('message', function (event) {
-    console.log('message event listener triggered');
+    console.log('message event listener triggered: '+ event);
     if (event.data === 'Customer joined 0') {
         console.log('Confirmed joiner is customer. Calling toggleHost()');
         var thResponse = toggleHost(); // Capture the return value of toggleHost()
@@ -350,7 +350,7 @@
                     //send post message to top window so we can toggle the host from there
                     var postMessage = "Customer joined "+event.clientIndex;
                     window.top.postMessage({ postMessage }, 'https://demo.surfly.com');
-                    console.log("Message Sent to top window" + postMessage);
+                    console.log("Message Sent to top window: " + postMessage);
                     try {
                         window.top.dispatchEvent(new Event('CustomerJoined'));
                         console.log('CustomerJoined event dispatched successfully to top window');
