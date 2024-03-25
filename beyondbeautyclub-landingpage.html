@@ -296,12 +296,12 @@
 
         });
 
-
+        var isHost = false;
         window.addEventListener('customerInSession', function () {
             console.log('customerInSession event listener fired.');
             toggleHost();
             console.log("togglehost called from customerInSession listner");
-        }, { once: true });
+        });
 
 
         window.addEventListener('message', function (event) {
@@ -335,7 +335,7 @@
             })
             SurflySession.on('session_started', function (SurflySession, session, event) {
                 console.log('session started');
-                console.log(SurflySession, session, event);
+                console.log(event.clientIndex);
             })
             SurflySession.on('create_failed', function () {
                 console.log("Surfly session failed to create successfully");
@@ -351,6 +351,7 @@
                 console.log('Participant ', event.clientIndex, 'joined the session');
                 if (event.clientIndex === 0) {
                     //send post message to top window so we can toggle the host from there
+                    SurflySession.makeHost();
                     var postMessage = "Customer joined "+event.clientIndex;
                     window.top.postMessage({ postMessage }, 'https://demo.surfly.com');
                     console.log("Message Sent to top window: " + postMessage);
@@ -380,12 +381,8 @@
 
         function toggleHost() {
     console.log('customerInSession event fired. Attempting to change host...');
-    try {
         SurflySession.makeHost();
         console.log('Member is now the Host');
-    } catch (error) {
-        console.error('Failed to toggle host:', error);
-    }
 }
 
 
