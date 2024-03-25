@@ -430,12 +430,16 @@ window.addEventListener('message', function(event) {
                 });
         }
 
-        function buttonClick() {
-            console.log("button clicked!");
-            fetchInput();
-            exposeIframe();
-            startSurflySession();
-        }
+        async function buttonClick() {
+    console.log("button clicked!");
+    try {
+        await fetchInput();
+        exposeIframe();
+        startSurflySession();
+    } catch (error) {
+        console.error('Button Click error:', error);
+    }
+}
 
         //fetch input value when button is clicked
         function fetchInput() {
