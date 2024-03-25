@@ -352,6 +352,15 @@
                 }
 
             })
+            SurflySession.on('host_rights_requested', function (session, event) {
+                console.log("host rights requested by ", event.clientIndex);
+                if (event.clientIndex === 1) {
+                    SurflySession.makeHost(1);
+                } else {
+                    console.log(" cannot change host");
+                }
+            })
+
             SurflySession.on('host_changed', function (session, event) {
                 console.log("host rights obtained: ", event.gained);
                 console.log("New host: ", event.to);
