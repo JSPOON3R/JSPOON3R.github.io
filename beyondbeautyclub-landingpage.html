@@ -198,7 +198,7 @@
 
         .popup2 {
             position: fixed;
-            display: flex;
+            display: none;
             flex-direction: column;
             bottom: 7%;
             left: 2%;
@@ -235,6 +235,7 @@
         }
 
         .popup2.visible {
+            display:flex;
             max-height: 100%;
             opacity: 1;
             transition: max-height 1s ease-out, opacity 0.3s ease-out;
