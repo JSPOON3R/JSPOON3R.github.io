@@ -296,12 +296,6 @@
 
         });
 
-        window.addEventListener('customerInSession', function () {
-            console.log('customerInSession event listener fired.');
-            toggleHost();
-            console.log("togglehost called from customerInSession listner");
-        });
-
         window.addEventListener('message', function (event) {
             console.log('message event listener triggered');
                 if (event.data.postMessage === 'Customer joined 0') {
@@ -349,32 +343,17 @@
                 console.log('Participant ', event.clientIndex, 'joined the session');
                 if (event.clientIndex === 0) {
                     //send post message to top window so we can toggle the host from there
-                    SurflySession.makeHost(0);
                     var postMessage = "Customer joined "+event.clientIndex;
                     window.top.postMessage({ postMessage }, 'https://demo.surfly.com');
                     console.log("Message Sent to top window: " + postMessage);
-                    try {
-                        window.top.dispatchEvent(new Event('CustomerJoined'));
-                        console.log('CustomerJoined event dispatched successfully to top window');
-                    } catch (error) {
-                        console.error('Failed to dispatch CustomerJoined event:', error);
-                    }
                 } else {
-                    console.log(event.clientIndex + " joined the session - no event dispatched");
+                    console.log(event.clientIndex + " joined the session - no message");
                 }
 
             })
-            SurflySession.on('message', function (session, event) {
-                console.log('Message event triggered' + event.clientIndex);
-                if (event.origin) {
-                    console.log('Message received from: ', event.origin);
-                }
-                if (event.data.message === "CustomerJoined") {
-                    toggleHost();
-                    console.log("togglehost called from Surfly message event");
-                }
-            });
-
+            SurflySession.on('host_changed', function (event) {
+                console.log("host changed event: "+event);
+            })
         }
 
         function toggleHost() {
