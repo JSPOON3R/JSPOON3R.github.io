@@ -381,8 +381,7 @@
         function toggleHost() {
     console.log('customerInSession event fired. Attempting to change host...');
     try {
-        SurflySession.giveControl(0);
-        SurflySession.makeHost(0);
+        SurflySession.makeHost();
         console.log('Member is now the Host');
     } catch (error) {
         console.error('Failed to toggle host:', error);
