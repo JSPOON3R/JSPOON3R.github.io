@@ -352,7 +352,9 @@
 
             })
             SurflySession.on('host_changed', function (event) {
-                console.log("host changed event: "+event);
+                console.log("host rights obtained: "+event.gained);
+                console.log("New host: "+event.to);
+                console.log("My index: "+event.myIndex);
             })
         }
 
