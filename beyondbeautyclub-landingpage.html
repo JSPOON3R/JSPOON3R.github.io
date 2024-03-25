@@ -247,7 +247,6 @@
             font-family: Figtree, sans-serif;
             margin: 0;
             text-align: center;
-
         }
     </style>
     <!--Surfly JS-->
@@ -292,13 +291,13 @@
         }, { once: true });
 
         window.addEventListener('message', function (event) {
-            console.log('message event listener triggered');
-                if (event.data.postMessage === 'Customer joined 0') {
-                    console.log('Confirmed joiner is customer. Calling ToggleHost()');
-                    toggleHost();
-                    console.log("togglehost called from message listner");
-                }
-        });
+    console.log('message event listener triggered');
+    if (event.data === 'Customer joined 0') {
+        console.log('Confirmed joiner is customer. Calling toggleHost()');
+        var thResponse = toggleHost(); // Capture the return value of toggleHost()
+        console.log("togglehost called from message listener. Response: ", thResponse);
+    }
+});
 
         Surfly.init(settings, function (initResult) {
             if (initResult.success) {
