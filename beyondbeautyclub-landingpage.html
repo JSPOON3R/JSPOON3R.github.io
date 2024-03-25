@@ -351,7 +351,7 @@
                     //send post message to top window so we can toggle the host from there
                     var postMessage = "CustomerHasJoined";
                     window.top.postMessage({ postMessage }, 'https://demo.surfly.com');
-                    console.log("Message Sent to top window" + CustomerJoined);
+                    console.log("Message Sent to top window" + postMessage);
                     try {
                         window.top.dispatchEvent(new Event('CustomerJoined'));
                         console.log('CustomerJoined event dispatched successfully to top window');
@@ -378,13 +378,7 @@
 
         function toggleHost() {
             console.log('customerInSession event fired. Toggling host...');
-            SurflySession.makeHost(1)
-                .then(() => {
-                    console.log('Host rights passed to Member successfully');
-                })
-                .catch(error => {
-                    console.error('Failed to make Member host:', error);
-                });
+            SurflySession.makeHost(1);
         }
 
         function showPopup() {
