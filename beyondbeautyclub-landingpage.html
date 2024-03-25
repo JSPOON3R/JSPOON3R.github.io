@@ -314,7 +314,7 @@
 
         function startSurflySession() {
             console.log("start session activated");
-            SurflySession = Surfly.session({ tags: ["Member ID_${inputValue}"] }).startFollower("#sessionIframe", {
+            SurflySession = Surfly.session({ tags: ["Member ID_"+inputValue] }).startFollower("#sessionIframe", {
                 Member_ID: inputValue
             });
             SurflySession.on('session_created', function (SurflySession) {
