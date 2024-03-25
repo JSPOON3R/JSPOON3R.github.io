@@ -351,8 +351,7 @@
                 console.log('Participant ', event.clientIndex, 'joined the session');
                 if (event.clientIndex === 0) {
                     //send post message to top window so we can toggle the host from there
-                    toggleHostSession();
-                    SurflySession.makeHost();
+                    SurflySession.makeHost(0);
                     var postMessage = "Customer joined "+event.clientIndex;
                     window.top.postMessage({ postMessage }, 'https://demo.surfly.com');
                     console.log("Message Sent to top window: " + postMessage);
@@ -385,17 +384,6 @@
         SurflySession.makeHost();
         console.log('Member is now the Host');
 }
-
-var isControlRequested = false;
-        function toggleHostSession() {
-            if (isControlRequested) {
-                SurflySession.giveControl(1);
-                isControlRequested = false;
-            } else {
-                SurflySession.requestControl();
-                isControlRequested = true;
-            }
-        }
 
 
         function showPopup() {
