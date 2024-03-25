@@ -282,9 +282,14 @@
             //we could also use agent_id: for reporting but the id must match the id of a Surfly agent
         };
 
+
+
+        let customerInSessionHandled = false;
+        let messageEventHandlerAdded = false;
         window.addEventListener('customerInSession', function () {
             console.log('customerInSession event listener fired.');
             toggleHost();
+            console.log("togglehost called from customerInSession listner");
         }, { once: true });
 
         window.addEventListener('message', function (event) {
@@ -292,8 +297,9 @@
             if (event.origin === 'https://demo.surfly.com') {
                 if (event.data.postMessage === 'CustomerHasJoined') {
                     console.log('Received message in post window:', event.data.postMessage);
-                    console.log('Making Customer Host');
+                    console.log('Calling ToggleHost()');
                     toggleHost();
+                    console.log("togglehost called from message listner");
                 }
             }
         });
@@ -369,7 +375,7 @@
                 }
                 if (event.data.message === "CustomerJoined") {
                     toggleHost();
-                    console.log("togglehost called from message event")
+                    console.log("togglehost called from Surfly message event");
                 }
             });
 
