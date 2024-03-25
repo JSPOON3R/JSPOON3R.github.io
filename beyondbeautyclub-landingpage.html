@@ -113,7 +113,7 @@
             width: 100%;
             bottom: 0;
             z-index: 2147483548 !important;
-            overflow:none;
+            overflow: none;
         }
 
         .bottomNavBtn {
@@ -282,7 +282,20 @@
             //we could also use agent_id: for reporting but the id must match the id of a Surfly agent
         };
 
-        window.addEventListener('customerInSession', toggleHost, { once: true });
+        window.addEventListener('customerInSession', function() {
+    console.log('customerInSession event listener fired.');
+    toggleHost();
+}, { once: true });
+
+window.addEventListener('message', function(event) {
+    console.log('message event listener fired.');
+    if (event.origin === 'https://demo.surfly.com') {
+        if (event.data.postMessage === 'CustomerHasJoined') {
+            console.log('Received message in post window:', event.data.postMessage);
+            toggleHost();
+        }
+    }
+});
 
         Surfly.init(settings, function (initResult) {
             if (initResult.success) {
@@ -333,11 +346,12 @@
                 console.log("participant_joined event triggered");
                 console.log('Participant ', event.clientIndex, 'joined the session');
                 if (event.clientIndex === 0) {
-                    sendMessage();
-                    var CustomerJoined = new Event('customerInSession');
+                    var postMessage = "CustomerHasJoined";
+                    window.top.postMessage({postMessage}, 'https://demo.surfly.com');
+                    console.log("Message Sent to top window" + CustomerJoined);
                     try {
-                        window.dispatchEvent(new Event('CustomerJoined'));
-                        console.log('CustomerJoined event dispatched successfully.');
+                        window.top.dispatchEvent(new Event('CustomerJoined'));
+                        console.log('CustomerJoined event dispatched successfully to top window');
                     } catch (error) {
                         console.error('Failed to dispatch CustomerJoined event:', error);
                     }
@@ -347,6 +361,7 @@
 
             })
             SurflySession.on('message', function (session, event) {
+                console.log('Message event triggered' + event.origin);
                 if (event.origin) {
                     console.log('Message received from: ', event.origin);
                 }
@@ -356,12 +371,6 @@
                 }
             });
 
-        }
-
-        function sendMessage() {
-            const messageinput = "CustomerJoined";
-            SurflySession.sendMessage({ message: messageinput }, 'https://demo.surfly.com', window.location.origin);
-            console.log("Message Sent");
         }
 
         function toggleHost() {
