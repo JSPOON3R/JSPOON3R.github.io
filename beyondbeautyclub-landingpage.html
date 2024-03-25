@@ -284,8 +284,6 @@
 
 
 
-        let customerInSessionHandled = false;
-        let messageEventHandlerAdded = false;
         window.addEventListener('customerInSession', function () {
             console.log('customerInSession event listener fired.');
             toggleHost();
@@ -293,15 +291,12 @@
         }, { once: true });
 
         window.addEventListener('message', function (event) {
-            console.log('message event listener fired.');
-            if (event.origin === 'https://demo.surfly.com') {
                 if (event.data.postMessage === 'CustomerHasJoined') {
-                    console.log('Received message in post window:', event.data.postMessage);
+                    console.log('message event listener fired', event.data.postMessage);
                     console.log('Calling ToggleHost()');
                     toggleHost();
                     console.log("togglehost called from message listner");
                 }
-            }
         });
 
         Surfly.init(settings, function (initResult) {
