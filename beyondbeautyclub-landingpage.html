@@ -35,7 +35,7 @@
             padding: 20px;
             border: 1px solid #888;
             width: 80%;
-            height:max-content;
+            height: max-content;
             max-width: 600px;
             border-radius: 1em;
         }
@@ -329,6 +329,7 @@
                 console.error("Failed to start Surfly session!");
             })
             SurflySession.on('viewer_joined', function (session, event) {
+                console.log("viewer_joined event triggered");
                 console.log('Viewer' + event.clientIndex + 'joined the session');
                 if (event.clientIndex === 0) {
                     var CustomerJoined = new Event('customerInSession');
@@ -337,13 +338,21 @@
                 }
             })
             SurflySession.on('participant_joined', function (session, event) {
+                console.log("participant_joined event triggered");
                 console.log('Participant ', event.clientIndex, 'joined the session');
                 if (event.clientIndex === 0) {
                     var CustomerJoined = new Event('customerInSession');
-                    window.dispatchEvent(CustomerJoined);
+                    try {
+                        window.dispatchEvent(new Event('CustomerJoined'));
+                        console.log('CustomerJoined event dispatched successfully.');
+                    } catch (error) {
+                        console.error('Failed to dispatch CustomerJoined event:', error);
+                    }
                     console.log("CustomerJoined event dispatched to window from participant joined");
+                } else {
+                    console.log(event.clientIndex + " joined the session - no event dispatched");
                 }
-            })
+            });
         }
 
         function toggleHost() {
