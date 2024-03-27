@@ -300,7 +300,7 @@
             console.log('message event listener triggered');
             if (event.data.postMessage === 'Customer joined 0') {
                 console.log('Confirmed joiner is customer. Calling ToggleHost()');
-                toggleHost();
+                window.top.toggleHost();
                 console.log("togglehost called from message listner: ");
             }
         });
@@ -372,7 +372,7 @@
 
         function toggleHost() {
             console.log('customerInSession event fired. Attempting to change host...');
-            SurflySession.makeHost();
+            SurflySession.makeHost(1);
             console.log('Member is now the Host');
         }
 
