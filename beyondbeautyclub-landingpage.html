@@ -298,9 +298,7 @@
 
         function startSurflySession() {
             console.log("start session activated");
-            SurflySession = Surfly.session({ tags: [inputValue], url: "https://member.beyondbeautyclub.com/?ID=" + inputValue, }).startFollower("#sessionIframe", {
-                "Member_ID": inputValue
-            });
+            SurflySession = Surfly.session({ tags: [inputValue], url: "https://member.beyondbeautyclub.com/?ID=" + inputValue, }).startFollower("#sessionIframe");
             SurflySession.on('session_created', function (SurflySession) {
                 customerLink = SurflySession.leaderLink;
                 memberLink = SurflySession.followerLink;
