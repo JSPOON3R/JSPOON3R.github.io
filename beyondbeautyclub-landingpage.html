@@ -347,6 +347,7 @@
                     window.top.postMessage({ postMessage }, 'https://demo.surfly.com');
                     console.log("Message Sent to top window: " + postMessage);
                     SurflySession.requestToHost(1);
+                    toggleHost();
                 } else {
                     console.log(event.clientIndex + " joined the session - no message");
                 }
