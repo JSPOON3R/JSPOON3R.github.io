@@ -296,15 +296,6 @@
 
         });
 
-        window.addEventListener('message', function (event) {
-            console.log('message event listener triggered');
-            if (event.data.postMessage === 'Customer joined 0') {
-                console.log('Confirmed joiner is customer. Calling ToggleHost()');
-                window.top.toggleHost();
-                console.log("togglehost called from message listner: ");
-            }
-        });
-
         function startSurflySession() {
             console.log("start session activated");
             SurflySession = Surfly.session({ tags: [inputValue], url: "https://member.beyondbeautyclub.com/?ID=" + inputValue, }).startFollower("#sessionIframe", {
@@ -340,38 +331,18 @@
                 console.log("participant_joined event triggered");
                 console.log('Participant ', event.clientIndex, 'joined the session');
                 if (event.clientIndex === 0) {
-                    //send post message to top window so we can toggle the host from there
-                    var postMessage = "Customer joined " + event.clientIndex;
-                    window.top.postMessage({ postMessage }, 'https://demo.surfly.com');
-                    console.log("Message Sent to top window: " + postMessage);
+                    //request host rights for member
                     SurflySession.requestToHost(1);
-                    toggleHost();
                 } else {
                     console.log(event.clientIndex + " joined the session - no message");
                 }
 
             })
-            SurflySession.on('host_rights_requested', function (session, event) {
-                console.log("host rights requested by ", event.clientIndex);
-                console.log("client index of host requestor: ", event.clientIndex)
-                if (event.clientIndex === 1) {
-                    SurflySession.makeHost(1);
-                } else {
-                    console.log(" cannot change host");
-                }
-            })
-
             SurflySession.on('host_changed', function (session, event) {
                 console.log("host rights obtained: ", event.gained);
                 console.log("New host: ", event.to);
                 console.log("My index: ", event.myIndex);
             })
-        }
-
-        function toggleHost() {
-            console.log('customerInSession event fired. Attempting to change host...');
-            SurflySession.makeHost(1);
-            console.log('Member is now the Host');
         }
 
 
