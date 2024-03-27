@@ -330,11 +330,12 @@
             SurflySession.on('participant_joined', function (session, event) {
                 console.log("participant_joined event triggered");
                 console.log('Participant ', event.clientIndex, 'joined the session');
+                //customer will always be CID 0 as the leader
                 if (event.clientIndex === 0) {
-                    //request host rights for member
+                    //request host rights for member (should be CID 1 as they are the first follower)
                     SurflySession.requestToHost(1);
                 } else {
-                    console.log(event.clientIndex + " joined the session - no message");
+                    console.log(event.clientIndex + " joined the session - no request sent");
                 }
 
             })
