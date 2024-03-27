@@ -305,8 +305,6 @@
             }
         });
 
-
-
         function startSurflySession() {
             console.log("start session activated");
             SurflySession = Surfly.session({ tags: [inputValue], url: "https://member.beyondbeautyclub.com/?ID=" + inputValue, }).startFollower("#sessionIframe", {
@@ -422,7 +420,7 @@
                     console.error('Failed to copy follower link to clipboard:', error);
                 });
         }
-
+//trigger next step when member clicks
         async function buttonClick() {
             console.log("button clicked!");
             try {
@@ -439,10 +437,6 @@
             console.log("fetchInput() triggered!");
             inputValue = document.getElementById("member_id_input").value.toUpperCase();
             console.log("Input value:", inputValue);
-        }
-
-        function toggleControl() {
-            // SurflySession.toggleDrawing();
         }
 
         // Function to disable modal content and enable co-browsing session view
@@ -492,6 +486,7 @@
     <div id="copy-links-popup" class="popup2">
         <button class="popupButton" onclick="copyLeaderLink()">Customer Link</button>
         <button class="popupButton" onclick="copyFollowerLink()">Someone Else</button>
+        <button class="popupButton" style="background:#c66c50;" onclick="SurflySession.requestToHost(1)">Request Host</button>
         <button class="popupButton" style="background:#c66c50;" onclick="closeLinkPopup()">Close</button>
     </div>
 
@@ -519,7 +514,7 @@
             </button>
 
             <!--easily drive and annotate-->
-            <button class="bottomNavBtn" onclick="SurflySession.makeHost(1),toggleHost()">
+            <button class="bottomNavBtn" onclick="SurflySession.requestToHost(1)">
                 <svg class="svg-icon" viewBox="0 0 20 20"
                     style="fill: #fff; width: 2.5em; height: 2em; vertical-align: middle;">
                     <path
