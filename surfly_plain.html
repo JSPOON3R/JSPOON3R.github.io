@@ -52,6 +52,7 @@ const loadScriptAsync = () => {
 }
 
 window.startCobrowse = async () => {
+    if (!Surfly) {
     await loadScriptAsync()
 
     const settings = {
@@ -111,7 +112,10 @@ window.startCobrowse = async () => {
             .startLeader()
     })
 }
-
+else {
+    console.log("Surfly is defined - do not run script")
+}
+}
 
 if (window.Surfly?.isInsideSession) {
     // This log should show up inside iframe#surfly-iframe but it does not
