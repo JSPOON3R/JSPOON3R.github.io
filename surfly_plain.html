@@ -57,7 +57,7 @@
         };
     
         function testFunction() {
-            if (typeof Surfly === 'undefined') {
+            if (typeof window.top.Surfly === 'undefined') {
                 console.log('Surfly is not defined - loading script');
                 window.startCobrowse = async () => {
                     await loadScriptAsync();
