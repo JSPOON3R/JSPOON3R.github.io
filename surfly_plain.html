@@ -7,130 +7,147 @@
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/smoothness/jquery-ui.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
 <link rel="icon" href="https://capacity.com/wp-content/uploads/2019/08/favicon.ico" sizes="192x192" />
-<script
-  src="https://code.jquery.com/jquery-3.5.0.min.js"
-  integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ="
-  crossorigin="anonymous"></script>
-<script
-  src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
-  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
-  crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.5.0.min.js"
+    integrity="sha256-xNzN2a4ltkB44Mc/Jz3pT4iU1cmeR0FkXs4pru/JxaQ=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+    integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
 <style>
-body,h1 {font-family: "Raleway", sans-serif}
-body, html {height: 100%}
-.bgimg {
-  background-image: url('https://capacity.com/wp-content/uploads/2021/09/2021-Homepage-Header-02.png');
-  min-height: 100%;
-  background-position: center;
-  background-size: cover;
-  background-color: #333;
-  filter: blur(10px) brightness(0.5);
-}
+    body,
+    h1 {
+        font-family: "Raleway", sans-serif
+    }
 
-.color-white {
-  color: white;
-}
+    body,
+    html {
+        height: 100%
+    }
+
+    .bgimg {
+        background-image: url('https://capacity.com/wp-content/uploads/2021/09/2021-Homepage-Header-02.png');
+        min-height: 100%;
+        background-position: center;
+        background-size: cover;
+        background-color: #333;
+        filter: blur(10px) brightness(0.5);
+    }
+
+    .color-white {
+        color: white;
+    }
 </style>
+
 <body>
-<script>
-const loadScriptAsync = () => {
-    return new Promise(resolve => {
-        window.Surfly = window.Surfly || {
-            init: function() {
-                window.Surfly.q = arguments
+    <script>
+        const loadScriptAsync = () => {
+            return new Promise(resolve => {
+                window.Surfly = window.Surfly || {
+                    init: function () {
+                        window.Surfly.q = arguments
+                    }
+                }
+
+                const surflyScript = document.createElement('script')
+                const mountingNode = document.body
+
+                surflyScript.async = true
+                surflyScript.src = 'https://surfly.com/surfly.js'
+                surflyScript.onload = resolve
+                mountingNode.appendChild(surflyScript)
+            })
+        }
+
+        function testFunction() {
+            try {
+                if (!Surfly) {
+                    console.log('Surfly is not defined - loading script');
+                    window.startCobrowse = async () => {
+                        await loadScriptAsync()
+
+                        const settings = {
+                            widget_key: '99671227762b43c2a96daa066ee006e2',
+                            require_password: false,
+                            session_autorestore_enabled: true
+                        }
+
+                        window.Surfly.init(settings, ({
+                            success
+                        } = {}) => {
+                            //check for init errors & abort if failed
+                            if (!success) {
+                                console.error('COBROWSE:INTI:ESTABLISH_SESSION:FAILED')
+                                return
+                            }
+                            //log line if success
+                            if (success) {
+                                console.log("JSTEST - Surfly init successfully")
+                            }
+                            //check if Surfly object exists & abort if failed
+                            if (!window.Surfly) {
+                                console.error('COBROWSE:SCRIPT:SCRIPT_LOAD_FAILED')
+                                return
+                            }
+                            //log line if true
+                            if (window.Surfly) {
+                                console.log("JSTEST - window.Surfly returns true")
+                            }
+
+                            //check for a session if
+                            if (!window.SESSION_ID) {
+                                console.log("JSTEST - No Session Found");
+                                //log & original session will be rejoined so no need to abord
+                            } if (window.SESSION_ID) {
+                                console.log('COBROWSE:SCRIPT:ALREADY_IN_SESSION: ' + SESSION_ID);
+                            }
+
+                            window.Surfly.on('session_restored', (api, event) => {
+                                // This log should show up after user refresh then press the button, but it does not. If we take it outside of the init callback, we receive error complaining ".on()" function does not exist on window.Surfly object
+                                console.log('COBROWSE:GLOBAL_EVENT:RESTORE_SESSION:DONE', api, event)
+                            })
+
+                            window.Surfly.session()
+                                .on('session_started', (session) => {
+                                    console.log('COBROWSE:SESSION_EVENT:ESTABLISH_SESSION:DONE', {
+                                        link: session.followerLink,
+                                        pin: session.pin
+                                    })
+                                })
+                                .on('session_ended', () => {
+                                    console.log('COBROWSE:SESSION_EVENT:END_SESSION:DONE')
+                                })
+                                .on('session_loaded', () => {
+                                    console.log('COBROWSE:SESSION_EVENT:LOAD_SESSION:DONE')
+                                })
+                                .startLeader()
+                        })
+                    }
+
+                } else {
+                    // Surfly is defined
+                    console.log('Surfly is already defined - will not load script');
+                }
+            } catch (error) {
+
+                console.error('An error occurred while checking Surfly:', error);
             }
         }
 
-        const surflyScript = document.createElement('script')
-        const mountingNode = document.body
 
-        surflyScript.async = true
-        surflyScript.src = 'https://surfly.com/surfly.js'
-        surflyScript.onload = resolve
-        mountingNode.appendChild(surflyScript)
-    })
-}
-
-window.startCobrowse = async () => {
-    if (!Surfly) {
-    await loadScriptAsync()
-
-    const settings = {
-        widget_key: '99671227762b43c2a96daa066ee006e2',
-        require_password: false,
-        session_autorestore_enabled: true
-    }
-
-    window.Surfly.init(settings, ({
-        success
-    } = {}) => {
-        //check for init errors & abort if failed
-        if (!success) {
-            console.error('COBROWSE:INTI:ESTABLISH_SESSION:FAILED')
-            return
+        if (window.Surfly?.isInsideSession) {
+            // This log should show up inside iframe#surfly-iframe but it does not
+            console.log('COBROWSE:ON_LOAD:IN_SESSION')
         }
-        //log line if success
-        if (success) {
-            console.log("JSTEST - Surfly init successfully")
-        }
-        //check if Surfly object exists & abort if failed
-        if (!window.Surfly) {
-        console.error('COBROWSE:SCRIPT:SCRIPT_LOAD_FAILED')
-        return
-    }
-    //log line if true
-    if (window.Surfly) {
-            console.log("JSTEST - window.Surfly returns true")
-        }
-
-        //check for a session if
-        if (!window.SESSION_ID) {
-    console.log("JSTEST - No Session Found");
-    //log & original session will be rejoined so no need to abord
-} if (window.SESSION_ID){
-    console.log('COBROWSE:SCRIPT:ALREADY_IN_SESSION: ' + SESSION_ID);
-}
-
-        window.Surfly.on('session_restored', (api, event) => {
-            // This log should show up after user refresh then press the button, but it does not. If we take it outside of the init callback, we receive error complaining ".on()" function does not exist on window.Surfly object
-            console.log('COBROWSE:GLOBAL_EVENT:RESTORE_SESSION:DONE', api, event)
-        })
-
-        window.Surfly.session()
-            .on('session_started', (session) => {
-                console.log('COBROWSE:SESSION_EVENT:ESTABLISH_SESSION:DONE', {
-                    link: session.followerLink,
-                    pin: session.pin
-                })
-            })
-            .on('session_ended', () => {
-                console.log('COBROWSE:SESSION_EVENT:END_SESSION:DONE')
-            })
-            .on('session_loaded', () => {
-                console.log('COBROWSE:SESSION_EVENT:LOAD_SESSION:DONE')
-            })
-            .startLeader()
-    })
-}
-else {
-    console.log("Surfly is already defined - do not run script")
-}
-}
-
-if (window.Surfly?.isInsideSession) {
-    // This log should show up inside iframe#surfly-iframe but it does not
-    console.log('COBROWSE:ON_LOAD:IN_SESSION')
-}
-</script>
-<div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
-</div>
-<div class="w3-display-middle color-white" style="text-align: center;">
-  <h1 class="w3-jumbo w3-animate-top">Cobrowse Demo</h1>
-  <hr class="w3-border-grey" style="margin:auto;width:40%">
-  <p id="button-display" class="w3-large w3-center"><button type="button" onclick="window.startCobrowse()">Start Cobrowse</button></p>
-</div>
-<div class="w3-display-bottomleft w3-padding-large color-white">
-  Surfly script trial
-</div>
+    </script>
+    <div class="bgimg w3-display-container w3-animate-opacity w3-text-white">
+    </div>
+    <div class="w3-display-middle color-white" style="text-align: center;">
+        <h1 class="w3-jumbo w3-animate-top">Cobrowse Demo</h1>
+        <hr class="w3-border-grey" style="margin:auto;width:40%">
+        <p id="button-display" class="w3-large w3-center"><button type="button" onclick="window.testFunction()">Start
+                Cobrowse</button></p>
+    </div>
+    <div class="w3-display-bottomleft w3-padding-large color-white">
+        Surfly script trial
+    </div>
 </body>
+
 </html>
