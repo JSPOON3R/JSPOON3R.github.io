@@ -52,7 +52,7 @@ const loadScriptAsync = () => {
 }
 
 window.startCobrowse = async () => {
-    if (!Surfly) {
+    if (typeof Surfly === 'undefined') {
     await loadScriptAsync()
 
     const settings = {
