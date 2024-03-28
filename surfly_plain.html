@@ -54,32 +54,41 @@ const loadScriptAsync = () => {
 window.startCobrowse = async () => {
     await loadScriptAsync()
 
-    if (!window.Surfly) {
-        console.error('COBROWSE:SCRIPT:SCRIPT_LOAD_FAILED')
-
-        return
-    }
-
-    if (window.Surfly.isInsideSession) {
-        // This log should show up inside iframe#surfly-iframe after pressing the button in the iframe, but it does not
-        console.log('COBROWSE:SCRIPT:ALREADY_IN_SESSION')
-
-        return
-    }
-
     const settings = {
-        widget_key: '144b60c81b0446cfb3b4549c9d9f425e',
-        require_password: false
+        widget_key: '99671227762b43c2a96daa066ee006e2',
+        require_password: false,
+        session_autorestore_enabled: true
     }
 
     window.Surfly.init(settings, ({
         success
     } = {}) => {
+        //check for init errors & abort if failed
         if (!success) {
             console.error('COBROWSE:INTI:ESTABLISH_SESSION:FAILED')
-
             return
         }
+        //log line if success
+        if (success) {
+            console.log("JSTEST - Surfly init successfully")
+        }
+        //check if Surfly object exists & abort if failed
+        if (!window.Surfly) {
+        console.error('COBROWSE:SCRIPT:SCRIPT_LOAD_FAILED')
+        return
+    }
+    //log line if true
+    if (window.Surfly) {
+            console.log("JSTEST - window.Surfly returns true")
+        }
+
+        //check for a session if
+        if (!window.SESSION_ID) {
+    console.log("JSTEST - No Session Found");
+    //log & original session will be rejoined so no need to abord
+} if (window.SESSION_ID){
+    console.log('COBROWSE:SCRIPT:ALREADY_IN_SESSION: ' + SESSION_ID);
+}
 
         window.Surfly.on('session_restored', (api, event) => {
             // This log should show up after user refresh then press the button, but it does not. If we take it outside of the init callback, we receive error complaining ".on()" function does not exist on window.Surfly object
@@ -102,6 +111,7 @@ window.startCobrowse = async () => {
             .startLeader()
     })
 }
+
 
 if (window.Surfly?.isInsideSession) {
     // This log should show up inside iframe#surfly-iframe but it does not
