@@ -52,7 +52,7 @@ const loadScriptAsync = () => {
 }
 
 window.startCobrowse = async () => {
-    if (!Surfly.isInsideSession) {
+    if (!Surfly) {
     await loadScriptAsync()
 
     const settings = {
@@ -113,7 +113,7 @@ window.startCobrowse = async () => {
     })
 }
 else {
-    console.log("session detected - do not run script")
+    console.log("Surfly is defined - do not run script")
 }
 }
 
