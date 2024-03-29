@@ -79,10 +79,12 @@
                         console.log('COBROWSE:SESSION_EVENT:ESTABLISH_SESSION:DONE', {
                             link: session.followerLink,
                             pin: session.pin
-                        })
+                        });
+                        console.log("new session: ", Surfly.currentSession);
                     })
                     .on('session_restored', (api, event) => {
                         console.log('COBROWSE:GLOBAL_EVENT:RESTORE_SESSION:DONE', api, event)
+                        console.log("restored session: ", Surfly.currentSession);
                     })
                     .on('session_ended', () => {
                         console.log('COBROWSE:SESSION_EVENT:END_SESSION:DONE')
