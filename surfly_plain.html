@@ -49,12 +49,12 @@
             const surflyScript = document.createElement('script');
             const mountingNode = document.body;
 
-            surflyScript.async = false; // Set async to false to make it synchronous
+            surflyScript.async = false; 
             surflyScript.src = 'https://surfly.com/surfly.js';
             surflyScript.onload = function () {
                 surflyLoaded = true;
                 if (typeof callback === 'function') {
-                    callback(); // Call the callback function if provided
+                    callback(); 
                 }
             };
             mountingNode.appendChild(surflyScript);
@@ -74,7 +74,7 @@
                 if (init.success) {
                     console.log('COBROWSE:INIT:INIT:SUCCESS');
                     if (typeof callback === 'function') {
-                        callback(); // Call the callback function if provided
+                        callback(); 
                     }
                 }
             });
@@ -110,7 +110,7 @@
                 }
                 if (Surfly._allSessions.length === 0) {
                     console.log('COBROWSE:SCRIPT:NOT_IN_SESSION');
-                    surflyInit(startNew); // Pass startNew function as callback
+                    surflyInit(startNew); 
                 } else {
                     console.log('COBROWSE:SCRIPT:EXISTING_SESSION(S)_FOUND');
                     // Init will automatically restore an existing session
@@ -124,8 +124,6 @@
                 console.error('COBROWSE:SCRIPT:SCRIPT_NOT_YET_LOADED');
             }
         }
-
-        // Call loadScript to start loading the Surfly script
         loadScript();
     </script>
 
