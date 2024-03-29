@@ -109,7 +109,7 @@ loadScript();
                         if (!Surfly._allSessions.length === 0) {
                             console.log('COBROWSE:SCRIPT:EXISTING_SESSION(S)_FOUND');
                             //init will automatically restore an existing session
-                            loadScript(surflyInit());
+                            loadScript(window.surflyInit());
                             window.Surfly.on('session_restored', (api, event) => {
                                 console.log('COBROWSE:GLOBAL_EVENT:RESTORE_SESSION:DONE', api, event)
                                 console.log('COBROWSE:SCRIPT:SESSION_RESTORED: ', session.followerLink)
