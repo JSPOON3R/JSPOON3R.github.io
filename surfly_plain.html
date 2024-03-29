@@ -58,31 +58,26 @@
                 mountingNode.appendChild(surflyScript)
             })
         }
+
         loadScriptAsync();
 
-        window.startCobrowse = async () => {
+        function surflyInit() {
             const settings = {
                 widget_key: '144b60c81b0446cfb3b4549c9d9f425e',
                 require_password: false,
                 session_autorestore_enabled: true
             }
 
-            Surfly.listSessions(function (session) {
-                if (session) {
-                    console.log('COBROWSE:SCRIPT:EXISTING_SESSION(S)_FOUND');
-                    window.Surfly.init(settings, ({ success } = {}) => {
-                        if (!success) {
-                            console.error('COBROWSE:INTI:ESTABLISH_SESSION:FAILED')
-                            return
-                        }
-                    })
-                    window.Surfly.on('session_restored', (api, event) => {
-                        console.log('COBROWSE:GLOBAL_EVENT:RESTORE_SESSION:DONE', api, event)
-                        console.log("restored session: ", Surfly.currentSession);
-                    })
-
+            window.Surfly.init(settings, ({ success } = {}) => {
+                if (!success) {
+                    console.error('COBROWSE:INTI:ESTABLISH_SESSION:FAILED')
+                    return
                 }
-                if (!session) {
+            })
+        }
+
+        function startNew() {
+            surflyInit();
                     window.Surfly.session().startLeader()
                         .on('session_started', (session) => {
                             console.log('COBROWSE:SESSION_EVENT:ESTABLISH_SESSION:DONE', {
@@ -91,16 +86,14 @@
                             });
                             console.log("new session: ", Surfly.currentSession);
                         })
-                }
-            })
-
-            window.Surfly.on('session_ended', () => {
+                        window.Surfly.on('session_ended', () => {
                 console.log('COBROWSE:SESSION_EVENT:END_SESSION:DONE')
             })
                 .on('session_loaded', () => {
                     console.log('COBROWSE:SESSION_EVENT:LOAD_SESSION:DONE')
                 })
-        }
+            }
+
 
         function buttonClick() {
             if (surflyLoaded) {
@@ -108,17 +101,30 @@
                     console.error('COBROWSE:SCRIPT:SCRIPT_LOAD_FAILED');
                     return;
                 }
-                if (window.Surfly.isInsideSession) {
-                    Surfly.listSessions().forEach(function (session) {
+                if (window.Surfly) {
+                    Surfly.listSessions(function (session) {
                         if (session) {
-                            console.log('COBROWSE:SCRIPT:ALREADY_IN_SESSION: ', session.followerLink);
+                            console.log('COBROWSE:SCRIPT:EXISTING_SESSION(S)_FOUND');
+                            if (window.Surfly.isInsideSession) {
+                                Surfly.listSessions()[0](function (session) {
+                                    if (session) {
+                                        console.log('COBROWSE:SCRIPT:ALREADY_IN_SESSION: ', session.followerLink);
+                                        surflyInit();
+                                        window.Surfly.on('session_restored', (api, event) => {
+                                console.log('COBROWSE:GLOBAL_EVENT:RESTORE_SESSION:DONE', api, event)
+                                console.log("restored session: ", Surfly.currentSession);
+                            })
+                                    }
+                                })
+                                return;
+                            }
+                            if (!window.Surfly.isInsideSession) {
+                                console.log('COBROWSE:SCRIPT:NOT_IN_SESSION');
+                                window.startNew();
+                            }
                         }
                     })
                     return;
-                }
-                if (!window.Surfly.isInsideSession) {
-                    console.log('COBROWSE:SCRIPT:NOT_IN_SESSION');
-                    window.startCobrowse();
                 }
             } else {
                 console.error('COBROWSE:SCRIPT:SCRIPT_NOT_YET_LOADED');
