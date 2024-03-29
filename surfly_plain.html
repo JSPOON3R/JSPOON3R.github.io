@@ -39,28 +39,29 @@
 <body>
     <script>
         var surflyLoaded = false;
-        const loadScriptAsync = () => {
-            return new Promise(resolve => {
-                window.Surfly = window.Surfly || {
-                    init: function () {
-                        window.Surfly.q = arguments
-                    }
-                }
-                const surflyScript = document.createElement('script')
-                const mountingNode = document.body
-
-                surflyScript.async = true
-                surflyScript.src = 'https://surfly.com/surfly.js'
-                surflyScript.onload = function () {
-                    surflyLoaded = true;
-                    resolve();
-                };
-                mountingNode.appendChild(surflyScript)
-            })
+    
+        function loadScript(callback) {
+    window.Surfly = window.Surfly || {
+        init: function () {
+            window.Surfly.q = arguments
         }
+    };
+    const surflyScript = document.createElement('script');
+    const mountingNode = document.body;
 
-        loadScriptAsync().then(() => {
-            function surflyInit() {
+    surflyScript.async = false; // Set async to false to make it synchronous
+    surflyScript.src = 'https://surfly.com/surfly.js';
+    surflyScript.onload = function () {
+        surflyLoaded = true;
+        if (typeof callback === 'function') {
+            callback(); // Call the callback function once the script is loaded
+        }
+    };
+    mountingNode.appendChild(surflyScript);
+}
+loadScript();
+
+        function surflyInit() {
                 const settings = {
                     widget_key: '144b60c81b0446cfb3b4549c9d9f425e',
                     require_password: false,
@@ -91,7 +92,8 @@
                         console.log('COBROWSE:SESSION_EVENT:LOAD_SESSION:DONE')
                     })
             }
-        });
+
+
 
         function buttonClick() {
                 if (surflyLoaded) {
@@ -102,12 +104,12 @@
                     if (window.Surfly) {
                         if (Surfly._allSessions.length === 0) {
                             console.log('COBROWSE:SCRIPT:NOT_IN_SESSION');
-                            window.startNew();
+                            loadScript(window.startNew());
                         }
                         if (!Surfly._allSessions.length === 0) {
                             console.log('COBROWSE:SCRIPT:EXISTING_SESSION(S)_FOUND');
                             //init will automatically restore an existing session
-                            surflyInit();
+                            loadScript(surflyInit());
                             window.Surfly.on('session_restored', (api, event) => {
                                 console.log('COBROWSE:GLOBAL_EVENT:RESTORE_SESSION:DONE', api, event)
                                 console.log('COBROWSE:SCRIPT:SESSION_RESTORED: ', session.followerLink)
