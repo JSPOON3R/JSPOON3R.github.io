@@ -114,7 +114,7 @@
                     console.error('COBROWSE:SCRIPT:SCRIPT_LOAD_FAILED');
                     return;
                 }
-                if (sesscount) {
+                if (sesscount === 0) {
                     console.log('COBROWSE:SCRIPT:NOT_IN_SESSION');
                     surflyInit(startNew); 
                 } else {
