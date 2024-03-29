@@ -46,7 +46,6 @@
                         window.Surfly.q = arguments
                     }
                 }
-
                 const surflyScript = document.createElement('script')
                 const mountingNode = document.body
 
@@ -62,38 +61,45 @@
         loadScriptAsync();
 
         window.startCobrowse = async () => {
-
             const settings = {
                 widget_key: '144b60c81b0446cfb3b4549c9d9f425e',
-                require_password: false
+                require_password: false,
+                session_autorestore_enabled: true
             }
 
-            window.Surfly.init(settings, ({ success } = {}) => {
-                if (!success) {
-                    console.error('COBROWSE:INTI:ESTABLISH_SESSION:FAILED')
-                    return
-                }
-
-                window.Surfly.session()
-                    .on('session_started', (session) => {
-                        console.log('COBROWSE:SESSION_EVENT:ESTABLISH_SESSION:DONE', {
-                            link: session.followerLink,
-                            pin: session.pin
-                        });
-                        console.log("new session: ", Surfly.currentSession);
+            Surfly.listSessions(function (session) {
+                if (session) {
+                    console.log('COBROWSE:SCRIPT:EXISTING_SESSION(S)_FOUND');
+                    window.Surfly.init(settings, ({ success } = {}) => {
+                        if (!success) {
+                            console.error('COBROWSE:INTI:ESTABLISH_SESSION:FAILED')
+                            return
+                        }
                     })
-                    .on('session_restored', (api, event) => {
+                    window.Surfly.on('session_restored', (api, event) => {
                         console.log('COBROWSE:GLOBAL_EVENT:RESTORE_SESSION:DONE', api, event)
                         console.log("restored session: ", Surfly.currentSession);
                     })
-                    .on('session_ended', () => {
-                        console.log('COBROWSE:SESSION_EVENT:END_SESSION:DONE')
-                    })
-                    .on('session_loaded', () => {
-                        console.log('COBROWSE:SESSION_EVENT:LOAD_SESSION:DONE')
-                    })
-                    .startLeader()
+
+                }
+                if (!session) {
+                    window.Surfly.session().startLeader()
+                        .on('session_started', (session) => {
+                            console.log('COBROWSE:SESSION_EVENT:ESTABLISH_SESSION:DONE', {
+                                link: session.followerLink,
+                                pin: session.pin
+                            });
+                            console.log("new session: ", Surfly.currentSession);
+                        })
+                }
             })
+
+            window.Surfly.on('session_ended', () => {
+                console.log('COBROWSE:SESSION_EVENT:END_SESSION:DONE')
+            })
+                .on('session_loaded', () => {
+                    console.log('COBROWSE:SESSION_EVENT:LOAD_SESSION:DONE')
+                })
         }
 
         function buttonClick() {
