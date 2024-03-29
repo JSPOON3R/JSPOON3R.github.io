@@ -78,11 +78,6 @@
                     }
                 }
             });
-            Surfly.session().on('session_restored', (api, event) => {
-                        console.log('COBROWSE:GLOBAL_EVENT:RESTORE_SESSION:DONE', api, event)
-                        console.log('COBROWSE:SCRIPT:SESSION_RESTORED: ', session.followerLink)
-                    }
-                    )
         }
 
         function startNew() {
@@ -104,6 +99,11 @@
                 .on('session_loaded', () => {
                     console.log('COBROWSE:SESSION_EVENT:LOAD_SESSION:DONE')
                 })
+                .on('session_restored', (api, event) => {
+                        console.log('COBROWSE:GLOBAL_EVENT:RESTORE_SESSION:DONE', api, event)
+                        console.log('COBROWSE:SCRIPT:SESSION_RESTORED: ', session.followerLink)
+                    }
+                    )
                 .startLeader()
         }
 
