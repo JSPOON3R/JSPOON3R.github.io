@@ -58,12 +58,6 @@ body, html {height: 100%}
 }
 
 window.startCobrowse = async () => {
-    await loadScriptAsync()
-
-    if (!window.Surfly) {
-        console.error('COBROWSE:SCRIPT:SCRIPT_LOAD_FAILED')
-        return
-    }
 
     if (window.Surfly.isInsideSession) {
         console.log('COBROWSE:SCRIPT:ALREADY_IN_SESSION')
@@ -81,9 +75,9 @@ window.startCobrowse = async () => {
             return
         }
 
-        window.Surfly.on('session_restored', (api, event) => {
-            console.log('COBROWSE:GLOBAL_EVENT:RESTORE_SESSION:DONE', api, event)
-        })
+        Surfly.listSessions().forEach(function(session) {
+  console.log('Found a session:', session.followerLink);
+});
 
         window.Surfly.session()
             .on('session_started', (session) => {
@@ -92,6 +86,9 @@ window.startCobrowse = async () => {
                     pin: session.pin
                 })
             })
+            .on('session_restored', (api, event) => {
+            console.log('COBROWSE:GLOBAL_EVENT:RESTORE_SESSION:DONE', api, event)
+        })
             .on('session_ended', () => {
                 console.log('COBROWSE:SESSION_EVENT:END_SESSION:DONE')
             })
@@ -107,8 +104,12 @@ if (window.Surfly?.isInsideSession) {
 }
 
 function buttonClick() {
-    loadScriptAsync().then(startCobrowse).catch(error => {
+    loadScriptAsync().then(window.startCobrowse).catch(error => {
     console.error('COBROWSE:SCRIPT:LOAD_FAILED', error);
+    if (!window.Surfly) {
+        console.error('COBROWSE:SCRIPT:SCRIPT_LOAD_FAILED')
+        return
+    }
 });}
 
 </script>
