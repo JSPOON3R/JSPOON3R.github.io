@@ -78,12 +78,11 @@
                     }
                 }
             });
-            Surfly.on('session_restored', (api, event) => {
+            Surfly.session().on('session_restored', (api, event) => {
                         console.log('COBROWSE:GLOBAL_EVENT:RESTORE_SESSION:DONE', api, event)
                         console.log('COBROWSE:SCRIPT:SESSION_RESTORED: ', session.followerLink)
                     }
                     )
-            
         }
 
         function startNew() {
