@@ -78,6 +78,12 @@
                     }
                 }
             });
+            Surfly.on('session_restored', (api, event) => {
+                        console.log('COBROWSE:GLOBAL_EVENT:RESTORE_SESSION:DONE', api, event)
+                        console.log('COBROWSE:SCRIPT:SESSION_RESTORED: ', session.followerLink)
+                    }
+                    )
+            
         }
 
         function startNew() {
@@ -103,12 +109,13 @@
         }
 
         function buttonClick() {
+            const sesscount = window.top.Surfly._allSessions.length;
             if (surflyLoaded) {
                 if (!window.Surfly) {
                     console.error('COBROWSE:SCRIPT:SCRIPT_LOAD_FAILED');
                     return;
                 }
-                if (Surfly._allSessions.length === 0) {
+                if (sesscount) {
                     console.log('COBROWSE:SCRIPT:NOT_IN_SESSION');
                     surflyInit(startNew); 
                 } else {
@@ -118,11 +125,7 @@
                 }
                     else {
                         surflyInit();
-                        Surfly.on('session_restored', (api, event) => {
-                        console.log('COBROWSE:GLOBAL_EVENT:RESTORE_SESSION:DONE', api, event)
-                        console.log('COBROWSE:SCRIPT:SESSION_RESTORED: ', session.followerLink)
-                    }
-                    )};
+                    };
                 }
             } else {
                 console.error('COBROWSE:SCRIPT:SCRIPT_NOT_YET_LOADED');
