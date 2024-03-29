@@ -64,20 +64,20 @@
                 require_password: false,
                 session_autorestore_enabled: true
             };
-
-            window.Surfly.init(settings, ({ success } = {}) => {
-                if (!success) {
-                    console.error('COBROWSE:INIT:ESTABLISH_SESSION:FAILED');
+            Surfly.init(settings, function (init) {
+                if (!init.success) {
+                    console.error('COBROWSE:INIT:INIT:FAILED');
                     return;
                 }
-                if (typeof callback === 'function') {
-                    callback();
+                if (init.success) {
+                    console.log('COBROWSE:INIT:INIT:SUCCESS');
                 }
-            });
+            })
         }
 
+
         function startNew() {
-            Surfly.session().startLeader()
+            Surfly.session()
                 .on('session_started', (session) => {
                     console.log('COBROWSE:SESSION_EVENT:ESTABLISH_SESSION:DONE', {
                         link: session.followerLink,
@@ -91,9 +91,8 @@
                 .on('session_loaded', () => {
                     console.log('COBROWSE:SESSION_EVENT:LOAD_SESSION:DONE')
                 })
+                .startLeader()
         }
-
-
 
         function buttonClick() {
             if (surflyLoaded) {
