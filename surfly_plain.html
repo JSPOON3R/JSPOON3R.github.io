@@ -77,7 +77,8 @@ loadScript();
             }
 
             function startNew() {
-                window.surflyInit().Surfly.session().startLeader()
+                window.surflyInit();
+                Surfly.session().startLeader()
                     .on('session_started', (session) => {
                         console.log('COBROWSE:SESSION_EVENT:ESTABLISH_SESSION:DONE', {
                             link: session.followerLink,
