@@ -110,15 +110,19 @@
                 }
                 if (Surfly._allSessions.length === 0) {
                     console.log('COBROWSE:SCRIPT:NOT_IN_SESSION');
-                    surflyInit(startNew); 
+                    surflyInit(startNew()); 
                 } else {
                     console.log('COBROWSE:SCRIPT:EXISTING_SESSION(S)_FOUND');
-                    // Init will automatically restore an existing session
-                    surflyInit();
-                    Surfly.on('session_restored', (api, event) => {
+                    if (Surfly.currentSession) {
+                        console.log('COBROWSE:SCRIPT:ALREADY_IN_SESSION'); 
+                }
+                    else {
+                        surflyInit();
+                        Surfly.on('session_restored', (api, event) => {
                         console.log('COBROWSE:GLOBAL_EVENT:RESTORE_SESSION:DONE', api, event)
                         console.log('COBROWSE:SCRIPT:SESSION_RESTORED: ', session.followerLink)
-                    });
+                    }
+                    )};
                 }
             } else {
                 console.error('COBROWSE:SCRIPT:SCRIPT_NOT_YET_LOADED');
