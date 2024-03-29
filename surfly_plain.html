@@ -53,9 +53,6 @@
             surflyScript.src = 'https://surfly.com/surfly.js';
             surflyScript.onload = function () {
                 surflyLoaded = true;
-                if (typeof callback === 'function') {
-                    callback(); // Call the callback function once the script is loaded
-                }
             };
             mountingNode.appendChild(surflyScript);
         }
@@ -80,7 +77,7 @@
         }
 
         function startNew() {
-            window.surflyInit(Surfly.session().startLeader()
+            Surfly.session().startLeader()
                 .on('session_started', (session) => {
                     console.log('COBROWSE:SESSION_EVENT:ESTABLISH_SESSION:DONE', {
                         link: session.followerLink,
@@ -93,7 +90,7 @@
                 })
                 .on('session_loaded', () => {
                     console.log('COBROWSE:SESSION_EVENT:LOAD_SESSION:DONE')
-                }));
+                })
         }
 
 
@@ -107,12 +104,12 @@
                 if (window.Surfly) {
                     if (Surfly._allSessions.length === 0) {
                         console.log('COBROWSE:SCRIPT:NOT_IN_SESSION');
-                        loadScript(window.startNew());
+                        window.surflyInit(startNew());
                     }
                     if (!Surfly._allSessions.length === 0) {
                         console.log('COBROWSE:SCRIPT:EXISTING_SESSION(S)_FOUND');
                         //init will automatically restore an existing session
-                        loadScript(window.surflyInit());
+                        window.surflyInit();
                         window.Surfly.on('session_restored', (api, event) => {
                             console.log('COBROWSE:GLOBAL_EVENT:RESTORE_SESSION:DONE', api, event)
                             console.log('COBROWSE:SCRIPT:SESSION_RESTORED: ', session.followerLink)
