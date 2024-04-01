@@ -173,7 +173,7 @@ margin-right:2.5%;
     background-color: #fdeced;
     color: #e54748;
     border-radius: 5px;
-    margin-top: 20px;
+    margin-top: 2vh;
     padding: 5px 10px;
     margin-right: 1vw;
 }
@@ -183,6 +183,7 @@ margin-right:2.5%;
     font-weight: normal;
     text-align: center;
     flex: 1;
+    margin-top: 2vh;
 }
 
 .contact-container {
