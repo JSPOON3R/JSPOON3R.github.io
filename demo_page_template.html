@@ -13,8 +13,10 @@ HTML Changes
 6. Update bullet points (contact email, contact link, new wording)
 7. Update starting iframe src to new customer website
 
-
-
+CSS Changes
+1. update root primary and secondary colours
+2. Update root font
+3. Update root background colours
 
 -->
 
@@ -131,59 +133,29 @@ HTML Changes
             }
         }
     </script>
-    <!--pop up js-->
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const openModalBtn = document.getElementById("openModalBtn");
-            const closeModalBtn = document.getElementById("closeModalBtn");
-            const closePopupBtn = document.getElementById("closePopupBtn");
-            const prevPageBtn = document.getElementById("prevPageBtn");
-            const nextPageBtn = document.getElementById("nextPageBtn");
-            const pages = document.querySelectorAll(".page");
-            let currentPage = 0;
-
-            openModalBtn.addEventListener("click", function () {
-                document.getElementById("myModal").style.display = "block";
-                showPage(currentPage);
-            });
-
-            closeModalBtn.addEventListener("click", function () {
-                document.getElementById("myModal").style.display = "none";
-            });
-
-            closePopupBtn.addEventListener("click", function () {
-                document.getElementById("myModal").style.display = "none";
-            });
-
-            prevPageBtn.addEventListener("click", function () {
-                showPage(currentPage - 1);
-            });
-
-            nextPageBtn.addEventListener("click", function () {
-                showPage(currentPage + 1);
-            });
-
-            function showPage(pageIndex) {
-                pages[currentPage].style.display = "none";
-                currentPage = pageIndex;
-                pages[currentPage].style.display = "block";
-                prevPageBtn.disabled = currentPage === 0;
-                nextPageBtn.disabled = currentPage === pages.length - 1;
-            }
-        });
-    </script>
+   
     <style>
+:root {
+  --primary: #000000;
+  --primary-focus: #000000;
+  --secondary: #555555; 
+  --secondary-focus: #555555; 
+  --font: sans-serif;
+  --background-dark: #e5e5e5;
+  --background-light: #ffffff;
+  --text-colour: #ffffff;
+}
+
         body {
             margin: 0;
             padding: 0;
             width: 100vw;
             height: 100vh;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(#eef5f7, #e0eff2);
+            font-family: var(--font);
+            background: linear-gradient(var(--background-light), var(--background-dark));
             background-repeat: no-repeat;
             background-position: center;
             background-size: cover;
-            /* Adjust as needed */
             background-attachment: fixed;
             overflow: scroll;
             flex-wrap: wrap;
@@ -194,7 +166,7 @@ HTML Changes
             text-decoration: none;
         }
 
-
+/* line through page do not edit */
         body::before {
             content: '';
             display: block;
@@ -207,124 +179,6 @@ HTML Changes
             z-index: -1;
             color: #f7fff6;
         }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 99999;
-            width: 100vw;
-            height: 100vh;
-            background-color: rgba(0, 0, 0, 0.7);
-        }
-
-        .modal-content-popup {
-            margin: 2% auto;
-            padding: 2% 2%;
-            width: 37vw;
-            text-align: center;
-            border-radius: .5vw;
-            border: 0;
-            background-color: #fdeced;
-        }
-
-        .modal-buttons {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-        }
-
-        .page {
-            display: none;
-            text-align: center;
-        }
-
-        .close {
-            float: right;
-            font-size: .874vw;
-            font-weight: bold;
-            cursor: pointer;
-            color: #cf2e2e;
-            padding-right: 0;
-            padding-top: 0;
-        }
-
-
-
-        #prevPageBtn:disabled,
-        #nextPageBtn:disabled {
-            background-color: #ececec;
-            cursor: not-allowed;
-            display: hide;
-        }
-
-        .page h1 {
-            text-align: center;
-            font-size: 1.5vw !important;
-            color: #848484;
-            font-weight: lighter;
-            font: nunito, sans-serif !important;
-            margin: 0.837vw !important;
-            margin-top: .9vw !important;
-            margin-bottom: .1vw !important;
-        }
-
-        .page h2 {
-            text-align: left;
-            font-size: 1vw !important;
-            color: #cf2e2e;
-            font-weight: 400;
-            font: nunito, sans-serif !important;
-            margin: 0.837vw !important;
-
-            margin-bottom: .05vw !important;
-        }
-
-        .page img {
-            max-width: 35vw;
-            height: auto;
-            border: 0vw solid #f0f0f0;
-            border-radius: 6%;
-            margin: 0.056vw !important;
-            clip-path: inset(26px 7px 26px 7px);
-            opacity: 45%;
-
-        }
-
-        .popuptext {
-            flex: 1;
-            padding: .5vw;
-            margin-bottom: 1.5vw;
-            text-align: center;
-            background-color: #ffe7e8;
-            border-radius: 4%;
-            color: #434343;
-            font-size: .7vw !important;
-            font-weight: 100;
-            font: nunito, sans-serif !important;
-            width: 25vw;
-        }
-
-        .image-text-container {
-            justify-content: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-
-
-        .surflylogo {
-            max-width: 6vw !important;
-            max-height: auto !important;
-            margin: 1vw !important;
-            position: relative !important;
-            border-radius: 0vw !important;
-            opacity: 100% !important;
-            box-shadow: none !important;
-            clip-path: none !important;
-
-        }
-
 
         .iframe-container {
             display: flex;
@@ -366,14 +220,6 @@ HTML Changes
             align-items: flex-start;
         }
 
-        .more-info-container {
-            display: flex;
-            flex-direction: row;
-            padding-left: 16vw;
-            margin-bottom: 3vh;
-            margin-left: 10px;
-        }
-
         .button-container {
             display: flex;
             flex-direction: column;
@@ -381,7 +227,7 @@ HTML Changes
         }
 
         .logo {
-            width: 8vw;
+            width: 10vw;
             height: auto;
         }
 
@@ -390,29 +236,19 @@ HTML Changes
             font-size: 2vw;
             margin-top: 2vh;
             margin-bottom: 0vh;
-            color: #2167ae
-        }
-
-        .heading-2 {
-            font-weight: normal;
-            font-size: 1vw;
-            margin-top: .5vh;
-            margin-bottom: .5vh;
-            color: #2167ae;
-            align-self: flex-start;
-    margin-left: 2vw;
+            color: var(--primary)
         }
 
         .subheading {
             font-size: 1vw;
             font-weight: lighter;
-            color: #91bfe3;
+            color: var(--secondary);
         }
 
         .subheading-2 {
             font-size: .9vw;
             font-weight: lighter;
-            color: #91bfe3;
+            color: var(--secondary);
             margin-right:1vw;
             padding-left:.4vw;
             
@@ -431,11 +267,11 @@ HTML Changes
 
 
         .input-field {
-            background-color: #ffffff;
-            border: 1px solid #dddddd;
+            background-color: var(--background-light);
+            border: 1px solid var(--background-dark);
             border-radius: 12px;
-            color: #2167ae;
-            font-family: nunito, sans-serif;
+            color: var(--primary);
+            font-family: var(--font);
             font-size: 1vw;
             font-weight: 300;
             padding: 1rem;
@@ -449,12 +285,12 @@ HTML Changes
         }
 
         .submit-button {
-            background-color: #2167ae;
+            background-color: var(--primary);
             box-sizing: border-box;
             border-radius: 50px;
-            color: #ffffff;
+            color: var(--text-colour);
             cursor: pointer;
-            font-family: nunito, sans-serif;
+            font-family: var(--font);
             font-size: 1rem;
             font-weight: 100;
             padding: 1rem 1.2rem;
@@ -465,16 +301,16 @@ HTML Changes
         }
 
         .submit-button:hover {
-            background-color: #174c80;
+            background-color: var(--primary-focus);
         }
 
         .more-info-button {
-            background-color: #91bfe3;
+            background-color: var(--secondary);
             box-sizing: border-box;
             border-radius: 50px;
-            color: #ffffff;
+            color: var(--text-colour);
             cursor: pointer;
-            font-family: nunito, sans-serif;
+            font-family: var(--font);
             font-size: .90rem;
             font-weight: 70;
             padding: 1rem 1.2rem;
@@ -490,38 +326,9 @@ HTML Changes
         }
 
         .more-info-button:hover {
-            background-color: #79b4e1;
+            background-color: var(--secondary-focus);
             opacity: 100%;
         }
-
-        #sales-button {
-            background-color: #2167ae;
-            color: #ffffff;
-        }
-
-        #sales-button:hover {
-            color: #ffffff;
-            opacity: 100%;
-        }
-
-        .instructions-button {
-            border: .05vw solid #2167ae;
-            background-color: #ffffff;
-            box-sizing: border-box;
-            border-radius: 12px;
-            color: #2167ae;
-            cursor: pointer;
-            font-family: nunito, sans-serif;
-            font-size: 1rem;
-            font-weight: 100;
-            padding: 0rem 1.2rem;
-            touch-action: manipulation;
-            margin-left: .5vw;
-            letter-spacing: .035vw;
-            display: none;
-        }
-
-
 
         .osx-window {
             width: 45vw;
@@ -568,8 +375,8 @@ HTML Changes
         }
 
         .window-title {
-            background-color: #e0eff2;
-            color: #2167ae;
+            background-color: var(--background-dark);
+            color: var(--primary);
             border-radius: 5px;
             margin-top: 20px;
             padding: 5px 10px;
@@ -577,7 +384,7 @@ HTML Changes
         }
 
         .window-description {
-            color: #79b4e1;
+            color: var(--secondary);
             font-weight: normal;
             text-align: center;
             flex: 1;
@@ -585,9 +392,9 @@ HTML Changes
         }
 
         .errormess {
-            color: #2167ae;
+            color: var(--primary);
             border-radius: 10px;
-            font-family: nunito, sans-serif;
+            font-family: var(--font);
             font-size: 15px;
             font-weight: 300;
             padding: 1px 10px;
@@ -689,12 +496,6 @@ HTML Changes
                 margin-bottom: 30px;
             }
 
-            .more-info-container {
-                padding-left: 0;
-                align-self: center;
-            }
-
-
             .errormess {
                 top: 0vh;
                 text-align: center;
@@ -703,9 +504,6 @@ HTML Changes
                 margin-top: 0;
             }
 
-            .instructions-button {
-                display: none;
-            }
         }
 
         /* HEIGHT*/
@@ -727,7 +525,7 @@ HTML Changes
 
     <div class="top-container">
         <div class="info-text">
-            <img src="XXXXXXX"
+            <img src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/img/png/example-company-logo.png"
                 alt="Logo" class="logo">
             <h1 class="heading">Experience Collaborative Web Browsing in Real-Time</h1>
             <h2 class="subheading">XXXXXXX</h2>
@@ -741,7 +539,6 @@ HTML Changes
                     onclick="show_inactive_buttons();endSurflySession()">End Session</button>
             </div>
             <div class="more-info-div">
-                <h1 class="heading-2"></h1>
                 <ul class="subheading-2 no-bullets">
                     <li>
                         <img src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/img/favicon/face_favicon.ico" class="logo-bullet"> Input any URL in the box above and click “Start Session” to begin co-browsing
