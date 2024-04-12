@@ -1,11 +1,32 @@
+<!--
+-----BUILD A NEW DEMO BRANDED DEMO PAGE-----
+Javascript changes:
+1. Update redirect URLs
+2. Update widget key
+
+HTML Changes
+1. Update title
+2. Update Favicon (shortcut icon)
+3. Update company logo
+4. Update Subheading (client input needed)
+5. Update input URL default value
+6. Update bullet points (contact email, contact link, new wording)
+7. Update starting iframe src to new customer website
+
+
+
+
+-->
+
+
+
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zurich Co-browing Demo</title>
-    <link rel="shortcut icon" type="image/x-icon" href="https://demo.surfly.com/resources/zurichfavicon.ico">
+    <title>TEMPLATE</title>
+    <link rel="shortcut icon" type="image/x-icon" href="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/img/favicon/face_favicon.ico">
     <script>
         (function (s, u, r, f, l, y) {
             s[f] = s[f] || { init: function () { s[f].q = arguments } };
@@ -18,14 +39,14 @@
         var SurflySession;
 
         var settings = {
-            widget_key: 'c0ed3545ea5147b8a48ad19f52067b37',
+            widget_key: '99671227762b43c2a96daa066ee006e2',
             private_session: false,
             password_required: false,
             host_switching_allowed: true,
             block_until_agent_joins: false,
             videochat: false,
-            follower_redirect_url: "https://demo.surfly.com/zurich",
-            leader_redirect_url: "https://demo.surfly.com/zurich",
+            follower_redirect_url: "https://www.example.com/",
+            leader_redirect_url: "https://www.example.com/",
             tags: ["demo-page"]
         };
 
@@ -698,60 +719,6 @@
 
 
 <main>
-
-    <!--INSTRUCTIONS-->
-    <div id="myModal" class="modal">
-        <div class="modal-content-popup">
-            <span class="close" id="closeModalBtn">&times;</span>
-            <div class="page">
-                <img class="surflylogo" src="https://logos-download.com/wp-content/uploads/2018/09/Surfly_Logo.png">
-                <div class="image-text-container">
-                    <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/you-them.gif?raw=true"
-                        alt="Image 2">
-                    <h2>Why can I see two windows?</h2>
-                    <p class="popuptext">This page displays both your screen and the screen of your guest.<br><br> In a
-                        normal session, these windows would be on two different computers<br><br> For demo purposes, we
-                        have put them side by side.<br><br> The window on the left is you. The window on the right is
-                        your guest.
-                    </p>
-                </div>
-            </div>
-            <div class="page">
-                <img class="surflylogo" src="https://logos-download.com/wp-content/uploads/2018/09/Surfly_Logo.png">
-                <div class="image-text-container">
-                    <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/you-them2.gif?raw=true"
-                        alt="Image 3">
-                    <h2>How can I test the co-browsing experience?</h2>
-                    <p class="popuptext">The left page is your window and is a regular browsing session<br><br>Treat the
-                        left window like your own browser explore the web<br><br> The right window is your guest's
-                        window<br><br>Your guest can see what you are doing and annotate</p>
-                </div>
-            </div>
-            <div class="page">
-                <img class="surflylogo" src="https://logos-download.com/wp-content/uploads/2018/09/Surfly_Logo.png">
-                <div class="image-text-container">
-                    <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/control.gif?raw=true"
-                        alt="Image 3">
-                    <h2>What if my guest wants to take control?</h2>
-                    <p class="popuptext">To begin with you (left window) are in control of the session<br><br>Your guest
-                        can ask to take control<br><br>You can approve or reject this request<br><br>If approved, your
-                        guest will now lead navigation. You can watch and annotate.</p>
-                </div>
-            </div>
-            <div class="modal-buttons">
-                <button id="prevPageBtn" class="instructions-button" disabled>Previous</button>
-                <button id="nextPageBtn" class="instructions-button">Next</button>
-                <button id="closePopupBtn" class="submit-button" onclick="startSurflySession()">Try it</button>
-            </div>
-        </div>
-    </div>
-    <!--INSTRUCTIONS END-->
-
-
-
-
-
-
     <div class="errormess" id="errorMessage">
         <p><b>OOPS! </b>Make sure that the URL is formatted
             <i>www.yourwebsite.com</i> and try again
@@ -760,45 +727,36 @@
 
     <div class="top-container">
         <div class="info-text">
-            <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/resources/Zurich_Insurance_Group_logo.png?raw=true"
+            <img src="XXXXXXX"
                 alt="Logo" class="logo">
             <h1 class="heading">Experience Collaborative Web Browsing in Real-Time</h1>
-            <h2 class="subheading">Co-browsing allows anyone to seamlessly connect with a Zurich agent and interact on
-                the same web-journey</h2>
+            <h2 class="subheading">XXXXXXX</h2>
         </div>
         <div class="button-container">
-
             <div class="input-url-div">
-                <input type="text" placeholder="Enter any valid URL..." class="input-field" id="session_url_input" value="www.zurich.com">                
+                <input type="text" placeholder="Enter any valid URL..." class="input-field" id="session_url_input" value="www.example.com">                
                 <button id="session_inactive_button" type="submit" class="submit-button" onclick="validateURL()">Start
                     Session</button>
                 <button id="session_active_button" type="submit" class="block"
                     onclick="show_inactive_buttons();endSurflySession()">End Session</button>
-                <button id="openModalBtn" class="instructions-button">Open Tutorial</button>
             </div>
             <div class="more-info-div">
                 <h1 class="heading-2"></h1>
                 <ul class="subheading-2 no-bullets">
                     <li>
-                        <img src="https://demo.surfly.com/resources/zurichfavicon-32x32.png" alt="Zurich Logo" class="logo-bullet"> Input any URL in the box above and click “Start Session” to begin co-browsing
+                        <img src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/img/favicon/face_favicon.ico" class="logo-bullet"> Input any URL in the box above and click “Start Session” to begin co-browsing
                     </li>
                     <li>
-                        <img src="https://demo.surfly.com/resources/zurichfavicon-32x32.png" alt="Zurich Logo" class="logo-bullet"> If you are interested, please join the <a class="link-bold" href="https://forms.office.com/e/UgqP9051yR">waiting list.</a> We'll get back to you shortly
+                        <img src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/img/favicon/face_favicon.ico" class="logo-bullet"> If you are interested, please XXXXXXX <a class="link-bold" href="XXXXXXX">XXXXXXX</a> We'll get back to you shortly
                     </li>
                     <li>
-                        <img src="https://demo.surfly.com/resources/zurichfavicon-32x32.png" alt="Zurich Logo" class="logo-bullet"> For any additional questions <a class="link-bold" href="mailto:apisupport@zurich.com">please contact GDP Transformation Architecture</a>
+                        <img src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/img/favicon/face_favicon.ico" class="logo-bullet"> For any additional questions <a class="link-bold" href="mailto:XXXXXXX">please contact XXXXXXX</a>
                     </li>
                 </ul>
             </div>
-            
-            
-            
-
-
         </div>
     </div>
     <div class="iframe-container">
-
         <div class="osx-window">
             <div class="traffic-lights">
                 <div class="traffic-light red"></div>
@@ -807,7 +765,7 @@
                 <div class="window-description" id="window-description1">This window will be your browser</div>
                 <div class="window-title" id="you">You</div>
             </div>
-            <iframe src="https://www.zurich.com/" class="iframe-content" id="leader"></iframe>
+            <iframe src="https://www.example.com/" class="iframe-content" id="leader"></iframe>
         </div>
 
         <div class="osx-window">
@@ -819,7 +777,7 @@
                 </div>
                 <div class="window-title">Them</div>
             </div>
-            <iframe src="https://www.zurich.com/" class="iframe-content" id="follower"></iframe>
+            <iframe src="https://www.example.com/" class="iframe-content" id="follower"></iframe>
         </div>
 
     </div>
