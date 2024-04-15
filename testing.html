@@ -11,23 +11,62 @@
     height: 100%;
     width: 100%;
     overflow: hidden;
-    display:flex;
+    display: flex;
+    flex-direction: row;
   }
   .iframe-container {
     width: 50vw;
     height: 100%;
-    float: left;
     border: none;
   }
-
+  .slider-container {
+    height: 100%;
+    cursor: col-resize;
+    user-select: none;
+    background-color: #f1f1f1;
+  }
+  .slider {
+    width: 5px;
+    height: 100%;
+    background-color: #ddd;
+    cursor: col-resize;
+  }
 </style>
 </head>
 <body>
-    <div>
-  <iframe class="iframe-container" src="https://surfly.com/s/just-video/" frameborder="0"></iframe>
-</div>
-<div>
-  <iframe class="iframe-container" src="https://surfly.com/s/just-browse/" frameborder="0"></iframe>
+  <div class="iframe-container">
+    <iframe src="https://surfly.com/s/just-video/" class="iframe" frameborder="0" allow="autoplay *; camera *; microphone *; display-capture *; geolocation *;></iframe>
   </div>
+  <div class="slider-container" id="slider">
+    <div class="slider" id="dragMe"></div>
+  </div>
+  <div class="iframe-container">
+    <iframe src="https://surfly.com/s/just-browse/" class="iframe" frameborder="0" allow="autoplay *; camera *; microphone *; display-capture *; geolocation *;></iframe>
+  </div>
+
+<script>
+  const slider = document.getElementById('dragMe');
+  const leftPane = document.querySelector('.iframe-container:nth-of-type(1)');
+  const rightPane = document.querySelector('.iframe-container:nth-of-type(3)');
+  let isResizing = false;
+
+  slider.addEventListener('mousedown', (e) => {
+    isResizing = true;
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', () => {
+      isResizing = false;
+      document.removeEventListener('mousemove', handleMouseMove);
+    });
+  });
+
+  function handleMouseMove(e) {
+    if (isResizing) {
+      const x = e.pageX;
+      const leftWidth = x - leftPane.getBoundingClientRect().left;
+      leftPane.style.width = `${leftWidth}px`;
+      rightPane.style.width = `calc(100% - ${leftWidth}px)`;
+    }
+  }
+</script>
 </body>
 </html>
