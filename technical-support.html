@@ -30,12 +30,12 @@
     height: 100%;
     cursor: col-resize;
     user-select: none;
-    background-color: #f1f1f1;
+    background-color: #4d4d4d;
   }
   .slider {
     width: 5px;
     height: 100%;
-    background-color: #ddd;
+    background-color: #4d4d4d;
     cursor: col-resize;
   }
   iframe {
@@ -49,7 +49,7 @@ height:80vh;
   .custom-area {
     height:20vh;
     width:100%;
-    background-color: #eff0f0;
+    background-color: #4d4d4d;
   }
   .control-panel {
     height:100%;
@@ -97,29 +97,52 @@ height:40%;
             padding: 1rem;
             text-align: center;
             width: 55%;
-            margin-right:4%;
+            margin-left:3%;
   }
 
   .url-button {
-    background-color: #e54747;
-            box-sizing: border-box;
-            border-radius: 12px;
-            color: #ffffff;
-            cursor: pointer;
-            font-size: 1rem;
-            font-weight: 100;
-            padding: 1rem 1.2rem;
-            border: 0;
-            touch-action: manipulation;
-            white-space: nowrap;
-  }
+    background-color: #4d4d4d;
+    box-sizing: border-box;
+    cursor: pointer;
+    border: 0;
+    height:50px;
+    width:50px;
+    touch-action: manipulation;
+    white-space: nowrap;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.url-button:hover {
+  background: #eff0f0;
+  border-radius: 50px;
+  height:60px;
+    width:60px;
+  background-image: inherit;
+  background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding:4px;
+}
+.url-button#control-switch {
+  background-image: url('https://github.com/JSPOON3R/JSPOON3R.github.io/raw/main/img/icon/steering-wheel.png');
+}
+.url-button#share-screen {
+  background-image: url('https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/img/icon/share-screen.png?raw=true');
+}
+.url-button#toggle-draw {
+  background-image: url('https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/img/icon/pen-icon.png?raw=true');
+}
+.url-button#end-sessions {
+  background-image: url('https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/img/icon/power-off.png?raw=true');
+}
 
 /* draw button css start */
 
 
 .type--A{
   --line_color : #e54747 ;
-  --back_color : #b1c6ce  ;
+  --back_color : #e54747  ;
 }
 .type--B{
   --line_color : #e54747 ;
@@ -139,16 +162,18 @@ height:40%;
     font: nunito, sans-serif;
     font-size : 14px ; 
     font-weight : bold ;
-    color : var(--line_color) ;
+    color : #eff0f0 ;
     letter-spacing : 2px ;
     transition : all .3s ease ;
 }
 .button__text{
+  position:absolute;
     display : flex ;
     justify-content : center ;
     align-items : center ;
     width : 100% ;
     height : 100% ;
+    z-index: 9999;
 }
 .button::before,
 .button::after,
@@ -223,6 +248,7 @@ height:40%;
     z-index : -1 ;
     border-radius : 16px ;
     transform-origin : 16px 16px ;
+    z-index:999;
 }
 .button__drow1{
     top : -16px ;
@@ -262,7 +288,6 @@ height:40%;
     border-radius : 16px ;
     transform-origin : 16px 16px ;
     transform : rotate( 69deg ) ;
-    z-index: 2147483647;
 }
 .button__drow2::before{
     bottom : 0 ;
@@ -281,7 +306,6 @@ height:40%;
     border-radius : 16px ;
     transform-origin : 16px 16px ;
     transform : rotate( -262deg ) ;
-    z-index: 2147483647;
 }
 .button__drow1,
 .button__drow1::before,
@@ -353,10 +377,12 @@ height:40%;
       <h1 class="control-panel-title">Custom Control Panel</h1>
     </div>
       <div class="button-container">
-<button class="url-button">JS API</button>
+<button id="control-switch" class="url-button"></button>
+<button id="share-screen" class="url-button"></button>
+<button id="toggle-draw" class="url-button"></button>
+<button id="end-sessions" class="url-button"></button>
       </div>
     <div class="url-input">
-      <input class="url-bar" type="text" placeholder="Enter new tab URL">
       <a href="#" class="button type--A">
         <div class="button__line"></div>
         <div class="button__line"></div>
@@ -364,6 +390,7 @@ height:40%;
         <div class="button__drow1"></div>
         <div class="button__drow2"></div>
       </a>
+      <input class="url-bar" type="text" placeholder="Enter new tab URL">
   </div>
   </div>
 </div>
