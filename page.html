@@ -30,7 +30,7 @@
             position: absolute;
             top: 0;
             left: 0;
-            z-index: -2;
+            z-index: -1;
         }
 
         header {
@@ -148,21 +148,21 @@
 
         const background = document.querySelector('.background');
 
-        function generateLightning() {
-            const boltCount = 10;
-            const boltWidth = 3;
+        function generateLightningEffects() {
+    const boltCount = 10;
+    const boltWidth = 3;
 
-            for (let i = 0; i < boltCount; i++) {
-                const bolt = document.createElement('div');
-                bolt.classList.add('bolt');
-                bolt.style.left = Math.random() * 100 + '%';
-                bolt.style.animationDuration = (Math.random() * 2 + 1) + 's';
-                bolt.style.width = boltWidth + 'px';
-                background.appendChild(bolt);
-            }
-        }
+    for (let i = 0; i < boltCount; i++) {
+        const bolt = document.createElement('div');
+        bolt.classList.add('bolt');
+        bolt.style.left = Math.random() * 100 + '%';
+        bolt.style.animationDuration = (Math.random() * 2 + 1) + 's';
+        bolt.style.width = boltWidth + 'px';
+        background.appendChild(bolt);
+    }
+}
 
-        generateLightning();
+generateLightningEffects();
     </script>
 </head>
 <body>
