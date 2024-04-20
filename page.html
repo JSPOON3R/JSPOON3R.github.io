@@ -10,6 +10,11 @@
             margin: 0;
             padding: 0;
             background-color: #f8f1e5;
+            overflow: hidden;
+
+        }
+        canvas {
+            display: block;
         }
         header {
             background-color: #301f0d;
@@ -56,6 +61,50 @@
             color: #666;
         }
     </style>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+      <script>
+          let sparks = [];
+  
+          function setup() {
+              createCanvas(windowWidth, windowHeight);
+          }
+  
+          function draw() {
+              background(0);
+              for (let i = 0; i < sparks.length; i++) {
+                  sparks[i].update();
+                  sparks[i].display();
+              }
+          }
+  
+          function mouseClicked() {
+              let spark = new Spark(mouseX, mouseY);
+              sparks.push(spark);
+          }
+  
+          class Spark {
+              constructor(x, y) {
+                  this.x = x;
+                  this.y = y;
+                  this.size = random(10, 30);
+                  this.vx = random(-5, 5);
+                  this.vy = random(-10, -1);
+                  this.alpha = 255;
+              }
+  
+              update() {
+                  this.x += this.vx;
+                  this.y += this.vy;
+                  this.alpha -= 5;
+              }
+  
+              display() {
+                  noStroke();
+                  fill(255, 255, 0, this.alpha);
+                  ellipse(this.x, this.y, this.size);
+              }
+          }
+      </script>
 </head>
 <body>
     <header>
