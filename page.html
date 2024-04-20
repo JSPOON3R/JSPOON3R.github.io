@@ -16,11 +16,20 @@
             overflow: hidden;
             position: relative; /* Added position relative */
             cursor: url(https://cur.cursors-4u.net/cursors/cur-2/cur197.ani), url(https://cur.cursors-4u.net/cursors/cur-2/cur197.png), auto !important;        }
+            .background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom, #000000, #0c013b, #1f0173, #3800ae, #5b00ef);
+    z-index: -1;
+}
         canvas {
             position: absolute; /* Set canvas position to absolute */
             top: 0;
             left: 0;
-            z-index: -1; /* Ensure canvas is behind other elements */
+            z-index: -2; /* Ensure canvas is behind other elements */
         }
         header {
             background-color: rgb(21, 13, 48);
@@ -117,6 +126,27 @@
                   ellipse(this.x, this.y, this.size);
               }
           }
+
+
+
+          const background = document.querySelector('.background');
+
+function generateLightning() {
+    const boltCount = 10; // Number of lightning bolts
+    const boltWidth = 3; // Width of each bolt in pixels
+
+    for (let i = 0; i < boltCount; i++) {
+        const bolt = document.createElement('div');
+        bolt.classList.add('bolt');
+        bolt.style.left = Math.random() * 100 + '%';
+        bolt.style.animationDuration = (Math.random() * 2 + 1) + 's';
+        bolt.style.width = boltWidth + 'px';
+        background.appendChild(bolt);
+    }
+}
+
+generateLightning();
+
       </script>
 </head>
 <body>
