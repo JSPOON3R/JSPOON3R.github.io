@@ -6,38 +6,44 @@
     <link rel="shortcut icon" type="image/x-icon" href="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/img/favicon/face_favicon.ico">
     <title>John Spooner - CV</title>
     <style>
-
-
         body {
-            font-family: 'Courier New', Courier, monospace;
+            font-family: 'Arial', sans-serif;
             margin: 0;
             padding: 0;
             background-color: #000000;
             overflow: hidden;
-            position: relative; /* Added position relative */
-            cursor: url(https://cur.cursors-4u.net/cursors/cur-2/cur197.ani), url(https://cur.cursors-4u.net/cursors/cur-2/cur197.png), auto !important;        }
-            .background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(to bottom, #000000, #0c013b, #1f0173, #3800ae, #5b00ef);
-    z-index: -1;
-}
-        canvas {
-            position: absolute; /* Set canvas position to absolute */
+            position: relative;
+            cursor: url(https://cur.cursors-4u.net/cursors/cur-2/cur197.ani), url(https://cur.cursors-4u.net/cursors/cur-2/cur197.png), auto !important;
+        }
+
+        .background {
+            position: absolute;
             top: 0;
             left: 0;
-            z-index: -2; /* Ensure canvas is behind other elements */
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, #000000, #0c013b, #1f0173, #3800ae, #5b00ef);
+            z-index: -1;
         }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -2;
+        }
+
         header {
             background-color: rgb(21, 13, 48);
             color: rgb(255, 255, 255);
             padding: 20px;
             text-align: center;
-            font-size: 24px;
+            font-size: 36px; /* Increased font size for header */
+            font-weight: bold; /* Added font weight */
+            text-transform: uppercase; /* Added text transformation */
+            letter-spacing: 2px; /* Added letter spacing */
         }
+
         main {
             max-width: 800px;
             margin: 20px auto;
@@ -45,6 +51,7 @@
             background-color: #160532;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
+
         article {
             margin-bottom: 20px;
             padding: 20px;
@@ -52,111 +59,115 @@
             border: 1px solid #310606;
             color:white;
         }
+
         h2 {
-            font-size: 20px;
-            font-weight: bold;
+            font-size: 36px; /* Increased font size for headings */
+            font-weight: bold; /* Added font weight */
             margin-top: 0;
             color: #ffffff;
         }
+
         p {
             line-height: 1.6;
             color: #ffffff;
+            font-size: 18px; /* Increased font size for paragraphs */
         }
+
         figure {
             margin: 0;
             text-align: center;
             margin-top: 20px;
         }
+
         img {
             max-width: 100%;
             height: auto;
             border-radius: 5px;
         }
+
         figcaption {
             font-style: italic;
             color: white;
         }
+
         .logo-bullet {
-    width: 2vw;
-    height: auto;
-    margin-right: 5px;
-    vertical-align: text-top;
-    transition: transform 0.3s ease-in-out, width 0.3s ease-in-out, height 0.3s ease-in-out; /* Add smooth transitions */
-}
+            width: 2vw;
+            height: auto;
+            margin-right: 5px;
+            vertical-align: text-top;
+            transition: transform 0.3s ease-in-out, width 0.3s ease-in-out, height 0.3s ease-in-out;
+        }
 
-.logo-bullet:hover {
-    transform: rotate(360deg) scale(2); /* Rotate 360 degrees and scale to twice the size upon hover */
-}
-
+        .logo-bullet:hover {
+            transform: rotate(360deg) scale(2);
+        }
     </style>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
-      <script>
-          let sparks = [];
-  
-          function setup() {
-              createCanvas(windowWidth, windowHeight);
-          }
-  
-          function draw() {
-              background(0);
-              for (let i = 0; i < sparks.length; i++) {
-                  sparks[i].update();
-                  sparks[i].display();
-              }
-          }
-  
-          function mouseClicked() {
-              let spark = new Spark(mouseX, mouseY);
-              sparks.push(spark);
-          }
-  
-          class Spark {
-              constructor(x, y) {
-                  this.x = x;
-                  this.y = y;
-                  this.size = random(10, 30);
-                  this.vx = random(-5, 5);
-                  this.vy = random(-10, -1);
-                  this.alpha = 255;
-              }
-  
-              update() {
-                  this.x += this.vx;
-                  this.y += this.vy;
-                  this.alpha -= 5;
-              }
-  
-              display() {
-                  noStroke();
-                  fill(44, 130, 201, this.alpha);
-                  ellipse(this.x, this.y, this.size);
-              }
-          }
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <script>
+        let sparks = [];
 
+        function setup() {
+            createCanvas(windowWidth, windowHeight);
+        }
 
+        function draw() {
+            background(0);
+            for (let i = 0; i < sparks.length; i++) {
+                sparks[i].update();
+                sparks[i].display();
+            }
+        }
 
-          const background = document.querySelector('.background');
+        function mouseClicked() {
+            let spark = new Spark(mouseX, mouseY);
+            sparks.push(spark);
+        }
 
-function generateLightning() {
-    const boltCount = 10; // Number of lightning bolts
-    const boltWidth = 3; // Width of each bolt in pixels
+        class Spark {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+                this.size = random(10, 30);
+                this.vx = random(-5, 5);
+                this.vy = random(-10, -1);
+                this.alpha = 255;
+            }
 
-    for (let i = 0; i < boltCount; i++) {
-        const bolt = document.createElement('div');
-        bolt.classList.add('bolt');
-        bolt.style.left = Math.random() * 100 + '%';
-        bolt.style.animationDuration = (Math.random() * 2 + 1) + 's';
-        bolt.style.width = boltWidth + 'px';
-        background.appendChild(bolt);
-    }
-}
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.alpha -= 5;
+            }
 
-generateLightning();
+            display() {
+                noStroke();
+                fill(44, 130, 201, this.alpha);
+                ellipse(this.x, this.y, this.size);
+            }
+        }
 
-      </script>
+        const background = document.querySelector('.background');
+
+        function generateLightning() {
+            const boltCount = 10;
+            const boltWidth = 3;
+
+            for (let i = 0; i < boltCount; i++) {
+                const bolt = document.createElement('div');
+                bolt.classList.add('bolt');
+                bolt.style.left = Math.random() * 100 + '%';
+                bolt.style.animationDuration = (Math.random() * 2 + 1) + 's';
+                bolt.style.width = boltWidth + 'px';
+                background.appendChild(bolt);
+            }
+        }
+
+        generateLightning();
+    </script>
 </head>
 <body>
-    <canvas></canvas> <!-- Moved canvas element here -->
+    <div class="background"></div>
+    <canvas></canvas>
     <header>
         <h1>John Spooner CV</h1>
     </header>
