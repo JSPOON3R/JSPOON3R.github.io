@@ -77,11 +77,17 @@
             color: white;
         }
         .logo-bullet {
-    width: .8vw;
+    width: 2vw;
     height: auto;
     margin-right: 5px;
-    vertical-align: text-top; 
-        }
+    vertical-align: text-top;
+    transition: transform 0.3s ease-in-out, width 0.3s ease-in-out, height 0.3s ease-in-out; /* Add smooth transitions */
+}
+
+.logo-bullet:hover {
+    transform: rotate(360deg) scale(2); /* Rotate 360 degrees and scale to twice the size upon hover */
+}
+
     </style>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
       <script>
