@@ -104,25 +104,6 @@
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
     <script>
-        let sparks = [];
-
-        function setup() {
-            createCanvas(windowWidth, windowHeight);
-        }
-
-        function draw() {
-            background(0);
-            for (let i = 0; i < sparks.length; i++) {
-                sparks[i].update();
-                sparks[i].display();
-            }
-        }
-
-        function mouseClicked() {
-            let spark = new Spark(mouseX, mouseY);
-            sparks.push(spark);
-        }
-
         class Spark {
             constructor(x, y) {
                 this.x = x;
@@ -146,23 +127,42 @@
             }
         }
 
+        let sparks = [];
+
+        function setup() {
+            createCanvas(windowWidth, windowHeight);
+        }
+
+        function draw() {
+            background(0);
+            for (let i = 0; i < sparks.length; i++) {
+                sparks[i].update();
+                sparks[i].display();
+            }
+        }
+
+        function mouseClicked() {
+            let spark = new Spark(mouseX, mouseY);
+            sparks.push(spark);
+        }
+
         const background = document.querySelector('.background');
 
         function generateLightningEffects() {
-    const boltCount = 10;
-    const boltWidth = 3;
+            const boltCount = 10;
+            const boltWidth = 3;
 
-    for (let i = 0; i < boltCount; i++) {
-        const bolt = document.createElement('div');
-        bolt.classList.add('bolt');
-        bolt.style.left = Math.random() * 100 + '%';
-        bolt.style.animationDuration = (Math.random() * 2 + 1) + 's';
-        bolt.style.width = boltWidth + 'px';
-        background.appendChild(bolt);
-    }
-}
+            for (let i = 0; i < boltCount; i++) {
+                const bolt = document.createElement('div');
+                bolt.classList.add('bolt');
+                bolt.style.left = Math.random() * 100 + '%';
+                bolt.style.animationDuration = (Math.random() * 2 + 1) + 's';
+                bolt.style.width = boltWidth + 'px';
+                background.appendChild(bolt);
+            }
+        }
 
-generateLightningEffects();
+        generateLightningEffects();
     </script>
 </head>
 <body>
