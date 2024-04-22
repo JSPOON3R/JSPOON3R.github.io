@@ -110,8 +110,7 @@
 
     </style>
     <script>
-        var start_url = "www.example.com";
-
+        var start_url;
         (function(s,u,r,f,l,y){
             s[f]=s[f]||{init:function(){s[f].q=arguments}};
             l=u.createElement(r);y=u.getElementsByTagName(r)[0];l.async=1;
@@ -140,9 +139,9 @@
                     return;
                 }
 
-                start_url = url; // Update the start_url variable
+                start_url = url; 
                 console.log('New URL value:', start_url);
-                loadSession(); // Call loadSession() when start_url is updated
+                loadSession();
             });
 
             // Function to validate URL
@@ -161,6 +160,7 @@
             admission_enabled: false,
             start_with_loading_screen: false,
             hide_session_ui: false,
+            start_with_chat_open: false,
             url: start_url,
             session_autorestore_enabled: false,
             videochat_enabled: false,
