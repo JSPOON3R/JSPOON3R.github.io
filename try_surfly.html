@@ -118,24 +118,6 @@
             l.src='https://surfly.com/surfly.js';y.parentNode.insertBefore(l,y);
         })(window,document,'script','Surfly');
 
-        var settings = {
-            widget_key: "4af7f6620fbb4ab58d2c70f5d4fee0e6",
-            hide_until_agent_joins: false,
-            block_until_agent_joins: false,
-            start_with_invite_modal: true,
-            admission_enabled: false,
-            start_with_loading_screen: false,
-            hide_session_ui: false,
-            url: start_url,
-            session_autorestore_enabled: false,
-            videochat_enabled: true,
-            start_with_videochat_on: true,
-            tags: [
-                "nice-conference-landing-page"
-            ],
-            blocklist: "[{\"pattern\": \"^https?://[\\\\w\\\\.]*facebook\\\\.com\",\"redirect\": \"https://demo.surfly.com/blocked.html\"}]"
-        };
-
         document.addEventListener('DOMContentLoaded', function() {
             const inputField = document.getElementById('start_url');
             const fetchButton = document.getElementById('start_button');
@@ -170,7 +152,26 @@
             }
         });
 
-        function loadSession() {    
+        function loadSession() {   
+            var settings = {
+            widget_key: "4af7f6620fbb4ab58d2c70f5d4fee0e6",
+            hide_until_agent_joins: false,
+            block_until_agent_joins: false,
+            start_with_invite_modal: true,
+            admission_enabled: false,
+            start_with_loading_screen: false,
+            hide_session_ui: false,
+            url: start_url,
+            session_autorestore_enabled: false,
+            videochat_enabled: true,
+            start_with_videochat_on: true,
+            tags: [
+                "nice-conference-landing-page"
+            ],
+            blocklist: "[{\"pattern\": \"^https?://[\\\\w\\\\.]*facebook\\\\.com\",\"redirect\": \"https://demo.surfly.com/blocked.html\"}]"
+        };
+            
+
             Surfly.init(settings, function(init) {
                 if (init.success && !Surfly.isInsideSession) {
                     Surfly.session().startLeader();
