@@ -107,7 +107,8 @@
         connectingText.classList.remove("hidden");
 
         // Create a co-browsing session
-        Surfly.session()
+        SurflySession = Surfly.session().startLeader();
+        SurflySession
             // When the session is started, show the session PIN so that it can be passed to the helpdesk agent
             .on("session_created", function(session, event) {
                 // display the session PIN
