@@ -70,7 +70,7 @@
 
     // Surfly session options, you need to provide your own widget key
     var settings = {
-        widget_key: "334bc83910d042c1b40675ab83e3a0d1",
+        widget_key: "99671227762b43c2a96daa066ee006e2",
         block_until_agent_joins: false,
         hide_until_agent_joins: true,
         start_with_loading_screen: true,
@@ -124,9 +124,7 @@
                 });
             })
             // Start the session immediately
-            .startLeader();
-            
-            Surfly.on('participant_joined', function (session, event) {
+            .startLeader().on('participant_joined', function (session, event) {
                 console.log("participant_joined event triggered");
                 console.log('Participant ', event.clientIndex, 'joined the session');
                 //customer will always be CID 0 as the leader
