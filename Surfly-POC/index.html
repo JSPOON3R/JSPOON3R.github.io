@@ -127,7 +127,7 @@
             SurflySession.on('participant_joined', function (session, event) {
                 console.log("participant_joined event triggered");
                 console.log('Participant ', event.clientIndex, 'joined the session');
-                SurflySession.requestToHost(1);
+                SurflySession.requestToHost(0);
             })
     }
 
