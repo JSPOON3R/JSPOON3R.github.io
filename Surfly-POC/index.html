@@ -123,13 +123,14 @@
                     session.end();
                 });
             })
-            // Start the session immediately
-            .startLeader().on('participant_joined', function (session, event) {
+            .on('participant_joined', function (session, event) {
                 console.log("participant_joined event triggered");
                 console.log('Participant ', event.clientIndex, 'joined the session');
                 //customer will always be CID 0 as the leader
                 Surfly.requestToHost(1);
             })
+            // Start the session immediately
+            .startLeader();
     }
 
     </script>
