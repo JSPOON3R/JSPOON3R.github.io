@@ -1,16 +1,22 @@
 ## Subsection 2.1
 
-This is the content of subsection 2.1.
+introduction to whatever this is bla bla bla
 
 ### Example of Adding Images
 
-![Small Image](image1.jpg)
+![Small Image](https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/img/gif/control.gif?raw=true)
 
-![Medium Image](image2.jpg)
+Text to explain. bla bla bla bla
 
-![Large Image](image3.jpg)
+![Medium Image](https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/img/gif/control.gif?raw=true)
 
-### Example of Adding Code Blocks
+Text to explain. bla bla bla bla
+
+![Large Image](https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/img/gif/control.gif?raw=true)
+
+Text to explain. bla bla bla bla
+
+#### Example of Adding Code Blocks
 
 <div class="code-block">
     <pre><code class="language-javascript">// Example JavaScript code block
