@@ -4,15 +4,15 @@ introduction to whatever this is bla bla bla
 
 ### Example of Adding Images
 
-![Small Image](https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/img/gif/control.gif?raw=true)
+![Small Image](https://demo.surfly.com/img/gif/you-them.gif)
 
 Text to explain. bla bla bla bla
 
-![Medium Image](https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/img/gif/control.gif?raw=true)
+![Medium Image](https://demo.surfly.com/img/gif/you-them.gif)
 
 Text to explain. bla bla bla bla
 
-![Large Image](https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/img/gif/control.gif?raw=true)
+![Large Image](https://demo.surfly.com/img/gif/you-them.gif)
 
 Text to explain. bla bla bla bla
 
