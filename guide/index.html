@@ -143,7 +143,7 @@
 
         async function fetchMarkdownContent(fileName) {
             try {
-                const response = await fetch(`guide/content/${fileName}`);
+                const response = await fetch(`https://demo.surfly.com/guide/content/${fileName}`);
                 const markdown = await response.text();
 
                 // Convert Markdown to HTML using Showdown.js
@@ -190,8 +190,9 @@
     <div class="container">
         <div class="heading-container">
             <img class="logo" src="logo.png" alt="Logo">
-            <h1>Support/Implementation Guide</h1>
+            <h1 class="header">Support/Implementation Guide</h1>
         </div>
+        
 
         <div class="table-of-contents"> <!-- Only table of contents has background color -->
             <p>Table of Contents:</p>
