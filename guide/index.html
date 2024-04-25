@@ -75,22 +75,26 @@
             border-radius: 10px;
         }
 
-        .image {
-            margin-bottom: 20px;
+        .image-container {
+            display: flex;
+            justify-content: center;
+            /* Horizontally center */
+            align-items: center;
+            /* Vertically center */
         }
 
         .small-image {
-            width: 100px;
+            width: 300px;
             height: auto;
         }
 
         .medium-image {
-            width: 200px;
+            width: 500px;
             height: auto;
         }
 
         .large-image {
-            width: 300px;
+            width: 700px;
             height: auto;
         }
 
@@ -139,32 +143,32 @@
         }
 
         async function fetchMarkdownContent(fileName) {
-    try {
-        const response = await fetch(`https://demo.surfly.com/guide/content/${fileName}`);
-        const markdown = await response.text();
+            try {
+                const response = await fetch(`https://demo.surfly.com/guide/content/${fileName}`);
+                const markdown = await response.text();
 
-        // Process Markdown to wrap code blocks with appropriate HTML tags
-        const processedMarkdown = markdown.replace(/```(\w+)([\s\S]*?)```/g, '<div class="code-block"><pre><code class="language-$1">$2</code></pre></div>');
+                // Process Markdown to wrap code blocks with appropriate HTML tags
+                const processedMarkdown = markdown.replace(/```(\w+)([\s\S]*?)```/g, '<div class="code-block"><pre><code class="language-$1">$2</code></pre></div>');
 
-        // Convert processed Markdown to HTML using Showdown.js
-        const converter = new showdown.Converter();
-        converter.setOption('simplifiedAutoLink', 'true');
-        converter.setOption('tables', 'true');
-        const html = converter.makeHtml(processedMarkdown);
+                // Convert processed Markdown to HTML using Showdown.js
+                const converter = new showdown.Converter();
+                converter.setOption('simplifiedAutoLink', 'true');
+                converter.setOption('tables', 'true');
+                const html = converter.makeHtml(processedMarkdown);
 
-        // Insert HTML content into the corresponding element
-        const elementId = fileName.replace('.md', ''); // Remove .md extension
-        const element = document.getElementById(elementId);
-        if (element) {
-            element.innerHTML = html;
-            Prism.highlightAllUnder(element); // Apply Prism to code blocks within the element
-        } else {
-            console.error(`Element with ID '${elementId}' not found.`);
+                // Insert HTML content into the corresponding element
+                const elementId = fileName.replace('.md', ''); // Remove .md extension
+                const element = document.getElementById(elementId);
+                if (element) {
+                    element.innerHTML = html;
+                    Prism.highlightAllUnder(element); // Apply Prism to code blocks within the element
+                } else {
+                    console.error(`Element with ID '${elementId}' not found.`);
+                }
+            } catch (error) {
+                console.error(`Error fetching Markdown content for '${fileName}':`, error);
+            }
         }
-    } catch (error) {
-        console.error(`Error fetching Markdown content for '${fileName}':`, error);
-    }
-}
 
     </script>
     <!-- Include Showdown.js library -->
@@ -207,25 +211,8 @@
 
         <h2 id="section2">Section 2</h2>
         <p>This is the content of section 2.</p>
-
         <div id="subsection2-1">Loading content...</div>
         <div id="subsection2-2">Loading content...</div>
-
-        <h2>Example of Adding Images</h2>
-        <img class="image small-image" src="image1.jpg" alt="Small Image">
-        <img class="image medium-image" src="image2.jpg" alt="Medium Image">
-        <img class="image large-image" src="image3.jpg" alt="Large Image">
-
-        <h2>Example of Adding Code Blocks</h2>
-        <div class="code-block">
-            <pre><code class="language-javascript">// Example JavaScript code block
-function greet(name) {
-    return 'Hello, ' + name + '!';
-}
-
-console.log(greet('World')); // Output: Hello, World!
-            </code></pre>
-        </div>
     </div>
 </body>
 
