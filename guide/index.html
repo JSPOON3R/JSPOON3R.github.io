@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,19 +19,14 @@
 
         .container {
             max-width: 800px;
-            /* Adjust as needed */
             margin: 0 auto;
             padding: 20px;
             background-color: white;
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-            /* Faint drop shadow */
             margin-top: 50px;
-            /* Space between top-level heading and page contents */
         }
 
-        h1,
-        h2,
-        h3 {
+        h1, h2, h3 {
             margin-top: 30px;
         }
 
@@ -59,39 +53,27 @@
             display: flex;
             align-items: center;
             overflow: hidden;
-            /* Prevent overflow */
         }
 
-        .header {
-    font-size: 1.5em; /* Adjust as needed */
-    max-width: calc(100% - 120px); /* Adjust based on the logo width and margin */
-}
-
-        /* Adjust the existing styles for the logo */
         .logo {
             float: left;
             margin-right: 20px;
-            /* Increased space between logo and heading */
-            max-width: 15%; /* Adjust as needed */
-            /* Adjust as needed */
+            max-width: 15%;
             height: auto;
         }
 
         h1 {
             margin: 0;
-            /* Remove default margin */
         }
 
         .table-of-contents {
             background-color: #f9f9f9;
-            /* Background color for table of contents */
             padding: 20px;
             border-radius: 10px;
         }
 
         .image {
             margin-bottom: 20px;
-            /* Space between images */
         }
 
         .code-block {
@@ -99,9 +81,7 @@
             border-radius: 5px;
             padding: 10px;
             margin: 20px auto;
-            /* Center horizontally */
             overflow-x: auto;
-            /* Enable horizontal scroll for long lines */
         }
 
         .icon-container {
@@ -117,7 +97,6 @@
         .icon-image {
             margin-bottom: 10px;
             max-width: 50px;
-            /* Adjust as needed */
             height: auto;
         }
     </style>
@@ -155,6 +134,7 @@
                 const element = document.getElementById(elementId);
                 if (element) {
                     element.innerHTML = html;
+                    Prism.highlightAllUnder(element); // Apply Prism to code blocks within the element
                 } else {
                     console.error(`Element with ID '${elementId}' not found.`);
                 }
@@ -163,19 +143,11 @@
             }
         }
     </script>
-
     <!-- Include Showdown.js library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.1/showdown.min.js"></script>
-    <!-- Initialize Prism.js -->
-    <script>
-        Prism.highlightAll();
-    </script>
-
 </head>
-
 <body>
     <div class="icon-container">
-        <!-- Static images for icons -->
         <div class="icon-image">
             <img src="icon1.jpg" alt="Icon 1">
         </div>
@@ -192,9 +164,8 @@
             <img class="logo" src="logo.png" alt="Logo">
             <h1 class="header">Support/Implementation Guide</h1>
         </div>
-        
 
-        <div class="table-of-contents"> <!-- Only table of contents has background color -->
+        <div class="table-of-contents">
             <p>Table of Contents:</p>
             <ul>
                 <li><a href="#section1">Section 1</a></li>
@@ -218,13 +189,11 @@
         <h3 id="subsection2-2">Subsection 2.2</h3>
         <p id="subsection2-2">Loading content...</p>
 
-        <!-- Original images for article content -->
         <h2>Example of Adding Images</h2>
         <img class="image small-image" src="image1.jpg" alt="Small Image">
         <img class="image medium-image" src="image2.jpg" alt="Medium Image">
         <img class="image large-image" src="image3.jpg" alt="Large Image">
 
-        <!-- Example of adding code blocks -->
         <h2>Example of Adding Code Blocks</h2>
         <div class="code-block">
             <pre><code class="language-javascript">// Example JavaScript code block
@@ -237,8 +206,4 @@ console.log(greet('World')); // Output: Hello, World!
         </div>
     </div>
 </body>
-
-</html>
-</body>
-
 </html>
