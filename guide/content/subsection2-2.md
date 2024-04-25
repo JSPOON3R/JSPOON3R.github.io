@@ -1,21 +1,39 @@
-## Subsection 2.2
+# Heading (2.2)
 
-This is the content of subsection 2.2.
+This is some plain text.
 
-### Example of Adding Images
+## Subheading
 
-![Small Image](image1.jpg)
+This is more plain text.
 
-![Medium Image](image2.jpg)
+### Sub-subheading
 
-![Large Image](image3.jpg)
+Even more plain text.
 
-### Example of Adding Code Blocks
+#### Example of Adding Images
 
-```javascript
-// Example JavaScript code block
+<img class="small-image" src="https://demo.surfly.com/img/gif/you-them.gif" alt="Small Image">
+
+This is additional plain text.
+
+<img class="large-image" src="https://demo.surfly.com/img/gif/you-them.gif" alt="Large Image">
+
+More plain text.
+
+<img class="medium-image" src="https://demo.surfly.com/img/gif/you-them.gif" alt="Medium Image">
+
+And yet more plain text.
+
+#### Example of Adding Code Blocks
+
+<div class="code-block">
+    <pre><code class="language-javascript">// Example JavaScript code block
 function greet(name) {
     return 'Hello, ' + name + '!';
 }
 
 console.log(greet('World')); // Output: Hello, World!
+    </code></pre>
+</div>
+
+Finally, some concluding plain text.
