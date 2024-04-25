@@ -12,10 +12,12 @@ This is the content of subsection 2.1.
 
 ### Example of Adding Code Blocks
 
-```javascript
-// Example JavaScript code block
+<div class="code-block">
+    <pre><code class="language-javascript">// Example JavaScript code block
 function greet(name) {
     return 'Hello, ' + name + '!';
 }
 
 console.log(greet('World')); // Output: Hello, World!
+    </code></pre>
+</div>
