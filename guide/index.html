@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -26,7 +27,9 @@
             margin-top: 50px;
         }
 
-        h1, h2, h3 {
+        h1,
+        h2,
+        h3 {
             margin-top: 30px;
         }
 
@@ -121,31 +124,39 @@
         }
 
         async function fetchMarkdownContent(fileName) {
-            try {
-                const response = await fetch(`https://demo.surfly.com/guide/content/${fileName}`);
-                const markdown = await response.text();
+    try {
+        const response = await fetch(`https://demo.surfly.com/guide/content/${fileName}`);
+        const markdown = await response.text();
 
-                // Convert Markdown to HTML using Showdown.js
-                const converter = new showdown.Converter();
-                const html = converter.makeHtml(markdown);
+        // Convert Markdown to HTML using Showdown.js
+        const converter = new showdown.Converter();
+        converter.setOption('simplifiedAutoLink', 'true');
+        converter.setOption('tables', 'true');
 
-                // Insert HTML content into the corresponding element
-                const elementId = fileName.replace('.md', ''); // Remove .md extension
-                const element = document.getElementById(elementId);
-                if (element) {
-                    element.innerHTML = html;
-                    Prism.highlightAllUnder(element); // Apply Prism to code blocks within the element
-                } else {
-                    console.error(`Element with ID '${elementId}' not found.`);
-                }
-            } catch (error) {
-                console.error(`Error fetching Markdown content for '${fileName}':`, error);
-            }
+        // Convert Markdown to HTML
+        const html = converter.makeHtml(markdown);
+
+        // Insert HTML content into the corresponding element
+        const elementId = fileName.replace('.md', ''); // Remove .md extension
+        const element = document.getElementById(elementId);
+        if (element) {
+            // Wrap code blocks in <pre><code> with appropriate class
+            const processedHtml = html.replace(/<pre><code>(.*?)<\/code><\/pre>/gs, '<div class="code-block"><pre><code class="language-javascript">$1</code></pre></div>');
+            element.innerHTML = processedHtml;
+            Prism.highlightAllUnder(element); // Apply Prism to code blocks within the element
+        } else {
+            console.error(`Element with ID '${elementId}' not found.`);
         }
+    } catch (error) {
+        console.error(`Error fetching Markdown content for '${fileName}':`, error);
+    }
+}
+
     </script>
     <!-- Include Showdown.js library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.1/showdown.min.js"></script>
 </head>
+
 <body>
     <div class="icon-container">
         <div class="icon-image">
@@ -206,4 +217,5 @@ console.log(greet('World')); // Output: Hello, World!
         </div>
     </div>
 </body>
+
 </html>
