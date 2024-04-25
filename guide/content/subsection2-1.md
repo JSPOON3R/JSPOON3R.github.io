@@ -34,20 +34,6 @@ And yet more plain text.
 
 Even MORE plain text.
 
-#### Example of Adding Images
-
-<img class="small-image" src="https://demo.surfly.com/img/gif/you-them.gif" alt="Small Image">
-
-This is additional plain text.
-
-<img class="large-image" src="https://demo.surfly.com/img/gif/you-them.gif" alt="Large Image">
-
-More plain text.
-
-<img class="medium-image" src="https://demo.surfly.com/img/gif/you-them.gif" alt="Medium Image">
-
-And yet more plain text.
-
 #### code block
 
 <div class="code-block">
