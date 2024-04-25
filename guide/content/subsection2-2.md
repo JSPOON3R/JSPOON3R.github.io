@@ -1,16 +1,16 @@
-## Heading (2.2)
+# Heading (2.2)
 
 This is some plain text.
 
-### Subheading
+## Subheading
 
 This is more plain text.
 
-#### Sub-subheading
+### Sub-subheading
 
 Even more plain text.
 
-##### Example of Adding Images
+#### Example of Adding Images
 
 <img class="small-image" src="https://demo.surfly.com/img/gif/you-them.gif" alt="Small Image">
 
@@ -26,11 +26,11 @@ More plain text.
 
 And yet more plain text.
 
-#### Sub-subheading
+### Sub-subheading
 
 Even MORE plain text.
 
-##### Example of Adding Images
+#### Example of Adding Images
 
 <img class="small-image" src="https://demo.surfly.com/img/gif/you-them.gif" alt="Small Image">
 
@@ -44,7 +44,7 @@ More plain text.
 
 And yet more plain text.
 
-##### code block
+#### code block
 
 <div class="code-block">
     <pre><code class="language-javascript">// Example JavaScript code block
