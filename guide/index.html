@@ -128,8 +128,8 @@
         const response = await fetch(`https://demo.surfly.com/guide/content/${fileName}`);
         const markdown = await response.text();
 
-        // Wrap code blocks in <pre><code> tags
-        const processedMarkdown = markdown.replace(/```([^`]+)```/gs, '<pre><code>$1</code></pre>');
+        // Wrap code blocks in <pre><code> tags with appropriate class
+        const processedMarkdown = markdown.replace(/```(\w+)([\s\S]*?)```/g, '<div class="code-block"><pre><code class="language-$1">$2</code></pre></div>');
 
         // Convert Markdown to HTML using Showdown.js
         const converter = new showdown.Converter();
@@ -152,7 +152,6 @@
         console.error(`Error fetching Markdown content for '${fileName}':`, error);
     }
 }
-
     </script>
     <!-- Include Showdown.js library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.1/showdown.min.js"></script>
