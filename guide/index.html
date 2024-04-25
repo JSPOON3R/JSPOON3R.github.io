@@ -128,15 +128,13 @@
         const response = await fetch(`https://demo.surfly.com/guide/content/${fileName}`);
         const markdown = await response.text();
 
-        // Wrap code blocks in <div class="code-block"> tags with appropriate class
+        // Process Markdown to wrap code blocks with appropriate HTML tags
         const processedMarkdown = markdown.replace(/```(\w+)([\s\S]*?)```/g, '<div class="code-block"><pre><code class="language-$1">$2</code></pre></div>');
 
-        // Convert Markdown to HTML using Showdown.js
+        // Convert processed Markdown to HTML using Showdown.js
         const converter = new showdown.Converter();
         converter.setOption('simplifiedAutoLink', 'true');
         converter.setOption('tables', 'true');
-
-        // Convert processed Markdown to HTML
         const html = converter.makeHtml(processedMarkdown);
 
         // Insert HTML content into the corresponding element
