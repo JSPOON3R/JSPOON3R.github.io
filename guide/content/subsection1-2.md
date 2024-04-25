@@ -12,7 +12,9 @@ Even more plain text.
 
 #### Example of Adding Images
 
+<div class=image-container>
 <img class="small-image" src="https://demo.surfly.com/img/gif/you-them.gif" alt="Small Image">
+</div>
 
 This is additional plain text.
 
@@ -22,7 +24,9 @@ This is additional plain text.
 
 More plain text.
 
+<div class=image-container>
 <img class="large-image" src="https://demo.surfly.com/img/gif/you-them.gif" alt="Large Image">
+</div>
 
 And yet more plain text.
 
