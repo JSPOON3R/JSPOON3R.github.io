@@ -1,6 +1,6 @@
-## Subsection 2.1
+## Subsection 2.2
 
-This is the content of subsection 2.1.
+This is the content of subsection 2.2.
 
 ### Example of Adding Images
 
