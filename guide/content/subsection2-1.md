@@ -1,20 +1,14 @@
 ## Subsection 2.1
 
-introduction to whatever this is bla bla bla
+Introduction to whatever this is bla bla bla
 
 ### Example of Adding Images
 
-![Small Image](https://demo.surfly.com/img/gif/you-them.gif)
+<img class="small-image" src="https://demo.surfly.com/img/gif/you-them.gif" alt="Small Image">
 
-Text to explain. bla bla bla bla
+<img class="medium-image" src="https://demo.surfly.com/img/gif/you-them.gif" alt="Medium Image">
 
-![Medium Image](https://demo.surfly.com/img/gif/you-them.gif)
-
-Text to explain. bla bla bla bla
-
-![Large Image](https://demo.surfly.com/img/gif/you-them.gif)
-
-Text to explain. bla bla bla bla
+<img class="large-image" src="https://demo.surfly.com/img/gif/you-them.gif" alt="Large Image">
 
 #### Example of Adding Code Blocks
 
