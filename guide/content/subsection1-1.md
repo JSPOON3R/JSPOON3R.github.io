@@ -10,10 +10,10 @@ We are uniquely able to do this due to the way our technology works. Most co-bro
 
 Let's start with the basics. Imagine you want to navigate to www.amazon.com. How does this actually happen?
 
-<span class="red">1.</span> You enter www.amazon.com into your browser
-<span class="red">2.</span> Your browser asks the Amazon server for the web page
-<span class="red">3.</span> The Amazon server sends the web page to your browser
-<span class="red">4.</span> Your browser renders the web page so you can use it
+<span class="red bold">1.</span> You enter www.amazon.com into your browser <br>
+<span class="red bold">2.</span> Your browser asks the Amazon server for the web page <br>
+<span class="red bold">3.</span> The Amazon server sends the web page to your browser <br>
+<span class="red bold">4.</span> Your browser renders the web page so you can use it <br>
 
 <div class=image-container>
 <img class="medium-image" src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/guide/images/request.png" alt="Medium Image">
@@ -48,12 +48,12 @@ Surfly has created a completely unique approach to visual collaboration, and it 
 
 Let's visit amazon.com again through Surfly. 
 
-<span class="red">1.</span> You enter www.amazon.com into your browser
-<span class="red">2.</span> Your browser asks the Surfly server to get the webpage from Amazon
-<span class="red">3.</span> Surfly asks the Amazon servers for the website code
-<span class="red">4.</span> The Amazon server gives the code to Surfly
-<span class="red">5.</span> Surfly gives it to you
-<span class="red">6.</span> Your browser renders the webpage so you can use it
+<span class="red bold">1.</span> You enter www.amazon.com into your browser <br>
+<span class="red bold">2.</span> Your browser asks the Surfly server to get the webpage from Amazon <br>
+<span class="red bold">3.</span> Surfly asks the Amazon servers for the website code <br>
+<span class="red bold">4.</span> The Amazon server gives the code to Surfly <br>
+<span class="red bold">5.</span> Surfly gives it to you <br>
+<span class="red bold">6.</span> Your browser renders the webpage so you can use it <br>
 
 <div class=image-container>
 <img class="medium-image" src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/guide/images/Surfly.png" alt="Medium Image">
