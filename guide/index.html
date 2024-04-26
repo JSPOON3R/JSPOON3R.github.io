@@ -15,13 +15,12 @@
             font-family: 'Nunito', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f2f2f2;
+            background-color: #f0f0f0;
             background-image:
-                url('https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/dd38063da1c717c1742cd91347cb104156ea6644/Mask%20group.svg');
+                url('https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/33d3d86d4d68b240a92d81de39e835d92a3505bb/guide/images/red-white-background.svg');
             background-repeat: no-repeat;
             background-position: center;
             background-size: cover;
-            /* Adjust as needed */
             background-attachment: fixed;
         }
 
@@ -32,6 +31,7 @@
             background-color: white;
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
             margin-top: 50px;
+            border-radius:4px;
         }
 
         h1,
@@ -40,9 +40,30 @@
             margin-top: 30px;
         }
 
+        h1 {
+            font-size: 1.5rem;
+        }
+
+        h2 {
+            font-size: 1.3rem;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+        }
+
+        h4 {
+            font-size: 1.1rem;
+        }
+
         ul {
             margin-top: 10px;
             margin-bottom: 10px;
+            color: #e54747;
+            font-size: 1rem;
+            font-weight: lighter;
+            list-style-type: none;
+            /* Remove default bullet points */
         }
 
         ul ul {
@@ -50,9 +71,16 @@
             margin-left: 20px;
         }
 
+        ul li::before {
+            content: "•";
+            /* Bullet point */
+            color: #c72323;
+            margin-right: 0.5em;
+        }
+
         a {
             text-decoration: none;
-            color: #0066cc;
+            color: #2288ad;
         }
 
         a:hover {
@@ -67,17 +95,26 @@
 
         .logo {
             float: left;
-            margin-right: 20px;
-            max-width: 15%;
+            margin-right: 10%;
+            margin-left: 2%;
+            max-width: 25%;
             height: auto;
         }
 
         .header {
-            font-size:2.8rem;
+            font-size: 4rem;
+            color: #4d4d4d;
+            font-weight: lighter;
+        }
+
+        .sub-header {
+            font-size: 2rem;
+            font-weight: lighter;
+            color: #757575;
         }
 
         .section-header {
-            font-size:2.2rem;
+            font-size: 1.8rem;
         }
 
         h1 {
@@ -85,9 +122,23 @@
         }
 
         .table-of-contents {
-            background-color: #f9f9f9;
+            background-color: #d9eaf1;
             padding: 20px;
+            padding-top: 10px;
             border-radius: 10px;
+            margin-top: 3%;
+        }
+
+        #contents-title {
+            font-size: 1.5rem;
+            font-weight: lighter;
+            color: #4d4d4d;
+            margin: 5px;
+            margin-bottom: 10px;
+        }
+
+        .list-numbers {
+            color: #0d485d;
         }
 
         .image-container {
@@ -119,22 +170,6 @@
             padding: 10px;
             margin: 20px auto;
             overflow-x: auto;
-        }
-
-        .icon-container {
-            position: fixed;
-            top: 50px;
-            left: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            z-index: 1000;
-        }
-
-        .icon-image {
-            margin-bottom: 10px;
-            max-width: 50px;
-            height: auto;
         }
     </style>
     <script>
@@ -191,36 +226,29 @@
 </head>
 
 <body>
-    <div class="icon-container">
-        <div class="icon-image">
-            <img src="icon1.jpg" alt="Icon 1">
-        </div>
-        <div class="icon-image">
-            <img src="icon2.jpg" alt="Icon 2">
-        </div>
-        <div class="icon-image">
-            <img src="icon3.jpg" alt="Icon 3">
-        </div>
-    </div>
-
     <div class="container">
         <div class="heading-container">
-            <img class="logo" src="logo.png" alt="Logo">
-            <h1 class="header">Support/Implementation Guide</h1>
+            <img class="logo"
+                src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/guide/images/Surfly_Logo.png"
+                alt="Logo">
+            <div class="header-text">
+                <h1 class="header">Exploring Surfly</h1>
+                <h1 class="sub-header">A Hands-On Guide for Beginners</h1>
+            </div>
         </div>
 
         <div class="table-of-contents">
-            <p>Table of Contents:</p>
+            <h3 id="contents-title">Contents:</h3>
             <ul>
-                <li><a href="#section1">1. How Surfly Works</a></li>
+                <li><a href="#section1"><span class="list-numbers">1.</span> How Surfly Works</a></li>
                 <ul>
-                    <li><a href="#subsection1-1">1.1 Subsection</a></li>
-                    <li><a href="#subsection1-2">1.2 Subsection</a></li>
+                    <li><a href="#subsection1-1"><span class="list-numbers">1.1</span> Subsection</a></li>
+                    <li><a href="#subsection1-2"><span class="list-numbers">1.2</span> Subsection</a></li>
                 </ul>
-                <li><a href="#section2">2. Surfly Glossary</a></li>
+                <li><a href="#section2"><span class="list-numbers">2.</span> Surfly Glossary</a></li>
                 <ul>
-                    <li><a href="#subsection2-1">2.1 Subsection</a></li>
-                    <li><a href="#subsection2-2">2.2 Subsection</a></li>
+                    <li><a href="#subsection2-1"><span class="list-numbers">2.1</span> Subsection</a></li>
+                    <li><a href="#subsection2-2"><span class="list-numbers">2.2</span> Subsection</a></li>
                 </ul>
             </ul>
         </div>
