@@ -4,16 +4,16 @@ Surfly is the only solution that offers true Universal Co-browsing. In the simpl
 
 We are uniquely able to do this due to the way our technology works. Most co-browsing vendors rely on embedding their code into your website. These are therefore limited to the domains you are able to modify and can increase implementation effort significantly. Surfly can be used without any changes to the target website or the browser being used. We work through middleware.
 
-## How it Works - Made Simple
+## Co-browsing Everywhere - Made Simple
 
 ### Visiting a Website Without Co-browsing
 
 Let's start with the basics. Imagine you want to navigate to www.amazon.com. How does this actually happen?
 
-1. You enter www.amazon.com into your browser
-2. Your browser asks the Amazon server for the web page
-3. The Amazon server sends the web page to your browser
-4. Your browser renders the web page so you can use it
+<span class="red">1.</span> You enter www.amazon.com into your browser
+<span class="red">2.</span> Your browser asks the Amazon server for the web page
+<span class="red">3.</span> The Amazon server sends the web page to your browser
+<span class="red">4.</span> Your browser renders the web page so you can use it
 
 <div class=image-container>
 <img class="medium-image" src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/guide/images/request.png" alt="Medium Image">
@@ -48,12 +48,12 @@ Surfly has created a completely unique approach to visual collaboration, and it 
 
 Let's visit amazon.com again through Surfly. 
 
-1. You enter www.amazon.com into your browser
-2. Your browser asks the Surfly server to get the webpage from Amazon
-3. Surfly asks the Amazon servers for the website code
-4. The Amazon server gives the code to Surfly
-5. Surfly gives it to you
-6. Your browser renders the webpage so you can use it
+<span class="red">1.</span> You enter www.amazon.com into your browser
+<span class="red">2.</span> Your browser asks the Surfly server to get the webpage from Amazon
+<span class="red">3.</span> Surfly asks the Amazon servers for the website code
+<span class="red">4.</span> The Amazon server gives the code to Surfly
+<span class="red">5.</span> Surfly gives it to you
+<span class="red">6.</span> Your browser renders the webpage so you can use it
 
 <div class=image-container>
 <img class="medium-image" src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/guide/images/Surfly.png" alt="Medium Image">
@@ -61,3 +61,6 @@ Let's visit amazon.com again through Surfly.
 
 So what's changed? There is now a middle space that the website will pass through on its way to you and the people you are browsing with. This middle space not only allows Surfly to make any modifications to the website here. We enable co-browsing, but we also enable you to change anything you like. You take full control over the browsing experience in a way no other tool can enable. 
 
+Read more:
+[Surfly vs Other Tools](https://www.surfly.com/surfly-vs-co-browsing-tools/)
+[Interaction Middleware](https://www.surfly.com/interaction-middleware/)
