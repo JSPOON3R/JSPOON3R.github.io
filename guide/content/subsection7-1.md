@@ -19,9 +19,7 @@ We have a workaround to this that we call [Session Continuation](https://docs.su
 <b>Will you need Session Continuation to enable Surfly to keep you logged in?</b>
 This depends on whether the cookie that keeps you logged in is httpOnly. 
 
-## How to check for <span class="red bold">httpOnly cookies</span>
-
-### Follow the Steps Below
+### How to check for <span class="red">httpOnly cookies</span>
 
 <span class="red bold">1.</span> Outside of Surfly, open your website and log in<br><br>
 <span class="red bold">2.</span> Open the <i>Application Tab</i> in your browser developer tools<br> 
