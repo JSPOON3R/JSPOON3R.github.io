@@ -7,9 +7,9 @@ Terms and phrases you will need to be familiar with to design the optimal Surfly
 Session functionality differs somewhat between the Host, Participant in Control, Tab Owner and following Participants. These roles are not mutually exclusive and a single Participant can hold multiple combinations of each. For example:
 
 <ul>
-<li class="red bold"><a class="dark-gray normal-font">The <b>Host</b> can be the following Participant in one tab and the in-Control <b>Tab Owner</b> of another tab simultaneously</a></li>
-<li class="red bold"><a class="dark-gray normal-font">The Participant in <b>Control</b> can be anybody for any tab, if allowed by the <b>Tab Owner</b></a></li>
-<li class="red bold"><a class="dark-gray normal-font">The <b>Tab Owner</b> can be anybody, as long as they loaded the tab in their browser</a></li>
+<li class="red bold"><a class="dark-gray normal-font">The <b class="red">Host</b> can be the following Participant in one tab and the in-Control <b class="red">Tab Owner</b> of another tab simultaneously</a></li>
+<li class="red bold"><a class="dark-gray normal-font">The Participant in <b class="red">Control</b> can be anybody for any tab, if allowed by the <b class="red">Tab Owner</b></a></li>
+<li class="red bold"><a class="dark-gray normal-font">The <b class="red">Tab Owner</b> can be anybody, as long as they loaded the tab in their browser</a></li>
 <li class="red bold"><a class="dark-gray normal-font">Every non-Tab Owner is a following Participant in a given tab</a></li>
 </ul>
 
