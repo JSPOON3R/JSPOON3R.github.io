@@ -31,7 +31,7 @@ You can do this by right clicking on the webpage and clicking <i>Insepct</i>. Fr
 <div class=image-container>
 <img class="large-image" src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/guide/images/httpOnly-check.png" alt="Large Image">
 </div>
-
+<br>
 <span class="red bold">3.</span> Find the cookie responsible for keeping you logged in<br>
 <ul class="dark-gray">
 <span class="green bold">Green: </span> Cookie name <br>
