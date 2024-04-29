@@ -99,5 +99,5 @@ console.log(greet('World')); // Output: Hello, World!
 
 ## Read More:<br>
 <ul>
-<li class="red bold"><a class="dark-gray normal-font">[Session Continuation](https://docs.surfly.com/tutorials/session-continuation/)<br></a></li><br>
+<li class="red bold"><a class="dark-gray normal-font" href="https://docs.surfly.com/tutorials/session-continuation/">Session Continuation<br></a></li><br>
 </ul>

@@ -61,7 +61,7 @@ If you see a tick next to the cookie you identified then your website is using h
 
 ## Read More:<br>
 <ul>
-<li class="red bold"><a class="dark-gray normal-font">[Session Continuation](https://docs.surfly.com/tutorials/session-continuation/)<br></a></li><br>
+<li class="red bold"><a class="dark-gray normal-font" href="https://docs.surfly.com/tutorials/session-continuation/">Session Continuation<br></a></li><br>
 </ul>
 
 

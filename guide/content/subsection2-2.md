@@ -214,9 +214,9 @@ Below are the default distributions of Session roles in popular implementations.
 
 ## Read More:<br>
 <ul>
-<li class="red bold"><a class="dark-gray normal-font">[Role Overview](https://help.surfly.com/en/what-do-leader-and-follower-mean-in-a-surfly-sessi)<br></a></li><br>
-<li class="red bold"><a class="dark-gray normal-font">[Control Switching in the UI](https://help.surfly.com/en/easy-control-switching)<br></a></li><br>
-<li class="red bold"><a class="dark-gray normal-font">[Role changes with Javascript](https://docs.surfly.com/javascript-api/surfly-session)<br></a></li><br>
-<li class="red bold"><a class="dark-gray normal-font">[Using Spaces]( https://help.surfly.com/en/spaces)<br></a></li><br>
+<li class="red bold"><a class="dark-gray normal-font" href="https://help.surfly.com/en/what-do-leader-and-follower-mean-in-a-surfly-sessi">Role Overview<br></a></li><br>
+<li class="red bold"><a class="dark-gray normal-font" href="https://help.surfly.com/en/easy-control-switching">Control Switching in the UI<br></a></li><br>
+<li class="red bold"><a class="dark-gray normal-font" href="https://docs.surfly.com/javascript-api/surfly-session">Role changes with Javascript<br></a></li><br>
+<li class="red bold"><a class="dark-gray normal-font" href="https://help.surfly.com/en/spaces">Using Spaces<br></a></li><br>
 </ul>
  
