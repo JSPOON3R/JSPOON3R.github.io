@@ -35,8 +35,9 @@ You can do this by right clicking on the webpage and clicking <i>Insepct</i>. Fr
 <img class="large-image" src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/guide/images/httpOnly-check.png" alt="Large Image">
 </div>
 
-<ul>
 <span class="red bold">3.</span> Find the cookie responsible for keeping you logged in<br>
+<br>
+<ul class="dark-gray">
 <span class="green bold">Green: </span> Cookie name <br>
 <span class="blue bold">Blue: </span> Cookie Domain <br>
 <span class="red bold">Red: </span> httpOnly flag <br>
