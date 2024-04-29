@@ -7,8 +7,7 @@ This is some plain text.
 This is more plain text.
 
 ### Sub-subheading
-### <span class="red bold">Red and Bold:</span> Blue additional info with normal weight
-
+### <span class="red bold">Bold Title <i class="normal-font">thin italics:</i></span> The participant who opened/ loaded the tab. 
 Even more plain text.
 
 #### Lists
