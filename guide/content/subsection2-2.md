@@ -2,9 +2,7 @@
 
 Terms and phrases you will need to be familiar with to design the optimal Surfly set-up and use case flow. 
 
-## Roles inside a Session
-
-### Quick Look
+## Quick Look
 
 Session functionality differs somewhat between the Host, Participant in Control, Tab Owner and following Participants. These roles are not mutually exclusive and a single Participant can hold multiple combinations of each. For example:
 
@@ -15,7 +13,7 @@ Session functionality differs somewhat between the Host, Participant in Control,
 <li class="red bold"><a class="dark-gray normal-font">Every non-Tab Owner is a following Participant in a given tab</a></li>
 </ul>
 
-### Deep Dive
+## Deep Dive
 
 Let’s take a closer look at the different roles that can apply to each participant in differing combinations. Different roles provide different functions. The distribution of these roles depend on several factors which will be covered later. The basic roles inside a Surfly Session are as follows:
 
@@ -68,7 +66,7 @@ Like Tab Ownership, Control is segregated per participant per tab. Control deter
 
 <b>Control can be changed using the meeting room UI or using Javascript.</b>
 
-### <b>In Practice</b> 
+## <b>In Practice</b> 
 
 The Host role is the only one that will apply across all tabs. Tab Ownership and Control can be different per tab. Different roles in different tabs will result in different abilities for Participants. 
 
@@ -182,7 +180,7 @@ The Host role is the only one that will apply across all tabs. Tab Ownership and
             </tr>
             </table>
 
-### <b>Session Roles</b> - What happens in Popular Flows?
+## <b>What happens in Popular Flows?</b>
 
 Below are the default distributions of Session roles in popular implementations. Many of these default values can be changed without any user action necessary using the Javascript API. 
 
