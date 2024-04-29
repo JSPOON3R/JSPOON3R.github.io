@@ -1,4 +1,4 @@
-# Why Am I Being Logged Out?
+# <span class="list-numbers">7.1</span> Why Am I Being Logged Out?
 
 This is to be expected for some websites (especially during the trial period). If you are logged in to a website and become logged out when starting a Session, it is likely due to the way your website maintains state.
 

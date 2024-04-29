@@ -1,4 +1,4 @@
-# The Basics - Universal Co-browsing
+# <span class="list-numbers">1.1</span> What is Universal Co-browsing?
 
 Surfly is the only solution that offers true Universal Co-browsing. In the simplest terms possible. Universal co-browsing is our way of saying that a Surfly session can be used to browse absolutely anything that can be loaded from a web browser via the internet. With Surfly, unlike other tools, this includes all websites and all web apps.
 
