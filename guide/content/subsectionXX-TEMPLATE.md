@@ -1,4 +1,4 @@
-# <span class="list-numbers">X.X</span> Heading
+# <span class="header-numbers">X.X</span> Heading
 
 This is some plain text.
 

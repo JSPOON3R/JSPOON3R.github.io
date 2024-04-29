@@ -1,4 +1,4 @@
-# <span class="list-numbers">2.2</span> Session Role Terminology
+# <span class="header-numbers">2.2</span> Session Role Terminology
 
 Terms and phrases you will need to be familiar with to design the optimal Surfly set-up and use case flow. 
 
