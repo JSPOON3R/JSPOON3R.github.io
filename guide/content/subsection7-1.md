@@ -31,17 +31,19 @@ If you or somebody else in your organisation knows how to use the browser's deve
 <br>
 You can do this by right clicking on the webpage and clicking <i>Insepct</i>. From here, navigate to the <i>Application</i> tab and you will see something similar to the screenshot below:
 <br>
+<br>
 
 <div class=image-container>
 <img class="large-image" src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/guide/images/httpOnly-check.png" alt="Large Image">
 </div>
 
 <br>
-<span class="red bold">3.</span>Find the cookie responsible for keeping you logged in<br>
+<span class="red bold">3.</span> Find the cookie responsible for keeping you logged in<br>
 <br>
-<span class="green italic">Green: </span> Cookie name
-<span class="blue italic">Blue: </span> Cookie Domain
-<span class="red italic">Red:</span> httpOnly flag
+<span class="green italic">Green: </span> Cookie name <br>
+<span class="blue italic">Blue: </span> Cookie Domain <br>
+<span class="red italic">Red: </span> httpOnly flag <br>
+
 <br>
 The cookie domain is likely to be the same as your website. The name will vary. Search through the rows in your browser and look for the relevant cookie. You can test by deleting a cookie you suspect might be your authentication cookie and refeshing the page. If you were logged in before the refresh and are logged out after deleting the cookie - this is the cookie that keeps you authenticated.
 <br>
