@@ -61,7 +61,7 @@ As the person who loads the content, the Tab Owner will always be able to see ma
 Like Tab Ownership, Control is segregated per participant per tab. Control determines who is able to browse on the current tab. By default, Control will go to the Tab Owner when a new tab is opened. Control can be requested by any Participant and transferred away from the Tab Owner. The Tab Owner, however, will remain the same and retain their right to revoke control. Masking will never be impacted by Control Switching. The parameters of the in Control participant role include:
 
 <ul>
-<li class="red bold"><a>Navigate the page (click, scroll, input). Other Participants will annotate</a></li>
+<li class="red bold"><p>Navigate the page (click, scroll, input). Other Participants will annotate</p></li>
 <li class="red bold"><a>Pass Control to others</a></li>
 <li class="red bold"><a>Regardless of who is currently in Control, Tab Owner for a given tab will always be able to revoke the Control of others</a></li>
 </ul>
