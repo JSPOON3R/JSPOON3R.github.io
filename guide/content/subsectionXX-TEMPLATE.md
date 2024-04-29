@@ -1,4 +1,4 @@
-# Heading (1.2)
+# Heading
 
 This is some plain text.
 
@@ -7,8 +7,24 @@ This is some plain text.
 This is more plain text.
 
 ### Sub-subheading
+### <span class="red bold">Red and Bold:</span> Blue additional info with normal weight
 
 Even more plain text.
+
+#### Lists
+<!-- Red bullet points -->
+<ul>
+<li class="red bold"><a class="dark-gray normal-font">text</a></li>
+<li class="red bold"><a class="dark-gray normal-font">text</a></li>
+<li class="red bold"><a class="dark-gray normal-font">text</a></li>
+</ul>
+
+<!-- Red, bold numbers number sequence list -->
+<span class="red bold">1.</span>Step 1<br>
+<span class="red bold">2.</span>Step 2<br>
+<span class="red bold">3.</span>Step 3<br>
+
+
 
 #### Example of Adding Images
 
@@ -30,12 +46,6 @@ More plain text.
 
 And yet more plain text.
 
-### links
-
-Read more:<br>
-[Surfly vs Other Tools](https://www.surfly.com/surfly-vs-co-browsing-tools/)<br>
-[Interaction Middleware](https://www.surfly.com/interaction-middleware/)<br>
-
 #### code block
 
 <div class="code-block">
@@ -48,4 +58,46 @@ console.log(greet('World')); // Output: Hello, World!
     </code></pre>
 </div>
 
-Finally, some concluding plain text.
+### Tables
+
+#### with tick/cross icons
+
+<table>
+            <!-- Columns -->
+            <tr>
+                <!-- Row -->
+                <td class="dark-blue-background lightest-gray bold table-header">Heading 1</td>
+                <td class="dark-blue-background lightest-gray bold table-header">Heading 2</td>
+                <td class="dark-blue-background lightest-gray bold table-header">Heading 3</td>
+                <td class="dark-blue-background lightest-gray bold table-header">Heading 4</td>
+                <td class="dark-blue-background lightest-gray bold table-header">Heading 5</td>
+            </tr>
+            <tr>
+                <td class="light-blue-background lightest-gray table-column-header">Column title</td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
+                <td class="lightest-green-background green table-icon tick-icon"></td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
+            </tr>
+            </table>
+
+#### 2 X {columns} (for Q&A format)
+
+<table>
+            <!-- Columns -->
+            <tr>
+                <!-- Row -->
+                <td class="dark-blue-background lightest-gray bold table-header">Heading 1</td>
+                <td class="dark-blue-background lightest-gray bold table-header">Heading 2</td>
+            </tr>
+            <tr>
+                <td class="light-blue-background lightest-gray table-column-header">Column 1 text</td>
+                <td class="lightest-green-background dark-gray">Column 2 text</td>
+            </tr>
+</table>
+
+### links
+
+Read more:<br>
+[Surfly vs Other Tools](https://www.surfly.com/surfly-vs-co-browsing-tools/)<br>
+[Interaction Middleware](https://www.surfly.com/interaction-middleware/)<br>
