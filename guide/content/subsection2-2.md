@@ -1,4 +1,4 @@
-# Surfly Terminology
+# Session Role Terminology
 
 Terms and phrases you will need to be familiar with to design the optimal Surfly set-up and use case flow. 
 
@@ -9,10 +9,10 @@ Terms and phrases you will need to be familiar with to design the optimal Surfly
 Session functionality differs somewhat between the Host, Participant in Control, Tab Owner and following Participants. These roles are not mutually exclusive and a single Participant can hold multiple combinations of each. For example:
 
 <ul>
-<li class="red bold"><a>The Host can be the following Participant in one tab and the in-Control Tab Owner of another tab simultaneously</a></li>
-<li class="red bold"><a>The Participant in control can be anybody for any tab, if allowed by the Tab Owner</a></li>
-<li class="red bold"><a>The Tab Owner can be anybody, as long as they loaded the tab in their browser</a></li>
-<li class="red bold"><a>Every non-Tab Owner is a following Participant in a given tab</a></li>
+<li class="red bold"><a class="dark-gray normal-font">The Host can be the following Participant in one tab and the in-Control Tab Owner of another tab simultaneously</a></li>
+<li class="red bold"><a class="dark-gray normal-font">The Participant in control can be anybody for any tab, if allowed by the Tab Owner</a></li>
+<li class="red bold"><a class="dark-gray normal-font">The Tab Owner can be anybody, as long as they loaded the tab in their browser</a></li>
+<li class="red bold"><a class="dark-gray normal-font">Every non-Tab Owner is a following Participant in a given tab</a></li>
 </ul>
 
 ### <b>Deep Dive</b>
@@ -61,14 +61,14 @@ As the person who loads the content, the Tab Owner will always be able to see ma
 Like Tab Ownership, Control is segregated per participant per tab. Control determines who is able to browse on the current tab. By default, Control will go to the Tab Owner when a new tab is opened. Control can be requested by any Participant and transferred away from the Tab Owner. The Tab Owner, however, will remain the same and retain their right to revoke control. Masking will never be impacted by Control Switching. The parameters of the in Control participant role include:
 
 <ul>
-<li class="red bold"><p>Navigate the page (click, scroll, input). Other Participants will annotate</p></li>
-<li class="red bold"><a>Pass Control to others</a></li>
-<li class="red bold"><a>Regardless of who is currently in Control, Tab Owner for a given tab will always be able to revoke the Control of others</a></li>
+<li class="red bold"><a class="dark-gray normal-font">Navigate the page (click, scroll, input). Other Participants will annotate</a></li>
+<li class="red bold"><a class="dark-gray normal-font">Pass Control to others</a></li>
+<li class="red bold"><a class="dark-gray normal-font">Regardless of who is currently in Control, Tab Owner for a given tab will always be able to revoke the Control of others</a></li>
 </ul>
 
 <b>Control can be changed using the meeting room UI or using Javascript.</b>
 
-### In Practice 
+### <b>In Practice</b> 
 
 The Host role is the only one that will apply across all tabs. Tab Ownership and Control can be different per tab. Different roles in different tabs will result in different abilities for Participants. 
 
