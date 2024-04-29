@@ -20,9 +20,7 @@ We have a workaround to this that we call [Session Continuation](https://docs.su
 
 This depends on whether the cookie that keeps you logged in is httpOnly. 
 
-## Does my website use <span class="red bold">httpOnly cookies</span>?
-
-If you or somebody else in your organisation knows how to use the browser's developer tools, it's easy to check:
+## Checking for <span class="red bold">httpOnly cookies</span>
 
 ### Steps to Follow
 
