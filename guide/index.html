@@ -32,6 +32,7 @@
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
             margin-top: 50px;
             border-radius: 4px;
+            overflow-x: auto;
         }
 
         h1,
@@ -158,23 +159,42 @@
 
         table {
             border-collapse: collapse;
-            width: 100%;
+            display:flex;
+            flex-direction: column;
+            justify-content: center;
+
         }
 
         td {
             border: 1px solid #b2b2b2;
-            padding: 8px;
             text-align: center;
+
+        }
+
+        .table-header {
+            padding:.7vw;
+            font-size: 1em;
+            width:auto;
+
+        }
+
+        .table-column-header {
+            width:30%;
+            padding:.5vw;
         }
 
         .table-icon {
             background-repeat: no-repeat;
             background-position: center;
-            height: 5px;
-            width: 5px;
         }
         .tick-icon {
             background-image: url("https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/guide/icons/tick.png");
+        }
+
+        .table-icon.cross-icon,
+        .table-icon.tick-icon {
+            background-size: 30px 30px;
+            padding:2%;
         }
 
         .cross-icon {
@@ -337,10 +357,34 @@
         .bold {
             font-weight: bold;
         }
+        .normal-font {
+            font-weight: normal;
+        }
 
         .italic {
             font-style: italic;
         }
+
+        @media only screen and (max-width: 600px) {
+    table {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    td,
+    .table-header,
+    th {
+        min-width: 5%;
+        font-size: .8rem;
+        padding:1vw;
+    }
+    .table-icon.cross-icon,
+    .table-icon.tick-icon {
+            background-size: 30px 30px;
+            padding:1%;
+        }
+}
+
     </style>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -441,126 +485,8 @@
         <div id="subsection2-1">Loading content...</div>
         <div id="subsection2-2">Loading content...</div>
 
-
         <h2 class="section-header" id="section2"><span class="red">3.</span> Understanding the Possibilities</h2>
         <p class="section-subheader">Exploring Surfly's value-adding features for your use case</p>
-
-        <table>
-            <!-- Columns -->
-            <tr>
-                <!-- Row -->
-                <td class="dark-blue-background lightest-gray bold">Action</td>
-                <td class="dark-blue-background lightest-gray bold">Host</td>
-                <td class="dark-blue-background lightest-gray bold">Tab Owner</td>
-                <td class="dark-blue-background lightest-gray bold">In-Control Participant</td>
-                <td class="dark-blue-background lightest-gray bold">Other Participants</td>
-            </tr>
-            <tr>
-                <td class="light-blue-background lightest-gray">Click, scroll, enter information</td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-green-background green table-icon tick-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-            </tr>
-            <tr>
-                <td class="light-blue-background lightest-gray">Click, scroll, enter information</td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-green-background green table-icon tick-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-            </tr>
-            <tr>
-                <td class="light-blue-background lightest-gray">Click, scroll, enter information</td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-green-background green table-icon tick-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-            </tr>
-            <tr>
-                <td class="light-blue-background lightest-gray">Click, scroll, enter information</td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-green-background green table-icon tick-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-            </tr>
-            <tr>
-                <td class="light-blue-background lightest-gray">Click, scroll, enter information</td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-green-background green table-icon tick-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-            </tr>
-            <tr>
-                <td class="light-blue-background lightest-gray">Click, scroll, enter information</td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-green-background green table-icon tick-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-            </tr>
-            <tr>
-                <td class="light-blue-background lightest-gray">Click, scroll, enter information</td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-green-background green table-icon tick-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-            </tr>
-            <tr>
-                <td class="light-blue-background lightest-gray">Click, scroll, enter information</td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-green-background green table-icon tick-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-            </tr>
-            <tr>
-                <td class="light-blue-background lightest-gray">Click, scroll, enter information</td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-green-background green table-icon tick-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-            </tr>
-            <tr>
-                <td class="light-blue-background lightest-gray">Click, scroll, enter information</td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-green-background green table-icon tick-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-            </tr>
-            <tr>
-                <td class="light-blue-background lightest-gray">Click, scroll, enter information</td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-green-background green table-icon tick-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-            </tr>
-            <tr>
-                <td class="light-blue-background lightest-gray">Click, scroll, enter information</td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-green-background green table-icon tick-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-            </tr>
-            <tr>
-                <td class="light-blue-background lightest-gray">Click, scroll, enter information</td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-green-background green table-icon tick-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-            </tr>
-            <tr>
-                <td class="light-blue-background lightest-gray">Click, scroll, enter information</td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-green-background green table-icon tick-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-            </tr>
-            <tr>
-                <td class="light-blue-background lightest-gray">Click, scroll, enter information</td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-green-background green table-icon tick-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-            </tr>
-        </table>
 
         <h2 class="section-header" id="section2"><span class="red">4.</span> Finding the Right Flow</h2>
         <p class="section-subheader">Ensure your implementation works the best possible way for your needs</p>
