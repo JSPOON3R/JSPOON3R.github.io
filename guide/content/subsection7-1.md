@@ -16,8 +16,7 @@ HttpOnly cookies are a subset of authentication cookies that can only be communi
 
 We have a workaround to this that we call [Session Continuation](https://docs.surfly.com/tutorials/session-continuation/). When HttpOnly cookies are involved in maintaining state, Session Continuation allows these cookies to be seamlessly copied into the Session with the others. This will ensure you remain logged in when the Session begins.
 
-<b>So, do you need Session Continuation to enable Surfly to keep you logged in?</b>
-
+<b>Will you need Session Continuation to enable Surfly to keep you logged in?</b>
 This depends on whether the cookie that keeps you logged in is httpOnly. 
 
 ## How to check for <span class="red bold">httpOnly cookies</span>
