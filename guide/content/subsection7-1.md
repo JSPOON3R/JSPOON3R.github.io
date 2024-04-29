@@ -26,8 +26,8 @@ If you or somebody else in your organisation knows how to use the browser's deve
 
 ### Steps to Follow
 
-<span class="red bold">1.</span>Outside of Surfly, open your website and log in<br>
-<span class="red bold">2.</span>Open the <i>Application Tab</i> in your browser developer tools<br> 
+<span class="red bold">1.</span> Outside of Surfly, open your website and log in<br>
+<span class="red bold">2.</span> Open the <i>Application Tab</i> in your browser developer tools<br> 
 <br>
 You can do this by right clicking on the webpage and clicking <i>Insepct</i>. From here, navigate to the <i>Application</i> tab and you will see something similar to the screenshot below:
 <br>
@@ -48,7 +48,7 @@ You can do this by right clicking on the webpage and clicking <i>Insepct</i>. Fr
 The cookie domain is likely to be the same as your website. The name will vary. Search through the rows in your browser and look for the relevant cookie. You can test by deleting a cookie you suspect might be your authentication cookie and refeshing the page. If you were logged in before the refresh and are logged out after deleting the cookie - this is the cookie that keeps you authenticated.
 <br>
 
-<span class="red bold">4.</span>Check the httpOnly flag<br>
+<span class="red bold">4.</span> Check the httpOnly flag<br>
 <br>
 In the red box, you can see some of the cookies marked with a tick. This denotes that the cookie is httpOnly.
 
