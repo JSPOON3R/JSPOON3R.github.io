@@ -21,7 +21,7 @@ Let’s take a closer look at the different roles that can apply to each partici
 
 This is the term for everybody in the Session. One Participant will be the Host. Outside of this role, there  is no distinction between Participants other than the roles they occupy within individual tabs. Therefore, the roles that a Session Participant has may vary between different tabs in a single Session. 
 
-### <span class="red bold">Host: <i class="normal-font">Session Level</i></span>  The participant who started the session. This role applies across all tabs. 
+### <span class="red bold">Host: <i class="normal-font">Session Level </i></span>  The participant who started the session. This role applies across all tabs. 
 
 This role of Host has some unique functions at the Session level not available to other Participants, regardless of Tab Ownership and Control at the tab level. The parameters of the Host role include:
 
@@ -39,7 +39,7 @@ In most cases, when a Session Starts the Host will also be the first Tab Owner f
 
  <b>The Host role can be changed using the meeting room UI or using Javascript as long as this is executed by the current Host.</b>
 
-### <span class="red bold">Tab Owner: <i class="normal-font">Tab Level</i></span> The participant who opened/ loaded the tab. 
+### <span class="red bold">Tab Owner: <i class="normal-font">Tab Level </i></span> The participant who opened/ loaded the tab. 
 
 This is the person who opens a given tab and loads the content in their own browser. For the starting tab this will normally be the Host. However, any new tabs that are opened in the Session will set the Tab Owner as the person who opened it. The Tab Owner can be different for each tab in a session depending on who loads the content. When a participant opens a new tab, the web content loads in their browser and is shared with others. The parameters of the Tab Owner role include:
 
@@ -54,7 +54,7 @@ As the person who loads the content, the Tab Owner will always be able to see ma
 
 <b>The Tab Owner cannot be changed. A new tab must be opened by the participant you want to be the Tab Owner.</b>
 
-### <span class="red bold">Control: <i class="normal-font">Tab Level</i></span> The person in Control will interact with the tab content while other participants can annotate.
+### <span class="red bold">Control: <i class="normal-font">Tab Level </i></span> The person in Control will interact with the tab content while other participants can annotate.
 
 Like Tab Ownership, Control is segregated per participant per tab. Control determines who is able to browse on the current tab. By default, Control will go to the Tab Owner when a new tab is opened. Control can be requested by any Participant and transferred away from the Tab Owner. The Tab Owner, however, will remain the same and retain their right to revoke control. Masking will never be impacted by Control Switching. The parameters of the in Control participant role include:
 
