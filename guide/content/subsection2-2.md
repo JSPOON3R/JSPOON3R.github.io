@@ -26,8 +26,8 @@ This is the term for everybody in the Session. One Participant will be the Host.
 This role of Host has some unique functions at the Session level not available to other Participants, regardless of Tab Ownership and Control at the tab level. The parameters of the Host role include:
 
 <ul>
-<li class="red bold"><a class="dark-gray normal-font">Admit or Deny entry to the Session</a></li>
-<li class="red bold"><a class="dark-gray normal-font">Disable/enable Presenter mode</a></li>
+<li class="red bold"><a class="dark-gray normal-font">Admit or deny entry to the Session</a></li>
+<li class="red bold"><a class="dark-gray normal-font">Disable/enable Presenter Mode</a></li>
 <li class="red bold"><a class="dark-gray normal-font">Switch between tabs in Presenter Mode</a></li>
 <li class="red bold"><a class="dark-gray normal-font">Close any tab</a></li>
 <li class="red bold"><a class="dark-gray normal-font">Grant or revoke the role of Host to another participant</a></li>
