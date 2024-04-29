@@ -31,7 +31,7 @@
             background-color: white;
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
             margin-top: 50px;
-            border-radius:4px;
+            border-radius: 4px;
         }
 
         h1,
@@ -54,7 +54,7 @@
         }
 
         h3 {
-            font-size: 1.2rem;            
+            font-size: 1.2rem;
             color: #166e8e;
         }
 
@@ -122,13 +122,13 @@
 
         .section-header {
             font-size: 1.8rem;
-            color:#4d4d4d;
+            color: #4d4d4d;
             font-weight: lighter;
         }
 
         .section-subheader {
             font-size: 1.2rem;
-            color:#757575;
+            color: #757575;
             font-weight: lighter;
         }
 
@@ -160,28 +160,31 @@
             border-collapse: collapse;
             width: 100%;
         }
-        
+
         td {
             border: 1px solid #b2b2b2;
             padding: 8px;
             text-align: center;
         }
-        .table-header {
-            background-color: #166e8e;
+
+        .table-icon {
+            background-repeat: no-repeat;
+            background-position: center;
+            height: 5px;
+            width: 5px;
         }
-        .table-yes {
-            background-color: #d6eacb;
+        .tick-icon {
+            background-image: url("https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/guide/icons/tick.png");
         }
-        .table-no {
-            background-color: #edd1d1;
+
+        .cross-icon {
+            background-image: url("https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/guide/icons/cross.png");
         }
 
         .image-container {
             display: flex;
             justify-content: center;
-            /* Horizontally center */
             align-items: center;
-            /* Vertically center */
         }
 
         .small-image {
@@ -208,47 +211,135 @@
         }
 
         p {
-            color:#757575;
+            color: #757575;
+        }
+
+        .darkest-gray-background {
+            background-color: #4d4d4d;
+        }
+
+        .dark-gray-background {
+            background-color: #757575;
+        }
+
+        .gray-background {
+            background-color: #b2b2b2;
+        }
+
+        .light-gray-background {
+            background-color: #d8dada;
+        }
+
+        .lightest-gray-background {
+            background-color: #eff0f0;
+        }
+
+        .white-background {
+            background-color: #ffffff;
+        }
+
+        .red-background {
+            background-color: #c72323;
+        }
+
+        .light-red-background {
+            background-color: #e54747;
+        }
+
+        .lightest-red-background {
+            background-color: #fbf3f3;
+        }
+
+        .dark-blue-background {
+            background-color: #166e8e;
+        }
+
+        .blue-background {
+            background-color: #2288ad;
+        }
+
+        .light-blue-background {
+            background-color: #7cadbf;
+        }
+
+        .green-background {
+            background-color: #48a418;
+        }
+
+        .light-green-background {
+            background-color: #7dc05a;
+        }
+
+        .lightest-green-background {
+            background-color: #f5fbf1;
         }
 
         .darkest-gray {
             color: #4d4d4d;
         }
+
         .dark-gray {
             color: #757575;
         }
+
         .gray {
             color: #b2b2b2;
         }
+
         .light-gray {
             color: #d8dada;
         }
+
         .lightest-gray {
             color: #eff0f0;
         }
+
         .white {
-            color:#ffffff;
+            color: #ffffff;
         }
+
         .red {
-            color:#c72323;
+            color: #c72323;
         }
+
         .light-red {
             color: #e54747;
         }
+
+        .lightest-red {
+            color: #fbf3f3;
+        }
+
         .dark-blue {
             color: #166e8e;
         }
+
         .blue {
             color: #2288ad;
         }
+
         .light-blue {
             color: #7cadbf;
         }
+
+        .green {
+            color: #48a418;
+        }
+
+        .light-green {
+            color: #7dc05a;
+        }
+
+        .lightest-green {
+            color: #f5fbf1;
+        }
+
         .bold {
             font-weight: bold;
         }
+
         .italic {
-            font-style:italic;
+            font-style: italic;
         }
     </style>
     <script>
@@ -302,6 +393,7 @@
     </script>
     <!-- Include Showdown.js library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/showdown/1.9.1/showdown.min.js"></script>
+
 </head>
 
 <body>
@@ -321,8 +413,10 @@
             <ul>
                 <li><a href="#section1"><span class="list-numbers">1.</span> How Surfly Works</a></li>
                 <ul>
-                    <li><a href="#subsection1-1"><span class="list-numbers">1.1</span> The Basics - Universal Co-browsing</a></li>
-                    <li><a href="#subsection1-2"><span class="list-numbers">1.2</span> What is a Surfly Session?</a></li>
+                    <li><a href="#subsection1-1"><span class="list-numbers">1.1</span> The Basics - Universal
+                            Co-browsing</a></li>
+                    <li><a href="#subsection1-2"><span class="list-numbers">1.2</span> What is a Surfly Session?</a>
+                    </li>
                 </ul>
                 <li><a href="#section2"><span class="list-numbers">2.</span> Surfly Glossary</a></li>
                 <ul>
@@ -355,116 +449,116 @@
             <!-- Columns -->
             <tr>
                 <!-- Row -->
-                <td class="table-header lightest-gray bold">Action</td>
-                <td class="table-header lightest-gray bold">Host</td>
-                <td class="table-header lightest-gray bold">Tab Owner</td>
-                <td class="table-header lightest-gray bold">In-Control Participant</td>
-                <td class="table-header lightest-gray bold">Other Participants</td>
+                <td class="dark-blue-background lightest-gray bold">Action</td>
+                <td class="dark-blue-background lightest-gray bold">Host</td>
+                <td class="dark-blue-background lightest-gray bold">Tab Owner</td>
+                <td class="dark-blue-background lightest-gray bold">In-Control Participant</td>
+                <td class="dark-blue-background lightest-gray bold">Other Participants</td>
             </tr>
             <tr>
-                <td class="table-yes"></td>
-                <td class="table-no"></td>
-                <td class="table-yes"></td>
-                <td class="table-no"></td>
-                <td class="table-yes"></td>
+                <td class="light-blue-background lightest-gray">Click, scroll, enter information</td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
+                <td class="lightest-green-background green table-icon tick-icon"></td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
             </tr>
             <tr>
-                <td class="table-yes"></td>
-                <td class="table-no"></td>
-                <td class="table-yes"></td>
-                <td class="table-no"></td>
-                <td class="table-yes"></td>
+                <td class="light-blue-background lightest-gray">Click, scroll, enter information</td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
+                <td class="lightest-green-background green table-icon tick-icon"></td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
             </tr>
             <tr>
-                <td class="table-yes"></td>
-                <td class="table-no"></td>
-                <td class="table-yes"></td>
-                <td class="table-no"></td>
-                <td class="table-yes"></td>
+                <td class="light-blue-background lightest-gray">Click, scroll, enter information</td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
+                <td class="lightest-green-background green table-icon tick-icon"></td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
             </tr>
             <tr>
-                <td class="table-yes"></td>
-                <td class="table-no"></td>
-                <td class="table-yes"></td>
-                <td class="table-no"></td>
-                <td class="table-yes"></td>
+                <td class="light-blue-background lightest-gray">Click, scroll, enter information</td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
+                <td class="lightest-green-background green table-icon tick-icon"></td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
             </tr>
             <tr>
-                <td class="table-yes"></td>
-                <td class="table-no"></td>
-                <td class="table-yes"></td>
-                <td class="table-no"></td>
-                <td class="table-yes"></td>
+                <td class="light-blue-background lightest-gray">Click, scroll, enter information</td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
+                <td class="lightest-green-background green table-icon tick-icon"></td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
             </tr>
             <tr>
-                <td class="table-yes"></td>
-                <td class="table-no"></td>
-                <td class="table-yes"></td>
-                <td class="table-no"></td>
-                <td class="table-yes"></td>
+                <td class="light-blue-background lightest-gray">Click, scroll, enter information</td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
+                <td class="lightest-green-background green table-icon tick-icon"></td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
             </tr>
             <tr>
-                <td class="table-yes"></td>
-                <td class="table-no"></td>
-                <td class="table-yes"></td>
-                <td class="table-no"></td>
-                <td class="table-yes"></td>
+                <td class="light-blue-background lightest-gray">Click, scroll, enter information</td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
+                <td class="lightest-green-background green table-icon tick-icon"></td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
             </tr>
             <tr>
-                <td class="table-yes"></td>
-                <td class="table-no"></td>
-                <td class="table-yes"></td>
-                <td class="table-no"></td>
-                <td class="table-yes"></td>
+                <td class="light-blue-background lightest-gray">Click, scroll, enter information</td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
+                <td class="lightest-green-background green table-icon tick-icon"></td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
             </tr>
             <tr>
-                <td class="table-yes"></td>
-                <td class="table-no"></td>
-                <td class="table-yes"></td>
-                <td class="table-no"></td>
-                <td class="table-yes"></td>
+                <td class="light-blue-background lightest-gray">Click, scroll, enter information</td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
+                <td class="lightest-green-background green table-icon tick-icon"></td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
             </tr>
             <tr>
-                <td class="table-yes"></td>
-                <td class="table-no"></td>
-                <td class="table-yes"></td>
-                <td class="table-no"></td>
-                <td class="table-yes"></td>
+                <td class="light-blue-background lightest-gray">Click, scroll, enter information</td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
+                <td class="lightest-green-background green table-icon tick-icon"></td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
             </tr>
             <tr>
-                <td class="table-yes"></td>
-                <td class="table-no"></td>
-                <td class="table-yes"></td>
-                <td class="table-no"></td>
-                <td class="table-yes"></td>
+                <td class="light-blue-background lightest-gray">Click, scroll, enter information</td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
+                <td class="lightest-green-background green table-icon tick-icon"></td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
             </tr>
             <tr>
-                <td class="table-yes"></td>
-                <td class="table-no"></td>
-                <td class="table-yes"></td>
-                <td class="table-no"></td>
-                <td class="table-yes"></td>
+                <td class="light-blue-background lightest-gray">Click, scroll, enter information</td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
+                <td class="lightest-green-background green table-icon tick-icon"></td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
             </tr>
             <tr>
-                <td class="table-yes"></td>
-                <td class="table-no"></td>
-                <td class="table-yes"></td>
-                <td class="table-no"></td>
-                <td class="table-yes"></td>
+                <td class="light-blue-background lightest-gray">Click, scroll, enter information</td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
+                <td class="lightest-green-background green table-icon tick-icon"></td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
             </tr>
             <tr>
-                <td class="table-yes"></td>
-                <td class="table-no"></td>
-                <td class="table-yes"></td>
-                <td class="table-no"></td>
-                <td class="table-yes"></td>
+                <td class="light-blue-background lightest-gray">Click, scroll, enter information</td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
+                <td class="lightest-green-background green table-icon tick-icon"></td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
             </tr>
             <tr>
-                <td class="table-yes"></td>
-                <td class="table-no"></td>
-                <td class="table-yes"></td>
-                <td class="table-no"></td>
-                <td class="table-yes"></td>
+                <td class="light-blue-background lightest-gray">Click, scroll, enter information</td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
+                <td class="lightest-green-background green table-icon tick-icon"></td>
+                <td class="lightest-red-background red table-icon cross-icon"></td>
             </tr>
         </table>
 
