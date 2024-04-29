@@ -98,4 +98,6 @@ console.log(greet('World')); // Output: Hello, World!
 ### links
 
 ## Read More:<br>
+<ul>
 <li class="red bold"><a class="dark-gray normal-font">[Session Continuation](https://docs.surfly.com/tutorials/session-continuation/)<br></a></li><br>
+</ul>

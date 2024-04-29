@@ -36,11 +36,12 @@ You can do this by right clicking on the webpage and clicking <i>Insepct</i>. Fr
 </div>
 
 <br>
+<ul>
 <span class="red bold">3.</span> Find the cookie responsible for keeping you logged in<br>
-<br>
 <span class="green italic">Green: </span> Cookie name <br>
 <span class="blue italic">Blue: </span> Cookie Domain <br>
 <span class="red italic">Red: </span> httpOnly flag <br>
+</ul>
 
 <br>
 The cookie domain is likely to be the same as your website. The name will vary. Search through the rows in your browser and look for the relevant cookie. You can test by deleting a cookie you suspect might be your authentication cookie and refeshing the page. If you were logged in before the refresh and are logged out after deleting the cookie - this is the cookie that keeps you authenticated.
@@ -61,7 +62,9 @@ If you see a tick next to the cookie you identified then your website is using h
 <b>If you are currently in a Trial Period, we will not set up Session Continuation until we are ready to deploy. At this point, we will be able to remove the need to log in again when you start a Session. 
 
 ## Read More:<br>
+<ul>
 <li class="red bold"><a class="dark-gray normal-font">[Session Continuation](https://docs.surfly.com/tutorials/session-continuation/)<br></a></li><br>
+</ul>
 
 
  
