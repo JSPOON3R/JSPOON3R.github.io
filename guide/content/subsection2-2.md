@@ -4,7 +4,7 @@ Terms and phrases you will need to be familiar with to design the optimal Surfly
 
 ## Roles Available inside a Session
 
-### Session Roles - Quick Look
+### <b>Session Roles</b> - Quick Look
 
 Session functionality differs somewhat between the Host, Participant in Control, Tab Owner and following Participants. These roles are not mutually exclusive and a single Participant can hold multiple combinations of each. For example:
 
@@ -15,15 +15,15 @@ Session functionality differs somewhat between the Host, Participant in Control,
 <li class="red bold"><a>Every non-Tab Owner is a following Participant in a given tab</a></li>
 </ul>
 
-### Session Roles - Deep Dive
+### <b>Session Roles</b> - Deep Dive
 
 Let’s take a closer look at the different roles that can apply to each participant in differing combinations. Different roles provide different functions. The distribution of these roles depend on several factors which will be covered later. The basic roles inside a Surfly Session are as follows:
 
-#### Participant: Any and all people who have entered a Surfly session are Participants.
+#### <b>Participant:</b> Any and all people who have entered a Surfly session are Participants.
 
 This is the term for everybody in the Session. One Participant will be the Host. Outside of this role, there  is no distinction between Participants other than the roles they occupy within individual tabs. Therefore, the roles that a Session Participant has may vary between different tabs in a single Session. 
 
-#### Host (Session Level):  The participant who started the session. This role applies across all tabs. 
+#### <b>Host (Session Level):</b>  The participant who started the session. This role applies across all tabs. 
 
 This role of Host has some unique functions at the Session level not available to other Participants, regardless of Tab Ownership and Control at the tab level. The parameters of the Host role include:
 
@@ -41,7 +41,7 @@ In most cases, when a Session Starts the Host will also be the first Tab Owner f
 
  <b>The Host role can be changed using the meeting room UI or using Javascript as long as this is executed by the current Host.</b>
 
-#### Tab Owner (Tab Level): The participant who opened/ loaded the tab. 
+#### <b>Tab Owner (Tab Level):</b> The participant who opened/ loaded the tab. 
 
 This is the person who opens a given tab and loads the content in their own browser. For the starting tab this will normally be the Host. However, any new tabs that are opened in the Session will set the Tab Owner as the person who opened it. The Tab Owner can be different for each tab in a session depending on who loads the content. When a participant opens a new tab, the web content loads in their browser and is shared with others. The parameters of the Tab Owner role include:
 
@@ -56,9 +56,9 @@ As the person who loads the content, the Tab Owner will always be able to see ma
 
 <b>The Tab Owner cannot be changed. A new tab must be opened by the participant you want to be the Tab Owner.</b>
 
-#### Control (Tab Level):  Like Tab Ownership, Control  is segregated per participant per tab. The person in Control will interact with the tab content while other participants can annotate.
+#### <b>Control (Tab Level):</b> The person in Control will interact with the tab content while other participants can annotate.
 
-Control determines who is able to browse on the current tab. By default, Control will go to the Tab Owner when a new tab is opened. Control can be requested by any Participant and transferred away from the Tab Owner. The Tab Owner, however, will remain the same, retain their right to revoke control and masking will never be impacted by Control Switching. The parameters of the in Control participant role include:
+Like Tab Ownership, Control is segregated per participant per tab. Control determines who is able to browse on the current tab. By default, Control will go to the Tab Owner when a new tab is opened. Control can be requested by any Participant and transferred away from the Tab Owner. The Tab Owner, however, will remain the same and retain their right to revoke control. Masking will never be impacted by Control Switching. The parameters of the in Control participant role include:
 
 <ul>
 <li class="red bold"><a>Navigate the page (click, scroll, input). Other Participants will annotate</a></li>
@@ -68,10 +68,9 @@ Control determines who is able to browse on the current tab. By default, Control
 
 <b>Control can be changed using the meeting room UI or using Javascript.</b>
 
-### Session Roles - In Practice
+### <b>Session Roles</b> - In Practice
 
 The Host role is the only one that will apply across all tabs. Tab Ownership and Control can be different per tab. Different roles in different tabs will result in different abilities for Participants. 
-
 
 <table>
             <!-- Columns -->
@@ -183,7 +182,7 @@ The Host role is the only one that will apply across all tabs. Tab Ownership and
             </tr>
             </table>
 
-### Session Roles - What happens in Popular Flows?
+### <b>Session Roles</b> - What happens in Popular Flows?
 
 Below are the default distributions of Session roles in popular implementations. Many of these default values can be changed without any user action necessary using the Javascript API. 
 
