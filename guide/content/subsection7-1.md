@@ -35,13 +35,12 @@ You can do this by right clicking on the webpage and clicking <i>Insepct</i>. Fr
 </div>
 
 <span class="red bold">3.</span> Find the cookie responsible for keeping you logged in<br>
-<br>
 <ul class="dark-gray">
 <span class="green bold">Green: </span> Cookie name <br>
 <span class="blue bold">Blue: </span> Cookie Domain <br>
 <span class="red bold">Red: </span> httpOnly flag <br>
 </ul>
-<br>
+
 The cookie domain is likely to be the same as your website. The name will vary. Search through the rows in your browser and look for the relevant cookie. You can test by deleting a cookie you suspect might be your authentication cookie and refeshing the page. If you were logged in before the refresh and are logged out after deleting the cookie - this is the cookie that keeps you authenticated.
 <br>
 
