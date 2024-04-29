@@ -60,9 +60,8 @@ If you see a tick next to the cookie you identified then your website is using h
 
 <b>If you are currently in a Trial Period, we will not set up Session Continuation until we are ready to deploy. At this point, we will be able to remove the need to log in again when you start a Session. 
 
-Read more:<br>
-[Session Continuation](https://docs.surfly.com/tutorials/session-continuation/)<br>
-
+## Read More:<br>
+<li class="red bold"><a class="dark-gray normal-font">[Session Continuation](https://docs.surfly.com/tutorials/session-continuation/)<br></a></li><br>
 
 
  

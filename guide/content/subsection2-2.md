@@ -212,11 +212,10 @@ Below are the default distributions of Session roles in popular implementations.
             </tr>
 </table>
 
-Read more:<br>
-[Role Overview](https://help.surfly.com/en/what-do-leader-and-follower-mean-in-a-surfly-sessi)<br>
-[Control Switching in the UI](https://help.surfly.com/en/easy-control-switching)<br>
-[Role changes with Javascript](https://docs.surfly.com/javascript-api/surfly-session)<br>
-[Using Spaces]( https://help.surfly.com/en/spaces)<br>
-
-
+## Read More:<br>
+## Read more:<br>
+<li class="red bold"><a class="dark-gray normal-font">[Role Overview](https://help.surfly.com/en/what-do-leader-and-follower-mean-in-a-surfly-sessi)<br></a></li><br>
+<li class="red bold"><a class="dark-gray normal-font">[Control Switching in the UI](https://help.surfly.com/en/easy-control-switching)<br></a></li><br>
+<li class="red bold"><a class="dark-gray normal-font">[Role changes with Javascript](https://docs.surfly.com/javascript-api/surfly-session)<br></a></li><br>
+<li class="red bold"><a class="dark-gray normal-font">[Using Spaces]( https://help.surfly.com/en/spaces)<br></a></li><br>
  

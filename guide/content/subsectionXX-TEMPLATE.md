@@ -97,6 +97,5 @@ console.log(greet('World')); // Output: Hello, World!
 
 ### links
 
-Read more:<br>
-[Surfly vs Other Tools](https://www.surfly.com/surfly-vs-co-browsing-tools/)<br>
-[Interaction Middleware](https://www.surfly.com/interaction-middleware/)<br>
+## Read More:<br>
+<li class="red bold"><a class="dark-gray normal-font">[Session Continuation](https://docs.surfly.com/tutorials/session-continuation/)<br></a></li><br>
