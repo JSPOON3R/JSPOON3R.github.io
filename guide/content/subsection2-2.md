@@ -192,6 +192,10 @@ The Host role is the only one that will apply across all tabs. Tab Ownership and
 Below are the default distributions of Session roles in popular implementations. Many of these default values can be changed without any user action necessary using the Javascript API. 
 
  <table>
+         <colgroup>
+           <col style="width: 25%;"> 
+           <col style="width: 75%;"> 
+       </colgroup>
             <!-- Columns -->
             <tr>
                 <!-- Row -->
@@ -200,30 +204,30 @@ Below are the default distributions of Session roles in popular implementations.
             </tr>
             <tr>
                 <td class="light-blue-background lightest-gray table-column-header">Default “Get Live Help” Widget</td>
-                <td class="lightest-green-background dark-gray">The person who clicks the widget is the Host, and the first Tab Owner. This person will see all masked content and will Control the session as the Host.</td>
+                <td class="lightest-green-background dark-gray">The person who clicks the widget is the <span class="red">Host</span>, and the first <span class="red">Tab Owner</span>. This person will see all masked content and will <span class="red">Control</span> the session as the <span class="red">Host</span>.</td>
             </tr>
             <tr>
                 <td class="light-blue-background lightest-gray table-column-header">Custom Button / Landing Page (Javascript API)</td>
-                <td class="lightest-green-background dark-gray">The Participant who clicks the button/loads the Session is the Host, the first Tab Owner and in Control. This person will see all Masked content and will Control the Session as the Host.</td>
+                <td class="lightest-green-background dark-gray">The Participant who clicks the button/loads the Session is the <span class="red">Host</span>, the first <span class="red">Tab Owner</span> and in <span class="red">Control</span>. This person will see all Masked content and will <span class="red">Control</span> the Session as the <span class="red">Host</span>.</td>
             </tr>
             <tr>
                 <td class="light-blue-background lightest-gray table-column-header">Surfly App Start Page</td>
-                <td class="lightest-green-background dark-gray">The Participant who clicks <i>Start Session</i> is the Host, the first Tab Owner and in Control. This Participant will see all Masked content and will Control the Session as the Host.</td>
+                <td class="lightest-green-background dark-gray">The Participant who clicks <i>Start Session</i> is the <span class="red">Host</span>, the first <span class="red">Tab Owner</span> and in <span class="red">Control</span>. This Participant will see all Masked content and will <span class="red">Control</span> the Session as the <span class="red">Host</span>.</td>
             </tr>
             <tr>
                 <td class="light-blue-background lightest-gray table-column-header">Spaces</td>
-                <td class="lightest-green-background dark-gray">Regardless of who joins first,	the Space owner is the Host, the first Tab Owner and in Control. This Participant will see all masked content and will Control the Session as the Host.</td>
+                <td class="lightest-green-background dark-gray">Regardless of who joins first,	the Space owner is the <span class="red">Host</span>, the first <span class="red">Tab Owner</span> and in <span class="red">Control</span>. This Participant will see all masked content and will <span class="red">Control</span> the Session as the <span class="red">Host</span>.</td>
             </tr>            <tr>
                 <td class="light-blue-background lightest-gray table-column-header">REST API</td>
-                <td class="lightest-green-background dark-gray">Highly configurable but by default the first Participant to join the Session from the API generated links will be the Host, the first Tab Owner and in Control. This Participant will see all masked content and will Control the Session as the Host.</td>
+                <td class="lightest-green-background dark-gray">Highly configurable but by default the first Participant to join the Session from the API generated links will be the <span class="red">Host</span>, the first <span class="red">Tab Owner</span>. and in <span class="red">Control</span>. This Participant will see all masked content and will <span class="red">Control</span> the Session as the <span class="red">Host</span>.</td>
             </tr>
 </table>
 
 ## Read More:<br>
 <ul>
-<li class="red bold" href="https://help.surfly.com/en/what-do-leader-and-follower-mean-in-a-surfly-sessi"><a class="dark-gray normal-weight">Role Overview<br></a></li><br>
-<li class="red bold" href="https://help.surfly.com/en/easy-control-switching"><a class="dark-gray normal-weight">Control Switching in the UI<br></a></li><br>
-<li class="red bold" href="https://docs.surfly.com/javascript-api/surfly-session"><a class="dark-gray normal-weight">Role changes with Javascript<br></a></li><br>
-<li class="red bold" href="https://help.surfly.com/en/spaces"><a class="dark-gray normal-weight">Using Spaces<br></a></li><br>
+<li class="red bold"><a class="dark-gray normal-weight" href="https://help.surfly.com/en/what-do-leader-and-follower-mean-in-a-surfly-sessi">Role Overview<br></a></li><br>
+<li class="red bold"><a class="dark-gray normal-weight" href="https://help.surfly.com/en/easy-control-switching">Control Switching in the UI<br></a></li><br>
+<li class="red bold"><a class="dark-gray normal-weight" href="https://docs.surfly.com/javascript-api/surfly-session">Role changes with Javascript<br></a></li><br>
+<li class="red bold"><a class="dark-gray normal-weight" href="https://help.surfly.com/en/spaces">Using Spaces<br></a></li><br>
 </ul>
  
