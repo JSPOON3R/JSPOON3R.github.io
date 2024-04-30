@@ -185,6 +185,14 @@ The Host role is the only one that will apply across all tabs. Tab Ownership and
 Below are the default distributions of Session roles in popular implementations. Many of these default values can be changed without any user action necessary using the Javascript API. 
 
  <table>
+ <!-- Column sizing -->
+     <colgroup>
+        <col style="width: 40%;"> 
+        <col style="width: 15%;"> 
+        <col style="width: 15%;"> 
+        <col style="width: 15%;"> 
+        <col style="width: 15%;"> 
+    </colgroup>
             <!-- Columns -->
             <tr>
                 <!-- Row -->
