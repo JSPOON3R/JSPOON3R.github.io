@@ -155,22 +155,23 @@
         }
 
         .divider {
-    border-top: 1px solid #d8dada; 
-    margin-top: 20px; 
-    margin-bottom: 20px; 
+            border-top: 1px solid #d8dada;
+            margin-top: 20px;
+            margin-bottom: 20px;
         }
 
         .list-numbers {
             color: #0d485d;
         }
+
         .header-numbers {
             color: #4d4d4d;
         }
 
         table {
             border-collapse: collapse;
-            table-layout: fixed; 
-        width: 100%;
+            table-layout: fixed;
+            width: 100%;
 
         }
 
@@ -181,19 +182,26 @@
         }
 
         .table-header {
-            padding:.2vw;
+            padding: .2vw;
             font-size: 1em;
         }
 
         .table-column-header {
             font-size: 1em;
-            padding:.5vw;
+            padding: .5vw;
+        }
+
+        .table-text {
+            width: 75%;
+            text-align: start;
+            padding-left: .5vw;
         }
 
         .table-icon {
             background-repeat: no-repeat;
             background-position: center;
         }
+
         .tick-icon {
             background-image: url("https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/guide/icons/tick.png");
         }
@@ -201,7 +209,7 @@
         .table-icon.cross-icon,
         .table-icon.tick-icon {
             background-size: 30px 30px;
-            padding:2%;
+            padding: 2%;
         }
 
         .cross-icon {
@@ -365,6 +373,7 @@
         .bold {
             font-weight: bold;
         }
+
         /*remove links*/
         .normal-font {
             font-weight: normal;
@@ -373,73 +382,79 @@
 
         .normal-weight {
             font-weight: normal;
-        }  
+        }
 
         .italic {
             font-style: italic;
         }
 
         @media only screen and (max-width: 800px) {
-           .heading-container {
-            flex-wrap: wrap;
-    flex-direction: column;
-    text-align: center;
-        }
-        .header {
-            font-size: 2.5rem;
-        }
-        .sub-header {
-            font-size: 1.2rem;
-        }
-        .logo {
-            float:none;
-            margin-right: 0%;
-            margin-left: 0%;
-            margin-bottom: 2%;
-    width: 50%;
-    max-width:300px;
-    height: auto;
-        }
-    table {
-        border-collapse: collapse;
-        table-layout: fixed; 
-        width: 100%; 
-    }
+            .heading-container {
+                flex-wrap: wrap;
+                flex-direction: column;
+                text-align: center;
+            }
 
-    td,
-    .table-header,
-    th {
-        padding:2vw;
-        font-size: .8em;
-        text-align: center;
-        overflow:hidden; 
-    }
-    .table-icon.cross-icon,
-    .table-icon.tick-icon {
-            background-size: 20px 20px;
-            padding:4%;
-        }
-        .table-column-header {
-            padding: 1vw;
-            font-size: .8em;
-        }
-        .small-image {
-            width: 50vw;
-            height: auto;
-        }
+            .header {
+                font-size: 2.5rem;
+            }
 
-        .medium-image {
-            width: 70vw;
-            height: auto;
+            .sub-header {
+                font-size: 1.2rem;
+            }
+
+            .logo {
+                float: none;
+                margin-right: 0%;
+                margin-left: 0%;
+                margin-bottom: 2%;
+                width: 50%;
+                max-width: 300px;
+                height: auto;
+            }
+
+            table {
+                border-collapse: collapse;
+                table-layout: fixed;
+                width: 100%;
+            }
+
+            td,
+            .table-header,
+            th {
+                padding: 2vw;
+                font-size: .8em;
+                text-align: center;
+                overflow: hidden;
+            }
+
+            .table-icon.cross-icon,
+            .table-icon.tick-icon {
+                background-size: 20px 20px;
+                padding: 4%;
+            }
+
+            .table-column-header {
+                padding: 1vw;
+                font-size: .8em;
+            }
+
+            .small-image {
+                width: 50vw;
+                height: auto;
+            }
+
+            .medium-image {
+                width: 70vw;
+                height: auto;
+            }
+
+            .large-image {
+                width: 90vw;
+                height: auto;
+            }
+
         }
-
-        .large-image {
-            width: 90vw;
-            height: auto;
-        }
-
-}
-
     </style>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
@@ -520,7 +535,7 @@
                 <li><a href="#section2"><span class="list-numbers">2.</span> Surfly Glossary</a></li>
                 <ul>
                     <li><a href="#subsection2-1"><span class="list-numbers">2.1</span> Co-browsing Terminology</a></li>
-                    
+
                     <li><a href="#subsection2-2"><span class="list-numbers">2.2</span> Session Role Terminology</a></li>
                 </ul>
                 <li><a href="#section3"><span class="list-numbers">3.</span> Understanding the Possibilities</a></li>
@@ -529,7 +544,8 @@
                 <li><a href="#section6"><span class="list-numbers">6.</span> Technical Requirements</a></li>
                 <li><a href="#section7"><span class="list-numbers">7.</span> Common Issues and Solutions</a></li>
                 <ul>
-                    <li><a href="#subsection7-1"><span class="list-numbers">7.1</span> Why am I Being Logged Out?</a></li>
+                    <li><a href="#subsection7-1"><span class="list-numbers">7.1</span> Why am I Being Logged Out?</a>
+                    </li>
                 </ul>
             </ul>
         </div>

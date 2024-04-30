@@ -204,22 +204,22 @@ Below are the default distributions of Session roles in popular implementations.
             </tr>
             <tr>
                 <td class="light-blue-background lightest-gray table-column-header">Default “Get Live Help” Widget</td>
-                <td class="lightest-green-background dark-gray">The person who clicks the widget is the <span class="red">Host</span>, and the first <span class="red">Tab Owner</span>. This person will see all masked content and will <span class="red">Control</span> the session as the <span class="red">Host</span>.</td>
+                <td class="lightest-green-background dark-gray table-text">The person who clicks the widget is the <span class="darkest-gray">Host</span>, and the first <span class="darkest-gray">Tab Owner</span>. This person will see all masked content and will <span class="darkest-gray">Control</span> the session as the <span class="darkest-gray">Host</span>.</td>
             </tr>
             <tr>
                 <td class="light-blue-background lightest-gray table-column-header">Custom Button / Landing Page (Javascript API)</td>
-                <td class="lightest-green-background dark-gray">The Participant who clicks the button/loads the Session is the <span class="red">Host</span>, the first <span class="red">Tab Owner</span> and in <span class="red">Control</span>. This person will see all Masked content and will <span class="red">Control</span> the Session as the <span class="red">Host</span>.</td>
+                <td class="lightest-green-background dark-gray table-text">The Participant who clicks the button/loads the Session is the <span class="darkest-gray">Host</span>, the first <span class="darkest-gray">Tab Owner</span> and in <span class="darkest-gray">Control</span>. This person will see all Masked content and will <span class="darkest-gray">Control</span> the Session as the <span class="darkest-gray">Host</span>.</td>
             </tr>
             <tr>
                 <td class="light-blue-background lightest-gray table-column-header">Surfly App Start Page</td>
-                <td class="lightest-green-background dark-gray">The Participant who clicks <i>Start Session</i> is the <span class="red">Host</span>, the first <span class="red">Tab Owner</span> and in <span class="red">Control</span>. This Participant will see all Masked content and will <span class="red">Control</span> the Session as the <span class="red">Host</span>.</td>
+                <td class="lightest-green-background dark-gray table-text">The Participant who clicks <i>Start Session</i> is the <span class="darkest-gray">Host</span>, the first <span class="darkest-gray">Tab Owner</span> and in <span class="darkest-gray">Control</span>. This Participant will see all Masked content and will <span class="darkest-gray">Control</span> the Session as the <span class="darkest-gray">Host</span>.</td>
             </tr>
             <tr>
                 <td class="light-blue-background lightest-gray table-column-header">Spaces</td>
-                <td class="lightest-green-background dark-gray">Regardless of who joins first,	the Space owner is the <span class="red">Host</span>, the first <span class="red">Tab Owner</span> and in <span class="red">Control</span>. This Participant will see all masked content and will <span class="red">Control</span> the Session as the <span class="red">Host</span>.</td>
+                <td class="lightest-green-background dark-gray table-text">Regardless of who joins first,	the Space owner is the <span class="darkest-gray">Host</span>, the first <span class="darkest-gray">Tab Owner</span> and in <span class="darkest-gray">Control</span>. This Participant will see all masked content and will <span class="darkest-gray">Control</span> the Session as the <span class="darkest-gray">Host</span>.</td>
             </tr>            <tr>
                 <td class="light-blue-background lightest-gray table-column-header">REST API</td>
-                <td class="lightest-green-background dark-gray">Highly configurable but by default the first Participant to join the Session from the API generated links will be the <span class="red">Host</span>, the first <span class="red">Tab Owner</span>. and in <span class="red">Control</span>. This Participant will see all masked content and will <span class="red">Control</span> the Session as the <span class="red">Host</span>.</td>
+                <td class="lightest-green-background dark-gray table-text">Highly configurable but by default the first Participant to join the Session from the API generated links will be the <span class="darkest-gray">Host</span>, the first <span class="darkest-gray">Tab Owner</span>. and in <span class="darkest-gray">Control</span>. This Participant will see all masked content and will <span class="darkest-gray">Control</span> the Session as the <span class="darkest-gray">Host</span>.</td>
             </tr>
 </table>
 

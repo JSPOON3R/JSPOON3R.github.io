@@ -99,7 +99,7 @@ console.log(greet('World')); // Output: Hello, World!
             </tr>
             <tr>
                 <td class="light-blue-background lightest-gray table-column-header">Column 1 text</td>
-                <td class="lightest-green-background dark-gray">Column 2 text</td>
+                <td class="lightest-green-background dark-gray table-text">Column 2 text</td>
             </tr>
 </table>
 
