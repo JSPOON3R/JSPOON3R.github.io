@@ -63,6 +63,6 @@ So what's changed? There is now a middle space that the website will pass throug
 
 ## Read More:<br>
 <ul>
-<li class="red bold" href="https://www.surfly.com/surfly-vs-co-browsing-tools/"><a class="dark-gray normal-font">Surfly vs Other Tools<br></a></li><br>
-<li class="red bold" href="https://www.surfly.com/interaction-middleware/"><a class="dark-gray normal-font">Interaction Middleware<br></a></li><br>
+<li class="red bold" href="https://www.surfly.com/surfly-vs-co-browsing-tools/"><a class="dark-gray normal-weight">Surfly vs Other Tools<br></a></li><br>
+<li class="red bold" href="https://www.surfly.com/interaction-middleware/"><a class="dark-gray normal-weight">Interaction Middleware<br></a></li><br>
 </ul>
