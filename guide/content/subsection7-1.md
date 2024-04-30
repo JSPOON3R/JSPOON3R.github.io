@@ -48,7 +48,7 @@ In the red box, you can see some of the cookies marked with a tick. This denotes
 
 <i class="red">If the Cookie is not httpOnly:</i>
 
-All cookies that are not httpOnly should be copied over javascript when the Surfly Session begins. It is possible that you do not have **cookie_transfer_enabled** checked in your configurations. Navigate to <i>Settings > Options > Session Functionality</i> and ensure the checkbox is ticked. If there are still issues after this, please reach out. 
+All cookies that are not httpOnly should be copied over javascript when the Surfly Session begins. It is possible that you do not have **cookie&nbsp;_transfer&nbsp;_enabled** checked in your configurations. Navigate to <i>Settings > Options > Session Functionality</i> and ensure the checkbox is ticked. If there are still issues after this, please reach out. 
 
 <i class="red">If the Cookie is httpOnly:</i>
 
