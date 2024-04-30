@@ -46,11 +46,11 @@ The cookie domain is likely to be the same as your website. The name will vary. 
 <br>
 In the red box, you can see some of the cookies marked with a tick. This denotes that the cookie is httpOnly.
 
-#### <i>If the Cookie is not httpOnly</i>
+<i class="red">If the Cookie is not httpOnly:</i>
 
-All cookies that are not httpOnly should be copied over javascript when the Surfly Session begins. It is possible that you do not have <b>cookie_transfer_enabled</b> checked in your configurations. Navigate to <i>Settings > Options > Session Functionality</i> and ensure the checkbox is ticked. If there are still issues after this, please reach out. 
+All cookies that are not httpOnly should be copied over javascript when the Surfly Session begins. It is possible that you do not have **cookie_transfer_enabled** checked in your configurations. Navigate to <i>Settings > Options > Session Functionality</i> and ensure the checkbox is ticked. If there are still issues after this, please reach out. 
 
-#### <i>If the Cookie is httpOnly</i>
+<i class="red">If the Cookie is httpOnly:</i>
 
 If you see a tick next to the cookie you identified then your website is using httpOnly cookies to maintain state and you will probably need [Session Continuation](https://docs.surfly.com/tutorials/session-continuation/). This is likely to resolve the issue. Please reach out to your contact at Surfly to proceed with the next steps.
 
