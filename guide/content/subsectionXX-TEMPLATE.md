@@ -62,6 +62,14 @@ console.log(greet('World')); // Output: Hello, World!
 #### with tick/cross icons
 
 <table>
+    <!-- Column sizing -->
+        <colgroup>
+           <col style="width: 32%;"> 
+           <col style="width: 17%;"> 
+           <col style="width: 17%;"> 
+           <col style="width: 17%;"> 
+           <col style="width: 17%;"> 
+       </colgroup>
             <!-- Columns -->
             <tr>
                 <!-- Row -->

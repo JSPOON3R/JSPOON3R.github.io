@@ -69,124 +69,123 @@ Like Tab Ownership, Control is segregated per participant per tab. Control deter
 ## <b>In Practice</b> 
 
 The Host role is the only one that will apply across all tabs. Tab Ownership and Control can be different per tab. Different roles in different tabs will result in different abilities for Participants. 
-
 <table>
- <!-- Column sizing -->
-     <colgroup>
-        <col style="width: 40%;"> 
-        <col style="width: 15%;"> 
-        <col style="width: 15%;"> 
-        <col style="width: 15%;"> 
-        <col style="width: 15%;"> 
-    </colgroup>
-            <!-- Columns -->
-            <tr>
-                <!-- Row -->
-                <td class="dark-blue-background lightest-gray bold table-header">Action</td>
-                <td class="dark-blue-background lightest-gray bold table-header">Host</td>
-                <td class="dark-blue-background lightest-gray bold table-header">Tab Owner</td>
-                <td class="dark-blue-background lightest-gray bold table-header">In-Control Participant</td>
-                <td class="dark-blue-background lightest-gray bold table-header">Other Participants</td>
-            </tr>
-            <tr>
-                <td class="light-blue-background lightest-gray table-column-header">Click, scroll, enter information</td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-green-background green table-icon tick-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-            </tr>
-            <tr>
-                <td class="light-blue-background lightest-gray table-column-header">Web content loads and runs inside their browser</td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-green-background green table-icon tick-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-            </tr>
-            <tr>
-                <td class="light-blue-background lightest-gray table-column-header">Sets screen dimensions based on screen size of the device in use</td>
-                <td class="lightest-green-background green table-icon tick-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-            </tr>
-            <tr>
-                <td class="light-blue-background lightest-gray table-column-header">In Control by default</td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-green-background green table-icon tick-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-            </tr>
-            <tr>
-                <td class="light-blue-background lightest-gray table-column-header">Can Close any tabs regardless of Tab Ownership</td>
-                <td class="lightest-green-background green table-icon tick-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-            </tr>
-            <tr>
-                <td class="light-blue-background lightest-gray table-column-header">Can close tabs for which they are the Tab Owner only</td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-green-background green table-icon tick-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-            </tr>
-            <tr>
-                <td class="light-blue-background lightest-gray table-column-header">Can make another Participant the Host</td>
-                <td class="lightest-green-background green table-icon tick-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-            </tr>
-            <tr>
-                <td class="light-blue-background lightest-gray table-column-header">Can switch tabs</td>
-                <td class="lightest-green-background green table-icon tick-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-            </tr>
-            <tr>
-                <td class="light-blue-background lightest-gray table-column-header">Must obtain consent to take Control (excluding Javascript)</td>
-                <td class="lightest-green-background green table-icon tick-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-green-background green table-icon tick-icon"></td>
-            </tr>
-            <tr>
-                <td class="light-blue-background lightest-gray table-column-header">Ability to give Control to any other Participant</td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-green-background green table-icon tick-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-            </tr>
-            <tr>
-                <td class="light-blue-background lightest-gray table-column-header">Ability to return Control to Tab Owner</td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-green-background green table-icon tick-icon"></td>
-                <td class="lightest-green-background green table-icon tick-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-            </tr>
-            <tr>
-                <td class="light-blue-background lightest-gray table-column-header">Able to revoke Control</td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-green-background green table-icon tick-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-            </tr>
-            <tr>
-                <td class="light-blue-background lightest-gray table-column-header">Masked elements in a tab blocked from view</td>
-                <td class="lightest-green-background green table-icon tick-icon"></td>                <td class="lightest-green-background green table-icon tick-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-green-background green table-icon tick-icon"></td>
-                <td class="lightest-green-background green table-icon tick-icon"></td>                <td class="lightest-red-background red table-icon cross-icon"></td>
-            </tr>
-            <tr>
-                <td class="light-blue-background lightest-gray table-column-header">Able to see Masked elements in a tab</td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-green-background green table-icon tick-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-                <td class="lightest-red-background red table-icon cross-icon"></td>
-            </tr>
-            </table>
+    <!-- Column sizing -->
+        <colgroup>
+           <col style="width: 32%;"> 
+           <col style="width: 17%;"> 
+           <col style="width: 17%;"> 
+           <col style="width: 17%;"> 
+           <col style="width: 17%;"> 
+       </colgroup>
+               <!-- Columns -->
+               <tr>
+                   <!-- Row -->
+                   <td class="dark-blue-background lightest-gray bold table-header">Action</td>
+                   <td class="dark-blue-background lightest-gray bold table-header">Host</td>
+                   <td class="dark-blue-background lightest-gray bold table-header">Tab Owner</td>
+                   <td class="dark-blue-background lightest-gray bold table-header">In-Control Participant</td>
+                   <td class="dark-blue-background lightest-gray bold table-header">Other Participants</td>
+               </tr>
+               <tr>
+                   <td class="light-blue-background lightest-gray table-column-header">Click, scroll, enter information</td>
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+                   <td class="lightest-green-background green table-icon tick-icon"></td>
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+               </tr>
+               <tr>
+                   <td class="light-blue-background lightest-gray table-column-header">Web content loads and runs inside their browser</td>
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+                   <td class="lightest-green-background green table-icon tick-icon"></td>
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+               </tr>
+               <tr>
+                   <td class="light-blue-background lightest-gray table-column-header">Sets screen dimensions based on screen size of the device in use</td>
+                   <td class="lightest-green-background green table-icon tick-icon"></td>
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+               </tr>
+               <tr>
+                   <td class="light-blue-background lightest-gray table-column-header">In Control by default</td>
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+                   <td class="lightest-green-background green table-icon tick-icon"></td>
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+               </tr>
+               <tr>
+                   <td class="light-blue-background lightest-gray table-column-header">Can Close any tabs regardless of Tab Ownership</td>
+                   <td class="lightest-green-background green table-icon tick-icon"></td>
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+               </tr>
+               <tr>
+                   <td class="light-blue-background lightest-gray table-column-header">Can close tabs for which they are the Tab Owner only</td>
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+                   <td class="lightest-green-background green table-icon tick-icon"></td>
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+               </tr>
+               <tr>
+                   <td class="light-blue-background lightest-gray table-column-header">Can make another Participant the Host</td>
+                   <td class="lightest-green-background green table-icon tick-icon"></td>
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+               </tr>
+               <tr>
+                   <td class="light-blue-background lightest-gray table-column-header">Can switch tabs</td>
+                   <td class="lightest-green-background green table-icon tick-icon"></td>
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+               </tr>
+               <tr>
+                   <td class="light-blue-background lightest-gray table-column-header">Must obtain consent to take Control (excluding Javascript)</td>
+                   <td class="lightest-green-background green table-icon tick-icon"></td>
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+                   <td class="lightest-green-background green table-icon tick-icon"></td>
+               </tr>
+               <tr>
+                   <td class="light-blue-background lightest-gray table-column-header">Ability to give Control to any other Participant</td>
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+                   <td class="lightest-green-background green table-icon tick-icon"></td>
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+               </tr>
+               <tr>
+                   <td class="light-blue-background lightest-gray table-column-header">Ability to return Control to Tab Owner</td>
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+                   <td class="lightest-green-background green table-icon tick-icon"></td>
+                   <td class="lightest-green-background green table-icon tick-icon"></td>
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+               </tr>
+               <tr>
+                   <td class="light-blue-background lightest-gray table-column-header">Able to revoke Control</td>
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+                   <td class="lightest-green-background green table-icon tick-icon"></td>
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+               </tr>
+               <tr>
+                   <td class="light-blue-background lightest-gray table-column-header">Masked elements in a tab blocked from view</td>
+                   <td class="lightest-green-background green table-icon tick-icon"></td>                
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+                   <td class="lightest-green-background green table-icon tick-icon"></td>
+                   <td class="lightest-green-background green table-icon tick-icon"></td>       
+               </tr>
+               <tr>
+                   <td class="light-blue-background lightest-gray table-column-header">Able to see Masked elements in a tab</td>
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+                   <td class="lightest-green-background green table-icon tick-icon"></td>
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+                   <td class="lightest-red-background red table-icon cross-icon"></td>
+               </tr>
+               </table>
 
 ## <b>What happens in Popular Flows?</b>
 

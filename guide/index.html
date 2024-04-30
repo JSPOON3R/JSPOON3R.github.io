@@ -169,9 +169,8 @@
 
         table {
             border-collapse: collapse;
-            display:flex;
-            flex-direction: column;
-            justify-content: center;
+            table-layout: fixed; 
+        width: 100%;
 
         }
 
@@ -182,14 +181,12 @@
         }
 
         .table-header {
-            padding:.7vw;
+            padding:.2vw;
             font-size: 1em;
-            width:auto;
-
         }
 
         .table-column-header {
-            width:30%;
+            font-size: 1em;
             padding:.5vw;
         }
 
@@ -404,24 +401,27 @@
     height: auto;
         }
     table {
-        width: 100%;
-        overflow-x: auto;
+        border-collapse: collapse;
+        table-layout: fixed; 
+        width: 100%; 
     }
 
     td,
     .table-header,
     th {
-        min-width: 5%;
-        font-size: .8rem;
-        padding:1vw;
+        padding:2vw;
+        font-size: .8em;
+        text-align: center;
+        overflow:hidden; 
     }
     .table-icon.cross-icon,
     .table-icon.tick-icon {
-            background-size: 30px 30px;
+            background-size: 20px 20px;
             padding:4%;
         }
         .table-column-header {
             padding: 1vw;
+            font-size: .8em;
         }
         .small-image {
             width: 50vw;
@@ -566,8 +566,6 @@
         <p class="section-subheader">Situations you may encounter in your first few weeks and how to fix them</p>
         <div id="subsection7-1">Loading content...</div>
         <div class="divider"></div>
-
-
     </div>
 </body>
 
