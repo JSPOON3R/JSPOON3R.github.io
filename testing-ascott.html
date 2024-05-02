@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IFrame Page</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        #iframe-container {
+            width: 100%;
+            height: calc(100vh - 100px); /* Adjust height according to your requirement */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        iframe {
+            width: 80%;
+            height: 80%;
+            border: none;
+        }
+        nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #333;
+            padding: 10px 0;
+            text-align: center;
+        }
+        nav button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div id="iframe-container">
+        <iframe
+    width="1024"
+    height="768"
+    src="https://app.surfly.com/embed/history/?agent_token=t6b8bd332dead462e980ec2e04afe5fb6"
+    allow="autoplay *; camera *; microphone *; display-capture *; geolocation *;"
+>
+</iframe>
+    </div>
+    <nav>
+        <button onclick="location.href='page1.html'">Page 1</button>
+        <button onclick="location.href='page2.html'">Page 2</button>
+        <button onclick="location.href='page3.html'">Page 3</button>
+    </nav>
+</body>
+</html>
