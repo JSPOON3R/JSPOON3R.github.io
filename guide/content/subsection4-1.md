@@ -43,10 +43,10 @@ The most simple way to use the pin code flow is to use the Start Page built in t
 
 If you don't want to use app.surfly.com but also don't need to build your own UI, you can simply embed the Surfly start bar into your own application using an iframe. This will allow you to access Surfly functionality from within whatever platform your Agents are most comfortable with.
 
-Some more information on how to do this can be found in <span class="red">Section 5</span>.
+Information on how to configure this flow can be found in <span class="red">Section 5</span>.
 
 <div class=image-container>
-<img class="medium-image" src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/guide/images/pinstart.gif?raw=true" alt="Medium Image">
+<img class="medium-image" src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/guide/images/embedded-pin-flow.gif" alt="Medium Image">
 </div>
 
 
@@ -54,9 +54,69 @@ Some more information on how to do this can be found in <span class="red">Sectio
 
 
 
-##### Lists
 
-#### Lists
+
+
+
+
+
+### Queue Flow
+
+<ul>
+<li class="red bold"><a class="dark-gray normal-font"></a></li>
+<li class="red bold"><a class="dark-gray normal-font"></a></li>
+<li class="red bold"><a class="dark-gray normal-font"></a></li>
+<li class="red bold"><a class="dark-gray normal-font"></a></li>
+<li class="red bold"><a class="dark-gray normal-font"></a></li>
+</ul>
+
+<i>(Please see the "What Happens in Popular Flows" table in section 2.2 to understand the default <b>Roles</b> given to the Customer and Agent in this type of flow.)</i>
+
+#### <span class="red bold">Complexity:</span> Simple
+
+<ul class="dark-gray">
+<span class="green bold">Implementation Effort: </span> None <br>
+<span class="blue bold">Technical Knowledge Required: </span> None <br>
+<span class="red bold">Time Taken to Implement: </span> None <br>
+</ul>
+
+The most simple way to use the queue code flow is to use the Queue Page built in to app.surfly.com. Simple log in and click "Queue". When a Session is started by the Customer, the Agent will see an entry appear in the Queue page. This will, by default, show the URL that the Customer is coming from. More information can be added here. 
+
+<div class=image-container>
+<img class="medium-image" src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/guide/images/queuestart.gif" alt="Medium Image">
+</div>
+
+#### <span class="red bold">Complexity:</span> Intermediate
+
+<ul class="dark-gray">
+<span class="green bold">Implementation Effort: </span> Low <br>
+<span class="blue bold">Technical Knowledge Required: </span> Embedding iFrames, REST API <br>
+<span class="red bold">Time Taken to Implement: </span> ~ 30 minutes <br>
+</ul>
+
+If you don't want to use app.surfly.com but also don't need to build your own UI, you can simply embed the Surfly start bar into your own application using an iframe. This will allow you to access Surfly functionality from within whatever platform your Agents are most comfortable with.
+
+Information on how to configure this flow can be found in <span class="red">Section 5</span>.
+
+<div class=image-container>
+<img class="medium-image" src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/guide/images/embedded-pin-flow.gif" alt="Medium Image">
+</div>
+
+
+#### <span class="red bold">Complexity:</span> Advanced
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
