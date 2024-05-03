@@ -3,11 +3,11 @@
 
 The experience for Agents and Customers will usually be different. This section focuses on finding the right set up and workflow for your Agents.
 
-## <span class="header-numbers">4.1.1.A </span> Agent Inbound <br><span class="red italic">(Agent responds to customer)</span>
+## Agent Inbound <br><span class="red normal-font">(Agent responds to customer)</span>
 
 For Agent inbound flows, the Session is started by the Customer and the Agent will <i>respond</i> to the incoming interaction. There are two primary ways this can be done. 
 
-### Pin Flow
+### Pin Flow <span class="dark-gray">- Best for Escalations</span>
 
 <ul>
 <li class="red bold"><a class="dark-gray normal-font">The Pin Flow is best used for escalations from existing interactions, such as a phone or IM conversation</a></li>
@@ -17,31 +17,34 @@ For Agent inbound flows, the Session is started by the Customer and the Agent wi
 <li class="red bold"><a class="dark-gray normal-font">The Agent types the pin code relayed to them into Surfly and joins the session</a></li>
 </ul>
 
-<i>(Please see the "What Happens in Popular Flows" table in section 2.2 to understand the default <b>Roles</b> given to the Customer and Agent in this type of flow.)</i>
+You can find the level of integration required based on your needs, the resources you have available and you timelines.
 
-#### <span class="red bold">Complexity:</span> Simple
+#### <span class="blue bold">Complexity:</span> Simple
 
 <ul class="dark-gray">
-<span class="green bold">Implementation Effort: </span> None <br>
-<span class="blue bold">Technical Knowledge Required: </span> None <br>
-<span class="red bold">Time Taken to Implement: </span> None <br>
+<span class="darkest-gray bold">Implementation Effort: </span> None <br>
+<span class="darkest-gray bold">Technical Knowledge Required: </span> None <br>
+<span class="darkest-gray bold">Time Taken to Implement: </span> None <br>
 </ul>
+<br>
 
-The most simple way to use the pin code flow is to use the Start Page built in to app.surfly.com. Simple log in and click "Start". When the Agent recieved a pin code from a Customer, they just have to enter it here.
+The most simple way to use the pin code flow is to use the Start Page built in to [app.surfly.com](app.surfly.com). Simple log in and click "Start". When the Agent recieved a pin code from a Customer, they just have to enter it here.
+<br>
 
 <div class=image-container>
 <img class="medium-image" src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/guide/images/pinstart.gif?raw=true" alt="Medium Image">
 </div>
+<br>
 
-#### <span class="red bold">Complexity:</span> Intermediate
+#### <span class="blue bold">Complexity:</span> Intermediate
 
 <ul class="dark-gray">
-<span class="green bold">Implementation Effort: </span> Low <br>
-<span class="blue bold">Technical Knowledge Required: </span> Embedding iFrames, REST API <br>
-<span class="red bold">Time Taken to Implement: </span> ~ 30 minutes <br>
+<span class="darkest-gray bold">Implementation Effort: </span> Low <br>
+<span class="darkest-gray bold">Technical Knowledge Required: </span> Embedding iFrames, REST API <br>
+<span class="darkest-gray bold">Time Taken to Implement: </span> ~ 30 minutes <br>
 </ul>
 
-If you don't want to use app.surfly.com but also don't need to build your own UI, you can simply embed the Surfly start bar into your own application using an iframe with the Surfly Embed API. This will allow you to access Surfly start functionality from within whatever platform your Agents are most comfortable with.
+If you don't want to use [app.surfly.com](app.surfly.com) but also don't want to build your own UI, you can simply embed the Surfly start bar into your own application using an iframe with the [Surfly Embed API](https://docs.surfly.com/embed-api/). This will allow you to access Surfly start functionality from within whatever platform your Agents are most comfortable with.
 
 Information on how to configure this flow can be found in <span class="red">Section 5</span>.
 
@@ -50,34 +53,32 @@ Information on how to configure this flow can be found in <span class="red">Sect
 </div>
 
 
-#### <span class="red bold">Complexity:</span> Advanced
+#### <span class="blue bold">Complexity:</span> Advanced
+
+--WIP--
+
+Please see the "What Happens in Popular Flows" table in section 2.2 to understand the default <b>Roles</b> given to the Customer and Agent in this type of flow.
 
 
 
 
-
-
-
-
-
-### Queue Flow
+### Queue Flow <span class="dark-gray">- Best for New Interactions</span>
 
 <ul>
-<li class="red bold"><a class="dark-gray normal-font"></a></li>
-<li class="red bold"><a class="dark-gray normal-font"></a></li>
-<li class="red bold"><a class="dark-gray normal-font"></a></li>
-<li class="red bold"><a class="dark-gray normal-font"></a></li>
-<li class="red bold"><a class="dark-gray normal-font"></a></li>
+<li class="red bold"><a class="dark-gray normal-font"></a>The queue will show all incoming interactions when somebody has triggered a Session</li>
+<li class="red bold"><a class="dark-gray normal-font"></a>Agents can join incoming interactions from the Queue</li>
+<li class="red bold"><a class="dark-gray normal-font"></a>The queue will show the Agent from which URL the Session has been triggered</li>
+<li class="red bold"><a class="dark-gray normal-font"></a>Custom meta data can be added to the queue to give Agents more information</li>
+<li class="red bold"><a class="dark-gray normal-font"></a>The queue can be used in our app, embedded in another app or an entirely custom queing system can be created with out APIs</li>
 </ul>
+<br>
 
-<i>(Please see the "What Happens in Popular Flows" table in section 2.2 to understand the default <b>Roles</b> given to the Customer and Agent in this type of flow.)</i>
-
-#### <span class="red bold">Complexity:</span> Simple
+#### <span class="blue bold">Complexity:</span> Simple
 
 <ul class="dark-gray">
-<span class="green bold">Implementation Effort: </span> None <br>
-<span class="blue bold">Technical Knowledge Required: </span> None <br>
-<span class="red bold">Time Taken to Implement: </span> None <br>
+<span class="darkest-gray bold">Implementation Effort: </span> None <br>
+<span class="darkest-gray bold">Technical Knowledge Required: </span> None <br>
+<span class="darkest-gray bold">Time Taken to Implement: </span> None <br>
 </ul>
 
 The most simple way to use the queue code flow is to use the Queue Page built in to app.surfly.com. Simple log in and click "Queue". When a Session is started by the Customer, the Agent will see an entry appear in the Queue page. This will, by default, show the URL that the Customer is coming from. The Agent clicks "Take call" to join the inbound Session.
@@ -85,28 +86,35 @@ The most simple way to use the queue code flow is to use the Queue Page built in
 <img class="medium-image" src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/guide/images/queuestart.gif" alt="Medium Image">
 </div>
 
-#### <span class="red bold">Complexity:</span> Intermediate
+#### <span class="blue bold">Complexity:</span> Intermediate
 
 <ul class="dark-gray">
-<span class="green bold">Implementation Effort: </span> Low <br>
-<span class="blue bold">Technical Knowledge Required: </span> Embedding iFrames, REST API <br>
-<span class="red bold">Time Taken to Implement: </span> ~ 30 minutes <br>
+<span class="darkest-gray bold">Implementation Effort: </span> Low <br>
+<span class="darkest-gray bold">Technical Knowledge Required: </span> Embedding iFrames, REST API <br>
+<span class="darkest-gray bold">Time Taken to Implement: </span> ~ 30 minutes <br>
 </ul>
 
-If you don't want to use app.surfly.com but also don't need to build your own UI, you can also use the Surfly Embed API to bring the Surfly queue into your own application using an iframe. This will allow you to access Surfly queue functionality from within whatever platform your Agents are most comfortable with.
+If you don't want to use app.surfly.com but also don't need to build your own UI, you can also use the [Surfly Embed API](https://docs.surfly.com/embed-api/) to bring the Surfly queue into your own application using an iframe. This will allow you to access Surfly queue functionality from within whatever platform your Agents are most comfortable with.
 
 Information on how to configure this flow can be found in <span class="red">Section 5</span>.
+<br>
 
 <div class=image-container>
-<img class="medium-image" src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/guide/images/zendesk-queue.gif" alt="Medium Image">
+<img class="medium-image" src="https://placehold.jp/30/dd6699/ffffff/300x150.png?text=placeholder+image" alt="Medium Image">
 </div>
+<br>
 
 
-#### <span class="red bold">Complexity:</span> Advanced
+#### <span class="blue bold">Complexity:</span> Advanced
 
+--WIP--
 
+Please see the "What Happens in Popular Flows" table in section 2.2 to understand the default <b>Roles</b> given to the Customer and Agent in this type of flow.
 
 ## Read More:<br>
 <ul>
-<li class="red bold"><a class="dark-gray normal-weight"  href="https://docs.surfly.com/tutorials/session-continuation/">Session Continuation<br></a></li><br>
+<li class="red bold"><a class="dark-gray normal-weight"  href="https://www.surfly.com/admin-guide/">Admin User Guide<br></a></li><br>
+<li class="red bold"><a class="dark-gray normal-weight"  href="https://docs.surfly.com/category/javascript-api">Javascript API<br></a></li><br>
+<li class="red bold"><a class="dark-gray normal-weight"  href="https://docs.surfly.com/embed-api/">Embed API<br></a></li><br>
+<li class="red bold"><a class="dark-gray normal-weight"  href="https://docs.surfly.com/webhooks">Webhooks<br></a></li><br>
 </ul>
