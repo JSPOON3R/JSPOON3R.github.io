@@ -100,7 +100,7 @@ Information on how to configure this flow can be found in <span class="red">Sect
 <br>
 
 <div class=image-container>
-<img class="medium-image" src="https://placehold.jp/30/dd6699/ffffff/300x150.png?text=placeholder+image" alt="Medium Image">
+<img class="medium-image" src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/guide/images/zendesk-queue.gif?raw=true" alt="Medium Image">
 </div>
 <br>
 
