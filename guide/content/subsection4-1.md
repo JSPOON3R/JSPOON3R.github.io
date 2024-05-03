@@ -65,7 +65,7 @@ Information on how to configure this flow can be found in <span class="red">Sect
 Please see the "What Happens in Popular Flows" table in section 2.2 to understand the default <b>Roles</b> given to the Customer and Agent in this type of flow.
 
 ## Queue Flow 
-<span class="blue normal-font">Best for New Interactions/span>
+<span class="blue normal-font">Best for New Interactions</span>
 
 <ul>
 <li class="red bold"><a class="dark-gray normal-font">The queue will show all incoming interactions when somebody has triggered a Session</a></li>
