@@ -187,7 +187,7 @@ The Host role is the only one that will apply across all tabs. Tab Ownership and
                </tr>
                </table>
 
-## What happens in Popular Flows?
+## What Happens in Popular Flows?
 
 Below are the default distributions of Session roles in popular implementations. Many of these default values can be changed without any user action necessary using the Javascript API. 
 
@@ -203,7 +203,7 @@ Below are the default distributions of Session roles in popular implementations.
                 <td class="dark-blue-background lightest-gray bold table-header">Default Role Distribution on Start</td>
             </tr>
             <tr>
-                <td class="light-blue-background lightest-gray table-column-header">Default “Get Live Help” Widget</td>
+                <td class="light-blue-background lightest-gray table-column-header">Pin code flow. E.g. the “Get Live Help” Widget</td>
                 <td class="lightest-green-background dark-gray table-text">The person who clicks the widget is the <span class="dark-blue bold">Host</span>, and the first <span class="dark-blue bold">Tab Owner</span>. This person will see all masked content and will <span class="dark-blue bold">Control</span> the session as the <span class="dark-blue bold">Host</span>.</td>
             </tr>
             <tr>

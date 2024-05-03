@@ -1,14 +1,72 @@
-# <span class="header-numbers">X.X</span> Heading
 
-This is more plain text.
+# <span class="header-numbers">4.1.1</span> Agent-Side Flow
 
-## Subheading
+The experience for Agents and Customers will usually be different. This section focuses on finding the right set up and workflow for your Agents.
 
-This is more plain text.
+## <span class="header-numbers">4.1.1.A </span> Agent Inbound <br><span class="red italic">(Agent responds to customer)</span>
 
-### Sub-subheading
+For Agent inbound flows, the Session is started by the Customer and the Agent will <i>respond</i> to the incoming interaction. There are two primary ways this can be done. 
+
+### Pin Flow
+
+<ul>
+<li class="red bold"><a class="dark-gray normal-font">The Pin Flow is best used for escalations from existing interactions, such as a phone or IM conversation</a></li>
+<li class="red bold"><a class="dark-gray normal-font">The Customer will trigger a Session (see section 5) and be presented with a 4 digit pin code</a></li>
+<li class="red bold"><a class="dark-gray normal-font">The Customer will communicate this pin code to the Agent through the channel they are already using</a></li>
+<li class="red bold"><a class="dark-gray normal-font">There is no need for routing because you already know which agent should join the Surfly Session</a></li>
+<li class="red bold"><a class="dark-gray normal-font">The Agent types the pin code relayed to them into Surfly and joins the session</a></li>
+</ul>
+
+<i>(Please see the "What Happens in Popular Flows" table in section 2.2 to understand the default <b>Roles</b> given to the Customer and Agent in this type of flow.)</i>
+
+#### <span class="red bold">Complexity:</span> Simple
+
+<ul class="dark-gray">
+<span class="green bold">Implementation Effort: </span> None <br>
+<span class="blue bold">Technical Knowledge Required: </span> None <br>
+<span class="red bold">Time Taken to Implement: </span> None <br>
+</ul>
+
+The most simple way to use the pin code flow is to use the Start Page built in to app.surfly.com. Simple log in and click "Start". When the Agent recieved a pin code from a Customer, they just have to enter it here.
+
+<div class=image-container>
+<img class="medium-image" src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/guide/images/pinstart.gif?raw=true" alt="Medium Image">
+</div>
+
+#### <span class="red bold">Complexity:</span> Intermediate
+
+<ul class="dark-gray">
+<span class="green bold">Implementation Effort: </span> Low <br>
+<span class="blue bold">Technical Knowledge Required: </span> Embedding iFrames, REST API <br>
+<span class="red bold">Time Taken to Implement: </span> ~ 30 minutes <br>
+</ul>
+
+If you don't want to use app.surfly.com but also don't need to build your own UI, you can simply embed the Surfly start bar into your own application using an iframe. This will allow you to access Surfly functionality from within whatever platform your Agents are most comfortable with.
+
+Some more information on how to do this can be found in <span class="red">Section 5</span>.
+
+<div class=image-container>
+<img class="medium-image" src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/guide/images/pinstart.gif?raw=true" alt="Medium Image">
+</div>
+
+
+#### <span class="red bold">Complexity:</span> Advanced
+
+
+
+##### Lists
+
+#### Lists
+
+
+
+
+
+
+
+
+
 ### <span class="red bold">Bold Title <i class="normal-font">thin italics:</i></span> The participant who opened/ loaded the tab. 
-Even more plain text.
 
 #### Lists
 <!-- Red bullet points -->
