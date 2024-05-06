@@ -100,8 +100,9 @@
             }
         }
 
-
-    Surfly.session().on('tab_control', function (session, event) {
+        function startSession() {
+    Surfly.session().startLeader()
+    .on('tab_control', function (session, event) {
         try {
             if (event.leaderIndex === event.controlIndex) {
                 show();
@@ -118,7 +119,7 @@
             console.error("An error occurred:", error.message);
         }
     });
-
+}
 
 function hide() {
     var veryImportantButton = document.getElementById("veryImportantButton");
@@ -290,10 +291,18 @@ function show() {
         }
 
         .surfly-masked.mask2 {
-    filter: blur(10px) !important; /* Adjust the blur radius as needed */
-    transition: filter 0.3s ease; /* Smooth transition for the blur effect */
-    box-shadow: 0 0 10px 0 red; /* Red glow effect */
-}
+            filter: none !important;
+            transition: transform 0.3s ease;
+            width: 15px; 
+             height: 15px; 
+            cursor: not-allowed;
+
+        }
+
+        .surfly-masked.mask2 {
+            filter: none !important;
+            transform: scale(0);
+        }
 
         .surfly-masked.mask3 {
             filter: none !important;
@@ -339,8 +348,9 @@ function show() {
             <div class="masking-header" id="mh_1">
                 <h2>Field Masking</h2>
                 <h3>Ensure text entered into a specified field is not visisble to other participants</h3>
-                <p>Field masking has been applied to the input boxes in this div. Characters enteres into elements with the type "input" will be redacted</p>
-
+                <p>Required changes to website code? <b>Yes</b><br><br>
+                    What can it mask? <b>Text input fields</b><br>
+                </p>
             </div>
             <form>
                 <label for="name">Name</label>
@@ -385,8 +395,9 @@ function show() {
             <div class="masking-header" id="mh_2">
                 <h2>Element Masking</h2>
                 <h3>Easily mask any page elements with Surfly's default masking colors</h3>
-                <p>Basic element masking will replace page elements with a blurred graphic to block them from both view and interaction</p>
-
+                <p>Required changes to website code: <b>No</b><br><br>
+                    What can it mask?: <b>All page elements (e.g. Text, Buttons, Images, iFrames, etc)</b><br>
+                </p>
             </div>
             <form>
                 <label for="name">Name</label>
@@ -432,7 +443,9 @@ function show() {
             <div class="masking-header" id="mh_3">
                 <h2>Custom Style Element Masking</h2>
                 <h3>Create your own styles for masked page content</h3>
-                <p>You can style the masking graphics as you see fit. Anything that can be achieved with CSS is possible. You may use different styles for different elements</p>
+                <p>Required changes to website code: <b>Yes</b><br><br>
+                    What can it mask?: <b>All page elements (e.g. Text, Buttons, Images, iFrames, etc)</b><br>
+                </p>
             </div>
             <form>
                 <label for="name">Name</label>
@@ -476,7 +489,9 @@ function show() {
             <div class="masking-header" id="mh_4">
                 <h2>Control Dependent Appearance</h2>
                 <h3>Remove elements depending on who is in control</h3>
-                <p>Surfly will show and hide elements on a page depending on who is currently in control.</p>
+                <p>Required changes to website code: <b>Yes</b><br><br>
+                    What can it mask?: <b>All page elements (e.g. Text, Buttons, Images, iFrames, etc)</b><br>
+                </p>
             </div>
             <form>
                 <label for="name">Name</label>

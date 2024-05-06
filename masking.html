@@ -29,6 +29,23 @@ function show() {
     }
 }
 
+Surfly.session().on('tab_control', function (session, event) {
+        try {
+            if (event.leaderIndex === event.controlIndex) {
+                show();
+                console.log("Element enabled");
+                console.log("Leader index: " + event.leaderIndex);
+                console.log("Control index: " + event.controlIndex);
+            } else {
+                hide();
+                console.log("Element disabled");
+                console.log("Leader index: " + event.leaderIndex);
+                console.log("Control index: " + event.controlIndex);
+            }
+        } catch (error) {
+            console.error("An error occurred:", error.message);
+        }
+    });
 
     </script>
 
@@ -276,9 +293,8 @@ function show() {
             <div class="masking-header" id="mh_2">
                 <h2>Element Masking</h2>
                 <h3>Easily mask any page elements with Surfly's default masking colors</h3>
-                <p>Required changes to website code: <b>No</b><br><br>
-                    What can it mask?: <b>All page elements (e.g. Text, Buttons, Images, iFrames, etc)</b><br>
-                </p>
+                <p>Field masking has been applied to the input boxes in this div. Characters enteres into elements with the type "input" will be redacted</p>
+
             </div>
             <form>
                 <label for="name">Name</label>
@@ -324,9 +340,7 @@ function show() {
             <div class="masking-header" id="mh_3">
                 <h2>Custom Style Element Masking</h2>
                 <h3>Create your own styles for masked page content</h3>
-                <p>Required changes to website code: <b>Yes</b><br><br>
-                    What can it mask?: <b>All page elements (e.g. Text, Buttons, Images, iFrames, etc)</b><br>
-                </p>
+                <p>Basic element masking will replace page elements with a blurred graphic to block them from both view and interaction</p>
             </div>
             <form>
                 <label for="name">Name</label>
@@ -370,9 +384,7 @@ function show() {
             <div class="masking-header" id="mh_4">
                 <h2>Control Dependent Appearance</h2>
                 <h3>Remove elements depending on who is in control</h3>
-                <p>Required changes to website code: <b>Yes</b><br><br>
-                    What can it mask?: <b>All page elements (e.g. Text, Buttons, Images, iFrames, etc)</b><br>
-                </p>
+                <p>You can style the masking graphics as you see fit. Anything that can be achieved with CSS is possible. You may use different styles for different elements</p>
             </div>
             <form>
                 <label for="name">Name</label>
