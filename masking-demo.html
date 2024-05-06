@@ -290,18 +290,10 @@ function show() {
         }
 
         .surfly-masked.mask2 {
-            filter: none !important;
-            transition: transform 0.3s ease;
-            width: 15px; 
-             height: 15px; 
-            cursor: not-allowed;
-
-        }
-
-        .surfly-masked.mask2 {
-            filter: none !important;
-            transform: scale(0);
-        }
+    filter: blur(10px) !important; /* Adjust the blur radius as needed */
+    transition: filter 0.3s ease; /* Smooth transition for the blur effect */
+    box-shadow: 0 0 10px 0 red; /* Red glow effect */
+}
 
         .surfly-masked.mask3 {
             filter: none !important;
