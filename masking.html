@@ -5,49 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Masking</title>
-    <script>
-        var widgetkey;
-        var session_ready = false;
-        var veryImportantButton = document.getElementById("veryImportantButton");
-
-
-function hide() {
-    var veryImportantButton = document.getElementById("veryImportantButton");
-    if (veryImportantButton) {
-        veryImportantButton.style.display = "none";
-    } else {
-        throw new Error("Element is null or undefined in hide()");
-    }
-}
-
-function show() {
-    var veryImportantButton = document.getElementById("veryImportantButton");
-    if (veryImportantButton) {
-        veryImportantButton.style.display = "inline";
-    } else {
-        throw new Error("Element is null or undefined in show()");
-    }
-}
-
-Surfly.session().on('tab_control', function (session, event) {
-        try {
-            if (event.leaderIndex === event.controlIndex) {
-                show();
-                console.log("Element enabled");
-                console.log("Leader index: " + event.leaderIndex);
-                console.log("Control index: " + event.controlIndex);
-            } else {
-                hide();
-                console.log("Element disabled");
-                console.log("Leader index: " + event.leaderIndex);
-                console.log("Control index: " + event.controlIndex);
-            }
-        } catch (error) {
-            console.error("An error occurred:", error.message);
-        }
-    });
-
-    </script>
 
     <style>
         body {
@@ -419,7 +376,6 @@ Surfly.session().on('tab_control', function (session, event) {
                 <label for="subscribe">Subscribe to Newsletter</label>
                 <input type="checkbox" id="subscribe" name="subscribe" value="yes">
                 <button type="submit" id="veryImportantButton" style="display:inline;">Very Important Button</button>
-                <button type="submit" onclick="hide()">TEST</button>
 
                 <label>Embedded Content</label>
                 <iframe
