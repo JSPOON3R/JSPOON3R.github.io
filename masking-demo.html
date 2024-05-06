@@ -100,9 +100,8 @@
             }
         }
 
-        function startSession() {
-    Surfly.session().startLeader()
-    .on('tab_control', function (session, event) {
+
+    Surfly.session().on('tab_control', function (session, event) {
         try {
             if (event.leaderIndex === event.controlIndex) {
                 show();
@@ -119,7 +118,7 @@
             console.error("An error occurred:", error.message);
         }
     });
-}
+
 
 function hide() {
     var veryImportantButton = document.getElementById("veryImportantButton");
