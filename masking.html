@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
-
+    <link rel="shortcut icon" type="image/x-icon" href="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/guide/icons/Favicon-PNG.png?raw=true">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Basic Form</title>
+    <title>Masking</title>
     <script>
         var widgetkey;
         var session_ready = false;
@@ -78,7 +78,7 @@ Surfly.session().on('tab_control', function (session, event) {
         }
 
         #c_1 {
-            background-color: #f0dca9;
+            background-color: #f2b170;
         }
 
         #c_2 {
@@ -97,6 +97,7 @@ Surfly.session().on('tab_control', function (session, event) {
             display: block;
             margin-bottom: 10px;
             font-weight: bold;
+            color:white;
         }
 
         .radio-btn-container {
@@ -112,13 +113,16 @@ Surfly.session().on('tab_control', function (session, event) {
         }
 
         h2 {
-            font-size: 1.8rem;
+            font-size: 4rem;
             font-weight: lighter;
             color: #4d4d4d;
+            margin: 3px;
         }
 
         h3 {
-            font-size: 1.2rem;
+            font-size: 2rem;
+            margin-top: 1px;
+            margin-bottom: 2px;
             font-weight: lighter;
             color: #757575;
         }
@@ -159,6 +163,9 @@ Surfly.session().on('tab_control', function (session, event) {
             padding: 20px;
             margin-bottom: 40px;
             border-radius: 10px;
+            display: flex;
+    flex-direction: column;
+    align-items: center;
         }
 
         .masking-header h1 {
@@ -177,16 +184,20 @@ Surfly.session().on('tab_control', function (session, event) {
         }
 
         .masking-header h3 {
-            font-size: 1.4rem;
+            font-size: 2rem;
             font-weight: lighter;
             color: #757575;
         }
 
         .masking-header p {
-            color: #757575;
-            background-color: #eff0f0;
             padding: 10px;
             border-radius: 10px;
+            font-size: 1rem;
+            margin-bottom:0;
+            margin-top: 15px;
+            color: #757575;
+            text-align: center;
+            width:90%
         }
 
         .surfly-masked.mask1 {
@@ -245,9 +256,6 @@ Surfly.session().on('tab_control', function (session, event) {
         <div class="sub-container" id="c_1">
             <div class="masking-header" id="mh_1">
                 <h2>Field Masking</h2>
-                <h3>Ensure text entered into a specified field is not visisble to other participants</h3>
-                <p>Field masking has been applied to the input boxes in this div. Characters enteres into elements with the type "input" will be redacted</p>
-
             </div>
             <form>
                 <label for="name">Name</label>
@@ -291,8 +299,6 @@ Surfly.session().on('tab_control', function (session, event) {
         <div class="sub-container" id="c_2">
             <div class="masking-header" id="mh_2">
                 <h2>Element Masking</h2>
-                <h3>Easily mask any page elements with Surfly's default masking colors</h3>
-                <p>Basic element masking will replace page elements with a blurred graphic to block them from both view and interaction</p>
             </div>
             <form>
                 <label for="name">Name</label>
@@ -336,9 +342,8 @@ Surfly.session().on('tab_control', function (session, event) {
         </div>
         <div class="sub-container" id="c_3">
             <div class="masking-header" id="mh_3">
-                <h2>Custom Style Element Masking</h2>
-                <h3>Create your own styles for masked page content</h3>
-                <p>You can style the masking graphics as you see fit. Anything that can be achieved with CSS is possible. You may use different styles for different elements</p>
+                <h2>Element Masking</h2>
+                <h3>Custom Styles</h3>
             </div>
             <form>
                 <label for="name">Name</label>
@@ -380,9 +385,8 @@ Surfly.session().on('tab_control', function (session, event) {
 
         <div class="sub-container" id="c_4">
             <div class="masking-header" id="mh_4">
-                <h2>Control Dependent Appearance</h2>
-                <h3>Remove elements depending on who is in control</h3>
-                <p>Surfly can change the page content depending on who is in control. We can ensure that certain page element are only rendered if the Customer/Agent is in control</p>
+                <h2>Control Switching</h2>
+                <h3>(Control Dependent Appearance)</h3>
             </div>
             <form>
                 <label for="name">Name</label>
