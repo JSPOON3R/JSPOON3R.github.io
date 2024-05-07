@@ -36,23 +36,23 @@
                     console.log("Leader Link: ", session.leaderLink);
                     console.log("Follower Link: ", session.followerLink);
                     console.log("Pin: ", session.pin);
-                });
 
-            //Open session in a new window
-            window.open(session.followerLink, "_blank");
+                    //Open session in a new window
+                    window.open(session.followerLink, "_blank");
 
-            //Send session URLs elsewhere e.g. if a customer starts a session here you might want to send the Agent URL to be loaded in their workspace instead of routing to the Surfly queue
-            fetch('https://example.com/post_endpoint', {
-                method: 'POST',
-                body: session.leaderLink
-            })
-                .then(response => response.json())
-                .then(data => {
-                    console.log('Message successfully posted:', data);
-                    // Do something with the response data
-                })
-                .catch(error => {
-                    console.error('Error posting message:', error);
+                    //Send session URLs elsewhere e.g. if a customer starts a session here you might want to send the Agent URL to be loaded in their workspace instead of routing to the Surfly queue
+                    fetch('https://example.com/post_endpoint', {
+                        method: 'POST',
+                        body: session.leaderLink
+                    })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log('Message successfully posted:', data);
+                            // Do something with the response data
+                        })
+                        .catch(error => {
+                            console.error('Error posting message:', error);
+                        });
                 });
         }
 
