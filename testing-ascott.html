@@ -4,6 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IFrame Page</title>
+<script>
+  (function(s,u,r,f,l,y){s[f]=s[f]||{init:function(){s[f].q=arguments}};
+  l=u.createElement(r);y=u.getElementsByTagName(r)[0];l.async=1;
+  l.src='https://surfly.com/surfly.js';y.parentNode.insertBefore(l,y);})
+  (window,document,'script','Surfly');
+
+  var settings = {
+    widget_key:'99671227762b43c2a96daa066ee006e2'
+  };
+  Surfly.init(settings, function(initResult) {
+    if (initResult.success) {
+      console.log('All good for happy cobrowsing!');
+      // it is now safe to use API
+      if (!Surfly.isInsideSession) {
+        Surfly.button();
+      }
+    } else {
+      console.log('Your browser lacks features required by Surfly');
+    }
+  });
+
+    function startSession() {
+        Surfly.session().create()
+        .on("session_created", function(session, event) {
+                console.log("session info:",session,"  event info:",event)
+            });
+        }
+    
+
+</script>
+
     <style>
         body {
             margin: 0;
@@ -61,5 +92,6 @@
         <button onclick="location.href='page2.html'">Page 2</button>
         <button onclick="location.href='page3.html'">Page 3</button>
     </nav>
+<button onclick="startSession()">start session</button>
 </body>
 </html>
