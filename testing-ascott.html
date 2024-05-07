@@ -21,7 +21,7 @@
                 console.log('All good for happy cobrowsing!');
                 // it is now safe to use API
                 if (!Surfly.isInsideSession) {
-                    Surfly.button();
+
                 }
             } else {
                 console.log('Your browser lacks features required by Surfly');
@@ -37,7 +37,7 @@
                     console.log("Follower Link: ", session.followerLink);
                     console.log("Pin: ", session.pin);
                 });
-                
+
             //Open session in a new window
             window.open(session.followerLink, "_blank");
 
