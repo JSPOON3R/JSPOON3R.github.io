@@ -14,7 +14,9 @@
             (window, document, 'script', 'Surfly');
 
         var settings = {
-            widget_key: '99671227762b43c2a96daa066ee006e2'
+            widget_key: '99671227762b43c2a96daa066ee006e2',
+            widget_key_domain_list: "demo.surfly.com",
+            url: "www.google.com"
         };
         Surfly.init(settings, function (initResult) {
             if (initResult.success) {
@@ -38,7 +40,7 @@
                     console.log("Pin: ", session.pin);
 
                     //Open session in a new window
-                    window.open(session.followerLink, "_blank");
+                    window.open(session.leaderLink, "_blank");
 
                     //Send session URLs elsewhere e.g. if a customer starts a session here you might want to send the Agent URL to be loaded in their workspace instead of routing to the Surfly queue
                     fetch('https://example.com/post_endpoint', {
