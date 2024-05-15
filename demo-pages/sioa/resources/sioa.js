@@ -391,9 +391,10 @@ function loadpinflow() {
         modal.style.display = "none";
     });
 
-    endsessionbutton.addEventListener("click", function () {
-        Surfly.session().end();
-    });
+    document.addEventListener("DOMContentLoaded", function() {
+        endsessionbutton.addEventListener("click", function () {
+            Surfly.session().end();
+        });    });
 }
 
 
