@@ -87,7 +87,7 @@
                         settings.script_embedded = '';
                     }
                     if (checkboxEmbed.checked) {
-                        settings.script_embedded = 'https://demo.surfly.com/script/screenshare_button_script.js';
+                        settings.script_embedded = 'https://demo.surfly.com/demo-pages/javascript-demo/resources/screenshare_button_script.js';
                         addLogLine('<span style="color: #166e8e; font-weight: bold;">Floating ScreenShare button added</span> ');
                     } else {
                         settings.script_embedded = '';
@@ -109,7 +109,7 @@
                         settings.script_embedded = '';
                     }
                     if (checkboxEmbed.checked) {
-                        settings.script_embedded = 'https://demo.surfly.com/script/inject-messaging.js';
+                        settings.script_embedded = 'https://demo.surfly.com/demo-pages/javascript-demo/resources/inject-messaging.js';
                         addLogLine('<span style="color: #166e8e; font-weight: bold;">Messaging Widget added</span> ');
                     } else {
                         settings.script_embedded = '';
@@ -362,7 +362,7 @@
         }
         //copy messaging url to clipboard
         function copyToClipboard() {
-            var urlToCopy = 'https://demo.surfly.com/resources/send-message-to-parent.html';
+            var urlToCopy = 'https://demo.surfly.com/demo-pages/javascript-demo/send-message-to-parent.html';
             navigator.clipboard.writeText(urlToCopy)
                 .catch(function (err) {
                     console.error('Unable to copy to clipboard', err);
