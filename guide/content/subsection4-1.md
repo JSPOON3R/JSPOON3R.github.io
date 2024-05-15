@@ -31,7 +31,7 @@ The most simple way to use the pin code flow is to use the Start Page built in t
 <br>
 <br>
 <div class=image-container>
-<img class="medium-image" src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/guide/images/pinstart.gif?raw=true" alt="Medium Image">
+<img class="medium-image" src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/resources-common/images/pinstart.gif?raw=true" alt="Medium Image">
 <figcaption>The pin code within the Surfly app</figcaption>
 </div>
 
@@ -52,7 +52,7 @@ Information on how to configure this flow can be found in <span class="red">Sect
 <br>
 <br>
 <div class=image-container>
-<img class="medium-image" src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/guide/images/embedded-pin-flow.gif" alt="Medium Image">
+<img class="medium-image" src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/resources-common/images/embedded-pin-flow.gif?raw=true" alt="Medium Image">
 <figcaption>The pin code flow embedded into NICE CX Platform</figcaption>
 </div>
 
@@ -87,7 +87,7 @@ Please see the "What Happens in Popular Flows" table in section 2.2 to understan
 #### The Surfly App
 The most simple way to use the queue code flow is to use the Queue Page built in to app.surfly.com. Simple log in and click "Queue". When a Session is started by the Customer, the Agent will see an entry appear in the Queue page. This will, by default, show the URL that the Customer is coming from. The Agent clicks "Take call" to join the inbound Session.
 <div class=image-container>
-<img class="medium-image" src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/guide/images/queuestart.gif" alt="Medium Image">
+<img class="medium-image" src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/resources-common/images/queuestart.gif?raw=true" alt="Medium Image">
 <figcaption>The queue code flow within the Surfly app</figcaption>
 </div>
 
@@ -108,7 +108,7 @@ Information on how to configure this flow can be found in <span class="red">Sect
 <br>
 
 <div class=image-container>
-<img class="medium-image" src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/guide/images/zendesk-queue.gif?raw=true" alt="Medium Image">
+<img class="medium-image" src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/resources-common/images/zendesk-queue.gif?raw=true" alt="Medium Image">
 <figcaption>The queue code embedded within Zendesk</figcaption>
 </div>
 <br>

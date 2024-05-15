@@ -16,7 +16,7 @@ Let's start with the basics. Imagine you want to navigate to www.amazon.com. How
 <span class="red bold">4.</span> Your browser renders the web page so you can use it <br>
 
 <div class=image-container>
-<img class="medium-image" src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/guide/images/request.png" alt="Medium Image">
+<img class="medium-image" src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/resources-common/images/request.png?raw=true" alt="Medium Image">
 </div>
 
 This is a simple request and response from you the website you are trying to visit. Next, let's look at how most Co-browsing vendors enable you to collaborate with others 
@@ -37,7 +37,7 @@ Every web page is a page made of code. These pages live on servers and they go t
 This is how most co-browsing tools work - you add a snippet of code to your website. Now your website can allow two people to share an experience. 
 
 <div class=image-container>
-<img class="medium-image" src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/guide/images/embedded.png" alt="Medium Image">
+<img class="medium-image" src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/resources-common/images/embedded.png?raw=true" alt="Medium Image">
 </div>
 
 The problem here is that your new co-browsing tool is restricted to the places you are able to add this code. The vast majority of the internet is unavailable to you. Any parts of your website that borrow from other websites (e.g. a google maps iframe) either won't work or will have their functionality reduced. 
@@ -56,7 +56,7 @@ Let's visit amazon.com again through Surfly.
 <span class="red bold">6.</span> Your browser renders the webpage so you can use it <br>
 
 <div class=image-container>
-<img class="medium-image" src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/guide/images/Surfly.png" alt="Medium Image">
+<img class="medium-image" src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/resources-common/images/Surfly.png?raw=true" alt="Medium Image">
 </div>
 
 So what's changed? There is now a middle space that the website will pass through on its way to you and the people you are browsing with. This middle space not only allows Surfly to make any modifications to the website here. We enable co-browsing, but we also enable you to change anything you like. You take full control over the browsing experience in a way no other tool can enable. 

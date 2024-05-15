@@ -28,19 +28,19 @@ Even more plain text.
 #### Example of Adding Images
 
 <div class=image-container>
-<img class="small-image" src="https://demo.surfly.com/img/gif/you-them.gif" alt="Small Image">
+<img class="small-image" src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/resources-common/images/embedded-pin-flow.gif?raw=true" alt="Small Image">
 </div>
 
 This is additional plain text.
 
 <div class=image-container>
-<img class="medium-image" src="https://demo.surfly.com/img/gif/you-them.gif" alt="Medium Image">
+<img class="medium-image" src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/resources-common/images/embedded-pin-flow.gif?raw=true" alt="Medium Image">
 </div>
 
 More plain text.
 
 <div class=image-container>
-<img class="large-image" src="https://demo.surfly.com/img/gif/you-them.gif" alt="Large Image">
+<img class="large-image" src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/resources-common/images/embedded-pin-flow.gif?raw=true" alt="Large Image">
 </div>
 
 And yet more plain text.

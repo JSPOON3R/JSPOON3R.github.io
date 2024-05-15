@@ -29,7 +29,7 @@ You can do this by right clicking on the webpage and clicking <i>Insepct</i>. Fr
 <br>
 
 <div class=image-container>
-<img class="large-image" src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/guide/images/httpOnly-check.png" alt="Large Image">
+<img class="large-image" src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/resources-common/images/httpOnly-check.png?raw=true" alt="Large Image">
 </div>
 <br>
 <span class="red bold">3.</span> Find the cookie responsible for keeping you logged in<br>
