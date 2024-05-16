@@ -79,14 +79,13 @@ CSS Changes
                 iframe.src = session.followerLink;
             })
                 .on('session_ended', function (session) {
-                    location.replace(page_url);
                     console.log(session, 'has ended');
+                    location.replace("https://demo.surfly.com/company/" + company_name);
                 });
         };
 
         function endSurflySession() {
             SurflySession.end();
-            location.replace("https://demo.surfly.com/company/" + company_name);
         }
     </script>
     <!--START WITH ENTER KEY-->
