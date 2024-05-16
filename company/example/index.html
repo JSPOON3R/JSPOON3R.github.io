@@ -3,6 +3,7 @@
 Javascript changes:
 1. Update redirect URLs
 2. Update widget key
+3. Update var company_name
 
 HTML Changes
 1. Update title
@@ -41,7 +42,7 @@ CSS Changes
     </script>
     <script>
         var SurflySession;
-
+        var company_name = "example"
         var settings = {
             widget_key: '99671227762b43c2a96daa066ee006e2',
             private_session: false,
@@ -68,7 +69,6 @@ CSS Changes
 
 
         function startSurflySession() {
-            var page_url = location.href;
             var urlinput = document.querySelector('#session_url_input').value;
             SurflySession = Surfly.session({ start_with_chat_open: false, start_with_videochat_on: false, url: urlinput }).startLeader("#leader");
             var errorMessage = document.getElementById('errorMessage');
@@ -86,16 +86,18 @@ CSS Changes
 
         function endSurflySession() {
             SurflySession.end();
-
+            location.replace("https://demo.surfly.com/company/" + company_name);
         }
     </script>
     <!--START WITH ENTER KEY-->
     <script>
-        var inputField = document.getElementById("session_url_input");
-        inputField.addEventListener("keypress", function (event) {
-            if (event.keyCode === 13) {
-                validateURL();
-            }
+        document.addEventListener("DOMContentLoaded", function () {
+            var inputField = document.getElementById("session_url_input");
+            inputField.addEventListener("keypress", function (event) {
+                if (event.keyCode === 13) {
+                    validateURL();
+                }
+            });
         });
     </script>
 
