@@ -68,6 +68,7 @@ CSS Changes
 
 
         function startSurflySession() {
+            var page_url = location.href;
             var urlinput = document.querySelector('#session_url_input').value;
             SurflySession = Surfly.session({ start_with_chat_open: false, start_with_videochat_on: false, url: urlinput }).startLeader("#leader");
             var errorMessage = document.getElementById('errorMessage');
@@ -78,7 +79,7 @@ CSS Changes
                 iframe.src = session.followerLink;
             })
                 .on('session_ended', function (session) {
-                    location.reload();
+                    location.replace(page_url);
                     console.log(session, 'has ended');
                 });
         };
