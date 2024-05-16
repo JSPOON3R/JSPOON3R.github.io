@@ -24,16 +24,18 @@ CSS Changes
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TEMPLATE</title>
-    <link rel="shortcut icon" type="image/x-icon" href="https://www.pngkey.com/png/detail/114-1140508_tools-vector-png-tool-icon-vector-png.png">
+    <link rel="shortcut icon" type="image/x-icon"
+        href="https://www.pngkey.com/png/detail/114-1140508_tools-vector-png-tool-icon-vector-png.png">
     <script>
         (function (s, u, r, f, l, y) {
             s[f] = s[f] || { init: function () { s[f].q = arguments } };
             l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
-            l.src = 'https://uat.surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+            l.src = 'https://app.surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
         })
             (window, document, 'script', 'Surfly');
     </script>
@@ -75,23 +77,26 @@ CSS Changes
                 var iframe = document.getElementById("follower");
                 iframe.src = session.followerLink;
             })
+                .on('session_ended', function (session) {
+                    location.reload();
+                    console.log(session, 'has ended');
+                });
         };
-
 
         function endSurflySession() {
             SurflySession.end();
 
         }
     </script>
-<!--START WITH ENTER KEY-->
-<script>
-    var inputField = document.getElementById("session_url_input");
-    inputField.addEventListener("keypress", function(event) {
-        if (event.keyCode === 13) {
-            validateURL();
-        }
-    });
-</script>
+    <!--START WITH ENTER KEY-->
+    <script>
+        var inputField = document.getElementById("session_url_input");
+        inputField.addEventListener("keypress", function (event) {
+            if (event.keyCode === 13) {
+                validateURL();
+            }
+        });
+    </script>
 
     <!--DISPLAY FUNCTIONS-->
     <script>
@@ -133,18 +138,18 @@ CSS Changes
             }
         }
     </script>
-   
+
     <style>
-:root {
-  --primary: #000000;
-  --primary-focus: #000000;
-  --secondary: #555555; 
-  --secondary-focus: #555555; 
-  --font: sans-serif;
-  --background-dark: #e5e5e5;
-  --background-light: #ffffff;
-  --text-colour: #ffffff;
-}
+        :root {
+            --primary: #000000;
+            --primary-focus: #000000;
+            --secondary: #555555;
+            --secondary-focus: #555555;
+            --font: sans-serif;
+            --background-dark: #e5e5e5;
+            --background-light: #ffffff;
+            --text-colour: #ffffff;
+        }
 
         body {
             margin: 0;
@@ -166,7 +171,7 @@ CSS Changes
             text-decoration: none;
         }
 
-/* line through page do not edit */
+        /* line through page do not edit */
         body::before {
             content: '';
             display: block;
@@ -249,21 +254,22 @@ CSS Changes
             font-size: .9vw;
             font-weight: lighter;
             color: var(--secondary);
-            margin-right:1vw;
-            padding-left:.4vw;
-            
-        }
-        .subheading-2 li {
-    margin-bottom: 10px; 
-    list-style-type: none; 
-}
+            margin-right: 1vw;
+            padding-left: .4vw;
 
-.logo-bullet {
-    width: .8vw;
-    height: auto;
-    margin-right: 5px;
-    vertical-align: text-top; 
-}
+        }
+
+        .subheading-2 li {
+            margin-bottom: 10px;
+            list-style-type: none;
+        }
+
+        .logo-bullet {
+            width: .8vw;
+            height: auto;
+            margin-right: 5px;
+            vertical-align: text-top;
+        }
 
 
         .input-field {
@@ -412,14 +418,14 @@ CSS Changes
         }
 
         .link-bold {
-    font-weight: bold;
-    text-decoration:underline; 
-    color: inherit; 
-}
+            font-weight: bold;
+            text-decoration: underline;
+            color: inherit;
+        }
 
-.link-bold:visited {
-    color:inherit; 
-}
+        .link-bold:visited {
+            color: inherit;
+        }
 
 
         /* MOBILE VIEW */
@@ -532,7 +538,8 @@ CSS Changes
         </div>
         <div class="button-container">
             <div class="input-url-div">
-                <input type="text" placeholder="Enter any valid URL..." class="input-field" id="session_url_input" value="www.example.com">                
+                <input type="text" placeholder="Enter any valid URL..." class="input-field" id="session_url_input"
+                    value="www.example.com">
                 <button id="session_inactive_button" type="submit" class="submit-button" onclick="validateURL()">Start
                     Session</button>
                 <button id="session_active_button" type="submit" class="block"
@@ -541,13 +548,19 @@ CSS Changes
             <div class="more-info-div">
                 <ul class="subheading-2 no-bullets">
                     <li>
-                        <img src="https://www.pngkey.com/png/detail/114-1140508_tools-vector-png-tool-icon-vector-png.png" class="logo-bullet"> Input any URL in the box above and click “Start Session” to begin co-browsing
+                        <img src="https://www.pngkey.com/png/detail/114-1140508_tools-vector-png-tool-icon-vector-png.png"
+                            class="logo-bullet"> Input any URL in the box above and click “Start Session” to begin
+                        co-browsing
                     </li>
                     <li>
-                        <img src="https://www.pngkey.com/png/detail/114-1140508_tools-vector-png-tool-icon-vector-png.png" class="logo-bullet"> If you are interested, please XXXXXXX <a class="link-bold" href="XXXXXXX">XXXXXXX</a> We'll get back to you shortly
+                        <img src="https://www.pngkey.com/png/detail/114-1140508_tools-vector-png-tool-icon-vector-png.png"
+                            class="logo-bullet"> If you are interested, please XXXXXXX <a class="link-bold"
+                            href="XXXXXXX">XXXXXXX</a> We'll get back to you shortly
                     </li>
                     <li>
-                        <img src="https://www.pngkey.com/png/detail/114-1140508_tools-vector-png-tool-icon-vector-png.png" class="logo-bullet"> For any additional questions <a class="link-bold" href="mailto:XXXXXXX">please contact XXXXXXX</a>
+                        <img src="https://www.pngkey.com/png/detail/114-1140508_tools-vector-png-tool-icon-vector-png.png"
+                            class="logo-bullet"> For any additional questions <a class="link-bold"
+                            href="mailto:XXXXXXX">please contact XXXXXXX</a>
                     </li>
                 </ul>
             </div>
