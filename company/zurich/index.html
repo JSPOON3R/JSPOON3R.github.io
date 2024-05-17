@@ -599,12 +599,14 @@
 }
 
 
-        /* MOBILE VIEW */
+             /* MOBILE VIEW */
         /* WIDTH*/
         @media screen and (max-width: 1300px) {
             .top-container {
                 flex-direction: column;
                 align-items: center;
+                padding:0;
+                margin:10px;
             }
 
             .info-text {
@@ -625,23 +627,25 @@
             }
 
             .logo {
-                width: 110px;
+                width: 60vw;
                 height: auto;
                 margin-bottom: 15px;
             }
 
             .heading {
-                font-size: 30px;
+                font-size: 40px;
+                width: 100vw;
             }
 
             .subheading {
-                font-size: 20px;
+                font-size: 25px;
+        width: 100vw;
             }
 
             .iframe-container {
                 flex-direction: column;
                 align-items: center;
-                width: auto;
+                width: 100%;
             }
 
             .window-description {
@@ -654,7 +658,8 @@
 
             .osx-window {
                 width: 90%;
-                height: 600px;
+                height: 300px;
+                margin-bottom:20px;
             }
 
             .input-url-div {
@@ -662,22 +667,17 @@
             }
 
             .input-field {
-                font-size: 15px;
-                width: 450px;
+                font-size: 1.5rem;
+                width: 80vw;
                 margin-bottom: 20px;
-                margin-left: 20px;
-                margin-right: 20px;
+                margin-left: 0px;
+                margin-right: 0px;
             }
 
             .submit-button {
                 margin-bottom: 30px;
+                font-size: 1.5rem;
             }
-
-            .more-info-container {
-                padding-left: 0;
-                align-self: center;
-            }
-
 
             .errormess {
                 top: 0vh;
@@ -686,10 +686,25 @@
                 right: 0;
                 margin-top: 0;
             }
+            .more-info-div {
+            width: 80vw;
+            padding-left:0;
+        }
+        .subheading-2 {
+            font-size: 1.3rem;
+            color: var(--secondary);
+            padding-left: 0;
+            margin:0;
 
-            .instructions-button {
-                display: none;
-            }
+        }
+
+        .logo-bullet {
+            width: 1rem;
+            height: auto;
+            margin-right: 0;
+            vertical-align: middle;
+        }
+
         }
 
         /* HEIGHT*/

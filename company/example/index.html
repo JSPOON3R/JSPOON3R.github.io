@@ -1,9 +1,8 @@
 <!--
 -----BUILD A NEW DEMO BRANDED DEMO PAGE-----
 Javascript changes:
-1. Update redirect URLs
-2. Update widget key
-3. Update var company_name
+1. Update widget key
+2. Update var company_name
 
 HTML Changes
 1. Update title
@@ -429,12 +428,14 @@ CSS Changes
         }
 
 
-        /* MOBILE VIEW */
+       /* MOBILE VIEW */
         /* WIDTH*/
         @media screen and (max-width: 1300px) {
             .top-container {
                 flex-direction: column;
                 align-items: center;
+                padding:0;
+                margin:10px;
             }
 
             .info-text {
@@ -455,23 +456,25 @@ CSS Changes
             }
 
             .logo {
-                width: 110px;
+                width: 60vw;
                 height: auto;
                 margin-bottom: 15px;
             }
 
             .heading {
-                font-size: 30px;
+                font-size: 40px;
+                width: 100vw;
             }
 
             .subheading {
-                font-size: 20px;
+                font-size: 25px;
+        width: 100vw;
             }
 
             .iframe-container {
                 flex-direction: column;
                 align-items: center;
-                width: auto;
+                width: 100%;
             }
 
             .window-description {
@@ -484,7 +487,8 @@ CSS Changes
 
             .osx-window {
                 width: 90%;
-                height: 600px;
+                height: 300px;
+                margin-bottom:20px;
             }
 
             .input-url-div {
@@ -492,15 +496,16 @@ CSS Changes
             }
 
             .input-field {
-                font-size: 15px;
-                width: 450px;
+                font-size: 1.5rem;
+                width: 80vw;
                 margin-bottom: 20px;
-                margin-left: 20px;
-                margin-right: 20px;
+                margin-left: 0px;
+                margin-right: 0px;
             }
 
             .submit-button {
                 margin-bottom: 30px;
+                font-size: 1.5rem;
             }
 
             .errormess {
@@ -510,6 +515,24 @@ CSS Changes
                 right: 0;
                 margin-top: 0;
             }
+            .more-info-div {
+            width: 80vw;
+            padding-left:0;
+        }
+        .subheading-2 {
+            font-size: 1.3rem;
+            color: var(--secondary);
+            padding-left: 0;
+            margin:0;
+
+        }
+
+        .logo-bullet {
+            width: 1rem;
+            height: auto;
+            margin-right: 0;
+            vertical-align: middle;
+        }
 
         }
 
