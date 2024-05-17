@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zurich Co-browing Demo</title>
+    <title>Zurich Co-browsing Demo</title>
     <link rel="shortcut icon" type="image/x-icon" href="https://demo.surfly.com/company/zurich/resources/zurichfavicon.ico">
     <script>
         (function (s, u, r, f, l, y) {
@@ -16,7 +16,7 @@
     </script>
     <script>
         var SurflySession;
-
+        var company_name = "zurich"
         var settings = {
             widget_key: 'c0ed3545ea5147b8a48ad19f52067b37',
             private_session: false,
@@ -24,8 +24,6 @@
             host_switching_allowed: true,
             block_until_agent_joins: false,
             videochat: false,
-            follower_redirect_url: "https://demo.surfly.com/zurich",
-            leader_redirect_url: "https://demo.surfly.com/zurich",
             tags: ["demo-page"]
         };
 
@@ -52,6 +50,10 @@
                 var iframe = document.getElementById("follower");
                 iframe.src = session.followerLink;
             })
+            .on('session_ended', function (session) {
+                    console.log(session, 'has ended');
+                    location.replace("https://demo.surfly.com/company/" + company_name);
+                });
         };
 
 
@@ -60,13 +62,15 @@
 
         }
     </script>
-<!--START WITH ENTER KEY-->
-<script>
-    var inputField = document.getElementById("session_url_input");
-    inputField.addEventListener("keypress", function(event) {
-        if (event.keyCode === 13) {
-            validateURL();
-        }
+ <!--START WITH ENTER KEY-->
+ <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var inputField = document.getElementById("session_url_input");
+        inputField.addEventListener("keypress", function (event) {
+            if (event.keyCode === 13) {
+                validateURL();
+            }
+        });
     });
 </script>
 
@@ -572,7 +576,7 @@
             padding: 1px 10px;
             position: absolute;
             right: 4vw;
-            top: 2vh;
+            top: 1vh;
             margin-right: 1px;
             margin-top: 1px;
             display: none;

@@ -1,27 +1,3 @@
-<!--
------BUILD A NEW DEMO BRANDED DEMO PAGE-----
-Javascript changes:
-1. Update redirect URLs
-2. Update widget key
-
-HTML Changes
-1. Update title
-2. Update Favicon (shortcut icon)
-3. Update company logo
-4. Update Subheading (client input needed)
-5. Update input URL default value
-6. Update bullet points (contact email, contact link, new wording)
-7. Update starting iframe src to new customer website
-
-CSS Changes
-1. update root primary and secondary colours
-2. Update root font
-3. Update root background colours
-
--->
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -40,7 +16,7 @@ CSS Changes
     </script>
     <script>
         var SurflySession;
-
+        var company_name = "voitec"
         var settings = {
             widget_key: '13b4d04ceff445e0bbee9d55e506cc83',
             private_session: false,
@@ -48,8 +24,6 @@ CSS Changes
             host_switching_allowed: true,
             block_until_agent_joins: false,
             videochat: false,
-            follower_redirect_url: "https://www.voitec.com.au/",
-            leader_redirect_url: "https://www.voitec.com.au/",
             tags: ["demo-page"]
         };
 
@@ -76,6 +50,10 @@ CSS Changes
                 var iframe = document.getElementById("follower");
                 iframe.src = session.followerLink;
             })
+            .on('session_ended', function (session) {
+                    console.log(session, 'has ended');
+                    location.replace("https://demo.surfly.com/company/" + company_name);
+                });
         };
 
 
@@ -84,13 +62,15 @@ CSS Changes
 
         }
     </script>
-<!--START WITH ENTER KEY-->
-<script>
-    var inputField = document.getElementById("session_url_input");
-    inputField.addEventListener("keypress", function(event) {
-        if (event.keyCode === 13) {
-            validateURL();
-        }
+ <!--START WITH ENTER KEY-->
+ <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var inputField = document.getElementById("session_url_input");
+        inputField.addEventListener("keypress", function (event) {
+            if (event.keyCode === 13) {
+                validateURL();
+            }
+        });
     });
 </script>
 
@@ -376,7 +356,7 @@ CSS Changes
             padding: 1px 10px;
             position: absolute;
             right: 4vw;
-            top: 2vh;
+            top: 1vh;
             margin-right: 1px;
             margin-top: 1px;
             display: none;
