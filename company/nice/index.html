@@ -1,17 +1,8 @@
 <!--
 -----BUILD A NEW DEMO BRANDED DEMO PAGE-----
 Javascript changes:
-1. Update widget key
-2. Update var company_name
 
-HTML Changes
-1. Update title
-2. Update Favicon (shortcut icon)
-3. Update company logo
-4. Update Subheading (client input needed)
-5. Update input URL default value
-6. Update bullet points (contact email, contact link, new wording)
-7. Update starting iframe src to new customer website
+
 
 CSS Changes
 1. update root primary and secondary colours
@@ -28,9 +19,12 @@ CSS Changes
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TEMPLATE</title>
+    <title>NICE Co-browsing</title>
     <link rel="shortcut icon" type="image/x-icon"
-        href="https://www.pngkey.com/png/detail/114-1140508_tools-vector-png-tool-icon-vector-png.png">
+        href="https://demo.surfly.com/company/nice/resources/NICE_com_favicon.png">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
     <script>
         (function (s, u, r, f, l, y) {
             s[f] = s[f] || { init: function () { s[f].q = arguments } };
@@ -41,9 +35,9 @@ CSS Changes
     </script>
     <script>
         var SurflySession;
-        var company_name = "example"
+        var company_name = "nice"
         var settings = {
-            widget_key: '99671227762b43c2a96daa066ee006e2',
+            widget_key: '3b6a1622975a4497947d3dc5f54a5019',
             private_session: false,
             password_required: false,
             host_switching_allowed: true,
@@ -141,8 +135,8 @@ CSS Changes
 
     <style>
         :root {
-            --primary: #000000;
-            --primary-focus: #000000;
+            --primary: #23C9FF;
+            --primary-focus: #009EDB;
             --secondary: #555555;
             --secondary-focus: #555555;
             --font: sans-serif;
@@ -557,15 +551,15 @@ CSS Changes
 
     <div class="top-container">
         <div class="info-text">
-            <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/company/example/resources/example-company-logo.png?raw=true"
+            <img src="https://demo.surfly.com/company/nice/resources/Nice_Logo.png"
                 alt="Logo" class="logo">
             <h1 class="heading">Experience Collaborative Web Browsing in Real-Time</h1>
-            <h2 class="subheading">XXXXXXX</h2>
+            <h2 class="subheading">Boost your Contact Center Solution with Surfly Co-browsing</h2>
         </div>
         <div class="button-container">
             <div class="input-url-div">
                 <input type="text" placeholder="Enter any valid URL..." class="input-field" id="session_url_input"
-                    value="www.example.com">
+                    value="https://www.nice.com/">
                 <button id="session_inactive_button" type="submit" class="submit-button" onclick="validateURL()">Start
                     Session</button>
                 <button id="session_active_button" type="submit" class="block"
@@ -574,19 +568,19 @@ CSS Changes
             <div class="more-info-div">
                 <ul class="subheading-2 no-bullets">
                     <li>
-                        <img src="https://www.pngkey.com/png/detail/114-1140508_tools-vector-png-tool-icon-vector-png.png"
+                        <img src="https://demo.surfly.com/company/nice/resources/NICE_com_favicon.png"
                             class="logo-bullet"> Input any URL in the box above and click “Start Session” to begin
                         co-browsing
                     </li>
                     <li>
-                        <img src="https://www.pngkey.com/png/detail/114-1140508_tools-vector-png-tool-icon-vector-png.png"
-                            class="logo-bullet"> If you are interested, please XXXXXXX <a class="link-bold"
-                            href="XXXXXXX">XXXXXXX</a> We'll get back to you shortly
+                        <img src="https://demo.surfly.com/company/nice/resources/NICE_com_favicon.png"
+                            class="logo-bullet"> Easily add <a class="link-bold"
+                            href="https://www.nice.com/glossary/what-is-contact-center-co-browse">Co-browsing</a> into your NICE CXone package
                     </li>
                     <li>
-                        <img src="https://www.pngkey.com/png/detail/114-1140508_tools-vector-png-tool-icon-vector-png.png"
-                            class="logo-bullet"> For any additional questions <a class="link-bold"
-                            href="mailto:XXXXXXX">please contact XXXXXXX</a>
+                        <img src="https://demo.surfly.com/company/nice/resources/NICE_com_favicon.png"
+                            class="logo-bullet"> For any additional questions, please contact<a class="link-bold"
+                            href="mailto:mihai@surfly.com"> Miahi @ Surfly</a>
                     </li>
                 </ul>
             </div>
@@ -601,7 +595,7 @@ CSS Changes
                 <div class="window-description" id="window-description1">This window will be your browser</div>
                 <div class="window-title" id="you">You</div>
             </div>
-            <iframe src="https://www.example.com/" class="iframe-content" id="leader"></iframe>
+            <iframe src="https://www.nice.com/" class="iframe-content" id="leader"></iframe>
         </div>
 
         <div class="osx-window">
@@ -613,7 +607,7 @@ CSS Changes
                 </div>
                 <div class="window-title">Them</div>
             </div>
-            <iframe src="https://www.example.com/" class="iframe-content" id="follower"></iframe>
+            <iframe src="https://www.nice.com/" class="iframe-content" id="follower"></iframe>
         </div>
 
     </div>
