@@ -52,10 +52,12 @@
                 var iframe = document.getElementById("follower");
                 iframe.src = session.followerLink;
             })
-                .on('session_ended', function (session) {
-                    console.log(session, 'has ended');
-                    location.replace("https://demo.surfly.com");
-                });
+            .on('session_ended', function (session) {
+    console.log(session, 'has ended');
+    setTimeout(function() {
+        location.replace("https://demo.surfly.com/company/" + company_name);
+    }, 1000); // 1000 milliseconds delay (1 second)
+});
         };
 
         function endSurflySession() {
