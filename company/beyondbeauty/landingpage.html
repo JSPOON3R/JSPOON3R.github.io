@@ -262,6 +262,10 @@
         var SurflySession;
         var customerLink;
         var memberLink;
+        var clipboardInvite = "<b>How to Join:</b>" + "\n" + "\n" + 
+                   "1. Copy the link below" + "\n" + 
+                   "2. Open your browser (Chrome or Safari)" + "\n" + 
+                   "3. Paste the link\n" + "\n"
         var inputValue = "none";
         var settings = {
             // Surfly session options can be set here, or at the Company/Plan levels.
@@ -300,15 +304,12 @@
             console.log("start session activated");
             SurflySession = Surfly.session({ tags: [inputValue], url: "https://member.beyondbeautyclub.com/?ID=" + inputValue, }).startFollower("#sessionIframe");
             SurflySession.on('session_created', function (SurflySession) {
-                let customerLink = "<b>How to Join:</b>" + "\n" + "\n" + 
-                   "1. Copy the link below" + "\n" + 
-                   "2. Open your browser (Chrome or Safari)" + "\n" + 
-                   "3. Paste the link\n" + SurflySession.leaderLink;
+                let customerLink = SurflySession.leaderLink;
                 memberLink = SurflySession.followerLink;
-                navigator.clipboard.writeText(SurflySession.leaderLink)
+                navigator.clipboard.writeText(clipboardInvite+SurflySession.leaderLink)
                     .then(() => {
                         showPopup();
-                        console.log('Output copied to clipboard:', memberLink);
+                        console.log('Link copied to clipboard:', memberLink);
                     })
                     .catch(err => {
                         console.error('Failed to copy output to clipboard:', err);
