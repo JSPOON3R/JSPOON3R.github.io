@@ -300,7 +300,7 @@
             console.log("start session activated");
             SurflySession = Surfly.session({ tags: [inputValue], url: "https://member.beyondbeautyclub.com/?ID=" + inputValue, }).startFollower("#sessionIframe");
             SurflySession.on('session_created', function (SurflySession) {
-                customerLink = SurflySession.leaderLink;
+                customerLink = "How to Join:"+"\n"+"\n"+"1. Copy th link below"+"\n"+"2. Open your browser (Chromes or Safari)"+"\n"+"3. Paste the link"+SurflySession.leaderLink;
                 memberLink = SurflySession.followerLink;
                 navigator.clipboard.writeText(SurflySession.leaderLink)
                     .then(() => {
