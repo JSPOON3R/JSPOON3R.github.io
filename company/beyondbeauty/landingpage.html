@@ -217,6 +217,8 @@
 
         .popupButton {
             display: flex;
+            flex-direction:column;
+            align-items:center;
             justify-content: center;
             color: #fff;
             cursor: pointer;
@@ -232,6 +234,12 @@
             margin-bottom: 3%;
             text-align: center;
             overflow: none;
+        }
+
+        .button-desc {
+            font-size: .7em;
+            margin-top:2px;
+            font-style:italic;
         }
 
         .popup2.visible {
@@ -471,9 +479,9 @@
     </div>
 
     <div id="copy-links-popup" class="popup2">
-        <button class="popupButton" onclick="copyLeaderLink()">Copy Customer Invite</button>
-        <button class="popupButton" onclick="copyLeaderLinkInstructions()">Copy Customer Invite With Instructions</button>
-        <button class="popupButton" onclick="copyFollowerLink()">Copy +1 Invite</button>
+        <button class="popupButton" onclick="copyLeaderLink()">Copy Customer Invite<span class="button-desc">(Link Only)</span></button>
+        <button class="popupButton" onclick="copyLeaderLinkInstructions()">Copy Customer Invite<br><span class="button-desc">(With Instructions)</span></button>
+        <button class="popupButton" onclick="copyFollowerLink()">Copy +1 Invite<br><span class="button-desc">(for a third joiner)</span></button>
         <button class="popupButton" onclick="SurflySession.requestToHost(1)">Request Host</button>
         <button class="popupButton" style="background:#c66c50;" onclick="closeLinkPopup()">Close</button>
     </div>
