@@ -168,32 +168,22 @@
 
         .popup {
             position: fixed;
-            bottom: 12%;
+            bottom: 20%;
             left: 50%;
             transform: translateX(-50%);
             padding: 10px 20px;
-            background-color: rgb(182, 128, 118);
+            background-color: #333;
             color: #fff;
             border-radius: 8px;
             width: auto;
             max-height: 0;
             overflow: hidden;
-            z-index: 2147483549;
-            text-align: center;
             opacity: 0;
-            transition: max-height 2s ease-out, opacity 1.5s ease-out;
-            display: flex;
-            /* Add flexbox */
-            justify-content: center;
-            /* Center horizontally */
-            align-items: center;
-            /* Center vertically */
-        }
-
-        .popup.visible {
-            max-height: 100%;
-            opacity: 1;
             transition: max-height 1s ease-out, opacity 0.5s ease-out;
+        }
+        .popup.visible {
+            max-height: 100px;
+            opacity: 1;
         }
 
         .popup2 {
@@ -226,7 +216,7 @@
             width: 100%;
             height: fit-content;
             text-transform: uppercase;
-            padding: 0.75rem;
+            padding: 0.5rem;
             border-radius: 6px;
             border: 1px solid rgb(182, 128, 118);
             transition: none;
@@ -239,6 +229,7 @@
         .button-desc {
             font-size: .7em;
             margin-top:2px;
+            color:#c66c50;
             font-style:italic;
         }
 
@@ -362,10 +353,12 @@
 
         function showPopup() {
             const popup = document.getElementById('link-copied-popup');
-            popup.classList.add('visible');
-            setTimeout(() => {
-                popup.classList.remove('visible');
-            }, 2000);
+            if (popup) {
+                popup.classList.add('visible');
+                setTimeout(() => {
+                    popup.classList.remove('visible');
+                }, 2000);
+            }
         }
 
         function openLinkPopup() {
@@ -479,9 +472,9 @@
     </div>
 
     <div id="copy-links-popup" class="popup2">
-        <button class="popupButton" onclick="copyLeaderLink()">Copy Customer Invite<span class="button-desc">(Link Only)</span></button>
-        <button class="popupButton" onclick="copyLeaderLinkInstructions()">Copy Customer Invite<br><span class="button-desc">(With Instructions)</span></button>
-        <button class="popupButton" onclick="copyFollowerLink()">Copy +1 Invite<br><span class="button-desc">(for a third joiner)</span></button>
+        <button class="popupButton" onclick="copyLeaderLink()">Copy Customer Invite<span class="button-desc">Link Only</span></button>
+        <button class="popupButton" onclick="copyLeaderLinkInstructions()">Copy Customer Invite<br><span class="button-desc">With Instructions</span></button>
+        <button class="popupButton" onclick="copyFollowerLink()">Copy +1 Invite<br><span class="button-desc">for a third joiner</span></button>
         <button class="popupButton" onclick="SurflySession.requestToHost(1)">Request Host</button>
         <button class="popupButton" style="background:#c66c50;" onclick="closeLinkPopup()">Close</button>
     </div>
