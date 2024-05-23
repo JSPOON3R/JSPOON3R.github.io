@@ -262,7 +262,7 @@
         var SurflySession;
         var customerLink;
         var memberLink;
-        var clipboardInvite = "*Shop with me 3 easy steps:*" + "\n" + "\n" + 
+        var instructionsInvite = "*Shop with me 3 easy steps:*" + "\n" + "\n" + 
                    "1. *Copy* the link below _(don't open it)_" + "\n" + 
                    "2. *Open* your phone's web browser _(Chrome or Safari)_" + "\n" + 
                    "3. *Paste* the link _(below)_ into your browser\n" 
@@ -309,7 +309,7 @@
             SurflySession.on('session_created', function (SurflySession) {
                 let customerLink = SurflySession.leaderLink;
                 memberLink = SurflySession.followerLink;
-                navigator.clipboard.writeText(clipboardInvite+SurflySession.leaderLink)
+                navigator.clipboard.writeText(SurflySession.leaderLink)
                     .then(() => {
                         showPopup();
                         console.log('Link copied to clipboard:', memberLink);
@@ -382,6 +382,16 @@
             navigator.clipboard.writeText(customerLink)
                 .then(function () {
                     console.log('Customer(leader) link copied to clipboard successfully: ' + customerLink);
+                })
+                .catch(function (error) {
+                    console.error('Failed to copy follower link to clipboard:', error);
+                });
+        }
+
+        function copyLeaderLinkInstructions() {
+            navigator.clipboard.writeText(instructionsInvite+customerLink)
+                .then(function () {
+                    console.log('Customer(leader) link copied to clipboard successfully with instructions: ' + customerLink);
                 })
                 .catch(function (error) {
                     console.error('Failed to copy follower link to clipboard:', error);
@@ -461,8 +471,9 @@
     </div>
 
     <div id="copy-links-popup" class="popup2">
-        <button class="popupButton" onclick="copyLeaderLink()">Customer Link</button>
-        <button class="popupButton" onclick="copyFollowerLink()">Someone Else</button>
+        <button class="popupButton" onclick="copyLeaderLink()">Copy Customer Invite</button>
+        <button class="popupButton" onclick="copyLeaderLinkInstructions()">Copy Customer Invite With Instructions</button>
+        <button class="popupButton" onclick="copyFollowerLink()">Copy +1 Invite</button>
         <button class="popupButton" onclick="SurflySession.requestToHost(1)">Request Host</button>
         <button class="popupButton" style="background:#c66c50;" onclick="closeLinkPopup()">Close</button>
     </div>
