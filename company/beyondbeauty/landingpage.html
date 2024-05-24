@@ -168,21 +168,26 @@
 
         .popup {
             position: fixed;
-            bottom: 20%;
+            display: flex;
+            align-content: center;
+            bottom: 0%;
             left: 50%;
             transform: translateX(-50%);
-            padding: 10px 20px;
+            padding: 5px 10px;
             background-color: rgb(182, 128, 118);
             color: #fff;
             border-radius: 8px;
-            width: auto;
+            width: 100%;
             max-height: 0;
             overflow: hidden;
             opacity: 0;
             transition: max-height 1s ease-out, opacity 0.5s ease-out;
+            flex-wrap: wrap;
+            justify-content: center;
         }
+
         .popup.visible {
-            max-height: 100px;
+            max-height: 3.5em;
             opacity: 1;
             z-index: 2147483647 !important;
         }
@@ -208,8 +213,8 @@
 
         .popupButton {
             display: flex;
-            flex-direction:column;
-            align-items:center;
+            flex-direction: column;
+            align-items: center;
             justify-content: center;
             color: #fff;
             cursor: pointer;
@@ -228,18 +233,19 @@
         }
 
         .moreButtons {
-            display:none;
+            display: none;
         }
+
         .moreButtons.visible {
-            display:block;
+            display: block;
             transition: max-height 1s ease-out, opacity 0.3s ease-out;
         }
 
         .button-desc {
             font-size: .9em;
-            margin-top:2px;
-            color:#e1d7d4;
-            font-style:italic;
+            margin-top: 2px;
+            color: #e1d7d4;
+            font-style: italic;
             text-transform: lowercase;
         }
 
@@ -256,6 +262,7 @@
             font-family: Figtree, sans-serif;
             margin: 0;
             text-align: center;
+            width: auto;
         }
     </style>
     <!--Surfly JS-->
@@ -271,13 +278,13 @@
         var SurflySession;
         var customerLink;
         var memberLink;
-        var instructionsInvite = "*Shop with me 3 easy steps:*" + "\n" + "\n" + 
-                   "1. *Copy* the link below _(don't open it)_" + "\n" + 
-                   "2. *Open* your phone's web browser _(Chrome or Safari)_" + "\n" + 
-                   "3. *Paste* the link _(below)_ into your browser\n" 
-                   + "\n" +
-                   "_(the video works better if you do it this way!)_\n"
-                   + "\n"
+        var instructionsInvite = "*Shop with me 3 easy steps:*" + "\n" + "\n" +
+            "1. *Copy* the link below _(don't open it)_" + "\n" +
+            "2. *Open* your phone's web browser _(Chrome or Safari)_" + "\n" +
+            "3. *Paste* the link _(below)_ into your browser\n"
+            + "\n" +
+            "_(the video works better if you do it this way!)_\n"
+            + "\n"
         var inputValue = "none";
         var settings = {
             // Surfly session options can be set here, or at the Company/Plan levels.
@@ -373,30 +380,30 @@
         }
 
         function toggleLinkPopup() {
-    const popup2 = document.getElementById('copy-links-popup');
-    popup2.classList.toggle('visible');
-}
-
-function toggleMoreOptions() {
-    let expandedText = "show less -";
-    let collapsedText = "show more +";
-    const moreOptionsButton = document.getElementById('moreOptionsButton');
- 
-    const moreButtons = document.getElementsByClassName('moreButtons');
-    let isVisible = false;
-    for (let i = 0; i < moreButtons.length; i++) {
-        moreButtons[i].classList.toggle('visible');
-        if (moreButtons[i].classList.contains('visible')) {
-            isVisible = true;
+            const popup2 = document.getElementById('copy-links-popup');
+            popup2.classList.toggle('visible');
         }
-    }
 
-    if (isVisible) {
-        moreOptionsButton.textContent = expandedText;
-    } else {
-        moreOptionsButton.textContent = collapsedText;
-    }
-}
+        function toggleMoreOptions() {
+            let expandedText = "show less -";
+            let collapsedText = "show more +";
+            const moreOptionsButton = document.getElementById('moreOptionsButton');
+
+            const moreButtons = document.getElementsByClassName('moreButtons');
+            let isVisible = false;
+            for (let i = 0; i < moreButtons.length; i++) {
+                moreButtons[i].classList.toggle('visible');
+                if (moreButtons[i].classList.contains('visible')) {
+                    isVisible = true;
+                }
+            }
+
+            if (isVisible) {
+                moreOptionsButton.textContent = expandedText;
+            } else {
+                moreOptionsButton.textContent = collapsedText;
+            }
+        }
 
         function endSurflySession() {
             SurflySession.end();
@@ -414,16 +421,18 @@ function toggleMoreOptions() {
                 .catch(function (error) {
                     console.error('Failed to copy follower link to clipboard:', error);
                 });
+                showPopup();
         }
 
         function copyLeaderLinkInstructions() {
-            navigator.clipboard.writeText(instructionsInvite+customerLink)
+            navigator.clipboard.writeText(instructionsInvite + customerLink)
                 .then(function () {
                     console.log('Customer(leader) link copied to clipboard successfully with instructions: ' + customerLink);
                 })
                 .catch(function (error) {
                     console.error('Failed to copy follower link to clipboard:', error);
                 });
+                showPopup();
         }
 
         function copyFollowerLink() {
@@ -434,8 +443,9 @@ function toggleMoreOptions() {
                 .catch(function (error) {
                     console.error('Failed to copy follower link to clipboard:', error);
                 });
+                showPopup();
         }
-//trigger next step when member clicks
+        //trigger next step when member clicks
         async function buttonClick() {
             console.log("button clicked!");
             try {
@@ -495,14 +505,18 @@ function toggleMoreOptions() {
     </div>
 
     <div id="link-copied-popup" class="popup">
-        <h2 class="popuptext">Customer Link Copied</h2>
+        <h2 class="popuptext">Link Copied</h2>
     </div>
 
     <div id="copy-links-popup" class="popup2">
-        <button class="popupButton" onclick="copyLeaderLink()">Customer Link<span class="button-desc">copy</span></button>
-        <button id="moreOptionsButton" class="popupButton" style="background:#c66c50;" onclick="toggleMoreOptions()">Show More +</button>
-        <button class="popupButton moreButtons" onclick="copyLeaderLinkInstructions()">Customer link<br><span class="button-desc">copy w/ Instructions</span></button>
-        <button class="popupButton moreButtons" onclick="copyFollowerLink()">+1 Invite<br><span class="button-desc">copy link for third person</span></button>
+        <button class="popupButton" onclick="copyLeaderLink()">Customer Link<span
+                class="button-desc">copy</span></button>
+        <button id="moreOptionsButton" class="popupButton" style="background:#c66c50;"
+            onclick="toggleMoreOptions()">Show More +</button>
+        <button class="popupButton moreButtons" onclick="copyLeaderLinkInstructions()">Customer link<br><span
+                class="button-desc">copy w/ Instructions</span></button>
+        <button class="popupButton moreButtons" onclick="copyFollowerLink()">+1 Invite<br><span class="button-desc">copy
+                link for third person</span></button>
         <button class="popupButton moreButtons" onclick="SurflySession.requestToHost(1)">Request Host</button>
     </div>
 
