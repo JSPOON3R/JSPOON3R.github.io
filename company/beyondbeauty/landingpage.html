@@ -227,11 +227,20 @@
             overflow: none;
         }
 
+        .moreButtons {
+            display:none;
+        }
+        .moreButtons.visible {
+            display:block;
+            transition: max-height 1s ease-out, opacity 0.3s ease-out;
+        }
+
         .button-desc {
-            font-size: .7em;
+            font-size: .9em;
             margin-top:2px;
             color:#e1d7d4;
             font-style:italic;
+            text-transform: lowercase;
         }
 
         .popup2.visible {
@@ -363,15 +372,31 @@
             }
         }
 
-        function openLinkPopup() {
-            const popup2 = document.getElementById('copy-links-popup');
-            popup2.classList.add('visible');
-        }
+        function toggleLinkPopup() {
+    const popup2 = document.getElementById('copy-links-popup');
+    popup2.classList.toggle('visible');
+}
 
-        function closeLinkPopup() {
-            const popup2 = document.getElementById('copy-links-popup');
-            popup2.classList.remove('visible');
+function toggleMoreOptions() {
+    let expandedText = "show less -";
+    let collapsedText = "show more +";
+    const moreOptionsButton = document.getElementById('moreOptionsButton');
+ 
+    const moreButtons = document.getElementsByClassName('moreButtons');
+    let isVisible = false;
+    for (let i = 0; i < moreButtons.length; i++) {
+        moreButtons[i].classList.toggle('visible');
+        if (moreButtons[i].classList.contains('visible')) {
+            isVisible = true;
         }
+    }
+
+    if (isVisible) {
+        moreOptionsButton.textContent = expandedText;
+    } else {
+        moreOptionsButton.textContent = collapsedText;
+    }
+}
 
         function endSurflySession() {
             SurflySession.end();
@@ -474,11 +499,11 @@
     </div>
 
     <div id="copy-links-popup" class="popup2">
-        <button class="popupButton" onclick="copyLeaderLink()">Copy Customer Invite<span class="button-desc">Link Only</span></button>
-        <button class="popupButton" onclick="copyLeaderLinkInstructions()">Copy Customer Invite<br><span class="button-desc">With Instructions</span></button>
-        <button class="popupButton" onclick="copyFollowerLink()">Copy +1 Invite<br><span class="button-desc">for a third joiner</span></button>
-        <button class="popupButton" onclick="SurflySession.requestToHost(1)">Request Host</button>
-        <button class="popupButton" style="background:#c66c50;" onclick="closeLinkPopup()">Close</button>
+        <button class="popupButton" onclick="copyLeaderLink()">Customer Link<span class="button-desc">copy</span></button>
+        <button id="moreOptionsButton" class="popupButton" style="background:#c66c50;" onclick="toggleMoreOptions()">Show More +</button>
+        <button class="popupButton moreButtons" onclick="copyLeaderLinkInstructions()">Customer link<br><span class="button-desc">copy w/ Instructions</span></button>
+        <button class="popupButton moreButtons" onclick="copyFollowerLink()">+1 Invite<br><span class="button-desc">copy link for third person</span></button>
+        <button class="popupButton moreButtons" onclick="SurflySession.requestToHost(1)">Request Host</button>
     </div>
 
     <div class="co-browsing-session">
@@ -486,7 +511,7 @@
             allow="autoplay *; camera *; microphone *; display-capture *; geolocation *; camera *;"></iframe>
         <div class="bottomNav">
             <!--another copy link for comfort-->
-            <button class="bottomNavBtn" onclick="openLinkPopup()">
+            <button class="bottomNavBtn" onclick="toggleLinkPopup()">
                 <svg class="svg-icon" viewBox="0 0 20 20"
                     style="fill: #fff; width: 2.5em; height: 2em; vertical-align: middle;">
                     <path
