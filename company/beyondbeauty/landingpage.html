@@ -212,6 +212,31 @@
             opacity: 0;
         }
 
+        .popup3 {
+            position: fixed;
+            flex-direction: column;
+            bottom: 5%;
+            left: 5%;
+            padding: 10px 20px;
+            background-color: #fff;
+            color: #45362F;
+            border-radius: 8px;
+            width: 70vw;
+            max-height: 100vh;
+            overflow: hidden;
+            transition: max-height 1s ease-out, opacity 0.3s ease-out;
+            z-index: 2147483549;
+            text-align: center;
+            opacity: 1;
+        }
+
+        .popup3.visible {
+            max-height: 90vh;
+            opacity: .9;
+            z-index: 2147483647 !important;
+            transition: max-height 1s ease-out, opacity 0.5s ease-out;
+        }
+
         .popupButton {
             display: flex;
             flex-direction: column;
@@ -235,6 +260,7 @@
 
         .moreButtons {
             display: none;
+            transition: max-height 1s ease-out, opacity 0.3s ease-out;
         }
 
         .moreButtons.visible {
@@ -385,6 +411,11 @@
             popup2.classList.toggle('visible');
         }
 
+        function toggleInstructionsPopup() {
+            const instructions = document.getElementById('instructions');
+            instructions.classList.toggle('visible');
+        }
+
         function toggleMoreOptions() {
             let expandedText = "show less -";
             let collapsedText = "show more +";
@@ -521,10 +552,20 @@
         <button class="popupButton moreButtons" onclick="SurflySession.requestToHost(1)">Request Host</button>
     </div>
 
+    <div id="instructions" class="popup3">
+<h1>heading</h1>
+<p>bla bla</p>
+    </div>
+
     <div class="co-browsing-session">
         <iframe src="" class="iframe-content" id="sessionIframe"
             allow="autoplay *; camera *; microphone *; display-capture *; geolocation *; camera *;"></iframe>
         <div class="bottomNav">
+            <button class="bottomNavBtn" onclick="toggleInstructionsPopup()">
+                <svg class="svg-icon" viewBox="0 0 20 20" style="fill: #fff; width: 2.5em; height: 2em; vertical-align: middle;">
+                    <path d="M10 0C4.48 0 0 4.48 0 10s4.48 10 10 10 10-4.48 10-10S15.52 0 10 0zm1 15h-2v-6h2v6zm0-8h-2V5h2v2z"></path>
+                </svg>
+            </button>
             <!--another copy link for comfort-->
             <button class="bottomNavBtn" onclick="toggleLinkPopup()">
                 <svg class="svg-icon" viewBox="0 0 20 20"
