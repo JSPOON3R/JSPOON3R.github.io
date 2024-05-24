@@ -214,7 +214,10 @@
 
         .popup3 {
             position: fixed;
+            font-family: Figtree, sans-serif;
+            display:flex;
             flex-direction: column;
+            border: 1px solid rgb(182, 128, 118);
             bottom: 5%;
             left: 5%;
             padding: 10px 20px;
@@ -222,19 +225,29 @@
             color: #45362F;
             border-radius: 8px;
             width: 70vw;
-            max-height: 100vh;
+            max-height: 0;
             overflow: hidden;
             transition: max-height 1s ease-out, opacity 0.3s ease-out;
             z-index: 2147483549;
-            text-align: center;
-            opacity: 1;
+            text-align: left;
+            font-size: .9em;
+            opacity: 0;
         }
+    
 
         .popup3.visible {
-            max-height: 90vh;
-            opacity: .9;
+            max-height: 95vh;
+            opacity: .95;
             z-index: 2147483647 !important;
             transition: max-height 1s ease-out, opacity 0.5s ease-out;
+        }
+
+        .instructions-heading {
+            font-size: 1.4em;
+        }
+        .instruction-subheading {
+            font-size: 1.2em;
+            margin:0;
         }
 
         .popupButton {
@@ -553,8 +566,23 @@
     </div>
 
     <div id="instructions" class="popup3">
-<h1>heading</h1>
-<p>bla bla</p>
+<h1 class="instructions-heading">Quick Reference Guide</h1>
+<h2 class="instruction-subheading">How to use this page:</h2>
+<div class="join-instructions">
+<ul>
+    <li>Enter your member ID</li>
+    <li>Tap "Start Co-browsing Session</li>
+    <li>A link will automatically copy to your clipboard</li>
+    <li>Paste this link into your chat with the customer</li>
+</ul>
+</div>
+<h1 class="instructions-heading">Troubleshooting</h1>
+<h2 class="instruction-subheading">Web page not working?</h2>
+<p>Make sure the customer has joined with the correct link. Copy the <i>“Customer Link”</i> from the link menu.</p>
+<h2 class="instruction-subheading">Video not working?</h2>  
+<p><b>For you:</b> Make sure you have granted permissions for your camera and mic.<br><br>
+<b>For the Customer:</b> If the Customer is having problems with their inputs, instruct them to join the session from their devices browser (instead of within another app).<br><br>
+Copy the <i>"Link with Instructions"</i>. to the customer to help them.  </p>
     </div>
 
     <div class="co-browsing-session">
