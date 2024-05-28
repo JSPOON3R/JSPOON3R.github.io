@@ -1,7 +1,7 @@
 # <span class="header-numbers">2.2</span> Session Role Terminology
 
 Terms and phrases you will need to be familiar with to design the optimal Surfly set-up and use case flow. 
-
+<div class="divider"></div>
 ## Quick Look
 
 Session functionality differs somewhat between the Host, Participant in Control, Tab Owner and following Participants. These roles are not mutually exclusive and a single Participant can hold multiple combinations of each. For example:
