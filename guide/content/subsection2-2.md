@@ -12,7 +12,7 @@ Session functionality differs somewhat between the Host, Participant in Control,
 <li class="red bold"><a class="dark-gray normal-font">The <b class="red">Tab Owner</b> can be anybody, as long as they loaded the tab in their browser</a></li>
 <li class="red bold"><a class="dark-gray normal-font">Every non-Tab Owner is a following Participant in a given tab</a></li>
 </ul>
-
+<div class="divider"></div>
 ## Deep Dive
 
 Let’s take a closer look at the different roles that can apply to each participant in differing combinations. Different roles provide different functions. The distribution of these roles depend on several factors which will be covered later. The basic roles inside a Surfly Session are as follows:
@@ -65,7 +65,7 @@ Like Tab Ownership, Control is segregated per participant per tab. Control deter
 </ul>
 
 <b>Control can be changed using the meeting room UI or using Javascript.</b>
-
+<div class="divider"></div>
 ## In Practice
 
 The Host role is the only one that will apply across all tabs. Tab Ownership and Control can be different per tab. Different roles in different tabs will result in different abilities for Participants. 
@@ -186,7 +186,7 @@ The Host role is the only one that will apply across all tabs. Tab Ownership and
                    <td class="lightest-red-background red table-icon cross-icon"></td>
                </tr>
                </table>
-
+<div class="divider"></div>
 ## What Happens in Popular Flows?
 
 Below are the default distributions of Session roles in popular implementations. Many of these default values can be changed without any user action necessary using the Javascript API. 
@@ -222,7 +222,7 @@ Below are the default distributions of Session roles in popular implementations.
                 <td class="lightest-green-background dark-gray table-text">Highly configurable but by default the first Participant to join the Session from the API generated links will be the <span class="dark-blue bold">Host</span>, the first <span class="dark-blue bold">Tab Owner</span>. and in <span class="dark-blue bold">Control</span>. This Participant will see all masked content and will <span class="dark-blue bold">Control</span> the Session as the <span class="dark-blue bold">Host</span>.</td>
             </tr>
 </table>
-
+<div class="divider"></div>
 ## Read More:<br>
 <ul>
 <li class="red bold"><a class="dark-gray normal-weight" href="https://help.surfly.com/en/what-do-leader-and-follower-mean-in-a-surfly-sessi">Role Overview<br></a></li><br>
