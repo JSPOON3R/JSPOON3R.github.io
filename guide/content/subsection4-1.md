@@ -3,7 +3,7 @@
 <span class="blue normal-font">(Agent responds to customer)</span>
 
 The experience for Agents and Customers will usually be different. This section focuses on finding the right set up and workflow for your Agents. For Agent inbound flows, the Session is started by the Customer and the Agent will <i>respond</i> to the incoming interaction. There are two primary ways this can be done. 
-
+<div class="divider"></div>
 ## Pin Flow 
 <span class="blue normal-font">Best for Escalations</span>
 
@@ -63,7 +63,7 @@ Information on how to configure this flow can be found in <span class="red">Sect
 --WIP--
 
 Please see the "What Happens in Popular Flows" table in section 2.2 to understand the default <b>Roles</b> given to the Customer and Agent in this type of flow.
-
+<div class="divider"></div>
 ## Queue Flow 
 <span class="blue normal-font">Best for New Interactions</span>
 
@@ -120,7 +120,7 @@ Information on how to configure this flow can be found in <span class="red">Sect
 --WIP--
 
 Please see the "What Happens in Popular Flows" table in section 2.2 to understand the default <b>Roles</b> given to the Customer and Agent in this type of flow.
-
+<div class="divider"></div>
 ## Read More:<br>
 <ul>
 <li class="red bold"><a class="dark-gray normal-weight"  href="https://www.surfly.com/admin-guide/">Admin User Guide<br></a></li><br>

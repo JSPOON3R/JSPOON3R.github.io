@@ -1,7 +1,7 @@
 # <span class="header-numbers">7.1</span> Why Am I Being Logged Out?
 
 This is to be expected for some websites (especially during the trial period). If you are logged in to a website and become logged out when starting a Session, it is likely due to the way your website maintains state.
-
+<div class="divider"></div>
 ## Quick Look
 
 Most websites maintain a logged in state with cookies. When you enter your username and password, a cookie is stored in the browser that remembers you are authenticated. All subsequent requests to the website domain will use this cookie to identify you, keeping you logged in. 
@@ -55,7 +55,7 @@ All cookies that are not httpOnly should be copied over javascript when the Surf
 If you see a tick next to the cookie you identified then your website is using httpOnly cookies to maintain state and you will probably need [Session Continuation](https://docs.surfly.com/tutorials/session-continuation/). This is likely to resolve the issue. Please reach out to your contact at Surfly to proceed with the next steps.
 
 <b>If you are currently in a Trial Period, we will not set up Session Continuation until we are ready to deploy. At this point, we will be able to remove the need to log in again when you start a Session. 
-
+<div class="divider"></div>
 ## Read More:<br>
 <ul>
 <li class="red bold"><a class="dark-gray normal-weight" href="https://docs.surfly.com/tutorials/session-continuation/">Session Continuation<br></a></li><br>

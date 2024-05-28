@@ -3,7 +3,7 @@
 Surfly is the only solution that offers true Universal Co-browsing. In the simplest terms possible. Universal co-browsing is our way of saying that a Surfly session can be used to browse absolutely anything that can be loaded from a web browser via the internet. With Surfly, unlike other tools, this includes all websites and all web apps.
 
 We are uniquely able to do this due to the way our technology works. Most co-browsing vendors rely on embedding their code into your website. These are therefore limited to the domains you are able to modify and can increase implementation effort significantly. Surfly can be used without any changes to the target website or the browser being used. We work through middleware.
-
+<div class="divider"></div>
 ## Co-browsing Everywhere - Made Simple
 
 ### Visiting a Website Without Co-browsing
@@ -60,7 +60,7 @@ Let's visit amazon.com again through Surfly.
 </div>
 
 So what's changed? There is now a middle space that the website will pass through on its way to you and the people you are browsing with. This middle space not only allows Surfly to make any modifications to the website here. We enable co-browsing, but we also enable you to change anything you like. You take full control over the browsing experience in a way no other tool can enable. 
-
+<div class="divider"></div>
 ## Read More:<br>
 <ul>
 <li class="red bold"><a class="dark-gray normal-weight" href="https://www.surfly.com/surfly-vs-co-browsing-tools/">Surfly vs Other Tools<br></a></li><br>

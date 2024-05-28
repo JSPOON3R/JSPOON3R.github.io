@@ -1,7 +1,7 @@
 # <span class="header-numbers">X.X</span> Heading
 
 This is more plain text.
-
+<div class="divider"></div>
 ## Subheading
 
 This is more plain text.
@@ -104,7 +104,7 @@ console.log(greet('World')); // Output: Hello, World!
 </table>
 
 ### links
-
+<div class="divider"></div>
 ## Read More:<br>
 <ul>
 <li class="red bold"><a class="dark-gray normal-weight"  href="https://docs.surfly.com/tutorials/session-continuation/">Session Continuation<br></a></li><br>
