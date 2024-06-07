@@ -1,0 +1,226 @@
+code[class*="language-"],
+pre[class*="language-"] {
+	text-align: left;
+	white-space: pre;
+	word-spacing: normal;
+	word-break: normal;
+	word-wrap: normal;
+	color: var(--white);
+	background: var(--darkest-grey);
+	font-family: Roboto Mono, monospace;
+	font-size: 1em;
+	line-height: 1.5em;
+
+	-moz-tab-size: 4;
+	-o-tab-size: 4;
+	tab-size: 4;
+
+	-webkit-hyphens: none;
+	-moz-hyphens: none;
+	-ms-hyphens: none;
+	hyphens: none;
+}
+
+code[class*="language-"]::-moz-selection,
+pre[class*="language-"]::-moz-selection,
+code[class*="language-"] ::-moz-selection,
+pre[class*="language-"] ::-moz-selection {
+	background: var(--dark-grey);
+}
+
+code[class*="language-"]::selection,
+pre[class*="language-"]::selection,
+code[class*="language-"] ::selection,
+pre[class*="language-"] ::selection {
+	background: var(--dark-grey);
+}
+
+:not(pre) > code[class*="language-"] {
+	white-space: normal;
+	border-radius: 0.2em;
+	padding: 0.1em;
+}
+
+pre[class*="language-"] {
+	overflow: auto;
+	position: relative;
+	margin: 0.5em 0;
+	padding: 1.25em 1em;
+}
+
+:root {
+    --light-red: #e54747;
+    --dark-red: #c72323;
+    --light-blue:#7cadbf;
+    --blue:#2288ad;
+    --dark-blue:#166e8e;
+    --yellow: #f4c344;
+    --orange:#fd942a;
+    --light-green:#7dc05a;
+    --dark-green:#48a418;
+    --darkest-grey: #4d4d4d;
+    --dark-grey: #757575;
+    --grey: #b2b2b2;
+    --light-grey:#d8dada;
+    --lightest-gray:#eff0f0;
+    --white:#ffffff;
+}
+
+
+
+
+.language-css > code,
+.language-sass > code,
+.language-scss > code {
+	color: var(--orange);
+}
+
+[class*="language-"] .namespace {
+	opacity: 0.7;
+}
+
+.token.atrule {
+	color: var(--light-red);
+}
+
+.token.attr-name {
+	color: var(--yellow);
+}
+
+.token.attr-value {
+	color: var(--dark-green);
+}
+
+.token.attribute {
+	color: var(--dark-green);
+}
+
+.token.boolean {
+	color: var(--light-red);
+}
+
+.token.builtin {
+	color: var(--yellow);
+}
+
+.token.cdata {
+	color: var(--light-blue);
+}
+
+.token.char {
+	color: var(--light-blue);
+}
+
+.token.class {
+	color: var(--yellow);
+}
+
+.token.class-name {
+	color: var(--yellow);
+}
+
+.token.comment {
+	color: var(--grey);
+}
+
+.token.constant {
+	color: var(--light-red);
+}
+
+.token.deleted {
+	color: var(--dark-red);
+}
+
+.token.doctype {
+	color: var(--grey);
+}
+
+.token.entity {
+	color: var(--dark-red);
+}
+
+.token.function {
+	color: var(--light-red);
+}
+
+.token.hexcode {
+	color: var(--yellow);
+}
+
+.token.id {
+	color: var(--light-red);
+	font-weight: bold;
+}
+
+.token.important {
+	color: var(--light-red);
+	font-weight: bold;
+}
+
+.token.inserted {
+	color: var(--light-blue);
+}
+
+.token.keyword {
+	color: var(--light-red);
+}
+
+.token.number {
+	color: var(--orange);
+}
+
+.token.operator {
+	color: var(--dark-blue);
+}
+
+.token.prolog {
+	color: var(--grey);
+}
+
+.token.property {
+	color: var(--light-blue);
+}
+
+.token.pseudo-class {
+	color: var(--dark-green);
+}
+
+.token.pseudo-element {
+	color: var(--dark-green);
+}
+
+.token.punctuation {
+	color: var(--dark-blue);
+}
+
+.token.regex {
+	color: var(--yellow);
+}
+
+.token.selector {
+	color: var(--dark-red);
+}
+
+.token.string {
+	color: var(--dark-green);
+}
+
+.token.symbol {
+	color: var(--light-red);
+}
+
+.token.tag {
+	color: var(--dark-red);
+}
+
+.token.unit {
+	color: var(--orange);
+}
+
+.token.url {
+	color: var(--dark-red);
+}
+
+.token.variable {
+	color: var(--dark-red);
+}
