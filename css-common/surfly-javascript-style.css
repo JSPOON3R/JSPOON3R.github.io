@@ -6,7 +6,7 @@ pre[class*="language-"] {
 	word-break: normal;
 	word-wrap: normal;
 	color: var(--white);
-	background: var(--darkest-grey);
+	background: var(--background);
 	font-family: Roboto Mono, monospace;
 	font-size: 1em;
 	line-height: 1.5em;
@@ -25,14 +25,14 @@ code[class*="language-"]::-moz-selection,
 pre[class*="language-"]::-moz-selection,
 code[class*="language-"] ::-moz-selection,
 pre[class*="language-"] ::-moz-selection {
-	background: var(--darkest-grey);
+	background: var(--background);
 }
 
 code[class*="language-"]::selection,
 pre[class*="language-"]::selection,
 code[class*="language-"] ::selection,
 pre[class*="language-"] ::selection {
-	background: var(--darkest-grey);
+	background: var(--background);
 }
 
 :not(pre) > code[class*="language-"] {
@@ -64,6 +64,7 @@ pre[class*="language-"] {
     --light-grey:#d8dada;
     --lightest-gray:#eff0f0;
     --white:#ffffff;
+    --background: #2f2f2f;
 }
 
 
@@ -88,11 +89,11 @@ pre[class*="language-"] {
 }
 
 .token.attr-value {
-	color: var(--blue)
+	color: var(--light-blue):
 }
 
 .token.attribute {
-	color: var(--blue)
+	color: var(--light-blue):
 }
 
 .token.boolean {
