@@ -34,7 +34,7 @@
         }
     </style>
     <script>
-        var SurflySesson;
+        var SurflySession;
        function loadSurfly() {
     console.log('surfly triggered following widget key declaration');
     (function (s, u, r, f, l, y) {
@@ -51,12 +51,13 @@
         videochat_enabled: true,
         start_with_videochat_on: false,
         session_autorestore_enabled: false,
-        screensharing_enabled: true
+        screensharing_enabled: true,
+        block_until_agent_joins: false
     };
 
     Surfly.init(settings, function(init) {
                 if (init.success && !Surfly.isInsideSession) {
-                    SurflySesson = Surfly.session().startLeader()
+                    SurflySession = Surfly.session().startLeader()
                     .on('session_created', function (session, event) {
                         SurflySession.startScreensharing();
     })
