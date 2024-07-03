@@ -278,7 +278,7 @@ function startCobrowsingtext() {
         session_start_confirmation: false,
         tags: ["text-input"],
         hide_element_by_selector: "#InsuredAddress,#HasAcceptedDisclaimer-checkbox-group > label > div > div > span,body > div.L3eUgb > div.o3j99.ikrT4e.om7nvf > form > div:nth-child(1) > div.A8SBwf > div.RNNXgb > div,#input_7_3,#input_7_5",
-        blocklist: "[{\"pattern\": \"^https?://[\\\\w\\\\.]*facebook\\\\.com\",\"redirect\": \"https://demo.surfly.com/blocked.html\"}]"
+        blocklist: "[{\"pattern\": \"^https?://[\\\\w\\\\.]*facebook\\\\.com\",\"redirect\": \"https://demo.surfly.com/pages-common/blocked.html\"}]"
     }).startLeader();
 }
 
@@ -298,7 +298,7 @@ function startvideochat() {
         tags: [
             "video-button"
         ],
-        blocklist: "[{\"pattern\": \"^https?://[\\\\w\\\\.]*facebook\\\\.com\",\"redirect\": \"https://demo.surfly.com/blocked.html\"}]"
+        blocklist: "[{\"pattern\": \"^https?://[\\\\w\\\\.]*facebook\\\\.com\",\"redirect\": \"https://demo.surfly.com/pages-common/blocked.html\"}]"
 
     }).startLeader();
 }
@@ -316,7 +316,7 @@ function startCobrowsingbutton1() {
         tags: [
             "default-flow-button"
         ],
-        blocklist: "[{\"pattern\": \"^https?://[\\\\w\\\\.]*facebook\\\\.com\",\"redirect\": \"https://demo.surfly.com/blocked.html\"}]"
+        blocklist: "[{\"pattern\": \"^https?://[\\\\w\\\\.]*facebook\\\\.com\",\"redirect\": \"https://demo.surfly.com/pages-common/blocked.html\"}]"
 
     }).startLeader();
     hideChatWidget();
@@ -353,7 +353,7 @@ function startCobrowsingbutton2() {
         tags: [
             "form-flow-button"
         ],
-        blocklist: "[{\"pattern\": \"^https?://[\\\\w\\\\.]*facebook\\\\.com\",\"redirect\": \"https://demo.surfly.com/blocked.html\"}]"
+        blocklist: "[{\"pattern\": \"^https?://[\\\\w\\\\.]*facebook\\\\.com\",\"redirect\": \"https://demo.surfly.com/pages-common/blocked.html\"}]"
 
     }).startLeader(null, {
         "Name": customerName,
@@ -366,34 +366,39 @@ function startCobrowsingbutton2() {
 ////////////"custom-pin-button"
 //Open the pop up with a fade
 function loadpinflow() {
-    const showpopup = document.getElementById("startpinflowButton");
-    const modal = document.getElementById("pinmodal");
-    const closeButton = document.getElementById("closepinButton");
-    const endsessionbutton = document.getElementById("endsessionbutton");
-    {
-        // Toggle visibility and opacity for fade-in/out effect
-        if (modal.style.opacity === "1" || modal.style.visibility === "visible") {
-            modal.style.opacity = "0";
-            modal.style.visibility = "hidden";
-        } else {
-            modal.style.display = "flex";
-            setTimeout(() => {
-                modal.style.opacity = "1";
-                modal.style.visibility = "visible";
-            }, 10); // Delay to ensure the display property is applied first
+    document.addEventListener("DOMContentLoaded", function() {
+        const showpopup = document.getElementById("startpinflowButton");
+        const modal = document.getElementById("pinmodal");
+        const closeButton = document.getElementById("closepinButton");
+        const endsessionbutton = document.getElementById("endsessionbutton");
+    
+        function loadpinflow() {
+            // Toggle visibility and opacity for fade-in/out effect
+            if (modal.style.opacity === "1" || modal.style.visibility === "visible") {
+                modal.style.opacity = "0";
+                modal.style.visibility = "hidden";
+            } else {
+                modal.style.display = "flex";
+                setTimeout(() => {
+                    modal.style.opacity = "1";
+                    modal.style.visibility = "visible";
+                }, 10); // Delay to ensure the display property is applied first
+            }
+            startCobrowsingbutton3();
         }
-    }
-    //Trigger function when the custom flow button is clicked
-    showpopup.addEventListener("click", loadpinflow);
-    startCobrowsingbutton3();
-
-    closeButton.addEventListener("click", function () {
-        modal.style.display = "none";
+    
+        // Trigger function when the custom flow button is clicked
+        showpopup.addEventListener("click", loadpinflow);
+    
+        closeButton.addEventListener("click", function () {
+            modal.style.display = "none";
+        });
+    
+        endsessionbutton.addEventListener("click", function () {
+            Surfly.session().end();
+        });
     });
-
-    endsessionbutton.addEventListener("click", function () {
-        Surfly.session().end();
-    });
+    
 }
 
 
@@ -416,7 +421,7 @@ function startCobrowsingbutton3() {
             tags: [
                 "custom-pin-button"
             ],
-            blocklist: "[{\"pattern\": \"^https?://[\\\\w\\\\.]*facebook\\\\.com\",\"redirect\": \"https://demo.surfly.com/blocked.html\"}]"
+            blocklist: "[{\"pattern\": \"^https?://[\\\\w\\\\.]*facebook\\\\.com\",\"redirect\": \"https://demo.surfly.com/pages-common/blocked.html\"}]"
 
         }).startLeader(null, {
             Custom_Field_1: 'Data goes here',
