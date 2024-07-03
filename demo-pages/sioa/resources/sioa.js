@@ -365,6 +365,21 @@ function startCobrowsingbutton2() {
 
 ////////////"custom-pin-button"
 //Open the pop up with a fade
+
+function loadpinflow() {
+    // Toggle visibility and opacity for fade-in/out effect
+    if (modal.style.opacity === "1" || modal.style.visibility === "visible") {
+        modal.style.opacity = "0";
+        modal.style.visibility = "hidden";
+    } else {
+        modal.style.display = "flex";
+        setTimeout(() => {
+            modal.style.opacity = "1";
+            modal.style.visibility = "visible";
+        }, 10); // Delay to ensure the display property is applied first
+    }
+}
+
     document.addEventListener("DOMContentLoaded", function() {
         const showpopup = document.getElementById("startpinflowButton");
         const modal = document.getElementById("pinmodal");
@@ -384,21 +399,6 @@ function startCobrowsingbutton2() {
         endsessionbutton.addEventListener("click", function () {
             Surfly.session().end();
         });
-
-
-    function loadpinflow() {
-        // Toggle visibility and opacity for fade-in/out effect
-        if (modal.style.opacity === "1" || modal.style.visibility === "visible") {
-            modal.style.opacity = "0";
-            modal.style.visibility = "hidden";
-        } else {
-            modal.style.display = "flex";
-            setTimeout(() => {
-                modal.style.opacity = "1";
-                modal.style.visibility = "visible";
-            }, 10); // Delay to ensure the display property is applied first
-        }
-    }
 });
 
 
