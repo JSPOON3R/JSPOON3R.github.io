@@ -370,20 +370,7 @@ function startCobrowsingbutton2() {
         const modal = document.getElementById("pinmodal");
         const closeButton = document.getElementById("closepinButton");
         const endsessionbutton = document.getElementById("endsessionbutton");
-    
-        function loadpinflow() {
-            // Toggle visibility and opacity for fade-in/out effect
-            if (modal.style.opacity === "1" || modal.style.visibility === "visible") {
-                modal.style.opacity = "0";
-                modal.style.visibility = "hidden";
-            } else {
-                modal.style.display = "flex";
-                setTimeout(() => {
-                    modal.style.opacity = "1";
-                    modal.style.visibility = "visible";
-                }, 10); // Delay to ensure the display property is applied first
-            }
-        }
+
     
         // Trigger function when the custom flow button is clicked
         showpopup.addEventListener("click", loadpinflow);
@@ -398,6 +385,20 @@ function startCobrowsingbutton2() {
             Surfly.session().end();
         });
     });
+
+    function loadpinflow() {
+        // Toggle visibility and opacity for fade-in/out effect
+        if (modal.style.opacity === "1" || modal.style.visibility === "visible") {
+            modal.style.opacity = "0";
+            modal.style.visibility = "hidden";
+        } else {
+            modal.style.display = "flex";
+            setTimeout(() => {
+                modal.style.opacity = "1";
+                modal.style.visibility = "visible";
+            }, 10); // Delay to ensure the display property is applied first
+        }
+    }
     
 
 
