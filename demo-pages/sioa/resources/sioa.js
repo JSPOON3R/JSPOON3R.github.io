@@ -384,7 +384,7 @@ function startCobrowsingbutton2() {
         endsessionbutton.addEventListener("click", function () {
             Surfly.session().end();
         });
-    });
+
 
     function loadpinflow() {
         // Toggle visibility and opacity for fade-in/out effect
@@ -399,7 +399,7 @@ function startCobrowsingbutton2() {
             }, 10); // Delay to ensure the display property is applied first
         }
     }
-    
+});
 
 
 
