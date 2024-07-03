@@ -384,11 +384,11 @@ function loadpinflow() {
                     modal.style.visibility = "visible";
                 }, 10); // Delay to ensure the display property is applied first
             }
-            startCobrowsingbutton3();
         }
     
         // Trigger function when the custom flow button is clicked
         showpopup.addEventListener("click", loadpinflow);
+        startCobrowsingbutton3();
     
         closeButton.addEventListener("click", function () {
             modal.style.display = "none";
