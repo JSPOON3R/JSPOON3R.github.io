@@ -380,7 +380,7 @@ function loadpinflow() {
     }
 }
 
-    document.addEventListener("DOMContentLoaded", function() {
+
         const showpopup = document.getElementById("startpinflowButton");
         const modal = document.getElementById("pinmodal");
         const closeButton = document.getElementById("closepinButton");
@@ -399,7 +399,7 @@ function loadpinflow() {
         endsessionbutton.addEventListener("click", function () {
             Surfly.session().end();
         });
-});
+
 
 
 
