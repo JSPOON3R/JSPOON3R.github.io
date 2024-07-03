@@ -365,7 +365,6 @@ function startCobrowsingbutton2() {
 
 ////////////"custom-pin-button"
 //Open the pop up with a fade
-function loadpinflow() {
     document.addEventListener("DOMContentLoaded", function() {
         const showpopup = document.getElementById("startpinflowButton");
         const modal = document.getElementById("pinmodal");
@@ -388,6 +387,7 @@ function loadpinflow() {
     
         // Trigger function when the custom flow button is clicked
         showpopup.addEventListener("click", loadpinflow);
+
         startCobrowsingbutton3();
     
         closeButton.addEventListener("click", function () {
@@ -399,7 +399,7 @@ function loadpinflow() {
         });
     });
     
-}
+
 
 
 
