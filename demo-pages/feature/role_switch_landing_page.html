@@ -60,9 +60,9 @@
                         .on('participant_joined', function (session, event) {
                             console.log("participant_joined event triggered");
                             console.log('Participant ', event.clientIndex, 'joined the session');
-                            if (event.clientIndex === 0) {
-                                SurflySession.makeHost(1);
-                                SurflySession.transferTabControl(1);
+                            if (event.clientIndex !== 0) {
+                                SurflySession.makeHost(event.clientIndex);
+                                SurflySession.transferTabControl(event.clientIndex);
                             } else {
                                 console.log(event.clientIndex + " joined the session - host not changed");
                             }
