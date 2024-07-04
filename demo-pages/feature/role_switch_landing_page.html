@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automatic Host & Control Switch Landing Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Nunito Sans', sans-serif;
+            background: linear-gradient(to bottom, white, #cfe0c5);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #757575;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 1.2rem;
+        }
+    </style>
+    <script>
+        var SurflySession;
+        function loadSurfly() {
+            console.log('surfly triggered following widget key declaration');
+            (function (s, u, r, f, l, y) {
+                s[f] = s[f] || { init: function () { s[f].q = arguments } };
+                l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+                l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+            })
+                (window, document, 'script', 'Surfly');
+
+            var settings = {
+                widget_key: "99671227762b43c2a96daa066ee006e2",
+                region: "us-east",
+                queued: true,
+                videochat_enabled: true,
+                start_with_videochat_on: false,
+                session_autorestore_enabled: false,
+                screensharing_enabled: true,
+                block_until_agent_joins: false
+            };
+
+            Surfly.init(settings, function (init) {
+                if (init.success && !Surfly.isInsideSession) {
+                    SurflySession = Surfly.session().startLeader()
+                        .on('participant_joined', function (session, event) {
+                            console.log("participant_joined event triggered");
+                            console.log('Participant ', event.clientIndex, 'joined the session');
+                            if (event.clientIndex === 0) {
+                                SurflySession.makeHost(1);
+                                SurflySession.transferTabControl(1);
+                            } else {
+                                console.log(event.clientIndex + " joined the session - host not changed");
+                            }
+                        })
+                    .on('host_changed', function (session, event) {
+                        console.log("host rights obtained: ", event.gained);
+                        console.log("New host: ", event.to);
+                        console.log("My index: ", event.myIndex);
+                    })
+                }
+            });
+        }
+        loadSurfly();
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Automatic Host & Control Switch<br>Landing Page</h1>
+        <p>When another participant joins, they will automatically recieve <b>Tab Control</b> and <b>Host</b> permissions</p>
+    </div>
+</body>
+
+</html>
