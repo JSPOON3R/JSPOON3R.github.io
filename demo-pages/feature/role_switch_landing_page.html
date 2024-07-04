@@ -51,7 +51,8 @@
                 start_with_videochat_on: false,
                 session_autorestore_enabled: false,
                 screensharing_enabled: true,
-                block_until_agent_joins: false
+                block_until_agent_joins: false,
+                url: "https://ezgif.com/gif-to-mp4"
             };
 
             Surfly.init(settings, function (init) {
@@ -61,14 +62,13 @@
                             console.log("participant_joined event triggered");
                             console.log('Participant ', event.clientIndex, 'joined the session');
                             if (event.clientIndex !== 0) {
-                                SurflySession.makeHost(event.clientIndex);
-                                SurflySession.transferTabControl(event.clientIndex);
+                                SurflySession.makeHost(2);
+                                SurflySession.transferTabControl(2);
                             } else {
                                 console.log(event.clientIndex + " joined the session - host not changed");
                             }
                         })
                     .on('host_changed', function (session, event) {
-                        console.log("host rights obtained: ", event.gained);
                         console.log("New host: ", event.to);
                         console.log("My index: ", event.myIndex);
                     })
