@@ -66,23 +66,36 @@
             l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
         })
             (window, document, 'script', 'Surfly');
+
         var settings = {
             widget_key: '99671227762b43c2a96daa066ee006e2',
         };
         Surfly.init(settings, function (initResult) {
-            if (initResult.success) {
-                console.log('Init success in Start Page');
-                Surfly.listSessions().forEach(function (session) {
-                    console.log('Found a session:', session.followerLink);
+    if (initResult.success) {
+        console.log('Init success in Start Page');
+
+        var sessions = Surfly.listSessions();
+        if (sessions.length > 0) {
+            sessions.forEach(function(session) {
+                console.log('Found a session:', session.followerLink);
+            });
+
+            if (Surfly.isInsideSession) {
+                console.log('Surfly inside Start Page');
+                sessions[0].on('participant_joined', function (session, event) {
+                    console.log('Participant ', event.clientIndex, 'joined the session. Start Page will close');
+                    window.close();
                 });
-                Surfly.listSessions()[0].on('participant_joined', function (session, event) {
-                console.log('Participant ', event.clientIndex, 'joined the session. Start Page will close');
-                window.close();
-            })
             } else {
-                console.log('Init failed on Start Page');
+                console.log("Surfly not inside session");
             }
-        });
+        } else {
+            console.log('No sessions found');
+        }
+    } else {
+        console.log('Init failed on Start Page');
+    }
+});
     </script>
 </head>
 
