@@ -69,9 +69,11 @@
         })
             (window, document, 'script', 'Surfly');
 
+        console.log("Surfly JS loaded on start page");
+
             Surfly.init( function(initResult) {
         if (initResult.success) {
-            console.log('Surfly loaded on start page');
+            console.log('Surfly init success on start page');
         } else {
             console.log('Surfly init failed in start page');
         };
@@ -83,11 +85,13 @@
         else {
             console.log("something went wrong");
         }
-        SurflySession.on('participant_joined', function (session, event) {
+    });
+
+    SurflySession.on('participant_joined', function (session, event) {
             console.log("Customer has Joined - tab will be closed");
             window.close();
         }
-    )});
+    );
     </script>
 </head>
 
