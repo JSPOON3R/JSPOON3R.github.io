@@ -65,17 +65,19 @@
     l.src='https://surfly.com/surfly.js';y.parentNode.insertBefore(l,y);})
     (window,document,'script','Surfly');
 
-    Surfly.init( function(initResult) {
-        if (initResult.success) {
-            console.log('Surfly Javascript Loaded on Start Page');
-        } else {
-            console.log('Surfly init failed on page');
-        }
-
-        Surfly.listSessions()[0].on('participant_joined', function(session, event) {
-                      console.log("Participant Joined - tab will be closed");
+    if (Surfly.isInsideSession) {
+  Surfly.currentSession.on('message', function (session, event) {
+    if (event.origin === window.location.origin) {
+      console.log('Outer window says:', event.data);
+    } else {
+      console.log("Error using Surfly JS on Start Page");
+    }
+  });
+}
+Surfly.currentSession.on('participant_joined', function(session, event) {
+                      console.log("Customer has Joined - tab will be closed");
                       window.close();
-    });});
+    });
     </script>
 </head>
 
