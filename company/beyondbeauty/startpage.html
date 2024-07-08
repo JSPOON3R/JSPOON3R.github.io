@@ -69,6 +69,13 @@
         })
             (window, document, 'script', 'Surfly');
 
+            Surfly.init( function(initResult) {
+        if (initResult.success) {
+            console.log('Surfly loaded on start page');
+        } else {
+            console.log('Surfly init failed in start page');
+        };
+
         if (Surfly.isInsideSession) {
             console.log("Surfly available on Start Page");
             SurflySession = Surfly.currentSession;
@@ -80,7 +87,7 @@
             console.log("Customer has Joined - tab will be closed");
             window.close();
         }
-        );
+    )});
     </script>
 </head>
 
