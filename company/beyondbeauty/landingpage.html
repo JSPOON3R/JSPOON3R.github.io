@@ -387,13 +387,6 @@
                 console.log("participant_joined event triggered");
                 console.log('Participant ', event.clientIndex, 'joined the session');
                 sendMessage();
-                if (event.clientIndex === 0) {
-                    //request host rights for member (should be CID 1 as they are the first follower)
-                    console.log("Member has joined the session")
-                } else {
-                    console.log(event.clientIndex + " joined the session");
-                }
-
             })
             SurflySession.on('host_changed', function (session, event) {
                 console.log("host rights obtained: ", event.gained);
@@ -414,9 +407,10 @@
         }
 
         function sendMessage() {
+            console.log("sendMessage triggered");
             const messageinput = "close tab";
             SurflySession.sendMessage({ message: messageinput },'https://demo.surfly.com', window.location.origin);
-            console.log("Message Sent to clos the tab");
+            console.log("Message Sent to close the tab");
         }
 
         function toggleLinkPopup() {
