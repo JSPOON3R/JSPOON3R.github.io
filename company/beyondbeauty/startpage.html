@@ -60,6 +60,7 @@
         }
     </style>
     <script>
+        var SurflySession;
         (function (s, u, r, f, l, y) {
             s[f] = s[f] || { init: function () { s[f].q = arguments } };
             l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
@@ -68,7 +69,9 @@
             (window, document, 'script', 'Surfly');
 
         if (Surfly.isInsideSession) {
-            Surfly.currentSession.on('participant_joined', function (session, event) {
+            console.log("Surfly available on Start Page");
+            var SurflySession = Surfly.currentSession;
+            SurflySession.on('participant_joined', function (session, event) {
                 console.log("Customer has Joined - tab will be closed");
                 window.close();
             }
