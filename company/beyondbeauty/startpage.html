@@ -73,9 +73,27 @@
             if (initResult.success) {
                 console.log('Init success in Start Page');
 
+                // Adding debug statements to verify Surfly object
+                console.log('Surfly object:', Surfly);
+
                 // Check if Surfly object is fully initialized
                 setTimeout(function() {
                     console.log('Attempting to list sessions...');
+
+                    if (typeof Surfly.listSessions === 'function') {
+                        console.log('Surfly.listSessions is a function');
+                    } else {
+                        console.error('Surfly.listSessions is not a function');
+                        return;
+                    }
+
+                    if (typeof Surfly.isInsideSession === 'boolean') {
+                        console.log('Surfly.isInsideSession is a boolean:', Surfly.isInsideSession);
+                    } else {
+                        console.error('Surfly.isInsideSession is not a boolean');
+                        return;
+                    }
+
                     var sessions;
                     try {
                         sessions = Surfly.listSessions();
