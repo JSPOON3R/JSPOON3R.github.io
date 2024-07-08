@@ -59,12 +59,32 @@
             margin-top: 20px;
         }
     </style>
+    <script>
+           //Load Surfly
+    (function(s,u,r,f,l,y){s[f]=s[f]||{init:function(){s[f].q=arguments}};
+    l=u.createElement(r);y=u.getElementsByTagName(r)[0];l.async=1;
+    l.src='https://surfly.com/surfly.js';y.parentNode.insertBefore(l,y);})
+    (window,document,'script','Surfly');
+
+    Surfly.init( function(initResult) {
+        if (initResult.success) {
+            console.log('Surfly Javascript Vailable in Page');
+        } else {
+            console.log('Surfly init failed on page');
+        }
+
+
+        Surfly.on('participant_joined', function(session, event) {
+                      console.log("Participant Joined - tab will be closed");
+                      window.close();
+    });});
+    </script>
 </head>
 
 <body>
     <div class="container">
-        <h2>When everyone is ready, tap the button to begin</h2>
-        <button class="btn" onclick="window.close()">Get Started</button>
+        <h2>Please wait for your customer to join</h2>
+        <button class="btn">Copy Customer Link</button>
     </div>
 </body>
 
