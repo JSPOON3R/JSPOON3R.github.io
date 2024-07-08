@@ -89,7 +89,9 @@
     if (event.origin) {
         console.log('Message received from '+ event.origin +': '+ event.data.params.msg.message);
         if (event.data.params.msg.message === "close tab") {
-            window.close();
+            setTimeout(function() {
+                window.close();
+            }, 5000);
         }
         else {
             console.log("failed to close tab")
