@@ -77,19 +77,17 @@
         };
 
         if (Surfly.isInsideSession) {
-            console.log("Surfly available on Start Page");
-            SurflySession = Surfly.currentSession;
-        }
-        else {
-            console.log("something went wrong");
-        }
+  Surfly.currentSession.on('message', function (session, event) {
+    if (event.origin === window.location.origin) {
+      console.log('Outer window says:', event.data);
+      window.close();
+    } else {
+      console.log("Failed to close Start Page");
+    }
+  });
+}
     });
 
-    Surfly.currentSession.on('participant_joined', function (session, event) {
-            console.log("Customer has Joined - tab will be closed");
-            window.close();
-        }
-    );
     </script>
 </head>
 
