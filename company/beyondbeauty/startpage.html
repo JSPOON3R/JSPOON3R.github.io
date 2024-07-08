@@ -69,13 +69,6 @@
 
         console.log("Surfly JS loaded on start page");
 
-            Surfly.init( function(initResult) {
-        if (initResult.success) {
-            console.log('Surfly init success on start page');
-        } else {
-            console.log('Surfly init failed in start page');
-        };
-
         if (Surfly.isInsideSession) {
             console.log('Surfly inside Start Page');
   Surfly.currentSession.on('message', function (session, event) {
@@ -87,7 +80,6 @@
     }
   });
 }
-    });
 
     </script>
 </head>
