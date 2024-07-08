@@ -72,6 +72,7 @@
         Surfly.init(settings, function (initResult) {
             if (initResult.success) {
                 console.log('Init success in Start Page');
+                Surfly.listSessions();
 
                 // Delaying session retrieval to ensure Surfly is fully initialized
                 setTimeout(function() {
