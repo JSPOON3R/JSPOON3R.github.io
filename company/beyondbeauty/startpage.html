@@ -72,7 +72,11 @@
         Surfly.init(settings, function (initResult) {
             if (initResult.success) {
                 console.log('Init success in Start Page')
-                if (Surfly.isInsideSession) {
+            } else {
+                console.log('Init failed on Start Page');
+            }
+        });
+        if (Surfly.isInsideSession) {
                     console.log('Surfly inside Start Page');
                     Surfly.currentSession.on('participant_joined', function (session, event) {
                         console.log('Participant ', event.clientIndex, 'joined the session. Start Page will close');
@@ -82,10 +86,6 @@
                 else {
                     console.log("Surfly not inside session");
                 }
-            } else {
-                console.log('Init failed on Start Page');
-            }
-        });
     </script>
 </head>
 
