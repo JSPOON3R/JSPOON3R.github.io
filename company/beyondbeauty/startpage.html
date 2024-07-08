@@ -88,6 +88,9 @@
     window.addEventListener('message', function (event) {
     if (event.origin) {
         console.log('Message received from '+ event.origin +': '+ event.data.params.msg.message);
+        if (event.data.params.msg.message === "close tab") {
+            window.close();
+        }
     }
 });
     </script>
