@@ -76,9 +76,14 @@
                 console.log('Init failed on Start Page');
             }
         });
+
+        Surfly.listSessions().forEach(function(session) {
+  console.log('Found a session:', session.followerLink);
+});
+
         if (Surfly.isInsideSession) {
                     console.log('Surfly inside Start Page');
-                    Surfly.currentSession.on('participant_joined', function (session, event) {
+                    Surfly.listSessions()[0].on('participant_joined', function (session, event) {
                         console.log('Participant ', event.clientIndex, 'joined the session. Start Page will close');
                         window.close();
                     })
