@@ -68,6 +68,7 @@
         }
 
         function initializeSurfly() {
+            console.log('Initializing Surfly...');
             var settings = {
                 widget_key: '99671227762b43c2a96daa066ee006e2',
             };
@@ -83,7 +84,6 @@
         }
 
         function checkSurflySessions() {
-            // Check if Surfly object is fully initialized
             setTimeout(function() {
                 console.log('Attempting to list sessions...');
 
@@ -130,7 +130,10 @@
         }
 
         // Load the Surfly script and initialize Surfly once loaded
-        loadSurflyScript(initializeSurfly);
+        loadSurflyScript(function() {
+            console.log('Surfly script loaded');
+            initializeSurfly();
+        });
     </script>
 </head>
 
