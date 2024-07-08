@@ -71,6 +71,7 @@
         };
 
             console.log('Initializing Surfly...');
+
     Surfly.init( function(initResult) {
         if (initResult.success) {
                 console.log('Init success in Start Page');
@@ -78,8 +79,6 @@
                 console.log('Init failed on Start Page');
             }
 
-
-        Surfly.on("session_started", ()=> {
             Surfly.on('message', function (session, event) {
                 if (event.origin) {
                     console.error('Message received inside from: ', event.origin);
@@ -89,7 +88,13 @@
                 }
             });
         
-    });});
+    });
+
+    window.addEventListener('message', function (event) {
+    if (event.origin) {
+        console.log('Message received from '+ event.origin +': '+ event.data.params.msg.message);
+    }
+});
     </script>
 </head>
 
