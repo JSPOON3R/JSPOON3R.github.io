@@ -60,24 +60,20 @@
         }
     </style>
     <script>
-    (function(s,u,r,f,l,y){s[f]=s[f]||{init:function(){s[f].q=arguments}};
-    l=u.createElement(r);y=u.getElementsByTagName(r)[0];l.async=1;
-    l.src='https://surfly.com/surfly.js';y.parentNode.insertBefore(l,y);})
-    (window,document,'script','Surfly');
+        (function (s, u, r, f, l, y) {
+            s[f] = s[f] || { init: function () { s[f].q = arguments } };
+            l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+            l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+        })
+            (window, document, 'script', 'Surfly');
 
-    if (Surfly.isInsideSession) {
-  Surfly.currentSession.on('message', function (session, event) {
-    if (event.origin === window.location.origin) {
-      console.log('Outer window says:', event.data);
-    } else {
-      console.log("Error using Surfly JS on Start Page");
-    }
-  });
-}
-Surfly.currentSession.on('participant_joined', function(session, event) {
-                      console.log("Customer has Joined - tab will be closed");
-                      window.close();
-    });
+        if (Surfly.isInsideSession) {
+            Surfly.currentSession.on('participant_joined', function (session, event) {
+                console.log("Customer has Joined - tab will be closed");
+                window.close();
+            }
+            );
+        }
     </script>
 </head>
 
