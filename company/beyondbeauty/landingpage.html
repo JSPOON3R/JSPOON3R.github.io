@@ -356,11 +356,11 @@
 
         function startSurflySession() {
             console.log("start session activated");
-            SurflySession = Surfly.session({ tags: [inputValue], url: ""}).startFollower("#sessionIframe");
+            SurflySession = Surfly.session({ tags: [inputValue], url: ""}).startLeader("#sessionIframe");
             SurflySession.on('session_created', function (SurflySession) {
                 customerLink = SurflySession.followerLink+"?url=member.beyondbeautyclub.com/?ID="+inputValue;
                 memberLink = SurflySession.leaderLink;
-                navigator.clipboard.writeText(SurflySession.leaderLink)
+                navigator.clipboard.writeText(customerLink)
                     .then(() => {
                         showPopup();
                         console.log('Link copied to clipboard:', memberLink);
