@@ -318,13 +318,7 @@
         var SurflySession;
         var customerLink;
         var memberLink;
-        var instructionsInvite = "*Shop with me 3 easy steps:*" + "\n" + "\n" +
-            "1. *Copy* the link below _(don't open it)_" + "\n" +
-            "2. *Open* your phone's web browser _(Chrome or Safari)_" + "\n" +
-            "3. *Paste* the link _(below)_ into your browser\n"
-            + "\n" +
-            "_(the video works better if you do it this way!)_\n"
-            + "\n"
+        var instructionsInvite = "YOUR MESSAGE COPIED TO CLIPBOARD"
         var inputValue = "none";
         var settings = {
             // Surfly session options can be set here, or at the Company/Plan levels.
@@ -362,10 +356,10 @@
 
         function startSurflySession() {
             console.log("start session activated");
-            SurflySession = Surfly.session({ tags: [inputValue], url: "https://member.beyondbeautyclub.com/?ID=" + inputValue, }).startFollower("#sessionIframe");
+            SurflySession = Surfly.session({ tags: [inputValue], url: ""}).startFollower("#sessionIframe");
             SurflySession.on('session_created', function (SurflySession) {
-                customerLink = SurflySession.leaderLink;
-                memberLink = SurflySession.followerLink;
+                customerLink = SurflySession.followerLink+"/?url=https://member.beyondbeautyclub.com/&ID=" + inputValue;
+                memberLink = SurflySession.leaderLink;
                 navigator.clipboard.writeText(SurflySession.leaderLink)
                     .then(() => {
                         showPopup();
@@ -374,7 +368,7 @@
                     .catch(err => {
                         console.error('Failed to copy output to clipboard:', err);
                     });
-                console.log("Follower link =", memberLink, " Leader link =", customerLink);
+                console.log("leader link =", memberLink, " follower link =", customerLink);
             })
             SurflySession.on('session_started', function (SurflySession, session, event) {
                 console.log('session started');
@@ -395,7 +389,7 @@
                 //customer will always be CID 0 as the leader
                 if (event.clientIndex === 0) {
                     //request host rights for member (should be CID 1 as they are the first follower)
-                    SurflySession.requestToHost(1);
+                    console.log("Member has joined the session")
                 } else {
                     console.log(event.clientIndex + " joined the session - no request sent");
                 }
