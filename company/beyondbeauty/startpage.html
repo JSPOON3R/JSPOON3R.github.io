@@ -66,33 +66,32 @@
         })
             (window, document, 'script', 'Surfly');
 
-        function loadSurflyScript(callback) {
-            var script = document.createElement('script');
-            script.async = 1;
-            script.src = 'https://surfly.com/surfly.js';
-            script.onload = callback;
-            document.head.appendChild(script);
-        }
-
-        console.log('Initializing Surfly...');
-        var settings = {
+            var settings = {
             widget_key: '99671227762b43c2a96daa066ee006e2',
         };
 
-        Surfly.init(settings, function (initResult) {
-            if (initResult.success) {
+            console.log('Initializing Surfly...');
+    Surfly.init( function(initResult) {
+        if (initResult.success) {
                 console.log('Init success in Start Page');
-
             } else {
                 console.log('Init failed on Start Page');
             }
-        });
 
-        var SurflySession = Surfly.listSessions()[0];
-        console.log(SurflySession);
-        Surfly.listSessions()[0].on("participant_joined", function (session, event) {
-            console.log("participant joined event triggered on start page");
-        })
+
+        Surfly.on("session_started", ()=> {
+            Surfly.on('message', function (session, event) {
+                if (event.origin) {
+                    console.error('Message received inside from: ', event.origin);
+                    console.log('Message Received inside session:', event.data.message);
+                }
+            });
+            Surfly.listSessions()[0].on('message', function(session, event) {
+                      console.log("Message recieved from Landing Page"+event.data.message);
+                      window.close();
+            });
+        
+    });});
     </script>
 </head>
 
