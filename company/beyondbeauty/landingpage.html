@@ -357,7 +357,7 @@
 
         function startSurflySession() {
             console.log("start session activated");
-            SurflySession = Surfly.session({ tags: [inputValue], url: "https://demo.surfly.com/company/beyondbeauty/startpage.html/?ID="+inputValue}).startLeader("#sessionIframe");
+            SurflySession = Surfly.session({ tags: [inputValue], url: "https://demo.surfly.com/company/beyondbeauty/startpage.html?ID="+inputValue}).startLeader("#sessionIframe");
             SurflySession.on('session_created', function (SurflySession) {
                 customerLink = SurflySession.followerLink+"?url=member.beyondbeautyclub.com";
                 memberLink = SurflySession.leaderLink;
