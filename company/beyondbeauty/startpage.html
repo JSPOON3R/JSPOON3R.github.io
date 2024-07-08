@@ -27,7 +27,6 @@
             max-width: 600px;
         }
 
-
         h2 {
             font-size: large;
             color: rgb(182, 128, 118);
@@ -64,38 +63,40 @@
             s[f] = s[f] || { init: function () { s[f].q = arguments } };
             l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
             l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
-        })
-            (window, document, 'script', 'Surfly');
+        })(window, document, 'script', 'Surfly');
 
         var settings = {
             widget_key: '99671227762b43c2a96daa066ee006e2',
         };
+
         Surfly.init(settings, function (initResult) {
-    if (initResult.success) {
-        console.log('Init success in Start Page');
+            if (initResult.success) {
+                console.log('Init success in Start Page');
 
-        var sessions = Surfly.listSessions();
-        if (sessions.length > 0) {
-            sessions.forEach(function(session) {
-                console.log('Found a session:', session.followerLink);
-            });
+                var sessions = Surfly.listSessions();
+                console.log('Sessions:', sessions);
 
-            if (Surfly.isInsideSession) {
-                console.log('Surfly inside Start Page');
-                sessions[0].on('participant_joined', function (session, event) {
-                    console.log('Participant ', event.clientIndex, 'joined the session. Start Page will close');
-                    window.close();
-                });
+                if (sessions.length > 0) {
+                    sessions.forEach(function (session) {
+                        console.log('Found a session:', session.followerLink);
+                    });
+
+                    if (Surfly.isInsideSession) {
+                        console.log('Surfly inside Start Page');
+                        sessions[0].on('participant_joined', function (session, event) {
+                            console.log('Participant ', event.clientIndex, 'joined the session. Start Page will close');
+                            window.close();
+                        });
+                    } else {
+                        console.log("Surfly not inside session");
+                    }
+                } else {
+                    console.log('No sessions found');
+                }
             } else {
-                console.log("Surfly not inside session");
+                console.log('Init failed on Start Page');
             }
-        } else {
-            console.log('No sessions found');
-        }
-    } else {
-        console.log('Init failed on Start Page');
-    }
-});
+        });
     </script>
 </head>
 
