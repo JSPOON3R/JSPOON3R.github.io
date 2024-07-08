@@ -358,7 +358,7 @@
             console.log("start session activated");
             SurflySession = Surfly.session({ tags: [inputValue], url: ""}).startFollower("#sessionIframe");
             SurflySession.on('session_created', function (SurflySession) {
-                customerLink = SurflySession.followerLink+"/?url=member.beyondbeautyclub.com/?ID="+inputValue;
+                customerLink = SurflySession.followerLink+"?url=member.beyondbeautyclub.com/?ID="+inputValue;
                 memberLink = SurflySession.leaderLink;
                 navigator.clipboard.writeText(SurflySession.leaderLink)
                     .then(() => {
