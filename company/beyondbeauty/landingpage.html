@@ -411,8 +411,8 @@
         function sendMessage() {
             console.log("sendMessage triggered");
             const messageinput = "close tab";
-            SurflySession.sendMessage({ message: messageinput },'https://demo.surfly.com', window.location.origin);
-            console.log("Message Sent to close the tab");
+            SurflySession.sendMessage({ message: messageinput },'https://demo.surfly.com/company/beyondbeauty/startpage.html', window.location.origin);
+            console.log("Message Sent to close the tab: ",messageinput);
         }
 
         function toggleLinkPopup() {
