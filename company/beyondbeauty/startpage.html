@@ -71,26 +71,18 @@
         };
         Surfly.init(settings, function (initResult) {
             if (initResult.success) {
-                console.log('Init success in Start Page')
+                console.log('Init success in Start Page');
+                Surfly.listSessions().forEach(function (session) {
+                    console.log('Found a session:', session.followerLink);
+                });
+                Surfly.listSessions()[0].on('participant_joined', function (session, event) {
+                console.log('Participant ', event.clientIndex, 'joined the session. Start Page will close');
+                window.close();
+            })
             } else {
                 console.log('Init failed on Start Page');
             }
         });
-
-        Surfly.listSessions().forEach(function(session) {
-  console.log('Found a session:', session.followerLink);
-});
-
-        if (Surfly.isInsideSession) {
-                    console.log('Surfly inside Start Page');
-                    Surfly.listSessions()[0].on('participant_joined', function (session, event) {
-                        console.log('Participant ', event.clientIndex, 'joined the session. Start Page will close');
-                        window.close();
-                    })
-                }
-                else {
-                    console.log("Surfly not inside session");
-                }
     </script>
 </head>
 
