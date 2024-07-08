@@ -60,14 +60,6 @@
         }
     </style>
     <script>
-        var SurflySession;
-        (function (s, u, r, f, l, y) {
-            s[f] = s[f] || { init: function () { s[f].q = arguments } };
-            l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
-            l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
-        })
-            (window, document, 'script', 'Surfly');
-
         if (Surfly.isInsideSession) {
             console.log("Surfly available on Start Page");
             SurflySession = Surfly.currentSession;
@@ -86,7 +78,7 @@
 <body>
     <div class="container">
         <h2>Please wait for your customer to join</h2>
-        <button class="btn">Copy Customer Link</button>
+        <button class="btn" onclick="window.close()">Copy Customer Link</button>
     </div>
 </body>
 
