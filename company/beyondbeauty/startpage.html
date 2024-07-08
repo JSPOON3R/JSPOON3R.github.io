@@ -82,15 +82,17 @@
         Surfly.init(settings, function (initResult) {
             if (initResult.success) {
                 console.log('Init success in Start Page');
-                Surfly.listSessions()[0].on("participant_joined", function (session, event) {
-            console.log("participant joined event triggered on start page");
-        })
+
             } else {
                 console.log('Init failed on Start Page');
             }
         });
 
-
+        var SurflySession = Surfly.listSessions()[0];
+        console.log(SurflySession);
+        Surfly.listSessions()[0].on("participant_joined", function (session, event) {
+            console.log("participant joined event triggered on start page");
+        })
     </script>
 </head>
 
