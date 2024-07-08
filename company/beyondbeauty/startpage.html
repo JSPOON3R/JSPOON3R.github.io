@@ -59,11 +59,13 @@
         }
     </style>
     <script>
-          (function(s,u,r,f,l,y){s[f]=s[f]||{init:function(){s[f].q=arguments}};
-  l=u.createElement(r);y=u.getElementsByTagName(r)[0];l.async=1;
-  l.src='https://surfly.com/surfly.js';y.parentNode.insertBefore(l,y);})
-  (window,document,'script','Surfly');
-  
+        (function (s, u, r, f, l, y) {
+            s[f] = s[f] || { init: function () { s[f].q = arguments } };
+            l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+            l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+        })
+            (window, document, 'script', 'Surfly');
+
         function loadSurflyScript(callback) {
             var script = document.createElement('script');
             script.async = 1;
@@ -72,73 +74,23 @@
             document.head.appendChild(script);
         }
 
-        function initializeSurfly() {
-            console.log('Initializing Surfly...');
-            var settings = {
-                widget_key: '99671227762b43c2a96daa066ee006e2',
-            };
+        console.log('Initializing Surfly...');
+        var settings = {
+            widget_key: '99671227762b43c2a96daa066ee006e2',
+        };
 
-            Surfly.init(settings, function (initResult) {
-                if (initResult.success) {
-                    console.log('Init success in Start Page');
-                    checkSurflySessions();
-                } else {
-                    console.log('Init failed on Start Page');
-                }
-            });
-        }
-
-        function checkSurflySessions() {
-            setTimeout(function() {
-                console.log('Attempting to list sessions...');
-
-                if (typeof Surfly.listSessions === 'function') {
-                    console.log('Surfly.listSessions is a function');
-                } else {
-                    console.error('Surfly.listSessions is not a function');
-                    return;
-                }
-
-                if (typeof Surfly.isInsideSession === 'boolean') {
-                    console.log('Surfly.isInsideSession is a boolean:', Surfly.isInsideSession);
-                } else {
-                    console.error('Surfly.isInsideSession is not a boolean');
-                    return;
-                }
-
-                var sessions;
-                try {
-                    sessions = Surfly.listSessions();
-                    console.log('Sessions:', sessions);
-
-                    if (sessions.length > 0) {
-                        sessions.forEach(function (session) {
-                            console.log('Found a session:', session.followerLink);
-                        });
-
-                        if (Surfly.isInsideSession) {
-                            console.log('Surfly inside Start Page');
-                            sessions[0].on('participant_joined', function (session, event) {
-                                console.log('Participant ', event.clientIndex, 'joined the session. Start Page will close');
-                                window.close();
-                            });
-                        } else {
-                            console.log("Surfly not inside session");
-                        }
-                    } else {
-                        console.log('No sessions found');
-                    }
-                } catch (error) {
-                    console.error('Error while listing sessions or setting up event listeners:', error);
-                }
-            }, 2000); // Adding a delay to ensure the sessions are available
-        }
-
-        // Load the Surfly script and initialize Surfly once loaded
-        loadSurflyScript(function() {
-            console.log('Surfly script loaded');
-            initializeSurfly();
+        Surfly.init(settings, function (initResult) {
+            if (initResult.success) {
+                console.log('Init success in Start Page');
+                Surfly.listSessions()[0].on("participant_joined", function (session, event) {
+            console.log("participant joined event triggered on start page");
+        })
+            } else {
+                console.log('Init failed on Start Page');
+            }
         });
+
+
     </script>
 </head>
 
