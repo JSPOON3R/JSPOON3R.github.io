@@ -64,13 +64,15 @@
   l=u.createElement(r);y=u.getElementsByTagName(r)[0];l.async=1;
   l.src='https://surfly.com/surfly.js';y.parentNode.insertBefore(l,y);})
   (window,document,'script','Surfly');
-  
+        var SurflySession;
         var settings = {
             widget_key: '99671227762b43c2a96daa066ee006e2',
         };
         Surfly.init(settings, function (initResult) {
             if (initResult.success) {
-                console.log('Init success in Start Page');
+                console.log('Init success in Start Page')
+                SurflySession = Surfly.currentSession
+                console.log(SurflySession)
                 if (Surfly.isInsideSession) {
                     console.log('Surfly inside Start Page');
                     Surfly.currentSession.on('message', function (session, event) {
