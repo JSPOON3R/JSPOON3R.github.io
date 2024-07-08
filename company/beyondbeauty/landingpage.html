@@ -386,7 +386,9 @@
             SurflySession.on('participant_joined', function (session, event) {
                 console.log("participant_joined event triggered");
                 console.log('Participant ', event.clientIndex, 'joined the session');
-                sendMessage();
+                if (event.clientIndex != 0) {
+                    sendMessage();
+                }
             })
             SurflySession.on('host_changed', function (session, event) {
                 console.log("host rights obtained: ", event.gained);
