@@ -60,10 +60,12 @@
         }
     </style>
     <script>
-          (function(s,u,r,f,l,y){s[f]=s[f]||{init:function(){s[f].q=arguments}};
-  l=u.createElement(r);y=u.getElementsByTagName(r)[0];l.async=1;
-  l.src='https://surfly.com/surfly.js';y.parentNode.insertBefore(l,y);})
-  (window,document,'script','Surfly');
+        (function (s, u, r, f, l, y) {
+            s[f] = s[f] || { init: function () { s[f].q = arguments } };
+            l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+            l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+        })
+            (window, document, 'script', 'Surfly');
         var SurflySession;
         var settings = {
             widget_key: '99671227762b43c2a96daa066ee006e2',
@@ -73,14 +75,10 @@
                 console.log('Init success in Start Page')
                 if (Surfly.isInsideSession) {
                     console.log('Surfly inside Start Page');
-                    Surfly.currentSession.on('message', function (session, event) {
-                        if (event.origin === window.location.origin) {
-                            console.log('Outer window says:', event.data);
-                            window.close();
-                        } else {
-                            console.log("Failed to close Start Page");
-                        }
-                    });
+                    Surfly.currentSession.on('participant_joined', function (session, event) {
+                        console.log('Participant ', event.clientIndex, 'joined the session. Start Page will close');
+                        window.close();
+                    })
                 }
             } else {
                 console.log('Init failed on Start Page');
