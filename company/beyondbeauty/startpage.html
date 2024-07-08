@@ -71,8 +71,6 @@
         Surfly.init(settings, function (initResult) {
             if (initResult.success) {
                 console.log('Init success in Start Page')
-                SurflySession = Surfly.currentSession
-                console.log(SurflySession)
                 if (Surfly.isInsideSession) {
                     console.log('Surfly inside Start Page');
                     Surfly.currentSession.on('message', function (session, event) {
