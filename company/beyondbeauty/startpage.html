@@ -84,11 +84,9 @@
                 if (event.origin) {
                     console.error('Message received inside from: ', event.origin);
                     console.log('Message Received inside session:', event.data.message);
+                    console.log("Message recieved from Landing Page"+event.data.message);
+                    window.close();
                 }
-            });
-            Surfly.listSessions()[0].on('message', function(session, event) {
-                      console.log("Message recieved from Landing Page"+event.data.message);
-                      window.close();
             });
         
     });});
