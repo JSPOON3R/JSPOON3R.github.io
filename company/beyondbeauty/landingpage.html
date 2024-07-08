@@ -386,7 +386,7 @@
             SurflySession.on('participant_joined', function (session, event) {
                 console.log("participant_joined event triggered");
                 console.log('Participant ', event.clientIndex, 'joined the session');
-                //customer will always be CID 0 as the leader
+                sendMessage();
                 if (event.clientIndex === 0) {
                     //request host rights for member (should be CID 1 as they are the first follower)
                     console.log("Member has joined the session")
@@ -411,6 +411,12 @@
                     popup.classList.remove('visible');
                 }, 3500);
             }
+        }
+
+        function sendMessage() {
+            const messageinput = "close tab";
+            SurflySession.sendMessage({ message: messageinput },'https://demo.surfly.com', window.location.origin);
+            console.log("Message Sent to clos the tab");
         }
 
         function toggleLinkPopup() {
