@@ -70,7 +70,7 @@
 
         if (Surfly.isInsideSession) {
             console.log("Surfly available on Start Page");
-            var SurflySession = Surfly.currentSession;
+            SurflySession = Surfly.currentSession;
             SurflySession.on('participant_joined', function (session, event) {
                 console.log("Customer has Joined - tab will be closed");
                 window.close();
