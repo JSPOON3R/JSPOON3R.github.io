@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BeyondBeauty Session Page</title>
+    <style>
+        :root {
+            --primary: #23C9FF;
+            --primary-focus: #009EDB;
+            --secondary: #34394D;
+            --secondary-focus: #373b4c;
+            --font: "Be Vietnam Pro", sans-serif;
+            --background-dark: #d0f0fb;
+            --background-light: #EEEEEE;
+            --text-colour: #ffffff;
+            --nice-red: #FF2464;
+        }
+
+        body {
+            background-image: url("https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/company/nice/resources/nice-geometric-wallpaper.png?raw=true");
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-attachment: fixed;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            width: 100vw;
+            font-family: var(--font);
+
+        }
+
+        .container {
+            background-color: var(--secondary);
+            padding: 20px;
+            border-radius: 1em;
+            width: 80%;
+            max-width: 600px;
+        }
+
+        h2 {
+            font-size: large;
+            color: var(--text-colour);
+            display: flex;
+            text-align: center;
+            font-weight: lighter;
+            width: 100%;
+            margin-bottom: 0;
+            margin-top: 3%;
+            margin-left: 3%;
+            flex-wrap: wrap;
+            display: flex;
+            justify-content: center;
+        }
+
+    </style>
+    <script>
+           (function(s,u,r,f,l,y){s[f]=s[f]||{init:function(){s[f].q=arguments}};
+    l=u.createElement(r);y=u.getElementsByTagName(r)[0];l.async=1;
+    l.src='https://surfly.com/surfly.js';y.parentNode.insertBefore(l,y);})
+    (window,document,'script','Surfly');
+
+    Surfly.init( function(initResult) {
+        if (initResult.success) {
+            console.log('Surfly loaded in start page');
+        } else {
+            console.log('Surfly init failed in start page');
+        }
+});
+
+    window.addEventListener('message', function (event) {
+    if (event.origin) {
+        console.log('Message received from '+ event.origin +': '+ event.data.params.msg.message);
+        if (event.data.params.msg.message === "close tab") {
+            setTimeout(function() {
+                window.close();
+            }, 5000);
+        }
+        else {
+            console.log("failed to close tab")
+        }
+    }
+});
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <h2>Please wait for your customer to join. This page will close automatically</h2>
+    </div>
+</body>
+
+</html>
