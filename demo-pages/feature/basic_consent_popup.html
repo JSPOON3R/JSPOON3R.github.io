@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Modal Example</title>
+    <style>
+        /* Basic styles for modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 300px;
+            text-align: center;
+        }
+
+        .modal button {
+            margin: 5px;
+        }
+
+        .modal input[type="text"] {
+            width: 80%;
+            padding: 5px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <button id="openModalBtn">Click Here</button>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <p>Your text goes here</p>
+            <label for="manualInput">add data to the session:</label>
+            <input type="text" id="manualInput" name="manualInput">
+            <br>
+            <button id="startBtn" onclick="loadSession()">Start</button>
+            <button id="cancelBtn">Cancel</button>
+        </div>
+    </div>
+
+    <script>
+        var modal = document.getElementById("myModal");
+        var btn = document.getElementById("openModalBtn");
+        var cancelBtn = document.getElementById("cancelBtn");
+        btn.onclick = function () {
+            modal.style.display = "block";
+        }
+        cancelBtn.onclick = function () {
+            modal.style.display = "none";
+        }
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+
+            (function (s, u, r, f, l, y) {
+                s[f] = s[f] || { init: function () { s[f].q = arguments } };
+                l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+                l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+            })(window, document, 'script', 'Surfly');
+
+        function loadSession() {
+            const input = document.getElementById("manualInput");
+            const manual_input = input.value;
+
+            var settings = {
+                widget_key: "99671227762b43c2a96daa066ee006e2",
+                hide_until_agent_joins: false,
+                block_until_agent_joins: false,
+                start_with_invite_modal: true,
+                admission_enabled: false,
+                start_with_loading_screen: false,
+                hide_session_ui: false,
+                start_with_chat_open: false,
+                url: start_url,
+                session_autorestore_enabled: false,
+                videochat_enabled: true,
+                tags: [
+                    "your_tags_here",
+                    manual_input
+                ],
+                blocklist: "[{\"pattern\": \"^https?://[\\\\w\\\\.]*facebook\\\\.com\",\"redirect\": \"https://example.com\"}]"
+            };
+
+            Surfly.init(settings, function (init) {
+                if (init.success && !Surfly.isInsideSession) {
+                    Surfly.session().startLeader(null, {
+                        "Title": manual_input
+                    })
+                }
+            });
+        }
+
+    </script>
+
+</body>
+
+</html>
