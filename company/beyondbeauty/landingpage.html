@@ -346,7 +346,7 @@
     <script>
         var SurflySession;
         var customerLink;
-        var currentControlIndex = 0;
+        var currentControlIndex = 1;
         var memberLink;
         var instructionsInvite = "YOUR MESSAGE COPIED TO CLIPBOARD"
         var inputValue = "none";
@@ -438,22 +438,30 @@
                 console.log("My index: ", event.myIndex);
             })
             SurflySession.on('tab_control_requested', function (event) {
-                console.log("control requested by clientIndex: "+event.clientIndex);
+                console.log("control requested by member");
                 if (event.clientIndex === 0) {
+                    console.log("sdfdsf");
                 document.getElementById('control-button-text').innerHTML="PENDING";
+                }
+                else {
+                    console.log("sdfdsfdsf");
                 }
             })
             SurflySession.on('tab_control', function (session, event) {
-                console.log("control given to clientIndex: "+event.controlIndex);
-                if (event.clientIndex === 0) {
+                console.log("control given to controlIndex: "+event.controlIndex);
+                if (event.controlIndex === 0) {
                 document.getElementById('control-button-text').innerHTML="RETURN CONTROL";
+                currentControlIndex = 0;
                 }
-                if (event.clientIndex === 1) {
+                if (event.controlIndex === 1) {
                 document.getElementById('control-button-text').innerHTML="REQUEST CONTROL";
+                currentControlIndex = 1;
+                }
+                else {
+                    console.log("dsfedfvevdfvfegvfevf");
                 }
             })
         }
-
 
         function showPopup() {
             const popup = document.getElementById('link-copied-popup');
@@ -488,7 +496,7 @@
         }
 
         function toggleControl() {
-            if (currentControlIndex === 0) {
+            if (currentControlIndex === 1) {
                 SurflySession.requestTabControl();
             } else {
                 SurflySession.returnTabControl();
