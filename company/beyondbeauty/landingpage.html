@@ -438,9 +438,18 @@
             })
             SurflySession.on('tab_control_requested', function (event) {
                 console.log("control requested by clientIndex: "+event.clientIndex);
+                if (event.clientIndex === 0) {
+                document.getElementById('control-button-text').innerHTML="PENDING";
+                }
             })
             SurflySession.on('tab_control', function (session, event) {
                 console.log("control given to clientIndex: "+event.controlIndex);
+                if (event.clientIndex === 0) {
+                document.getElementById('control-button-text').innerHTML="RETURN CONTROL";
+                }
+                if (event.clientIndex === 1) {
+                document.getElementById('control-button-text').innerHTML="REQUEST CONTROL";
+                }
             })
         }
 
