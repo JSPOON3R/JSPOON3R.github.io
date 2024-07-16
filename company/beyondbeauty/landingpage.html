@@ -478,11 +478,10 @@
 
         function toggleControl() {
             if (currentControlIndex === 0) {
-                SurflySession.requestTabControl(0);
+                SurflySession.requestTabControl();
             } else {
-                SurflySession.transferTabControl(1);
+                SurflySession.returnTabControl();
             }
-            console.log("Control transferred to index: " + currentControlIndex);
         }
 
 
