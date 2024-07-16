@@ -436,14 +436,11 @@
                 console.log("New host: ", event.to);
                 console.log("My index: ", event.myIndex);
             })
-            SurflySession.on('tab_control_requested', function (session, event) {
-                console.log(event);
-                console.log(session);
-
+            SurflySession.on('tab_control_requested', function (event) {
+                console.log("control requested by clientIndex: "+event.clientIndex);
             })
             SurflySession.on('tab_control', function (session, event) {
-                console.log(event);
-                console.log(session);
+                console.log("control given to clientIndex: "+event.controlIndex);
             })
         }
 
