@@ -436,8 +436,8 @@
                 console.log("New host: ", event.to);
                 console.log("My index: ", event.myIndex);
             })
-            SurflySession.on('tab_control'), function (controlIndex) {
-                console.log("host rights obtained: ", controlIndex);
+            SurflySession.on('tab_control'), function (event) {
+                console.log(event);
                 console.log("New host: ", event.to);
                 console.log("My index: ", event.myIndex);
             }
