@@ -124,6 +124,7 @@
             width: fit-content;
             height: 2em;
             text-transform: uppercase;
+            font-size: small;
             padding: 0px 5px;
             border-radius: 6px;
             border: 1px solid #fff;
@@ -588,14 +589,13 @@
     </div>
 
     <div id="copy-links-popup" class="popup2">
-        <button class="popupButton" onclick="copyCustomerLink(),toggleLinkPopup()">link only</button>
-        <button class="popupButton" onclick="copyCustomerLinkInstructions(),toggleLinkPopup()">link with
+        <button class="popupButton" onclick="copyCustomerLink(),toggleLinkPopup()">copy link only</button>
+        <button class="popupButton" onclick="copyCustomerLinkInstructions(),toggleLinkPopup()">copy link with
             instructions<br></button>
     </div>
 
     <div id="end-session-popup" class="popup4">
-        <h2>Are you sure?<br><br></h2>
-        <button class="popupButton" style="background:#c66c50;" onclick="endSurflySession()">YES, END SESSION</button>
+        <button class="popupButton" style="background:#c66c50;" onclick="endSurflySession()">END SESSION</button>
         <button class="popupButton" onclick="toggleEndSessionPopup()">CANCEL<br></button>
     </div>
 
@@ -631,7 +631,7 @@
             </button>
             <!--another copy link for comfort-->
             <button class="bottomNavBtn" onclick="toggleLinkPopup()">
-                copy link
+                invite
             </button>
             <button class="bottomNavBtn" onclick="toggleControl()">
                 <span id="control-button-text">request control</span>
