@@ -375,6 +375,7 @@
             non_hosts_can_open_tabs: false,
             new_urls_allowed: false,
             invitations_allowed: false,
+            participants_can_request_to_interact: true,
             hide_session_ui: false,
             white_label: true,
 
@@ -435,6 +436,11 @@
                 console.log("New host: ", event.to);
                 console.log("My index: ", event.myIndex);
             })
+            SurflySession.on('tab_control'), function (session, event) {
+                console.log("host rights obtained: ", event);
+                console.log("New host: ", event.to);
+                console.log("My index: ", event.myIndex);
+            }
         }
 
 
@@ -472,11 +478,9 @@
 
         function toggleControl() {
             if (currentControlIndex === 0) {
-                SurflySession.transferTabControl(1);
-                currentControlIndex = 1;
+                SurflySession.requestTabControl(0);
             } else {
-                SurflySession.transferTabControl(0);
-                currentControlIndex = 0;
+                SurflySession.transferTabControl(1);
             }
             console.log("Control transferred to index: " + currentControlIndex);
         }
@@ -621,7 +625,7 @@
                 copy link
             </button>
             <button class="bottomNavBtn" onclick="toggleControl()">
-                take control
+                <span id="control-button-text">request control</span>
             </button>
             <!--easy video toggle-->
             <button class="bottomNavBtn" onclick="toggleFullscreen()">
