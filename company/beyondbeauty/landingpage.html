@@ -439,13 +439,9 @@
             })
             SurflySession.on('tab_control_requested', function (event) {
                 console.log("control requested by member");
-                if (event.clientIndex === 0) {
                     console.log("sdfdsf");
                 document.getElementById('control-button-text').innerHTML="PENDING";
-                }
-                else {
-                    console.log("sdfdsfdsf");
-                }
+                
             })
             SurflySession.on('tab_control', function (session, event) {
                 console.log("control given to controlIndex: "+event.controlIndex);
