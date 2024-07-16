@@ -97,7 +97,7 @@
         }
 
         .iframe-content {
-            height: 94%;
+            height: 95%;
             width: 100%;
             top: 0;
             z-index: 2147483548 !important;
@@ -109,7 +109,7 @@
             justify-content: space-evenly;
             background: #fff;
             align-items: center;
-            height: 6%;
+            height: 5%;
             width: 100%;
             bottom: 0;
             z-index: 2147483548 !important;
@@ -122,15 +122,15 @@
             cursor: pointer;
             background: rgb(182, 128, 118);
             width: fit-content;
-            height: 3em;
+            height: 2em;
             text-transform: uppercase;
-            padding: 0.5em 1em;
+            padding: 0px 5px;
             border-radius: 6px;
             border: 1px solid #fff;
             transition: all 0.3s ease 0s;
             vertical-align: middle;
             white-space: nowrap;
-            margin: 1px;
+            margin: 3px;
         }
 
         .input-field {
@@ -224,7 +224,7 @@
             background-color: #fff;
             color: #45362F;
             border-radius: 8px;
-            width: 70vw;
+            width: 80vw;
             max-height: 0;
             overflow: hidden;
             transition: max-height 1s ease-out, opacity 0.3s ease-out;
@@ -238,6 +238,38 @@
         .popup3.visible {
             max-height: 95vh;
             opacity: .95;
+            z-index: 2147483647 !important;
+            transition: max-height 1s ease-out, opacity 0.5s ease-out;
+        }
+
+        .popup4 {
+            position: fixed;
+            font-family: Figtree, sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            border: 1px solid rgb(182, 128, 118);
+            bottom: 5%;
+            left: 0;
+            background-color: #fff;
+            color: #45362F;
+            border-radius: 8px;
+            width: 0vw;
+            height: 0vh;
+            overflow: hidden;
+            transition: height 1s ease-out, opacity 0.3s ease-out;
+            z-index: 2147483549;
+            text-align: left;
+            font-size: .9em;
+            opacity: 0;
+        }
+
+
+        .popup4.visible {
+            height: 95vh;
+            width: 80vw;
+            opacity: .95;
+            padding: 10%;
             z-index: 2147483647 !important;
             transition: max-height 1s ease-out, opacity 0.5s ease-out;
         }
@@ -313,6 +345,7 @@
     <script>
         var SurflySession;
         var customerLink;
+        var currentControlIndex = 0;
         var memberLink;
         var instructionsInvite = "YOUR MESSAGE COPIED TO CLIPBOARD"
         var inputValue = "none";
@@ -320,6 +353,7 @@
             // Surfly session options can be set here, or at the Company/Plan levels.
             widget_key: '99671227762b43c2a96daa066ee006e2',
             private_session: false, // to make sure only logged in agents can join the call
+            chat_enabled: false,
             password_required: false,
             host_switching_allowed: true,
             block_until_agent_joins: false,
@@ -328,13 +362,22 @@
             videochat: true,
             start_with_videochat_on: true,
             start_with_fullscreen_videochat: false,
+            session_autorestore_enabled: true,
             default_videochat_fullscreen_mode: 'spotlight',
             default_videochat_mode: 'floating',
             follower_redirect_url: "https://member.beyondbeautyclub.com/",
             leader_redirect_url: "https://member.beyondbeautyclub.com/",
             end_redirect_enabled: false,
+            language: "en",
+            alternative_proxy_enabled: true,
             block_until_agent_joins: false,
-            invitations_allowed: false
+            allow_opening_urls_from_query_parameter: true,
+            non_hosts_can_open_tabs: false,
+            new_urls_allowed: false,
+            invitations_allowed: false,
+            hide_session_ui: false,
+            white_label: true,
+
         };
 
 
@@ -417,10 +460,27 @@
             popup2.classList.toggle('visible');
         }
 
+        function toggleEndSessionPopup() {
+            const popup2 = document.getElementById('end-session-popup');
+            popup2.classList.toggle('visible');
+        }
+
         function toggleInstructionsPopup() {
             const instructions = document.getElementById('instructions');
             instructions.classList.toggle('visible');
         }
+
+        function toggleControl() {
+            if (currentControlIndex === 0) {
+                SurflySession.transferTabControl(1);
+                currentControlIndex = 1;
+            } else {
+                SurflySession.transferTabControl(0);
+                currentControlIndex = 0;
+            }
+            console.log("Control transferred to index: " + currentControlIndex);
+        }
+
 
         function endSurflySession() {
             SurflySession.end();
@@ -515,10 +575,15 @@
     </div>
 
     <div id="copy-links-popup" class="popup2">
-        <button class="popupButton" onclick="copyCustomerLink()">Customer Link<span
-                class="button-desc">copy</span></button>
-        <button class="popupButton" onclick="copyCustomerLinkInstructions()">Customer link<br><span
-                class="button-desc">copy w/ Instructions</span></button>
+        <button class="popupButton" onclick="copyCustomerLink(),toggleLinkPopup()">link only</button>
+        <button class="popupButton" onclick="copyCustomerLinkInstructions(),toggleLinkPopup()">link with
+            instructions<br></button>
+    </div>
+
+    <div id="end-session-popup" class="popup4">
+        <h2>Are you sure?<br><br></h2>
+        <button class="popupButton" style="background:#c66c50;" onclick="endSurflySession()">YES, END SESSION</button>
+        <button class="popupButton" onclick="toggleEndSessionPopup()">CANCEL<br></button>
     </div>
 
     <div id="instructions" class="popup3">
@@ -549,11 +614,14 @@
             allow="autoplay *; camera *; microphone *; display-capture *; geolocation *; camera *;"></iframe>
         <div class="bottomNav">
             <button class="bottomNavBtn" onclick="toggleInstructionsPopup()">
-                HELP
+                help
             </button>
             <!--another copy link for comfort-->
             <button class="bottomNavBtn" onclick="toggleLinkPopup()">
-                COPY LINK
+                copy link
+            </button>
+            <button class="bottomNavBtn" onclick="toggleControl()">
+                take control
             </button>
             <!--easy video toggle-->
             <button class="bottomNavBtn" onclick="toggleFullscreen()">
@@ -564,7 +632,7 @@
                         style="stroke: #fff; stroke-width: 0.8;"></path>
                 </svg>
             </button>
-            <button class="bottomNavBtn" style="background:#c66c50;" onclick="endSurflySession()">END SESSION</button>
+            <button class="bottomNavBtn" style="background:#c66c50;" onclick="toggleEndSessionPopup()">END</button>
         </div>
     </div>
 
