@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple Modal Example</title>
     <style>
-        /* Basic styles for modal */
         .modal {
             display: none;
             position: fixed;
@@ -77,7 +76,9 @@
                 s[f] = s[f] || { init: function () { s[f].q = arguments } };
                 l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
                 l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
-            })(window, document, 'script', 'Surfly');
+            })
+
+            (window, document, 'script', 'Surfly');
 
         function loadSession() {
             const input = document.getElementById("manualInput");
@@ -92,7 +93,8 @@
                 start_with_loading_screen: false,
                 hide_session_ui: false,
                 start_with_chat_open: false,
-                url: start_url,
+                /* leave URL blank for current page in current state */
+                url: "www.google.com",
                 session_autorestore_enabled: false,
                 videochat_enabled: true,
                 tags: [
