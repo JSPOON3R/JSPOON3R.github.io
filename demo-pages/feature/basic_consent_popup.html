@@ -51,7 +51,7 @@
             <label for="manualInput">add data to the session:</label>
             <input type="text" id="manualInput" name="manualInput">
             <br>
-            <button id="startBtn" onclick="loadSession()">Start</button>
+            <button id="startBtn">Start</button>
             <button id="cancelBtn">Cancel</button>
         </div>
     </div>
@@ -72,6 +72,7 @@
         }
         startBtn.onclick = function () {
             modal.style.display = "none";
+            loadSession();
         }
         window.onclick = function (event) {
             if (event.target == modal) {
@@ -128,7 +129,6 @@
                 setTimeout(noAgentEnd, 120000);
             })
             SurflySession.on('participant_joined', function (session, event) {
-                console.log("participant_joined event triggered");
                 console.log('Participant ', event.clientIndex, 'joined the session');
                 if (event.clientIndex !== 0) {
                     AgentJoined = true;
