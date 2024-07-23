@@ -58,6 +58,7 @@
 
     <script>
         var AgentJoined = false;
+        var SurflySession;
         var manual_input = "no_input_given";
         var modal = document.getElementById("myModal");
         var btn = document.getElementById("openModalBtn");
@@ -112,24 +113,27 @@
 
             Surfly.init(settings, function (init) {
                 if (init.success && !Surfly.isInsideSession) {
-                    Surfly.session()
-                        .on('session_created', function (session) {
-                            console.log(session, 'is fully initiated');
-                            setTimeout(noAgentEnd, 120000);
-                        })
-                        .on('participant_joined', function (session, event) {
-                            if (event.clientIndex === 0) {
-                                AgentJoined = true;
-                            }
-                        }).startLeader(null, {
-                            "Title": manual_input
-                        });
                 }
             });
 
+            SurflySession = Surfly.session().startLeader(null, { "Title": manual_input });
+
+            SurflySession.on('session_created', function (session) {
+                console.log(session, 'is fully initiated');
+                setTimeout(noAgentEnd, 120000);
+            })
+            SurflySession.on('participant_joined', function (session, event) {
+                console.log("participant_joined event triggered");
+                console.log('Participant ', event.clientIndex, 'joined the session');
+                if (event.clientIndex === 0) {
+                    AgentJoined = true;
+                }
+
+            })
+
             function noAgentEnd() {
                 if (typeof AgentJoined === 'undefined' || AgentJoined !== true) {
-                    Surfly.session().end();
+                    SurflySession.end();
                 } else {
                     console.log('Agent present in session after 2 minutes');
                 }
