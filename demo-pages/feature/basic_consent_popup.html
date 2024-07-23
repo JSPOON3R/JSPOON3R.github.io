@@ -87,21 +87,12 @@
             manual_input = input ? input.value : manual_input;
     
             (function (s, u, r, f, l, y) {
-                s[f] = s[f] || function () {
-                    (s[f].q = s[f].q || []).push(arguments);
-                };
-                l = u.createElement(r);
-                y = u.getElementsByTagName(r)[0];
-                l.async = 1;
-                l.src = 'https://surfly.com/surfly.js';
-                y.parentNode.insertBefore(l, y);
-                l.onload = function () {
-                    initializeSurfly();
-                }
-            })(window, document, 'script', 'Surfly');
-        }
+            s[f] = s[f] || { init: function () { s[f].q = arguments } };
+            l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+            l.src = 'https://video.beyondbeautyclub.com/surfly.j'; y.parentNode.insertBefore(l, y);
+        })
+            (window, document, 'script', 'Surfly');
     
-        function initializeSurfly() {
             var settings = {
                 widget_key: "99671227762b43c2a96daa066ee006e2",
                 hide_until_agent_joins: false,
@@ -129,7 +120,7 @@
                     attachSessionEvents();
                 }
             });
-        }
+
     
         function attachSessionEvents() {
             SurflySession.on('session_created', function (session) {
