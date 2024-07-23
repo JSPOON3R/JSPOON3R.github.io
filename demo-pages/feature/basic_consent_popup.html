@@ -57,6 +57,7 @@
     </div>
 
     <script>
+        var AgentJoined = false;
         var modal = document.getElementById("myModal");
         var btn = document.getElementById("openModalBtn");
         var cancelBtn = document.getElementById("cancelBtn");
@@ -91,6 +92,7 @@
                 block_until_agent_joins: false,
                 start_with_invite_modal: true,
                 admission_enabled: false,
+                
                 start_with_loading_screen: false,
                 hide_session_ui: false,
                 start_with_chat_open: false,
@@ -108,13 +110,31 @@
 
             Surfly.init(settings, function (init) {
                 if (init.success && !Surfly.isInsideSession) {
-                    Surfly.session().startLeader(null, {
-                        /* add meta data */
-                        "Title": manual_input
+                    Surfly.session().on('session_started', function (session) {
+                        console.log(session, 'is fully initiated');
+
+                        // Set a timeout to run the noAgentEnd function 2 minutes (120000 milliseconds) after session_started event is triggered
+                        setTimeout(noAgentEnd, 120000);
                     })
+                        .on('participant_joined', function (session, event) {
+                            if (event.clientIndex === 0) {
+                                AgentJoined = true;
+                            }
+                        }).startLeader(null, {
+                            "Title": manual_input
+                        });
                 }
             });
+
+            function noAgentEnd() {
+                if (typeof AgentJoined === 'undefined' || AgentJoined !== true) {
+                    Surfly.session().end();
+                } else {
+                    console.log('Agent present in session after 2 minutes');
+                }
+            }
         }
+
 
     </script>
 
