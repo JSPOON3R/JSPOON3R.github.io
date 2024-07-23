@@ -64,6 +64,7 @@
         var btn = document.getElementById("openModalBtn");
         var cancelBtn = document.getElementById("cancelBtn");
         var startBtn = document.getElementById("startBtn");
+    
         btn.onclick = function () {
             modal.style.display = "block";
         }
@@ -79,21 +80,28 @@
                 modal.style.display = "none";
             }
         }
-
-
+    
         function loadSession() {
             manual_input = "no_input_given";
             const input = document.getElementById("manualInput");
-            manual_input = input.value;
-
+            manual_input = input ? input.value : manual_input;
+    
             (function (s, u, r, f, l, y) {
-                s[f] = s[f] || { init: function () { s[f].q = arguments } };
-                l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
-                l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
-            })
-
-                (window, document, 'script', 'Surfly');
-
+                s[f] = s[f] || function () {
+                    (s[f].q = s[f].q || []).push(arguments);
+                };
+                l = u.createElement(r);
+                y = u.getElementsByTagName(r)[0];
+                l.async = 1;
+                l.src = 'https://surfly.com/surfly.js';
+                y.parentNode.insertBefore(l, y);
+                l.onload = function () {
+                    initializeSurfly();
+                }
+            })(window, document, 'script', 'Surfly');
+        }
+    
+        function initializeSurfly() {
             var settings = {
                 widget_key: "99671227762b43c2a96daa066ee006e2",
                 hide_until_agent_joins: false,
@@ -103,51 +111,51 @@
                 start_with_loading_screen: false,
                 hide_session_ui: false,
                 start_with_chat_open: false,
-                /* leave URL blank for current page in current state */
-                url: "www.google.com",
+                url: "https://www.google.com", // Ensure this URL is complete
                 session_autorestore_enabled: false,
                 videochat_enabled: true,
                 start_with_invite_modal: false,
-                /* add tags */
                 tags: [
                     "your_tags_here",
                     manual_input
                 ],
-                blocklist: "[{\"pattern\": \"^https?://[\\\\w\\\\.]*facebook\\\\.com\",\"redirect\": \"https://example.com\"}]"
+                blocklist: [{ "pattern": "^https?://[\\\\w\\\\.]*facebook\\\\.com", "redirect": "https://example.com" }]
             };
-
+    
             Surfly.init(settings, function (init) {
                 if (init.success && !Surfly.isInsideSession) {
                     console.log("init success");
                     SurflySession = Surfly.session().startLeader(null, { "Title": manual_input });
+                    attachSessionEvents();
                 }
             });
-
-           
+        }
+    
+        function attachSessionEvents() {
             SurflySession.on('session_created', function (session) {
                 console.log(session, 'is fully initiated');
                 setTimeout(noAgentEnd, 120000);
-            })
+            });
+    
             SurflySession.on('participant_joined', function (session, event) {
                 console.log('Participant ', event.clientIndex, 'joined the session');
                 if (event.clientIndex !== 0) {
                     AgentJoined = true;
                 }
-
-            })
-
-            function noAgentEnd() {
-                console.log('Checking for Agent...');
-                if (typeof AgentJoined === 'undefined' || AgentJoined !== true) {
-                    console.log('No Agent present in session after 2 minutes. Session will end');
-                    SurflySession.end();
-                } else {
-                    console.log('Agent present in session');
-                }
+            });
+        }
+    
+        function noAgentEnd() {
+            console.log('Checking for Agent...');
+            if (typeof AgentJoined === 'undefined' || AgentJoined !== true) {
+                console.log('No Agent present in session after 2 minutes. Session will end');
+                SurflySession.end();
+            } else {
+                console.log('Agent present in session');
             }
         }
-
     </script>
+    
 
 </body>
 
