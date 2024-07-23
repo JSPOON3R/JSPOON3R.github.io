@@ -113,6 +113,7 @@
 
             Surfly.init(settings, function (init) {
                 if (init.success && !Surfly.isInsideSession) {
+                    console.log("init success")
                 }
             });
 
@@ -125,7 +126,7 @@
             SurflySession.on('participant_joined', function (session, event) {
                 console.log("participant_joined event triggered");
                 console.log('Participant ', event.clientIndex, 'joined the session');
-                if (event.clientIndex === 0) {
+                if (event.clientIndex !== 0) {
                     AgentJoined = true;
                 }
 
