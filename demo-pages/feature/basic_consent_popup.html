@@ -63,10 +63,14 @@
         var modal = document.getElementById("myModal");
         var btn = document.getElementById("openModalBtn");
         var cancelBtn = document.getElementById("cancelBtn");
+        var startBtn = document.getElementById("startBtn");
         btn.onclick = function () {
             modal.style.display = "block";
         }
         cancelBtn.onclick = function () {
+            modal.style.display = "none";
+        }
+        startBtn.onclick = function () {
             modal.style.display = "none";
         }
         window.onclick = function (event) {
@@ -95,7 +99,6 @@
                 block_until_agent_joins: false,
                 start_with_invite_modal: true,
                 admission_enabled: false,
-
                 start_with_loading_screen: false,
                 hide_session_ui: false,
                 start_with_chat_open: false,
@@ -114,12 +117,12 @@
 
             Surfly.init(settings, function (init) {
                 if (init.success && !Surfly.isInsideSession) {
-                    console.log("init success")
+                    console.log("init success");
+                    SurflySession = Surfly.session().startLeader(null, { "Title": manual_input });
                 }
             });
 
-            SurflySession = Surfly.session().startLeader(null, { "Title": manual_input });
-
+           
             SurflySession.on('session_created', function (session) {
                 console.log(session, 'is fully initiated');
                 setTimeout(noAgentEnd, 120000);
@@ -134,10 +137,12 @@
             })
 
             function noAgentEnd() {
+                console.log('Checking for Agent...');
                 if (typeof AgentJoined === 'undefined' || AgentJoined !== true) {
+                    console.log('No Agent present in session after 2 minutes. Session will end');
                     SurflySession.end();
                 } else {
-                    console.log('Agent present in session after 2 minutes');
+                    console.log('Agent present in session');
                 }
             }
         }
