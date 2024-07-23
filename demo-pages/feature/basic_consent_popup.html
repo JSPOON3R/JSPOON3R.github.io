@@ -76,11 +76,11 @@
                 modal.style.display = "none";
             }
         }
+        manual_input = "no_input_given";
     
         function loadSession() {
-            manual_input = "no_input_given";
             const input = document.getElementById("manualInput");
-            manual_input = input ? input.value : manual_input;
+            manual_input = input.value;
     
             (function (s, u, r, f, l, y) {
             s[f] = s[f] || { init: function () { s[f].q = arguments } };
