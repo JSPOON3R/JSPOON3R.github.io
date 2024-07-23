@@ -51,7 +51,7 @@
             <label for="manualInput">add data to the session:</label>
             <input type="text" id="manualInput" name="manualInput">
             <br>
-            <button id="startBtn">Start</button>
+            <button id="startBtn" onclick="loadSession()">Start</button>
             <button id="cancelBtn">Cancel</button>
         </div>
     </div>
@@ -127,6 +127,7 @@
             SurflySession.on('session_created', function (session) {
                 console.log(session, 'is fully initiated');
                 setTimeout(noAgentEnd, 120000);
+                startBtn.modal.style.display = "none";
             });
     
             SurflySession.on('participant_joined', function (session, event) {
