@@ -1,11 +1,62 @@
 <!DOCTYPE html>
 <html lang="en">
+<link rel="shortcut icon" type="image/x-icon" href="https://demo.surfly.com/resources-common/icons/Favicon-PNG.png">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://demo.surfly.com/css-common/surfly-javascript-style.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simple Modal Example</title>
     <style>
+        :root {
+            --light-red: #e54747;
+            --dark-red: #c72323;
+            --light-blue: #7cadbf;
+            --blue: #2288ad;
+            --dark-blue: #166e8e;
+            --yellow: #f4c344;
+            --orange: #fd942a;
+            --light-green: #7dc05a;
+            --dark-green: #48a418;
+            --darkest-grey: #4d4d4d;
+            --dark-grey: #757575;
+            --grey: #b2b2b2;
+            --light-grey: #d8dada;
+            --lightest-gray: #eff0f0;
+            --white: #ffffff;
+            --background: #2f2f2f;
+            --font: 'Nunito', sans-serif;
+
+        }
+
+        body {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-start;
+            background-color: var(--white);
+            font-family: var(--font);
+            overflow:hidden;
+        }
+
+        .content {
+            width: 40%;
+            padding: 20px;
+        }
+
+        .javascript-window {
+            font-size: .7em;
+            width: 60%;
+            padding: 20px;
+            overflow: auto;
+            height: 100vh;
+            background-color: var(--background-dark);
+            border-left: 1px solid #ddd;
+        }
+
         .modal {
             display: none;
             position: fixed;
@@ -19,13 +70,13 @@
         }
 
         .modal-content {
-            background-color: #fefefe;
             margin: 15% auto;
             padding: 20px;
-            border: 1px solid #888;
             width: 80%;
             max-width: 300px;
             text-align: center;
+            background-color: var(--light-blue);
+            border-radius: 8px;
         }
 
         .modal button {
@@ -38,35 +89,77 @@
             margin-top: 10px;
             margin-bottom: 20px;
         }
+
+        .submit-button {
+            background-color: var(--dark-red);
+            box-sizing: border-box;
+            border-radius: 50px;
+            color: var(--white);
+            cursor: pointer;
+            font-family: var(--font);
+            font-size: 1rem;
+            font-weight: 100;
+            padding: 1rem 1.2rem;
+            border: 0;
+            touch-action: manipulation;
+            margin-left: 0.5vw;
+            white-space: nowrap;
+        }
+
+        h2 {
+            color: var(--darkest-grey);
+            font-size: 2em;
+        }
+
+        li {
+            color: var(--dark-grey);
+            font-size: 1.5em;
+        }
+
+        p,
+        label {
+            color: var(--white);
+            font-size: 1em;
+        }
     </style>
 </head>
 
 <body>
-        <h2><b>On this page:</b></h2>
-        <li>Start session from pop up</li>
-        <li>Collect input for metadata and session tags (present in outgoing webhooks)</li>
-        <li>End session if no Agent responds after 2 minutes</li>
+    <div class="content">
+        <h2><b>This Page:</b></h2>
+        <li>Start session from custom pop up</li><br>
+        <li>Collect input for metadata and session tags (present in outgoing webhooks)</li><br>
+        <li>End session if no Agent responds after 2 minutes</li><br>
         <br>
-        <button id="openModalBtn">Click Here</button>
+        <button id="openModalBtn" class="submit-button">Click Here to Test</button>
 
-
-    <div id="myModal" class="modal">
-        <div class="modal-content">
-            <p>Your text goes here</p>
-            <label for="manualInput">add data to the session:</label>
-            <input type="text" id="manualInput" name="manualInput">
-            <br>
-            <button id="startBtn">Start</button>
-            <button id="cancelBtn">Cancel</button>
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <p>Your text goes here</p>
+                <label for="manualInput">Use the inpout field to collect inputs that will be attached to the session
+                    tags and metadata:</label>
+                <input type="text" id="manualInput" name="manualInput">
+                <br>
+                <button id="startBtn" class="submit-button">Start</button>
+                <button id="cancelBtn" class="submit-button">Cancel</button>
+            </div>
         </div>
     </div>
 
-    <script>
+    <div class="javascript-window">
+        <pre><code id="code-preview" class="language-javascript">
+Javascript goes here
+        </code></pre>
+    </div>
+
+    <script id="myScript">
+        //added AgentJoined variable to record whether and Agent has entered the session
         var AgentJoined = false;
         var SurflySession;
+        //added manual_input variable to store the pop up input collected and pass it to the Surfly API
         var manual_input;
 
-        //popup display JS
+        //JS to manage the pop up display
         document.addEventListener("DOMContentLoaded", function () {
             var modal = document.getElementById("myModal");
             var btn = document.getElementById("openModalBtn");
@@ -105,6 +198,7 @@
             })
                 (window, document, 'script', 'Surfly');
 
+            //any settings specified here will override the global Surfly settings you have
             var settings = {
                 widget_key: "99671227762b43c2a96daa066ee006e2",
                 hide_until_agent_joins: false,
@@ -114,12 +208,13 @@
                 start_with_loading_screen: false,
                 hide_session_ui: false,
                 start_with_chat_open: false,
-                url: "https://www.google.com", // Ensure this URL is complete
+                url: "https://www.google.com",
                 session_autorestore_enabled: false,
                 videochat_enabled: true,
                 start_with_invite_modal: false,
                 tags: [
                     "your_tags_here",
+                    //include the collected inout from the pop up in the tags
                     manual_input
                 ]
             };
@@ -127,7 +222,8 @@
             Surfly.init(settings, function (init) {
                 if (init.success && !Surfly.isInsideSession) {
                     console.log("init success");
-                    SurflySession = Surfly.session().startLeader(null, { "Title": manual_input });
+                    //include the collected inout from the pop up in the metadata
+                    SurflySession = Surfly.session().startLeader(null, { "customer input": manual_input });
                     attachSessionEvents();
                 }
             });
@@ -137,21 +233,25 @@
         function attachSessionEvents() {
             SurflySession.on('session_created', function (session) {
                 console.log(session, 'is fully initiated');
+                //check if an agent is in the session after 2 minutes
                 setTimeout(noAgentEnd, 120000);
+                //hide the pop up
                 startBtn.modal.style.display = "none";
             });
 
             SurflySession.on('participant_joined', function (session, event) {
                 console.log('Participant ', event.clientIndex, 'joined the session');
+                //if an agent joins from the queue (index will be 0) then update AgentJoined variable to true
                 if (event.clientIndex !== 0) {
                     AgentJoined = true;
-                    console.log("Agent joined: ",AgentJoined)
+                    console.log("Agent joined: ", AgentJoined)
                 }
             });
         }
 
         function noAgentEnd() {
             console.log('Checking for Agent...');
+            //check value of AgentJoined and kill session if false
             if (typeof AgentJoined === 'undefined' || AgentJoined !== true) {
                 console.log('No Agent present in session after 2 minutes. Session will end');
                 SurflySession.end();
@@ -160,8 +260,25 @@
             }
         };
     </script>
+    <script>
+        var scriptContent = document.getElementById("myScript").textContent;
 
+        function loadScripts() {
+            const prismScript1 = document.createElement('script');
+            prismScript1.src = "https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js";
+            prismScript1.onload = function () {
+                const prismScript2 = document.createElement('script');
+                prismScript2.src = "https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js";
+                document.body.appendChild(prismScript2);
+            };
+            document.body.appendChild(prismScript1);
+        }
 
+        document.addEventListener("DOMContentLoaded", function () {
+            document.getElementById("code-preview").innerHTML = scriptContent;
+            loadScripts();
+        })
+    </script>
 </body>
 
 </html>
