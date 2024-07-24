@@ -51,7 +51,7 @@
             <label for="manualInput">add data to the session:</label>
             <input type="text" id="manualInput" name="manualInput">
             <br>
-            <button id="startBtn" onclick="loadSession()">Start</button>
+            <button id="startBtn">Start</button>
             <button id="cancelBtn">Cancel</button>
         </div>
     </div>
@@ -60,35 +60,48 @@
         var AgentJoined = false;
         var SurflySession;
         var manual_input;
-        var modal = document.getElementById("myModal");
-        var btn = document.getElementById("openModalBtn");
-        var cancelBtn = document.getElementById("cancelBtn");
-        var startBtn = document.getElementById("startBtn");
-    
-        btn.onclick = function () {
-            modal.style.display = "block";
-        }
-        cancelBtn.onclick = function () {
-            modal.style.display = "none";
-        }
-        window.onclick = function (event) {
-            if (event.target == modal) {
+
+        //popup display JS
+        document.addEventListener("DOMContentLoaded", function () {
+            var modal = document.getElementById("myModal");
+            var btn = document.getElementById("openModalBtn");
+            var cancelBtn = document.getElementById("cancelBtn");
+            var startBtn = document.getElementById("startBtn");
+
+            btn.onclick = function () {
+                modal.style.display = "block";
+            }
+            cancelBtn.onclick = function () {
                 modal.style.display = "none";
             }
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+            startBtn.onclick = function() {
+        if (input && input.value.trim() !== "") {
+            manual_input = input.value;
         }
-        manual_input = "no_input_given";
-    
+        else {
+            manual_input = "no_input_given";
+        }
+        loadSession();
+    }
+        });
+
+
         function loadSession() {
             const input = document.getElementById("manualInput");
             manual_input = input.value;
-    
+
             (function (s, u, r, f, l, y) {
-            s[f] = s[f] || { init: function () { s[f].q = arguments } };
-            l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
-            l.src = 'https://app.surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
-        })
-            (window, document, 'script', 'Surfly');
-    
+                s[f] = s[f] || { init: function () { s[f].q = arguments } };
+                l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+                l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+            })
+                (window, document, 'script', 'Surfly');
+
             var settings = {
                 widget_key: "99671227762b43c2a96daa066ee006e2",
                 hide_until_agent_joins: false,
@@ -108,7 +121,7 @@
                 ],
                 blocklist: [{ "pattern": "^https?://[\\\\w\\\\.]*facebook\\\\.com", "redirect": "https://example.com" }]
             };
-    
+
             Surfly.init(settings, function (init) {
                 if (init.success && !Surfly.isInsideSession) {
                     console.log("init success");
@@ -118,14 +131,14 @@
             });
         }
 
-    
+
         function attachSessionEvents() {
             SurflySession.on('session_created', function (session) {
                 console.log(session, 'is fully initiated');
                 setTimeout(noAgentEnd, 120000);
                 startBtn.modal.style.display = "none";
             });
-    
+
             SurflySession.on('participant_joined', function (session, event) {
                 console.log('Participant ', event.clientIndex, 'joined the session');
                 if (event.clientIndex !== 0) {
@@ -133,7 +146,7 @@
                 }
             });
         }
-    
+
         function noAgentEnd() {
             console.log('Checking for Agent...');
             if (typeof AgentJoined === 'undefined' || AgentJoined !== true) {
@@ -144,7 +157,7 @@
             }
         };
     </script>
-    
+
 
 </body>
 
