@@ -43,8 +43,19 @@
         }
 
         .content {
+            display:flex;
+            flex-direction: column;
+            align-items: center;
             width: 40%;
+            height:100%;
             padding: 20px;
+        }
+
+        .content-body {
+            display:flex;
+            flex-direction: column;
+            height:100%;
+            margin-top: 10%;
         }
 
         .javascript-window {
@@ -73,10 +84,11 @@
             margin: 15% auto;
             padding: 20px;
             width: 80%;
-            max-width: 300px;
+            max-width: 500px;
             text-align: center;
             background-color: var(--light-blue);
             border-radius: 8px;
+            border: 2px solid var(--light-grey);
         }
 
         .modal button {
@@ -106,6 +118,10 @@
             white-space: nowrap;
         }
 
+        .surfly-logo {
+            width: 10%;
+        }
+
         h2 {
             color: var(--darkest-grey);
             font-size: 2em;
@@ -126,6 +142,9 @@
 
 <body>
     <div class="content">
+        <img class="surfly-logo" src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/64e869e4cd0a5d200c10c0e9bfd00adba7e4e60c/resources-common/images/Surfly_Logo.png"
+        alt="Logo">
+        <div class="content-body">
         <h2><b>This Page:</b></h2>
         <li>Start session from custom pop up</li><br>
         <li>Collect input for metadata and session tags (present in outgoing webhooks)</li><br>
@@ -144,6 +163,7 @@
                 <button id="cancelBtn" class="submit-button">Cancel</button>
             </div>
         </div>
+    </div>
     </div>
 
     <div class="javascript-window">
