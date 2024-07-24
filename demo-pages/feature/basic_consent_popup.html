@@ -80,15 +80,15 @@
                     modal.style.display = "none";
                 }
             }
-            startBtn.onclick = function() {
-        if (input && input.value.trim() !== "") {
-            manual_input = input.value;
-        }
-        else {
-            manual_input = "no_input_given";
-        }
-        loadSession();
-    } 
+            startBtn.onclick = function () {
+                if (input && input.value.trim() !== "") {
+                    manual_input = input.value;
+                }
+                else {
+                    manual_input = "no_input_given";
+                }
+                loadSession();
+            }
         });
 
 
@@ -116,8 +116,7 @@
                 tags: [
                     "your_tags_here",
                     manual_input
-                ],
-                blocklist: [{ "pattern": "^https?://[\\\\w\\\\.]*facebook\\\\.com", "redirect": "https://example.com" }]
+                ]
             };
 
             Surfly.init(settings, function (init) {
