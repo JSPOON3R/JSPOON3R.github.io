@@ -67,6 +67,7 @@
             var btn = document.getElementById("openModalBtn");
             var cancelBtn = document.getElementById("cancelBtn");
             var startBtn = document.getElementById("startBtn");
+            var input = document.getElementById("manualInput");
 
             btn.onclick = function () {
                 modal.style.display = "block";
@@ -92,9 +93,6 @@
 
 
         function loadSession() {
-            const input = document.getElementById("manualInput");
-            manual_input = input.value;
-
             (function (s, u, r, f, l, y) {
                 s[f] = s[f] || { init: function () { s[f].q = arguments } };
                 l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
