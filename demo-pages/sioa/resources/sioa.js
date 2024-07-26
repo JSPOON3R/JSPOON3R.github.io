@@ -388,9 +388,7 @@ function loadpinflow() {
 
     
         // Trigger function when the custom flow button is clicked
-        showpopup.addEventListener("click", loadpinflow);
-
-        startCobrowsingbutton3();
+        showpopup.addEventListener("click", loadpinflow, startCobrowsingbutton3);
     
         closeButton.addEventListener("click", function () {
             modal.style.display = "none";
