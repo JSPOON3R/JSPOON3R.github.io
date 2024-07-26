@@ -366,37 +366,38 @@ function startCobrowsingbutton2() {
 ////////////"custom-pin-button"
 //Open the pop up with a fade
 
-function loadpinflow() {
-    // Toggle visibility and opacity for fade-in/out effect
-    if (modal.style.opacity === "1" || modal.style.visibility === "visible") {
-        modal.style.opacity = "0";
-        modal.style.visibility = "hidden";
-    } else {
-        modal.style.display = "flex";
-        setTimeout(() => {
-            modal.style.opacity = "1";
-            modal.style.visibility = "visible";
-        }, 10); // Delay to ensure the display property is applied first
+document.addEventListener("DOMContentLoaded", function() {
+    function loadpinflow() {
+        // Toggle visibility and opacity for fade-in/out effect
+        if (modal.style.opacity === "1" || modal.style.visibility === "visible") {
+            modal.style.opacity = "0";
+            modal.style.visibility = "hidden";
+        } else {
+            modal.style.display = "flex";
+            setTimeout(() => {
+                modal.style.opacity = "1";
+                modal.style.visibility = "visible";
+            }, 10); // Delay to ensure the display property is applied first
+        }
     }
-}
 
+    const showpopup = document.getElementById("startpinflowButton");
+    const modal = document.getElementById("pinmodal");
+    const closeButton = document.getElementById("closepinButton");
+    const endsessionbutton = document.getElementById("endsessionbutton");
 
-        const showpopup = document.getElementById("startpinflowButton");
-        const modal = document.getElementById("pinmodal");
-        const closeButton = document.getElementById("closepinButton");
-        const endsessionbutton = document.getElementById("endsessionbutton");
+    // Trigger functions when the custom flow button is clicked
+    showpopup.addEventListener("click", loadpinflow);
+    showpopup.addEventListener("click", startCobrowsingbutton3);
 
-    
-        // Trigger function when the custom flow button is clicked
-        showpopup.addEventListener("click", loadpinflow, startCobrowsingbutton3);
-    
-        closeButton.addEventListener("click", function () {
-            modal.style.display = "none";
-        });
-    
-        endsessionbutton.addEventListener("click", function () {
-            Surfly.session().end();
-        });
+    closeButton.addEventListener("click", function () {
+        modal.style.display = "none";
+    });
+
+    endsessionbutton.addEventListener("click", function () {
+        Surfly.session().end();
+    });
+});
 
 
 
