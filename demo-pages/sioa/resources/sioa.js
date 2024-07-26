@@ -175,8 +175,7 @@ function loadSurfly() {
         videochat_enabled: true,
         start_with_videochat_on: false,
         session_autorestore_enabled: false,
-        url: "https://www.simplyioa.com/",
-        script_embedded: "https://demo.surfly.com/script/masking-visuals-sioa.js",
+        url: "https://www.simplyioa.com/"
     };
 
     Surfly.init(settings, function (initResult) {
@@ -421,7 +420,6 @@ function startCobrowsingbutton3() {
             hide_until_agent_joins: true,
             session_start_confirmation: false,
             hide_element_by_selector: "#InsuredAddress,#HasAcceptedDisclaimer-checkbox-group > label > div > div > span,body > div.L3eUgb > div.o3j99.ikrT4e.om7nvf > form > div:nth-child(1) > div.A8SBwf > div.RNNXgb > div,#input_7_3,#input_7_5",
-            script_embedded: "https://demo.surfly.com/script/masking-visuals-sioa.js",
             tags: [
                 "custom-pin-button"
             ],
