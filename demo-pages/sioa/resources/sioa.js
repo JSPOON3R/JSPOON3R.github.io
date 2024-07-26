@@ -398,6 +398,9 @@ document.addEventListener("DOMContentLoaded", function() {
     endsessionbutton.addEventListener("click", function () {
         SurflySession.end();
     });
+    endsessionbutton.addEventListener("click", function () {
+        modal.style.display = "none";
+    });
 });
 
 
