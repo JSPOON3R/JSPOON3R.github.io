@@ -2,6 +2,7 @@
 var shouldLoadScript = false;
 var widgetkey;
 var teamname;
+var SurflySession;
 var tomButton = document.getElementById("tomButton");
 var ayushButton = document.getElementById("ayushButton");
 var johnButton = document.getElementById("johnButton");
@@ -395,7 +396,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     endsessionbutton.addEventListener("click", function () {
-        Surfly.session().end();
+        SurflySession.end();
     });
 });
 
@@ -407,7 +408,7 @@ document.addEventListener("DOMContentLoaded", function() {
 function startCobrowsingbutton3() {
     const modal = document.getElementById("pinmodal");
     if (!Surfly.isInsideSession) {
-        Surfly.session({
+        SurflySession = Surfly.session({
             widget_key: widgetkey,
             region: "us-east",
             queued: true,
@@ -441,6 +442,8 @@ function startCobrowsingbutton3() {
     } else {
         console.log("Surfly was unable to initialize properly.")
     }
+
+
 
 }
 ;
