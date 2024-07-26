@@ -170,7 +170,7 @@ function loadSurfly() {
         hide_element_by_selector: "#InsuredAddress,#HasAcceptedDisclaimer-checkbox-group > label > div > div > span,body > div.L3eUgb > div.o3j99.ikrT4e.om7nvf > form > div:nth-child(1) > div.A8SBwf > div.RNNXgb > div,#input_7_3,#input_7_5",
         region: "us-east",
         queued: true,
-        leader_redirect_url: `https://demo.surfly.com/sioa?`+teamname,
+        leader_redirect_url: `https://demo.surfly.com/demo-pages/sioa/?`+teamname,
         follower_redirect_url: "https://www.surfly.com",
         videochat_enabled: true,
         start_with_videochat_on: false,
@@ -279,7 +279,7 @@ function startCobrowsingtext() {
         session_start_confirmation: false,
         tags: ["text-input"],
         hide_element_by_selector: "#InsuredAddress,#HasAcceptedDisclaimer-checkbox-group > label > div > div > span,body > div.L3eUgb > div.o3j99.ikrT4e.om7nvf > form > div:nth-child(1) > div.A8SBwf > div.RNNXgb > div,#input_7_3,#input_7_5",
-        blocklist: "[{\"pattern\": \"^https?://[\\\\w\\\\.]*facebook\\\\.com\",\"redirect\": \"https://demo.surfly.com/pages-common/blocked.html\"}]"
+        blocklist: "[{\"pattern\": \"^https?://[\\\\w\\\\.]*facebook\\\\.com\",\"redirect\": \"https://demo.surfly.com/pages-common/blocked\"}]"
     }).startLeader();
 }
 
@@ -299,7 +299,7 @@ function startvideochat() {
         tags: [
             "video-button"
         ],
-        blocklist: "[{\"pattern\": \"^https?://[\\\\w\\\\.]*facebook\\\\.com\",\"redirect\": \"https://demo.surfly.com/pages-common/blocked.html\"}]"
+        blocklist: "[{\"pattern\": \"^https?://[\\\\w\\\\.]*facebook\\\\.com\",\"redirect\": \"https://demo.surfly.com/pages-common/blocked\"}]"
 
     }).startLeader();
 }
@@ -317,7 +317,7 @@ function startCobrowsingbutton1() {
         tags: [
             "default-flow-button"
         ],
-        blocklist: "[{\"pattern\": \"^https?://[\\\\w\\\\.]*facebook\\\\.com\",\"redirect\": \"https://demo.surfly.com/pages-common/blocked.html\"}]"
+        blocklist: "[{\"pattern\": \"^https?://[\\\\w\\\\.]*facebook\\\\.com\",\"redirect\": \"https://demo.surfly.com/pages-common/blocked\"}]"
 
     }).startLeader();
     hideChatWidget();
@@ -354,7 +354,7 @@ function startCobrowsingbutton2() {
         tags: [
             "form-flow-button"
         ],
-        blocklist: "[{\"pattern\": \"^https?://[\\\\w\\\\.]*facebook\\\\.com\",\"redirect\": \"https://demo.surfly.com/pages-common/blocked.html\"}]"
+        blocklist: "[{\"pattern\": \"^https?://[\\\\w\\\\.]*facebook\\\\.com\",\"redirect\": \"https://demo.surfly.com/pages-common/blocked\"}]"
 
     }).startLeader(null, {
         "Name": customerName,
@@ -425,7 +425,7 @@ function startCobrowsingbutton3() {
             tags: [
                 "custom-pin-button"
             ],
-            blocklist: "[{\"pattern\": \"^https?://[\\\\w\\\\.]*facebook\\\\.com\",\"redirect\": \"https://demo.surfly.com/pages-common/blocked.html\"}]"
+            blocklist: "[{\"pattern\": \"^https?://[\\\\w\\\\.]*facebook\\\\.com\",\"redirect\": \"https://demo.surfly.com/pages-common/blocked\"}]"
 
         }).startLeader(null, {
             Custom_Field_1: 'Data goes here',
