@@ -238,7 +238,7 @@ Javascript goes here
                 return '';
             }
             // Transform the string by splitting by commas, trimming each part, and joining with '&url='
-            return manual_input.split(',').map(url => `url=${url.trim()}`).join('&url=');
+            manual_input = manual_input.split(',').join('&url=');
         }
 
         document.addEventListener("DOMContentLoaded", function () {
