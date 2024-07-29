@@ -343,12 +343,11 @@ Javascript goes here
                     Surfly.session().create().on("session_created", function (session, event) {
                         console.log("Leader Link: ", session.leaderLink);
                         console.log("Follower Link: ", session.followerLink);
-                        //Open session in a new window with additional tabs
+                        //Open session in a new window without additional tabs
                         window.open(session.leaderLink);
-                        window.open(session.leaderLink + "?url=" + manual_input, "_blank");
 
-                        //copy the link with new tab instructions to clipboard
-                        navigator.clipboard.writeText(session.followerLink + "?url=" + manual_input, "_blank")
+                        //copy the link for the participant who will open the tabs
+                        navigator.clipboard.writeText(session.followerLink + "?url=" + manual_input)
                             .then(() => {
                                 alert("link copied to clipboard: " + session.followerLink + "?url=" + manual_input);
                                 console.log('Link copied to clipboard:', session.followerLink + "?url=" + manual_input);
