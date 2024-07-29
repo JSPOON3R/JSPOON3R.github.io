@@ -256,80 +256,11 @@ Javascript goes here
                     console.log("init success");
                     //include the collected inout from the pop up in the metadata
                     SurflySession = Surfly.session().create(null, { "customer input": manual_input });
-                    attachSessionEvents();
-                    window.location.assign(SurflySession.leaderLink+"?url="+manual_input); 
+                    window.location.relocate(SurflySession.leaderLink+"?url="+manual_input); 
                 }
             });
         }
 
-
-        function loadSession() {
-            //This function will open the new tabs on the page 
-
-            (function (s, u, r, f, l, y) {
-                s[f] = s[f] || { init: function () { s[f].q = arguments } };
-                l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
-                l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
-            })
-                (window, document, 'script', 'Surfly');
-
-            //any settings specified here will override the global Surfly settings you have
-            var settings = {
-                widget_key: "99671227762b43c2a96daa066ee006e2",
-                hide_until_agent_joins: false,
-                block_until_agent_joins: false,
-                start_with_invite_modal: true,
-                admission_enabled: false,
-                start_with_loading_screen: false,
-                hide_session_ui: false,
-                start_with_chat_open: false,
-                url: "https://www.google.com",
-                session_autorestore_enabled: false,
-                videochat_enabled: true,
-                start_with_invite_modal: false
-            };
-
-            Surfly.init(settings, function (init) {
-                if (init.success && !Surfly.isInsideSession) {
-                    console.log("init success");
-                    //include the collected inout from the pop up in the metadata
-                    SurflySession = Surfly.session().create(null, { "customer input": manual_input });
-                    attachSessionEvents();
-                    window.location.assign(SurflySession.leaderLink+"?url="+manual_input); 
-                }
-            });
-        }
-
-
-        function attachSessionEvents() {
-            SurflySession.on('session_created', function (session) {
-                console.log(session, 'is fully initiated');
-                //check if an agent is in the session after 2 minutes
-                setTimeout(noAgentEnd, 120000);
-                //hide the pop up
-                startBtn.modal.style.display = "none";
-            });
-
-            SurflySession.on('participant_joined', function (session, event) {
-                console.log('Participant ', event.clientIndex, 'joined the session');
-                //if an agent joins from the queue (index will be 0) then update AgentJoined variable to true
-                if (event.clientIndex !== 0) {
-                    AgentJoined = true;
-                    console.log("Agent joined: ", AgentJoined)
-                }
-            });
-        }
-
-        function noAgentEnd() {
-            console.log('Checking for Agent...');
-            //check value of AgentJoined and kill session if false
-            if (typeof AgentJoined === 'undefined' || AgentJoined !== true) {
-                console.log('No Agent present in session after 2 minutes. Session will end');
-                SurflySession.end();
-            } else {
-                console.log('Agent present in session');
-            }
-        };
     </script>
     <script>
         var scriptContent = document.getElementById("myScript").textContent;
