@@ -277,7 +277,7 @@ Javascript goes here
                         console.log("Leader Link: ", session.leaderLink);
                         console.log("Follower Link: ", session.followerLink);
                         //Open session in a new window with additional tabs
-                        window.open(session.leaderLink+ "?url=" + manual_input, "_blank");
+                        window.location.href = session.leaderLink + "?url=" + manual_input;
                     });
                 }
             });
