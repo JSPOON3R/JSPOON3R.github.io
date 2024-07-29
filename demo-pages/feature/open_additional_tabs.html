@@ -180,7 +180,8 @@
                     <input type="text" id="manualInput" name="manualInput" placeholder="www.bing.com,www.wikipedia.com"
                         class="input-field">
                     <button id="startBtn" class="submit-button">Start Session & open tabs<p class="button-description">
-                            <i>tabs will open for you</i></p></button>
+                            <i>tabs will open for you</i>
+                        </p></button>
                     <button id="startBtn2" class="submit-button">Start Session & Copy link <p
                             class="button-description"><i>tabs will open for the other participant</i></p>
                     </button>
@@ -272,10 +273,11 @@ Javascript goes here
             Surfly.init(settings, function (init) {
                 if (init.success && !Surfly.isInsideSession) {
                     console.log("init success");
-                    Surfly.session().create().then(SurflySession => {
-                        window.location.href = SurflySession.leaderLink + "?url=" + manual_input;
-                    }).catch(error => {
-                        console.error("Error creating Surfly session:", error);
+                    Surfly.session().create().on("session_created", function (session, event) {
+                        console.log("Leader Link: ", session.leaderLink);
+                        console.log("Follower Link: ", session.followerLink);
+                        //Open session in a new window with additional tabs
+                        window.open(session.leaderLink+ "?url=" + manual_input, "_blank");
                     });
                 }
             });
