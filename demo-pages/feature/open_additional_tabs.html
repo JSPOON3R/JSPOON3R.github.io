@@ -87,12 +87,16 @@
             align-items: center;
             margin: 15% auto;
             padding: 20px;
-            width: 80%;
-            max-width: 500px;
+            width: fit-content;
             text-align: center;
             background-color: var(--light-blue);
             border-radius: 8px;
             border: 2px solid var(--light-grey);
+        }
+
+        .modal-buttons {
+            display:flex;
+            flex-direction: row;
         }
 
         .modal button {
@@ -108,7 +112,7 @@
             font-family: var(--font);
             font-size: 1rem;
             font-weight: 100;
-            padding: .5rem .8rem;
+            padding: .5rem 1rem;
             border: 0;
             touch-action: manipulation;
             white-space: nowrap;
@@ -118,15 +122,21 @@
         .input-field {
             width: 90%;
             padding: 10px;
-            font-size: 1rem;
+            font-size: 1.2rem;
             border: 2px solid var(--blue);
             border-radius: 50px;
-            margin-bottom: 5px;
+            margin-bottom: 20px;
             outline: none;
         }
 
         .input-field:focus {
             border-color: var(--dark-blue);
+            color: var(--dark-blue);
+        }
+
+        .input-field::placeholder {
+            color: var(--light-blue);
+            opacity: 50%;
         }
 
         .surfly-logo {
@@ -143,10 +153,9 @@
             font-size: 1.5em;
         }
 
-        p,
-        label {
+        p {
             color: var(--white);
-            font-size: 1em;
+            font-size: 1.2em;
         }
 
         .button-description {
@@ -177,10 +186,11 @@
 
             <div id="myModal" class="modal">
                 <div class="modal-content">
-                    <p>Enter your additional URLs here. Ensure they are formatted correctly and are each seperated by a
+                    <p><b>Enter your additional URLs here:</b><br> Ensure they are formatted correctly and are each seperated by a
                         comma</p>
                     <input type="text" id="manualInput" name="manualInput"
                         placeholder="e.g.www.bing.com,www.wikipedia.com" class="input-field">
+                        <div class="modal-buttons">
                     <button id="startBtn" class="submit-button">Start Session & open tabs<p class="button-description">
                             <i>tabs will open for you</i>
                         </p></button>
@@ -189,6 +199,7 @@
                     </button>
 
                     <button id="cancelBtn" class="submit-button">Cancel</button>
+                </div>
                 </div>
             </div>
         </div>
