@@ -226,6 +226,7 @@ Javascript goes here
         //added manual_input variable to store the pop up input collected and pass it to the Surfly API when the session is started. 
         //You can also predefine a variable with the additional tab URLs if you already know what they will be
         var manual_input;
+        var formatted_query_parameters;
 
         //JS to manage the pop up display for this page
         document.addEventListener("DOMContentLoaded", function () {
@@ -263,7 +264,10 @@ Javascript goes here
                 else {
                     manual_input = "";
                 }
+                transformInput();
+                if (formatted_query_parameters) {
                 loadSession2();
+            }
             }
         });
 
@@ -299,7 +303,7 @@ Javascript goes here
                         console.log("Leader Link: ", session.leaderLink);
                         console.log("Follower Link: ", session.followerLink);
                         //Open session with the additional tabs for yourself by adding the "?url=" query paramater to your session link & loading it immediately after
-                        window.location.href = session.leaderLink + "?url=" + manual_input;
+                        window.location.href = session.leaderLink + "?url=" + formatted_query_parameters;
                     });
                 }
             });
@@ -340,13 +344,13 @@ Javascript goes here
                         console.log("Follower Link: ", session.followerLink);
                         //Open session in a new window with additional tabs
                         window.open(session.leaderLink);
-                        window.open(session.leaderLink + "?url=" + manual_input, "_blank");
+                        window.open(session.leaderLink + "?url=" + formatted_query_parameters, "_blank");
 
                         //copy the link with new tab instructions to clipboard
-                        navigator.clipboard.writeText(session.followerLink + "?url=" + manual_input, "_blank")
+                        navigator.clipboard.writeText(session.followerLink + "?url=" + formatted_query_parameters, "_blank")
                             .then(() => {
-                                alert("link copied to clipboard: " + session.followerLink + "?url=" + manual_input);
-                                console.log('Link copied to clipboard:', session.followerLink + "?url=" + manual_input);
+                                alert("link copied to clipboard: " + session.followerLink + "?url=" + formatted_query_parameters);
+                                console.log('Link copied to clipboard:', session.followerLink + "?url=" + formatted_query_parameters);
                             })
                             .catch(err => {
                                 console.error('Failed to copy output to clipboard:', err);
@@ -355,6 +359,10 @@ Javascript goes here
                 }
             });
         }
+
+        function transformInput(manual_input) {
+   formatted_query_parameters = manual_input.split(',').map(url => `url=${url}`).join('&url=');
+}
 
     </script>
     <script>
