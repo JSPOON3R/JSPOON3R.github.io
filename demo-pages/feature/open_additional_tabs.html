@@ -62,12 +62,21 @@
         .javascript-window {
             font-size: .7em;
             width: 60%;
-            padding: 20px;
             overflow: scroll;
             height: 100vh;
             background-color: var(--background-dark);
-            border-left: 1px solid #ddd;
+            user-select: text !important;
         }
+
+        .javascript-window ::selection {
+    background: var(--dark-red) !important; 
+    color: var(--white) !important; 
+        }
+
+.javascript-window ::-moz-selection {
+    background: var(--dark-red) !important; 
+    color: var(--white) !important; 
+}
 
         .modal {
             display: none;
@@ -173,7 +182,7 @@
             src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/64e869e4cd0a5d200c10c0e9bfd00adba7e4e60c/resources-common/images/Surfly_Logo.png"
             alt="Logo">
         <div class="content-body">
-            <h2><b>This Page:</b></h2>
+            <h2><b>Automatically Open Additional Tabs:</b></h2>
             <li>This page demonstrates one way to start a Surfly session with multiple tabs from the begininng without
                 needing users to manually open them</li><br>
             <li><b>Important:</b> the person who opens a tab will be in control of that tab & will be able to see any
