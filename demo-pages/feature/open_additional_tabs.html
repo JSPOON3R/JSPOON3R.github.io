@@ -99,13 +99,6 @@
             margin: 5px;
         }
 
-        .modal input[type="text"] {
-            width: 80%;
-            padding: 5px;
-            margin-top: 10px;
-            margin-bottom: 20px;
-        }
-
         .submit-button {
             background-color: var(--dark-red);
             box-sizing: border-box;
@@ -115,11 +108,25 @@
             font-family: var(--font);
             font-size: 1rem;
             font-weight: 100;
-            padding: .5rem 1.2rem;
+            padding: .5rem .8rem;
             border: 0;
             touch-action: manipulation;
-            margin-left: 0.5vw;
             white-space: nowrap;
+            width: 60%;
+        }
+
+        .input-field {
+            width: 90%;
+            padding: 10px;
+            font-size: 1rem;
+            border: 2px solid var(--blue);
+            border-radius: 50px;
+            margin-bottom: 5px;
+            outline: none;
+        }
+
+        .input-field:focus {
+            border-color: var(--dark-blue);
         }
 
         .surfly-logo {
@@ -140,6 +147,13 @@
         label {
             color: var(--white);
             font-size: 1em;
+        }
+
+        .button-description {
+            color: var(--lightest-gray);
+            font-size: .8em;
+            margin: 0;
+            padding: 0;
         }
     </style>
 </head>
@@ -163,9 +177,13 @@
                 <div class="modal-content">
                     <p>Enter your additional URLs here. Ensure they are formatted correctly and are each seperated by a
                         comma</p>
-                    <input type="text" id="manualInput" name="manualInput" placeholder="www.bing.com,www.wikipedia.com">
-                    <button id="startBtn" class="submit-button">Start Session & Open URLs here</button>
-                    <button id="startBtn2" class="submit-button">Start Session & Adds URLs to Join Link</button>
+                    <input type="text" id="manualInput" name="manualInput" placeholder="www.bing.com,www.wikipedia.com" class="input-field">
+                    <button id="startBtn" class="submit-button">Start Session & open tabs<p
+                        class="button-description"><i>tabs will open for you</i></p></button>
+                    <button id="startBtn2" class="submit-button">Start Session & Copy link <p
+                            class="button-description"><i>tabs will open for the other participant</i></p>
+                    </button>
+
                     <button id="cancelBtn" class="submit-button">Cancel</button>
                 </div>
             </div>
@@ -255,7 +273,7 @@ Javascript goes here
                     console.log("init success");
                     //include the collected inout from the pop up in the metadata
                     SurflySession = Surfly.session().create(null, { "customer input": manual_input });
-                    window.open(SurflySession.leaderLink+"?url="+manual_input, "_self"); 
+                    window.location.href =SurflySession.leaderLink + "?url=" + manual_input;
                 }
             });
         }
