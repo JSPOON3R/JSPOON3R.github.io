@@ -225,21 +225,10 @@ Javascript goes here
     <script id="myScript">
 
         var SurflySession;
+
         //added manual_input variable to store the pop up input collected and pass it to the Surfly API when the session is started. 
         //You can also predefine a variable with the additional tab URLs if you already know what they will be
         var manual_input;
-
-
- 
-
-       //function to format the URLs provided into URL query paramater syntax
-        function transformInput(manual_input) {
-            if (!manual_input) {
-                return '';
-            }
-            // Transform the string by splitting by commas, trimming each part, and joining with '&url='
-           return manual_input.split(',').join('&url=');
-        }
 
         document.addEventListener("DOMContentLoaded", function () {
             var modal = document.getElementById("myModal");
@@ -262,20 +251,21 @@ Javascript goes here
             }
             startBtn.onclick = function () {
                 if (input && input.value.trim() !== "") {
-                    manual_input = transformInput(input.value);
+                    //format the manually inoput URLs into query paramater syntax
+                    manual_input = input.value.replace(/,/g, '&url=');
                 } else {
                     manual_input = "";
                 }
-                console.log(manual_input);
+
                 loadSession();
             }
             startBtn2.onclick = function () {
                 if (input && input.value.trim() !== "") {
-                    manual_input = transformInput(input.value);
+                    //format the manually inoput URLs into query paramater syntax
+                    manual_input = input.value.replace(/,/g, '&url=');
                 } else {
                     manual_input = "";
                 }
-                console.log(manual_input);
                 loadSession2();
             }
         });
