@@ -17,15 +17,21 @@
                 automated_session_recording_enabled: false,
                 url: "https://demo.lfsuat.com/disclosures/Remote-Closing-sf",
                 leader_redirect_url: "https://www.bing.com",
-                follower_redirect_url: "https://www.wikipedia.com"
+                follower_redirect_url: "https://www.wikipedia.com",
             };
 
             Surfly.init(settings, function (init) {
                 if
                     (init.success && !Surfly.isInsideSession) {
-                    SurflySession = Surfly.session().startLeader()
+                    SurflySession = Surfly.session().create()
                 }
-            });
+                SurflySession.on("session_created", function (session, event) {
+                    console.log("Leader Link: ", session.leaderLink);
+                    console.log("Follower Link: ", session.followerLink);
+                    //Open session with the additional tabs for yourself 
+                    window.location.href = session.leaderLink;
+                });
+            })
         }
         loadSurfly(); 
     </script>
