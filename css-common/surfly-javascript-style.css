@@ -172,7 +172,7 @@ pre[class*="language-"] {
 }
 
 .token.operator {
-	color: var(--dark-blue);
+	color: var(--white);
 }
 
 .token.prolog {
@@ -192,7 +192,7 @@ pre[class*="language-"] {
 }
 
 .token.punctuation {
-	color: var(--dark-blue);
+	color: var(--light-red);
 }
 
 .token.regex {
