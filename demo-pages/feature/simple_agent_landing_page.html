@@ -24,7 +24,7 @@
             Surfly.init(settings, function (init) {
                 if
                     (init.success && !Surfly.isInsideSession) {
-                    SurflySession = Surfly.session().create()
+                    SurflySession = Surfly.session().startLeader()
                 }
             });
         }
