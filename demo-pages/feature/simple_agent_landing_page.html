@@ -18,6 +18,7 @@
                 url: "https://demo.lfsuat.com/disclosures/Remote-Closing-sf",
                 leader_redirect_url: "https://www.bing.com",
                 follower_redirect_url: "https://www.wikipedia.com",
+                skip_queue: true
             };
 
             Surfly.init(settings, function (init) {
@@ -25,13 +26,7 @@
                     (init.success && !Surfly.isInsideSession) {
                     SurflySession = Surfly.session().create()
                 }
-                SurflySession.on("session_created", function (session, event) {
-                    console.log("Leader Link: ", session.leaderLink);
-                    console.log("Follower Link: ", session.followerLink);
-                    //Open session with the additional tabs for yourself 
-                    window.location.href = session.leaderLink;
-                });
-            })
+            });
         }
         loadSurfly(); 
     </script>
