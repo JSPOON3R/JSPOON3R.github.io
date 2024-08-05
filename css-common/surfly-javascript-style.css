@@ -192,7 +192,7 @@ pre[class*="language-"] {
 }
 
 .token.punctuation {
-	color: var(--dark-green);
+	color: var(--yellow);
 }
 
 .token.regex {
