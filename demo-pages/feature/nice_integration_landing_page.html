@@ -195,6 +195,7 @@
     </div>
 
     <script>
+        var nameInput = '';
         function toggleInstructions() {
             const stepsContainer = document.getElementById('stepsContainer');
             const toggleButton = document.querySelector('.toggle-button');
@@ -208,15 +209,13 @@
         }
 
         function validateInput() {
-            const nameInput = document.getElementById('nameInput').value.trim();
+            nameInput = document.getElementById('nameInput').value.trim();
             const errorMessage = document.getElementById('error-message');
-            
             if (nameInput === '') {
                 errorMessage.style.display = 'block';
-            } else {
-                errorMessage.style.display = 'none';
-                // Proceed to the next step or function (e.g., start the co-browsing session)
-                alert('Thank you, ' + nameInput + '. You will now be connected to an agent.');
+            } 
+            else {
+                console.log("Name input recieved: ",nameInput);
             }
         }
 
@@ -296,7 +295,7 @@
             videochat_prompt: true,
             start_muted: false,
         });
-        var surflyMetadata = { "name": "Pedro Pereira", "email": "pedro@surfly.com" };
+        var surflyMetadata = {"name": nameInput};
 
         videochatSession.on("session_created", function (session, event) {
             console.log('Waiting for confirmation');
@@ -317,7 +316,7 @@
     }
 
     // Create Surfly Session
-    function createSurflySession(contactId, inviteType) {
+    function createSurflySession(contactId) {
         var surflyMetadata = { "name": "Customer" };
         if (inviteType == 'cobrowse') {
             var regularSession = Surfly.session({ block_until_agent_joins: false });
@@ -407,7 +406,7 @@
 
     document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('startButton').addEventListener('click', fetchInputContent);
-    document.getElementById('startButton').addEventListener('click', createSurflySession);
+    document.getElementById('startButton').addEventListener('click', createVideochatSession);
 });
 
 
