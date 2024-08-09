@@ -308,6 +308,7 @@
             }).on("session_started", function (session, event) {
                 var surflySessionPin = session.pin;
                 var surflyFollowerLink = session.followerLink;
+                signalContact(contactId, surflyFollowerLink, surflySessionPin, 'videochat');
                 signalWorkItem(surflyFollowerLink);
                 signalContact(contactId, surflyFollowerLink, surflySessionPin, 'cobrowse');
                 console.log("Videochat session started");
