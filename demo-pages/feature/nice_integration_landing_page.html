@@ -294,9 +294,10 @@
                 block_until_agent_joins: false,
                 hide_unitl_anget_joins: true,
                 videochat_autostart: true,
-                start_with_fullscreen_videochat: true,
+                start_with_fullscreen_videochat: false,
                 videochat_prompt: true,
                 start_muted: false,
+                url: "https://demo.surfly.com/demo-pages/feature/nice_integration_start_url"
             });
             var surflyMetadata = { "name": nameInput };
 
@@ -309,8 +310,14 @@
                 signalWorkItem(surflyFollowerLink);
                 console.log("Videochat session started");
                 console.log('Session Pin: ' + surflySessionPin);
-            }).on("viewer_joined", function (session, event) {
+            }).on("participant_joined", function (session, event) {
                 window.nicVideochatContactId = event.userData.contactId;
+                videochatSession.toggleVideochatFullscreen()
+                if (event.clientIndex !== 0) {
+                                SurflySession.makeHost(1);
+                            } else {
+                                console.log(event.clientIndex + " joined the session - host not changed");
+                            };
             }).on("session_ended", function (session, event) {
                 console.log("Videochat session ended");
                 createVideochatButton();
