@@ -405,8 +405,11 @@
         });
     }
 
-    document.getElementById('#startButton').addEventListener('click', fetchInputContent);
-    document.getElementById('#startButton').addEventListener('click', createSurflySession);
+    document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('startButton').addEventListener('click', fetchInputContent);
+    document.getElementById('startButton').addEventListener('click', createSurflySession);
+});
+
 
 </script>
 
