@@ -309,7 +309,6 @@
                 var surflySessionPin = session.pin;
                 var surflyFollowerLink = session.followerLink;
                 signalContact(contactId, surflyFollowerLink, surflySessionPin, 'videochat');
-                signalWorkItem(surflyFollowerLink);
                 console.log("Videochat session started");
                 console.log('Session Pin: ' + surflySessionPin);
             }).on("participant_joined", function (session, event) {
@@ -419,7 +418,7 @@
     <script>
     document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('startButton').addEventListener('click', fetchInputContent);
-    document.getElementById('startButton').addEventListener('click', createVideochatSession);
+    document.getElementById('startButton').addEventListener('click', createSurflySession);
 });
 </script>
 
