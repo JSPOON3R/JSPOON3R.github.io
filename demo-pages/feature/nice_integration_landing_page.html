@@ -310,7 +310,6 @@
                 var surflyFollowerLink = session.followerLink;
                 signalContact(contactId, surflyFollowerLink, surflySessionPin, 'videochat');
                 signalWorkItem(surflyFollowerLink);
-                signalContact(contactId, surflyFollowerLink, surflySessionPin, 'cobrowse');
                 console.log("Videochat session started");
                 console.log('Session Pin: ' + surflySessionPin);
             }).on("participant_joined", function (session, event) {
