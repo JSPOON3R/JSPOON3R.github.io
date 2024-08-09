@@ -290,6 +290,7 @@
 
         // Create Videochat Session
         function createVideochatSession() {
+            var contactId = "";
             var videochatSession = Surfly.session({
                 block_until_agent_joins: false,
                 hide_unitl_anget_joins: true,
@@ -308,6 +309,7 @@
                 var surflySessionPin = session.pin;
                 var surflyFollowerLink = session.followerLink;
                 signalWorkItem(surflyFollowerLink);
+                signalContact(contactId, surflyFollowerLink, surflySessionPin, 'cobrowse');
                 console.log("Videochat session started");
                 console.log('Session Pin: ' + surflySessionPin);
             }).on("participant_joined", function (session, event) {
@@ -320,7 +322,6 @@
                             };
             }).on("session_ended", function (session, event) {
                 console.log("Videochat session ended");
-                createVideochatButton();
                 endWorkItem(window.nicVideochatContactId);
             }).create();
         }
