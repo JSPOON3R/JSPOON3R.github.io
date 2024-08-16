@@ -604,8 +604,8 @@
             url_mangling: false,
             videochat_enabled: false,
             videochat_prompt: false,
-            default_videochat_fullscreen_mode: "Grid",
-            default_videochat_mode: "Floating",
+            default_videochat_fullscreen_mode: "grid",
+            default_videochat_mode: "floating",
         };
     </script>
 
@@ -1503,15 +1503,15 @@ navigator.clipboard.writeText(surflySnippet).then(() => alert('The Surfly code s
                             </p>
                             <select class="drop-down" id="default_videochat_fullscreen_mode"
                                 onchange="toggleVideoView(this)">
-                                <option value="Grid">Grid</option>
-                                <option value="Spotlight">Spotlight</option>
+                                <option value="grid">Grid</option>
+                                <option value="spotlight">Spotlight</option>
                             </select>
                         </div>
                         <div class="view-select">
                             <p class="category-description" id="preview-screen-label">default_videochat_mode</a></p>
                             <select class="drop-down" id="default_videochat_mode" onchange="toggleVideoView(this)">
-                                <option value="Floating">Floating</option>
-                                <option value="Sidebar">Sidebar</option>
+                                <option value="floating">Floating</option>
+                                <option value="sidebar">Sidebar</option>
                             </select>
                         </div>
                     </div>
