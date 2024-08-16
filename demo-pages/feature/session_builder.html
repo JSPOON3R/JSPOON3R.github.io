@@ -1,0 +1,1632 @@
+<!DOCTYPE html>
+<html lang="en">
+<link rel="shortcut icon" type="image/x-icon" href="https://demo.surfly.com/resources-common/icons/Favicon-PNG.png">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://demo.surfly.com/css-common/surfly-javascript-style.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surfly Session Builder</title>
+    <style>
+        :root {
+            --light-red: #e54747;
+            --dark-red: #c72323;
+            --light-blue: #7cadbf;
+            --blue: #2288ad;
+            --dark-blue: #166e8e;
+            --yellow: #f4c344;
+            --orange: #fd942a;
+            --light-green: #7dc05a;
+            --dark-green: #48a418;
+            --darkest-grey: #4d4d4d;
+            --dark-grey: #757575;
+            --grey: #b2b2b2;
+            --light-grey: #d8dada;
+            --lightest-gray: #eff0f0;
+            --white: #ffffff;
+            --background: #2f2f2f;
+            --font: 'Nunito', sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: flex-start;
+            background-color: var(--white);
+            font-family: var(--font);
+            overflow: hidden;
+            margin-bottom: 0;
+        }
+
+        .content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 60%;
+            height: 97vh;
+            padding: 20px;
+            padding-bottom: 0px;
+            overflow: scroll;
+        }
+
+        .content-body {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            margin-top: 10%;
+            padding: 5px;
+        }
+
+        .javascript-window {
+            font-size: .7em;
+            width: 40%;
+            overflow: scroll;
+            height: 100vh;
+            background-color: var(--background-dark);
+            user-select: text !important;
+        }
+
+        .javascript-window ::selection {
+            background: var(--dark-red) !important;
+            color: var(--white) !important;
+        }
+
+        .javascript-window ::-moz-selection {
+            background: var(--dark-red) !important;
+            color: var(--white) !important;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.4);
+        }
+
+        .modal-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 15% auto;
+            padding: 20px;
+            width: fit-content;
+            text-align: center;
+            background-color: var(--light-blue);
+            border-radius: 8px;
+            border: 2px solid var(--light-grey);
+        }
+
+        .modal-buttons {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .modal button {
+            margin: 5px;
+        }
+
+        .submit-button {
+            background-color: var(--dark-red);
+            box-sizing: border-box;
+            border-radius: 50px;
+            color: var(--white);
+            cursor: pointer;
+            font-family: var(--font);
+            font-size: 1rem;
+            font-weight: 100;
+            padding: .5rem 1rem;
+            border: 0;
+            touch-action: manipulation;
+            white-space: nowrap;
+            width: 60%;
+        }
+
+        .input-field {
+            width: 90%;
+            padding: 10px;
+            font-size: 1.2rem;
+            border: 2px solid var(--blue);
+            border-radius: 50px;
+            margin-bottom: 20px;
+            outline: none;
+        }
+
+        .input-field#metadata_input_value,
+        .input-field#metadata_input_key {
+            width: 33.2%;
+        }
+
+        .input-field:focus {
+            border-color: var(--dark-blue);
+            color: var(--dark-grey);
+        }
+
+        .input-field::placeholder {
+            color: var(--light-blue);
+            opacity: 50%;
+        }
+
+        .surfly-logo {
+            width: 10%;
+        }
+
+        h2 {
+            color: var(--darkest-grey);
+            font-size: 2em;
+        }
+
+        li {
+            color: var(--dark-grey);
+            font-size: 1.5em;
+        }
+
+        p {
+            color: var(--white);
+            font-size: 1.2em;
+        }
+
+        .button-description {
+            color: var(--lightest-gray);
+            font-size: .8em;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        button {
+            background-color: var(--dark-red);
+            box-sizing: border-box;
+            border-radius: 50px;
+            color: var(--lightest-gray);
+            cursor: pointer;
+            font-family: var(--font);
+            font-size: 1em;
+            font-weight: 100;
+            padding: .3rem .8rem;
+            border: 0;
+            touch-action: manipulation;
+            white-space: nowrap;
+            height: auto;
+            margin-right: 2px;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            padding-left: 20px;
+            padding-right: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        img.selected {
+            outline: 4px solid var(--dark-grey);
+            box-sizing: border-box;
+            border-radius: 50%;
+            /* Ensure the border is circular */
+        }
+
+        .category-content {
+            display: none;
+        }
+
+        .category-description {
+            color: var(--dark-grey);
+            font-size: .9em;
+            padding: 0;
+            margin: 5px;
+            margin-left: 0;
+        }
+
+        .category-description#metadata-description,
+        .category-description#tags-description {
+            margin-bottom: 0;
+            margin-top: 10px;
+        }
+
+        .category-description#full-screen-label,
+        .category-description#preview-screen-label {
+            margin: 0px;
+            margin-bottom: 3px;
+            color: var(--grey);
+            font-size: .8em;
+        }
+
+        #additional-tab-preview-query-paramaters {
+            margin-top: 10px;
+            font-size: .8em;
+            max-width: 90%;
+            width: max-content;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            word-break: break-all;
+            white-space: normal;
+        }
+
+        .roles {
+            width: 20%;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            margin-right: 20px;
+        }
+
+        .settings {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            margin-right: 20px;
+        }
+
+        .settings .category,
+        .roles .category {
+            background-color: var(--white);
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .roles h2 {
+            margin-top: 0;
+            margin-bottom: 0;
+            font-size: 1em;
+            font-weight: normal;
+            color: var(--dark-red);
+        }
+
+        .category .category-items {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 10px;
+        }
+
+        .feature-toggles {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-gap: 20px 0px;
+            margin-bottom: 40px;
+        }
+
+        .video-view {
+            display: flex;
+            flex-direction: row;
+            margin-top: 20px;
+        }
+
+        .drop-down {
+            background-color: var(--dark-red);
+            border-radius: 20px;
+            color: var(--lightest-gray);
+            cursor: pointer;
+            font-family: var(--font);
+            font-size: 1em;
+            padding: .1rem .5rem;
+            border: 0;
+            touch-action: manipulation;
+            text-align: center;
+            margin-top: 0px;
+            width: 100px;
+        }
+
+        .view-select {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-right: 30px;
+        }
+
+        .settings-toggle,
+        .single-toggle {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .single-toggle#queue-toggle {
+            width: max-content;
+        }
+
+        .settings-toggle h2,
+        .single-toggle h2 {
+            font-size: .8em;
+            font-weight: lighter;
+            font-family: 'Courier New', Courier, monospace;
+            margin-bottom: 0;
+            text-transform: lowercase;
+            margin-top: 8px;
+            color: var(--dark-grey);
+        }
+
+
+        /* Toggle Switch */
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 40px;
+            height: 24px;
+            margin-bottom: 4px;
+            margin-top: 8px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--lightest-gray);
+            border: 1px solid var(--light-grey);
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 12px;
+            width: 12px;
+            left: 4px;
+            bottom: 4px;
+            background-color: var(--dark-blue);
+            transition: .4s;
+            border-radius: 50%;
+            border: 1px solid var(--dark-blue);
+        }
+
+        input:checked+.slider {
+            background-color: var(--grey);
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(16px);
+        }
+
+
+        .your-settings {
+            font-size: .7em;
+            width: 35%;
+            background-color: var(--dark-grey);
+            color: var(--text-color);
+            padding: 1px;
+            border-radius: 10px;
+            overflow: auto;
+            height: fit-content;
+        }
+
+        .section-heading {
+            font-style: normal;
+            font-size: 1.2em;
+            color: var(--darkest-grey);
+            text-align: left;
+            margin-bottom: 2px;
+            margin-top: 1px;
+        }
+
+        .input-preview {
+            max-width: 90%;
+            width: max-content;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            word-break: break-all;
+            white-space: normal;
+            display: flex;
+            font-size: .8em;
+            font-family: 'Courier New', Courier, monospace;
+            margin-bottom: 0;
+            text-transform: lowercase;
+            background-color: var(--lightest-gray);
+            color: var(--dark-grey);
+            border-radius: 10px;
+            padding: 5px;
+        }
+
+        .hide-input-preview {
+            opacity: 0;
+        }
+
+        .button-container {
+            width: 100%;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            margin-top: 2px;
+            margin-bottom: 40px;
+        }
+
+        .or {
+            display: inline-block;
+            padding: 5px 10px;
+            margin: 0 10px;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .start-session {
+            background-color: var(--dark-red);
+            box-sizing: border-box;
+            border-radius: 50px;
+            color: var(--white);
+            cursor: pointer;
+            font-family: var(--font);
+            font-size: 1.2rem;
+            font-weight: 200;
+            padding: .5rem .8rem;
+            border: 0;
+            touch-action: manipulation;
+            margin-left: 1px;
+            white-space: nowrap;
+        }
+
+        .input-selector-div {
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .input-string-div {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: baseline;
+        }
+
+        .input-string-div input {
+            background-color: var(--white);
+            border: 1px solid var(--light-grey);
+            border-radius: 12px;
+            color: var(--dark-grey);
+            font-size: 1em;
+            font-weight: 300;
+            padding: .5em 1em;
+            text-align: center;
+            margin-right: .2vw;
+            margin-top: 1vh;
+            width: 70%;
+        }
+
+        .input-field {
+            outline: none;
+        }
+
+        .input-field:focus {
+            background-color: var(--white);
+            border: 1px solid var(--dark-red);
+        }
+
+        .category-content {
+            display: none;
+            overflow: scroll;
+        }
+
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            color: var(--darkest-grey);
+            padding: 5px;
+        }
+
+        .checkbox-option input[type="checkbox"] {
+            margin-right: 8px;
+            display: none;
+        }
+
+        .custom-checkbox {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: var(--lightest-grey);
+            border: 2px solid var(--light-grey);
+            margin-right: 8px;
+            cursor: pointer;
+        }
+
+        .checkbox-option input[type="checkbox"]:checked+.custom-checkbox {
+            background-color: var(--dark-red);
+            border: 2px solid var(--lightest-gray);
+        }
+
+        .toggle-button {
+            background-color: var(--white);
+            color: var(--dark-red);
+            border: none;
+            padding: 0px;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-bottom: 1px;
+        }
+    </style>
+
+    <script id="myScript">
+
+        var SurflySession;
+        var manual_input;
+        var settings = {
+            admission_enabled: false,
+            alternative_proxy_enabled: false,
+            anonymous_users_can_share_camera: false,
+            anyone_can_deactivate_space: false,
+            block_until_agent_joins: false,
+            chat_enabled: false,
+            cookie_transfer_enabled: false,
+            default_invitations_enabled: false,
+            document_editor_enabled: false,
+            download_trigger_enabled: false,
+            enable_cookie_backtransfer: false,
+            end_redirect_enabled: false,
+            filesharing_enabled: false,
+            format_session_id: false,
+            headless: false,
+            hide_cursors: false,
+            hide_session_ui: false,
+            host_switching_allowed: false,
+            invitations_allowed: false,
+            multileader: false,
+            native_selects: false,
+            new_urls_allowed: false,
+            non_hosts_can_open_tabs: false,
+            notifications_enabled: false,
+            original_file_download_allowed: false,
+            p2p_videochat_enabled: false,
+            participants_can_request_to_interact: false,
+            pause_enabled: false,
+            private_session: false,
+            screensharing_enabled: false,
+            session_autorestore_enabled: false,
+            session_start_confirmation: false,
+            sounds_enabled: false,
+            start_muted: false,
+            start_with_chat_open: false,
+            start_with_fullscreen_videochat: false,
+            start_with_invite_modal: false,
+            start_with_loading_screen: false,
+            start_with_videochat_on: false,
+            url_mangling: false,
+            videochat_enabled: false,
+            videochat_prompt: false,
+            default_videochat_fullscreen_mode: "Grid",
+            default_videochat_mode: "Floating",
+        };
+    </script>
+
+    <script>
+        function toggleCategory(button) {
+            var content = button.nextElementSibling;
+            if (content.style.display === 'none') {
+                content.style.display = 'block';
+                button.textContent = 'Hide';
+            } else {
+                content.style.display = 'none';
+                button.textContent = 'Expand';
+            }
+        }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.settings-toggle input').forEach(input => {
+                input.addEventListener('change', (event) => {
+                    const id = event.target.parentElement.id; // Get the id from the parent element
+                    const isChecked = event.target.checked; // Get the state of the checkbox
+
+                    // Update the settings object with the new value
+                    settings[id] = isChecked;
+
+                    console.log(`Setting ${id} is ${isChecked ? 'enabled' : 'disabled'}`);
+                    // Optionally update the setting on the server or in local storage
+                });
+            });
+        });
+    </script>
+
+    <script>
+        // Function to load Prism scripts
+        function loadScripts() {
+            const prismScript1 = document.createElement('script');
+            prismScript1.src = "https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js";
+            prismScript1.onload = function () {
+                const prismScript2 = document.createElement('script');
+                prismScript2.src = "https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js";
+                document.body.appendChild(prismScript2);
+            };
+            document.body.appendChild(prismScript1);
+        }
+
+        // Function to update code-preview
+        function updateCodePreview() {
+            const scriptContent = document.getElementById("myScript").textContent;
+            document.getElementById("code-preview").innerHTML = scriptContent;
+            // Trigger Prism to highlight the code
+            if (window.Prism) {
+                Prism.highlightAll();
+            }
+        }
+
+        // Initialize script loading and content update
+        document.addEventListener("DOMContentLoaded", function () {
+            // Initial update
+            updateCodePreview();
+            loadScripts();
+
+            // Create a MutationObserver to watch for changes in myScript element
+            const observer = new MutationObserver(updateCodePreview);
+            const myScriptElement = document.getElementById("myScript");
+
+            // Start observing the myScript element for changes in its content
+            if (myScriptElement) {
+                observer.observe(myScriptElement, {
+                    childList: true,
+                    subtree: true,
+                    characterData: true
+                });
+            }
+        });
+    </script>
+    <script>
+        // Initialize the selectedRegions array and startUrl variable
+        var scriptElement;
+        var selectedRegions = [];
+        var manualInput = '';
+        var sessionMetadata = null;
+        var startUrl = '';
+        var widgetKey = '';
+        var maskingString = '';
+        var tagsArray = '';
+        var metadataObject = {};
+        var AdditionalUrls;
+        var AdditionalUrlQueryParams = '';
+        var AdditionalUrlNewTabs;
+        var skipQueue = false;
+        var startLeaderOnCreated = '';
+        var startLeaderwithAdditionalTabs = '';
+        var controlAndHostToAgent = '';
+        var instantScreenShare = '';
+        var startFullScreenVideo = '';
+        var endIfNoAgent = '';
+        var participantJoinedVar = ''
+        var updateParticipantJoinedVar = ''
+        var endIfNoActivity10Mins = '';
+        var formattedMetadataJSON;
+        var indentedFormattedMetadataJSON;
+        var indentedTagsArray;
+
+        function updateEventVariables(eventName, isChecked) {
+            switch (eventName) {
+                case 'controlAndHostToAgent':
+                    controlAndHostToAgent = isChecked ? 'if (event.clientIndex !== 0) {' + '\n\t\t\t\t\t' + 'SurflySession.makeHost(1);' + '\n\t\t\t\t\t' + 'SurflySession.transferTabControl(1);}' + '\n\t\t\t\t' + 'else {' + '\n\t\t\t\t\t' + 'console.log(event.clientIndex + \" joined the session - host not changed\");' + '\n\t\t\t\t' + '};' : '';
+                    console.log(controlAndHostToAgent);
+                    break;
+                case 'instantScreenShare':
+                    instantScreenShare = isChecked ? 'SurflySession.startScreenShare();' : '';
+                    break;
+                case 'startFullScreenVideo':
+                    startFullScreenVideo = isChecked ? 'SurflySession.toggleVideochatFullscreen();' : '';
+                    break;
+                case 'endIfNoAgent':
+                    endIfNoAgent = isChecked ? '(async () => {' + '\n\t\t\t\t\t' + 'await new Promise(resolve => setTimeout(resolve, 120000));' + '\n\t\t\t\t\t' + 'if (ParticipantJoined === true) {' + '\n\t\t\t\t\t\t' + 'console.log(\'Participant has joined.\');' + '\n\t\t\t\t\t' + '} else {' + '\n\t\t\t\t\t\t' + 'SurflySession.end();' + '\n\t\t\t\t\t' + '}' + '\n\t\t\t\t' + '})();' : '';
+                    participantJoinedVar = isChecked ? '\n\t' + 'var ParticipantJoined = false;' : '';
+                    updateParticipantJoinedVar = isChecked ? '\n\t\t\t\t' + 'ParticipantJoined = true;' : '';
+                    break;
+                case 'endIfNoActivity10Mins':
+                    endIfNoActivity10Mins = isChecked ? '\n\t\t\t' + '.on("user_activity", function (session, event) {' + '\n\t\t\t\t\t' + 'if (session.inactivityTimeout) {' + '\n\t\t\t\t\t\t' + 'clearTimeout(session.inactivityTimeout);' + '\n\t\t\t\t\t' + '}' + '\n\t\t\t\t\t' + 'session.inactivityTimeout = setTimeout(function () {' + '\n\t\t\t\t\t\t' + 'console.log("Session ended due to inactivity");' + '\n\t\t\t\t\t\t' + 'SurflySession.end();' + '\n\t\t\t\t\t\t' + '}, 600000);' + '\n\t\t\t' + '})' : '';
+                    break;
+                default:
+                    console.log('Unknown toggle name');
+            }
+            updateScriptElement();
+        }
+
+        // Function to update the settings element in the script tag and flash the updated line
+        function updateScriptElement() {
+            scriptElement = document.getElementById("myScript");
+            const settingsString = JSON.stringify(settings, null, 4);
+            const maskingPreivew = document.getElementById("masking-preview");
+            const additionalTabsPreivew = document.getElementById("additional-tab-preview");
+            const additionalTabPreviewQueryParamaters = document.getElementById("additional-tab-preview-query-paramaters");
+            const tagsPreview = document.getElementById("tags-preview");
+            const metadataPreview = document.getElementById("metadata-preview");
+            const settingsContent = settingsString.slice(1, settingsString.length - 2) + ",";
+            const formattedRegions = '\n\t' + `"selected_regions": [${selectedRegions.map(region => `\n        "${region}"`).join(',')}\n        ]`;
+
+            //update masking preview
+            if (maskingString) {
+                maskingPreivew.textContent = maskingString;
+                maskingPreivew.classList.remove('hide-input-preview');
+            } else {
+                maskingPreivew.classList.add('hide-input-preview');
+            }
+            //update additional tab previews
+            if (AdditionalUrls) {
+                additionalTabsPreivew.textContent = AdditionalUrls;
+                additionalTabPreviewQueryParamaters.innerHTML = "Open tabs for someone else by adding the following to their join link: " + "<b>" + AdditionalUrlQueryParams + "</b>";
+                additionalTabsPreivew.classList.remove('hide-input-preview');
+                additionalTabPreviewQueryParamaters.classList.remove('hide-input-preview');
+            } else {
+                additionalTabsPreivew.classList.add('hide-input-preview');
+                additionalTabPreviewQueryParamaters.classList.add('hide-input-preview');
+            }
+            //update tags preview
+            if (tagsArray.length > 0) {
+                tagsPreview.classList.remove('hide-input-preview');
+                tagsPreview.innerHTML = JSON.stringify(tagsArray, null, 2);
+            } else {
+                tagsPreview.classList.add('hide-input-preview');
+                tagsPreview.innerHTML = '';
+                tagsArray = [];
+            }
+            //update metadata preview
+            if (formattedMetadataJSON) {
+                metadataPreview.classList.remove('hide-input-preview');
+                metadataPreview.innerHTML = "<pre>" + formattedMetadataJSON + "</pre>";
+            } else {
+                metadataPreview.innerHTML = '';
+                metadataPreview.classList.add('hide-input-preview');
+            }
+            //update the page code snippet
+            scriptElement.textContent = `
+
+    (function (s, u, r, f, l, y) {
+    s[f] = s[f] || { init: function () { s[f].q = arguments } };
+    l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+    l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+    }) (window, document, 'script', 'Surfly');
+
+    var SurflySession;${participantJoinedVar}
+    var settings = {
+    "widget_key": "${widgetKey}",
+    "url": "${startUrl}",
+    "skip_queue":${skipQueue},${formattedRegions},${settingsContent}
+    "hide_element_by_selector": "${maskingString}",
+    "tags": ${indentedTagsArray ? `${indentedTagsArray}` : "[]"}
+    };
+
+    Surfly.init(settings, function (init) {
+        if (init.success && !Surfly.isInsideSession) {
+            console.log("init success");
+            SurflySession = Surfly.session().create()
+            .on("session_created", function (session, event) {
+                SurflySession.startLeader(${indentedFormattedMetadataJSON ? "null," + `\n${indentedFormattedMetadataJSON}` : ''});
+            })
+            .on("session_started", function (session, event) {
+                console.log("Session has started");${endIfNoAgent ? `\n\t\t\t\t${endIfNoAgent}` : ''}${AdditionalUrlNewTabs ? `\n\t\t\t\t${AdditionalUrlNewTabs}` : ''}${instantScreenShare ? `\n\t\t\t\t${instantScreenShare}` : ''} 
+            })
+            .on("session_queued", function (session, event) {
+                console.log("Session is in the queue with pin ", session.pin);
+            })${endIfNoActivity10Mins}
+            .on('participant_joined', function (session, event) {
+                console.log('Participant ', event.clientIndex, 'joined the session');${startFullScreenVideo ? `\n\t\t\t\t${startFullScreenVideo}` : ''}${controlAndHostToAgent ? `\n\t\t\t\t${controlAndHostToAgent}` : ''}${updateParticipantJoinedVar}
+            })
+            .on("session_ended", function (session, event) {
+                console.log("Session has ended");
+                //trigger post session actions here
+            });
+        }
+    });
+`;
+        }
+
+        function toggleVideoView(selectElement) {
+            const selectedValue = selectElement.value;
+            const id = selectElement.id;
+            settings[id] = selectedValue;
+            console.log(`Selected video view mode for ${id}:`, selectedValue);
+            updateScriptElement(); // Update the script element when the video view mode changes
+        }
+
+        // Function to toggle selection and update selectedRegions array
+        function toggleSelect(img) {
+            img.classList.toggle('selected');
+            const id = img.id;
+            if (img.classList.contains('selected')) {
+                if (!selectedRegions.includes(id)) {
+                    selectedRegions.push(id);
+                }
+            } else {
+                const index = selectedRegions.indexOf(id);
+                if (index > -1) {
+                    selectedRegions.splice(index, 1);
+                }
+            }
+            updateScriptElement(); // Update the script element when selection changes
+        }
+
+        function addWidgetKeyToCode() {
+            const widgetKeyInput = document.getElementById('widget_key_input').value.trim();
+            widgetKey = widgetKeyInput;
+            updateScriptElement(); // Update the script element when the URL changes
+
+        }
+
+        // Function to reset the URL and update the script element
+        function resetWidgetKey() {
+            widgetKey = '';
+            updateScriptElement(); // Update the script element when the URL is reset
+        }
+
+        // Function to fetch the URL from the input field and update startUrl
+        function addUrlToCode() {
+            const urlInput = document.getElementById('session_url_input').value.trim();
+
+            // Regular expression to check if the URL starts with 'www.' and contains a domain like '.com', '.net', etc.
+            const urlPattern = /^(https?:\/\/)?(www\.)[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/;
+
+            if (urlPattern.test(urlInput)) {
+                try {
+                    const url = new URL(urlInput.includes('://') ? urlInput : `https://${urlInput}`);
+                    startUrl = url.href;
+                    updateScriptElement(); // Update the script element when the URL changes
+                } catch (e) {
+                    alert('Please enter a valid URL');
+                }
+            } else {
+                alert('Please enter a valid URL that starts with "www" and includes a valid domain.');
+            }
+        }
+
+        // Function to reset the URL and update the script element
+        function resetUrl() {
+            startUrl = '';
+            updateScriptElement(); // Update the script element when the URL is reset
+        }
+
+        //function to build the masking string
+        function addToSelectors() {
+            const inputElement = document.getElementById('masking_input');
+            const inputValue = inputElement.value.trim();
+
+            if (inputValue) {
+                if (maskingString) {
+                    maskingString += ',' + inputValue;
+                } else {
+                    maskingString = inputValue;
+                }
+                console.log('Updated maskingString:', maskingString);
+            }
+
+            inputElement.value = '';
+            updateScriptElement(); // Update the script element to reflect changes
+        }
+
+        function clearMaskingString() {
+            maskingString = '';
+            console.log('Masking string cleared:', maskingString);
+            updateScriptElement();
+        }
+
+
+        //function to build the additional tab string
+        function addToAdditionalTabs() {
+            const urlPattern = /^(https?:\/\/)?(www\.)[a-zA-Z0-9-]+\.[a-zA-Z]{2,}$/;
+            const inputUrlString = document.getElementById('additional_tab_input');
+            const inputUrlValue = inputUrlString.value.trim();
+            if (urlPattern.test(inputUrlValue)) {
+                if (inputUrlValue) {
+                    if (AdditionalUrls) {
+                        AdditionalUrls += ', ' + inputUrlValue;
+                        AdditionalUrlNewTabs = AdditionalUrlNewTabs + '\n\t\t\t\t\t\t' + 'SurflySession.openTab("' + 'https://' + inputUrlValue + '");';
+                        AdditionalUrlQueryParams += '&url=' + inputUrlValue;
+                    } else {
+                        AdditionalUrls = inputUrlValue;
+                        AdditionalUrlNewTabs = 'SurflySession.openTab("' + 'https://' + inputUrlValue + '");';
+                        AdditionalUrlQueryParams = '?url=' + inputUrlValue;
+                    }
+                    console.log('Updated masking String:', AdditionalUrlQueryParams);
+                }
+                inputUrlString.value = '';
+                updateScriptElement();
+            } else {
+                alert('Please enter a valid URL that starts with "www" and includes a valid domain.');
+            }
+        }
+
+
+        function clearAdditionalTabs() {
+            AdditionalUrls = '';
+            AdditionalUrlNewTabs = '';
+            AdditionalUrlQueryParams = '';
+            console.log('AdditionalUrlQueryParams string cleared:', AdditionalUrlQueryParams);
+            updateScriptElement();
+        }
+
+        //function to build the tags string
+        function addToTags() {
+            const inputTag = document.getElementById('tags_input').value.trim();
+            if (inputTag) {
+                if (!tagsArray) {
+                    tagsArray = [];
+                }
+                tagsArray.push(inputTag);
+                indentedTagsArray = "[\n" +
+                    tagsArray.map((tag, index) => {
+                        const comma = index < tagsArray.length - 1 ? ',' : '';
+                        return `\t\t"${tag}"${comma}`;
+                    }).join('\n') +
+                    "\n\t\t]";
+
+                document.getElementById('tags_input').value = '';
+                updateScriptElement();
+            }
+        }
+
+        function clearTags() {
+            tagsArray = '';
+            indentedTagsArray = '';
+            console.log('tagsArray cleared:', tagsArray);
+            updateScriptElement();
+        }
+
+        //function to build the metadata string
+        function addToMetadata() {
+            const inputMetadataKey = document.getElementById('metadata_input_key').value.trim();
+            const inputMetadataValue = document.getElementById('metadata_input_value').value.trim();
+
+            if (inputMetadataKey && inputMetadataValue) {
+                // Add or update the key-value pair in the object
+                metadataObject[inputMetadataKey] = inputMetadataValue;
+                formattedMetadataJSON = JSON.stringify(metadataObject, null, 2);
+                formattedMetadataJSON = formattedMetadataJSON.replace(/},\s*{/g, '},\n{');
+                indentedFormattedMetadataJSON = formattedMetadataJSON.split('\n').map(line => `\t\t\t\t\t\t${line}`).join('\n');
+
+                indentedFormattedMetadataJSON.isChecked;
+                console.log('Updated Metadata object:', metadataObject);
+            }
+
+            // Clear the input fields
+            document.getElementById('metadata_input_key').value = '';
+            document.getElementById('metadata_input_value').value = '';
+            updateScriptElement();
+        }
+
+        function clearMetadata() {
+            metadataObject = {};
+            formattedMetadataJSON = '';
+            indentedFormattedMetadataJSON = '';
+            indentedFormattedMetadataJSON.isChecked = false;
+            console.log('Metadata object cleared:', metadataObject);
+            updateScriptElement();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Event listener for settings toggles
+            document.querySelectorAll('.settings-toggle input').forEach(input => {
+                input.addEventListener('change', (event) => {
+                    const id = event.target.parentElement.id; // Get the id from the parent element
+                    const isChecked = event.target.checked; // Get the state of the checkbox
+
+                    // Update the settings object with the new value
+                    settings[id] = isChecked;
+
+                    console.log(`Setting ${id} is ${isChecked ? 'enabled' : 'disabled'}`);
+                    updateScriptElement(); // Update the script element when settings change
+                });
+            });
+
+            // Event listener for the "Add to code" button for widget key
+            document.getElementById('add-widget-key-button').addEventListener('click', addWidgetKeyToCode);
+            // Event listener for the "Reset" button
+            document.getElementById('reset-widget-key-button').addEventListener('click', resetWidgetKey);
+
+            // Event listener for the "Add to code" button for url
+            document.getElementById('add-url-button').addEventListener('click', addUrlToCode);
+            // Event listener for the "Reset" button
+            document.getElementById('reset-url-button').addEventListener('click', resetUrl);
+
+            // Event listener for the "Add to selectors" button
+            document.getElementById('add_masking_selector_button').addEventListener('click', addToSelectors);
+            // Event listener for the "Reset" button
+            document.getElementById('clear_masking_selectors').addEventListener('click', clearMaskingString);
+
+            // Event listener for the "Add to selectors" button
+            document.getElementById('add_additional_tabs_button').addEventListener('click', addToAdditionalTabs);
+            // Event listener for the "Reset" button
+            document.getElementById('clear_additional_tabs_button').addEventListener('click', clearAdditionalTabs);
+
+            // Event listener for adding tags button
+            document.getElementById('add_tags_button').addEventListener('click', addToTags);
+            // Event listener for the "Reset" button
+            document.getElementById('clear_tags_button').addEventListener('click', clearTags);
+
+            // Event listener for adding metadata button
+            document.getElementById('add_metadata_button').addEventListener('click', addToMetadata);
+            // Event listener for the "Reset" button
+            document.getElementById('clear_metadata_button').addEventListener('click', clearMetadata);
+
+            //skip queue toggle
+            document.getElementById('skip_queue').addEventListener('change', function () {
+                if (this.checked) {
+                    skipQueue = true;
+                } else {
+                    skipQueue = false;
+                }
+                updateScriptElement();
+            });
+
+            //Event listners for event adding section
+            document.getElementById('start-screenshare').addEventListener('change', function () {
+                updateEventVariables('instantScreenShare', this.checked);
+            });
+
+            document.getElementById('host-and-control-transfer').addEventListener('change', function () {
+                updateEventVariables('controlAndHostToAgent', this.checked);
+            });
+
+            document.getElementById('full-screen-video-on-start').addEventListener('change', function () {
+                updateEventVariables('startFullScreenVideo', this.checked);
+            });
+
+            document.getElementById('end-if-no-agent').addEventListener('change', function () {
+                updateEventVariables('endIfNoAgent', this.checked);
+            });
+
+            document.getElementById('end-if-no-activity').addEventListener('change', function () {
+                updateEventVariables('endIfNoActivity10Mins', this.checked);
+            });
+
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initial update of the script element
+            updateScriptElement();
+        });
+    </script>
+    <script id="realSurflyScript">
+        function startSessionHere() {
+            const surflySnippet = scriptElement.textContent;
+            const startSurfly = new Function(surflySnippet);
+            startSurfly();
+        }
+        function copyCode() {
+const surflySnippet = scriptElement.textContent;
+navigator.clipboard.writeText(surflySnippet).then(() => alert('The Surfly code snippet has been copied to the clipboard.'));
+
+
+
+        }
+    </script>
+
+
+
+</head>
+
+<body>
+    <div class="content">
+        <div class="settings">
+
+            <div class="category">
+                <h2 class="section-heading">Add your widget key</h2>
+                <button class="toggle-button" onclick="toggleCategory(this)">Expand</button>
+                <div class="category-content" style="display: none;">
+                    <p class="category-description">The <a
+                            href="https://docs.surfly.com/tutorials/advanced-integration/#restrict-session-creation"
+                            target="_blank">widget key</a> is different to the API key - <a
+                            href="mailto:sales@surfly.com">contact us</a> if you don't have one</p>
+                    <div class="input-string-div">
+                        <input type="text" placeholder="Enter your Widget Key" class="input-field" id="widget_key_input"
+                            value="">
+                        <button id="add-widget-key-button">Add to code</button>
+                        <button id="reset-widget-key-button">Reset</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category">
+                <h2 class="section-heading">Session queue</h2>
+                <button class="toggle-button" onclick="toggleCategory(this)">Expand</button>
+                <div class="category-content" style="display: none;">
+                    <p class="category-description">Should the session appear in the <a
+                            href="https://app.surfly.com/incoming_queue/" target="_blank">incoming queue</a>?</p>
+                    <div class="single-toggle" id="queue-toggle">
+                        <label class="switch">
+                            <input type="checkbox" id="skip_queue">
+                            <span class="slider"></span>
+                        </label>
+                        <h2>skip_queue</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category">
+                <h2 class="section-heading">Starting website/webapp</h2>
+                <button class="toggle-button" onclick="toggleCategory(this)">Expand</button>
+                <div class="category-content" style="display: none;">
+                    <p class="category-description">This will be the first tab in your session</p>
+                    <div class="input-string-div">
+                        <input type="text" placeholder="e.g. www.wikipedia.com" class="input-field"
+                            id="session_url_input" value="">
+                        <button id="add-url-button">Add to code</button>
+                        <button id="reset-url-button">Reset</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category">
+                <h2 class="section-heading">Select server region(s)</h2>
+                <button class="toggle-button" onclick="toggleCategory(this)">Expand</button>
+                <div class="category-content" style="display: none;">
+                    <p class="category-description">Pin traffic to a single <a
+                            href="https://help.surfly.com/en/what-are-the-surfly-ip-addresses" target="_blank">server
+                            region</a> or select multiple</p>
+                    <div class="category-items">
+                        <img src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/resources-common/icons/usa-icon.png"
+                            alt="USA" id="us-west" onclick="toggleSelect(this)">
+                        <img src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/resources-common/icons/canada-icon.png"
+                            alt="CA" id="ca-east" onclick="toggleSelect(this)">
+                        <img src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/resources-common/icons/germany-icon.png"
+                            alt="DE" id="eu-de" onclick="toggleSelect(this)">
+                        <img src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/resources-common/icons/nl-icon.png"
+                            alt="NL" id="eu-nl" onclick="toggleSelect(this)">
+                        <img src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/resources-common/icons/uk-icon.png"
+                            alt="UK" id="eu-uk" onclick="toggleSelect(this)">
+                        <img src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/resources-common/icons/singapore-icon.png"
+                            alt="SIN" id="asia" onclick="toggleSelect(this)">
+                        <img src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/resources-common/icons/india-icon.png"
+                            alt="IN" id="india" onclick="toggleSelect(this)">
+                        <img src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/main/resources-common/icons/aus-icon.png"
+                            alt="AUS" id="au" onclick="toggleSelect(this)">
+                    </div>
+                </div>
+            </div>
+
+            <div class="category">
+                <h2 class="section-heading">Configure the session </h2>
+                <button class="toggle-button" onclick="toggleCategory(this)">Expand</button>
+                <div class="category-content" style="display: none;">
+                    <p class="category-description">Overview of all <a href="https://docs.surfly.com/session-options"
+                            target="_blank">session options</a> and what they do</p>
+                    <div class="feature-toggles">
+                        <div class="settings-toggle">
+                            <label class="switch" id="admission_enabled">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>admission_enabled</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="alternative_proxy_enabled">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>alternative_proxy_enabled</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="anonymous_users_can_share_camera">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>anonymous_users_can_share_camera</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="anyone_can_deactivate_space">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>anyone_can_deactivate_space</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="block_until_agent_joins">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>block_until_agent_joins</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="chat_enabled">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>chat_enabled</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="cookie_transfer_enabled">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>cookie_transfer_enabled</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="default_invitations_enabled">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>default_invitations_enabled</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="document_editor_enabled">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>document_editor_enabled</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="download_trigger_enabled">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>download_trigger_enabled</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="enable_cookie_backtransfer">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>enable_cookie_backtransfer</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="end_redirect_enabled">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>end_redirect_enabled</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="filesharing_enabled">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>filesharing_enabled</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="format_session_id">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>format_session_id</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="headless">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>headless</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="hide_cursors">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>hide_cursors</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="hide_session_ui">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>hide_session_ui</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="host_switching_allowed">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>host_switching_allowed</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="invitations_allowed">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>invitations_allowed</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="multileader">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>multileader</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="native_selects">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>native_selects</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="new_urls_allowed">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>new_urls_allowed</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="non_hosts_can_open_tabs">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>non_hosts_can_open_tabs</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="notifications_enabled">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>notifications_enabled</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="original_file_download_allowed">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>original_file_download_allowed</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="p2p_videochat_enabled">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>p2p_videochat_enabled</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="participants_can_request_to_interact">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>participants_can_request_to_interact</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="pause_enabled">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>pause_enabled</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="private_session">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>private_session</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="screensharing_enabled">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>screensharing_enabled</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="session_autorestore_enabled">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>session_autorestore_enabled</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="session_start_confirmation">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>session_start_confirmation</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="sounds_enabled">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>sounds_enabled</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="start_muted">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>start_muted</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="start_with_chat_open">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>start_with_chat_open</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="start_with_fullscreen_videochat">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>start_with_fullscreen_videochat</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="start_with_invite_modal">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>start_with_invite_modal</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="start_with_loading_screen">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>start_with_loading_screen</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="start_with_videochat_on">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>start_with_videochat_on</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="url_mangling">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>url_mangling</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="videochat_enabled">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>videochat_enabled</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="videochat_prompt">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>videochat_prompt</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="category">
+                <h2 class="section-heading">Configure the video view</h2>
+                <button class="toggle-button" onclick="toggleCategory(this)">Expand</button>
+                <div class="category-content" style="display: none;">
+                    <p class="category-description">Select your <a
+                            href="https://help.surfly.com/en/video-chat#VideochatandTextchat-Audioandvideosettings"
+                            target="_blank">display preferences</a></p>
+                    <div class="video-view">
+                        <div class="view-select">
+                            <p class="category-description" id="full-screen-label">default_videochat_fullscreen_mode</a>
+                            </p>
+                            <select class="drop-down" id="default_videochat_fullscreen_mode"
+                                onchange="toggleVideoView(this)">
+                                <option value="Grid">Grid</option>
+                                <option value="Spotlight">Spotlight</option>
+                            </select>
+                        </div>
+                        <div class="view-select">
+                            <p class="category-description" id="preview-screen-label">default_videochat_mode</a></p>
+                            <select class="drop-down" id="default_videochat_mode" onchange="toggleVideoView(this)">
+                                <option value="Floating">Floating</option>
+                                <option value="Sidebar">Sidebar</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="category">
+                <h2 class="section-heading">Add element masking</h2>
+                <button class="toggle-button" onclick="toggleCategory(this)">Expand</button>
+                <div class="category-content" style="display: none;">
+                    <p class="category-description">Element Masking <a
+                            href="https://www.youtube.com/watch?v=4oDZKSgJM_g" target="_blank">tutorial</a></p>
+                    <div class="input-string-div">
+                        <input type="text" placeholder="Enter the CSS selector of the element you want to mask"
+                            class="input-field" id="masking_input">
+                        <button id="add_masking_selector_button">Add to Selectors</button>
+                        <button id="clear_masking_selectors">Clear</button>
+                    </div>
+                    <span id="masking-preview" class="input-preview"></span>
+                </div>
+            </div>
+
+            <div class="category">
+                <h2 class="section-heading">Add additional tabs</h2>
+                <button class="toggle-button" onclick="toggleCategory(this)">Expand</button>
+                <div class="category-content" style="display: none;">
+                    <p class="category-description">Additional tabs will open automatically once the session begins</a>
+                    </p>
+                    <div class="input-string-div">
+                        <input type="text" placeholder="e.g. www.google.com,www.bing.com" class="input-field"
+                            id="additional_tab_input">
+                        <button id="add_additional_tabs_button">Add to code</button>
+                        <button id="clear_additional_tabs_button">Reset</button>
+                    </div>
+                    <span id="additional-tab-preview" class="input-preview"></span>
+                    <p id="additional-tab-preview-query-paramaters" class="category-description"></p>
+                </div>
+            </div>
+
+
+            <div class="category">
+                <h2 class="section-heading">Add your own data</h2>
+                <button class="toggle-button" onclick="toggleCategory(this)">Expand</button>
+                <div class="category-content" style="display: none;">
+                    <p class="category-description" id="tags-description">Tags will appear in the session record and in
+                        <a href="https://docs.surfly.com/webhooks" target="_blank">webhooks</a></a>
+                    </p>
+                    <div class="input-string-div">
+                        <input type="text" placeholder="e.g. customer name, customer query, etc" class="input-field"
+                            id="tags_input">
+                        <button id="add_tags_button">Add to Code</button>
+                        <button id="clear_tags_button">Reset</button>
+                    </div>
+                    <span id="tags-preview" class="input-preview"></span>
+                    <p class="category-description" id="metadata-description">Metadata will appear in the session queue
+                        and in <a href="https://docs.surfly.com/webhooks" target="_blank">webhooks</a></a>
+                    </p>
+                    <div class="input-string-div">
+                        <input type="text" placeholder="Key" class="input-field" id="metadata_input_key">
+                        <input type="text" placeholder="Value" class="input-field" id="metadata_input_value">
+                        <button id="add_metadata_button">Add to Code</button>
+                        <button id="clear_metadata_button">Reset</button>
+                    </div>
+                    <span id="metadata-preview" class="input-preview"></span>
+                </div>
+            </div>
+
+            <div class="category">
+                <h2 class="section-heading">Add automated event actions</h2>
+                <button class="toggle-button" onclick="toggleCategory(this)">Expand</button>
+                <div class="category-content" style="display: none;">
+                    <p class="category-description">See more Surfly <a
+                            href="https://docs.surfly.com/javascript-api/surfly-events" target="_blank">Javascript
+                            Events</a></p>
+                    <label class="checkbox-option">
+                        <input type="checkbox" id="end-if-no-agent">
+                        <span class="custom-checkbox"></span>
+                        End session if nobody else joins in 2 minutes
+                    </label>
+                    <label class="checkbox-option">
+                        <input type="checkbox" id="end-if-no-activity">
+                        <span class="custom-checkbox"></span>
+                        End session after 10 minutes of inactivity
+                    </label>
+                    <label class="checkbox-option">
+                        <input type="checkbox" id="start-screenshare">
+                        <span class="custom-checkbox"></span>
+                        Automatically start traditional screen share
+                    </label>
+                    <label class="checkbox-option">
+                        <input type="checkbox" id="host-and-control-transfer">
+                        <span class="custom-checkbox"></span>
+                        Transfer Host and Control to agent when they join
+                    </label>
+                    <label class="checkbox-option">
+                        <input type="checkbox" id="full-screen-video-on-start">
+                        <span class="custom-checkbox"></span>
+                        Make video full screen when someone joins
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="button-container">
+            <button class="start-session" id="start-session-on-page" onclick="copyCode()">Copy Custom Button
+                Snippet</button>
+            <span class="or">or</span>
+            <button class="start-session" id="copy-session-code" onclick="startSessionHere()">Start Session Here</button>
+        </div>
+    </div>
+
+    <div class="javascript-window">
+        <pre><code id="code-preview" class="language-javascript">
+Javascript goes here
+        </code></pre>
+    </div>
+</body>
+
+</html>
