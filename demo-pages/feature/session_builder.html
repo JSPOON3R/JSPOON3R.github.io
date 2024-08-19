@@ -250,13 +250,13 @@
             color: var(--white);
             background-color: var(--orange);
             padding: 5px;
-            margin:0;
+            margin: 0;
             font-weight: normal;
             font-size: 1em;
             animation: gentle-flash 2.5s infinite ease-in-out;
             width: 100%;
             display: flex;
-            justify-content: center; 
+            justify-content: center;
             align-items: center;
         }
 
@@ -333,6 +333,14 @@
             justify-content: space-around;
             align-items: center;
             margin: 10px;
+        }
+
+        .category-heading {
+            display:flex;
+            justify-content: center;
+            align-content: center;
+            color: var(--grey);
+            font-size: 1em;
         }
 
         .feature-toggles {
@@ -478,13 +486,43 @@
             margin-bottom: 0;
             text-transform: lowercase;
             background-color: var(--lightest-gray);
-            color: var(--dark-grey);
+            color: var(--grey);
             border-radius: 10px;
             padding: 5px;
         }
 
+        .required-configs-div {
+            background-color: var(--light-blue);
+            margin-bottom: 50px;
+            margin-left: 5px;
+            width: max-content;
+            color: var(--lightest-gray);
+            font-weight: normal;
+            font-size: 1em;
+            border-radius: 10px;
+            padding: 15px;
+        }
+
+        .config-category {
+            color: var(--dark-blue);
+            background-color: var(--white);
+            border-radius: 10px;
+            padding: 5px;
+            font-weight: bold;
+        }
+
+        span#config-requirements-heading {
+            font-size: .8em;
+            margin-bottom: 10px;
+            margin-top: 0px;
+            color: var(--white);
+            border-radius: 10px;
+            padding: 3px;
+        }
+
         .hide-input-preview {
             opacity: 0;
+            display:none;
         }
 
         .button-container {
@@ -493,7 +531,7 @@
             justify-content: flex-start;
             align-items: center;
             margin-top: 2px;
-            margin-bottom: 5px;
+            margin-bottom: 20px;
         }
 
         .or {
@@ -737,30 +775,89 @@
         var formattedMetadataJSON;
         var indentedFormattedMetadataJSON;
         var indentedTagsArray;
+        var eventConfigRequirements = '';
 
         function updateEventVariables(eventName, isChecked) {
+            let requirementsText = '';
             switch (eventName) {
                 case 'controlAndHostToAgent':
-                    controlAndHostToAgent = isChecked ? 'if (event.clientIndex !== 0) {' + '\n\t\t\t\t\t' + 'SurflySession.makeHost(1);' + '\n\t\t\t\t\t' + 'SurflySession.transferTabControl(1);}' + '\n\t\t\t\t' + 'else {' + '\n\t\t\t\t\t' + 'console.log(event.clientIndex + \" joined the session - host not changed\");' + '\n\t\t\t\t' + '};' : '';
-                    console.log(controlAndHostToAgent);
+                    controlAndHostToAgent = isChecked ? 'if (event.clientIndex !== 0) {' + '\n\t\t\t\t\t' +
+                        'SurflySession.makeHost(1);' + '\n\t\t\t\t\t' +
+                        'SurflySession.transferTabControl(1);}' + '\n\t\t\t\t' +
+                        'else {' + '\n\t\t\t\t\t' +
+                        'console.log(event.clientIndex + " joined the session - host not changed");' + '\n\t\t\t\t' + '};' : '';
+                    requirementsText = "<span class=config-category>control and host switching:</span>" + "&nbsp;host_switching_allowed" + "," + "&nbsp;participants_can_request_to_interact";
                     break;
                 case 'instantScreenShare':
                     instantScreenShare = isChecked ? 'SurflySession.startScreensharing();' : '';
+                    requirementsText = "<span class=config-category>screen sharing:</span>" + "&nbsp;screensharing_enabled" + "," + "&nbsp;videochat";
                     break;
                 case 'startFullScreenVideo':
                     startFullScreenVideo = isChecked ? 'SurflySession.toggleVideochatFullscreen();' : '';
+                    requirementsText = "<span class=config-category>full screen video:</span>" + "&nbsp;videochat" + "," + "&nbsp;start_with_videochat_on";
                     break;
                 case 'endIfNoAgent':
-                    endIfNoAgent = isChecked ? '(async () => {' + '\n\t\t\t\t\t' + 'await new Promise(resolve => setTimeout(resolve, 120000));' + '\n\t\t\t\t\t' + 'if (ParticipantJoined === true) {' + '\n\t\t\t\t\t\t' + 'console.log(\'Participant has joined.\');' + '\n\t\t\t\t\t' + '} else {' + '\n\t\t\t\t\t\t' + 'SurflySession.end();' + '\n\t\t\t\t\t\t' + 'console.log("Session ended due no other participants joined within 2 minutes");' + '\n\t\t\t\t\t' + '}' + '\n\t\t\t\t' + '})();' : '';
-                    participantJoinedVar = isChecked ? '\n\t' + 'var ParticipantJoined = false;' : '';
-                    updateParticipantJoinedVar = isChecked ? '\n\t\t\t\t' + 'ParticipantJoined = true;' : '';
+                    endIfNoAgent = isChecked ? '(async () => {' + '\n\t\t\t\t\t' +
+                        'await new Promise(resolve => setTimeout(resolve, 120000));' + '\n\t\t\t\t\t' +
+                        'if (ParticipantJoined === true) {' + '\n\t\t\t\t\t\t' +
+                        'console.log(\'Participant has joined.\');' + '\n\t\t\t\t\t' +
+                        '} else {' + '\n\t\t\t\t\t\t' +
+                        'SurflySession.end();' + '\n\t\t\t\t\t\t' +
+                        'console.log("Session ended due no other participants joined within 2 minutes");' + '\n\t\t\t\t\t' +
+                        '}' + '\n\t\t\t\t' + '})();' : '';
+                    requirementsText = "<span class=config-category>end if nobody joins:</span>" + "&nbsp;none";
                     break;
                 case 'endIfNoActivity10Mins':
-                    endIfNoActivity10Mins = isChecked ? '\n\t\t\t' + '.on("user_activity", function (session, event) {' + '\n\t\t\t\t\t' + 'if (session.inactivityTimeout) {' + '\n\t\t\t\t\t\t' + 'clearTimeout(session.inactivityTimeout);' + '\n\t\t\t\t\t' + '}' + '\n\t\t\t\t\t' + 'session.inactivityTimeout = setTimeout(function () {' + '\n\t\t\t\t\t\t' + 'console.log("Session ended due to inactivity");' + '\n\t\t\t\t\t\t' + 'SurflySession.end();' + '\n\t\t\t\t\t\t' + '}, 600000);' + '\n\t\t\t' + '})' : '';
+                    endIfNoActivity10Mins = isChecked ? '\n\t\t\t' +
+                        '.on("user_activity", function (session, event) {' + '\n\t\t\t\t\t' +
+                        'if (session.inactivityTimeout) {' + '\n\t\t\t\t\t\t' +
+                        'clearTimeout(session.inactivityTimeout);' + '\n\t\t\t\t\t' +
+                        '}' + '\n\t\t\t\t\t' +
+                        'session.inactivityTimeout = setTimeout(function () {' + '\n\t\t\t\t\t\t' +
+                        'console.log("Session ended due to inactivity");' + '\n\t\t\t\t\t\t' +
+                        'SurflySession.end();' + '\n\t\t\t\t\t\t' +
+                        '}, 600000);' + '\n\t\t\t' + '})' : '';
+                    requirementsText = "<span class=config-category>end after inactivity:</span>" + "&nbsp;none";
                     break;
                 default:
                     console.log('Unknown toggle name');
+                    return;
             }
+
+            // Update eventConfigRequirements
+            if (isChecked) {
+                if (eventConfigRequirements) {
+                    if (requirementsText) {
+                        eventConfigRequirements += '\n\n' + requirementsText;
+                    }
+                } else {
+                    if (requirementsText) {
+                        eventConfigRequirements = requirementsText;
+                    }
+                }
+            } else {
+                eventConfigRequirements = eventConfigRequirements.replace(requirementsText, '').trim();
+                eventConfigRequirements = eventConfigRequirements.replace(/(\n\s*\n)/g, '\n\n');
+            }
+            console.log(eventConfigRequirements);
+            updateScriptElement();
+        }
+
+        function updateNonEventRequirements() {
+            let newTabRequirementsText = "<span class=config-category>automatically open extra tabs:</span>" + "&nbsp;new_urls_allowed";
+            if (AdditionalUrls) {
+                if (eventConfigRequirements) {
+                        eventConfigRequirements += '\n\n' + newTabRequirementsText;
+                    }
+                 else {
+                        eventConfigRequirements = newTabRequirementsText;
+                    
+                }}
+             else {
+                eventConfigRequirements = eventConfigRequirements.replace(newTabRequirementsText, '').trim();
+                eventConfigRequirements = eventConfigRequirements.replace(/(\n\s*\n)/g, '\n\n');
+            }
+            console.log(eventConfigRequirements);
             updateScriptElement();
         }
 
@@ -773,6 +870,8 @@
             const additionalTabPreviewQueryParamaters = document.getElementById("additional-tab-preview-query-paramaters");
             const tagsPreview = document.getElementById("tags-preview");
             const metadataPreview = document.getElementById("metadata-preview");
+            const eventRequirementsHeading = document.getElementById("required-configs");
+            const eventRequirementsPreview = document.getElementById("event-config-requirements-preview");
             const settingsContent = settingsString.slice(1, settingsString.length - 2) + ",";
             const formattedRegions = '\n\t' + `"selected_regions": [${selectedRegions.map(region => `\n        "${region}"`).join(',')}\n        ]`;
 
@@ -809,6 +908,16 @@
             } else {
                 metadataPreview.innerHTML = '';
                 metadataPreview.classList.add('hide-input-preview');
+            }
+            //update event config requirements preview
+            if (eventConfigRequirements) {
+                eventRequirementsHeading.classList.remove('hide-input-preview');
+                eventRequirementsPreview.classList.remove('hide-input-preview');
+                eventRequirementsPreview.innerHTML = "<pre>" + eventConfigRequirements + "</pre>";
+            } else {
+                eventConfigRequirements = '';
+                eventRequirementsPreview.classList.add('hide-input-preview');
+                eventRequirementsHeading.classList.add('hide-input-preview');
             }
             //update the page code snippet
             scriptElement.textContent = `
@@ -967,6 +1076,7 @@
                     console.log('Updated masking String:', AdditionalUrlQueryParams);
                 }
                 inputUrlString.value = '';
+                updateNonEventRequirements();
                 updateScriptElement();
             } else {
                 alert('Please enter a valid URL that starts with "www" and includes a valid domain.');
@@ -979,6 +1089,7 @@
             AdditionalUrlNewTabs = '';
             AdditionalUrlQueryParams = '';
             console.log('AdditionalUrlQueryParams string cleared:', AdditionalUrlQueryParams);
+            updateNonEventRequirements();
             updateScriptElement();
         }
 
@@ -1242,6 +1353,52 @@
                 <div class="category-content" style="display: none;">
                     <p class="category-description">Overview of all <a href="https://docs.surfly.com/session-options"
                             target="_blank">session options</a> and what they do</p>
+                            <h2 class="category-heading">Video</h2>
+                            <div class="feature-toggles">
+                                <div class="settings-toggle">
+                                    <label class="switch" id="videochat_enabled">
+                                        <input type="checkbox">
+                                        <span class="slider"></span>
+                                    </label>
+                                    <h2>videochat_enabled</h2>
+                                </div>
+                                <div class="settings-toggle">
+                                    <label class="switch" id="start_with_videochat_on">
+                                        <input type="checkbox">
+                                        <span class="slider"></span>
+                                    </label>
+                                    <h2>start_with_videochat_on</h2>
+                                </div>
+                                <div class="settings-toggle">
+                                    <label class="switch" id="start_with_fullscreen_videochat">
+                                        <input type="checkbox">
+                                        <span class="slider"></span>
+                                    </label>
+                                    <h2>start_with_fullscreen_videochat</h2>
+                                </div>
+                                <div class="settings-toggle">
+                                    <label class="switch" id="videochat_prompt">
+                                        <input type="checkbox">
+                                        <span class="slider"></span>
+                                    </label>
+                                    <h2>videochat_prompt</h2>
+                                </div>
+                                <div class="settings-toggle">
+                                    <label class="switch" id="anonymous_users_can_share_camera">
+                                        <input type="checkbox">
+                                        <span class="slider"></span>
+                                    </label>
+                                    <h2>anonymous_users_can_share_camera</h2>
+                                </div>
+                                <div class="settings-toggle">
+                                    <label class="switch" id="p2p_videochat_enabled">
+                                        <input type="checkbox">
+                                        <span class="slider"></span>
+                                    </label>
+                                    <h2>p2p_videochat_enabled</h2>
+                                </div>
+                            </div>
+                            <h2 class="category-heading">Other</h2>
                     <div class="feature-toggles">
                         <div class="settings-toggle">
                             <label class="switch" id="admission_enabled">
@@ -1256,13 +1413,6 @@
                                 <span class="slider"></span>
                             </label>
                             <h2>alternative_proxy_enabled</h2>
-                        </div>
-                        <div class="settings-toggle">
-                            <label class="switch" id="anonymous_users_can_share_camera">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                            <h2>anonymous_users_can_share_camera</h2>
                         </div>
                         <div class="settings-toggle">
                             <label class="switch" id="anyone_can_deactivate_space">
@@ -1419,13 +1569,6 @@
                             <h2>original_file_download_allowed</h2>
                         </div>
                         <div class="settings-toggle">
-                            <label class="switch" id="p2p_videochat_enabled">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                            <h2>p2p_videochat_enabled</h2>
-                        </div>
-                        <div class="settings-toggle">
                             <label class="switch" id="participants_can_request_to_interact">
                                 <input type="checkbox">
                                 <span class="slider"></span>
@@ -1489,13 +1632,6 @@
                             <h2>start_with_chat_open</h2>
                         </div>
                         <div class="settings-toggle">
-                            <label class="switch" id="start_with_fullscreen_videochat">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                            <h2>start_with_fullscreen_videochat</h2>
-                        </div>
-                        <div class="settings-toggle">
                             <label class="switch" id="start_with_invite_modal">
                                 <input type="checkbox">
                                 <span class="slider"></span>
@@ -1510,32 +1646,11 @@
                             <h2>start_with_loading_screen</h2>
                         </div>
                         <div class="settings-toggle">
-                            <label class="switch" id="start_with_videochat_on">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                            <h2>start_with_videochat_on</h2>
-                        </div>
-                        <div class="settings-toggle">
                             <label class="switch" id="url_mangling">
                                 <input type="checkbox">
                                 <span class="slider"></span>
                             </label>
                             <h2>url_mangling</h2>
-                        </div>
-                        <div class="settings-toggle">
-                            <label class="switch" id="videochat_enabled">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                            <h2>videochat_enabled</h2>
-                        </div>
-                        <div class="settings-toggle">
-                            <label class="switch" id="videochat_prompt">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                            <h2>videochat_prompt</h2>
                         </div>
                     </div>
                 </div>
@@ -1662,6 +1777,10 @@
                         Make video full screen when someone joins
                     </label>
                 </div>
+            </div>
+            <div class="required-configs-div" id="required-configs">
+                <span id="config-requirements-heading">Requirements for your session:</span>
+                <span id="event-config-requirements-preview"></span>
             </div>
         </div>
         <div class="button-container">
