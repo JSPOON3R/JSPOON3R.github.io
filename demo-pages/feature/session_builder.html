@@ -621,22 +621,6 @@
             }
         }
     </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.settings-toggle input').forEach(input => {
-                input.addEventListener('change', (event) => {
-                    const id = event.target.parentElement.id; // Get the id from the parent element
-                    const isChecked = event.target.checked; // Get the state of the checkbox
-
-                    // Update the settings object with the new value
-                    settings[id] = isChecked;
-
-                    console.log(`Setting ${id} is ${isChecked ? 'enabled' : 'disabled'}`);
-                    // Optionally update the setting on the server or in local storage
-                });
-            });
-        });
-    </script>
 
     <script>
         // Function to load Prism scripts
@@ -716,13 +700,13 @@
                     console.log(controlAndHostToAgent);
                     break;
                 case 'instantScreenShare':
-                    instantScreenShare = isChecked ? 'SurflySession.startScreenShare();' : '';
+                    instantScreenShare = isChecked ? 'SurflySession.startScreensharing();' : '';
                     break;
                 case 'startFullScreenVideo':
                     startFullScreenVideo = isChecked ? 'SurflySession.toggleVideochatFullscreen();' : '';
                     break;
                 case 'endIfNoAgent':
-                    endIfNoAgent = isChecked ? '(async () => {' + '\n\t\t\t\t\t' + 'await new Promise(resolve => setTimeout(resolve, 120000));' + '\n\t\t\t\t\t' + 'if (ParticipantJoined === true) {' + '\n\t\t\t\t\t\t' + 'console.log(\'Participant has joined.\');' + '\n\t\t\t\t\t' + '} else {' + '\n\t\t\t\t\t\t' + 'SurflySession.end();' + '\n\t\t\t\t\t' + '}' + '\n\t\t\t\t' + '})();' : '';
+                    endIfNoAgent = isChecked ? '(async () => {' + '\n\t\t\t\t\t' + 'await new Promise(resolve => setTimeout(resolve, 120000));' + '\n\t\t\t\t\t' + 'if (ParticipantJoined === true) {' + '\n\t\t\t\t\t\t' + 'console.log(\'Participant has joined.\');' + '\n\t\t\t\t\t' + '} else {' + '\n\t\t\t\t\t\t' + 'SurflySession.end();' + '\n\t\t\t\t\t\t' + 'console.log("Session ended due no other participants joined within 2 minutes");' + '\n\t\t\t\t\t' + '}' + '\n\t\t\t\t' + '})();' : '';
                     participantJoinedVar = isChecked ? '\n\t' + 'var ParticipantJoined = false;' : '';
                     updateParticipantJoinedVar = isChecked ? '\n\t\t\t\t' + 'ParticipantJoined = true;' : '';
                     break;
