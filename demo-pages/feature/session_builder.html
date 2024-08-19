@@ -836,11 +836,17 @@
                 SurflySession.startLeader(${indentedFormattedMetadataJSON ? "null," + `\n${indentedFormattedMetadataJSON}` : ''});
             })
             .on("session_started", function (session, event) {
-                console.log("Session has started");${endIfNoAgent ? `\n\t\t\t\t${endIfNoAgent}` : ''}${AdditionalUrlNewTabs ? `\n\t\t\t\t${AdditionalUrlNewTabs}` : ''}${instantScreenShare ? `\n\t\t\t\t${instantScreenShare}` : ''} 
+                console.log("Session has started");${endIfNoAgent ? `\n\t\t\t\t${endIfNoAgent}` : ''}${endIfNoActivity10Mins}
+            })
+            .on('session_loaded', function (session, event) {
+                console.log("Session loaded successfully");${AdditionalUrlNewTabs ? `\n\t\t\t\t${AdditionalUrlNewTabs}` : ''}${instantScreenShare ? `\n\t\t\t\t${instantScreenShare}` : ''} 
             })
             .on("session_queued", function (session, event) {
                 console.log("Session is in the queue with pin ", session.pin);
-            })${endIfNoActivity10Mins}
+                console.log("Agent link: ", session.leaderLink);
+                console.log("Customer link: ", session.followerLink);
+                //this event can be used to send notifications to Agents
+            })
             .on('participant_joined', function (session, event) {
                 console.log('Participant ', event.clientIndex, 'joined the session');${startFullScreenVideo ? `\n\t\t\t\t${startFullScreenVideo}` : ''}${controlAndHostToAgent ? `\n\t\t\t\t${controlAndHostToAgent}` : ''}${updateParticipantJoinedVar}
             })
