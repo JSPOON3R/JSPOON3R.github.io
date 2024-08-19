@@ -215,6 +215,51 @@
             /* Ensure the border is circular */
         }
 
+        @keyframes gentle-flash {
+            0% {
+                opacity: 1;
+
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+
+        .warning-message-hidden {
+            display: none;
+        }
+
+        .warning-message {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .warning-message-text {
+            color: var(--white);
+            background-color: var(--light-red);
+            padding: 5px;
+            margin:0;
+            font-weight: normal;
+            font-size: 1em;
+            animation: gentle-flash 2.5s infinite ease-in-out;
+            width: 100%;
+            display: flex;
+            justify-content: center; 
+            align-items: center;
+        }
+
         .category-content {
             display: none;
         }
@@ -448,7 +493,7 @@
             justify-content: flex-start;
             align-items: center;
             margin-top: 2px;
-            margin-bottom: 40px;
+            margin-bottom: 5px;
         }
 
         .or {
@@ -1076,11 +1121,14 @@
         function startSessionHere() {
             const surflySnippet = scriptElement.textContent;
             const startSurfly = new Function(surflySnippet);
+            const refreshPageMessage = document.getElementById("refresh-page-message")
+            refreshPageMessage.classList.remove('warning-message-hidden');
+            refreshPageMessage.classList.add('warning-message');
             startSurfly();
         }
         function copyCode() {
-const surflySnippet = scriptElement.textContent;
-navigator.clipboard.writeText(surflySnippet).then(() => alert('The Surfly code snippet has been copied to the clipboard.'));
+            const surflySnippet = scriptElement.textContent;
+            navigator.clipboard.writeText(surflySnippet).then(() => alert('The Surfly code snippet has been copied to the clipboard.'));
 
 
 
@@ -1092,6 +1140,18 @@ navigator.clipboard.writeText(surflySnippet).then(() => alert('The Surfly code s
 </head>
 
 <body>
+    <div class="warning-message-hidden" id="refresh-page-message">
+        <p class="warning-message-text">
+            <svg xmlns="http://www.w3.org/2000/svg" width="15px" height="15px" viewBox="0 0 24 24"
+                style="vertical-align: middle;">
+                <path fill="white"
+                    d="M12 5.177l8.631 15.823h-17.262l8.631-15.823zm0-4.177l-12 22h24l-12-22zm-1 9h2v6h-2v-6zm1 9.75c-.689 0-1.25-.56-1.25-1.25s.561-1.25 1.25-1.25 1.25.56 1.25 1.25-.561 1.25-1.25 1.25z" />
+            </svg>&nbsp;&nbsp;Refresh the page to start again&nbsp;&nbsp;
+        </p>
+    </div>
+
+
+
     <div class="content">
         <div class="settings">
 
@@ -1602,7 +1662,8 @@ navigator.clipboard.writeText(surflySnippet).then(() => alert('The Surfly code s
             <button class="start-session" id="start-session-on-page" onclick="copyCode()">Copy Custom Button
                 Snippet</button>
             <span class="or">or</span>
-            <button class="start-session" id="copy-session-code" onclick="startSessionHere()">Start Session Here</button>
+            <button class="start-session" id="copy-session-code" onclick="startSessionHere()">Start Session
+                Here</button>
         </div>
     </div>
 
