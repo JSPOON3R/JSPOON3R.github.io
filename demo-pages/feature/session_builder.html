@@ -26,6 +26,7 @@
             --grey: #b2b2b2;
             --light-grey: #d8dada;
             --lightest-gray: #eff0f0;
+            --off-white: #f9f9f9;
             --white: #ffffff;
             --background: #2f2f2f;
             --font: 'Nunito', sans-serif;
@@ -40,6 +41,10 @@
             font-family: var(--font);
             overflow: hidden;
             margin-bottom: 0;
+        }
+
+        pre {
+            margin: 0;
         }
 
         .content {
@@ -181,7 +186,6 @@
             padding: 0;
         }
 
-
         button {
             background-color: var(--dark-red);
             box-sizing: border-box;
@@ -212,7 +216,6 @@
             outline: 4px solid var(--dark-grey);
             box-sizing: border-box;
             border-radius: 50%;
-            /* Ensure the border is circular */
         }
 
         @keyframes gentle-flash {
@@ -229,7 +232,6 @@
                 opacity: 1;
             }
         }
-
 
         .warning-message-hidden {
             display: none;
@@ -336,18 +338,22 @@
         }
 
         .category-heading {
-            display:flex;
+            display: flex;
             justify-content: center;
-            align-content: center;
-            color: var(--grey);
+            color: var(--dark-grey);
             font-size: 1em;
+            margin-bottom: 5px;
         }
 
         .feature-toggles {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             grid-gap: 20px 0px;
-            margin-bottom: 40px;
+            padding-bottom: 20px;
+            padding-top: 10px;
+            margin-bottom: 20px;
+            background-color: var(--off-white);
+            border-radius: 20px;
         }
 
         .video-view {
@@ -401,8 +407,6 @@
             color: var(--dark-grey);
         }
 
-
-        /* Toggle Switch */
         .switch {
             position: relative;
             display: inline-block;
@@ -438,20 +442,22 @@
             width: 12px;
             left: 4px;
             bottom: 4px;
-            background-color: var(--dark-blue);
+            background-color: var(--dark-red);
             transition: .4s;
             border-radius: 50%;
-            border: 1px solid var(--dark-blue);
+            border: 1px solid var(--grey);
         }
 
         input:checked+.slider {
-            background-color: var(--grey);
+            background-color: var(--white);
+            border: 1px solid var(--light-grey);
         }
 
         input:checked+.slider:before {
             transform: translateX(16px);
+            background-color: var(--dark-green);
+            border: 1px solid var(--light-green);
         }
-
 
         .your-settings {
             font-size: .7em;
@@ -492,37 +498,47 @@
         }
 
         .required-configs-div {
-            background-color: var(--light-blue);
+            display: flex;
+            flex-direction: column;
+            background-color: var(--lightest-gray);
+            font-family: 'Courier New', Courier, monospace;
             margin-bottom: 50px;
             margin-left: 5px;
             width: max-content;
-            color: var(--lightest-gray);
-            font-weight: normal;
+            height: fit-content;
+            color: var(--dark-grey);
+            font-weight: lighter;
             font-size: 1em;
             border-radius: 10px;
+            padding-top: 5px;
+            padding-bottom: 5px;
             padding: 15px;
         }
 
         .config-category {
             color: var(--dark-blue);
-            background-color: var(--white);
+            background-color: var(--lightest-gray);
             border-radius: 10px;
             padding: 5px;
-            font-weight: bold;
+            font-weight: light;
         }
 
         span#config-requirements-heading {
             font-size: .8em;
+            text-align: center;
+            display: none;
             margin-bottom: 10px;
+            width: 100%;
             margin-top: 0px;
-            color: var(--white);
-            border-radius: 10px;
+            background-color: var(--lightest-gray);
+            color: var(--grey);
+            border-radius: 8px;
             padding: 3px;
         }
 
         .hide-input-preview {
             opacity: 0;
-            display:none;
+            display: none;
         }
 
         .button-container {
@@ -640,10 +656,11 @@
         }
     </style>
 
-    <script id="myScript">
 
-        var SurflySession;
-        var manual_input;
+    <script id="myScript">
+        //1// INITIAL SCRIPT
+        //Starting script to be edited by updateScriptElement(). 
+        //Settings listed here because to process used to update them visually requires it
         var settings = {
             admission_enabled: false,
             alternative_proxy_enabled: false,
@@ -691,22 +708,10 @@
             default_videochat_mode: "floating",
         };
     </script>
-
     <script>
-        function toggleCategory(button) {
-            var content = button.nextElementSibling;
-            if (content.style.display === 'none') {
-                content.style.display = 'block';
-                button.textContent = 'Hide';
-            } else {
-                content.style.display = 'none';
-                button.textContent = 'Expand';
-            }
-        }
-    </script>
-
-    <script>
-        // Function to load Prism scripts
+        //2// DEPENDENCIES
+        //Functions to manage and implement dependencies 
+        // Function to load Prism scripts (formats the JS preview)
         function loadScripts() {
             const prismScript1 = document.createElement('script');
             prismScript1.src = "https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js";
@@ -717,17 +722,6 @@
             };
             document.body.appendChild(prismScript1);
         }
-
-        // Function to update code-preview
-        function updateCodePreview() {
-            const scriptContent = document.getElementById("myScript").textContent;
-            document.getElementById("code-preview").innerHTML = scriptContent;
-            // Trigger Prism to highlight the code
-            if (window.Prism) {
-                Prism.highlightAll();
-            }
-        }
-
         // Initialize script loading and content update
         document.addEventListener("DOMContentLoaded", function () {
             // Initial update
@@ -737,8 +731,7 @@
             // Create a MutationObserver to watch for changes in myScript element
             const observer = new MutationObserver(updateCodePreview);
             const myScriptElement = document.getElementById("myScript");
-
-            // Start observing the myScript element for changes in its content
+            // Observing the myScript element for changes in its content
             if (myScriptElement) {
                 observer.observe(myScriptElement, {
                     childList: true,
@@ -749,118 +742,54 @@
         });
     </script>
     <script>
-        // Initialize the selectedRegions array and startUrl variable
+        //3// VARS
+        //Vars needed in this page and explanations below each
         var scriptElement;
+        //Holds the script to be displayed on the page
         var selectedRegions = [];
-        var manualInput = '';
-        var sessionMetadata = null;
+        //stores the Surfly server regions 
         var startUrl = '';
+        //Stores the start URL for the session
         var widgetKey = '';
+        //Stores the widget key for the session
         var maskingString = '';
+        //Stores the masking selector string for the session
         var tagsArray = '';
-        var metadataObject = {};
-        var AdditionalUrls;
-        var AdditionalUrlQueryParams = '';
-        var AdditionalUrlNewTabs;
-        var skipQueue = false;
-        var startLeaderOnCreated = '';
-        var startLeaderwithAdditionalTabs = '';
-        var controlAndHostToAgent = '';
-        var instantScreenShare = '';
-        var startFullScreenVideo = '';
-        var endIfNoAgent = '';
-        var participantJoinedVar = ''
-        var updateParticipantJoinedVar = ''
-        var endIfNoActivity10Mins = '';
-        var formattedMetadataJSON;
-        var indentedFormattedMetadataJSON;
+        //Stores the tags array
         var indentedTagsArray;
+        //indented tags array for display
+        var metadataObject = {};
+        //stores the metadata object
+        var AdditionalUrls;
+        //stores a string of additional urls for additional tabs
+        var AdditionalUrlQueryParams = '';
+        //stores the additional tab urls in query paramater format for session links
+        var AdditionalUrlNewTabs;
+        //adds the additional urls to Surfly open tab function
+        var skipQueue = false;
+        //stores the skip queue value
+        var controlAndHostToAgent = '';
+        //adds event triggered code to transfer host and control to an agent when they join
+        var instantScreenShare = '';
+        //adds event triggered code to auto start screenshare
+        var startFullScreenVideo = '';
+        //adds event triggered code to trnsition to full screen video when someone joins
+        var endIfNoAgent = '';
+        //adds event triggered code to end a session if no agent joins
+        var endIfNoActivity10Mins = '';
+        //adds event triggered code to end session after inactivity
+        var formattedMetadataJSON;
+        //holds metadata object converted to string
+        var indentedFormattedMetadataJSON;
+        //holds html formatted string to look like object again
         var eventConfigRequirements = '';
-
-        function updateEventVariables(eventName, isChecked) {
-            let requirementsText = '';
-            switch (eventName) {
-                case 'controlAndHostToAgent':
-                    controlAndHostToAgent = isChecked ? 'if (event.clientIndex !== 0) {' + '\n\t\t\t\t\t' +
-                        'SurflySession.makeHost(1);' + '\n\t\t\t\t\t' +
-                        'SurflySession.transferTabControl(1);}' + '\n\t\t\t\t' +
-                        'else {' + '\n\t\t\t\t\t' +
-                        'console.log(event.clientIndex + " joined the session - host not changed");' + '\n\t\t\t\t' + '};' : '';
-                    requirementsText = "<span class=config-category>control and host switching:</span>" + "&nbsp;host_switching_allowed" + "," + "&nbsp;participants_can_request_to_interact";
-                    break;
-                case 'instantScreenShare':
-                    instantScreenShare = isChecked ? 'SurflySession.startScreensharing();' : '';
-                    requirementsText = "<span class=config-category>screen sharing:</span>" + "&nbsp;screensharing_enabled" + "," + "&nbsp;videochat";
-                    break;
-                case 'startFullScreenVideo':
-                    startFullScreenVideo = isChecked ? 'SurflySession.toggleVideochatFullscreen();' : '';
-                    requirementsText = "<span class=config-category>full screen video:</span>" + "&nbsp;videochat" + "," + "&nbsp;start_with_videochat_on";
-                    break;
-                case 'endIfNoAgent':
-                    endIfNoAgent = isChecked ? '(async () => {' + '\n\t\t\t\t\t' +
-                        'await new Promise(resolve => setTimeout(resolve, 120000));' + '\n\t\t\t\t\t' +
-                        'if (ParticipantJoined === true) {' + '\n\t\t\t\t\t\t' +
-                        'console.log(\'Participant has joined.\');' + '\n\t\t\t\t\t' +
-                        '} else {' + '\n\t\t\t\t\t\t' +
-                        'SurflySession.end();' + '\n\t\t\t\t\t\t' +
-                        'console.log("Session ended due no other participants joined within 2 minutes");' + '\n\t\t\t\t\t' +
-                        '}' + '\n\t\t\t\t' + '})();' : '';
-                    requirementsText = "<span class=config-category>end if nobody joins:</span>" + "&nbsp;none";
-                    break;
-                case 'endIfNoActivity10Mins':
-                    endIfNoActivity10Mins = isChecked ? '\n\t\t\t' +
-                        '.on("user_activity", function (session, event) {' + '\n\t\t\t\t\t' +
-                        'if (session.inactivityTimeout) {' + '\n\t\t\t\t\t\t' +
-                        'clearTimeout(session.inactivityTimeout);' + '\n\t\t\t\t\t' +
-                        '}' + '\n\t\t\t\t\t' +
-                        'session.inactivityTimeout = setTimeout(function () {' + '\n\t\t\t\t\t\t' +
-                        'console.log("Session ended due to inactivity");' + '\n\t\t\t\t\t\t' +
-                        'SurflySession.end();' + '\n\t\t\t\t\t\t' +
-                        '}, 600000);' + '\n\t\t\t' + '})' : '';
-                    requirementsText = "<span class=config-category>end after inactivity:</span>" + "&nbsp;none";
-                    break;
-                default:
-                    console.log('Unknown toggle name');
-                    return;
-            }
-
-            // Update eventConfigRequirements
-            if (isChecked) {
-                if (eventConfigRequirements) {
-                    if (requirementsText) {
-                        eventConfigRequirements += '\n\n' + requirementsText;
-                    }
-                } else {
-                    if (requirementsText) {
-                        eventConfigRequirements = requirementsText;
-                    }
-                }
-            } else {
-                eventConfigRequirements = eventConfigRequirements.replace(requirementsText, '').trim();
-                eventConfigRequirements = eventConfigRequirements.replace(/(\n\s*\n)/g, '\n\n');
-            }
-            console.log(eventConfigRequirements);
-            updateScriptElement();
-        }
-
-        function updateNonEventRequirements() {
-            let newTabRequirementsText = "<span class=config-category>automatically open extra tabs:</span>" + "&nbsp;new_urls_allowed";
-            if (AdditionalUrls) {
-                if (eventConfigRequirements) {
-                        eventConfigRequirements += '\n\n' + newTabRequirementsText;
-                    }
-                 else {
-                        eventConfigRequirements = newTabRequirementsText;
-                    
-                }}
-             else {
-                eventConfigRequirements = eventConfigRequirements.replace(newTabRequirementsText, '').trim();
-                eventConfigRequirements = eventConfigRequirements.replace(/(\n\s*\n)/g, '\n\n');
-            }
-            console.log(eventConfigRequirements);
-            updateScriptElement();
-        }
-
+        //holds the required session configs for selections made for display on page
+    </script>
+    <script>
+        //4// VISUAL UPDATES FOR THE PAGE
+        //function to update the code snippet based on user selections
+        //function also updates previews on selections outside the code snippet
+        //This function is called by many other functions to maintain updated display of selections in the on screen snippet
         // Function to update the settings element in the script tag and flash the updated line
         function updateScriptElement() {
             scriptElement = document.getElementById("myScript");
@@ -921,14 +850,14 @@
             }
             //update the page code snippet
             scriptElement.textContent = `
-
+    
     (function (s, u, r, f, l, y) {
     s[f] = s[f] || { init: function () { s[f].q = arguments } };
     l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
     l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
     }) (window, document, 'script', 'Surfly');
-
-    var SurflySession;${participantJoinedVar}
+    
+    var SurflySession;${endIfNoAgent ? `\n\tvar participantJoined = false` : ''}
     var settings = {
     "widget_key": "${widgetKey}",
     "url": "${startUrl}",
@@ -936,7 +865,7 @@
     "hide_element_by_selector": "${maskingString}",
     "tags": ${indentedTagsArray ? `${indentedTagsArray}` : "[]"}
     };
-
+    
     Surfly.init(settings, function (init) {
         if (init.success && !Surfly.isInsideSession) {
             console.log("init success");
@@ -945,8 +874,8 @@
                 SurflySession.startLeader(${indentedFormattedMetadataJSON ? "null," + `\n${indentedFormattedMetadataJSON}` : ''});
             })
             .on("session_started", function (session, event) {
-                console.log("Session has started");${endIfNoAgent ? `\n\t\t\t\t${endIfNoAgent}` : ''}${endIfNoActivity10Mins}
-            })
+                console.log("Session has started");${endIfNoAgent ? `\n\t\t\t\t${endIfNoAgent}` : ''}
+            })${endIfNoActivity10Mins}
             .on('session_loaded', function (session, event) {
                 console.log("Session loaded successfully");${AdditionalUrlNewTabs ? `\n\t\t\t\t${AdditionalUrlNewTabs}` : ''}${instantScreenShare ? `\n\t\t\t\t${instantScreenShare}` : ''} 
             })
@@ -957,7 +886,7 @@
                 //this event can be used to send notifications to Agents
             })
             .on('participant_joined', function (session, event) {
-                console.log('Participant ', event.clientIndex, 'joined the session');${startFullScreenVideo ? `\n\t\t\t\t${startFullScreenVideo}` : ''}${controlAndHostToAgent ? `\n\t\t\t\t${controlAndHostToAgent}` : ''}${updateParticipantJoinedVar}
+                console.log('Participant ', event.clientIndex, 'joined the session');${startFullScreenVideo ? `\n\t\t\t\t${startFullScreenVideo}` : ''}${controlAndHostToAgent ? `\n\t\t\t\t${controlAndHostToAgent}` : ''}
             })
             .on("session_ended", function (session, event) {
                 console.log("Session has ended");
@@ -965,9 +894,119 @@
             });
         }
     });
-`;
+    `;
+        }
+    </script>
+    <script>
+        //5// BUILD THE CODE SNIPPET & MANAGE PAGE UX
+        //Functions to manage the display and behaviour of the page
+        //Function to reveal the categories in Session Builder when they are expanded
+        function toggleCategory(button) {
+            var content = button.nextElementSibling;
+            if (content.style.display === 'none') {
+                content.style.display = 'block';
+                button.textContent = 'Hide';
+            } else {
+                content.style.display = 'none';
+                button.textContent = 'Expand';
+            }
+        }
+        // Function to update code-preview
+        function updateCodePreview() {
+            const scriptContent = document.getElementById("myScript").textContent;
+            document.getElementById("code-preview").innerHTML = scriptContent;
+            // Trigger Prism to highlight the code
+            if (window.Prism) {
+                Prism.highlightAll();
+            }
+        }
+        //Function to update the code snippet event handlers & event handler related requirement text with code from relevant selection
+        function updateEventVariables(eventName, isChecked) {
+            let requirementsText = '';
+            switch (eventName) {
+                case 'controlAndHostToAgent':
+                    controlAndHostToAgent = isChecked ? 'if (event.clientIndex !== 0) {' + '\n\t\t\t\t\t' +
+                        'SurflySession.makeHost(1);' + '\n\t\t\t\t\t' +
+                        'SurflySession.transferTabControl(1);}' + '\n\t\t\t\t' +
+                        'else {' + '\n\t\t\t\t\t' +
+                        'console.log(event.clientIndex + " joined the session - host not changed");' + '\n\t\t\t\t' + '};' : '';
+                    requirementsText = "<span class=config-category>control and host switching:</span>" + "&nbsp;host_switching_allowed" + "," + "&nbsp;participants_can_request_to_interact";
+                    break;
+                case 'instantScreenShare':
+                    instantScreenShare = isChecked ? 'SurflySession.startScreensharing();' : '';
+                    requirementsText = "<span class=config-category>screen sharing:</span>" + "&nbsp;screensharing_enabled" + "," + "&nbsp;videochat";
+                    break;
+                case 'startFullScreenVideo':
+                    startFullScreenVideo = isChecked ? 'SurflySession.toggleVideochatFullscreen();' : '';
+                    requirementsText = "<span class=config-category>full screen video:</span>" + "&nbsp;videochat" + "," + "&nbsp;start_with_videochat_on";
+                    break;
+                case 'endIfNoAgent':
+                    endIfNoAgent = isChecked ? '(async () => {' + '\n\t\t\t\t\t' +
+                        'await new Promise(resolve => setTimeout(resolve, 120000));' + '\n\t\t\t\t\t' +
+                        'if (participantJoined === true) {' + '\n\t\t\t\t\t\t' +
+                        'console.log(\'Participant has joined.\');' + '\n\t\t\t\t\t' +
+                        '} else {' + '\n\t\t\t\t\t\t' +
+                        'SurflySession.end();' + '\n\t\t\t\t\t\t' +
+                        'console.log("Session ended due no other participants joined within 2 minutes");' + '\n\t\t\t\t\t' +
+                        '}' + '\n\t\t\t\t' + '})();' : '';
+                    requirementsText = "";
+                    break;
+                case 'endIfNoActivity10Mins':
+                    endIfNoActivity10Mins = isChecked ? '\n\t\t\t' +
+                        '.on("user_activity", function (session, event) {' + '\n\t\t\t\t' +
+                        'if (session.inactivityTimeout) {' + '\n\t\t\t\t\t' +
+                        'clearTimeout(session.inactivityTimeout);' + '\n\t\t\t\t' +
+                        '}' + '\n\t\t\t\t' +
+                        'session.inactivityTimeout = setTimeout(function () {' + '\n\t\t\t\t\t' +
+                        'console.log("Session ended due to inactivity");' + '\n\t\t\t\t\t' +
+                        'SurflySession.end();' + '\n\t\t\t\t\t' +
+                        '}, 600000);' + '\n\t\t\t' + '})' : '';
+                    requirementsText = "";
+                    break;
+                default:
+                    console.log('Unknown toggle name');
+                    return;
+            }
+
+            // Update eventConfigRequirements
+            if (isChecked) {
+                if (eventConfigRequirements) {
+                    if (requirementsText) {
+                        eventConfigRequirements += '\n\n' + requirementsText;
+                    }
+                } else {
+                    if (requirementsText) {
+                        eventConfigRequirements = requirementsText;
+                    }
+                }
+            } else {
+                eventConfigRequirements = eventConfigRequirements.replace(requirementsText, '').trim();
+                eventConfigRequirements = eventConfigRequirements.replace(/(\n\s*\n)/g, '\n\n');
+            }
+            console.log(eventConfigRequirements);
+            updateScriptElement();
+        }
+        //function to update requirements string from selections outside event actions
+        function updateNonEventRequirements() {
+            let newTabRequirementsText = "<span class=config-category>open extra tabs:</span>" + "&nbsp;new_urls_allowed";
+            if (AdditionalUrls) {
+                if (eventConfigRequirements) {
+                    eventConfigRequirements += '\n\n' + newTabRequirementsText;
+                }
+                else {
+                    eventConfigRequirements = newTabRequirementsText;
+
+                }
+            }
+            else {
+                eventConfigRequirements = eventConfigRequirements.replace(newTabRequirementsText, '').trim();
+                eventConfigRequirements = eventConfigRequirements.replace(/(\n\s*\n)/g, '\n\n');
+            }
+            console.log(eventConfigRequirements);
+            updateScriptElement();
         }
 
+        //function to update the video view preferences
         function toggleVideoView(selectElement) {
             const selectedValue = selectElement.value;
             const id = selectElement.id;
@@ -975,6 +1014,7 @@
             console.log(`Selected video view mode for ${id}:`, selectedValue);
             updateScriptElement(); // Update the script element when the video view mode changes
         }
+
 
         // Function to toggle selection and update selectedRegions array
         function toggleSelect(img) {
@@ -993,11 +1033,13 @@
             updateScriptElement(); // Update the script element when selection changes
         }
 
+        //function to add the widget key
         function addWidgetKeyToCode() {
             const widgetKeyInput = document.getElementById('widget_key_input').value.trim();
             widgetKey = widgetKeyInput;
-            updateScriptElement(); // Update the script element when the URL changes
 
+            updateScriptElement(); // Update the script element when the URL changes
+            document.getElementById('widget_key_input').value = '';
         }
 
         // Function to reset the URL and update the script element
@@ -1018,6 +1060,7 @@
                     const url = new URL(urlInput.includes('://') ? urlInput : `https://${urlInput}`);
                     startUrl = url.href;
                     updateScriptElement(); // Update the script element when the URL changes
+                    document.getElementById('session_url_input').value = '';
                 } catch (e) {
                     alert('Please enter a valid URL');
                 }
@@ -1050,12 +1093,12 @@
             updateScriptElement(); // Update the script element to reflect changes
         }
 
+        //clear the masking selectors
         function clearMaskingString() {
             maskingString = '';
             console.log('Masking string cleared:', maskingString);
             updateScriptElement();
         }
-
 
         //function to build the additional tab string
         function addToAdditionalTabs() {
@@ -1083,7 +1126,7 @@
             }
         }
 
-
+        //clear additional tab string
         function clearAdditionalTabs() {
             AdditionalUrls = '';
             AdditionalUrlNewTabs = '';
@@ -1112,7 +1155,7 @@
                 updateScriptElement();
             }
         }
-
+        //clear the tag string
         function clearTags() {
             tagsArray = '';
             indentedTagsArray = '';
@@ -1142,6 +1185,7 @@
             updateScriptElement();
         }
 
+        //clear metadata string
         function clearMetadata() {
             metadataObject = {};
             formattedMetadataJSON = '';
@@ -1150,7 +1194,11 @@
             console.log('Metadata object cleared:', metadataObject);
             updateScriptElement();
         }
+    </script>
 
+    <script>
+        //6// LISTNERS
+        //mapping elements to functions
         document.addEventListener('DOMContentLoaded', () => {
             // Event listener for settings toggles
             document.querySelectorAll('.settings-toggle input').forEach(input => {
@@ -1229,12 +1277,15 @@
 
         });
 
+        // Initial update of the script element
         document.addEventListener('DOMContentLoaded', () => {
-            // Initial update of the script element
             updateScriptElement();
         });
     </script>
     <script id="realSurflyScript">
+        //7// USING THE GENERATED SNIPPET
+
+        //Turn text content of code snippet element into usable function & manage its use on the page
         function startSessionHere() {
             const surflySnippet = scriptElement.textContent;
             const startSurfly = new Function(surflySnippet);
@@ -1243,15 +1294,13 @@
             refreshPageMessage.classList.add('warning-message');
             startSurfly();
         }
+
+        //copy code snippet to clipboard for use elsewhere
         function copyCode() {
             const surflySnippet = scriptElement.textContent;
             navigator.clipboard.writeText(surflySnippet).then(() => alert('The Surfly code snippet has been copied to the clipboard.'));
-
-
-
         }
     </script>
-
 
 
 </head>
@@ -1266,12 +1315,8 @@
             </svg>&nbsp;&nbsp;Refresh the page to start again&nbsp;&nbsp;
         </p>
     </div>
-
-
-
     <div class="content">
         <div class="settings">
-
             <div class="category">
                 <h2 class="section-heading">Add your widget key</h2>
                 <button class="toggle-button" onclick="toggleCategory(this)">Expand</button>
@@ -1288,7 +1333,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="category">
                 <h2 class="section-heading">Session queue</h2>
                 <button class="toggle-button" onclick="toggleCategory(this)">Expand</button>
@@ -1304,7 +1348,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="category">
                 <h2 class="section-heading">Starting website/webapp</h2>
                 <button class="toggle-button" onclick="toggleCategory(this)">Expand</button>
@@ -1318,7 +1361,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="category">
                 <h2 class="section-heading">Select server region(s)</h2>
                 <button class="toggle-button" onclick="toggleCategory(this)">Expand</button>
@@ -1346,59 +1388,44 @@
                     </div>
                 </div>
             </div>
-
             <div class="category">
                 <h2 class="section-heading">Configure the session </h2>
                 <button class="toggle-button" onclick="toggleCategory(this)">Expand</button>
                 <div class="category-content" style="display: none;">
                     <p class="category-description">Overview of all <a href="https://docs.surfly.com/session-options"
                             target="_blank">session options</a> and what they do</p>
-                            <h2 class="category-heading">Video</h2>
-                            <div class="feature-toggles">
-                                <div class="settings-toggle">
-                                    <label class="switch" id="videochat_enabled">
-                                        <input type="checkbox">
-                                        <span class="slider"></span>
-                                    </label>
-                                    <h2>videochat_enabled</h2>
-                                </div>
-                                <div class="settings-toggle">
-                                    <label class="switch" id="start_with_videochat_on">
-                                        <input type="checkbox">
-                                        <span class="slider"></span>
-                                    </label>
-                                    <h2>start_with_videochat_on</h2>
-                                </div>
-                                <div class="settings-toggle">
-                                    <label class="switch" id="start_with_fullscreen_videochat">
-                                        <input type="checkbox">
-                                        <span class="slider"></span>
-                                    </label>
-                                    <h2>start_with_fullscreen_videochat</h2>
-                                </div>
-                                <div class="settings-toggle">
-                                    <label class="switch" id="videochat_prompt">
-                                        <input type="checkbox">
-                                        <span class="slider"></span>
-                                    </label>
-                                    <h2>videochat_prompt</h2>
-                                </div>
-                                <div class="settings-toggle">
-                                    <label class="switch" id="anonymous_users_can_share_camera">
-                                        <input type="checkbox">
-                                        <span class="slider"></span>
-                                    </label>
-                                    <h2>anonymous_users_can_share_camera</h2>
-                                </div>
-                                <div class="settings-toggle">
-                                    <label class="switch" id="p2p_videochat_enabled">
-                                        <input type="checkbox">
-                                        <span class="slider"></span>
-                                    </label>
-                                    <h2>p2p_videochat_enabled</h2>
-                                </div>
-                            </div>
-                            <h2 class="category-heading">Other</h2>
+                    <h2 class="category-heading">Features</h2>
+                    <div class="feature-toggles">
+                        <div class="settings-toggle">
+                            <label class="switch" id="videochat_enabled">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>videochat_enabled</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="document_editor_enabled">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>document_editor_enabled</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="chat_enabled">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>chat_enabled</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="screensharing_enabled">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>screensharing_enabled</h2>
+                        </div>
+                    </div>
+                    <h2 class="category-heading">Permissions & Control</h2>
                     <div class="feature-toggles">
                         <div class="settings-toggle">
                             <label class="switch" id="admission_enabled">
@@ -1406,13 +1433,6 @@
                                 <span class="slider"></span>
                             </label>
                             <h2>admission_enabled</h2>
-                        </div>
-                        <div class="settings-toggle">
-                            <label class="switch" id="alternative_proxy_enabled">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                            <h2>alternative_proxy_enabled</h2>
                         </div>
                         <div class="settings-toggle">
                             <label class="switch" id="anyone_can_deactivate_space">
@@ -1429,88 +1449,11 @@
                             <h2>block_until_agent_joins</h2>
                         </div>
                         <div class="settings-toggle">
-                            <label class="switch" id="chat_enabled">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                            <h2>chat_enabled</h2>
-                        </div>
-                        <div class="settings-toggle">
-                            <label class="switch" id="cookie_transfer_enabled">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                            <h2>cookie_transfer_enabled</h2>
-                        </div>
-                        <div class="settings-toggle">
                             <label class="switch" id="default_invitations_enabled">
                                 <input type="checkbox">
                                 <span class="slider"></span>
                             </label>
                             <h2>default_invitations_enabled</h2>
-                        </div>
-                        <div class="settings-toggle">
-                            <label class="switch" id="document_editor_enabled">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                            <h2>document_editor_enabled</h2>
-                        </div>
-                        <div class="settings-toggle">
-                            <label class="switch" id="download_trigger_enabled">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                            <h2>download_trigger_enabled</h2>
-                        </div>
-                        <div class="settings-toggle">
-                            <label class="switch" id="enable_cookie_backtransfer">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                            <h2>enable_cookie_backtransfer</h2>
-                        </div>
-                        <div class="settings-toggle">
-                            <label class="switch" id="end_redirect_enabled">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                            <h2>end_redirect_enabled</h2>
-                        </div>
-                        <div class="settings-toggle">
-                            <label class="switch" id="filesharing_enabled">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                            <h2>filesharing_enabled</h2>
-                        </div>
-                        <div class="settings-toggle">
-                            <label class="switch" id="format_session_id">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                            <h2>format_session_id</h2>
-                        </div>
-                        <div class="settings-toggle">
-                            <label class="switch" id="headless">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                            <h2>headless</h2>
-                        </div>
-                        <div class="settings-toggle">
-                            <label class="switch" id="hide_cursors">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                            <h2>hide_cursors</h2>
-                        </div>
-                        <div class="settings-toggle">
-                            <label class="switch" id="hide_session_ui">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                            <h2>hide_session_ui</h2>
                         </div>
                         <div class="settings-toggle">
                             <label class="switch" id="host_switching_allowed">
@@ -1526,47 +1469,13 @@
                             </label>
                             <h2>invitations_allowed</h2>
                         </div>
-                        <div class="settings-toggle">
-                            <label class="switch" id="multileader">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                            <h2>multileader</h2>
-                        </div>
-                        <div class="settings-toggle">
-                            <label class="switch" id="native_selects">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                            <h2>native_selects</h2>
-                        </div>
+
                         <div class="settings-toggle">
                             <label class="switch" id="new_urls_allowed">
                                 <input type="checkbox">
                                 <span class="slider"></span>
                             </label>
                             <h2>new_urls_allowed</h2>
-                        </div>
-                        <div class="settings-toggle">
-                            <label class="switch" id="non_hosts_can_open_tabs">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                            <h2>non_hosts_can_open_tabs</h2>
-                        </div>
-                        <div class="settings-toggle">
-                            <label class="switch" id="notifications_enabled">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                            <h2>notifications_enabled</h2>
-                        </div>
-                        <div class="settings-toggle">
-                            <label class="switch" id="original_file_download_allowed">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                            <h2>original_file_download_allowed</h2>
                         </div>
                         <div class="settings-toggle">
                             <label class="switch" id="participants_can_request_to_interact">
@@ -1576,39 +1485,21 @@
                             <h2>participants_can_request_to_interact</h2>
                         </div>
                         <div class="settings-toggle">
-                            <label class="switch" id="pause_enabled">
+                            <label class="switch" id="non_hosts_can_open_tabs">
                                 <input type="checkbox">
                                 <span class="slider"></span>
                             </label>
-                            <h2>pause_enabled</h2>
+                            <h2>non_hosts_can_open_tabs</h2>
                         </div>
+                    </div>
+                    <h2 class="category-heading">Appearance & Experience</h2>
+                    <div class="feature-toggles">
                         <div class="settings-toggle">
-                            <label class="switch" id="private_session">
+                            <label class="switch" id="notifications_enabled">
                                 <input type="checkbox">
                                 <span class="slider"></span>
                             </label>
-                            <h2>private_session</h2>
-                        </div>
-                        <div class="settings-toggle">
-                            <label class="switch" id="screensharing_enabled">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                            <h2>screensharing_enabled</h2>
-                        </div>
-                        <div class="settings-toggle">
-                            <label class="switch" id="session_autorestore_enabled">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                            <h2>session_autorestore_enabled</h2>
-                        </div>
-                        <div class="settings-toggle">
-                            <label class="switch" id="session_start_confirmation">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                            <h2>session_start_confirmation</h2>
+                            <h2>notifications_enabled</h2>
                         </div>
                         <div class="settings-toggle">
                             <label class="switch" id="sounds_enabled">
@@ -1618,25 +1509,39 @@
                             <h2>sounds_enabled</h2>
                         </div>
                         <div class="settings-toggle">
-                            <label class="switch" id="start_muted">
+                            <label class="switch" id="end_redirect_enabled">
                                 <input type="checkbox">
                                 <span class="slider"></span>
                             </label>
-                            <h2>start_muted</h2>
+                            <h2>end_redirect_enabled</h2>
                         </div>
                         <div class="settings-toggle">
-                            <label class="switch" id="start_with_chat_open">
+                            <label class="switch" id="hide_cursors">
                                 <input type="checkbox">
                                 <span class="slider"></span>
                             </label>
-                            <h2>start_with_chat_open</h2>
+                            <h2>hide_cursors</h2>
                         </div>
                         <div class="settings-toggle">
-                            <label class="switch" id="start_with_invite_modal">
+                            <label class="switch" id="headless">
                                 <input type="checkbox">
                                 <span class="slider"></span>
                             </label>
-                            <h2>start_with_invite_modal</h2>
+                            <h2>headless</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="hide_session_ui">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>hide_session_ui</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="private_session">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>private_session</h2>
                         </div>
                         <div class="settings-toggle">
                             <label class="switch" id="start_with_loading_screen">
@@ -1646,11 +1551,161 @@
                             <h2>start_with_loading_screen</h2>
                         </div>
                         <div class="settings-toggle">
+                            <label class="switch" id="multileader">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>multileader</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="session_start_confirmation">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>session_start_confirmation</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="session_autorestore_enabled">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>session_autorestore_enabled</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="start_with_invite_modal">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>start_with_invite_modal</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="pause_enabled">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>pause_enabled</h2>
+                        </div>
+
+                        <div class="settings-toggle">
+                            <label class="switch" id="start_with_chat_open">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>start_with_chat_open</h2>
+                        </div>
+                    </div>
+                    <h2 class="category-heading">Video</h2>
+                    <div class="feature-toggles">
+                        <div class="settings-toggle">
+                            <label class="switch" id="start_with_videochat_on">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>start_with_videochat_on</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="start_with_fullscreen_videochat">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>start_with_fullscreen_videochat</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="videochat_prompt">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>videochat_prompt</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="anonymous_users_can_share_camera">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>anonymous_users_can_share_camera</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="p2p_videochat_enabled">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>p2p_videochat_enabled</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="start_muted">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>start_muted</h2>
+                        </div>
+                    </div>
+                    <h2 class="category-heading">Documents & Files</h2>
+                    <div class="feature-toggles">
+                        <div class="settings-toggle">
+                            <label class="switch" id="download_trigger_enabled">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>download_trigger_enabled</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="filesharing_enabled">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>filesharing_enabled</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="original_file_download_allowed">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>original_file_download_allowed</h2>
+                        </div>
+                    </div>
+                    <h2 class="category-heading">Browsing & Security</h2>
+                    <div class="feature-toggles">
+                        <div class="settings-toggle">
+                            <label class="switch" id="cookie_transfer_enabled">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>cookie_transfer_enabled</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="format_session_id">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>format_session_id</h2>
+                        </div>
+                        <div class="settings-toggle">
                             <label class="switch" id="url_mangling">
                                 <input type="checkbox">
                                 <span class="slider"></span>
                             </label>
                             <h2>url_mangling</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="alternative_proxy_enabled">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>alternative_proxy_enabled</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="enable_cookie_backtransfer">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>enable_cookie_backtransfer</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="native_selects">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>native_selects</h2>
                         </div>
                     </div>
                 </div>
@@ -1682,7 +1737,6 @@
                     </div>
                 </div>
             </div>
-
             <div class="category">
                 <h2 class="section-heading">Add element masking</h2>
                 <button class="toggle-button" onclick="toggleCategory(this)">Expand</button>
@@ -1698,7 +1752,6 @@
                     <span id="masking-preview" class="input-preview"></span>
                 </div>
             </div>
-
             <div class="category">
                 <h2 class="section-heading">Add additional tabs</h2>
                 <button class="toggle-button" onclick="toggleCategory(this)">Expand</button>
@@ -1715,8 +1768,6 @@
                     <p id="additional-tab-preview-query-paramaters" class="category-description"></p>
                 </div>
             </div>
-
-
             <div class="category">
                 <h2 class="section-heading">Add your own data</h2>
                 <button class="toggle-button" onclick="toggleCategory(this)">Expand</button>
@@ -1743,7 +1794,6 @@
                     <span id="metadata-preview" class="input-preview"></span>
                 </div>
             </div>
-
             <div class="category">
                 <h2 class="section-heading">Add automated event actions</h2>
                 <button class="toggle-button" onclick="toggleCategory(this)">Expand</button>
@@ -1779,7 +1829,7 @@
                 </div>
             </div>
             <div class="required-configs-div" id="required-configs">
-                <span id="config-requirements-heading">Requirements for your session:</span>
+                <span id="config-requirements-heading">your session requires the following options selected:</span>
                 <span id="event-config-requirements-preview"></span>
             </div>
         </div>
@@ -1791,7 +1841,6 @@
                 Here</button>
         </div>
     </div>
-
     <div class="javascript-window">
         <pre><code id="code-preview" class="language-javascript">
 Javascript goes here
