@@ -857,11 +857,11 @@
     l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
     }) (window, document, 'script', 'Surfly');
     
-    var SurflySession;${endIfNoAgent ? `\n\tvar participantJoined = false` : ''}
+    var SurflySession;${endIfNoAgent ? `\n\tvar participantJoined = false;` : ''}
     var settings = {
     "widget_key": "${widgetKey}",
     "url": "${startUrl}",
-    "skip_queue":${skipQueue},${formattedRegions},${settingsContent}
+    "skip_queue": ${skipQueue},${formattedRegions},${settingsContent}
     "hide_element_by_selector": "${maskingString}",
     "tags": ${indentedTagsArray ? `${indentedTagsArray}` : "[]"}
     };
@@ -886,7 +886,7 @@
                 //this event can be used to send notifications to Agents
             })
             .on('participant_joined', function (session, event) {
-                console.log('Participant ', event.clientIndex, 'joined the session');${startFullScreenVideo ? `\n\t\t\t\t${startFullScreenVideo}` : ''}${controlAndHostToAgent ? `\n\t\t\t\t${controlAndHostToAgent}` : ''}
+                console.log('Participant ', event.clientIndex, 'joined the session');${startFullScreenVideo ? `\n\t\t\t\t${startFullScreenVideo}` : ''}${controlAndHostToAgent ? `\n\t\t\t\t${controlAndHostToAgent}` : ''}${endIfNoAgent ? `\n\t\t\t\tparticipantJoined = true;` : ''}
             })
             .on("session_ended", function (session, event) {
                 console.log("Session has ended");
