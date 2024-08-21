@@ -41,6 +41,7 @@
             font-family: var(--font);
             overflow: hidden;
             margin-bottom: 0;
+            margin: 0;
         }
 
         pre {
@@ -56,6 +57,9 @@
             padding: 20px;
             padding-bottom: 0px;
             overflow: scroll;
+            transition: width 0.5s ease;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
 
         .content-body {
@@ -66,6 +70,27 @@
             padding: 5px;
         }
 
+        .hide-show-js-div {
+            position: sticky;
+            display: flex;
+            height: 24px;
+            top: -2px;
+            right: 0;
+            align-self: flex-end;
+            align-content: center;
+            transform: translateX(20px);
+            background-color: var(--lightest-gray);
+            border-radius: 12px 0px 0px 12px;
+            padding: 5px;
+            transition: transform 0.5s linear;
+        }
+
+        .hide-show-js-div>#expand-collapse-arrow {
+            float: right;
+            clear: both;
+            transition: transform 0.5s linear;
+        }
+
         .javascript-window {
             font-size: .7em;
             width: 40%;
@@ -73,6 +98,8 @@
             height: 100vh;
             background-color: var(--background-dark);
             user-select: text !important;
+            transition: width 0.5s ease;
+            z-index: 1;
         }
 
         .javascript-window ::selection {
@@ -147,7 +174,7 @@
 
         .input-field#metadata_input_value,
         .input-field#metadata_input_key {
-            width: 33.2%;
+            width: 230px;
         }
 
         .input-field:focus {
@@ -195,12 +222,18 @@
             font-family: var(--font);
             font-size: 1em;
             font-weight: 100;
-            padding: .3rem .8rem;
+            padding: .2rem .8rem;
             border: 0;
             touch-action: manipulation;
             white-space: nowrap;
             height: auto;
             margin-right: 2px;
+        }
+
+        #hide-show-button {
+            all: unset;
+            touch-action: manipulation;
+            cursor: pointer;
         }
 
         .container {
@@ -264,6 +297,7 @@
 
         .category-content {
             display: none;
+            max-width: 900px;
         }
 
         .category-description {
@@ -311,7 +345,6 @@
             width: 100%;
             display: flex;
             flex-direction: column;
-            margin-right: 20px;
         }
 
         .settings .category,
@@ -559,16 +592,16 @@
         }
 
         .start-session {
-            background-color: var(--dark-red);
+            background-color: var(--white);
+            border: 1px solid var(--dark-red);
             box-sizing: border-box;
             border-radius: 50px;
-            color: var(--white);
+            color: var(--light-red);
             cursor: pointer;
             font-family: var(--font);
-            font-size: 1.2rem;
-            font-weight: 200;
-            padding: .5rem .8rem;
-            border: 0;
+            font-size: 1rem;
+            font-weight: 150;
+            padding: .4rem .6rem;
             touch-action: manipulation;
             margin-left: 1px;
             white-space: nowrap;
@@ -600,7 +633,7 @@
             text-align: center;
             margin-right: .2vw;
             margin-top: 1vh;
-            width: 70%;
+            width: 500px;
         }
 
         .input-field {
@@ -653,6 +686,20 @@
             cursor: pointer;
             border-radius: 5px;
             margin-bottom: 1px;
+        }
+
+        @media (max-width: 800px) {
+            .javascript-window {
+                display: none;
+            }
+
+            .content {
+                width: 100%;
+            }
+
+            .hide-show-js-div {
+                display: none;
+            }
         }
     </style>
 
@@ -784,6 +831,8 @@
         //holds html formatted string to look like object again
         var eventConfigRequirements = '';
         //holds the required session configs for selections made for display on page
+        var firstTabUrlSubmitted = false;
+        //used to check if a new tab entry has already been submitted
     </script>
     <script>
         //4// VISUAL UPDATES FOR THE PAGE
@@ -794,6 +843,8 @@
         function updateScriptElement() {
             scriptElement = document.getElementById("myScript");
             const settingsString = JSON.stringify(settings, null, 4);
+            const widgetKetPreivew = document.getElementById("widget-key-preview");
+            const startUrlPreivew = document.getElementById("start-url-preview");
             const maskingPreivew = document.getElementById("masking-preview");
             const additionalTabsPreivew = document.getElementById("additional-tab-preview");
             const additionalTabPreviewQueryParamaters = document.getElementById("additional-tab-preview-query-paramaters");
@@ -803,6 +854,22 @@
             const eventRequirementsPreview = document.getElementById("event-config-requirements-preview");
             const settingsContent = settingsString.slice(1, settingsString.length - 2) + ",";
             const formattedRegions = '\n\t' + `"selected_regions": [${selectedRegions.map(region => `\n        "${region}"`).join(',')}\n        ]`;
+
+            //update widget key preview
+            if (widgetKey) {
+                widgetKetPreivew.textContent = widgetKey;
+                widgetKetPreivew.classList.remove('hide-input-preview');
+            } else {
+                widgetKetPreivew.classList.add('hide-input-preview');
+            }
+
+            //update start url preview
+            if (startUrl) {
+                startUrlPreivew.textContent = startUrl;
+                startUrlPreivew.classList.remove('hide-input-preview');
+            } else {
+                startUrlPreivew.classList.add('hide-input-preview');
+            }
 
             //update masking preview
             if (maskingString) {
@@ -896,6 +963,29 @@
     });
     `;
         }
+
+
+        // Also adjust the position immediately after toggling the preview
+        function toggleJavascriptPreview() {
+            const javascriptViewer = document.getElementById('javascript-viewer');
+            const sessionBuilderUI = document.getElementById('session-builder-ui');
+            const toggleJavaScriptButton = document.getElementById("hide-show-button");
+
+            // Check current widths and toggle between the two states
+            if (javascriptViewer.style.width === '0%' && sessionBuilderUI.style.width === '100%') {
+                // Revert to initial state
+                javascriptViewer.style.width = '40%';
+                sessionBuilderUI.style.width = '60%';
+                toggleJavaScriptButton.style.transform = "none";
+            } else {
+                // Set to hidden state
+                javascriptViewer.style.width = '0%';
+                sessionBuilderUI.style.width = '100%';
+                toggleJavaScriptButton.style.transform = "rotate(-180deg)";
+            }
+        }
+
+
     </script>
     <script>
         //5// BUILD THE CODE SNIPPET & MANAGE PAGE UX
@@ -911,7 +1001,7 @@
                 button.textContent = 'Expand';
             }
         }
-        // Function to update code-preview
+        // Function to update code preview
         function updateCodePreview() {
             const scriptContent = document.getElementById("myScript").textContent;
             document.getElementById("code-preview").innerHTML = scriptContent;
@@ -990,17 +1080,18 @@
         function updateNonEventRequirements() {
             let newTabRequirementsText = "<span class=config-category>open extra tabs:</span>" + "&nbsp;new_urls_allowed";
             if (AdditionalUrls) {
-                if (eventConfigRequirements) {
+                if (eventConfigRequirements && !firstTabUrlSubmitted) {
                     eventConfigRequirements += '\n\n' + newTabRequirementsText;
                 }
                 else {
                     eventConfigRequirements = newTabRequirementsText;
-
+                    firstTabUrlSubmitted = true;
                 }
             }
             else {
                 eventConfigRequirements = eventConfigRequirements.replace(newTabRequirementsText, '').trim();
                 eventConfigRequirements = eventConfigRequirements.replace(/(\n\s*\n)/g, '\n\n');
+                firstTabUrlSubmitted = false;
             }
             console.log(eventConfigRequirements);
             updateScriptElement();
@@ -1109,7 +1200,7 @@
                 if (inputUrlValue) {
                     if (AdditionalUrls) {
                         AdditionalUrls += ', ' + inputUrlValue;
-                        AdditionalUrlNewTabs = AdditionalUrlNewTabs + '\n\t\t\t\t\t\t' + 'SurflySession.openTab("' + 'https://' + inputUrlValue + '");';
+                        AdditionalUrlNewTabs = AdditionalUrlNewTabs + '\n\t\t\t\t' + 'SurflySession.openTab("' + 'https://' + inputUrlValue + '");';
                         AdditionalUrlQueryParams += '&url=' + inputUrlValue;
                     } else {
                         AdditionalUrls = inputUrlValue;
@@ -1254,6 +1345,9 @@
                 updateScriptElement();
             });
 
+            //toggle JS preview modal view
+            document.getElementById('hide-show-button').addEventListener('click', toggleJavascriptPreview);
+
             //Event listners for event adding section
             document.getElementById('start-screenshare').addEventListener('change', function () {
                 updateEventVariables('instantScreenShare', this.checked);
@@ -1290,15 +1384,25 @@
             const surflySnippet = scriptElement.textContent;
             const startSurfly = new Function(surflySnippet);
             const refreshPageMessage = document.getElementById("refresh-page-message")
-            refreshPageMessage.classList.remove('warning-message-hidden');
-            refreshPageMessage.classList.add('warning-message');
-            startSurfly();
+            if (!widgetKey) {
+                alert('Your need a widget key to start a session!');
+            }
+            else {
+                refreshPageMessage.classList.remove('warning-message-hidden');
+                refreshPageMessage.classList.add('warning-message');
+                startSurfly();
+            }
         }
 
         //copy code snippet to clipboard for use elsewhere
         function copyCode() {
             const surflySnippet = scriptElement.textContent;
+            if (!widgetKey) {
+                alert('Your need a widget key to start a session!');
+            }
+            else {
             navigator.clipboard.writeText(surflySnippet).then(() => alert('The Surfly code snippet has been copied to the clipboard.'));
+            }
         }
     </script>
 
@@ -1315,8 +1419,20 @@
             </svg>&nbsp;&nbsp;Refresh the page to start again&nbsp;&nbsp;
         </p>
     </div>
-    <div class="content">
-        <div class="settings">
+    <div class="content" id="session-builder-ui">
+        <div class="hide-show-js-div">
+            <button id="hide-show-button">
+                <svg id="expand-collapse-arrow" xmlns="http://www.w3.org/2000/svg" width="22px" height="22px">
+                    <path
+                        d="M12 2a10 10 0 1 0 10 10A10.011 10.011 0 0 0 12 2zm0 18a8 8 0 1 1 8-8 8.009 8.009 0 0 1-8 8z"
+                        fill="var(--grey)" />
+                    <path
+                        d="M11.293 8.707 13.586 11H8v2h5.586l-2.293 2.293 1.414 1.414L17.414 12l-4.707-4.707-1.414 1.414z"
+                        fill="var(--grey)" />
+                </svg>
+            </button>
+        </div>
+        <div class="settings" id="settings-div">
             <div class="category">
                 <h2 class="section-heading">Add your widget key</h2>
                 <button class="toggle-button" onclick="toggleCategory(this)">Expand</button>
@@ -1332,6 +1448,7 @@
                         <button id="reset-widget-key-button">Reset</button>
                     </div>
                 </div>
+                <span id="widget-key-preview" class="input-preview"></span>
             </div>
             <div class="category">
                 <h2 class="section-heading">Session queue</h2>
@@ -1352,7 +1469,7 @@
                 <h2 class="section-heading">Starting website/webapp</h2>
                 <button class="toggle-button" onclick="toggleCategory(this)">Expand</button>
                 <div class="category-content" style="display: none;">
-                    <p class="category-description">This will be the first tab in your session</p>
+                    <p class="category-description">Leave empty to use the page the session will start from.</p>
                     <div class="input-string-div">
                         <input type="text" placeholder="e.g. www.wikipedia.com" class="input-field"
                             id="session_url_input" value="">
@@ -1360,6 +1477,7 @@
                         <button id="reset-url-button">Reset</button>
                     </div>
                 </div>
+                <span id="start-url-preview" class="input-preview"></span>
             </div>
             <div class="category">
                 <h2 class="section-heading">Select server region(s)</h2>
@@ -1759,7 +1877,7 @@
                     <p class="category-description">Additional tabs will open automatically once the session begins</a>
                     </p>
                     <div class="input-string-div">
-                        <input type="text" placeholder="e.g. www.google.com,www.bing.com" class="input-field"
+                        <input type="text" placeholder="e.g. www.google.com" class="input-field"
                             id="additional_tab_input">
                         <button id="add_additional_tabs_button">Add to code</button>
                         <button id="clear_additional_tabs_button">Reset</button>
@@ -1841,9 +1959,8 @@
                 Here</button>
         </div>
     </div>
-    <div class="javascript-window">
+    <div class="javascript-window" id="javascript-viewer">
         <pre><code id="code-preview" class="language-javascript">
-Javascript goes here
         </code></pre>
     </div>
 </body>
