@@ -26,7 +26,8 @@
                     (init.success && !Surfly.isInsideSession) {
                     SurflySession = Surfly.session().startLeader()
                     .on('session_started', function (session, event) {
-                            console.log(event.userData);
+                            console.log(event);
+                            console.log(session);
                         })
                         .on('participant_joined', function (session, event) {
                             console.log(event.userData);
