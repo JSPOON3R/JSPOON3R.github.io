@@ -25,6 +25,12 @@
                 if
                     (init.success && !Surfly.isInsideSession) {
                     SurflySession = Surfly.session().startLeader()
+                    .on('session_started', function (session, event) {
+                            console.log(event.userData);
+                        })
+                        .on('participant_joined', function (session, event) {
+                            console.log(event.userData);
+                        })
                 }
             });
         }
