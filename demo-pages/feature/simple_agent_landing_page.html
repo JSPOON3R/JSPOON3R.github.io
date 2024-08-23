@@ -5,58 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Landing Page</title>
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <script> 
-    function onLoadCallback() {
-    gapi.load('auth2', function() {
-        gapi.auth2.init().then(function() {
-            checkSignInStatus();
-        });
-    });
-}
-
-function checkSignInStatus() {
-    var auth2 = gapi.auth2.getAuthInstance();
-    if (auth2.isSignedIn.get()) {
-        console.log("User is signed in.");
-        var user = auth2.currentUser.get();
-        console.log("User's name: " + user.getBasicProfile().getName());
-        console.log("User's email: " + user.getBasicProfile().getEmail());
-        //start session
-        //surfly code start
-        var SurflySession; function loadSurfly() {
-            console.log('surfly triggered following widget key declaration');
-            (function (s, u, r, f, l, y) { s[f] = s[f] || { init: function () { s[f].q = arguments } }; l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1; l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y); })(window, document, 'script', 'Surfly');
-
-            var settings = {
-                widget_key: "99671227762b43c2a96daa066ee006e2",
-                queued: false,
-                session_autorestore_enabled: false,
-                block_until_agent_joins: false,
-                automated_session_recording_enabled: false,
-                url: "https://demo.lfsuat.com/disclosures/Remote-Closing-sf",
-                leader_redirect_url: "https://www.bing.com",
-                follower_redirect_url: "https://www.wikipedia.com",
-                skip_queue: true
-            };
-
-            Surfly.init(settings, function (init) {
-                if
-                    (init.success && !Surfly.isInsideSession) {
-                    SurflySession = Surfly.session().startLeader()
-                }
-            });
-        }
-        loadSurfly(); 
-        //Surfly code end
-    } else {
-        console.log("User is not signed in. Relocating to sign in page");
-        window.location.href = "https://myaccount.google.com/";
-    }
-}
-    
-    
-    var SurflySession; function loadSurfly() {
+    <script> var SurflySession; function loadSurfly() {
             console.log('surfly triggered following widget key declaration');
             (function (s, u, r, f, l, y) { s[f] = s[f] || { init: function () { s[f].q = arguments } }; l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1; l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y); })(window, document, 'script', 'Surfly');
 
@@ -83,6 +32,7 @@ function checkSignInStatus() {
     </script>
 </head>
 
-<body onload="onLoadCallback()"></body>
+<body>
+</body>
 
 </html>
