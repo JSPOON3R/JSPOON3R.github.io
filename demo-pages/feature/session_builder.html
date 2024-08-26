@@ -96,7 +96,7 @@
             width: 40%;
             overflow: scroll;
             height: 100vh;
-            background-color: var(--background-dark);
+            background-color: var(--background);
             user-select: text !important;
             transition: width 0.5s ease;
             z-index: 1;
@@ -583,11 +583,19 @@
             margin-bottom: 20px;
         }
 
+        .copy-buttons {
+            display: flex;
+            flex-direction: column;
+            align-content: space-between;
+        }
+
         .or {
             display: inline-block;
-            padding: 5px 10px;
+            height: 60%;
+            width: 2px;
             margin: 0 10px;
             font-size: 18px;
+            background-color: var(--lightest-gray);
             text-align: center;
         }
 
@@ -603,8 +611,9 @@
             font-weight: 150;
             padding: .4rem .6rem;
             touch-action: manipulation;
-            margin-left: 1px;
+            margin: 40px 10px;
             white-space: nowrap;
+            width: 250px;
         }
 
         .input-selector-div {
@@ -688,6 +697,31 @@
             margin-bottom: 1px;
         }
 
+        .disclaimer {
+            display: flex;
+            flex-direction: column;
+            padding: 10px 20px;
+            margin-top: 30px;
+            border-radius: 12px;
+            max-width: 900px;
+            background-color: var(--off-white);
+            align-self: flex-start;
+        }
+
+        .disclaimer-title {
+            color: var(--grey);
+            font-size: .9rem;
+            margin-bottom: 10px;
+        }
+
+        .disclaimer-text {
+            color: var(--grey);
+            font-size: .8rem;
+            text-align: justify;
+            text-justify: inter-word;
+        }
+
+
         @media (max-width: 800px) {
             .javascript-window {
                 display: none;
@@ -709,50 +743,50 @@
         //Starting script to be edited by updateScriptElement(). 
         //Settings listed here because to process used to update them visually requires it
         var settings = {
-            admission_enabled: false,
-            alternative_proxy_enabled: false,
-            anonymous_users_can_share_camera: false,
-            anyone_can_deactivate_space: false,
-            block_until_agent_joins: false,
-            chat_enabled: false,
-            cookie_transfer_enabled: false,
-            default_invitations_enabled: false,
-            document_editor_enabled: false,
-            download_trigger_enabled: false,
-            enable_cookie_backtransfer: false,
-            end_redirect_enabled: false,
-            filesharing_enabled: false,
-            format_session_id: false,
-            headless: false,
-            hide_cursors: false,
-            hide_session_ui: false,
-            host_switching_allowed: false,
-            invitations_allowed: false,
-            multileader: false,
-            native_selects: false,
-            new_urls_allowed: false,
-            non_hosts_can_open_tabs: false,
-            notifications_enabled: false,
-            original_file_download_allowed: false,
-            p2p_videochat_enabled: false,
-            participants_can_request_to_interact: false,
-            pause_enabled: false,
-            private_session: false,
-            screensharing_enabled: false,
-            session_autorestore_enabled: false,
-            session_start_confirmation: false,
-            sounds_enabled: false,
-            start_muted: false,
-            start_with_chat_open: false,
-            start_with_fullscreen_videochat: false,
-            start_with_invite_modal: false,
-            start_with_loading_screen: false,
-            start_with_videochat_on: false,
-            url_mangling: false,
-            videochat_enabled: false,
-            videochat_prompt: false,
-            default_videochat_fullscreen_mode: "grid",
-            default_videochat_mode: "floating",
+            admission_enabled: '',
+            alternative_proxy_enabled: '',
+            anonymous_users_can_share_camera: '',
+            anyone_can_deactivate_space: '',
+            block_until_agent_joins: '',
+            chat_enabled: '',
+            cookie_transfer_enabled: '',
+            default_invitations_enabled: '',
+            document_editor_enabled: '',
+            download_trigger_enabled: '',
+            enable_cookie_backtransfer: '',
+            end_redirect_enabled: '',
+            filesharing_enabled: '',
+            format_session_id: '',
+            headless: '',
+            hide_cursors: '',
+            hide_session_ui: '',
+            host_switching_allowed: '',
+            invitations_allowed: '',
+            multileader: '',
+            native_selects: '',
+            new_urls_allowed: '',
+            non_hosts_can_open_tabs: '',
+            notifications_enabled: '',
+            original_file_download_allowed: '',
+            p2p_videochat_enabled: '',
+            participants_can_request_to_interact: '',
+            pause_enabled: '',
+            private_session: '',
+            screensharing_enabled: '',
+            session_autorestore_enabled: '',
+            session_start_confirmation: '',
+            sounds_enabled: '',
+            start_muted: '',
+            start_with_chat_open: '',
+            start_with_fullscreen_videochat: '',
+            start_with_invite_modal: '',
+            start_with_loading_screen: '',
+            start_with_videochat_on: '',
+            url_mangling: '',
+            videochat_enabled: '',
+            videochat_prompt: '',
+            default_videochat_fullscreen_mode: '',
+            default_videochat_mode: '',
         };
     </script>
     <script>
@@ -793,6 +827,16 @@
         //Vars needed in this page and explanations below each
         var scriptElement;
         //Holds the script to be displayed on the page
+        var allSettings = '';
+        //collects all settings together in one var
+        var sessionStarted = '';
+        //code block for this event
+        var sessionLoaded = '';
+        //code block for this event
+        var userAcvivity = '';
+        //code block for this event
+        var participantJoined = '';
+        //code block for this event
         var selectedRegions = [];
         //stores the Surfly server regions 
         var startUrl = '';
@@ -813,7 +857,7 @@
         //stores the additional tab urls in query paramater format for session links
         var AdditionalUrlNewTabs;
         //adds the additional urls to Surfly open tab function
-        var skipQueue = false;
+        var skipQueue = '';
         //stores the skip queue value
         var controlAndHostToAgent = '';
         //adds event triggered code to transfer host and control to an agent when they join
@@ -840,9 +884,21 @@
         //function also updates previews on selections outside the code snippet
         //This function is called by many other functions to maintain updated display of selections in the on screen snippet
         // Function to update the settings element in the script tag and flash the updated line
+
+        //filter out the values from the initial settings block that do not have a value (messy but im locked in)
+        function filterValidValues(obj) {
+            return Object.keys(obj)
+                .filter(key => obj[key] !== null && obj[key] !== undefined && obj[key] !== '')
+                .reduce((acc, key) => {
+                    acc[key] = obj[key];
+                    return acc;
+                }, {});
+        }
+
         function updateScriptElement() {
             scriptElement = document.getElementById("myScript");
-            const settingsString = JSON.stringify(settings, null, 4);
+            const filteredSettings = filterValidValues(settings);
+            const settingsString = JSON.stringify(filteredSettings, null, 4);
             const widgetKetPreivew = document.getElementById("widget-key-preview");
             const startUrlPreivew = document.getElementById("start-url-preview");
             const maskingPreivew = document.getElementById("masking-preview");
@@ -852,9 +908,14 @@
             const metadataPreview = document.getElementById("metadata-preview");
             const eventRequirementsHeading = document.getElementById("required-configs");
             const eventRequirementsPreview = document.getElementById("event-config-requirements-preview");
-            const settingsContent = settingsString.slice(1, settingsString.length - 2) + ",";
-            const formattedRegions = '\n\t' + `"selected_regions": [${selectedRegions.map(region => `\n        "${region}"`).join(',')}\n        ]`;
-
+            const importSettingsContent = settingsString.slice(1, settingsString.length - 2);
+            const settingsContent = importSettingsContent
+                ? importSettingsContent.trim().endsWith(',')
+                    ? importSettingsContent.trim()
+                    : importSettingsContent.trim() + ","
+                : '';
+            const formattedRegions = selectedRegions && selectedRegions.length > 0 ? `[\t${selectedRegions.map(region => `\n\t\t"${region}"`).join(',')}\n\t\t\t]`
+                : '';
             //update widget key preview
             if (widgetKey) {
                 widgetKetPreivew.textContent = widgetKey;
@@ -915,6 +976,61 @@
                 eventRequirementsPreview.classList.add('hide-input-preview');
                 eventRequirementsHeading.classList.add('hide-input-preview');
             }
+
+            //manage the custom settings variable
+            allSettings =
+                `${widgetKey ? '\n\t"widget_key": ' + `"${widgetKey}",` : ''}` +
+                `${startUrl ? '\n\t' + '"url": ' + '"' + `${startUrl}` + '"' + `,` : ''}` +
+                `${skipQueue ? `\n\t${skipQueue},` : ''}` +
+                `${formattedRegions ? '\n\t"selected_regions": ' + `${formattedRegions},` : ''}` +
+                `${settingsContent ? '\n\t' + `${settingsContent}` : ''}` +
+                `${maskingString ? '\n\t"hide_element_by_selector": ' + `"${maskingString}",` : ''}` +
+                `${indentedTagsArray ? '\n\t"tags": ' + `${indentedTagsArray}` : '\n\t"tags": [' + '\n\t\t"Session-Builder"' + '\n\t\t\t]'}`;
+
+            //manage session_started event block
+            if (endIfNoAgent) {
+                sessionStarted = `
+            .on("session_started", function (session, event) {
+                console.log("Session has started");${endIfNoAgent ? `\n\t\t\t\t${endIfNoAgent}` : ''}
+            })`;
+            } else {
+                sessionStarted = '';
+            }
+            //manage session_loaded event block
+            if (endIfNoActivity10Mins) {
+                userAcvivity = `
+            .on("user_activity", function (session, event) {${endIfNoActivity10Mins}
+            })`;
+            } else {
+                userAcvivity = '';
+            }
+            //manage session_loaded event block
+            if (instantScreenShare || AdditionalUrlNewTabs) {
+                sessionLoaded = `
+            .on('session_loaded', function (session, event) {
+                console.log("Session loaded successfully");${AdditionalUrlNewTabs ? `\n\t\t\t\t${AdditionalUrlNewTabs}` : ''}${instantScreenShare ? `\n\t\t\t\t${instantScreenShare}` : ''} 
+            })`;
+            } else {
+                sessionLoaded = '';
+            }
+            //manage user_acvivity event block
+            if (endIfNoActivity10Mins) {
+                userAcvivity = `
+            .on("user_activity", function (session, event) {${endIfNoActivity10Mins}
+            })`;
+            } else {
+                userAcvivity = '';
+            }
+            //manage participant_joined event block
+            if (startFullScreenVideo || controlAndHostToAgent || endIfNoAgent) {
+                participantJoined = `
+            .on('participant_joined', function (session, event) {
+                console.log('Participant ', event.clientIndex, 'joined the session');${startFullScreenVideo ? `\n\t\t\t\t${startFullScreenVideo}` : ''}${controlAndHostToAgent ? `\n\t\t\t\t${controlAndHostToAgent}` : ''}${endIfNoAgent ? `\n\t\t\t\tparticipantJoined = true;` : ''}
+            })`
+            } else {
+                participantJoined = '';
+            }
+
             //update the page code snippet
             scriptElement.textContent = `
     
@@ -925,13 +1041,7 @@
     }) (window, document, 'script', 'Surfly');
     
     var SurflySession;${endIfNoAgent ? `\n\tvar participantJoined = false;` : ''}
-    var settings = {
-    "widget_key": "${widgetKey}",
-    "url": "${startUrl}",
-    "skip_queue": ${skipQueue},${formattedRegions},${settingsContent}
-    "hide_element_by_selector": "${maskingString}",
-    "tags": ${indentedTagsArray ? `${indentedTagsArray}` : "[]"}
-    };
+    var settings = {${allSettings ? `${allSettings}\n\t\t};` : '};'}
     
     Surfly.init(settings, function (init) {
         if (init.success && !Surfly.isInsideSession) {
@@ -939,26 +1049,7 @@
             SurflySession = Surfly.session().create()
             .on("session_created", function (session, event) {
                 SurflySession.startLeader(${indentedFormattedMetadataJSON ? "null," + `\n${indentedFormattedMetadataJSON}` : ''});
-            })
-            .on("session_started", function (session, event) {
-                console.log("Session has started");${endIfNoAgent ? `\n\t\t\t\t${endIfNoAgent}` : ''}
-            })${endIfNoActivity10Mins}
-            .on('session_loaded', function (session, event) {
-                console.log("Session loaded successfully");${AdditionalUrlNewTabs ? `\n\t\t\t\t${AdditionalUrlNewTabs}` : ''}${instantScreenShare ? `\n\t\t\t\t${instantScreenShare}` : ''} 
-            })
-            .on("session_queued", function (session, event) {
-                console.log("Session is in the queue with pin ", session.pin);
-                console.log("Agent link: ", session.leaderLink);
-                console.log("Customer link: ", session.followerLink);
-                //this event can be used to send notifications to Agents
-            })
-            .on('participant_joined', function (session, event) {
-                console.log('Participant ', event.clientIndex, 'joined the session');${startFullScreenVideo ? `\n\t\t\t\t${startFullScreenVideo}` : ''}${controlAndHostToAgent ? `\n\t\t\t\t${controlAndHostToAgent}` : ''}${endIfNoAgent ? `\n\t\t\t\tparticipantJoined = true;` : ''}
-            })
-            .on("session_ended", function (session, event) {
-                console.log("Session has ended");
-                //trigger post session actions here
-            });
+            })${sessionStarted}${sessionLoaded}${userAcvivity}${participantJoined} 
         }
     });
     `;
@@ -1042,15 +1133,14 @@
                     requirementsText = "";
                     break;
                 case 'endIfNoActivity10Mins':
-                    endIfNoActivity10Mins = isChecked ? '\n\t\t\t' +
-                        '.on("user_activity", function (session, event) {' + '\n\t\t\t\t' +
+                    endIfNoActivity10Mins = isChecked ? '\n\t\t\t\t' +
                         'if (session.inactivityTimeout) {' + '\n\t\t\t\t\t' +
                         'clearTimeout(session.inactivityTimeout);' + '\n\t\t\t\t' +
                         '}' + '\n\t\t\t\t' +
                         'session.inactivityTimeout = setTimeout(function () {' + '\n\t\t\t\t\t' +
                         'console.log("Session ended due to inactivity");' + '\n\t\t\t\t\t' +
                         'SurflySession.end();' + '\n\t\t\t\t\t' +
-                        '}, 600000);' + '\n\t\t\t' + '})' : '';
+                        '}, 600000);' : '';
                     requirementsText = "";
                     break;
                 default:
@@ -1073,7 +1163,6 @@
                 eventConfigRequirements = eventConfigRequirements.replace(requirementsText, '').trim();
                 eventConfigRequirements = eventConfigRequirements.replace(/(\n\s*\n)/g, '\n\n');
             }
-            console.log(eventConfigRequirements);
             updateScriptElement();
         }
         //function to update requirements string from selections outside event actions
@@ -1093,7 +1182,6 @@
                 eventConfigRequirements = eventConfigRequirements.replace(/(\n\s*\n)/g, '\n\n');
                 firstTabUrlSubmitted = false;
             }
-            console.log(eventConfigRequirements);
             updateScriptElement();
         }
 
@@ -1239,8 +1327,8 @@
                     tagsArray.map((tag, index) => {
                         const comma = index < tagsArray.length - 1 ? ',' : '';
                         return `\t\t"${tag}"${comma}`;
-                    }).join('\n') +
-                    "\n\t\t]";
+                    }).join('\n') + ',' + '\n\t\t"Session-Builder"' +
+                    "\n\t\t\t]";
 
                 document.getElementById('tags_input').value = '';
                 updateScriptElement();
@@ -1288,9 +1376,30 @@
     </script>
 
     <script>
-        //6// LISTNERS
+        //6// MAKE SURE IT WORKS
+        //Manage settings combinations and ensure nothing weird can happen
+
+        //make sure pin modal doesn't show if queue is skipped 
+
+
+
+    </script>
+
+    <script>
+        //7// LISTNERS
         //mapping elements to functions
         document.addEventListener('DOMContentLoaded', () => {
+
+
+            //skip queue toggle
+            document.getElementById('skip_queue').addEventListener('change', function () {
+                if (this.checked) {
+                    skipQueue = '"skip_queue": true';
+                } else {
+                    skipQueue = '';
+                }
+                updateScriptElement();
+            });
             // Event listener for settings toggles
             document.querySelectorAll('.settings-toggle input').forEach(input => {
                 input.addEventListener('change', (event) => {
@@ -1335,16 +1444,6 @@
             // Event listener for the "Reset" button
             document.getElementById('clear_metadata_button').addEventListener('click', clearMetadata);
 
-            //skip queue toggle
-            document.getElementById('skip_queue').addEventListener('change', function () {
-                if (this.checked) {
-                    skipQueue = true;
-                } else {
-                    skipQueue = false;
-                }
-                updateScriptElement();
-            });
-
             //toggle JS preview modal view
             document.getElementById('hide-show-button').addEventListener('click', toggleJavascriptPreview);
 
@@ -1377,7 +1476,7 @@
         });
     </script>
     <script id="realSurflyScript">
-        //7// USING THE GENERATED SNIPPET
+        //8// USING THE GENERATED SNIPPET
 
         //Turn text content of code snippet element into usable function & manage its use on the page
         function startSessionHere() {
@@ -1401,7 +1500,43 @@
                 alert('Your need a widget key to start a session!');
             }
             else {
-            navigator.clipboard.writeText(surflySnippet).then(() => alert('The Surfly code snippet has been copied to the clipboard.'));
+                navigator.clipboard.writeText(surflySnippet).then(() => alert('The Surfly code snippet has been copied to the clipboard.'));
+            }
+        }
+
+        function copyCodeWithButton() {
+            const surflySnippet = scriptElement.textContent;
+            const buttonCode = `
+const customSurflyButton = document.createElement('button');
+customSurflyButton.style.position = 'fixed';
+customSurflyButton.style.bottom = '20px';
+customSurflyButton.style.right = '20px';
+customSurflyButton.style.zIndex = '1000'; // Ensure it sits on top of other content
+customSurflyButton.style.backgroundColor = '#007bff'; // Button color
+customSurflyButton.style.color = 'white'; // Text color
+customSurflyButton.style.border = 'none';
+customSurflyButton.style.borderRadius = '50%';
+customSurflyButton.style.width = '60px';
+customSurflyButton.style.height = '60px';
+customSurflyButton.style.display = 'flex';
+customSurflyButton.style.justifyContent = 'center';
+customSurflyButton.style.alignItems = 'center';
+customSurflyButton.style.cursor = 'pointer';
+customSurflyButton.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+customSurflyButton.style.fontSize = '24px';
+
+customSurflyButton.innerHTML = '+';
+
+customSurflyButton.addEventListener('click', () => {
+   ${surflySnippet}
+});
+document.body.appendChild(customSurflyButton);
+            `
+            if (!widgetKey) {
+                alert('Your need a widget key to start a session!');
+            }
+            else {
+                navigator.clipboard.writeText(buttonCode).then(() => alert('The custom button code snippet has been copied to the clipboard.'));
             }
         }
     </script>
@@ -1511,7 +1646,9 @@
                 <button class="toggle-button" onclick="toggleCategory(this)">Expand</button>
                 <div class="category-content" style="display: none;">
                     <p class="category-description">Overview of all <a href="https://docs.surfly.com/session-options"
-                            target="_blank">session options</a> and what they do</p>
+                            target="_blank">session options</a> and what they do.<br><i
+                            style="color:var(--grey);">Settings not selected here will use the value given in your
+                            Surfly environment<br> Toggle a setting on and off to ensure it is false</i></p>
                     <h2 class="category-heading">Features</h2>
                     <div class="feature-toggles">
                         <div class="settings-toggle">
@@ -1841,6 +1978,7 @@
                             </p>
                             <select class="drop-down" id="default_videochat_fullscreen_mode"
                                 onchange="toggleVideoView(this)">
+                                <option value="">none set</option>
                                 <option value="grid">Grid</option>
                                 <option value="spotlight">Spotlight</option>
                             </select>
@@ -1848,6 +1986,7 @@
                         <div class="view-select">
                             <p class="category-description" id="preview-screen-label">default_videochat_mode</a></p>
                             <select class="drop-down" id="default_videochat_mode" onchange="toggleVideoView(this)">
+                                <option value="">none set</option>
                                 <option value="floating">Floating</option>
                                 <option value="sidebar">Sidebar</option>
                             </select>
@@ -1952,11 +2091,28 @@
             </div>
         </div>
         <div class="button-container">
-            <button class="start-session" id="start-session-on-page" onclick="copyCode()">Copy Custom Button
+            <div class="copy-buttons">
+                <button class="start-session" id="copy-session-code" onclick="startSessionHere()">Start Session
+                    Here</button>
+            </div>
+            <span class="or"></span>
+            <button class="start-session" id="start-session-on-page" onclick="copyCode()">Copy
                 Snippet</button>
-            <span class="or">or</span>
-            <button class="start-session" id="copy-session-code" onclick="startSessionHere()">Start Session
-                Here</button>
+            <button class="start-session" id="start-session-on-page" onclick="copyCodeWithButton()">Copy Custom Button
+                Snippet</button>
+        </div>
+        <div class="disclaimer">
+            <div class="disclaimer-title">Disclaimer - this page has been designed to assist only</div>
+            <div class="disclaimer-text">The code generated by this tool is provided solely as a guide for informational
+                purposes. Surfly makes no guarantees, warranties, or representations, express or implied, as to the
+                accuracy, reliability, or completeness of the code generated. Any code used or implemented in your
+                production environment is at your own risk. Surfly shall not be held liable for any direct, indirect,
+                incidental, special, consequential, or exemplary damages, including but not limited to system
+                malfunctions, data loss, security vulnerabilities, or operational failures, arising from the use of the
+                generated code. We strongly recommend reviewing and testing the code in a development environment before
+                deploying it in production. By using this tool, you acknowledge and agree that Surfly is not responsible
+                for any claims, losses, damages, or liabilities that may result from the use of the generated code.
+            </div>
         </div>
     </div>
     <div class="javascript-window" id="javascript-viewer">
