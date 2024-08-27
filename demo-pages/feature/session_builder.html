@@ -1511,10 +1511,9 @@ const customSurflyButton = document.createElement('button');
 customSurflyButton.style.position = 'fixed';
 customSurflyButton.style.bottom = '20px';
 customSurflyButton.style.right = '20px';
-customSurflyButton.style.zIndex = '1000'; // Ensure it sits on top of other content
-customSurflyButton.style.backgroundColor = '#007bff'; // Button color
-customSurflyButton.style.color = 'white'; // Text color
-customSurflyButton.style.border = 'none';
+customSurflyButton.style.zIndex = '1000';
+customSurflyButton.style.backgroundColor = 'white';
+customSurflyButton.style.border = '2px solid #c72323';
 customSurflyButton.style.borderRadius = '50%';
 customSurflyButton.style.width = '60px';
 customSurflyButton.style.height = '60px';
@@ -1523,9 +1522,16 @@ customSurflyButton.style.justifyContent = 'center';
 customSurflyButton.style.alignItems = 'center';
 customSurflyButton.style.cursor = 'pointer';
 customSurflyButton.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
-customSurflyButton.style.fontSize = '24px';
+customSurflyButton.style.padding = '0';
+customSurflyButton.style.overflow = 'hidden';
 
-customSurflyButton.innerHTML = '+';
+const iconImage = document.createElement('img');
+iconImage.src = 'https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/resources-common/icons/tools.png?raw=true';
+iconImage.style.width = '60%';
+iconImage.style.height = '60%';
+iconImage.style.objectFit = 'contain';
+
+customSurflyButton.appendChild(iconImage);
 
 customSurflyButton.addEventListener('click', () => {
    ${surflySnippet}
