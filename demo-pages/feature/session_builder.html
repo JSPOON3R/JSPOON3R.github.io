@@ -372,12 +372,14 @@
 
         .category-items img {
             width: 50px;
-            height:50px;
+            height: 50px;
         }
 
         .category-heading {
             display: flex;
+            flex-direction: column;
             justify-content: center;
+            align-items: center;
             color: var(--dark-grey);
             font-size: 1em;
             margin-bottom: 5px;
@@ -392,34 +394,32 @@
             margin-bottom: 20px;
             background-color: var(--off-white);
             border-radius: 20px;
-        }
-
-        .video-view {
-            display: flex;
-            flex-direction: row;
-            margin-top: 20px;
-        }
+       }
 
         .drop-down {
-            background-color: var(--dark-red);
+            background-color: var(--lightest-gray);
             border-radius: 20px;
-            color: var(--lightest-gray);
+            color: var(--light-red);
+            border: 1px solid var(--light-grey);
             cursor: pointer;
             font-family: var(--font);
-            font-size: 1em;
+            font-size: .9rem;
             padding: .1rem .5rem;
-            border: 0;
             touch-action: manipulation;
             text-align: center;
             margin-top: 0px;
+            margin-bottom: 4px;
             width: 100px;
+        }
+
+        .drop-down:focus {
+            outline: none;
         }
 
         .view-select {
             display: flex;
             flex-direction: column;
             align-items: center;
-            margin-right: 30px;
         }
 
         .settings-toggle,
@@ -1060,6 +1060,21 @@
     `;
         }
 
+        //manage the colours of the drop downs when changes are made
+        document.addEventListener('DOMContentLoaded', () => {
+            const dropdowns = document.querySelectorAll('.drop-down');
+            dropdowns.forEach(dropdown => {
+                dropdown.addEventListener('change', function () {
+                    if (this.value === "") {
+                        this.style.backgroundColor = 'var(--lightest-gray)';
+                        this.style.color = 'var(--light-red)';
+                    } else {
+                        this.style.backgroundColor = 'var(--light-green)';
+                        this.style.color = 'var(--lightest-gray)';
+                    }
+                });
+            });
+        });
 
         // Also adjust the position immediately after toggling the preview
         function toggleJavascriptPreview() {
@@ -1387,6 +1402,35 @@
         //make sure pin modal doesn't show if queue is skipped 
 
 
+        document.addEventListener('DOMContentLoaded', () => {
+    const updateAvailableOptions = () => {
+        const inputs = document.querySelectorAll('.settings-toggle input');
+        const VideoOptions = document.getElementById("video-toggles");
+        const VideoHeading = document.getElementById("video-heading");
+
+        inputs.forEach(input => {
+            const id = input.parentElement.id; 
+            const isChecked = input.checked;
+        //hide/show video options based on videochat_enabled
+            if (id === "videochat_enabled" && isChecked) {
+                console.log("enable the video options");
+                VideoOptions.style.display = ""; 
+                VideoHeading.innerHTML = "Video";
+            } else if (id === "videochat_enabled" && !isChecked) {
+                console.log("disable the video options");
+                VideoOptions.style.display = "none"; 
+                VideoHeading.innerHTML = "Video<span style='color:var(--grey);font-weight:lighter;opacity:60%;'>(requires videochat_enabled)</span>";
+            }
+        });
+        updateScriptElement(); 
+    };
+    updateAvailableOptions();
+    document.querySelectorAll('.settings-toggle input').forEach(input => {
+        input.addEventListener('change', updateAvailableOptions);
+    });
+});
+
+
 
     </script>
 
@@ -1658,7 +1702,8 @@ document.body.appendChild(customSurflyButton);
                 <div class="category-content" style="display: none;">
                     <p class="category-description">Overview of all <a href="https://docs.surfly.com/session-options"
                             target="_blank">session options</a> and what they do.<br><i
-                            style="color:var(--grey);font-size:.7rem;">Settings not selected here will use the value given in your
+                            style="color:var(--grey);font-size:.7rem;">Settings not selected here will use the value
+                            given in your
                             Surfly environment - toggle to override</i></p>
                     <h2 class="category-heading">Features</h2>
                     <div class="feature-toggles">
@@ -1860,8 +1905,8 @@ document.body.appendChild(customSurflyButton);
                             <h2>start_with_chat_open</h2>
                         </div>
                     </div>
-                    <h2 class="category-heading">Video</h2>
-                    <div class="feature-toggles">
+                    <h2 class="category-heading" id="video-heading">Video</h2>
+                    <div class="feature-toggles" id="video-toggles">
                         <div class="settings-toggle">
                             <label class="switch" id="start_with_videochat_on">
                                 <input type="checkbox">
@@ -1903,6 +1948,28 @@ document.body.appendChild(customSurflyButton);
                                 <span class="slider"></span>
                             </label>
                             <h2>start_muted</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <div class="view-select">
+                                <select class="drop-down" id="default_videochat_fullscreen_mode"
+                                    onchange="toggleVideoView(this)">
+                                    <option value="">Default</option>
+                                    <option value="grid">Grid</option>
+                                    <option value="spotlight">Spotlight</option>
+                                </select>
+                                <h2>default_videochat_fullscreen_mode</h2>
+                            </div>
+                        </div>
+                        <div class="settings-toggle">
+                            <div class="view-select">
+                                <select class="drop-down" id="default_videochat_mode"
+                                   onchange="toggleVideoView(this)">
+                                    <option value="">Default</option>
+                                    <option value="floating">Floating</option>
+                                    <option value="sidebar">Sidebar</option>
+                                </select>
+                                <h2>default_videochat_mode</h2>
+                            </div>
                         </div>
                     </div>
                     <h2 class="category-heading">Documents & Files</h2>
@@ -1972,35 +2039,6 @@ document.body.appendChild(customSurflyButton);
                                 <span class="slider"></span>
                             </label>
                             <h2>native_selects</h2>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="category">
-                <h2 class="section-heading">Configure the video view</h2>
-                <button class="toggle-button" onclick="toggleCategory(this)">Expand</button>
-                <div class="category-content" style="display: none;">
-                    <p class="category-description">Select your <a
-                            href="https://help.surfly.com/en/video-chat#VideochatandTextchat-Audioandvideosettings"
-                            target="_blank">display preferences</a></p>
-                    <div class="video-view">
-                        <div class="view-select">
-                            <p class="category-description" id="full-screen-label">default_videochat_fullscreen_mode</a>
-                            </p>
-                            <select class="drop-down" id="default_videochat_fullscreen_mode"
-                                onchange="toggleVideoView(this)">
-                                <option value="">none set</option>
-                                <option value="grid">Grid</option>
-                                <option value="spotlight">Spotlight</option>
-                            </select>
-                        </div>
-                        <div class="view-select">
-                            <p class="category-description" id="preview-screen-label">default_videochat_mode</a></p>
-                            <select class="drop-down" id="default_videochat_mode" onchange="toggleVideoView(this)">
-                                <option value="">none set</option>
-                                <option value="floating">Floating</option>
-                                <option value="sidebar">Sidebar</option>
-                            </select>
                         </div>
                     </div>
                 </div>
