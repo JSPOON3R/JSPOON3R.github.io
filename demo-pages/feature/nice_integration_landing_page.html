@@ -220,7 +220,7 @@
         }
 
         function fetchInputContent() {
-    const nameInput = document.getElementById('nameInput').value.trim();
+    nameInput = document.getElementById('nameInput').value.trim();
     console.log(nameInput); // Print the input content to the console
 }
     </script>
@@ -290,17 +290,15 @@
 
         // Create Videochat Session
         function createVideochatSession() {
-            var contactId = 5240;
             var videochatSession = Surfly.session({
                 block_until_agent_joins: false,
                 hide_unitl_anget_joins: true,
                 videochat_autostart: true,
-                start_with_fullscreen_videochat: false,
+                start_with_fullscreen_videochat: true,
                 videochat_prompt: true,
                 start_muted: false,
-                url: "https://demo.surfly.com/demo-pages/feature/nice_integration_start_url"
             });
-            var surflyMetadata = { "name": nameInput };
+            var surflyMetadata = { "name": "Pedro Pereira", "email": "pedro@surfly.com" };
 
             videochatSession.on("session_created", function (session, event) {
                 console.log('Waiting for confirmation');
@@ -308,19 +306,14 @@
             }).on("session_started", function (session, event) {
                 var surflySessionPin = session.pin;
                 var surflyFollowerLink = session.followerLink;
-                signalContact(contactId, surflyFollowerLink, surflySessionPin, 'videochat');
+                signalWorkItem(surflyFollowerLink);
                 console.log("Videochat session started");
                 console.log('Session Pin: ' + surflySessionPin);
-            }).on("participant_joined", function (session, event) {
+            }).on("viewer_joined", function (session, event) {
                 window.nicVideochatContactId = event.userData.contactId;
-                videochatSession.toggleVideochatFullscreen()
-                if (event.clientIndex !== 0) {
-                                SurflySession.makeHost(1);
-                            } else {
-                                console.log(event.clientIndex + " joined the session - host not changed");
-                            };
             }).on("session_ended", function (session, event) {
                 console.log("Videochat session ended");
+                createVideochatButton();
                 endWorkItem(window.nicVideochatContactId);
             }).create();
         }
