@@ -5,8 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Surfly Co-browsing</title>
-    <link rel="shortcut icon" type="image/x-icon"
-        href="https://demo.surfly.com/resources-common/icons/Favicon-PNG.png">
+    <link rel="shortcut icon" type="image/x-icon" href="https://demo.surfly.com/resources-common/icons/Favicon-PNG.png">
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
     <script>
         (function (s, u, r, f, l, y) {
@@ -43,6 +42,7 @@
 
 
         function startSurflySession() {
+            removeOverlays();
             var urlinput = document.querySelector('#session_url_input').value;
             SurflySession = Surfly.session({ start_with_chat_open: false, start_with_videochat_on: false, url: urlinput }).startLeader("#leader");
             var errorMessage = document.getElementById('errorMessage');
@@ -52,12 +52,12 @@
                 var iframe = document.getElementById("follower");
                 iframe.src = session.followerLink;
             })
-            .on('session_ended', function (session) {
-    console.log(session, 'has ended');
-    setTimeout(function() {
-        location.replace("https://demo.surfly.com/company/" + company_name);
-    }, 1000); // 1000 milliseconds delay (1 second)
-});
+                .on('session_ended', function (session) {
+                    console.log(session, 'has ended');
+                    setTimeout(function () {
+                        location.replace("https://demo.surfly.com/company/" + company_name);
+                    }, 1000); // 1000 milliseconds delay (1 second)
+                });
         };
 
         function endSurflySession() {
@@ -93,6 +93,27 @@
             document.getElementById('you').style.backgroundColor = '#fdeced';
             document.getElementById('session_url_input').style.visibility = "visible";
         }
+
+        function removeOverlays() {
+    var overlayElements = document.querySelectorAll('.overlay');
+    window.removedOverlays = []; 
+
+    overlayElements.forEach(function(overlayElement) {
+        if (overlayElement) {
+            window.removedOverlays.push({element: overlayElement, parent: overlayElement.parentNode});
+            overlayElement.parentNode.removeChild(overlayElement);
+        }
+    });
+}
+
+function addOverlays() {
+    if (window.removedOverlays && window.removedOverlays.length > 0) {
+        window.removedOverlays.forEach(function(storedOverlay) {
+            storedOverlay.parent.appendChild(storedOverlay.element);
+        });
+        window.removedOverlays = [];
+    }
+}
     </script>
     <!--ERRORS-->
     <script>
@@ -201,7 +222,7 @@
             padding-left: 16vw;
             width: 40vw;
             align-items: flex-start;
-            margin-top:2vh;
+            margin-top: 2vh;
         }
 
         .button-container {
@@ -288,6 +309,7 @@
         #session_active_button {
             background-color: #c72323;
         }
+
         #session_active_button:hover {
             background-color: #b41f1f;
         }
@@ -331,11 +353,13 @@
             display: flex;
             flex-direction: column;
             margin: 1vw;
+            overflow: hidden;
         }
 
         .traffic-lights {
             display: flex;
             align-items: center;
+            padding-bottom: 2%;
         }
 
         .traffic-light {
@@ -359,11 +383,39 @@
         }
 
         .iframe-content {
-            padding-top: 2%;
             padding-bottom: 0;
             width: auto;
             height: 100%;
             border: none;
+        }
+
+        .overlay {
+            width: auto;
+            min-height: 100%;
+            min-height: -webkit-fill-available;
+            min-height: fill-available;
+            border: none;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: normal;
+            color: white;
+            font-size: 20px;
+            text-align: center;
+            opacity:70%;
+        }
+
+        .iframe-pre-message {
+            display: flex;
+            justify-content: center;
+            /* Center horizontally */
+            align-items: center;
+            /* Center vertically */
+            color: white;
+            font-size: 20px;
+            text-align: center;
+            width: 100%;
+            height: 90%;
         }
 
         .window-title {
@@ -420,8 +472,8 @@
             .top-container {
                 flex-direction: column;
                 align-items: center;
-                padding:0;
-                margin:10px;
+                padding: 0;
+                margin: 10px;
             }
 
             .info-text {
@@ -454,7 +506,7 @@
 
             .subheading {
                 font-size: 25px;
-        width: 100vw;
+                width: 100vw;
             }
 
             .iframe-container {
@@ -474,7 +526,7 @@
             .osx-window {
                 width: 90%;
                 height: 300px;
-                margin-bottom:20px;
+                margin-bottom: 20px;
             }
 
             .input-url-div {
@@ -501,25 +553,27 @@
                 right: 0;
                 margin-top: 0;
             }
-            .more-info-div {
-            width: 80vw;
-            padding-left:0;
-            margin-top:0;
-        }
-        .subheading-2 {
-            font-size: 1.3rem;
-            color: var(--secondary);
-            padding-left: 0;
-            margin:0;
-            display:none;
-        }
 
-        .logo-bullet {
-            width: 1rem;
-            height: auto;
-            margin-right: 0;
-            vertical-align: middle;
-        }
+            .more-info-div {
+                width: 80vw;
+                padding-left: 0;
+                margin-top: 0;
+            }
+
+            .subheading-2 {
+                font-size: 1.3rem;
+                color: var(--secondary);
+                padding-left: 0;
+                margin: 0;
+                display: none;
+            }
+
+            .logo-bullet {
+                width: 1rem;
+                height: auto;
+                margin-right: 0;
+                vertical-align: middle;
+            }
 
         }
 
@@ -542,11 +596,10 @@
 
     <div class="top-container">
         <div class="info-text">
-            <img src="https://demo.surfly.com/resources-common/images/Surfly_Logo.png"
-                alt="Logo" class="logo">
-                <h1 class="heading">Experience Collaborative Web Browsing in Real-Time</h1>
-                <h2 class="subheading">Surfly enables users to securely and collaboratively surf the full web together
-                    within a session.</h2>
+            <img src="https://demo.surfly.com/resources-common/images/Surfly_Logo.png" alt="Logo" class="logo">
+            <h1 class="heading">Experience Collaborative Web Browsing in Real-Time</h1>
+            <h2 class="subheading">Surfly enables users to securely and collaboratively surf the full web together
+                within a session.</h2>
         </div>
         <div class="button-container">
             <div class="input-url-div">
@@ -567,7 +620,8 @@
                     <li>
                         <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/resources-common/icons/calendar-5.png?raw=true"
                             class="logo-bullet"> To schedule a demo, please fill out our <a class="link-bold"
-                            href="https://www.surfly.com/request-a-demo/">contact form.</a> We'll get back to you shortly
+                            href="https://www.surfly.com/request-a-demo/">contact form.</a> We'll get back to you
+                        shortly
                     </li>
                     <li>
                         <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/resources-common/icons/mail.png?raw=true"
@@ -587,7 +641,12 @@
                 <div class="window-description" id="window-description1">This window will be your browser</div>
                 <div class="window-title" id="you">You</div>
             </div>
-            <iframe src="https://www.surfly.com/" class="iframe-content" id="leader"></iframe>
+            <div class="overlay" id="overlay1">
+                <div>
+                    <span class="iframe-pre-message">Enter a URL and click "Start Session" to begin</span>
+                </div>
+            </div>
+            <iframe class="iframe-content" id="leader" src=""></iframe>
         </div>
 
         <div class="osx-window">
@@ -598,6 +657,11 @@
                 <div class="window-description" id="window-description2">This window will be the other person's browser
                 </div>
                 <div class="window-title">Them</div>
+            </div>
+            <div class="overlay" id="overlay2">
+                <div>
+                    <span class="iframe-pre-message">Enter a URL and click "Start Session" to begin</span>
+                </div>
             </div>
             <iframe src="https://www.surfly.com/" class="iframe-content" id="follower"></iframe>
         </div>
