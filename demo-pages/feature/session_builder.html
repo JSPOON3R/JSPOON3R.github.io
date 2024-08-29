@@ -1106,56 +1106,76 @@
 
         //NEW CODE
         function importSurflySetttings() {
-    (function (s, u, r, f, l, y) {
-        s[f] = s[f] || { init: function () { s[f].q = arguments } };
-        l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
-        l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
-    })(window, document, 'script', 'Surfly');
+            (function (s, u, r, f, l, y) {
+                s[f] = s[f] || { init: function () { s[f].q = arguments } };
+                l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+                l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+            })
+                (window, document, 'script', 'Surfly');
 
-    function updateSettingsWithDefaultValues(settings, defaultSettings) {
-        // Iterate over each key in the settings object
-        for (var key in settings) {
-            // Check if the key exists in the defaultSettings object
-            if (defaultSettings.hasOwnProperty(key)) {
-                // Update the settings object with the value from defaultSettings
-                settings[key] = defaultSettings[key];
+            function updateSettingsWithDefaultValues(settings, defaultSettings) {
+                // Iterate over each key in the settings object
+                for (var key in settings) {
+                    // Check if the key exists in the defaultSettings object
+                    if (defaultSettings.hasOwnProperty(key)) {
+                        // Update the settings object with the value from defaultSettings
+                        settings[key] = defaultSettings[key];
+                    }
+                }
             }
-        }
-    }
 
-    if (Surfly._initStatus && Surfly._initStatus.started === true) {
-        if (Surfly._defaultSettings) {
-            updateSettingsWithDefaultValues(settings, Surfly._defaultSettings);
-            updateScriptElement();
-        } else {
-            console.log("Widget Key not recognized");
-            alert("Widget Key not recognized");
-        }
-    } else if (Surfly._initStatus && Surfly._initStatus.started !== true) {
-        Surfly.init(settings, function (initResult) {
-            if (initResult.success) {
-                console.log("Surfly initializes on page.");
+
+            if (Surfly._initStatus && Surfly._initStatus.started === true) {
                 if (Surfly._defaultSettings) {
                     console.log("Surfly default settings found");
                     updateSettingsWithDefaultValues(settings, Surfly._defaultSettings);
                     updateScriptElement();
                 } else {
-                    console.log("Widget Key not recognized");
-                    alert("Widget Key not recognized");
+                    setTimeout(() => {
+                        if (Surfly._defaultSettings) {
+                            console.log("Surfly default settings found after delay");
+                            updateSettingsWithDefaultValues(settings, Surfly._defaultSettings);
+                            updateScriptElement();
+                        } else {
+                            console.log("Widget Key not recognized after delay");
+                            alert("Widget Key not recognized");
+                        }
+                    }, 1000); // Wait for 1 second before checking again
                 }
-            } else {
-                console.log("Surfly was unable to initialize properly.");
             }
-        });
-    } else {
-        console.log("Surfly already initialized on page.");
-    }
-}
-
+            if (Surfly._initStatus && !Surfly._initStatus.started === true) {
+                Surfly.init(settings, function (initResult) {
+                    if (initResult.success) {
+                        console.log("Surfly initializes on page.");
+                        if (Surfly._defaultSettings) {
+                            console.log("Surfly default settings found");
+                            updateSettingsWithDefaultValues(settings, Surfly._defaultSettings);
+                            updateScriptElement();
+                        } else {
+                            setTimeout(() => {
+                                if (Surfly._defaultSettings) {
+                                    console.log("Surfly default settings found after delay");
+                                    updateSettingsWithDefaultValues(settings, Surfly._defaultSettings);
+                                    updateScriptElement();
+                                } else {
+                                    console.log("Widget Key not recognized after delay");
+                                    alert("Widget Key not recognized");
+                                }
+                            }, 1000); // Wait for 1 second before checking again
+                        }
+                    }
+                    else {
+                        console.log("Surfly was unable to initialize properly.")
+                    }
+                });
+            } else {
+                console.log("Surfly already initialized on page.")
+            }
+        }
 
         //NEW CODE
 
-        
+
 
 
 
