@@ -984,7 +984,7 @@
 
             //manage the custom settings variable
             allSettings =
-                `${widgetKey ? '\n\t"widget_key": ' + `"${widgetKey}",` : ''}` +
+               // `${widgetKey ? '\n\t"widget_key": ' + `"${widgetKey}",` : ''}` +
                 `${startUrl ? '\n\t' + '"url": ' + '"' + `${startUrl}` + '"' + `,` : ''}` +
                 `${skipQueue ? `\n\t${skipQueue},` : ''}` +
                 `${formattedRegions ? '\n\t"selected_regions": ' + `${formattedRegions},` : ''}` +
@@ -1120,6 +1120,7 @@
                     if (defaultSettings.hasOwnProperty(key)) {
                         // Update the settings object with the value from defaultSettings
                         settings[key] = defaultSettings[key];
+                        settings.widget_key = widgetKey;
                     }
                 }
                 updateScriptElement();
@@ -1298,10 +1299,10 @@
         //function to add the widget key
         function addWidgetKeyToCode() {
             const widgetKeyInput = document.getElementById('widget_key_input').value.trim();
-         //   widgetKey = widgetKeyInput;
+            widgetKey = widgetKeyInput;
 
             //add to the session builder page settings var so we can import settings from Surfly from the key
-            settings.widget_key = widgetKeyInput;
+            settings.widget_key = widgetKey;
             console.log(settings.widget_key);
 
             updateScriptElement(); // Update the script element when the URL changes
