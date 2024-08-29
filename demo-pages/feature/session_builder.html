@@ -1299,6 +1299,10 @@
             const widgetKeyInput = document.getElementById('widget_key_input').value.trim();
             widgetKey = widgetKeyInput;
 
+            //add to the session builder page settings var so we can import settings from Surfly from the key
+            settings.widget_key = widgetKeyInput;
+            console.log(settings.widget_key);
+
             updateScriptElement(); // Update the script element when the URL changes
             document.getElementById('widget_key_input').value = '';
         }
@@ -1307,6 +1311,7 @@
         function resetWidgetKey() {
             widgetKey = '';
             updateScriptElement(); // Update the script element when the URL is reset
+            delete settings.widget_key; //remove from Surfly settings var for the session builder page
         }
 
         // Function to fetch the URL from the input field and update startUrl
