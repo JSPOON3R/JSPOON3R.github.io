@@ -984,7 +984,7 @@
 
             //manage the custom settings variable
             allSettings =
-               // `${widgetKey ? '\n\t"widget_key": ' + `"${widgetKey}",` : ''}` +
+                // `${widgetKey ? '\n\t"widget_key": ' + `"${widgetKey}",` : ''}` +
                 `${startUrl ? '\n\t' + '"url": ' + '"' + `${startUrl}` + '"' + `,` : ''}` +
                 `${skipQueue ? `\n\t${skipQueue},` : ''}` +
                 `${formattedRegions ? '\n\t"selected_regions": ' + `${formattedRegions},` : ''}` +
@@ -1126,27 +1126,14 @@
                 updateScriptElement();
             }
 
-            if (typeof Surfly !== 'undefined' && Surfly._initStatus && Surfly._initStatus.started == true) {
-                console.log("Surfly init already started on page.");
-                Surfly._defaultSettings = {widget_key: widgetKey};
-                const noImportedValues = Object.keys(settings).every(key => key === 'widget_key' || !settings[key]);
-                if (noImportedValues) {
-                    console.log("Surfly default settings not found");
-                    console.log("Widget Key not recognized");
-                    alert("Widget Key not recognized");
-                    return; 
-                } else {
-                    console.log("Surfly default settings found");
-                    updateSettingsWithDefaultValues(settings, Surfly._defaultSettings);
-                }
-            }
+            //code if widget key is correct first try
             if (typeof Surfly !== 'undefined' || Surfly._initStatus && Surfly._initStatus.started == false) {
                 Surfly.init(settings, function (initResult) {
                     if (initResult.success) {
                         console.log("Surfly initialized on page.");
                         if (Surfly._defaultSettings && Object.keys(Surfly._defaultSettings).length > 0) {
                             console.log("Surfly default settings found");
-                            updateSettingsWithDefaultValues(settings, Surfly._defaultSettings);
+                            updateSettingsWithDefaultValues(settings, filterValidValues(Surfly._defaultSettings));
                         } else {
                             console.log("Widget Key not recognized");
                             alert("Widget Key not recognized");
@@ -1159,9 +1146,30 @@
             } else {
                 console.error("Something went wrong.")
             }
-        }
 
+            //NEEDS WORKS //Code to handle subsuquent attempts
+            if (typeof Surfly !== 'undefined' && Surfly._initStatus && Surfly._initStatus.started == true) {
+                console.log("Surfly init already started on page.");
+                Surfly._defaultSettings = { widget_key: widgetKey };
+                const noImportedValues = Object.keys(_defaultSettings).every(key => key === 'widget_key' || !_defaultSettings[key]);
+                if (noImportedValues) {
+                    console.log("Surfly default settings not found");
+                    console.log("Widget Key not recognized");
+                    alert("Widget Key not recognized");
+                    return;
+                } else {
+                    console.log("Surfly default settings found");
+                    updateSettingsWithDefaultValues(settings, Surfly._defaultSettings);
+                }
+            }
+            //NEEDS WORKS - I need Surfly to retrieve what it has for settings without using init or I need to get init to run again
+
+        }
         //NEW CODE
+        //remove any redundant widget key code
+        //make sure it works first try and on subsuquent tries
+        //make sure false values don't display
+        //make sure the toggles move with the new values
 
 
 
