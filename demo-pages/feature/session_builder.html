@@ -1125,7 +1125,7 @@
             }
 
 
-            if (Surfly._initStatus.started) {
+            if (Surfly._initStatus.started === true) {
                 if (Surfly._defaultSettings) {
                             updateSettingsWithDefaultValues(settings, Surfly._defaultSettings);
                             updateScriptElement();
@@ -1134,7 +1134,7 @@
                             alert("Widget Key not recognized"); 
                         }
             }
-            if (!Surfly._initStatus.started) {
+            if (!Surfly._initStatus.started=== true) {
                 Surfly.init(settings, function (initResult) {
                     if (initResult.success) {
                         console.log("Surfly initializes on page.")
