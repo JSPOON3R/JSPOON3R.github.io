@@ -394,7 +394,7 @@
             margin-bottom: 20px;
             background-color: var(--off-white);
             border-radius: 20px;
-       }
+        }
 
         .drop-down {
             background-color: var(--lightest-gray);
@@ -1101,6 +1101,68 @@
     <script>
         //5// BUILD THE CODE SNIPPET & MANAGE PAGE UX
         //Functions to manage the display and behaviour of the page
+
+
+
+        //NEW CODE
+        function importSurflySetttings() {
+            (function (s, u, r, f, l, y) {
+                s[f] = s[f] || { init: function () { s[f].q = arguments } };
+                l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+                l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+            })
+                (window, document, 'script', 'Surfly');
+
+            function updateSettingsWithDefaultValues(settings, defaultSettings) {
+                // Iterate over each key in the settings object
+                for (var key in settings) {
+                    // Check if the key exists in the defaultSettings object
+                    if (defaultSettings.hasOwnProperty(key)) {
+                        // Update the settings object with the value from defaultSettings
+                        settings[key] = defaultSettings[key];
+                    }
+                }
+            }
+
+
+            if (Surfly._initStatus.started) {
+                if (Surfly._defaultSettings) {
+                            updateSettingsWithDefaultValues(settings, Surfly._defaultSettings);
+                            updateScriptElement();
+                        } else {
+                            console.log("Widget Key not recognized");
+                            alert("Widget Key not recognized"); 
+                        }
+            }
+            if (!Surfly._initStatus.started) {
+                Surfly.init(settings, function (initResult) {
+                    if (initResult.success) {
+                        console.log("Surfly initializes on page.")
+                        if (Surfly._defaultSettings) {
+                            updateSettingsWithDefaultValues(settings, Surfly._defaultSettings);
+                            updateScriptElement();
+                        } else {
+                            console.log("Widget Key not recognized");
+                            alert("Widget Key not recognized"); 
+                        }
+                    }
+                    else {
+                        console.log("Surfly was unable to initialize properly.")
+                    }
+                });
+            } else {
+                console.log("Surfly already initialized on page.")
+            }
+        }
+
+        document.getElementById('widget_key_input').addEventListener('click', importSurflySetttings);
+
+        //NEW CODE
+
+        
+
+
+
         //Function to reveal the categories in Session Builder when they are expanded
         function toggleCategory(button) {
             var content = button.nextElementSibling;
@@ -1403,33 +1465,32 @@
 
 
         document.addEventListener('DOMContentLoaded', () => {
-    const updateAvailableOptions = () => {
-        const inputs = document.querySelectorAll('.settings-toggle input');
-        const VideoOptions = document.getElementById("video-toggles");
-        const VideoHeading = document.getElementById("video-heading");
+            const updateAvailableOptions = () => {
+                const inputs = document.querySelectorAll('.settings-toggle input');
+                const VideoOptions = document.getElementById("video-toggles");
+                const VideoHeading = document.getElementById("video-heading");
 
-        inputs.forEach(input => {
-            const id = input.parentElement.id; 
-            const isChecked = input.checked;
-        //hide/show video options based on videochat_enabled
-            if (id === "videochat_enabled" && isChecked) {
-                console.log("enable the video options");
-                VideoOptions.style.display = ""; 
-                VideoHeading.innerHTML = "Video";
-            } else if (id === "videochat_enabled" && !isChecked) {
-                console.log("disable the video options");
-                VideoOptions.style.display = "none"; 
-                VideoHeading.innerHTML = "Video<span style='color:var(--grey);font-weight:lighter;opacity:60%;'>(requires videochat_enabled)</span>";
-            }
+                inputs.forEach(input => {
+                    const id = input.parentElement.id;
+                    const isChecked = input.checked;
+                    //hide/show video options based on videochat_enabled
+                    if (id === "videochat_enabled" && isChecked) {
+                        console.log("enable the video options");
+                        VideoOptions.style.display = "";
+                        VideoHeading.innerHTML = "Video";
+                    } else if (id === "videochat_enabled" && !isChecked) {
+                        console.log("disable the video options");
+                        VideoOptions.style.display = "none";
+                        VideoHeading.innerHTML = "Video<span style='color:var(--grey);font-weight:lighter;opacity:60%;'>(requires videochat_enabled)</span>";
+                    }
+                });
+                updateScriptElement();
+            };
+            updateAvailableOptions();
+            document.querySelectorAll('.settings-toggle input').forEach(input => {
+                input.addEventListener('change', updateAvailableOptions);
+            });
         });
-        updateScriptElement(); 
-    };
-    updateAvailableOptions();
-    document.querySelectorAll('.settings-toggle input').forEach(input => {
-        input.addEventListener('change', updateAvailableOptions);
-    });
-});
-
 
 
     </script>
@@ -1906,7 +1967,7 @@ document.body.appendChild(customSurflyButton);
                         </div>
                     </div>
                     <h2 class="category-heading" id="video-heading">Video
-                      </h2>
+                    </h2>
                     <div class="feature-toggles" id="video-toggles">
                         <div class="settings-toggle">
                             <label class="switch" id="start_with_videochat_on">
@@ -1963,8 +2024,7 @@ document.body.appendChild(customSurflyButton);
                         </div>
                         <div class="settings-toggle">
                             <div class="view-select">
-                                <select class="drop-down" id="default_videochat_mode"
-                                   onchange="toggleVideoView(this)">
+                                <select class="drop-down" id="default_videochat_mode" onchange="toggleVideoView(this)">
                                     <option value="">Default</option>
                                     <option value="floating">Floating</option>
                                     <option value="sidebar">Sidebar</option>
