@@ -1133,8 +1133,7 @@
                         console.log("Surfly initialized on page.");
                         if (Surfly._defaultSettings && Object.keys(Surfly._defaultSettings).length > 0) {
                             console.log("Surfly default settings found");
-                            const filteredSettings = filterValidValues(defaultSettings);
-                            updateSettingsWithDefaultValues(settings, filteredSettings);
+                            updateSettingsWithDefaultValues(settings, Surfly._defaultSettings);
                         } else {
                             console.log("Widget Key not recognized");
                             alert("Widget Key not recognized");
