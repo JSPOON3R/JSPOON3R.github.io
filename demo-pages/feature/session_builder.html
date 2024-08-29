@@ -1155,8 +1155,6 @@
             }
         }
 
-        document.getElementById('widget_key_input').addEventListener('click', importSurflySetttings);
-
         //NEW CODE
 
         
@@ -1577,6 +1575,9 @@
             document.getElementById('end-if-no-activity').addEventListener('change', function () {
                 updateEventVariables('endIfNoActivity10Mins', this.checked);
             });
+
+            //listen for click to check widget key
+            document.getElementById('widget_key_input').addEventListener('click', importSurflySetttings);
 
         });
 
