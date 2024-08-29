@@ -1128,7 +1128,9 @@
 
             if (typeof Surfly !== 'undefined' && Surfly._initStatus && Surfly._initStatus.started == true) {
                 console.log("Surfly init already started on page.");
-                if (Surfly._defaultSettings && Object.keys(Surfly._defaultSettings).length > 0) {
+                settings.widget_key = widgetKey;
+                const filteredSettings = Object.keys(Surfly._defaultSettings).filter(key => key !== 'widget_key' && Surfly._defaultSettings[key]);
+                if (filteredSettings.length > 0) {
                     console.log("Surfly default settings found");
                     updateSettingsWithDefaultValues(settings, Surfly._defaultSettings);
                 } else {
