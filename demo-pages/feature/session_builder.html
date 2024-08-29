@@ -1125,19 +1125,20 @@
             }
 
             if (typeof Surfly !== 'undefined' && Surfly._initStatus && Surfly._initStatus.started == true) {
+                console.log("Surfly init already started on page.");
                 if (Surfly._defaultSettings && Object.keys(Surfly._defaultSettings).length > 0) {
-                    console.log("Surfly default settings found");
                     updateSettingsWithDefaultValues(settings, Surfly._defaultSettings);
                     updateScriptElement();
                 } else {
                     console.log("Widget Key not recognized");
                     alert("Widget Key not recognized");
+                    return; 
                 }
             }
-            if (typeof Surfly !== 'undefined' || Surfly._initStatus && Surfly._initStatus.started == !true) {
+            if (typeof Surfly !== 'undefined' || Surfly._initStatus && Surfly._initStatus.started == false) {
                 Surfly.init(settings, function (initResult) {
                     if (initResult.success) {
-                        console.log("Surfly initializes on page.");
+                        console.log("Surfly initialized on page.");
                         if (Surfly._defaultSettings && Object.keys(Surfly._defaultSettings).length > 0) {
                             console.log("Surfly default settings found");
                             updateSettingsWithDefaultValues(settings, Surfly._defaultSettings);
