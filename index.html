@@ -50,7 +50,9 @@
                 console.log('Session', session.followerLink, 'has just started');
                 var iframe = document.getElementById("follower");
                 iframe.src = session.followerLink;
-                removeOverlays();
+                iframe.onload = function () {
+                    removeOverlays();
+                };
             })
                 .on('session_ended', function (session) {
                     console.log(session, 'has ended');
@@ -95,25 +97,25 @@
         }
 
         function removeOverlays() {
-    var overlayElements = document.querySelectorAll('.overlay');
-    window.removedOverlays = []; 
+            var overlayElements = document.querySelectorAll('.overlay');
+            window.removedOverlays = [];
 
-    overlayElements.forEach(function(overlayElement) {
-        if (overlayElement) {
-            window.removedOverlays.push({element: overlayElement, parent: overlayElement.parentNode});
-            overlayElement.parentNode.removeChild(overlayElement);
+            overlayElements.forEach(function (overlayElement) {
+                if (overlayElement) {
+                    window.removedOverlays.push({ element: overlayElement, parent: overlayElement.parentNode });
+                    overlayElement.parentNode.removeChild(overlayElement);
+                }
+            });
         }
-    });
-}
 
-function addOverlays() {
-    if (window.removedOverlays && window.removedOverlays.length > 0) {
-        window.removedOverlays.forEach(function(storedOverlay) {
-            storedOverlay.parent.appendChild(storedOverlay.element);
-        });
-        window.removedOverlays = [];
-    }
-}
+        function addOverlays() {
+            if (window.removedOverlays && window.removedOverlays.length > 0) {
+                window.removedOverlays.forEach(function (storedOverlay) {
+                    storedOverlay.parent.appendChild(storedOverlay.element);
+                });
+                window.removedOverlays = [];
+            }
+        }
     </script>
     <!--ERRORS-->
     <script>
@@ -402,7 +404,7 @@ function addOverlays() {
             color: white;
             font-size: 20px;
             text-align: center;
-            opacity:70%;
+            opacity: 70%;
         }
 
         .iframe-pre-message {
