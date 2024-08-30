@@ -750,7 +750,11 @@
 //test test test
 //remove any redundant widget key code
 //fix removeImportedSurflySetttings() - calling it at the start of the import function removed the newly added key and then init fails. Need to remove settings at the start of that function WITHOUT removing the widget key
+//emptySettings var isnt staying empty
 //fix the widget key placement
+//add the remaining category show/hide logic
+//find out what's up with emptySettings
+//try and make the script preview updat with the toggles when resetting the widget key
 //reorder and clean up
 
 
@@ -759,7 +763,7 @@
         //1// INITIAL SCRIPT
         //Starting script to be edited by updateScriptElement(). 
         //Settings listed here because to process used to update them visually requires it
-        var emptySettings = settings = {
+        var settings = {
             admission_enabled: '',
             alternative_proxy_enabled: '',
             anonymous_users_can_share_camera: '',
@@ -846,6 +850,8 @@
         //Holds the script to be displayed on the page
         var allSettings = '';
         //collects all settings together in one var
+        var emptySettings = '';
+        //to reset when needed
         var sessionStarted = '';
         //code block for this event
         var sessionLoaded = '';
