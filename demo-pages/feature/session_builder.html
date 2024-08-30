@@ -834,7 +834,7 @@
         //Holds the script to be displayed on the page
         var allSettings = '';
         //collects all settings together in one var
-        var emptySettings = settings;
+        var emptySettings = '';
         //to reset when needed
         var sessionStarted = '';
         //code block for this event
@@ -1131,7 +1131,7 @@
             //code if widget key is correct first try
             if (typeof Surfly !== 'undefined' || Surfly._initStatus && Surfly._initStatus.started == false) {
                 Surfly.init(settings, function (initResult) {
-                    if (initResult.success === true) {
+                    if (Surfly._initStatus.successful === true) {
                         console.log("Surfly initialized on page.");
                         if (Surfly._defaultSettings && Object.keys(Surfly._defaultSettings).length > 0) {
                             console.log("Surfly default settings found");
@@ -1144,16 +1144,20 @@
                             delete Surfly;
                         }
                     }
-                    if (initResult.success === !true) {
+                    if (Surfly._initStatus.successful === !true) {
                         console.log("blaaaa");
+                        alert("Widget Key not recognized");
+                        delete Surfly;
                     }
                     else {
                         console.log("Surfly was unable to initialize properly.");
+                        delete Surfly;
                     }
                 });
             }
             else {
                 console.error("Something went wrong.");
+                delete Surfly;
             }
         }
 
@@ -1512,9 +1516,13 @@
     <script>
         //7// LISTNERS
         //mapping elements to functions
+
+        //make emptySettings hold the original values for the settings
+        window.addEventListener('load', () => {
+            emptySettings = JSON.parse(JSON.stringify(settings));
+        });
+
         document.addEventListener('DOMContentLoaded', () => {
-
-
             //skip queue toggle
             document.getElementById('skip_queue').addEventListener('change', function () {
                 if (this.checked) {
