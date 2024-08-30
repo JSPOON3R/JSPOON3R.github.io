@@ -1153,20 +1153,21 @@
 
     // Continue with the rest of your code, regardless of whether Surfly.init succeeded or failed
     console.log("Continuing with the rest of the importSurflySetttings function...");
+
+    if (Surfly._initStatus) {
+    console.log("Surfly._initStatus:", Surfly._initStatus); 
+
     if (Surfly._initStatus.successful === true) {
-                    console.log("2: Surfly initialized on page.");
-                    if (Surfly._defaultSettings && Object.keys(Surfly._defaultSettings).length > 0) {
-                        console.log("2: Surfly default settings found");
-                        const trueValuesOnly = filterValidValues(Surfly._defaultSettings);
-                        updateSettingsWithDefaultValues(settings, trueValuesOnly);
-                    } else {
-                        console.log("2: Widget Key not recognized");
-                        alert("2: Widget Key not recognized");
-                    }
-                } else {
-                    console.log("2: Surfly initialization failed or was unsuccessful.");
-                }
-                delete Surfly; // Cleanup after Surfly initialization
+        console.log("Surfly initialized successfully.");
+    } else if (Surfly._initStatus.successful === null) {
+        console.log("Surfly initialization status is null.");
+    } else {
+        console.log("Surfly initialization was unsuccessful or has another falsy value.");
+    }
+} else {
+    console.log("Surfly._initStatus is undefined.");
+}
+
 }
 
 
