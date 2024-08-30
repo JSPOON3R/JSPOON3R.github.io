@@ -1131,29 +1131,30 @@
             //code if widget key is correct first try
             if (typeof Surfly !== 'undefined' || Surfly._initStatus && Surfly._initStatus.started == false) {
                 Surfly.init(settings, function (initResult) {
-                    if (initResult.success) {
+                    if (initResult.success === true) {
                         console.log("Surfly initialized on page.");
                         if (Surfly._defaultSettings && Object.keys(Surfly._defaultSettings).length > 0) {
                             console.log("Surfly default settings found");
                             const trueValuesOnly = filterValidValues(Surfly._defaultSettings);
                             updateSettingsWithDefaultValues(settings, trueValuesOnly);
+                            delete Surfly;
                         } else {
                             console.log("Widget Key not recognizedddd");
                             alert("Widget Key not recognizedddd");
+                            delete Surfly;
                         }
                     }
-                    if (!initResult.success) {
+                    if (!initResult.success === true) {
                         console.log("blaaaa");
                     }
                     else {
-                        console.log("Surfly was unable to initialize properly.")
+                        console.log("Surfly was unable to initialize properly.");
                     }
                 });
             }
             else {
-                console.error("Something went wrong.")
+                console.error("Something went wrong.");
             }
-            delete Surfly;
         }
 
 
