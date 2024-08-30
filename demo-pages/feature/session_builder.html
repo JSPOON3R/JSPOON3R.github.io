@@ -1172,6 +1172,7 @@
                         });
                     }
                     finally {
+                        //Try again if Surfly JS loads slowly
                         setTimeout(() => {
                             if (typeof Surfly !== 'undefined' && Surfly._initStatus && Surfly._initStatus.started === true) {
                                 if (Surfly._initStatus.successful === true) {
@@ -1179,28 +1180,24 @@
                                     return;
                                 }
                                 else {
+                                    console.log("Try again...");
                                     checkWidgetKey();
                                 }
-                            }
-                            else {
-                                console.log("Something went wrong");
                             }
                         }, 500);
                     }
                 }
                 else if (typeof Surfly !== 'undefined' && Surfly._initStatus && Surfly._initStatus.started === true) {
                     if (Surfly._initStatus && Surfly._initStatus.successful === true) {
-                        console.log("successful init should mean settings imported");
+                        console.log("Settings should be imported - error");
                     }
                     else {
+                        console.log("OOOOOOOOO");
                         checkWidgetKey();
                     }
                 }
-                else if (typeof Surfly !== 'undefined' && Surfly._initStatus && Surfly._initStatus.started === true) {
-                    console.log("Settings import completed!");
-                }
                 else {
-                    console.log("AAAAA");
+                    console.log("Something went wrong");
                 }
             }, 500);
         }
