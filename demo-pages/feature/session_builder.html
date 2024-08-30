@@ -1145,8 +1145,10 @@
                 }
             }
 
+        setTimeout(() => {
             if (typeof Surfly !== 'undefined' && Surfly._initStatus && Surfly._initStatus.started === false) {
                 console.log("attempting to initialize Surfly");
+                try {
                 Surfly.init(settings, function (initResult) {
                     if (typeof Surfly._initStatus === 'undefined') {
                         setTimeout(() => {
@@ -1157,9 +1159,19 @@
                     else checkWidgetKey();
                 });
             }
+            finally {
+                if (typeof Surfly !== 'undefined' && Surfly._initStatus && Surfly._initStatus.started === true) {
+checkWidgetKey();
+            }
+            else {
+                console.log("something went wrong");
+            }
+            }
+            }
             else {
                 console.log("Something went wrong");
-            }
+            }        
+        }, 500); 
         }
 
 
