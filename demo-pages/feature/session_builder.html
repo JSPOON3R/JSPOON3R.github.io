@@ -1124,69 +1124,47 @@
                 updateScriptElement();
             }
 
-            try {
-                if (typeof Surfly !== 'undefined' && Surfly._initStatus && Surfly._initStatus.started === false) {
-                    console.log("attempting to initialize Surfly");
-                    Surfly.init(settings, function (initResult) {
-                        if (Surfly._initStatus.successful === true) {
-                            console.log("Surfly initialized on page.");
-                            if (Surfly._defaultSettings && Object.keys(Surfly._defaultSettings).length > 0) {
-                                console.log("Surfly global settings found");
-                                const trueValuesOnly = filterValidValues(Surfly._defaultSettings);
-                                updateSettingsWithDefaultValues(settings, trueValuesOnly);
-                                console.log("Surfly global settings imported into page");
-                                delete Surfly;
-                                console.log("Aborting function");
-                                return;
-                            } else {
-                                console.log("Widget Key not recognized");
-                                alert("Widget Key not recognized");
-                            }
+            function checkWidgetKey() {
+                if (Surfly._initStatus.successful === true) {
+                    console.log("Surfly initialized on page.");
+                    if (Surfly._defaultSettings && Object.keys(Surfly._defaultSettings).length > 0) {
+                        console.log("Surfly global settings found");
+                        const trueValuesOnly = filterValidValues(Surfly._defaultSettings);
+                        updateSettingsWithDefaultValues(settings, trueValuesOnly);
+                        console.log("Surfly global settings imported into page");
+                        delete Surfly;
+                        console.log("Aborting function");
+                        return;
+                    } else {
+                        console.log("Widget Key not recognized");
+                        alert("Widget Key not recognized");
+                    }
 
-                        } else {
-                            console.log("Surfly initialization failed or was unsuccessful.");
-                        }
-                    });
-                }
-
-                else {
-                    console.log("Surfly cannot initialize. Trying again");
-                    setTimeout(() => {
-                        console.log("Retrying Surfly initialization after 0.5 seconds...");
-                        importSurflySetttings(); //this to the second attempt code
-                    }, 500);
-                }
-            }
-            catch (error) {
-                console.error("An error occurred during Surfly initialization:", error);
-                alert("Something went wrong. Please try again.");
-                delete Surfly;
-                console.log("Aborting function");
-                return;
-            }
-            // Should only run when Surfly recieves an unknown widget key
-            console.log("attempting to initialize Surfly - second try");
-            if (Surfly._initStatus) {
-                console.log("Surfly._initStatus:", Surfly._initStatus);
-                if (Surfly._initStatus.successful === null) {
-                    console.log("Surfly initialization status is null.");
-                    alert("Widget Key not recognised. Please try again.");
-                    console.log("Aborting function");
-                    return;
                 } else {
-                    console.log("Surfly initialization was unsuccessful");
-                    alert("Widget Key not recognised. Please try again.");
-                    console.log("Aborting function");
-                    return;
+                    console.log("Surfly initialization failed or was unsuccessful.");
                 }
-            } else {
-                console.log("Surfly._initStatus is undefined.");
-                return;
             }
-            console.log("Attempt failed");
-            console.log("Aborting function");
-            return;
+
+            if (typeof Surfly !== 'undefined' && Surfly._initStatus && Surfly._initStatus.started === false) {
+                console.log("attempting to initialize Surfly");
+                Surfly.init(settings, function (initResult) {
+                    if (typeof Surfly._initStatus === 'undefined') {
+                        setTimeout(() => {
+                            console.log("Surfly._initStatus undefined, retrying after 0.5 seconds...");
+                            checkWidgetKey();
+                        }, 500); 
+                    }
+                    else checkWidgetKey();
+                });
+            }
+            else {
+                console.log("Something went wrong");
+            }
         }
+
+
+
+
 
 
         function removeImportedSurflySetttings() {
