@@ -1108,6 +1108,7 @@
 
         //NEW CODE
         function importSurflySetttings() {
+            removeImportedSurflySetttings();
             delete Surfly;
             (function (s, u, r, f, l, y) {
                 s[f] = s[f] || { init: function () { s[f].q = arguments } };
@@ -1203,10 +1204,6 @@
         //make sure it works first try and on subsuquent tries
         //make sure false values don't display
         //make sure the toggles move with the new values
-
-
-
-
 
         //Function to reveal the categories in Session Builder when they are expanded
         function toggleCategory(button) {
