@@ -1108,6 +1108,7 @@
 
         //NEW CODE
         function importSurflySetttings() {
+            delete Surfly;
             (function (s, u, r, f, l, y) {
                 s[f] = s[f] || { init: function () { s[f].q = arguments } };
                 l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
@@ -1140,12 +1141,12 @@
                         console.log("Widget Key has no settings");
                         alert("No settings to import");
                     }
-                } 
-                if (Surfly._initStatus.successful === false || "null" ) {
+                }
+                if (Surfly._initStatus.successful === false || "null") {
                     console.log("Widget Key not recognised");
                     alert("Please enter a valid Widget Key");
                 }
-                
+
                 else {
                     console.log("Surfly initialization failed or was unsuccessful.");
                     alert("Something went wrong! Please try again");
@@ -1168,24 +1169,24 @@
                     }
                     finally {
                         setTimeout(() => {
-                        if (typeof Surfly !== 'undefined' && Surfly._initStatus && Surfly._initStatus.started === true) {
-                            if (Surfly._initStatus.successful === true) {
-                                console.log("Settings import completed!");
-                                return;
+                            if (typeof Surfly !== 'undefined' && Surfly._initStatus && Surfly._initStatus.started === true) {
+                                if (Surfly._initStatus.successful === true) {
+                                    console.log("Settings import completed!");
+                                    return;
+                                }
+                                else {
+                                    checkWidgetKey();
+                                }
                             }
                             else {
-                                checkWidgetKey();
+                                console.log("Something went wrong");
                             }
-                        }
-                        else {
-                            console.log("Something went wrong");
-                        }
-                    }, 500);
+                        }, 500);
                     }
                 }
                 else if (typeof Surfly !== 'undefined' && Surfly._initStatus && Surfly._initStatus.started === true) {
                     if (Surfly._initStatus && Surfly._initStatus.successful === true) {
-console.log("successful init should mean settings imported");
+                        console.log("successful init should mean settings imported");
                     }
                     else {
                         checkWidgetKey();
