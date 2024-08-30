@@ -743,6 +743,17 @@
     </style>
 
 
+<script>
+//to do
+//make a global function for updating the category displays so they work with widget key updates too
+//hide rest of page if not widget key has been found
+//test test test
+//remove any redundant widget key code
+//fix the widget key placement
+//reorder and clean up
+
+
+</script>
     <script id="myScript">
         //1// INITIAL SCRIPT
         //Starting script to be edited by updateScriptElement(). 
@@ -1104,11 +1115,8 @@
         //5// BUILD THE CODE SNIPPET & MANAGE PAGE UX
         //Functions to manage the display and behaviour of the page
 
-
-
-        //NEW CODE
+//import settings from the given widgt key
         function importSurflySetttings() {
-            removeImportedSurflySetttings();
             delete Surfly;
             (function (s, u, r, f, l, y) {
                 s[f] = s[f] || { init: function () { s[f].q = arguments } };
@@ -1142,6 +1150,7 @@
                 if (Surfly._initStatus.successful === true) {
                     console.log("Surfly initialized on page.");
                     if (Surfly._defaultSettings && Object.keys(Surfly._defaultSettings).length > 0) {
+                        removeImportedSurflySetttings();
                         console.log("Surfly global settings found");
                         const trueValuesOnly = filterValidValues(Surfly._defaultSettings);
                         updateSettingsWithDefaultValues(settings, trueValuesOnly);
@@ -1206,16 +1215,12 @@
             }, 500);
         }
 
+        //remove settings from the given widget key
         function removeImportedSurflySetttings() {
             settings = emptySettings;
             console.log("widget key settings removed from snippet");
             updateScriptElement();
         }
-        //NEW CODE
-        //remove any redundant widget key code
-        //make sure it works first try and on subsuquent tries
-        //make sure false values don't display
-        //make sure the toggles move with the new values
 
         //Function to reveal the categories in Session Builder when they are expanded
         function toggleCategory(button) {
