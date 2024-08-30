@@ -1187,17 +1187,8 @@
                         }, 500);
                     }
                 }
-                else if (typeof Surfly !== 'undefined' && Surfly._initStatus && Surfly._initStatus.started === true) {
-                    if (Surfly._initStatus && Surfly._initStatus.successful === true) {
-                        console.log("Settings should be imported - error");
-                    }
-                    else {
-                        console.log("OOOOOOOOO");
-                        checkWidgetKey();
-                    }
-                }
                 else {
-                    console.log("Something went wrong");
+                    console.log("Something went wrong - Surfly did not initialize properly");
                 }
             }, 500);
         }
