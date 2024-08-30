@@ -1184,7 +1184,12 @@
                     }
                 }
                 else if (typeof Surfly !== 'undefined' && Surfly._initStatus && Surfly._initStatus.started === true) {
-                    console.log("OOOO");
+                    if (Surfly._initStatus && Surfly._initStatus.successful === true) {
+console.log("successful init should mean settings imported");
+                    }
+                    else {
+                        checkWidgetKey();
+                    }
                 }
                 else if (typeof Surfly !== 'undefined' && Surfly._initStatus && Surfly._initStatus.started === true) {
                     console.log("Settings import completed!");
