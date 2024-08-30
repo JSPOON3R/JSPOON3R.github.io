@@ -1121,10 +1121,15 @@
                     if (defaultSettings.hasOwnProperty(key)) {
                         settings[key] = defaultSettings[key];
                         settings.widget_key = widgetKey;
+                        var slider = document.getElementById(key);
+            if (slider) {
+                slider.querySelector('input[type="checkbox"]').checked = settings[key];
+            }
                     }
                 }
                 updateScriptElement();
             }
+
 
             function checkWidgetKey() {
                 console.log("checking widget key");
