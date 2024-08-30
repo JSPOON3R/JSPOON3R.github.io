@@ -1150,7 +1150,6 @@
                 if (Surfly._initStatus.successful === true) {
                     console.log("Surfly initialized on page.");
                     if (Surfly._defaultSettings && Object.keys(Surfly._defaultSettings).length > 0) {
-                        removeImportedSurflySetttings();
                         console.log("Surfly global settings found");
                         const trueValuesOnly = filterValidValues(Surfly._defaultSettings);
                         updateSettingsWithDefaultValues(settings, trueValuesOnly);
@@ -1355,6 +1354,7 @@
 
         //function to add the widget key
         function addWidgetKeyToCode() {
+            removeImportedSurflySetttings();
             const widgetKeyInput = document.getElementById('widget_key_input').value.trim();
             widgetKey = widgetKeyInput;
 
