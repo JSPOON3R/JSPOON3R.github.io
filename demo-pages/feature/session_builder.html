@@ -1121,15 +1121,21 @@
                     if (defaultSettings.hasOwnProperty(key)) {
                         settings[key] = defaultSettings[key];
                         settings.widget_key = widgetKey;
-                        var slider = document.getElementById(key);
-            if (slider) {
-                slider.querySelector('input[type="checkbox"]').checked = settings[key];
-            }
                     }
                 }
                 updateScriptElement();
             }
 
+            function updateSliders(settings) {
+                for (var key in settings) {
+                    if (settings.hasOwnProperty(key)) {
+                        var slider = document.getElementById(key);
+                        if (slider) {
+                            slider.querySelector('input[type="checkbox"]').checked = settings[key];
+                        }
+                    }
+                }
+            }
 
             function checkWidgetKey() {
                 console.log("checking widget key");
@@ -1139,6 +1145,7 @@
                         console.log("Surfly global settings found");
                         const trueValuesOnly = filterValidValues(Surfly._defaultSettings);
                         updateSettingsWithDefaultValues(settings, trueValuesOnly);
+                        updateSliders(trueValuesOnly);
                         console.log("Surfly global settings imported into page");
                         delete Surfly;
                         console.log("Aborting function");
