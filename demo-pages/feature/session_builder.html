@@ -1140,11 +1140,15 @@
                     } else {
                         console.log("Widget Key has no settings");
                         alert("No settings to import");
+                        delete Surfly;
+                        return;
                     }
                 }
                 if (Surfly._initStatus.successful === false || "null") {
                     console.log("Widget Key not recognised");
                     alert("Please enter a valid Widget Key");
+                    delete Surfly;
+                    return;
                 }
 
                 else {
