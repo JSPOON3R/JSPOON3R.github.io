@@ -1145,33 +1145,36 @@
                 }
             }
 
-        setTimeout(() => {
-            if (typeof Surfly !== 'undefined' && Surfly._initStatus && Surfly._initStatus.started === false) {
-                console.log("attempting to initialize Surfly");
-                try {
-                Surfly.init(settings, function (initResult) {
-                    if (typeof Surfly._initStatus === 'undefined') {
-                        setTimeout(() => {
-                            console.log("Surfly._initStatus undefined, retrying after 0.5 seconds...");
-                            checkWidgetKey();
-                        }, 500); 
+            setTimeout(() => {
+                if (typeof Surfly !== 'undefined' && Surfly._initStatus && Surfly._initStatus.started === false) {
+                    console.log("attempting to initialize Surfly");
+                    try {
+                        Surfly.init(settings, function (initResult) {
+                            if (typeof Surfly._initStatus === 'undefined') {
+                                setTimeout(() => {
+                                    console.log("Surfly._initStatus undefined, retrying after 0.5 seconds...");
+                                    checkWidgetKey();
+                                }, 500);
+                            }
+                            else checkWidgetKey();
+                        });
                     }
-                    else checkWidgetKey();
-                });
-            }
-            finally {
-                if (typeof Surfly !== 'undefined' && Surfly._initStatus && Surfly._initStatus.started === true) {
-checkWidgetKey();
-            }
-            else {
-                console.log("something went wrong");
-            }
-            }
-            }
-            else {
-                console.log("Something went wrong");
-            }        
-        }, 500); 
+                    finally {
+                        if (typeof Surfly !== 'undefined' && Surfly._initStatus && Surfly._initStatus.started === true) {
+                            checkWidgetKey();
+                        }
+                        else {
+                            console.log("something went wrong");
+                        }
+                    }
+                }
+                else if (typeof Surfly !== 'undefined' && Surfly._initStatus && Surfly._initStatus.started === true) {
+                    checkWidgetKey();
+                }
+                else {
+                    console.log("Something went wrong");
+                }
+            }, 500);
         }
 
 
