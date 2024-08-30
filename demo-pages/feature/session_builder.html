@@ -749,6 +749,7 @@
 //hide rest of page if not widget key has been found
 //test test test
 //remove any redundant widget key code
+//fix removeImportedSurflySetttings() - calling it at the start of the import function removed the newly added key and then init fails. Need to remove settings at the start of that function WITHOUT removing the widget key
 //fix the widget key placement
 //reorder and clean up
 
@@ -1217,6 +1218,10 @@
         //remove settings from the given widget key
         function removeImportedSurflySetttings() {
             settings = emptySettings;
+            var toggles = document.querySelectorAll('.settings-toggle input[type="checkbox"]');
+    toggles.forEach(function(toggle) {
+        toggle.checked = false;
+    });
             console.log("widget key settings removed from snippet");
             updateScriptElement();
         }
@@ -1354,7 +1359,6 @@
 
         //function to add the widget key
         function addWidgetKeyToCode() {
-            removeImportedSurflySetttings();
             const widgetKeyInput = document.getElementById('widget_key_input').value.trim();
             widgetKey = widgetKeyInput;
 
