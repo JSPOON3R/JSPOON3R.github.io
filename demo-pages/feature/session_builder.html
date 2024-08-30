@@ -1125,6 +1125,7 @@
             }
 
             function checkWidgetKey() {
+                console.log("checking widget key");
                 if (Surfly._initStatus.successful === true) {
                     console.log("Surfly initialized on page.");
                     if (Surfly._defaultSettings && Object.keys(Surfly._defaultSettings).length > 0) {
@@ -1136,11 +1137,16 @@
                         console.log("Aborting function");
                         return;
                     } else {
-                        console.log("Widget Key not recognized");
-                        alert("Widget Key not recognized");
+                        console.log("Widget Key has no settings");
+                        alert("No settings to import");
                     }
-
-                } else {
+                } 
+                if (Surfly._initStatus.successful === false || "null" ) {
+                    console.log("Widget Key not recognised");
+                    alert("Please enter a valid Widget Key");
+                }
+                
+                else {
                     console.log("Surfly initialization failed or was unsuccessful.");
                 }
             }
