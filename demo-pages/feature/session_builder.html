@@ -759,7 +759,7 @@
         //1// INITIAL SCRIPT
         //Starting script to be edited by updateScriptElement(). 
         //Settings listed here because to process used to update them visually requires it
-        var settings = {
+        var emptySettings = settings = {
             admission_enabled: '',
             alternative_proxy_enabled: '',
             anonymous_users_can_share_camera: '',
@@ -846,8 +846,6 @@
         //Holds the script to be displayed on the page
         var allSettings = '';
         //collects all settings together in one var
-        var emptySettings = '';
-        //to reset when needed
         var sessionStarted = '';
         //code block for this event
         var sessionLoaded = '';
@@ -1566,11 +1564,6 @@
     <script>
         //7// LISTNERS
         //mapping elements to functions
-
-        //make emptySettings hold the original values for the settings
-
-            emptySettings = JSON.parse(JSON.stringify(settings));
-
 
         document.addEventListener('DOMContentLoaded', () => {
             //skip queue toggle
