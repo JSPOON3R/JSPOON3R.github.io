@@ -1148,6 +1148,7 @@
                 
                 else {
                     console.log("Surfly initialization failed or was unsuccessful.");
+                    alert("Something went wrong! Please try again");
                 }
             }
 
@@ -1166,19 +1167,30 @@
                         });
                     }
                     finally {
+                        setTimeout(() => {
                         if (typeof Surfly !== 'undefined' && Surfly._initStatus && Surfly._initStatus.started === true) {
-                            checkWidgetKey();
+                            if (Surfly._initStatus.successful === true) {
+                                console.log("Settings import completed!");
+                                return;
+                            }
+                            else {
+                                checkWidgetKey();
+                            }
                         }
                         else {
-                            console.log("something went wrong");
+                            console.log("Something went wrong");
                         }
+                    }, 500);
                     }
                 }
                 else if (typeof Surfly !== 'undefined' && Surfly._initStatus && Surfly._initStatus.started === true) {
-                    checkWidgetKey();
+                    console.log("OOOO");
+                }
+                else if (typeof Surfly !== 'undefined' && Surfly._initStatus && Surfly._initStatus.started === true) {
+                    console.log("Settings import completed!");
                 }
                 else {
-                    console.log("Something went wrong");
+                    console.log("AAAAA");
                 }
             }, 500);
         }
