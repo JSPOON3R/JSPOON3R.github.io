@@ -1136,6 +1136,7 @@
                                 updateSettingsWithDefaultValues(settings, trueValuesOnly);
                                 console.log("Surfly global settings imported into page");
                                 delete Surfly;
+                                console.log("Aborting function");
                                 return;
                             } else {
                                 console.log("Widget Key not recognized");
@@ -1158,8 +1159,9 @@
             }
             catch (error) {
                 console.error("An error occurred during Surfly initialization:", error);
-                alert("Somrthign went wrong. Please try again.");
+                alert("Something went wrong. Please try again.");
                 delete Surfly;
+                console.log("Aborting function");
                 return;
             }
             // Should only run when Surfly recieves an unknown widget key
@@ -1169,10 +1171,12 @@
                 if (Surfly._initStatus.successful === null) {
                     console.log("Surfly initialization status is null.");
                     alert("Widget Key not recognised. Please try again.");
+                    console.log("Aborting function");
                     return;
                 } else {
                     console.log("Surfly initialization was unsuccessful");
                     alert("Widget Key not recognised. Please try again.");
+                    console.log("Aborting function");
                     return;
                 }
             } else {
@@ -1180,6 +1184,7 @@
                 return;
             }
             console.log("Attempt failed");
+            console.log("Aborting function");
             return;
         }
 
