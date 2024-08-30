@@ -892,13 +892,13 @@
 
         //filter out the values from the initial settings block that do not have a value (messy but im locked in)
         function filterValidValues(obj) {
-    return Object.keys(obj)
-        .filter(key => !!obj[key]) // Filters out any falsy values
-        .reduce((acc, key) => {
-            acc[key] = obj[key];
-            return acc;
-        }, {});
-}
+            return Object.keys(obj)
+                .filter(key => !!obj[key]) // Filters out any falsy values
+                .reduce((acc, key) => {
+                    acc[key] = obj[key];
+                    return acc;
+                }, {});
+        }
 
         function updateScriptElement() {
             scriptElement = document.getElementById("myScript");
@@ -1126,30 +1126,29 @@
                 updateScriptElement();
             }
 
-            //code if widget key is correct first try
             if (typeof Surfly !== 'undefined' || Surfly._initStatus && Surfly._initStatus.started == false) {
                 Surfly.init(settings, function (initResult) {
                     if (initResult.success) {
                         console.log("Surfly initialized on page.");
-                        if (Surfly._defaultSettings && Object.keys(Surfly._defaultSettings).length > 0) {
-                            console.log("Surfly default settings found");
-                            const trueValuesOnly = filterValidValues(Surfly._defaultSettings);
-                            updateSettingsWithDefaultValues(settings, trueValuesOnly);
-                            delete Surfly;
-                        } else {
-                            console.log("Widget Key not recognized");
-                            alert("Widget Key not recognized");
-                        }
+                        const trueValuesOnly = filterValidValues(Surfly._defaultSettings);
+                        updateSettingsWithDefaultValues(settings, trueValuesOnly);
+                    }
+                    if (!initResult.success) {
+                        console.log("Widget Key not recognized");
+                        alert("Widget Key not recognized");
                     }
                     else {
                         console.log("Surfly was unable to initialize properly.")
                     }
                 });
-            }             
+            }
             else {
                 console.error("Something went wrong.")
             }
+            delete Surfly;
         }
+        
+        
         //NEW CODE
         //remove any redundant widget key code
         //make sure it works first try and on subsuquent tries
