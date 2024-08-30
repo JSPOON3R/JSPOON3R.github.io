@@ -1108,58 +1108,66 @@
 
         //NEW CODE
         function importSurflySetttings() {
-            (function (s, u, r, f, l, y) {
-                s[f] = s[f] || { init: function () { s[f].q = arguments } };
-                l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
-                l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
-            })
-                (window, document, 'script', 'Surfly');
+    (function (s, u, r, f, l, y) {
+        s[f] = s[f] || { init: function () { s[f].q = arguments } };
+        l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+        l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+    })(window, document, 'script', 'Surfly');
 
-            function updateSettingsWithDefaultValues(settings, defaultSettings) {
-                // Iterate over each key in the settings object
-                for (var key in settings) {
-                    // Check if the key exists in the defaultSettings object
-                    if (defaultSettings.hasOwnProperty(key)) {
-                        // Update the settings object with the value from defaultSettings
-                        settings[key] = defaultSettings[key];
-                        settings.widget_key = widgetKey;
-                    }
-                }
-                updateScriptElement();
-            }
-
-            //code if widget key is correct first try
-            if (typeof Surfly !== 'undefined' || Surfly._initStatus && Surfly._initStatus.started == false) {
-                Surfly.init(settings, function (initResult) {
-                    if (Surfly._initStatus.successful === true) {
-                        console.log("Surfly initialized on page.");
-                        if (Surfly._defaultSettings && Object.keys(Surfly._defaultSettings).length > 0) {
-                            console.log("Surfly default settings found");
-                            const trueValuesOnly = filterValidValues(Surfly._defaultSettings);
-                            updateSettingsWithDefaultValues(settings, trueValuesOnly);
-                            delete Surfly;
-                        } else {
-                            console.log("Widget Key not recognizedddd");
-                            alert("Widget Key not recognizedddd");
-                            delete Surfly;
-                        }
-                    }
-                    if (Surfly._initStatus.successful === !true) {
-                        console.log("blaaaa");
-                        alert("Widget Key not recognized");
-                        delete Surfly;
-                    }
-                    else {
-                        console.log("Surfly was unable to initialize properly.");
-                        delete Surfly;
-                    }
-                });
-            }
-            else {
-                console.error("Something went wrong.");
-                delete Surfly;
+    function updateSettingsWithDefaultValues(settings, defaultSettings) {
+        for (var key in settings) {
+            if (defaultSettings.hasOwnProperty(key)) {
+                settings[key] = defaultSettings[key];
+                settings.widget_key = widgetKey;
             }
         }
+        updateScriptElement();
+    }
+
+    try {
+        if (typeof Surfly !== 'undefined' && Surfly._initStatus && Surfly._initStatus.started === false) {
+            Surfly.init(settings, function (initResult) {
+                if (Surfly._initStatus.successful === true) {
+                    console.log("Surfly initialized on page.");
+                    if (Surfly._defaultSettings && Object.keys(Surfly._defaultSettings).length > 0) {
+                        console.log("Surfly default settings found");
+                        const trueValuesOnly = filterValidValues(Surfly._defaultSettings);
+                        updateSettingsWithDefaultValues(settings, trueValuesOnly);
+                    } else {
+                        console.log("Widget Key not recognized");
+                        alert("Widget Key not recognized");
+                    }
+                } else {
+                    console.log("Surfly initialization failed or was unsuccessful.");
+                }
+                delete Surfly; // Cleanup after Surfly initialization
+            });
+        } else {
+            console.log("Surfly is already initialized or cannot initialize.");
+            delete Surfly; // Cleanup if Surfly cannot initialize
+        }
+    } catch (error) {
+        console.error("An error occurred during Surfly initialization:", error);
+        delete Surfly; // Ensure cleanup even if there's an error
+    }
+
+    // Continue with the rest of your code, regardless of whether Surfly.init succeeded or failed
+    console.log("Continuing with the rest of the importSurflySetttings function...");
+    if (Surfly._initStatus.successful === true) {
+                    console.log("2: Surfly initialized on page.");
+                    if (Surfly._defaultSettings && Object.keys(Surfly._defaultSettings).length > 0) {
+                        console.log("2: Surfly default settings found");
+                        const trueValuesOnly = filterValidValues(Surfly._defaultSettings);
+                        updateSettingsWithDefaultValues(settings, trueValuesOnly);
+                    } else {
+                        console.log("2: Widget Key not recognized");
+                        alert("2: Widget Key not recognized");
+                    }
+                } else {
+                    console.log("2: Surfly initialization failed or was unsuccessful.");
+                }
+                delete Surfly; // Cleanup after Surfly initialization
+}
 
 
         function removeImportedSurflySetttings() {
