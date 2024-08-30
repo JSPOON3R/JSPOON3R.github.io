@@ -1137,17 +1137,22 @@
                         console.log("Widget Key not recognized");
                         alert("Widget Key not recognized");
                     }
+
                 } else {
                     console.log("Surfly initialization failed or was unsuccessful.");
                 }
-                delete Surfly; // Cleanup after Surfly initialization
+            console.log("running these cheeky fellas");
+            delete Surfly; 
+            return;
             });
-        } else {
+        } 
+        
+        else {
             console.log("Surfly is already initialized or cannot initialize.");
         }
     } catch (error) {
         console.error("An error occurred during Surfly initialization:", error);
-        delete Surfly; // Ensure cleanup even if there's an error
+        delete Surfly; 
         return;
     }
 
