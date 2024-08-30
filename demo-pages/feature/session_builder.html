@@ -1126,6 +1126,7 @@
 
     try {
         if (typeof Surfly !== 'undefined' && Surfly._initStatus && Surfly._initStatus.started === false) {
+            console.log("attempting to initialize Surfly");
             Surfly.init(settings, function (initResult) {
                 if (Surfly._initStatus.successful === true) {
                     console.log("Surfly initialized on page.");
@@ -1148,20 +1149,25 @@
         } 
         
         else {
-            console.log("Surfly is already initialized or cannot initialize.");
+            console.log("Surfly cannot initialize. Trying again");
+            setTimeout(() => {
+                        console.log("Retrying Surfly initialization after 0.5 seconds...");
+                        importSurflySetttings(); //this to the second attempt code
+                    }, 500);
         }
-    } catch (error) {
+    } 
+    
+    catch (error) {
         console.error("An error occurred during Surfly initialization:", error);
         delete Surfly; 
         return;
     }
 
     // Continue with the rest of your code, regardless of whether Surfly.init succeeded or failed
-    console.log("Continuing with the rest of the importSurflySetttings function...");
+    console.log("Init second try started");
 
     if (Surfly._initStatus) {
     console.log("Surfly._initStatus:", Surfly._initStatus); 
-
     if (Surfly._initStatus.successful === true) {
         console.log("Surfly initialized successfully.");
     } else if (Surfly._initStatus.successful === null) {
