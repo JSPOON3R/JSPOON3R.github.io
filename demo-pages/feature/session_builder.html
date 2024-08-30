@@ -1144,11 +1144,11 @@
             });
         } else {
             console.log("Surfly is already initialized or cannot initialize.");
-            delete Surfly; // Cleanup if Surfly cannot initialize
         }
     } catch (error) {
         console.error("An error occurred during Surfly initialization:", error);
         delete Surfly; // Ensure cleanup even if there's an error
+        return;
     }
 
     // Continue with the rest of your code, regardless of whether Surfly.init succeeded or failed
