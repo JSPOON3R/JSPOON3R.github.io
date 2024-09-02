@@ -1222,7 +1222,7 @@
 
         //remove settings from the given widget key
         function removeImportedSurflySetttings() {
-            settings = emptySettings;
+            settings = JSON.parse(JSON.stringify(emptySettings));
             var toggles = document.querySelectorAll('.settings-toggle input[type="checkbox"]');
             toggles.forEach(function (toggle) {
                 toggle.checked = false;
