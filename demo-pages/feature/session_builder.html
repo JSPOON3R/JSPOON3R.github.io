@@ -744,22 +744,22 @@
     </style>
 
 
-<script>
-//to do
-//make a global function for updating the category displays so they work with widget key updates too
-//hide rest of page if not widget key has been found
-//test test test
-//remove any redundant widget key code
-//fix removeImportedSurflySetttings() - calling it at the start of the import function removed the newly added key and then init fails. Need to remove settings at the start of that function WITHOUT removing the widget key
-//emptySettings var isnt staying empty
-//fix the widget key placement
-//add the remaining category show/hide logic
-//find out what's up with emptySettings
-//try and make the script preview updat with the toggles when resetting the widget key
-//reorder and clean up
+    <script>
+        //to do
+        //make a global function for updating the category displays so they work with widget key updates too
+        //hide rest of page if not widget key has been found
+        //test test test
+        //remove any redundant widget key code
+        //fix removeImportedSurflySetttings() - calling it at the start of the import function removed the newly added key and then init fails. Need to remove settings at the start of that function WITHOUT removing the widget key
+        //emptySettings var isnt staying empty
+        //fix the widget key placement
+        //add the remaining category show/hide logic
+        //find out what's up with emptySettings
+        //try and make the script preview updat with the toggles when resetting the widget key
+        //reorder and clean up
 
 
-</script>
+    </script>
     <script id="myScript">
         //1// INITIAL SCRIPT
         //Starting script to be edited by updateScriptElement(). 
@@ -1105,7 +1105,7 @@
         //5// BUILD THE CODE SNIPPET & MANAGE PAGE UX
         //Functions to manage the display and behaviour of the page
 
-//import settings from the given widgt key
+        //import settings from the given widgt key
         function importSurflySetttings() {
             delete Surfly;
             (function (s, u, r, f, l, y) {
@@ -1125,28 +1125,28 @@
             }
 
             function updateSliders(settings) {
-    for (var key in settings) {
-        if (settings.hasOwnProperty(key) && settings[key] !== null) {
-            var element = document.getElementById(key);
+                for (var key in settings) {
+                    if (settings.hasOwnProperty(key) && settings[key] !== null) {
+                        var element = document.getElementById(key);
 
-            if (element) {
-                // Handle checkboxes
-                if (element.querySelector('input[type="checkbox"]')) {
-                    element.querySelector('input[type="checkbox"]').checked = settings[key];
+                        if (element) {
+                            // Handle checkboxes
+                            if (element.querySelector('input[type="checkbox"]')) {
+                                element.querySelector('input[type="checkbox"]').checked = settings[key];
+                            }
+                            // Handle select elements
+                            else if (element.tagName === 'SELECT') {
+                                element.value = settings[key]; // Update the select element's value
+                                toggleVideoView(element); // Call the function to update the video view (or other select element actions)
+                            } else {
+                                console.warn(`Element with ID ${key} is not a recognized input type.`);
+                            }
+                        } else {
+                            console.warn(`Element with ID ${key} not found.`);
+                        }
+                    }
                 }
-                // Handle select elements
-                else if (element.tagName === 'SELECT') {
-                    element.value = settings[key]; // Update the select element's value
-                    toggleVideoView(element); // Call the function to update the video view (or other select element actions)
-                } else {
-                    console.warn(`Element with ID ${key} is not a recognized input type.`);
-                }
-            } else {
-                console.warn(`Element with ID ${key} not found.`);
             }
-        }
-    }
-}
 
             function checkWidgetKey() {
                 console.log("checking widget key");
@@ -1220,9 +1220,9 @@
         function removeImportedSurflySetttings() {
             settings = emptySettings;
             var toggles = document.querySelectorAll('.settings-toggle input[type="checkbox"]');
-    toggles.forEach(function(toggle) {
-        toggle.checked = false;
-    });
+            toggles.forEach(function (toggle) {
+                toggle.checked = false;
+            });
             console.log("widget key settings removed from snippet");
             updateScriptElement();
         }
@@ -1534,32 +1534,49 @@
 
 
         document.addEventListener('DOMContentLoaded', () => {
-            
+
             function updateAvailableOptions() {
                 const inputs = document.querySelectorAll('.settings-toggle input');
                 const VideoOptions = document.getElementById("video-toggles");
                 const VideoHeading = document.getElementById("video-heading");
+                const DocumentEditorOptions = document.getElementById("document-editor-toggles"); // New element for document editor
+                const DocumentEditorHeading = document.getElementById("document-editor-heading"); // Heading for document editor (if any)
 
                 inputs.forEach(input => {
                     const id = input.parentElement.id;
                     const isChecked = input.checked;
-                    //hide/show video options based on videochat_enabled
+
+                    // Hide/show video options based on videochat_enabled
                     if (id === "videochat_enabled" && isChecked) {
-                        console.log("enable the video options");
+                        console.log("Enable the video options");
                         VideoOptions.style.display = "";
                         VideoHeading.innerHTML = "Video";
                     } else if (id === "videochat_enabled" && !isChecked) {
-                        console.log("disable the video options");
+                        console.log("Disable the video options");
                         VideoOptions.style.display = "none";
                         VideoHeading.innerHTML = "Video<span style='color:var(--grey);font-weight:lighter;opacity:60%;'>(requires videochat_enabled)</span>";
                     }
+
+                    // Hide/show document editor options based on document_editor_enabled
+                    if (id === "document_editor_enabled" && isChecked) {
+                        console.log("Enable the document editor options");
+                        DocumentEditorOptions.style.display = "";
+                        DocumentEditorHeading.innerHTML = "Document Editor";
+                    } else if (id === "document_editor_enabled" && !isChecked) {
+                        console.log("Disable the document editor options");
+                        DocumentEditorOptions.style.display = "none";
+                        DocumentEditorHeading.innerHTML = "Document Editor<span style='color:var(--grey);font-weight:lighter;opacity:60%;'>(requires document_editor_enabled)</span>";
+                    }
                 });
                 updateScriptElement();
-            };
-    
+            }
+
             document.querySelectorAll('.settings-toggle input').forEach(input => {
                 input.addEventListener('change', updateAvailableOptions);
             });
+
+            // Call the function once initially to set the correct state based on the current slider positions
+            updateAvailableOptions();
         });
 
 
@@ -1659,7 +1676,7 @@
             updateScriptElement();
         });
 
-     
+
 
 
     </script>
@@ -1875,6 +1892,95 @@ document.body.appendChild(customSurflyButton);
                             <h2>screensharing_enabled</h2>
                         </div>
                     </div>
+                    <h2 class="category-heading" id="video-heading">Video
+                    </h2>
+                    <div class="feature-toggles" id="video-toggles">
+                        <div class="settings-toggle">
+                            <label class="switch" id="start_with_videochat_on">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>start_with_videochat_on</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="start_with_fullscreen_videochat">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>start_with_fullscreen_videochat</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="videochat_prompt">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>videochat_prompt</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="anonymous_users_can_share_camera">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>anonymous_users_can_share_camera</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="p2p_videochat_enabled">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>p2p_videochat_enabled</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="start_muted">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>start_muted</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <div class="view-select">
+                                <select class="drop-down" id="default_videochat_fullscreen_mode"
+                                    onchange="toggleVideoView(this)">
+                                    <option value="grid">grid</option>
+                                    <option value="spotlight">spotlight</option>
+                                </select>
+                                <h2>default_videochat_fullscreen_mode</h2>
+                            </div>
+                        </div>
+                        <div class="settings-toggle">
+                            <div class="view-select">
+                                <select class="drop-down" id="default_videochat_mode" onchange="toggleVideoView(this)">
+                                    <option value="floating">floating</option>
+                                    <option value="sidebar">sidebar</option>
+                                </select>
+                                <h2>default_videochat_mode</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <h2 class="category-heading" id="document-editor-heading">Documents & Files</h2>
+                    <div class="feature-toggles" id="document-editor-toggles">
+                        <div class="settings-toggle">
+                            <label class="switch" id="download_trigger_enabled">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>download_trigger_enabled</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="filesharing_enabled">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>filesharing_enabled</h2>
+                        </div>
+                        <div class="settings-toggle">
+                            <label class="switch" id="original_file_download_allowed">
+                                <input type="checkbox">
+                                <span class="slider"></span>
+                            </label>
+                            <h2>original_file_download_allowed</h2>
+                        </div>
+                    </div>
                     <h2 class="category-heading">Permissions & Control</h2>
                     <div class="feature-toggles">
                         <div class="settings-toggle">
@@ -2042,95 +2148,6 @@ document.body.appendChild(customSurflyButton);
                                 <span class="slider"></span>
                             </label>
                             <h2>start_with_chat_open</h2>
-                        </div>
-                    </div>
-                    <h2 class="category-heading" id="video-heading">Video
-                    </h2>
-                    <div class="feature-toggles" id="video-toggles">
-                        <div class="settings-toggle">
-                            <label class="switch" id="start_with_videochat_on">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                            <h2>start_with_videochat_on</h2>
-                        </div>
-                        <div class="settings-toggle">
-                            <label class="switch" id="start_with_fullscreen_videochat">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                            <h2>start_with_fullscreen_videochat</h2>
-                        </div>
-                        <div class="settings-toggle">
-                            <label class="switch" id="videochat_prompt">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                            <h2>videochat_prompt</h2>
-                        </div>
-                        <div class="settings-toggle">
-                            <label class="switch" id="anonymous_users_can_share_camera">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                            <h2>anonymous_users_can_share_camera</h2>
-                        </div>
-                        <div class="settings-toggle">
-                            <label class="switch" id="p2p_videochat_enabled">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                            <h2>p2p_videochat_enabled</h2>
-                        </div>
-                        <div class="settings-toggle">
-                            <label class="switch" id="start_muted">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                            <h2>start_muted</h2>
-                        </div>
-                        <div class="settings-toggle">
-                            <div class="view-select">
-                                <select class="drop-down" id="default_videochat_fullscreen_mode"
-                                    onchange="toggleVideoView(this)">
-                                    <option value="grid">grid</option>
-                                    <option value="spotlight">spotlight</option>
-                                </select>
-                                <h2>default_videochat_fullscreen_mode</h2>
-                            </div>
-                        </div>
-                        <div class="settings-toggle">
-                            <div class="view-select">
-                                <select class="drop-down" id="default_videochat_mode" onchange="toggleVideoView(this)">
-                                    <option value="floating">floating</option>
-                                    <option value="sidebar">sidebar</option>
-                                </select>
-                                <h2>default_videochat_mode</h2>
-                            </div>
-                        </div>
-                    </div>
-                    <h2 class="category-heading">Documents & Files</h2>
-                    <div class="feature-toggles">
-                        <div class="settings-toggle">
-                            <label class="switch" id="download_trigger_enabled">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                            <h2>download_trigger_enabled</h2>
-                        </div>
-                        <div class="settings-toggle">
-                            <label class="switch" id="filesharing_enabled">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                            <h2>filesharing_enabled</h2>
-                        </div>
-                        <div class="settings-toggle">
-                            <label class="switch" id="original_file_download_allowed">
-                                <input type="checkbox">
-                                <span class="slider"></span>
-                            </label>
-                            <h2>original_file_download_allowed</h2>
                         </div>
                     </div>
                     <h2 class="category-heading">Browsing & Security</h2>
