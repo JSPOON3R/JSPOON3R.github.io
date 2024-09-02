@@ -1106,7 +1106,28 @@
         //Functions to manage the display and behaviour of the page
 
         //populate emptySettings with default values on load
-        function updateSliders(settings) {
+
+
+        //import settings from the given widgt key
+        function importSurflySetttings() {
+            delete Surfly;
+            (function (s, u, r, f, l, y) {
+                s[f] = s[f] || { init: function () { s[f].q = arguments } };
+                l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+                l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+            })(window, document, 'script', 'Surfly');
+
+            function updateSettingsWithDefaultValues(settings, defaultSettings) {
+                for (var key in settings) {
+                    if (defaultSettings.hasOwnProperty(key)) {
+                        settings[key] = defaultSettings[key];
+                        settings.widget_key = widgetKey;
+                    }
+                }
+                updateScriptElement();
+            }
+
+            function updateSliders(settings) {
                 for (var key in settings) {
                     if (settings.hasOwnProperty(key) && settings[key] !== null) {
                         var element = document.getElementById(key);
@@ -1128,25 +1149,6 @@
                         }
                     }
                 }
-            }
-
-        //import settings from the given widgt key
-        function importSurflySetttings() {
-            delete Surfly;
-            (function (s, u, r, f, l, y) {
-                s[f] = s[f] || { init: function () { s[f].q = arguments } };
-                l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
-                l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
-            })(window, document, 'script', 'Surfly');
-
-            function updateSettingsWithDefaultValues(settings, defaultSettings) {
-                for (var key in settings) {
-                    if (defaultSettings.hasOwnProperty(key)) {
-                        settings[key] = defaultSettings[key];
-                        settings.widget_key = widgetKey;
-                    }
-                }
-                updateScriptElement();
             }
 
             function checkWidgetKey() {
@@ -1221,7 +1223,10 @@
         //remove settings from the given widget key
         function removeImportedSurflySetttings() {
             settings = emptySettings;
-            updateSliders(emptySettings);
+            var toggles = document.querySelectorAll('.settings-toggle input[type="checkbox"]');
+            toggles.forEach(function (toggle) {
+                toggle.checked = false;
+            });
             console.log("widget key settings removed from snippet");
             updateScriptElement();
         }
