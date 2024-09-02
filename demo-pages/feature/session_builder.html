@@ -1537,8 +1537,8 @@
 
 
         document.addEventListener('DOMContentLoaded', () => {
-
-            function updateAvailableOptions() {
+            
+            const updateAvailableOptions = () => {
                 const inputs = document.querySelectorAll('.settings-toggle input');
                 const VideoOptions = document.getElementById("video-toggles");
                 const VideoHeading = document.getElementById("video-heading");
