@@ -1656,12 +1656,21 @@
             //listen for click to reset anything imported from a widget key
             document.getElementById('reset-widget-key-button').addEventListener('click', removeImportedSurflySetttings);
 
+            //make sure the video view settings update when changed by settings import
+            document.querySelectorAll('.settings-toggle select').forEach(input => {
+                input.addEventListener('change', toggleVideoView);
+            });
+
         });
 
         // Initial update of the script element
         document.addEventListener('DOMContentLoaded', () => {
             updateScriptElement();
         });
+
+     
+
+
     </script>
     <script id="realSurflyScript">
         //8// USING THE GENERATED SNIPPET
