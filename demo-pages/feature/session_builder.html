@@ -746,7 +746,7 @@
 
     <script>
         //to do
-        //make sure pin modal doesn't show if queue is skipped 
+        //make sure pin modal doesn't show if queue is skipped
         //hide rest of page if not widget key has been found
         //test test test
         //remove any redundant widget key code
@@ -1534,48 +1534,41 @@
         //function to change the available options based in initial selections
 
 
-            function updateAvailableOptions() {
-                const inputs = document.querySelectorAll('.settings-toggle input');
-                const VideoOptions = document.getElementById("video-toggles");
-                const VideoHeading = document.getElementById("video-heading");
-                const DocumentEditorOptions = document.getElementById("document-editor-toggles");
-                const DocumentEditorHeading = document.getElementById("document-editor-heading");
+        function updateAvailableOptions() {
+            const inputs = document.querySelectorAll('.settings-toggle input');
+            const VideoOptions = document.getElementById("video-toggles");
+            const VideoHeading = document.getElementById("video-heading");
+            const DocumentEditorOptions = document.getElementById("document-editor-toggles");
+            const DocumentEditorHeading = document.getElementById("document-editor-heading");
 
-                inputs.forEach(input => {
-                    const id = input.parentElement.id;
-                    const isChecked = input.checked;
+            inputs.forEach(input => {
+                const id = input.parentElement.id;
+                const isChecked = input.checked;
 
-                    // Hide/show video options based on videochat_enabled
-                    if (id === "videochat_enabled" && isChecked) {
-                        console.log("Enable the video options");
-                        VideoOptions.style.display = "";
-                        VideoHeading.innerHTML = "Video";
-                    } else if (id === "videochat_enabled" && !isChecked) {
-                        console.log("Disable the video options");
-                        VideoOptions.style.display = "none";
-                        VideoHeading.innerHTML = "Video<span style='color:var(--grey);font-weight:lighter;opacity:60%;'>(requires videochat_enabled)</span>";
-                    }
+                // Hide/show video options based on videochat_enabled
+                if (id === "videochat_enabled" && isChecked) {
+                    console.log("Enable the video options");
+                    VideoOptions.style.display = "";
+                    VideoHeading.innerHTML = "Video";
+                } else if (id === "videochat_enabled" && !isChecked) {
+                    console.log("Disable the video options");
+                    VideoOptions.style.display = "none";
+                    VideoHeading.innerHTML = "Video<span style='color:var(--grey);font-weight:lighter;opacity:60%;'>(requires videochat_enabled)</span>";
+                }
 
-                    // Hide/show document editor options based on document_editor_enabled
-                    if (id === "document_editor_enabled" && isChecked) {
-                        console.log("Enable the document editor options");
-                        DocumentEditorOptions.style.display = "";
-                        DocumentEditorHeading.innerHTML = "Document Editor";
-                    } else if (id === "document_editor_enabled" && !isChecked) {
-                        console.log("Disable the document editor options");
-                        DocumentEditorOptions.style.display = "none";
-                        DocumentEditorHeading.innerHTML = "Document Editor<span style='color:var(--grey);font-weight:lighter;opacity:60%;'>(requires document_editor_enabled)</span>";
-                    }
-                });
-                updateScriptElement();
-            }
-
-            document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.settings-toggle input').forEach(input => {
-                input.addEventListener('change', updateAvailableOptions);
+                // Hide/show document editor options based on document_editor_enabled
+                if (id === "document_editor_enabled" && isChecked) {
+                    console.log("Enable the document editor options");
+                    DocumentEditorOptions.style.display = "";
+                    DocumentEditorHeading.innerHTML = "Document Editor";
+                } else if (id === "document_editor_enabled" && !isChecked) {
+                    console.log("Disable the document editor options");
+                    DocumentEditorOptions.style.display = "none";
+                    DocumentEditorHeading.innerHTML = "Document Editor<span style='color:var(--grey);font-weight:lighter;opacity:60%;'>(requires document_editor_enabled)</span>";
+                }
             });
-            updateAvailableOptions();
-        });
+            updateScriptElement();
+        }
 
 
     </script>
@@ -1666,6 +1659,12 @@
             document.getElementById('add-widget-key-button').addEventListener('click', importSurflySetttings);
             //listen for click to reset anything imported from a widget key
             document.getElementById('reset-widget-key-button').addEventListener('click', removeImportedSurflySetttings);
+
+
+            //update available options when toggles change
+            document.querySelectorAll('.settings-toggle input').forEach(input => {
+                input.addEventListener('change', updateAvailableOptions);
+            });
 
         });
 
