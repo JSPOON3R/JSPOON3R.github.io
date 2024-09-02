@@ -397,9 +397,9 @@
         }
 
         .drop-down {
-            background-color: var(--lightest-gray);
+            background-color: var(--light-green);
             border-radius: 20px;
-            color: var(--light-red);
+            color: var(--lightest-gray);
             border: 1px solid var(--light-grey);
             cursor: pointer;
             font-family: var(--font);
@@ -1077,22 +1077,6 @@
     });
     `;
         }
-
-        //manage the colours of the drop downs when changes are made
-        document.addEventListener('DOMContentLoaded', () => {
-            const dropdowns = document.querySelectorAll('.drop-down');
-            dropdowns.forEach(dropdown => {
-                dropdown.addEventListener('change', function () {
-                    if (this.value === "") {
-                        this.style.backgroundColor = 'var(--lightest-gray)';
-                        this.style.color = 'var(--light-red)';
-                    } else {
-                        this.style.backgroundColor = 'var(--light-green)';
-                        this.style.color = 'var(--lightest-gray)';
-                    }
-                });
-            });
-        });
 
         // Also adjust the position immediately after toggling the preview
         function toggleJavascriptPreview() {
