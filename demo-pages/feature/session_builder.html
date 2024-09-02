@@ -746,7 +746,7 @@
 
     <script>
         //to do
-        //make a global function for updating the category displays so they work with widget key updates too
+        //make sure pin modal doesn't show if queue is skipped 
         //hide rest of page if not widget key has been found
         //test test test
         //remove any redundant widget key code
@@ -1159,6 +1159,7 @@
                         updateSliders(trueValuesOnly);
                         console.log("Surfly global settings imported into page");
                         delete Surfly;
+                        updateAvailableOptions();
                         console.log("Aborting function");
                         return;
                     } else {
@@ -1530,17 +1531,15 @@
         //6// MAKE SURE IT WORKS
         //Manage settings combinations and ensure nothing weird can happen
 
-        //make sure pin modal doesn't show if queue is skipped 
+        //function to change the available options based in initial selections
 
-
-        document.addEventListener('DOMContentLoaded', () => {
 
             function updateAvailableOptions() {
                 const inputs = document.querySelectorAll('.settings-toggle input');
                 const VideoOptions = document.getElementById("video-toggles");
                 const VideoHeading = document.getElementById("video-heading");
-                const DocumentEditorOptions = document.getElementById("document-editor-toggles"); // New element for document editor
-                const DocumentEditorHeading = document.getElementById("document-editor-heading"); // Heading for document editor (if any)
+                const DocumentEditorOptions = document.getElementById("document-editor-toggles");
+                const DocumentEditorHeading = document.getElementById("document-editor-heading");
 
                 inputs.forEach(input => {
                     const id = input.parentElement.id;
@@ -1571,11 +1570,10 @@
                 updateScriptElement();
             }
 
+            document.addEventListener('DOMContentLoaded', () => {
             document.querySelectorAll('.settings-toggle input').forEach(input => {
                 input.addEventListener('change', updateAvailableOptions);
             });
-
-            // Call the function once initially to set the correct state based on the current slider positions
             updateAvailableOptions();
         });
 
