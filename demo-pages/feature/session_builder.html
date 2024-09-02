@@ -1105,6 +1105,9 @@
         //5// BUILD THE CODE SNIPPET & MANAGE PAGE UX
         //Functions to manage the display and behaviour of the page
 
+        //populate emptySettings with default values on load
+
+
         //import settings from the given widgt key
         function importSurflySetttings() {
             delete Surfly;
@@ -1220,10 +1223,7 @@
         //remove settings from the given widget key
         function removeImportedSurflySetttings() {
             settings = emptySettings;
-            var toggles = document.querySelectorAll('.settings-toggle input[type="checkbox"]');
-            toggles.forEach(function (toggle) {
-                toggle.checked = false;
-            });
+            updateAvailableOptions();
             console.log("widget key settings removed from snippet");
             updateScriptElement();
         }
@@ -1578,6 +1578,9 @@
         //mapping elements to functions
 
         document.addEventListener('DOMContentLoaded', () => {
+            //set emptySettings as the default value for settings so settings can be reset
+            emptySettings = JSON.parse(JSON.stringify(settings));
+
             //skip queue toggle
             document.getElementById('skip_queue').addEventListener('change', function () {
                 if (this.checked) {
