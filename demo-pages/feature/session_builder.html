@@ -1538,7 +1538,7 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             
-            const updateAvailableOptions = () => {
+            function updateAvailableOptions() {
                 const inputs = document.querySelectorAll('.settings-toggle input');
                 const VideoOptions = document.getElementById("video-toggles");
                 const VideoHeading = document.getElementById("video-heading");
@@ -1559,7 +1559,7 @@
                 });
                 updateScriptElement();
             };
-            updateAvailableOptions();
+    
             document.querySelectorAll('.settings-toggle input').forEach(input => {
                 input.addEventListener('change', updateAvailableOptions);
             });
