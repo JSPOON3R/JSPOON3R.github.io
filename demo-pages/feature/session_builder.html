@@ -1143,8 +1143,10 @@
     for (var key in settings) {
         if (settings.hasOwnProperty(key) && settings[key] !== null) {
             var slider = document.getElementById(key);
-            if (slider) {
+            if (slider && slider.querySelector('input[type="checkbox"]')) { 
                 slider.querySelector('input[type="checkbox"]').checked = settings[key];
+            } else {
+                console.warn(`Element with ID ${key} not found or does not contain a checkbox.`);
             }
         }
     }
