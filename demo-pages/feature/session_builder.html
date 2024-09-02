@@ -1227,6 +1227,7 @@
             toggles.forEach(function (toggle) {
                 toggle.checked = false;
             });
+            updateAvailableOptions();
             console.log("widget key settings removed from snippet");
             updateScriptElement();
         }
