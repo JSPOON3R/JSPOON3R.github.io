@@ -1161,6 +1161,7 @@
                         updateSliders(trueValuesOnly);
                         console.log("Surfly global settings imported into page");
                         delete Surfly;
+                        updateAvailableOptions();
                         console.log("Aborting function");
                         return;
                     } else {
@@ -1202,8 +1203,7 @@
                         setTimeout(() => {
                             if (typeof Surfly !== 'undefined' && Surfly._initStatus && Surfly._initStatus.started === true) {
                                 if (Surfly._initStatus.successful === true) {
-                                    console.log("Settings import completed!");
-                                    return;
+                                    console.log("Settings import completed - second try aborted");
                                 }
                                 else {
                                     console.log("Try again...");
