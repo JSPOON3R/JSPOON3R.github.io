@@ -1142,11 +1142,22 @@
             function updateSliders(settings) {
     for (var key in settings) {
         if (settings.hasOwnProperty(key) && settings[key] !== null) {
-            var slider = document.getElementById(key);
-            if (slider && slider.querySelector('input[type="checkbox"]')) { 
-                slider.querySelector('input[type="checkbox"]').checked = settings[key];
+            var element = document.getElementById(key);
+
+            if (element) {
+                // Handle checkboxes
+                if (element.querySelector('input[type="checkbox"]')) {
+                    element.querySelector('input[type="checkbox"]').checked = settings[key];
+                }
+                // Handle select elements
+                else if (element.tagName === 'SELECT') {
+                    element.value = settings[key]; // Update the select element's value
+                    toggleVideoView(element); // Call the function to update the video view (or other select element actions)
+                } else {
+                    console.warn(`Element with ID ${key} is not a recognized input type.`);
+                }
             } else {
-                console.warn(`Element with ID ${key} not found or does not contain a checkbox.`);
+                console.warn(`Element with ID ${key} not found.`);
             }
         }
     }
@@ -1655,11 +1666,6 @@
             document.getElementById('add-widget-key-button').addEventListener('click', importSurflySetttings);
             //listen for click to reset anything imported from a widget key
             document.getElementById('reset-widget-key-button').addEventListener('click', removeImportedSurflySetttings);
-
-            //make sure the video view settings update when changed by settings import
-            document.querySelectorAll('.settings-toggle select').forEach(input => {
-                input.addEventListener('change', toggleVideoView);
-            });
 
         });
 
