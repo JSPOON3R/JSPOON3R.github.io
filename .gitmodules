@@ -1,0 +1,3 @@
+[submodule "surfly-app"]
+	path = surfly-app
+	url = https://github.com/JSPOON3R/surfly-app.git
