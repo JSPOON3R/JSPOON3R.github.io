@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Insurance Application</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            width: 100vw;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+
+        .navbar {
+            background-color: #3d7aca;
+            position: fixed;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            padding: 0;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            height: 50px;
+            width: 100vw;
+        }
+
+
+        .navbar-logo {
+            padding-left: 15px;/
+        }
+
+        .navbar-logo img {
+            height: 40px;
+            width: auto;
+        }
+
+        .navbar-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            height: 100%;
+        }
+
+        .navbar-item {
+            margin: 0;
+            height: 100%;
+        }
+
+        .navbar-item.active {
+            background-color: #ffffff;
+            height: 100%;
+        }
+
+        .navbar-item a {
+            text-decoration: none;
+            color: white;
+            font-weight: 500;
+            padding: 15px 20px;
+            display: block;
+            font-size: 16px;
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        .navbar-item.active a {
+            color: #002147;
+            height: 100%;
+            box-sizing: border-box;
+        }
+
+        .navbar-item a:hover {
+            background-color: #005ea6;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+
+
+        .guidance-container {
+            padding-top: 50px;
+            background-color: #3d7aca;
+            
+
+        }
+
+        .guidance-container p {
+            font-size: 12pt;
+            color: #F1F4FF;
+            padding:5px;
+            margin:0;
+        }
+
+        .scroll-zone {
+            overflow: scroll;
+        }
+
+        .form-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100vw;
+            box-sizing: border-box;
+            padding-top: 60px;
+            padding-bottom: 50px;
+            background-color: #373737;
+        }
+
+        .form-content {
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+            padding-top:15px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            border-radius: 1px;
+        }
+
+        h1 {
+            color: #009EE1;
+            font-family: "Century Gothic", sans-serif;
+            font-style: normal;
+            font-weight: lighter;
+            text-decoration: none;
+            font-size: 30pt;
+            text-align: center;
+            margin: 2px 5px;
+        }
+
+        h2 {
+            color: #009EE1;
+            font-family: "Century Gothic", sans-serif;
+            font-weight: lighter;
+            text-decoration: none;
+            font-size: 9pt;
+            text-align: left;
+            font-style: italic;
+            margin: 2px 5px;
+            ;
+        }
+
+        .form-section {
+            color: #ffffff;
+            font-family: "Century Gothic", sans-serif;
+            font-style: normal;
+            font-weight: lighter;
+            text-decoration: none;
+            font-size: 6.5pt;
+        }
+
+        .form-title {
+            background-color: rgb(0, 158, 225);
+            padding: 10px;
+            font-size: 18px;
+            font-weight: lighter;
+            text-align: left;
+        }
+
+        p {
+            color: #009EE1;
+            font-size: small;
+            margin: 3px
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        tr {
+            display: table-row;
+            vertical-align: inherit;
+            unicode-bidi: isolate;
+            border-color: inherit;
+        }
+
+        td {
+            color: #009EE1;
+            font-family: Arial, sans-serif;
+            font-style: normal;
+            font-weight: normal;
+            text-decoration: none;
+            font-size: 9pt;
+            vertical-align: 1pt;
+            width: 146pt;
+            background-color: rgb(213, 236, 250);
+            border-bottom-style: solid;
+            border-bottom-width: 1pt;
+            border-bottom-color: #009EE1
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid rgb(186, 221, 241);
+            border-bottom: 1pt solid #009EE1;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        input {
+            border: none;
+            background-color: #F1F4FF;
+        }
+
+        input[type="checkbox"] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            border: 1px solid #009EE1;
+            background-color: white;
+            cursor: pointer;
+            margin: 0 5px;
+        }
+
+        input[type="checkbox"]:checked {
+            background-color: black;
+            border: 1px solid #009EE1;
+            ;
+        }
+
+        input[type="radio"] {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            width: 15px;
+            height: 15px;
+            border: 1px solid #009EE1;
+            background-color: white;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        input[type="radio"]:checked {
+            background-color: black;
+            border: 1px solid #009EE1;
+            ;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="number"],
+        input[type="email"],
+        input[type="tel"] {
+            width: 100%;
+            padding: 5px;
+            margin: 5px 0;
+            box-sizing: border-box;
+        }
+
+        input:focus {
+            outline: none;
+            border: none;
+        }
+
+        .policyholder-details-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .policyholder-details-table td {
+            padding: 8px;
+            text-align: left;
+            font-size: 9pt;
+            vertical-align: middle;
+            background-color: rgb(213, 236, 250);
+            border-bottom: 1pt solid #009EE1;
+        }
+
+        .policyholder-details-table input[type="text"],
+        .policyholder-details-table input[type="tel"],
+        .policyholder-details-table input[type="email"] {
+            width: 100%;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+
+        .legal-text {
+            display: flex;
+            width: 100%;
+            flex-direction: row;
+            font-weight: lighter;
+        }
+
+        .legal-column {
+            width: 50%;
+            color: #009EE1;
+            font-family: Arial, sans-serif;
+            font-size: 8pt;
+            text-align: justify;
+            background-color: rgb(255, 255, 255);
+            padding: 10px;
+            border: 1px solid #ffffff;
+            box-sizing: border-box;
+        }
+
+        .legal-header {
+            width: 100%;
+            color: #009EE1;
+            font-family: Arial, sans-serif;
+            font-size: 8pt;
+            text-align: justify;
+            background-color: rgb(255, 255, 255);
+            padding: 10px;
+            border: 1px solid #ffffff;
+            box-sizing: border-box;
+        }
+
+        .addons-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .addons-table th,
+        .addons-table td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+            font-size: 9pt;
+        }
+
+        .addons-table th {
+            background-color: #009EE1;
+            color: white;
+            font-size: 10pt;
+        }
+
+        .addons-table input[type="text"] {
+            width: 100%;
+            padding: 5px;
+            margin: 0;
+        }
+
+        .insured-details-table,
+        .health-questionnaire-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .insured-details-table td,
+        .health-questionnaire-table td {
+            padding: 8px;
+            text-align: left;
+            font-size: 9pt;
+            vertical-align: middle;
+            background-color: rgb(213, 236, 250);
+            border-bottom: 1pt solid #009EE1;
+        }
+
+        .insured-details-table input[type="text"],
+        .health-questionnaire-table input[type="text"],
+        .insured-details-table input[type="tel"],
+        .insured-details-table input[type="email"] {
+            width: 100%;
+            padding: 5px;
+            box-sizing: border-box;
+        }
+
+        .signature-section {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 10px;
+            height: 150px;
+        }
+
+        .signature-section-date {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0px;
+            height: 50px;
+        }
+
+        .signature-box {
+            width: 50%;
+            background-color: rgb(213, 236, 250);
+            padding: 10px 0px;
+            text-align: center;
+            font-size: 9pt;
+            color: #009EE1;
+        }
+
+        .signature-date-container {
+            display: flex;
+            flex-direction: row;
+            background-color: rgb(213, 236, 250);
+            padding: 10px 0px;
+            text-align: center;
+            font-size: 9pt;
+            color: #009EE1;
+            align-items: center;
+            width: 100%;
+        }
+
+        .signature-date {
+            width: 40%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            margin-left: 20px;
+        }
+
+        .date-input {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            width: 100%
+        }
+
+        .date-divider {
+            font-size: small;
+            margin: 0;
+            padding: 0;
+            align-self: center;
+            margin: 0px 2px;
+        }
+
+        .signature-date input[type="text"] {
+            width: 30%;
+            padding: 5px;
+            margin-left: 5px;
+        }
+
+        .declaration {
+            font-size: 9pt;
+            color: #009EE1;
+            margin-top: 10px;
+            text-align: justify;
+        }
+
+
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            background-color: #003366;
+            padding: 20px;
+        }
+
+        .footer-column {
+            flex: 1 1 20%;
+            margin: 10px;
+            color: #ffffff;
+        }
+
+        .footer-column h3 {
+            color: #ffffff;
+        }
+
+        .footer-column ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .footer-column ul li {
+            margin-bottom: 5px;
+        }
+
+        .footer-column ul li a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .footer-column ul li a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+
+
+
+
+    <div class="navbar">
+        <div class="navbar-logo">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/01/Bupa-logo_2022.png/1200px-Bupa-logo_2022.png"
+                alt="Logo">
+        </div>
+        <ul class="navbar-list">
+            <li class="navbar-item active">
+                <a href="#">Health Insurance</a>
+            </li>
+            <li class="navbar-item">
+                <a href="#">Compare cover</a>
+            </li>
+            <li class="navbar-item">
+                <a href="#">Policy benefits</a>
+            </li>
+            <li class="navbar-item">
+                <a href="#">Understanding health insurance</a>
+            </li>
+            <li class="navbar-item">
+                <a href="#">Leaving company scheme</a>
+            </li>
+            <li class="navbar-item">
+                <a href="#">Member support</a>
+            </li>
+        </ul>
+    </div>
+
+
+    <div class="scroll-zone">
+
+        <div class="guidance-container">
+            <p><strong>STEP 3/4</strong> - Complete your application:</p>
+        </div>
+
+        <div class="form-container">
+            <div class="form-content">
+
+                <h1>Insurance Application Form</h1>
+                <p style="text-align: center; margin-bottom:10px;font-size:larger">Inclusion of a new insured on the
+                    policy
+                    </hp>
+                <h2>Section to be completed by policy holder</h2>
+
+                <div class="form-section">
+                    <div class="form-title">Policy Details</div>
+                    <table>
+                        <tr>
+                            <td>Inception Date Requested:</td>
+                            <td><input type="date" name="inception_date"></td>
+                            <td>Number of Insureds:</td>
+                            <td><input type="number" name="num_insureds"></td>
+                        </tr>
+                        <tr>
+                            <td>Product Name:</td>
+                            <td><input type="text" name="product_name"></td>
+                            <td>Policy Type:</td>
+                            <td>
+                                <input type="radio" name="policy_type" value="New"> New Policy<br>
+                                <input type="radio" name="policy_type" value="Add-On"> Inclusion Add-on<br>
+                                <input type="radio" name="policy_type" value="Change"> Change of Policy
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Previous Policy No. (if changing):</td>
+                            <td colspan="3"><input type="text" name="previous_policy_no"></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-title">Policyholder details</div>
+                    <table class="policyholder-details-table">
+                        <tr>
+                            <td>Name and surname / Business name:</td>
+                            <td colspan="3"><input type="text" name="policyholder_name"></td>
+                            <td>Sex:</td>
+                            <td>
+                                <div style="display:flex;flex-direction:column;">
+                                    <div><input type="checkbox" name="insured_sex" value="Male"> Male</div>
+                                    <div><input type="checkbox" name="insured_sex" value="Female"> Female</div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Date of birth:</td>
+                            <td><input type="text" name="day" placeholder="day"></td>
+                            <td><input type="text" name="month" placeholder="month"></td>
+                            <td><input type="text" name="year" placeholder="year"></td>
+                            <td>Nationality:</td>
+                            <td><input type="text" name="nationality"></td>
+                        </tr>
+                        <tr>
+                            <td>ID Document:</td>
+                            <td colspan="5">
+                                <input type="checkbox" name="id_document" value="Tax ID"> Tax ID
+                                <input type="checkbox" name="id_document" value="Passport"> Passport
+                                <input type="checkbox" name="id_document" value="Residence Permit"> Residence Permit
+                                <input type="checkbox" name="id_document" value="National ID"> National ID Document (EU
+                                citizens)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Mobile Number:</td>
+                            <td colspan="2"><input type="tel" name="mobile_number"></td>
+                            <td>Telephone 2:</td>
+                            <td colspan="2"><input type="tel" name="telephone_2"></td>
+                        </tr>
+                        <tr>
+                            <td>Email:</td>
+                            <td colspan="5"><input type="email" name="email"></td>
+                        </tr>
+                        <tr>
+                            <td>Company:</td>
+                            <td colspan="5"><input type="text" name="company"></td>
+                        </tr>
+                    </table>
+                </div>
+
+
+                <div class="form-section">
+                    <div class="form-title">Bank Details</div>
+                    <table>
+                        <tr>
+                            <td>IBAN:</td>
+                            <td><input type="text" name="iban"></td>
+                            <td>BIC:</td>
+                            <td><input type="text" name="bic"></td>
+                        </tr>
+                        <tr>
+                            <td>Payment Frequency:</td>
+                            <td colspan="3">
+                                <input type="radio" name="payment_frequency" value="Annual"> Annual<br>
+                                <input type="radio" name="payment_frequency" value="Six-monthly"> Six-monthly<br>
+                                <input type="radio" name="payment_frequency" value="Quarterly"> Quarterly<br>
+                                <input type="radio" name="payment_frequency" value="Monthly"> Monthly
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-title">Policyholder's Address</div>
+                    <table>
+                        <tr>
+                            <td>Street:</td>
+                            <td><input type="text" name="street"></td>
+                            <td>No.:</td>
+                            <td><input type="text" name="street_no"></td>
+                        </tr>
+                        <tr>
+                            <td>Town/City:</td>
+                            <td><input type="text" name="town"></td>
+                            <td>Postcode:</td>
+                            <td><input type="text" name="postcode"></td>
+                        </tr>
+                        <tr>
+                            <td>Province:</td>
+                            <td><input type="text" name="province"></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <h2 style="margin-top:5px;">Section to be completed by the insured</h2>
+                <div class="form-section">
+                    <div class="form-title">Insured Details</div>
+                    <table class="insured-details-table">
+                        <tr>
+                            <td>Name and Surname:</td>
+                            <td colspan="3"><input type="text" name="insured_name"></td>
+                            <td>Sex:</td>
+                            <td>
+                                <div style="display:flex;flex-direction:column;">
+                                    <div><input type="checkbox" name="insured_sex" value="Male"> Male</div>
+                                    <div><input type="checkbox" name="insured_sex" value="Female"> Female</div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Date of birth:</td>
+                            <td><input type="text" name="day" placeholder="day"></td>
+                            <td><input type="text" name="month" placeholder="month"></td>
+                            <td><input type="text" name="year" placeholder="year"></td>
+                            <td>Relation to the first insured:</td>
+                            <td><input type="text" name="relation_first_insured"></td>
+                        </tr>
+                        <tr>
+                            <td>Mobile number:</td>
+                            <td colspan="2"><input type="tel" name="insured_mobile_number"></td>
+                            <td>Telephone 2:</td>
+                            <td colspan="2"><input type="tel" name="insured_telephone_2"></td>
+                        </tr>
+                        <tr>
+                            <td>Email:</td>
+                            <td colspan="5"><input type="email" name="insured_email"></td>
+                        </tr>
+                        <tr>
+                            <td>ID Document nº:</td>
+                            <td colspan="5">
+                                <input type="checkbox" name="insured_id_document" value="Tax ID"> Tax ID
+                                <input type="checkbox" name="insured_id_document" value="Passport"> Passport
+                                <input type="checkbox" name="insured_id_document" value="Residence Permit"> Residence
+                                Permit
+                                <input type="checkbox" name="insured_id_document" value="National ID"> National ID
+                                Document
+                                (EU citizens)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Are you or have you been a member of Sanitas or Bupa?</td>
+                            <td><input type="checkbox" name="sanitas_member" value="Yes"> Yes
+                                <input type="checkbox" name="sanitas_member" value="No"> No
+                            </td>
+                            <td>Previous policy no.:</td>
+                            <td colspan="3"><input type="text" name="insured_previous_policy_no"></td>
+                        </tr>
+                        <tr>
+                            <td>Have you previously been insured by another insurance company?</td>
+                            <td><input type="checkbox" name="previous_insured" value="Yes"> Yes
+                                <input type="checkbox" name="previous_insured" value="No"> No
+                            </td>
+                            <td>Which?</td>
+                            <td colspan="3"><input type="text" name="which_insurer"></td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-title">Health questionnaire</div>
+                    <table class="health-questionnaire-table">
+                        <tr>
+                            <td>Weight:</td>
+                            <td><input type="text" name="weight"></td>
+                            <td>kg.</td>
+                            <td>Height:</td>
+                            <td><input type="text" name="height"></td>
+                            <td>cm.</td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">1. Do you have or have you had a disease or had an accident in the last five
+                                years that
+                                required medical treatment?</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><input type="checkbox" name="disease_treatment" value="Yes"> Yes
+                                <input type="checkbox" name="disease_treatment" value="No"> No
+                            </td>
+                            <td colspan="4"><input type="text" name="disease_details"
+                                    placeholder="If yes, please give details">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">2. Have you ever been or are you due to be admitted to hospital/undergo
+                                surgery?
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><input type="checkbox" name="hospital_surgery" value="Yes"> Yes
+                                <input type="checkbox" name="hospital_surgery" value="No"> No
+                            </td>
+                            <td colspan="4"><input type="text" name="surgery_details"
+                                    placeholder="If yes, please give details">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">3. Are you currently receiving medical treatment?</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><input type="checkbox" name="receiving_treatment" value="Yes"> Yes
+                                <input type="checkbox" name="receiving_treatment" value="No"> No
+                            </td>
+                            <td colspan="4"><input type="text" name="treatment_details"
+                                    placeholder="If yes, please give details">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">4. Do you currently continually or repeatedly suffer any undiagnosed
+                                symptoms or
+                                pain?
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2"><input type="checkbox" name="undiagnosed_pain" value="Yes"> Yes
+                                <input type="checkbox" name="undiagnosed_pain" value="No"> No
+                            </td>
+                            <td colspan="4"><input type="text" name="pain_details"
+                                    placeholder="If yes, please give details"></td>
+                        </tr>
+                    </table>
+                </div>
+
+
+
+
+                <div class="form-section">
+                    <div class="form-title">Information prior to contracting</div>
+                    <div class="legal-header">
+                        By signing the front of the present insurance application form, the Policyholder acknowledges
+                        that
+                        he or she
+                        has been informed, on the date of the present, of the
+                        information indicated below pursuant to the provisions contained in article 96 of Law 20 dated
+                        July
+                        14th,
+                        2015, and in article 122 and 126 of the Regulations developing
+                        the same, that he or she has received, at his or her email address stipulated on the insurance
+                        application
+                        form, or in hard copy if no address is furnished, the additional
+                        Prior Information Note for the product referred to in the application form. SANITAS is under no
+                        obligation
+                        whatsoever as a result of this application, and reserves the right
+                        to accept or reject it for the purposes of taking out the policy.
+                    </div>
+                    <div class="legal-text">
+                        <div class="legal-column">
+                            <p><strong>INSURER.</strong></p>
+                            SANITAS, SOCIEDAD ANÓNIMA DE SEGUROS, has its registered office at Calle Ribera
+                            del Loira 52 (28042 Madrid, Spain) and tax ID no A-28037042. The supervision and
+                            monitoring of its activities corresponds to the Directorate General for Insurance and
+                            Pension Funds at the Ministry of the Economy and Competitiveness. Through its
+                            website, SANITAS will publish the statutory reports on its financial situation and
+                            solvency status within the terms foreseen in current legislation.
+                            <p><strong>ACCEPTANCE OF TERMS AND CONDITIONS. NOTIFICATIONS.</strong></p>
+                            If and when this insurance application is accepted, SANITAS will send an email to the
+                            Policyholder at the address provided by the latter on this application form. This email
+                            will feature a link allowing the Policyholder to register on the website and choose a
+                            Security Password.
+                            Once he/she has obtained the password, the Policyholder must access
+                            www.sanitas.es, where the General and Particular Terms and Conditions of his/her
+                            policy are available; these must be accepted using the code sent to the mobile phone
+                            number provided in this form The use of the Passwordcode will be legally equivalent,
+                            for all purposes, to the Policyholder’s handwritten signature. Sanitas may deny the
+                            insured cover if the policyholder does not accept the policy terms and conditions.
+                            The Policyholder authorizes SANITAS to record any telephone communications and
+                            the computing and remote electronic records generated by accessing the SANITAS
+                            service. Such recordings and records may be used as evidence in any legal or
+                            arbitration proceedings which might arise between the two parties.
+                            The Policyholder authorizes SANITAS to use his/her mobile telephone number and
+                            email address to send him/her any notifications, communications and information
+                            related to his/her policy by electronic means, provided current legislation so allows.
+                            The Policyholder accepts that any notification sent by SANITAS to the physical or
+                            email address or telephone number provided by the Policyholder when the application
+                            for insurance is made will be fully valid and effective until such time as a change in
+                            these details are notified to SANITAS.
+                            The Policyholder will pass on the terms and conditions agreed and indicated in the
+                            previous paragraphs to any Insured parties in the policy who might wish to register
+                            and obtain their own security password, and hereby accepts the full legal validity of
+                            said terms and conditions, both
+                            <p><strong>Direct debit mandate</strong></p>
+                            Through the signature placed on the front of this form, the Policyholder and Debtor for the
+                            insurance
+                            premium authorizes Sanitas S.A. de Seguros to present a direct debit for the amount
+                            corresponding to the
+                            insurance premium for the policy referred to on this application form and any other amount
+                            payable by
+                            the Policyholder in connection
+                            with said policy. Furthermore, the bank indicated is authorized to effect the said debits
+                            against the
+                            Policyholder's account following the instructions received from Sanitas S.A. de Seguros.
+                            <p><strong>Basic Data Protection Information.</strong></p>
+                            Coordinator: SANITAS, SOCIEDAD ANÓNIMA DE SEGUROS (Sanitas), with registered offices at C/
+                            Ribera del
+                            Loira, 52, 28042 Madrid, Spain.
+                            Purpose: Your personal data provided by the Applicant about the Policyholder and Insureds,
+                            including
+                            their health data, will be processed for the following purposes: Formalise, develop and
+                            implement the
+                            insurance contract (Performance of a contract); Provide and cover the healthcare service
+                            included in the
+                            insurance contract, for which purpose it may request and obtain health information from
+                            healthcare
+                            professionals; Research to design care models included in the insurance
+                            Information.
+                            Additional information: more information regarding the processing your personal data is
+                            available at
+                            https://www.sanitas.es/RGPD.html
+                            Lack of acceptance of the data processing included below does not condition the application
+                            form
+                            or the
+                            insurance contract with Sanitas. Unless specified otherwise — by checking one of the
+                            following
+                            options—
+                            by signing this clause the Applicant agrees that SANITAS processes the data provided for the
+                            following
+                            purposes:
+                            contract; Offer and manage care and prevention programmes (health promotion service)
+                            included in
+                            the
+                            insurance contract; Manage the actuarial risk in order to determine the appropriate rate in
+                            each
+                            case,
+                            and others; Comply with the obligations corresponding to Sanitas by law, including those
+                            related
+                            to
+                            insurance regulations, tax laws, data protection regulations, and others; Analyse your
+                            interests
+                            and
+                            needs based on the data provided by you, including but not limited to your health data,
+                            personal
+                            data
+                            generated as a result of the service provided by Sanitas and data obtained through other
+                            means;
+                            Send
+                            marketing communications by any channel, including electronic means; Carry out procedures
+                            for
+                            anonymization and pseudoanonymization of your personal data; Transfer your personal data to
+                            companies
+                            within the group for marketing purposes and scientific and / or statistical research
+                            purposes
+                            and to
+                            third-party collaborating companies for marketing purposes.
+                            Legitimisation: Performance of a contract, comply with legal obligations, legitimate
+                            interests,
+                            scientific and / or statistical research purposes, and consent, as detailed in Additional
+                            Information.
+                        </div>
+                        <div class="legal-column">
+                            <p><strong>COMPLAINTS HANDLING BODIES.</strong></p>
+                            In the event of any complaint regarding the insurance contract, the Policyholder, Insured,
+                            beneficiary,
+                            harmed third party or successor in rights of any of the above must address their complaint
+                            for
+                            resolution:
+
+                            To the Complaints Handling Department of SANITAS, by means of a signed letter (with the
+                            claimant's
+                            National Identification Document or a document accrediting their identity) addressed to the
+                            Insurer at
+                            Calle Ribera del Loira 52, 28042 Madrid or sent to fax number (+34) 915 852 468 or by email
+                            to
+                            the
+                            address reclamaciones@sanitas.es. We shall acknowledge receipt in writing and shall issue a
+                            formal
+                            reasoned resolution in writing within the maximum legal term of two months from the date of
+                            submission
+                            of the complaint.
+
+                            Once the Insurer's internal complaints process has been exhausted, or if the client does not
+                            accept the
+                            resolution reached, it will be possible to lodge a complaint in writing, facilitating the
+                            claimant's
+                            National Identification Document or a document accrediting their identity before the
+                            Directorate
+                            General
+                            for Insurance and Pension Funds. For this purpose, the claimant must show that the term
+                            stipulated for
+                            the resolution of the claim has elapsed or that consideration of the claim has been refused
+                            or
+                            the claim
+                            submitted has been rejected.
+
+                            Please be informed that SANITAS is not attached to any consumer rights board, without
+                            prejudice
+                            to the
+                            Insured's right to follow the administrative and legal proceedings specified in the
+                            complaints
+                            procedure
+                            set down in the General Terms and Conditions of their policy.
+
+                            In any case, it will be possible to resort to the competent Courts, which shall be those
+                            corresponding
+                            to the Insured’s address.
+                            <p><strong>RENEWAL, TERMINATION, UPDATING OF PREMIUMS AND OTHER
+                                    INFORMATION.</strong></p>
+                            1. Renewal. Unless otherwise established in the policy, the insurance contract is of
+                            annual duration, calculated from the date it enters into force, and it will be tacitly
+                            extended for successive periods of one year unless either of the parties opposes
+                            said extension by communicating this fact to the other party, giving 2 months’
+                            notice if SANITAS effects this notification and 1 month if it is the Policyholder.
+                            Under no circumstances will Sanitas oppose the extension if the insured is over 65
+                            years old, provided that they have been insured with Sanitas for 5 years or more
+                            and without any missed payments, or if they are undergoing treatment for one of
+                            the serious diseases listed below, which was first diagnosed during the period the
+                            insured was included on the policy, (Active oncological processes; Tributary heart
+                            diseases of surgical or interventional treatment; Organ transplants; Complex
+                            orthopaedic surgery in evolution phase; Degenerative or demyelinating diseases of
+                            the nervous system; Acute kidney failure; Torpid chronic respiratory failure;
+                            Chronic hepatopathy (excluding those of alcohol origin); Acute Myocardial
+                            Infarction with heart failure; Macular degeneration.
+                            2. Termination of the contract (generally speaking, without prejudice to the
+                            provisions of statute and in the General and Particular Terms and Conditions of
+                            the policy).
+                            a) SANITAS may terminate the policy:
+                            • In the event of any inaccuracy or withholding of information by the
+                            Policyholder when completing the health questionnaire for the Insured/s.
+                            Such termination shall take effect by means of a declaration addressed to
+                            the Policyholder within 1 month from when SANITAS becomes aware of the
+                            inaccuracy or withholding of information.
+                            • If, due to the fault of the Policyholder, the initial premium is not paid on
+                            maturity, unless SANITAS opts to require payment through enforcement. In
+                            the event of non-payment of subsequent premiums, instalment payments or
+                            co-payments, then art. 15 of Law 50/1980 and the Terms and Conditions of
+                            the policy shall apply.
+                            b) The Policyholder may terminate the policy in the following cases by notifying
+                            SANITAS of this fact in writing:
+                            • On receipt, in due course, of a notification from SANITAS regarding a
+                            variation in the amount of the premiums payable for the next annual period.
+                            In such cases, the termination shall take effect from the conclusion of the
+                            annual period in course, provided that the Policyholder notifies SANITAS at
+                            least one month prior to the aforesaid date.
+                            • Whenever there is a change in the national medical staff of SANITAS,
+                            provided that this change affects at least 50% of those professionals
+                            making up its staff prior to the change.
+                            3. Objective risk factors to be considered in the rate of the premium to be applied in
+                            successive renewals of the policy: age of each Insured; geographical area for the
+                            provision of the services; variation in the costs of health-care services; frequency
+                            of the use of benefits; inclusion of technological medical innovations or new
+                            insured cover.
+                            4. The Policyholder is not entitled to have the policy reinstated.Optional ancillary
+                            guarantees offered in the policy, over and above the cover.Applicable premium
+                            tariffs.
+                            5. For healthcare policies the insured can access the professionals on the medical
+                            chart corresponding to the product purchased under the terms and conditions
+                            and with the limits set out in the general terms and conditions. For reimbursement
+                            products there will be no access limits, provided that the medical service is
+                            included in the cover.
+                            6. You can read the report about Sanitas’ financial situation and solvency at:
+                            http://corporativo.sanitas.es/
+                            7. You can check the premiums applicable for every age range and the
+                            supplementary optional cover available at www.sanitas.es
+                            8. If the policy is taken out through a sales representative employed by Sanitas, the
+                            nature of their remuneration will comprise the salary agreed between Sanitas and
+                            the employee
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-section">
+                    <div class="form-title">ADD-ONS PURCHASED (for all insureds)</div>
+                    <p>Do you wish to purchase any of the add-ons below? (only valid if compatible with the product)</p>
+                    <table class="addons-table">
+                        <thead>
+                            <tr>
+                                <th>Add-on</th>
+                                <th>Inception date</th>
+                                <th>Product code</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="checkbox" name="digital"> Digital</td>
+                                <td>
+                                    <div class="date-input">
+                                        <input type="text" name="signature_day" placeholder="DD">
+                                        <p class="date-divider">&nbsp;/&nbsp;</p>
+                                        <input type="text" name="signature_month" placeholder="MM">
+                                        <p class="date-divider">&nbsp;/&nbsp;</p>
+                                        <input type="text" name="signature_year" placeholder="YYYY">
+                                    </div>
+                                </td>
+                                <td><input type="text" name="product_code_digital"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" name="dental"> Dental</td>
+                                <td>
+                                    <div class="date-input">
+                                        <input type="text" name="signature_day" placeholder="DD">
+                                        <p class="date-divider">&nbsp;/&nbsp;</p>
+                                        <input type="text" name="signature_month" placeholder="MM">
+                                        <p class="date-divider">&nbsp;/&nbsp;</p>
+                                        <input type="text" name="signature_year" placeholder="YYYY">
+                                    </div>
+                                </td>
+                                <td><input type="text" name="product_code_dental"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" name="navarra"> Clínica Universidad de Navarra</td>
+                                <td>
+                                    <div class="date-input">
+                                        <input type="text" name="signature_day" placeholder="DD">
+                                        <p class="date-divider">&nbsp;/&nbsp;</p>
+                                        <input type="text" name="signature_month" placeholder="MM">
+                                        <p class="date-divider">&nbsp;/&nbsp;</p>
+                                        <input type="text" name="signature_year" placeholder="YYYY">
+                                    </div>
+                                </td>
+                                <td><input type="text" name="product_code_navarra"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" name="pharmacy"> Pharmacy</td>
+                                <td>
+                                    <div class="date-input">
+                                        <input type="text" name="signature_day" placeholder="DD">
+                                        <p class="date-divider">&nbsp;/&nbsp;</p>
+                                        <input type="text" name="signature_month" placeholder="MM">
+                                        <p class="date-divider">&nbsp;/&nbsp;</p>
+                                        <input type="text" name="signature_year" placeholder="YYYY">
+                                    </div>
+                                </td>
+                                <td><input type="text" name="product_code_pharmacy"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="checkbox" name="traffic"> Traffic/work accidents</td>
+                                <td>
+                                    <div class="date-input">
+                                        <input type="text" name="signature_day" placeholder="DD">
+                                        <p class="date-divider">&nbsp;/&nbsp;</p>
+                                        <input type="text" name="signature_month" placeholder="MM">
+                                        <p class="date-divider">&nbsp;/&nbsp;</p>
+                                        <input type="text" name="signature_year" placeholder="YYYY">
+                                    </div>
+                                </td>
+                                <td><input type="text" name="product_code_traffic"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+
+                    <div class="signature-section">
+                        <div class="form-title" style="align-content: center;width:100px;">Signature</div>
+                        <div class="signature-box">Policyholder / Insured’s Signature</div>
+                        <div class="signature-box">Broker’s Signature</div>
+                    </div>
+                    <div class="signature-section-date">
+                        <div class="form-title" style="align-content: center;width:100px;">Date</div>
+                        <div class="signature-date-container" style="    border-top: 1px solid #f2f4ff;">
+                            <div class="signature-date">
+                                <div class="date-input">
+                                    <input type="text" name="signature_day" placeholder="DD">
+                                    <p class="date-divider">&nbsp;/&nbsp;</p>
+                                    <input type="text" name="signature_month" placeholder="MM">
+                                    <p class="date-divider">&nbsp;/&nbsp;</p>
+                                    <input type="text" name="signature_year" placeholder="YYYY">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="declaration">
+                        <p>
+                            I declare that I have answered truthfully all of the questions contained in this application
+                            form
+                            and I acknowledge that I have received the <strong>insurance Information Prior to
+                                Contracting</strong>
+                            contained and in the Information about the insurance product document associated to the
+                            application
+                            form.
+                            I hereby give my consent to the direct debit order for the insurance premium and to the
+                            processing of
+                            the
+                            personal details also stipulated overleaf.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <div class="footer-container">
+                <div class="footer-column">
+                    <h3>Health</h3>
+                    <ul>
+                        <li><a href="https://www.bupa.co.uk/health">Health</a></li>
+                        <li><a href="https://www.bupa.co.uk/health">Health overview</a></li>
+                        <li><a href="https://www.bupa.co.uk/health/health-insurance">Health insurance</a></li>
+                        <li><a href="https://www.bupa.co.uk/health/health-insurance/cash-plan">Health cash plans</a>
+                        </li>
+                        <li><a href="https://www.bupa.co.uk/health/health-assessments">Health assessments</a></li>
+                        <li><a href="https://www.bupa.co.uk/health/payg">Pay as you go healthcare</a></li>
+                        <li><a href="https://www.bupa.co.uk/health/health-assessments/our-centres">Bupa Centres</a></li>
+                        <li><a>John</a></li>
+                        <li><a>Thomas</a></li>
+                        <li><a>Mihai</a></li>
+                        <li><a>Ayush</a></li>
+                        <li><a>Marko</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Dental</h3>
+                    <ul>
+                        <li><a href="https://www.bupa.co.uk/dental">Dental</a></li>
+                        <li><a href="https://www.bupa.co.uk/dental">Dental overview</a></li>
+                        <li><a href="https://www.bupa.co.uk/dental/dental-care">Bupa Dental Care</a></li>
+                        <li><a href="https://www.bupa.co.uk/dental/dental-care/practices">Book an appointment</a></li>
+                        <li><a href="https://www.bupa.co.uk/dental/dental-care/patient-portal">Patient portal</a></li>
+                        <li><a href="https://www.bupa.co.uk/dental/dental-care/treatments">Treatments</a></li>
+                        <li><a href="https://www.bupa.co.uk/dental/dental-care/services">Dental services</a></li>
+                        <li><a href="https://www.bupa.co.uk/dental/dental-care/symptoms">Symptoms</a></li>
+                        <li><a href="https://www.bupa.co.uk/dental/dental-care/services/emergency">Emergency dentist</a>
+                        </li>
+                        <li><a href="https://www.bupa.co.uk/dental/dental-care/ways-to-pay">Ways to pay</a></li>
+                        <li><a href="https://www.bupa.co.uk/dental/dental-insurance">Dental insurance</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Mental health</h3>
+                    <ul>
+                        <li><a href="https://www.bupa.co.uk/health/health-insurance/mental-health">Mental health</a>
+                        </li>
+                        <li><a href="https://www.bupa.co.uk/health/health-insurance/mental-health">Mental health
+                                overview</a></li>
+                        <li><a href="https://www.bupa.co.uk/health/health-insurance/mental-health/advice-and-tools">Advice
+                                and tools</a></li>
+                        <li><a href="https://www.bupa.co.uk/health/health-insurance/mental-health/support">Conditions we
+                                support</a></li>
+                        <li><a href="https://www.bupa.co.uk/health/health-insurance/mental-health/family">Family mental
+                                health support</a></li>
+                        <li><a href="https://www.bupa.co.uk/health-information/mental-health">Mental health
+                                information</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>Care homes</h3>
+                    <ul>
+                        <li><a href="https://www.bupa.co.uk/care-services">Care homes</a></li>
+                        <li><a href="https://www.bupa.co.uk/care-services/choosing-a-care-home">Where do I start?</a>
+                        </li>
+                        <li><a href="https://www.bupa.co.uk/care-services/what-type-of-care-do-i-need">What type of care
+                                do
+                                I need?</a></li>
+                        <li><a href="https://www.bupa.co.uk/care-services/life-in-a-bupa-care-home">Life in a Bupa Care
+                                Home</a></li>
+                        <li><a href="https://www.bupa.co.uk/care-services/care-home-funding">Funding for care</a></li>
+                        <li><a href="https://www.bupa.co.uk/care-services/customer-care-team">Customer Care Team</a>
+                        </li>
+                        <li><a href="https://www.bupa.co.uk/care-services/news-and-events">News and events</a></li>
+                        <li><a href="https://www.bupa.co.uk/care-services/care-homes/find-a-care-home">Find a care
+                                home</a>
+                        </li>
+                        <li><a href="https://www.bupa.co.uk/~/media/Files/MMS/cs-02711" target="_blank">Resident Terms &
+                                Conditions</a></li>
+                        <li><a href="https://www.bupa.co.uk/care-services/care-home-costs">Care home costs</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3>About Bupa</h3>
+                    <ul>
+                        <li><a href="https://www.bupa.co.uk/health-information">Health information</a></li>
+                        <li><a href="https://www.bupa.co.uk/health-information/a-to-z">A-Z</a></li>
+                        <li><a href="https://www.bupa.co.uk/health-information/health-topics">Health Topics</a></li>
+                        <li><a href="https://www.bupa.co.uk/health-information/health-blog">Health Blog</a></li>
+                        <li><a href="https://www.bupa.co.uk/health-information/cancer">Cancer</a></li>
+                        <li><a href="https://www.bupa.co.uk/health-information/dementia">Dementia</a></li>
+                        <li><a href="https://www.bupa.co.uk/health-information/mental-health">Mental health</a></li>
+                    </ul>
+                </div>
+            </div>
+        </footer>
+
+
+    </div>
+</body>
+
+</html>
