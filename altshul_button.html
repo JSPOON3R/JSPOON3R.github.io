@@ -219,10 +219,6 @@
 
                 }
             });
-
-            document.getElementById('signature').addEventListener('click', function () {
-                SurflySession.transferTabControl(0);
-            });
         };
 
 
@@ -236,7 +232,9 @@
 
 
         document.addEventListener('DOMContentLoaded', function () {
-
+            document.getElementById('signature').addEventListener('click', function () {
+                SurflySession.transferTabControl(0);
+            });
 
         });
     </script>
