@@ -51,14 +51,13 @@
 
 </body>
 <script>
-        window.addEventListener('message', function (event) {
-            console.log(event);
+    window.addEventListener('message', function (event) {
     if (event.origin) {
         console.log('Message received from '+ event.origin +': '+ event.data.params.msg.message);
         if (event.data.params.msg.message === "close tab") {
             setTimeout(function() {
                 window.close();
-            }, 1000);
+            }, 5000);
         }
         else {
             console.log("failed to close tab")
