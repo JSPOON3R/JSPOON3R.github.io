@@ -52,7 +52,7 @@
 </body>
 <script>
         window.addEventListener('message', function (event) {
-            console.log("message from waiting page: "+ event);
+            console.log(event);
     if (event.origin) {
         console.log('Message received from '+ event.origin +': '+ event.data.params.msg.message);
         if (event.data.params.msg.message === "close tab") {
