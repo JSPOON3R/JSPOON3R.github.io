@@ -228,6 +228,20 @@
             Surfly.listSessions()[0].sendMessage({ message: messageinput }, 'https://demo.surfly.com/', window.location.origin);
             console.log("Message Sent to close the tab: ", messageinput);
         }
+
+
+    document.addEventListener('DOMContentLoaded', function () {
+        document.getElementById('signature').addEventListener('click', function() {
+            const sessions = Surfly.listSessions();
+            if (sessions && sessions.length > 0) {
+                sessions[0].transferTabControl(0);
+                console.log('Tab control pushed to index 0.');
+            } else {
+                console.error('No active Surfly sessions found.');
+            }
+        });
+        
+    });
     </script>
 
 </body>
