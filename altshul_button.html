@@ -208,7 +208,7 @@
                         })
                         .on('participant_joined', function (session, event) {
                             console.log('Participant ', event.clientIndex, 'joined the session');
-                            if (event.clientIndex !== 0) {
+                            if (event.clientIndex !== 1) {
                                 sendMessage();
                             } else {
                                 console.log(event.clientIndex + " joined the session. Host rights unchanged");
