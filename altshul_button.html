@@ -199,12 +199,7 @@
                             SurflySession.startLeader();
                         })
                         .on("session_started", function (session, event) {
-                            console.log("JOIN LINK: " + session.followerLink + "?url=https://demo.surfly.com/altshul_button.html");
-                        })
-                        .on('host_changed', function (session, event) {
-                            console.log("host rights obtained: ", event.gained);
-                            console.log("New host: ", event.to);
-                            console.log("My index: ", event.myIndex);
+                            window.alert("JOIN LINK: " + session.followerLink + "?url=https://demo.surfly.com/altshul_button.html");
                         })
                         .on('participant_joined', function (session, event) {
                             console.log('Participant ', event.clientIndex, 'joined the session');
@@ -215,6 +210,11 @@
                             } else {
                                 console.log(event.clientIndex + " joined the session. Host rights unchanged");
                             }
+                        })
+                        .on('host_changed', function (session, event) {
+                            console.log("host rights obtained: ", event.gained);
+                            console.log("New host: ", event.to);
+                            console.log("My index: ", event.myIndex);
                         })
 
                 }
