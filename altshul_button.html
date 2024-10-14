@@ -103,7 +103,6 @@
             <button type="button" onclick="submitForm()">Submit</button>
         </form>
         <button type="button" onclick="startSession()">TEST</button>
-        </form>
     </div>
 
     <script>
@@ -200,15 +199,8 @@
                             SurflySession.startLeader();
                         })
                         .on("session_started", function (session, event) {
-                            if (firstTab === false) {
-                            var firstTab = true;
                             console.log("JOIN LINK: " + session.followerLink + "?url=https://demo.surfly.com/altshul_button.html");
                             SurflySession.openTab("https://demo.surfly.com/altshul_please_wait.html")
-                        }
-                        else
-                        {
-                            console.log("new tab already opened - duplicate event fire")
-                        }
                         })
                         .on('host_changed', function (session, event) {
                             console.log("host rights obtained: ", event.gained);
