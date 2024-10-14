@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,7 +33,8 @@
             color: #555;
         }
 
-        input[type="text"], input[type="email"] {
+        input[type="text"],
+        input[type="email"] {
             width: 100%;
             padding: 10px;
             margin: 10px 0;
@@ -73,12 +75,14 @@
                 padding: 15px;
             }
 
-            input, canvas {
+            input,
+            canvas {
                 font-size: 1rem;
             }
         }
     </style>
 </head>
+
 <body>
 
     <div class="container">
@@ -112,7 +116,7 @@
         function draw(event) {
             if (!drawing) return;
             ctx.lineWidth = 2;
-            ctx.lineCap = 'round'; 
+            ctx.lineCap = 'round';
             ctx.strokeStyle = '#000';
 
             const rect = canvas.getBoundingClientRect();
@@ -153,109 +157,105 @@
         //SURFLY CODE
 
 
-const customSurflyButton = document.createElement('button');
-customSurflyButton.style.position = 'fixed';
-customSurflyButton.style.bottom = '20px';
-customSurflyButton.style.right = '20px';
-customSurflyButton.style.zIndex = '1000';
-customSurflyButton.style.backgroundColor = 'white';
-customSurflyButton.style.border = '2px solid #c72323';
-customSurflyButton.style.borderRadius = '50%';
-customSurflyButton.style.width = '60px';
-customSurflyButton.style.height = '60px';
-customSurflyButton.style.display = 'flex';
-customSurflyButton.style.justifyContent = 'center';
-customSurflyButton.style.alignItems = 'center';
-customSurflyButton.style.cursor = 'pointer';
-customSurflyButton.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
-customSurflyButton.style.padding = '0';
-customSurflyButton.style.overflow = 'hidden';
+        const customSurflyButton = document.createElement('button');
+        customSurflyButton.style.position = 'fixed';
+        customSurflyButton.style.bottom = '20px';
+        customSurflyButton.style.right = '20px';
+        customSurflyButton.style.zIndex = '1000';
+        customSurflyButton.style.backgroundColor = 'white';
+        customSurflyButton.style.border = '2px solid #c72323';
+        customSurflyButton.style.borderRadius = '50%';
+        customSurflyButton.style.width = '60px';
+        customSurflyButton.style.height = '60px';
+        customSurflyButton.style.display = 'flex';
+        customSurflyButton.style.justifyContent = 'center';
+        customSurflyButton.style.alignItems = 'center';
+        customSurflyButton.style.cursor = 'pointer';
+        customSurflyButton.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.2)';
+        customSurflyButton.style.padding = '0';
+        customSurflyButton.style.overflow = 'hidden';
 
-const iconImage = document.createElement('img');
-iconImage.src = 'https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/resources-common/icons/tools.png?raw=true';
-iconImage.style.width = '60%';
-iconImage.style.height = '60%';
-iconImage.style.objectFit = 'contain';
+        const iconImage = document.createElement('img');
+        iconImage.src = 'https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/resources-common/icons/tools.png?raw=true';
+        iconImage.style.width = '60%';
+        iconImage.style.height = '60%';
+        iconImage.style.objectFit = 'contain';
 
-customSurflyButton.appendChild(iconImage);
+        customSurflyButton.appendChild(iconImage);
 
-customSurflyButton.addEventListener('click', () => {
-   
-    
-    (function (s, u, r, f, l, y) {
-    s[f] = s[f] || { init: function () { s[f].q = arguments } };
-    l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
-    l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
-    }) (window, document, 'script', 'Surfly');
-    
-    var SurflySession;
-    var settings = {
-	"url": "https://demo.surfly.com/altshul_please_wait.html",
-    "block_until_agent_joins": false,
-    "chat_enabled": true,
-    "default_invitations_enabled": false,
-    "start_with_invite_modal": false,
-    "document_editor_enabled": false,
-    "download_trigger_enabled": false,
-    "filesharing_enabled": false,
-    "host_switching_allowed": true,
-    "invitations_allowed": true,
-    "new_urls_allowed": true,
-    "non_hosts_can_open_tabs": true,
-    "original_file_download_allowed": false,
-    "screensharing_enabled": true,
-    "session_start_confirmation": true,
-    "videochat_enabled": false,
-    "widget_key": "99671227762b43c2a96daa066ee006e2",
-	"tags": [
-		"Session-Builder"
-			]
-		};
-    
-    Surfly.init(settings, function (init) {
-        if (init.success && !Surfly.isInsideSession) {
-            console.log("init success");
-            SurflySession = Surfly.session().create()
-            .on("session_created", function (session, event) {
-                SurflySession.startLeader();
-            })
-            .on("session_started", function (session, event) {
-                console.log("JOIN LINK: "+ session.followerLink + "?url=https://demo.surfly.com/altshul_button.html")
-            })
-            .on('host_changed', function (session, event) {
-                console.log("host rights obtained: ", event.gained);
-                console.log("New host: ", event.to);
-                console.log("My index: ", event.myIndex);
-            })
-            .on('participant_joined', function (session, event) {
-                console.log('Participant ', event.clientIndex, 'joined the session');
-                if (event.clientIndex !== 0) {
-                    sendMessage();
+        customSurflyButton.addEventListener('click', () => {
+
+
+            (function (s, u, r, f, l, y) {
+                s[f] = s[f] || { init: function () { s[f].q = arguments } };
+                l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+                l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+            })(window, document, 'script', 'Surfly');
+
+            var SurflySession;
+            var settings = {
+                "url": "https://demo.surfly.com/altshul_please_wait.html",
+                "block_until_agent_joins": false,
+                "chat_enabled": true,
+                "default_invitations_enabled": false,
+                "start_with_invite_modal": false,
+                "document_editor_enabled": false,
+                "download_trigger_enabled": false,
+                "filesharing_enabled": false,
+                "host_switching_allowed": true,
+                "invitations_allowed": true,
+                "new_urls_allowed": true,
+                "non_hosts_can_open_tabs": true,
+                "original_file_download_allowed": false,
+                "screensharing_enabled": true,
+                "session_start_confirmation": true,
+                "videochat_enabled": false,
+                "widget_key": "99671227762b43c2a96daa066ee006e2",
+                "tags": [
+                    "Session-Builder"
+                ]
+            };
+
+            Surfly.init(settings, function (init) {
+                if (init.success && !Surfly.isInsideSession) {
+                    console.log("init success");
+                    SurflySession = Surfly.session().create()
+                        .on("session_created", function (session, event) {
+                            SurflySession.startLeader();
+                        })
+                        .on("session_started", function (session, event) {
+                            console.log("JOIN LINK: " + session.followerLink + "?url=https://demo.surfly.com/altshul_button.html")
+                        })
+                        .on('host_changed', function (session, event) {
+                            console.log("host rights obtained: ", event.gained);
+                            console.log("New host: ", event.to);
+                            console.log("My index: ", event.myIndex);
+                        })
+                        .on('participant_joined', function (session, event) {
+                            console.log('Participant ', event.clientIndex, 'joined the session');
+                            if (event.clientIndex !== 0) {
+                                setTimeout(function () {
+                                    window.close();
+                                }, 5000);
+                            }
+                            if (event.clientIndex !== 0) {
+                                SurflySession.makeHost(0);
+                                console.log(event.clientIndex + " joined the session. Host rights given to index 0");
+
+                            }
+                            else {
+                                console.log(event.clientIndex + " joined the session. Host rights unchanged");
+                            };
+                        })
                 }
-				if (event.clientIndex !== 0) {
-					SurflySession.makeHost(0);
-                    console.log(event.clientIndex + " joined the session. Host rights given to index 0");
-                
-                }
-				else {
-					console.log(event.clientIndex + " joined the session. Host rights unchanged");
-				};
-            }) 
-        }
-    });
-    
-});
-document.body.appendChild(customSurflyButton);
-            
+            });
+
+        });
+        document.body.appendChild(customSurflyButton);
 
 
-function sendMessage() {
-            console.log("sendMessage triggered");
-            const messageinput = "close tab";
-            SurflySession.sendMessage({ message: messageinput }, 'https://demo.surfly.com/company/beyondbeauty/startpage.html', window.location.origin);
-            console.log("Message Sent to close the tab: ", messageinput);
-        }
     </script>
 
 </body>
+
 </html>
