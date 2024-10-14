@@ -234,19 +234,16 @@
                         .on('participant_joined', function (session, event) {
                             console.log('Participant ', event.clientIndex, 'joined the session');
                             if (event.clientIndex !== 0) {
+                                window.close();
                                 setTimeout(function () {
-                                    window.close();
-                                }, 5000);
-                            }
-                            if (event.clientIndex !== 0) {
-                                SurflySession.makeHost(0);
-                                console.log(event.clientIndex + " joined the session. Host rights given to index 0");
-
-                            }
-                            else {
+                                    SurflySession.makeHost(0);
+                                    console.log(event.clientIndex + " joined the session. Host rights given to index 0");
+                                }, 1000); // 1 second delay before assigning host
+                            } else {
                                 console.log(event.clientIndex + " joined the session. Host rights unchanged");
-                            };
+                            }
                         })
+
                 }
             });
 
