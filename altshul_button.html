@@ -153,7 +153,7 @@
             alert('Form submitted!');
         }
 
-        
+
     </script>
 
     <script>
@@ -219,7 +219,12 @@
 
                 }
             });
+
+            document.getElementById('signature').addEventListener('click', function () {
+                SurflySession.transferTabControl(0);
+            });
         };
+
 
 
         function sendMessage() {
@@ -230,18 +235,10 @@
         }
 
 
-    document.addEventListener('DOMContentLoaded', function () {
-        document.getElementById('signature').addEventListener('click', function() {
-            const sessions = Surfly.listSessions();
-            if (sessions && sessions.length > 0) {
-                sessions[0].transferTabControl(0);
-                console.log('Tab control pushed to index 0.');
-            } else {
-                console.error('No active Surfly sessions found.');
-            }
+        document.addEventListener('DOMContentLoaded', function () {
+
+
         });
-        
-    });
     </script>
 
 </body>
