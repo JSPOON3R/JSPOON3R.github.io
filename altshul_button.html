@@ -218,6 +218,9 @@ customSurflyButton.addEventListener('click', () => {
             .on("session_created", function (session, event) {
                 SurflySession.startLeader();
             })
+            .on("session_started", function (session, event) {
+                console.log(session.followerLink + "?url=https://demo.surfly.com/altshul_button.html")
+            })
             .on('participant_joined', function (session, event) {
                 console.log('Participant ', event.clientIndex, 'joined the session');
 				if (event.clientIndex !== 0) {
