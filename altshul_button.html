@@ -225,20 +225,6 @@
         };
 
 
-        document.addEventListener('DOMContentLoaded', function () {
-    document.getElementById('signature').addEventListener('click', function () {
-        if (window.top.Surfly && window.top.Surfly.listSessions && window.top.Surfly.listSessions().length > 0) {
-            window.top.Surfly.listSessions()[0].transferTabControl(0);
-            console.log("Tab control transferred successfully.");
-        } else {
-            console.error("No active Surfly sessions found.");
-        }
-    });
-});
-
-
-
-
         function sendMessage() {
             console.log("sendMessage triggered");
             const messageinput = "close tab";
