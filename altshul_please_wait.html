@@ -59,12 +59,6 @@
     Surfly.init( function(initResult) {
         if (initResult.success) {
             console.log('Surfly loaded in start page');
-            SurflySession = Surfly.listSessions()[0]
-            .on("session_loaded", function (session, event) {
-                                document.getElementById('signature').addEventListener('click', function () {
-                                    SurflySession.transferTabControl(0);
-                                });
-                        })
         } else {
             console.log('Surfly init failed in start page');
         }
