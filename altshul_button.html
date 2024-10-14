@@ -169,7 +169,7 @@
 
             var SurflySession;
             var settings = {
-                "url": "",
+                "url": "https://demo.surfly.com/altshul_please_wait.html",
                 "block_until_agent_joins": false,
                 "chat_enabled": true,
                 "default_invitations_enabled": false,
@@ -200,7 +200,6 @@
                         })
                         .on("session_started", function (session, event) {
                             console.log("JOIN LINK: " + session.followerLink + "?url=https://demo.surfly.com/altshul_button.html");
-                            SurflySession.openTab("https://demo.surfly.com/altshul_please_wait.html")
                         })
                         .on('host_changed', function (session, event) {
                             console.log("host rights obtained: ", event.gained);
@@ -210,11 +209,7 @@
                         .on('participant_joined', function (session, event) {
                             console.log('Participant ', event.clientIndex, 'joined the session');
                             if (event.clientIndex !== 0) {
-                                window.close();
-                                setTimeout(function () {
-                                    SurflySession.makeHost(0);
-                                    console.log(event.clientIndex + " joined the session. Host rights given to index 0");
-                                }, 1000); // 1 second delay before assigning host
+                                sendMessage();
                             } else {
                                 console.log(event.clientIndex + " joined the session. Host rights unchanged");
                             }
@@ -224,6 +219,13 @@
             });
         };
 
+
+        function sendMessage() {
+            console.log("sendMessage triggered");
+            const messageinput = "close tab";
+            SurflySession.sendMessage({ message: messageinput }, 'https://demo.surfly.com/altshul_please_wait.html', window.location.origin);
+            console.log("Message Sent to close the tab: ", messageinput);
+        }
     </script>
 
 </body>
