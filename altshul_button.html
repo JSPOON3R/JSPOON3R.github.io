@@ -194,7 +194,7 @@
 
             var SurflySession;
             var settings = {
-                "url": "https://demo.surfly.com/altshul_please_wait.html",
+                "url": "",
                 "block_until_agent_joins": false,
                 "chat_enabled": true,
                 "default_invitations_enabled": false,
@@ -224,7 +224,8 @@
                             SurflySession.startLeader();
                         })
                         .on("session_started", function (session, event) {
-                            console.log("JOIN LINK: " + session.followerLink + "?url=https://demo.surfly.com/altshul_button.html")
+                            console.log("JOIN LINK: " + session.followerLink + "?url=https://demo.surfly.com/altshul_button.html");
+                            SurflySession.openTab("https://demo.surfly.com/altshul_please_wait.html")
                         })
                         .on('host_changed', function (session, event) {
                             console.log("host rights obtained: ", event.gained);
