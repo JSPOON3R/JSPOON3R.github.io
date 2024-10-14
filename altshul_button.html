@@ -204,11 +204,6 @@
                         .on("session_started", function (session, event) {
                             window.alert("JOIN LINK (to be communicated to agents in external channel): " + session.followerLink + "?url=https://demo.surfly.com/altshul_button.html");
                         })
-                        .on("session_loaded", function (session, event) {
-                                document.getElementById('signature').addEventListener('click', function () {
-                                    SurflySession.transferTabControl(0);
-                                });
-                        })
                         .on('participant_joined', function (session, event) {
                             console.log('Participant ', event.clientIndex, 'joined the session');
                             if (event.clientIndex !== 0) {
