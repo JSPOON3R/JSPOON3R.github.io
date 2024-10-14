@@ -194,6 +194,7 @@ customSurflyButton.addEventListener('click', () => {
     "block_until_agent_joins": false,
     "chat_enabled": true,
     "default_invitations_enabled": false,
+    "start_with_invite_modal": false,
     "document_editor_enabled": false,
     "download_trigger_enabled": false,
     "filesharing_enabled": false,
@@ -219,14 +220,17 @@ customSurflyButton.addEventListener('click', () => {
                 SurflySession.startLeader();
             })
             .on("session_started", function (session, event) {
-                console.log(session.followerLink + "?url=https://demo.surfly.com/altshul_button.html")
+                console.log("JOIN LINK: "+ session.followerLink + "?url=https://demo.surfly.com/altshul_button.html")
             })
             .on('participant_joined', function (session, event) {
                 console.log('Participant ', event.clientIndex, 'joined the session');
 				if (event.clientIndex !== 0) {
-					SurflySession.makeHost(1);}
+					SurflySession.makeHost(0);
+                    console.log(event.clientIndex + " joined the session. Host rights given to index 0");
+                
+                }
 				else {
-					console.log(event.clientIndex + " joined the session - host not changed");
+					console.log(event.clientIndex + " joined the session. Host rights unchanged");
 				};
             }) 
         }
