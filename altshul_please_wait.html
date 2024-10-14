@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connecting...</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f7f6;
+            font-family: Arial, sans-serif;
+        }
+
+        .message-container {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .message {
+            font-size: 1.8rem;
+            color: #333;
+            animation: flash 2s ease-in-out infinite;
+        }
+
+        @keyframes flash {
+            0% { opacity: 1; }
+            50% { opacity: 0.3; }
+            100% { opacity: 1; }
+        }
+
+        @media (max-width: 600px) {
+            .message {
+                font-size: 1.2rem;
+            }
+
+            .message-container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="message-container">
+        <p class="message">Please wait while we connect you with an agent...</p>
+    </div>
+
+</body>
+</html>
