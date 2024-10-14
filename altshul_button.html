@@ -225,7 +225,7 @@
         function sendMessage() {
             console.log("sendMessage triggered");
             const messageinput = "close tab";
-            SurflySession.sendMessage({ message: messageinput }, 'https://demo.surfly.com/', window.location.origin);
+            Surfly.listSessions()[0].sendMessage({ message: messageinput }, 'https://demo.surfly.com/', window.location.origin);
             console.log("Message Sent to close the tab: ", messageinput);
         }
     </script>
