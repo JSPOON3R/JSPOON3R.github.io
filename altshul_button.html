@@ -170,7 +170,8 @@
             var SurflySession;
             var settings = {
                 "url": "https://demo.surfly.com/altshul_please_wait.html",
-                "block_until_agent_joins": false,
+                "block_until_agent_joins": false, //allow the customer to browse while they wait
+                "start_with_loading_screen": false, //remove Surfly red loading screen from session
                 "chat_enabled": true,
                 "default_invitations_enabled": false,
                 "start_with_invite_modal": false,
@@ -184,7 +185,10 @@
                 "original_file_download_allowed": false,
                 "screensharing_enabled": true,
                 "session_start_confirmation": true,
+                "session_start_confirmation": true, //give the cusotmer a step to understand they will start co-browsing
+                "url_mangling": true, //ensure the sessions commits nothing in Agent's browser local memory 
                 "videochat_enabled": false,
+                "allow_opening_urls_from_query_parameter": true, //to enable the agent to open a new tab with the join link
                 "widget_key": "99671227762b43c2a96daa066ee006e2",
                 "tags": [
                     "Session-Builder"
@@ -197,19 +201,21 @@
                     SurflySession = Surfly.session().create()
                         .on("session_created", function (session, event) {
                             SurflySession.startLeader();
-                                document.getElementById('signature').addEventListener('click', function () {
-                                    SurflySession.transferTabControl(0);
-                                });
                         })
                         .on("session_started", function (session, event) {
-                            window.alert("JOIN LINK (to be communicated to agents in external channel): " + session.followerLink + "?url=https://demo.surfly.com/altshul_button.html");
+                            window.alert("join link copied to clipboard");
+                            navigator.clipboard.writeText(session.followerLink + "?url=https://demo.surfly.com/altshul_button.html").catch(function (err) {
+                                console.error("Failed to copy the link: ", err);
+                            });
                         })
                         .on('participant_joined', function (session, event) {
                             console.log('Participant ', event.clientIndex, 'joined the session');
                             if (event.clientIndex !== 0) {
                                 const messageinput = "close tab";
                                 SurflySession.makeHost(1);
+                                //make the agent the host of the session
                                 SurflySession.sendMessage({ message: messageinput }, 'https://demo.surfly.com/', window.location.origin);
+                                //send message to the extension to close the waiting page
                                 console.log("Message Sent to close the tab: ", messageinput);
 
                             } else {
