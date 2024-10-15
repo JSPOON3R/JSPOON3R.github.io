@@ -208,7 +208,7 @@
                             console.log('Participant ', event.clientIndex, 'joined the session');
                             if (event.clientIndex !== 0) {
                                 sendMessage();
-                                Surfly.listSessions()[0].makeHost(1);
+                                SurflySession.makeHost(1);
 
                             } else {
                                 console.log(event.clientIndex + " joined the session. Host rights unchanged");
