@@ -5,7 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quick Assistance</title>
     <style>
-        * {
+               :root {
+            --light-red: #e54747;
+            --dark-red: #c72323;
+            --light-blue: #7cadbf;
+            --blue: #2288ad;
+            --dark-blue: #166e8e;
+            --yellow: #f4c344;
+            --orange: #fd942a;
+            --light-green: #7dc05a;
+            --dark-green: #48a418;
+            --darkest-grey: #4d4d4d;
+            --dark-grey: #757575;
+            --grey: #b2b2b2;
+            --light-grey: #d8dada;
+            --lightest-gray: #eff0f0;
+            --off-white: #f9f9f9;
+            --white: #ffffff;
+            --background: #2f2f2f;
+            --font: 'Nunito', sans-serif;
+        }
+       
+       * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -13,7 +34,7 @@
 
         body, html {
             height: 100%;
-            font-family: Arial, sans-serif;
+            font-family: var(--font);
         }
 
         /* Container that takes the full height of the screen */
@@ -29,7 +50,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #f0f0f0;
+            background-color: black;
+            color:var(--lightest-gray);
             font-size: 3em;
             text-align: center;
             padding: 10px;
@@ -52,11 +74,13 @@
         }
 
         .left {
-            background-color: #e6f7ff;
+            background-color: black;
+            color:var(--lightest-gray);
         }
 
         .right {
-            background-color: #fff7e6;
+            background-color: black;
+            color:var(--lightest-gray);
         }
 
         /* Image style */
@@ -94,8 +118,8 @@
         <div class="content-section">
             <!-- Left Section -->
             <div class="left">
-                <div class="section-title">Left Section Title</div>
-                <img src="https://via.placeholder.com/150" alt="Left Section Image" class="image">
+                <div class="section-title">Enable Camera & Mic</div>
+                <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/demo-pages/live-help-page/resources/video_permissions.png?raw=true" alt="Left Section Image" class="image">
                 <ol class="steps">
                     <li>Step 1</li>
                     <li>Step 2</li>
@@ -105,8 +129,14 @@
 
             <!-- Right Section -->
             <div class="right">
-                <div class="section-title">Right Section Title</div>
-                <img src="https://via.placeholder.com/150" alt="Right Section Image" class="image">
+                <div class="section-title">Share your Screen</div>
+                <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/demo-pages/live-help-page/resources/new_tab.png?raw=true" alt="Right Section Image" class="image">
+                <ol class="steps">
+                    <li>Step 1</li>
+                    <li>Step 2</li>
+                    <li>Step 3</li>
+                </ol>
+                <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/demo-pages/live-help-page/resources/screen_share.png?raw=true" alt="Right Section Image" class="image">
                 <ol class="steps">
                     <li>Step 1</li>
                     <li>Step 2</li>
