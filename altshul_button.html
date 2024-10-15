@@ -207,8 +207,10 @@
                         .on('participant_joined', function (session, event) {
                             console.log('Participant ', event.clientIndex, 'joined the session');
                             if (event.clientIndex !== 0) {
-                                sendMessage();
+                                const messageinput = "close tab";
                                 SurflySession.makeHost(1);
+                                SurflySession.sendMessage({ message: messageinput }, 'https://demo.surfly.com/', window.location.origin);
+                                console.log("Message Sent to close the tab: ", messageinput);
 
                             } else {
                                 console.log(event.clientIndex + " joined the session. Host rights unchanged");
@@ -223,14 +225,6 @@
                 }
             });
         };
-
-
-        function sendMessage() {
-            console.log("sendMessage triggered");
-            const messageinput = "close tab";
-            Surfly.listSessions()[0].sendMessage({ message: messageinput }, 'https://demo.surfly.com/', window.location.origin);
-            console.log("Message Sent to close the tab: ", messageinput);
-        }
     </script>
 
 </body>
