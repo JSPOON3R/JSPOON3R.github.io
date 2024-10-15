@@ -208,20 +208,6 @@
                                 console.error("Failed to copy the link: ", err);
                             });
                         })
-                        .on('participant_joined', function (session, event) {
-                            console.log('Participant ', event.clientIndex, 'joined the session');
-                            if (event.clientIndex !== 0) {
-                                const messageinput = "close tab";
-                                SurflySession.makeHost(1);
-                                //make the agent the host of the session
-                                SurflySession.sendMessage({ message: messageinput }, 'https://demo.surfly.com/', window.location.origin);
-                                //send message to the extension to close the waiting page
-                                console.log("Message Sent to close the tab: ", messageinput);
-
-                            } else {
-                                console.log(event.clientIndex + " joined the session. Host rights unchanged");
-                            }
-                        })
                         .on('host_changed', function (session, event) {
                             console.log("host rights obtained: ", event.gained);
                             console.log("New host: ", event.to);
