@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quick Assistance</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body, html {
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        /* Container that takes the full height of the screen */
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* Title Section: 20% height */
+        .title-section {
+            height: 20%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f0f0;
+            font-size: 3em;
+            text-align: center;
+            padding: 10px;
+        }
+
+        /* Content Section: Bottom 80% */
+        .content-section {
+            display: flex;
+            flex-direction: row;
+            height: 80%;
+        }
+
+        /* Left and Right sections, each takes 50% width */
+        .left, .right {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .left {
+            background-color: #e6f7ff;
+        }
+
+        .right {
+            background-color: #fff7e6;
+        }
+
+        /* Image style */
+        .image {
+            width: 80%;
+            height: auto;
+            max-width: 300px;
+            margin: 20px 0;
+        }
+
+        /* Step flow list */
+        .steps {
+            list-style-type: decimal;
+            padding-left: 20px;
+            text-align: left;
+            font-size: 1.2em;
+            margin-top: 10px;
+        }
+
+        .section-title {
+            font-size: 1.8em;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Title Section -->
+        <div class="title-section">
+            Quick Assistance
+        </div>
+
+        <!-- Content Section (split left and right) -->
+        <div class="content-section">
+            <!-- Left Section -->
+            <div class="left">
+                <div class="section-title">Left Section Title</div>
+                <img src="https://via.placeholder.com/150" alt="Left Section Image" class="image">
+                <ol class="steps">
+                    <li>Step 1</li>
+                    <li>Step 2</li>
+                    <li>Step 3</li>
+                </ol>
+            </div>
+
+            <!-- Right Section -->
+            <div class="right">
+                <div class="section-title">Right Section Title</div>
+                <img src="https://via.placeholder.com/150" alt="Right Section Image" class="image">
+                <ol class="steps">
+                    <li>Step 1</li>
+                    <li>Step 2</li>
+                    <li>Step 3</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
