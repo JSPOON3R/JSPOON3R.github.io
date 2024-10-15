@@ -209,11 +209,11 @@
                             });
                         })
                         .on('host_changed', function (session, event) {
+                            //for troubleshooting / visibility
                             console.log("host rights obtained: ", event.gained);
                             console.log("New host: ", event.to);
                             console.log("My index: ", event.myIndex);
                         })
-
                 }
             });
         };
