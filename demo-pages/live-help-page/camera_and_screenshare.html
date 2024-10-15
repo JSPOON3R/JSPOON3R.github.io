@@ -5,105 +5,148 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quick Assistance</title>
     <style>
-               :root {
-            --light-red: #e54747;
-            --dark-red: #c72323;
-            --light-blue: #7cadbf;
-            --blue: #2288ad;
-            --dark-blue: #166e8e;
-            --yellow: #f4c344;
-            --orange: #fd942a;
-            --light-green: #7dc05a;
-            --dark-green: #48a418;
-            --darkest-grey: #4d4d4d;
-            --dark-grey: #757575;
-            --grey: #b2b2b2;
-            --light-grey: #d8dada;
-            --lightest-gray: #eff0f0;
-            --off-white: #f9f9f9;
-            --white: #ffffff;
-            --background: #2f2f2f;
-            --font: 'Nunito', sans-serif;
-        }
-       
-       * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+:root {
+    --light-red: #e54747;
+    --dark-red: #c72323;
+    --light-blue: #7cadbf;
+    --blue: #2288ad;
+    --dark-blue: #166e8e;
+    --yellow: #f4c344;
+    --orange: #fd942a;
+    --light-green: #7dc05a;
+    --dark-green: #48a418;
+    --darkest-grey: #4d4d4d;
+    --dark-grey: #757575;
+    --grey: #b2b2b2;
+    --light-grey: #d8dada;
+    --lightest-gray: #eff0f0;
+    --off-white: #f9f9f9;
+    --white: #ffffff;
+    --background: #2f2f2f;
+    --font: 'Nunito', sans-serif;
+}
 
-        body, html {
-            height: 100%;
-            font-family: var(--font);
-        }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        /* Container that takes the full height of the screen */
-        .container {
-            display: flex;
-            flex-direction: column;
-            height: 100vh;
-        }
+body, html {
+    height: 100%;
+    font-family: var(--font);
+}
 
-        /* Title Section: 20% height */
-        .title-section {
-            height: 20%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background-color: black;
-            color:var(--lightest-gray);
-            font-size: 3em;
-            text-align: center;
-            padding: 10px;
-        }
+/* Container that takes the full height of the screen */
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
 
-        /* Content Section: Bottom 80% */
-        .content-section {
-            display: flex;
-            flex-direction: row;
-            height: 80%;
-        }
+/* Title Section: 20% height */
+.title-section {
+    height: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: black;
+    color: var(--background);
+    font-size: 5em;
+    text-align: center;
+    padding: 10px;
+}
 
-        /* Left and Right sections, each takes 50% width */
-        .left, .right {
-            flex: 1;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
+/* Content Section: Bottom 80% */
+.content-section {
+    display: flex;
+    flex-direction: row;
+    height: 80%;
+}
 
-        .left {
-            background-color: black;
-            color:var(--lightest-gray);
-        }
+/* Left and Right sections, each takes 50% width */
+.left, .right {
+    flex: 1;
+    padding: 20px;
+    padding-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-        .right {
-            background-color: black;
-            color:var(--lightest-gray);
-        }
+.left {
+    background-color: black;
+    color: var(--lightest-gray);
+}
 
-        /* Image style */
-        .image {
-            width: 80%;
-            height: auto;
-            max-width: 300px;
-            margin: 20px 0;
-        }
+.right {
+    background-color: black;
+    color: var(--lightest-gray);
+}
 
-        /* Step flow list */
-        .steps {
-            list-style-type: decimal;
-            padding-left: 20px;
-            text-align: left;
-            font-size: 1.2em;
-            margin-top: 10px;
-        }
+/* Flexbox for the left section images (side by side) */
+.left-images {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+}
 
-        .section-title {
-            font-size: 1.8em;
-            margin-bottom: 10px;
-        }
+/* Image style for left section */
+.left .image {
+    width: 48%;
+    height: auto;
+    margin-top: 20px;
+    opacity: 0.5; /* Dim the image */
+    transition: opacity 0.3s ease; /* Smooth transition */
+}
+
+/* Stack images in the right section (top and bottom) */
+.right-images {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+/* Image style for right section */
+.right .image {
+    width: 100%;
+    height: auto;
+    margin-top: 20px;
+    opacity: 0.5; /* Dim the image */
+    transition: opacity 0.3s ease; /* Smooth transition */
+}
+
+/* Hover effect to brighten images */
+.left .image:hover, .right .image:hover {
+    opacity: 1; /* Fully visible on hover */
+}
+
+/* Title style (dim by default) */
+.section-title {
+    font-size: 1.8em;
+    margin-bottom: 10px;
+    opacity: 0.5; /* Dim the title by default */
+    transition: opacity 0.3s ease;
+}
+
+/* Brighten the section title when hovering over the images in that section */
+.left-images:hover ~ .section-title,
+.right-images:hover ~ .section-title {
+    opacity: 1; /* Fully visible when hovering over any image in that section */
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .left .image, .right .image {
+        width: 80%; /* Adjust image width for smaller screens */
+    }
+
+    .left-images {
+        flex-direction: column; /* Stack left images vertically on small screens */
+        align-items: center;
+    }
+}
     </style>
 </head>
 <body>
@@ -118,33 +161,53 @@
         <div class="content-section">
             <!-- Left Section -->
             <div class="left">
-                <div class="section-title">Enable Camera & Mic</div>
-                <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/demo-pages/live-help-page/resources/video_permissions.png?raw=true" alt="Left Section Image" class="image">
-                <ol class="steps">
-                    <li>Step 1</li>
-                    <li>Step 2</li>
-                    <li>Step 3</li>
-                </ol>
+                <div class="section-title">Enable Camera & Microphone</div>
+                <div class="left-images">
+                    <!-- Left images placed side by side -->
+                    <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/demo-pages/live-help-page/resources/video_permissions_1.png?raw=true" alt="Left Section Image" class="image">
+                    <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/demo-pages/live-help-page/resources/video_permissions_2.png?raw=true" alt="Left Section Image" class="image">
+                </div>
             </div>
 
             <!-- Right Section -->
             <div class="right">
                 <div class="section-title">Share your Screen</div>
-                <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/demo-pages/live-help-page/resources/new_tab.png?raw=true" alt="Right Section Image" class="image">
-                <ol class="steps">
-                    <li>Step 1</li>
-                    <li>Step 2</li>
-                    <li>Step 3</li>
-                </ol>
-                <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/demo-pages/live-help-page/resources/screen_share.png?raw=true" alt="Right Section Image" class="image">
-                <ol class="steps">
-                    <li>Step 1</li>
-                    <li>Step 2</li>
-                    <li>Step 3</li>
-                </ol>
+                <div class="right-images">
+                    <!-- Right images stacked top and bottom -->
+                    <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/demo-pages/live-help-page/resources/new_tab.png?raw=true" alt="Right Section Image" class="image">
+                    <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/demo-pages/live-help-page/resources/screen_share.png?raw=true" alt="Right Section Image" class="image">
+                </div>
             </div>
         </div>
     </div>
-
+    <script>
+        // Function to dim the title when not hovered over images
+        function setupTitleHoverEffect() {
+            const leftSectionTitle = document.querySelector('.left .section-title');
+            const rightSectionTitle = document.querySelector('.right .section-title');
+            const leftImages = document.querySelectorAll('.left .image');
+            const rightImages = document.querySelectorAll('.right .image');
+    
+            // Helper function to manage hover state
+            function addHoverEffect(images, title) {
+                images.forEach(image => {
+                    image.addEventListener('mouseenter', () => {
+                        title.style.opacity = '1'; // Brighten title on hover
+                    });
+                    image.addEventListener('mouseleave', () => {
+                        title.style.opacity = '0.5'; // Dim title when not hovering
+                    });
+                });
+            }
+    
+            // Apply hover effect to both sections
+            addHoverEffect(leftImages, leftSectionTitle);
+            addHoverEffect(rightImages, rightSectionTitle);
+        }
+    
+        // Initialize the hover effects when the page is loaded
+        window.onload = setupTitleHoverEffect;
+    </script>
+    
 </body>
 </html>
