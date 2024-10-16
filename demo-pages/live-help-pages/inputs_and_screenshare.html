@@ -33,45 +33,39 @@
 }
 
 body, html {
-    height: 100%;
+    height: 100vh;
+    width: 100vw;
     font-family: var(--font);
+    background-color: rgb(0, 0, 0);
 }
 
 /* Container that takes the full height of the screen */
 .container {
     display: flex;
-    flex-direction: column;
-    height: 100vh;
-}
-
-/* Title Section: 20% height */
-.title-section {
-    height: 20%;
-    display: flex;
-    align-items: center;
     justify-content: center;
-    background-color: black;
-    color: var(--background);
-    font-size: 2em;
-    text-align: center;
-    padding: 10px;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
 }
 
-/* Content Section: Bottom 80% */
+/* Content Section: Both left and right sections start at 50% width */
 .content-section {
     display: flex;
-    flex-direction: row;
-    height: 80%;
+    width: 100%;
+    height: 100%;
+    transition: all 0.5s ease; /* Smooth transition for flex size changes */
 }
 
-/* Left and Right sections, each takes 50% width */
+/* Left and Right sections with flex-grow to allow expansion */
 .left, .right {
-    flex: 1;
+    flex-grow: 1;
+    flex-basis: 50%; /* Default equal space for both sections (50% width) */
     padding: 20px;
-    padding-top: 50px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center; /* Vertically center the content */
+    transition: flex-grow 0.5s ease, flex-basis 0.5s ease; /* Smooth transition for resizing */
 }
 
 .left {
@@ -87,7 +81,7 @@ body, html {
 /* Flexbox for the left section images (side by side) */
 .left-images {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     width: 100%;
 }
 
@@ -97,6 +91,7 @@ body, html {
     height: auto;
     margin-top: 20px;
     opacity: 0.5; /* Dim the image */
+    border-radius:10px 10px 20px 20px;
     transition: opacity 0.3s ease; /* Smooth transition */
 }
 
@@ -114,6 +109,7 @@ body, html {
     height: auto;
     margin-top: 20px;
     opacity: 0.5; /* Dim the image */
+    border-radius:10px;
     transition: opacity 0.3s ease; /* Smooth transition */
 }
 
@@ -122,18 +118,14 @@ body, html {
     opacity: 1; /* Fully visible on hover */
 }
 
-/* Title style (dim by default) */
+/* Title style (hidden by default with pop-up effect) */
 .section-title {
-    font-size: 1.8em;
+    font-size: 1.5em;
     margin-bottom: 10px;
-    opacity: 0.5; /* Dim the title by default */
-    transition: opacity 0.3s ease;
-}
-
-/* Brighten the section title when hovering over the images in that section */
-.left-images:hover ~ .section-title,
-.right-images:hover ~ .section-title {
-    opacity: 1; /* Fully visible when hovering over any image in that section */
+    color: var(--dark-grey);
+    opacity: 0; /* Fully hidden by default */
+    transform: translateY(20px); /* Move title down */
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth transition for pop-up effect */
 }
 
 /* Responsive design */
@@ -147,16 +139,12 @@ body, html {
         align-items: center;
     }
 }
+
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- Title Section -->
-        <div class="title-section">
-            Quick Assistance
-        </div>
-
         <!-- Content Section (split left and right) -->
         <div class="content-section">
             <!-- Left Section -->
@@ -164,50 +152,61 @@ body, html {
                 <div class="section-title">Enable Camera & Microphone</div>
                 <div class="left-images">
                     <!-- Left images placed side by side -->
-                    <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/demo-pages/live-help-page/resources/video_permissions_1.png?raw=true" alt="Left Section Image" class="image">
-                    <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/demo-pages/live-help-page/resources/video_permissions_2.png?raw=true" alt="Left Section Image" class="image">
+                    <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/demo-pages/live-help-pages/resources/video_permissions_1.png?raw=true" alt="Left Section Image" class="image">
+                    <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/demo-pages/live-help-pages/resources/video_permissions_2.png?raw=true" alt="Left Section Image" class="image">
                 </div>
             </div>
 
             <!-- Right Section -->
             <div class="right">
-                <div class="section-title">Share your Screen</div>
+                <div class="section-title">Share Screen</div>
                 <div class="right-images">
                     <!-- Right images stacked top and bottom -->
-                    <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/demo-pages/live-help-page/resources/new_tab.png?raw=true" alt="Right Section Image" class="image">
-                    <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/demo-pages/live-help-page/resources/screen_share.png?raw=true" alt="Right Section Image" class="image">
+                    <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/demo-pages/live-help-pages/resources/new_tab.png?raw=true" alt="Right Section Image" class="image">
+                    <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/demo-pages/live-help-pages/resources/screen_share.png?raw=true" alt="Right Section Image" class="image">
                 </div>
             </div>
         </div>
     </div>
+
     <script>
-        // Function to dim the title when not hovered over images
-        function setupTitleHoverEffect() {
+        // Function to resize sections and show titles on hover
+        function setupSectionHoverEffect() {
+            const leftSection = document.querySelector('.left');
+            const rightSection = document.querySelector('.right');
             const leftSectionTitle = document.querySelector('.left .section-title');
             const rightSectionTitle = document.querySelector('.right .section-title');
-            const leftImages = document.querySelectorAll('.left .image');
-            const rightImages = document.querySelectorAll('.right .image');
+        
+            // Function to handle hover effect for each section
+            function addHoverEffect(section, title, otherSection) {
+                section.addEventListener('mouseenter', () => {
+                    title.style.opacity = '1'; // Make the title visible
+                    title.style.transform = 'translateY(0)'; // Move title into view
+                    section.style.flexGrow = '2'; // Expand the hovered section
+                    section.style.flexBasis = '60%'; // Set the section to take 60% width
+                    otherSection.style.flexGrow = '1'; // Shrink the other section
+                    otherSection.style.flexBasis = '40%'; // Set the other section to take 40% width
+                });
     
-            // Helper function to manage hover state
-            function addHoverEffect(images, title) {
-                images.forEach(image => {
-                    image.addEventListener('mouseenter', () => {
-                        title.style.opacity = '1'; // Brighten title on hover
-                    });
-                    image.addEventListener('mouseleave', () => {
-                        title.style.opacity = '0.5'; // Dim title when not hovering
-                    });
+                section.addEventListener('mouseleave', () => {
+                    title.style.opacity = '0'; // Hide the title
+                    title.style.transform = 'translateY(20px)'; // Move title down
+                    section.style.flexGrow = '1'; // Reset section size
+                    section.style.flexBasis = '50%'; // Reset section to 50% width
+                    otherSection.style.flexGrow = '1'; // Reset other section size
+                    otherSection.style.flexBasis = '50%'; // Reset other section to 50% width
                 });
             }
     
             // Apply hover effect to both sections
-            addHoverEffect(leftImages, leftSectionTitle);
-            addHoverEffect(rightImages, rightSectionTitle);
+            addHoverEffect(leftSection, leftSectionTitle, rightSection);
+            addHoverEffect(rightSection, rightSectionTitle, leftSection);
         }
     
         // Initialize the hover effects when the page is loaded
-        window.onload = setupTitleHoverEffect;
+        window.onload = setupSectionHoverEffect;
     </script>
+    
     
 </body>
 </html>
