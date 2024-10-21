@@ -248,9 +248,16 @@
         Surfly.init({ widget_key: "99671227762b43c2a96daa066ee006e2" }, function (initResult) {
             if (initResult.success) {
                 if (!Surfly.isInsideSession) {
-
+                }
+            }
+            else {
+                console.log("Surfly was unable to initialize properly.")
+            }
+        });
+    </script>
+    <script>
  // Initialize Intercom widget and settings
-window.intercomSettings = {
+ window.intercomSettings = {
     api_base: "https://api-iam.intercom.io",
     app_id: "tuo914lx",  // Your Intercom App ID
     // Add other user details if necessary, e.g., user_id or email for logged-in users
@@ -310,14 +317,9 @@ Intercom('onReady', function () {
 });
 
 
-                }
-            }
-            else {
-                console.log("Surfly was unable to initialize properly.")
-            }
-        });
-    </script>
-    <script>
+
+
+
         function sendIntercomMessage(userOrVisitorId) {
     console.log('Sending message for ID:', userOrVisitorId);
 
