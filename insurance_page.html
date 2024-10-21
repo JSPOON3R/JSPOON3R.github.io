@@ -287,11 +287,38 @@ window.intercomSettings = {
     }
 })();
 
+
 // Ensure Intercom is fully initialized before sending messages
 Intercom('onReady', function () {
     console.log("Intercom is fully ready. Proceeding to fetch user or visitor ID...");
-// Send message via Intercom API
-function sendIntercomMessage(userOrVisitorId) {
+
+    // Fetch the user ID (if available) or fall back to visitor ID
+    var userId = Intercom('getUserId');
+    if (userId) {
+        console.log('Found logged-in user ID:', userId);
+        sendIntercomMessage(userId);  // Send message for logged-in user
+    } else {
+        Intercom('getVisitorId', function (visitorId) {
+            if (visitorId) {
+                console.log('Found visitor ID:', visitorId);
+                sendIntercomMessage(visitorId);  // Send message for visitor
+            } else {
+                console.error('Could not retrieve visitor ID.');
+            }
+        });
+    }
+});
+
+
+                }
+            }
+            else {
+                console.log("Surfly was unable to initialize properly.")
+            }
+        });
+    </script>
+    <script>
+        function sendIntercomMessage(userOrVisitorId) {
     console.log('Sending message for ID:', userOrVisitorId);
 
     const messageData = {
@@ -331,32 +358,7 @@ function sendIntercomMessage(userOrVisitorId) {
     .catch(error => {
         console.error('Error sending message:', error);
     });
-
-
-    // Fetch the user ID (if available) or fall back to visitor ID
-    var userId = Intercom('getUserId');
-    if (userId) {
-        console.log('Found logged-in user ID:', userId);
-        sendIntercomMessage(userId);  // Send message for logged-in user
-    } else {
-        Intercom('getVisitorId', function (visitorId) {
-            if (visitorId) {
-                console.log('Found visitor ID:', visitorId);
-                sendIntercomMessage(visitorId);  // Send message for visitor
-            } else {
-                console.error('Could not retrieve visitor ID.');
-            }
-        });
-    }
-});
-
-
-                }
-            }
-            else {
-                console.log("Surfly was unable to initialize properly.")
-            }
-        });
+}
     </script>
 </body>
 
