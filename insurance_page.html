@@ -274,6 +274,14 @@
                 console.log("Reattaching Intercom activator...");
                 ic('reattach_activator');
                 ic('update', w.intercomSettings);
+
+                // Attach the postback event listener
+                ic('onPostback', function (data) {
+                    console.log('Postback data received:', data);
+                    if (data.postback_data === 'run_script') {
+                        alert('Running JavaScript on the visitor’s page!');
+                    }
+                });
             } else {
                 console.log("Creating new Intercom instance...");
                 var d = document;
@@ -298,12 +306,17 @@
                 }
             }
         })();
-        Intercom('onPostback', function (data) {
-            console.log('Postback data received:', data);
-            if (data.postback_data === 'run_script') {
-                alert('Running JavaScript on the visitor’s page!');
-            }
-        });
+        setTimeout(function() {
+    Intercom('onPostback', function (data) {
+        console.log('Postback data received:', data);
+        if (data.postback_data === 'run_script') {
+            alert('Running JavaScript on the visitor’s page!');
+        }
+    });
+}, 2000);  // 2-second delay to ensure Intercom is fully loaded
+
+
+
     </script>
 
 </body>
