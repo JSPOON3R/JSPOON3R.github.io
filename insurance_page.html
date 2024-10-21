@@ -311,7 +311,7 @@
     setTimeout(function() {
         console.log("Checking Intercom readiness...");
         if (typeof window.Intercom === 'function') {
-            window.Intercom('onReady', function() {
+            window.Intercom('onShow', function() {
                 console.log("Intercom is fully ready.");
 
                 // Fetch the user ID or visitor ID
