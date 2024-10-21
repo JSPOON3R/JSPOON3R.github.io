@@ -248,23 +248,57 @@
         Surfly.init({ widget_key: "99671227762b43c2a96daa066ee006e2" }, function (initResult) {
             if (initResult.success) {
                 if (!Surfly.isInsideSession) {
+                    // Initialize Intercom widget
                     window.intercomSettings = {
                         api_base: "https://api-iam.intercom.io",
                         app_id: "tuo914lx",
                     };
-                    (function () { var w = window; var ic = w.Intercom; if (typeof ic === "function") { ic('reattach_activator'); ic('update', w.intercomSettings); } else { var d = document; var i = function () { i.c(arguments); }; i.q = []; i.c = function (args) { i.q.push(args); }; w.Intercom = i; var l = function () { var s = d.createElement('script'); s.type = 'text/javascript'; s.async = true; s.src = 'https://widget.intercom.io/widget/tuo914lx'; var x = d.getElementsByTagName('script')[0]; x.parentNode.insertBefore(s, x); }; if (document.readyState === 'complete') { l(); } else if (w.attachEvent) { w.attachEvent('onload', l); } else { w.addEventListener('load', l, false); } } })();
+                    (function () {
+                        var w = window;
+                        var ic = w.Intercom;
+                        if (typeof ic === "function") {
+                            ic('reattach_activator');
+                            ic('update', w.intercomSettings);
+                        } else {
+                            var d = document;
+                            var i = function () { i.c(arguments); };
+                            i.q = [];
+                            i.c = function (args) { i.q.push(args); };
+                            w.Intercom = i;
+                            var l = function () {
+                                var s = d.createElement('script');
+                                s.type = 'text/javascript';
+                                s.async = true;
+                                s.src = 'https://widget.intercom.io/widget/tuo914lx';
+                                var x = d.getElementsByTagName('script')[0];
+                                x.parentNode.insertBefore(s, x);
+                            };
+                            if (document.readyState === 'complete') {
+                                l();
+                            } else if (w.attachEvent) {
+                                w.attachEvent('onload', l);
+                            } else {
+                                w.addEventListener('load', l, false);
+                            }
+                        }
+                    })();
+
+                    // Show new message in the Intercom chat window
                     Intercom('onShow', function () {
                         Intercom('showNewMessage', "Hi! I would like live assistance");
+
+                        // Fetch visitor ID from Intercom
                         Intercom('getVisitorId', function (visitorId) {
-                            console.log('Current user ID:', visitorId);  
-                            sendIntercomMessage(visitorId);
+                            console.log('Current user ID:', visitorId);  // Log the user ID
+                            sendIntercomMessage(visitorId);  // Send message with dynamic user ID
                         });
                     });
 
+                    // API call to send a message via Intercom Messenger API
                     const apiUrl = 'https://api.intercom.io/messages';
                     const token = 'dG9rOjI5NTI3ZWJmXzE1ODhfNDYwZF9iMDc3XzkzMzE0ZTRlOWVkNToxOjA=';
 
-                    function sendIntercomMessage() {
+                    function sendIntercomMessage(visitorId) {
                         const messageData = {
                             "message_type": "inapp",
                             "body": "Click this button for Live Assistance",
@@ -282,10 +316,11 @@
                             },
                             "to": {
                                 "type": "user",
-                                "id": "USER_ID"  // Replace with the user's ID
+                                "id": visitorId  // Use the dynamic visitor ID
                             }
                         };
 
+                        // API POST request to Intercom
                         fetch(apiUrl, {
                             method: 'POST',
                             headers: {
@@ -303,6 +338,7 @@
                                 console.error('Error sending message:', error);
                             });
                     }
+
                 }
             }
             else {
