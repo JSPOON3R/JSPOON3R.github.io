@@ -287,6 +287,9 @@ window.intercomSettings = {
     }
 })();
 
+// Ensure Intercom is fully initialized before sending messages
+Intercom('onReady', function () {
+    console.log("Intercom is fully ready. Proceeding to fetch user or visitor ID...");
 // Send message via Intercom API
 function sendIntercomMessage(userOrVisitorId) {
     console.log('Sending message for ID:', userOrVisitorId);
@@ -328,11 +331,7 @@ function sendIntercomMessage(userOrVisitorId) {
     .catch(error => {
         console.error('Error sending message:', error);
     });
-}
 
-// Ensure Intercom is fully initialized before sending messages
-Intercom('onReady', function () {
-    console.log("Intercom is fully ready. Proceeding to fetch user or visitor ID...");
 
     // Fetch the user ID (if available) or fall back to visitor ID
     var userId = Intercom('getUserId');
