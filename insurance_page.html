@@ -248,14 +248,15 @@
         Surfly.init({ widget_key: "99671227762b43c2a96daa066ee006e2" }, function (initResult) {
             if (initResult.success) {
                 if (!Surfly.isInsideSession) {
-                   // Initialize Intercom widget and settings
+
+ // Initialize Intercom widget and settings
 window.intercomSettings = {
     api_base: "https://api-iam.intercom.io",
     app_id: "tuo914lx",  // Your Intercom App ID
-    // Optionally add more user data (user_id, email) if available
+    // Add other user details if necessary, e.g., user_id or email for logged-in users
 };
 
-// Load the Intercom widget script and initialize
+// Load Intercom widget
 (function () {
     var w = window;
     var ic = w.Intercom;
@@ -286,7 +287,7 @@ window.intercomSettings = {
     }
 })();
 
-// Function to send message via API
+// Send message via Intercom API
 function sendIntercomMessage(userOrVisitorId) {
     console.log('Sending message for ID:', userOrVisitorId);
 
@@ -297,24 +298,24 @@ function sendIntercomMessage(userOrVisitorId) {
         "buttons": [
             {
                 "type": "url",
-                "url": "https://example.com",
-                "label": "Learn More"
+                "url": "https://example.com",  // Replace with your desired URL
+                "label": "Learn More"  // Button label
             }
         ],
         "from": {
             "type": "admin",
-            "id": "7852072"  // Your Admin ID
+            "id": "7852072"  // Replace with your Intercom Admin ID
         },
         "to": {
             "type": "user",
-            "id": userOrVisitorId  // Dynamic user or visitor ID
+            "id": userOrVisitorId  // Use the dynamic user or visitor ID
         }
     };
 
     fetch('https://api.intercom.io/messages', {
         method: 'POST',
         headers: {
-            'Authorization': `Bearer dG9rOjI5NTI3ZWJmXzE1ODhfNDYwZF9iMDc3XzkzMzE0ZTRlOWVkNToxOjA=`,  // Add your token
+            'Authorization': `Bearer dG9rOjI5NTI3ZWJmXzE1ODhfNDYwZF9iMDc3XzkzMzE0ZTRlOWVkNToxOjA=`,  // Your API token here
             'Accept': 'application/json',
             'Content-Type': 'application/json',
         },
@@ -329,20 +330,19 @@ function sendIntercomMessage(userOrVisitorId) {
     });
 }
 
-// Ensure that the Intercom widget is fully booted
-Intercom('onReady', function() {
-    console.log("Intercom is fully ready.");
+// Ensure Intercom is fully initialized before sending messages
+Intercom('onReady', function () {
+    console.log("Intercom is fully ready. Proceeding to fetch user or visitor ID...");
 
-    // First, check if there is a logged-in user (user_id available)
+    // Fetch the user ID (if available) or fall back to visitor ID
     var userId = Intercom('getUserId');
     if (userId) {
-        console.log('Logged-in user ID:', userId);
+        console.log('Found logged-in user ID:', userId);
         sendIntercomMessage(userId);  // Send message for logged-in user
     } else {
-        // If no logged-in user, try fetching visitor ID
-        Intercom('getVisitorId', function(visitorId) {
+        Intercom('getVisitorId', function (visitorId) {
             if (visitorId) {
-                console.log('Anonymous visitor ID:', visitorId);
+                console.log('Found visitor ID:', visitorId);
                 sendIntercomMessage(visitorId);  // Send message for visitor
             } else {
                 console.error('Could not retrieve visitor ID.');
@@ -350,6 +350,7 @@ Intercom('onReady', function() {
         });
     }
 });
+
 
                 }
             }
