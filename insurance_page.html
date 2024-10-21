@@ -248,119 +248,108 @@
         Surfly.init({ widget_key: "99671227762b43c2a96daa066ee006e2" }, function (initResult) {
             if (initResult.success) {
                 if (!Surfly.isInsideSession) {
-                    // Initialize Intercom widget
-                    // Initialize Intercom widget and settings
-                    window.intercomSettings = {
-                        api_base: "https://api-iam.intercom.io",
-                        app_id: "tuo914lx",  // Replace with your Intercom app_id
-                    };
+                   // Initialize Intercom widget and settings
+window.intercomSettings = {
+    api_base: "https://api-iam.intercom.io",
+    app_id: "tuo914lx",
+    // Optionally add more data like user_id, email for logged-in users
+};
 
-                    // Load Intercom widget script and initialize
-                    (function () {
-                        var w = window;
-                        var ic = w.Intercom;
-                        if (typeof ic === "function") {
-                            ic('reattach_activator');
-                            ic('update', w.intercomSettings);
-                        } else {
-                            var d = document;
-                            var i = function () { i.c(arguments); };
-                            i.q = [];
-                            i.c = function (args) { i.q.push(args); };
-                            w.Intercom = i;
-                            var l = function () {
-                                var s = d.createElement('script');
-                                s.type = 'text/javascript';
-                                s.async = true;
-                                s.src = 'https://widget.intercom.io/widget/tuo914lx';
-                                var x = d.getElementsByTagName('script')[0];
-                                x.parentNode.insertBefore(s, x);
-                            };
-                            if (document.readyState === 'complete') {
-                                l();
-                            } else if (w.attachEvent) {
-                                w.attachEvent('onload', l);
-                            } else {
-                                w.addEventListener('load', l, false);
-                            }
-                        }
-                    })();
+// Load the Intercom widget script and initialize
+(function () {
+    var w = window;
+    var ic = w.Intercom;
+    if (typeof ic === "function") {
+        ic('reattach_activator');
+        ic('update', w.intercomSettings);
+    } else {
+        var d = document;
+        var i = function () { i.c(arguments); };
+        i.q = [];
+        i.c = function (args) { i.q.push(args); };
+        w.Intercom = i;
+        var l = function () {
+            var s = d.createElement('script');
+            s.type = 'text/javascript';
+            s.async = true;
+            s.src = 'https://widget.intercom.io/widget/tuo914lx';
+            var x = d.getElementsByTagName('script')[0];
+            x.parentNode.insertBefore(s, x);
+        };
+        if (document.readyState === 'complete') {
+            l();
+        } else if (w.attachEvent) {
+            w.attachEvent('onload', l);
+        } else {
+            w.addEventListener('load', l, false);
+        }
+    }
+})();
 
-                    // Helper function to log visitor ID and send API message
-                    function sendIntercomMessage(visitorId) {
-                        console.log('Sending message for visitor ID:', visitorId);
+// Function to send message via API
+function sendIntercomMessage(userOrVisitorId) {
+    console.log('Sending message for ID:', userOrVisitorId);
 
-                        // Prepare message data
-                        const messageData = {
-                            "message_type": "inapp",
-                            "body": "Click this button for Live Assistance",
-                            "template": "button",
-                            "buttons": [
-                                {
-                                    "type": "url",
-                                    "url": "https://example.com",  // The link you want to open
-                                    "label": "Learn More"  // Button label
-                                }
-                            ],
-                            "from": {
-                                "type": "admin",
-                                "id": "7852072"  // Replace with your Intercom Admin ID
-                            },
-                            "to": {
-                                "type": "user",
-                                "id": visitorId  // Dynamic visitor ID
-                            }
-                        };
+    const messageData = {
+        "message_type": "inapp",
+        "body": "Click this button for Live Assistance",
+        "template": "button",
+        "buttons": [
+            {
+                "type": "url",
+                "url": "https://example.com",
+                "label": "Learn More"
+            }
+        ],
+        "from": {
+            "type": "admin",
+            "id": "7852072"  // Your Admin ID
+        },
+        "to": {
+            "type": "user",
+            "id": userOrVisitorId  // Dynamic user or visitor ID
+        }
+    };
 
-                        const apiUrl = 'https://api.intercom.io/messages';
-                        const token = 'dG9rOjI5NTI3ZWJmXzE1ODhfNDYwZF9iMDc3XzkzMzE0ZTRlOWVkNToxOjA=';  // Your API token
+    fetch('https://api.intercom.io/messages', {
+        method: 'POST',
+        headers: {
+            'Authorization': `Bearer dG9rOjI5NTI3ZWJmXzE1ODhfNDYwZF9iMDc3XzkzMzE0ZTRlOWVkNToxOjA=`,  // Add your token
+            'Accept': 'application/json',
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(messageData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Message sent successfully:', data);
+    })
+    .catch(error => {
+        console.error('Error sending message:', error);
+    });
+}
 
-                        // API POST request to Intercom
-                        fetch(apiUrl, {
-                            method: 'POST',
-                            headers: {
-                                'Authorization': `Bearer ${token}`,
-                                'Accept': 'application/json',
-                                'Content-Type': 'application/json',
-                            },
-                            body: JSON.stringify(messageData)
-                        })
-                            .then(response => response.json())
-                            .then(data => {
-                                console.log('Message sent successfully:', data);
-                            })
-                            .catch(error => {
-                                console.error('Error sending message:', error);
-                            });
-                    }
+// Ensure that the Intercom widget is shown and everything is handled correctly
+Intercom('onShow', function () {
+    console.log("Intercom widget shown.");
 
-                    // Ensure that the Intercom widget is shown and the message is sent
-                    Intercom('onShow', function () {
-                        console.log("Intercom widget shown.");
-
-                        // First, try fetching user ID if available (for logged-in users)
-                        var userId = Intercom('getUserId');
-                        if (userId) {
-                            console.log('Current logged-in user ID:', userId);
-                            sendIntercomMessage(userId);  // Send message with dynamic user ID
-                        } else {
-                            // If user ID is not available, fallback to visitor ID for anonymous visitors
-                            Intercom('getVisitorId', function (visitorId) {
-                                if (visitorId) {
-                                    console.log('Current visitor ID:', visitorId);  // Log the visitor ID
-                                    sendIntercomMessage(visitorId);  // Send message with dynamic visitor ID
-                                } else {
-                                    console.error('Could not retrieve visitor ID.');
-                                }
-                            });
-                        }
-                    });
-
-                    // Ensure widget is ready for interaction
-                    Intercom('onHide', function () {
-                        console.log("Intercom widget hidden.");
-                    });
-
+    // First, check if there is a logged-in user (user_id available)
+    var userId = Intercom('getUserId');
+    if (userId) {
+        console.log('Logged-in user ID:', userId);
+        sendIntercomMessage(userId);  // Send message for logged-in user
+    } else {
+        // If no logged-in user, try fetching visitor ID
+        Intercom('getVisitorId', function (visitorId) {
+            if (visitorId) {
+                console.log('Anonymous visitor ID:', visitorId);
+                sendIntercomMessage(visitorId);  // Send message for visitor
+            } else {
+                console.error('Could not retrieve visitor ID.');
+            }
+        });
+    }
+});
 
                 }
             }
