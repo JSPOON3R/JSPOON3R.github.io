@@ -256,17 +256,18 @@
         });
     </script>
 
+
 <script>
-    // Add logging to see when the Intercom script is initialized and updated
     console.log("Initializing Intercom...");
 
+    // Set up Intercom settings
     window.intercomSettings = {
         api_base: "https://api-iam.intercom.io",
         app_id: "tuo914lx",  // Your Intercom App ID
-        // Add other user details if necessary, e.g., user_id or email for logged-in users
+        // You can add user data like user_id, email here if applicable
     };
 
-    // Load Intercom widget
+    // Load the Intercom widget
     (function () {
         var w = window;
         var ic = w.Intercom;
@@ -300,26 +301,39 @@
         }
     })();
 
-    // Ensure Intercom is fully initialized before sending messages
-    window.Intercom('onReady', function () {
-        console.log("Intercom is fully ready. Proceeding to fetch user or visitor ID...");
+    // Wait for Intercom to boot
+    function bootIntercom() {
+        console.log("Booting Intercom...");
+        window.Intercom('boot', window.intercomSettings);
+    }
 
-        // Fetch the user ID (if available) or fall back to visitor ID
-        var userId = Intercom('getUserId');
-        if (userId) {
-            console.log('Found logged-in user ID:', userId);
-            sendIntercomMessage(userId);  // Send message for logged-in user
-        } else {
-            Intercom('getVisitorId', function (visitorId) {
-                if (visitorId) {
-                    console.log('Found visitor ID:', visitorId);
-                    sendIntercomMessage(visitorId);  // Send message for visitor
+    // Check Intercom status after booting
+    setTimeout(function() {
+        console.log("Checking Intercom readiness...");
+        if (typeof window.Intercom === 'function') {
+            window.Intercom('onReady', function() {
+                console.log("Intercom is fully ready.");
+
+                // Fetch the user ID or visitor ID
+                var userId = Intercom('getUserId');
+                if (userId) {
+                    console.log('Found logged-in user ID:', userId);
+                    sendIntercomMessage(userId);
                 } else {
-                    console.error('Could not retrieve visitor ID.');
+                    Intercom('getVisitorId', function(visitorId) {
+                        if (visitorId) {
+                            console.log('Found visitor ID:', visitorId);
+                            sendIntercomMessage(visitorId);
+                        } else {
+                            console.error('Could not retrieve visitor ID.');
+                        }
+                    });
                 }
             });
+        } else {
+            console.error("Intercom is not available.");
         }
-    });
+    }, 3000);  // 3-second delay to ensure the script is loaded
 
     function sendIntercomMessage(userOrVisitorId) {
         console.log('Sending message for ID:', userOrVisitorId);
@@ -348,7 +362,7 @@
         fetch('https://api.intercom.io/messages', {
             method: 'POST',
             headers: {
-                'Authorization': `Bearer dG9rOjI5NTI3ZWJmXzE1ODhfNDYwZF9iMDc3XzkzMzE0ZTRlOWVkNToxOjA=`,  // Your API token here
+                'Authorization': `Bearer YOUR_API_TOKEN`,  // Your API token here
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
@@ -362,6 +376,9 @@
             console.error('Error sending message:', error);
         });
     }
+
+    // Boot Intercom after a short delay to ensure the script is fully loaded
+    setTimeout(bootIntercom, 2000);
 </script>
        
 </body>
