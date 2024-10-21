@@ -237,15 +237,6 @@
     <div class="footer">
         <p>&copy; 2024 Insurance Company. All rights reserved.</p>
     </div>
-    <script>
-        window.intercomSettings = {
-          api_base: "https://api-iam.intercom.io",
-          app_id: "tuo914lx",
-        };
-      </script>
-      <script>
-        (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/tuo914lx';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(document.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
-      </script>
       <script>
         (function(s,u,r,f,l,y){s[f]=s[f]||{init:function(){s[f].q=arguments}};
         l=u.createElement(r);y=u.getElementsByTagName(r)[0];l.async=1;
@@ -255,12 +246,21 @@
         Surfly.init({widget_key: "99671227762b43c2a96daa066ee006e2"}, function(initResult) {
             if (initResult.success) {
                 if (!Surfly.isInsideSession) {
+                    Surfly.button();
                 }
             }
             else {
                 console.log("Surfly was unable to initialize properly.")
             }
         });
+
+        if(!Surfly.isInsideSession){
+            window.intercomSettings = {
+          api_base: "https://api-iam.intercom.io",
+          app_id: "tuo914lx",
+        };
+            (function(){var w=window;var ic=w.Intercom;if(typeof ic==="function"){ic('reattach_activator');ic('update',w.intercomSettings);}else{var d=document;var i=function(){i.c(arguments);};i.q=[];i.c=function(args){i.q.push(args);};w.Intercom=i;var l=function(){var s=d.createElement('script');s.type='text/javascript';s.async=true;s.src='https://widget.intercom.io/widget/tuo914lx';var x=d.getElementsByTagName('script')[0];x.parentNode.insertBefore(s,x);};if(document.readyState==='complete'){l();}else if(w.attachEvent){w.attachEvent('onload',l);}else{w.addEventListener('load',l,false);}}})();
+    }
     </script>
 </body>
 
