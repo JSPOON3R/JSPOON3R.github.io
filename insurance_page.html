@@ -293,6 +293,12 @@
                             sendIntercomMessage(visitorId);  // Send message with dynamic user ID
                         });
                     });
+                    Intercom('onShow', function () {
+                        Intercom('getVisitorId', function (visitorId) {
+                            console.log('Current user ID:', visitorId);  // Log the user ID
+                            sendIntercomMessage(visitorId);  // Send message with dynamic user ID
+                        });
+                    });
 
                     // API call to send a message via Intercom Messenger API
                     const apiUrl = 'https://api.intercom.io/messages';
