@@ -306,6 +306,11 @@
                 }
             }
         })();
+
+        Intercom('onReady', function() {
+    console.log('Intercom is fully ready and initialized.');
+});
+
         setTimeout(function() {
     Intercom('onPostback', function (data) {
         console.log('Postback data received:', data);
