@@ -301,21 +301,6 @@
             }
         })();
 
-        var userId = Intercom('getUserId');
-            if (userId) {
-                console.log('Found logged-in user ID:', userId);
-                sendIntercomMessage(userId);
-            } else {
-                Intercom('getVisitorId', function (visitorId) {
-                    if (visitorId) {
-                        console.log('Found visitor ID:', visitorId);
-                    } else {
-                        console.error('Could not retrieve visitor ID.');
-                    }
-                });
-            }
-            console.log('Sending message for ID:', userOrVisitorId);
-
         // Wait for Intercom to boot
         function bootIntercom() {
             console.log("Booting Intercom...");
@@ -332,10 +317,16 @@
             } else {
                 console.error("Intercom is not available.");
             }
-        }, 3000);  // 3-second delay to ensure the script is loaded
+        }, 3000);  
 
         function sendIntercomMessage() {
-            // Fetch the user ID or visitor ID
+            var visitorId = Intercom('getVisitorId') 
+            if (visitorId) {
+            console.log(visitorId);
+        }
+        else {
+            console.log("cannot find visitor id");
+        }
 
             const messageData = {
                 "message_type": "inapp",
@@ -353,8 +344,8 @@
                     "id": "7852072"  // Replace with your Intercom Admin ID
                 },
                 "to": {
-                    "type": "user",
-                    "id": userOrVisitorId  // Use the dynamic user or visitor ID
+                    "type": "visitor",
+                    "id": visitorId  // Use the dynamic user or visitor ID
                 }
             };
 
