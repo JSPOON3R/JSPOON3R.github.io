@@ -338,15 +338,22 @@
                     Intercom('onShow', function () {
                         console.log("Intercom widget shown.");
 
-                        // Fetch the visitor ID from Intercom after widget is shown
-                        Intercom('getVisitorId', function (visitorId) {
-                            if (visitorId) {
-                                console.log('Current user ID:', visitorId);  // Log the user ID
-                                sendIntercomMessage(visitorId);  // Send message with dynamic user ID
-                            } else {
-                                console.error('Could not retrieve visitor ID.');
-                            }
-                        });
+                        // First, try fetching user ID if available (for logged-in users)
+                        var userId = Intercom('getUserId');
+                        if (userId) {
+                            console.log('Current logged-in user ID:', userId);
+                            sendIntercomMessage(userId);  // Send message with dynamic user ID
+                        } else {
+                            // If user ID is not available, fallback to visitor ID for anonymous visitors
+                            Intercom('getVisitorId', function (visitorId) {
+                                if (visitorId) {
+                                    console.log('Current visitor ID:', visitorId);  // Log the visitor ID
+                                    sendIntercomMessage(visitorId);  // Send message with dynamic visitor ID
+                                } else {
+                                    console.error('Could not retrieve visitor ID.');
+                                }
+                            });
+                        }
                     });
 
                     // Ensure widget is ready for interaction
