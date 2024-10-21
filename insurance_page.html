@@ -249,10 +249,13 @@
             if (initResult.success) {
                 if (!Surfly.isInsideSession) {
                     // Initialize Intercom widget
+                    // Initialize Intercom widget and settings
                     window.intercomSettings = {
                         api_base: "https://api-iam.intercom.io",
-                        app_id: "tuo914lx",
+                        app_id: "tuo914lx",  // Replace with your Intercom app_id
                     };
+
+                    // Load Intercom widget script and initialize
                     (function () {
                         var w = window;
                         var ic = w.Intercom;
@@ -283,28 +286,11 @@
                         }
                     })();
 
-                    // Show new message in the Intercom chat window
-                    Intercom('onShow', function () {
-                        Intercom('showNewMessage', "Hi! I would like live assistance");
-
-                        // Fetch visitor ID from Intercom
-                        Intercom('getVisitorId', function (visitorId) {
-                            console.log('Current user ID:', visitorId);  // Log the user ID
-                            sendIntercomMessage(visitorId);  // Send message with dynamic user ID
-                        });
-                    });
-                    Intercom('onShow', function () {
-                        Intercom('getVisitorId', function (visitorId) {
-                            console.log('Current user ID:', visitorId);  // Log the user ID
-                            sendIntercomMessage(visitorId);  // Send message with dynamic user ID
-                        });
-                    });
-
-                    // API call to send a message via Intercom Messenger API
-                    const apiUrl = 'https://api.intercom.io/messages';
-                    const token = 'dG9rOjI5NTI3ZWJmXzE1ODhfNDYwZF9iMDc3XzkzMzE0ZTRlOWVkNToxOjA=';
-
+                    // Helper function to log visitor ID and send API message
                     function sendIntercomMessage(visitorId) {
+                        console.log('Sending message for visitor ID:', visitorId);
+
+                        // Prepare message data
                         const messageData = {
                             "message_type": "inapp",
                             "body": "Click this button for Live Assistance",
@@ -322,9 +308,12 @@
                             },
                             "to": {
                                 "type": "user",
-                                "id": visitorId  // Use the dynamic visitor ID
+                                "id": visitorId  // Dynamic visitor ID
                             }
                         };
+
+                        const apiUrl = 'https://api.intercom.io/messages';
+                        const token = 'dG9rOjI5NTI3ZWJmXzE1ODhfNDYwZF9iMDc3XzkzMzE0ZTRlOWVkNToxOjA=';  // Your API token
 
                         // API POST request to Intercom
                         fetch(apiUrl, {
@@ -344,6 +333,27 @@
                                 console.error('Error sending message:', error);
                             });
                     }
+
+                    // Ensure that the Intercom widget is shown and the message is sent
+                    Intercom('onShow', function () {
+                        console.log("Intercom widget shown.");
+
+                        // Fetch the visitor ID from Intercom after widget is shown
+                        Intercom('getVisitorId', function (visitorId) {
+                            if (visitorId) {
+                                console.log('Current user ID:', visitorId);  // Log the user ID
+                                sendIntercomMessage(visitorId);  // Send message with dynamic user ID
+                            } else {
+                                console.error('Could not retrieve visitor ID.');
+                            }
+                        });
+                    });
+
+                    // Ensure widget is ready for interaction
+                    Intercom('onHide', function () {
+                        console.log("Intercom widget hidden.");
+                    });
+
 
                 }
             }
