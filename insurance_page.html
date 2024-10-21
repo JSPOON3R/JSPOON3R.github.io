@@ -311,14 +311,21 @@
     console.log('Intercom is fully ready and initialized.');
 });
 
-        setTimeout(function() {
+Intercom('onShow', function() {
+    console.log('Intercom Messenger is now visible.');
+});
+
+Intercom('onHide', function() {
+    console.log('Intercom Messenger is now hidden.');
+});
+
+
     Intercom('onPostback', function (data) {
         console.log('Postback data received:', data);
         if (data.postback_data === 'run_script') {
             alert('Running JavaScript on the visitor’s page!');
         }
-    });
-}, 2000);  // 2-second delay to ensure Intercom is fully loaded
+    }); 
 
 
 
