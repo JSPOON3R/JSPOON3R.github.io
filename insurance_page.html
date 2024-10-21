@@ -255,113 +255,115 @@
             }
         });
     </script>
-    <script>
- // Initialize Intercom widget and settings
- window.intercomSettings = {
-    api_base: "https://api-iam.intercom.io",
-    app_id: "tuo914lx",  // Your Intercom App ID
-    // Add other user details if necessary, e.g., user_id or email for logged-in users
-};
 
-// Load Intercom widget
-(function () {
-    var w = window;
-    var ic = w.Intercom;
-    if (typeof ic === "function") {
-        ic('reattach_activator');
-        ic('update', w.intercomSettings);
-    } else {
-        var d = document;
-        var i = function () { i.c(arguments); };
-        i.q = [];
-        i.c = function (args) { i.q.push(args); };
-        w.Intercom = i;
-        var l = function () {
-            var s = d.createElement('script');
-            s.type = 'text/javascript';
-            s.async = true;
-            s.src = 'https://widget.intercom.io/widget/tuo914lx';
-            var x = d.getElementsByTagName('script')[0];
-            x.parentNode.insertBefore(s, x);
-        };
-        if (document.readyState === 'complete') {
-            l();
-        } else if (w.attachEvent) {
-            w.attachEvent('onload', l);
-        } else {
-            w.addEventListener('load', l, false);
-        }
-    }
-})();
+<script>
+    // Add logging to see when the Intercom script is initialized and updated
+    console.log("Initializing Intercom...");
 
-
-// Ensure Intercom is fully initialized before sending messages
-Intercom('onReady', function () {
-    console.log("Intercom is fully ready. Proceeding to fetch user or visitor ID...");
-
-    // Fetch the user ID (if available) or fall back to visitor ID
-    var userId = Intercom('getUserId');
-    if (userId) {
-        console.log('Found logged-in user ID:', userId);
-        sendIntercomMessage(userId);  // Send message for logged-in user
-    } else {
-        Intercom('getVisitorId', function (visitorId) {
-            if (visitorId) {
-                console.log('Found visitor ID:', visitorId);
-                sendIntercomMessage(visitorId);  // Send message for visitor
-            } else {
-                console.error('Could not retrieve visitor ID.');
-            }
-        });
-    }
-});
-
-
-
-
-
-        function sendIntercomMessage(userOrVisitorId) {
-    console.log('Sending message for ID:', userOrVisitorId);
-
-    const messageData = {
-        "message_type": "inapp",
-        "body": "Click this button for Live Assistance",
-        "template": "button",
-        "buttons": [
-            {
-                "type": "url",
-                "url": "https://example.com",  // Replace with your desired URL
-                "label": "Learn More"  // Button label
-            }
-        ],
-        "from": {
-            "type": "admin",
-            "id": "7852072"  // Replace with your Intercom Admin ID
-        },
-        "to": {
-            "type": "user",
-            "id": userOrVisitorId  // Use the dynamic user or visitor ID
-        }
+    window.intercomSettings = {
+        api_base: "https://api-iam.intercom.io",
+        app_id: "tuo914lx",  // Your Intercom App ID
+        // Add other user details if necessary, e.g., user_id or email for logged-in users
     };
 
-    fetch('https://api.intercom.io/messages', {
-        method: 'POST',
-        headers: {
-            'Authorization': `Bearer dG9rOjI5NTI3ZWJmXzE1ODhfNDYwZF9iMDc3XzkzMzE0ZTRlOWVkNToxOjA=`,  // Your API token here
-            'Accept': 'application/json',
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(messageData)
-    })
-    .then(response => response.json())
-    .then(data => {
-        console.log('Message sent successfully:', data);
-    })
-    .catch(error => {
-        console.error('Error sending message:', error);
+    // Load Intercom widget
+    (function () {
+        var w = window;
+        var ic = w.Intercom;
+        if (typeof ic === "function") {
+            console.log("Intercom function already exists. Reattaching...");
+            ic('reattach_activator');
+            ic('update', w.intercomSettings);
+        } else {
+            console.log("Creating new Intercom instance...");
+            var d = document;
+            var i = function () { i.c(arguments); };
+            i.q = [];
+            i.c = function (args) { i.q.push(args); };
+            w.Intercom = i;
+            var l = function () {
+                var s = d.createElement('script');
+                s.type = 'text/javascript';
+                s.async = true;
+                s.src = 'https://widget.intercom.io/widget/tuo914lx';
+                var x = d.getElementsByTagName('script')[0];
+                x.parentNode.insertBefore(s, x);
+                console.log("Intercom script loaded...");
+            };
+            if (document.readyState === 'complete') {
+                l();
+            } else if (w.attachEvent) {
+                w.attachEvent('onload', l);
+            } else {
+                w.addEventListener('load', l, false);
+            }
+        }
+    })();
+
+    // Ensure Intercom is fully initialized before sending messages
+    window.Intercom('onReady', function () {
+        console.log("Intercom is fully ready. Proceeding to fetch user or visitor ID...");
+
+        // Fetch the user ID (if available) or fall back to visitor ID
+        var userId = Intercom('getUserId');
+        if (userId) {
+            console.log('Found logged-in user ID:', userId);
+            sendIntercomMessage(userId);  // Send message for logged-in user
+        } else {
+            Intercom('getVisitorId', function (visitorId) {
+                if (visitorId) {
+                    console.log('Found visitor ID:', visitorId);
+                    sendIntercomMessage(visitorId);  // Send message for visitor
+                } else {
+                    console.error('Could not retrieve visitor ID.');
+                }
+            });
+        }
     });
-}
-    </script>
+
+    function sendIntercomMessage(userOrVisitorId) {
+        console.log('Sending message for ID:', userOrVisitorId);
+
+        const messageData = {
+            "message_type": "inapp",
+            "body": "Click this button for Live Assistance",
+            "template": "button",
+            "buttons": [
+                {
+                    "type": "url",
+                    "url": "https://example.com",  // Replace with your desired URL
+                    "label": "Learn More"  // Button label
+                }
+            ],
+            "from": {
+                "type": "admin",
+                "id": "7852072"  // Replace with your Intercom Admin ID
+            },
+            "to": {
+                "type": "user",
+                "id": userOrVisitorId  // Use the dynamic user or visitor ID
+            }
+        };
+
+        fetch('https://api.intercom.io/messages', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer dG9rOjI5NTI3ZWJmXzE1ODhfNDYwZF9iMDc3XzkzMzE0ZTRlOWVkNToxOjA=`,  // Your API token here
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(messageData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Message sent successfully:', data);
+        })
+        .catch(error => {
+            console.error('Error sending message:', error);
+        });
+    }
+</script>
+       
 </body>
 
 </html>
