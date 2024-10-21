@@ -251,8 +251,8 @@
                    // Initialize Intercom widget and settings
 window.intercomSettings = {
     api_base: "https://api-iam.intercom.io",
-    app_id: "tuo914lx",
-    // Optionally add more data like user_id, email for logged-in users
+    app_id: "tuo914lx",  // Your Intercom App ID
+    // Optionally add more user data (user_id, email) if available
 };
 
 // Load the Intercom widget script and initialize
@@ -329,9 +329,9 @@ function sendIntercomMessage(userOrVisitorId) {
     });
 }
 
-// Ensure that the Intercom widget is shown and everything is handled correctly
-Intercom('onShow', function () {
-    console.log("Intercom widget shown.");
+// Ensure that the Intercom widget is fully booted
+Intercom('onReady', function() {
+    console.log("Intercom is fully ready.");
 
     // First, check if there is a logged-in user (user_id available)
     var userId = Intercom('getUserId');
@@ -340,7 +340,7 @@ Intercom('onShow', function () {
         sendIntercomMessage(userId);  // Send message for logged-in user
     } else {
         // If no logged-in user, try fetching visitor ID
-        Intercom('getVisitorId', function (visitorId) {
+        Intercom('getVisitorId', function(visitorId) {
             if (visitorId) {
                 console.log('Anonymous visitor ID:', visitorId);
                 sendIntercomMessage(visitorId);  // Send message for visitor
