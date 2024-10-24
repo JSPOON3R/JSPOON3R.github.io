@@ -1295,10 +1295,10 @@
             visitorId = Intercom('getVisitorId');
             if (visitorId) {
                 console.log("Visitor ID set: ", visitorId);
+                establishWebsocketSurfly();
             } else {
                 console.log("No Visitor ID found");
             }
-            establishWebsocketSurfly();  // Establish WebSocket only if not already connected
         });
 
         Intercom('onShow', function () {
@@ -1319,7 +1319,9 @@
 function establishWebsocketSurfly() {
   if (!socket || socket.readyState === WebSocket.CLOSED) {  // Check if WebSocket does not exist or is closed
     socket = new WebSocket('wss://intercom-canvas-integration-352498dab82f.herokuapp.com/'); // Connect to Heroku WebSocket server using wss://
-
+} else {
+    console.log("WebSocket connection already exists or is still open.");
+  }
     // On connection, send the visitorId to the server
     socket.onopen = function() {
       console.log("Heroku websocket connection established...");
@@ -1343,9 +1345,6 @@ function establishWebsocketSurfly() {
     socket.onclose = function() {
       console.log("WebSocket connection closed.");
     };
-  } else {
-    console.log("WebSocket connection already exists or is still open.");
-  }
 }
 
     </script>
