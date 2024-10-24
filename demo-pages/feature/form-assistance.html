@@ -1294,7 +1294,11 @@
                 console.log('Intercom is fully ready and visitorId is:', visitorId);
                 if (visitorId && visitorId.length > 0) {
                     establishWebsocketSurfly();
-                } else {
+                } 
+                else if (surfly_triggered === true) {
+                clearInterval(intercomReadyInterval);
+                }
+                else {
                     console.log("No visitor ID found.");
                 }
                 clearInterval(intercomReadyInterval);  // Stop checking once Intercom is ready
