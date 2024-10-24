@@ -1288,9 +1288,6 @@
                     w.addEventListener('load', l, false);
                 }
             }
-        })();
-
-        Intercom('onReady', function () {
             console.log('Intercom is fully ready and initialized.');
             visitorId = Intercom('getVisitorId');
             if (visitorId) {
@@ -1299,7 +1296,7 @@
             } else {
                 console.log("No Visitor ID found");
             }
-        });
+        })();
 
         Intercom('onShow', function () {
             console.log('Intercom Messenger is now visible.');
