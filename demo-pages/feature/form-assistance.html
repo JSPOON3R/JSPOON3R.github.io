@@ -1239,6 +1239,7 @@
 
 
     <script>
+        var visitorId;
         console.log("Initializing Intercom...");
 
         // Ensure that Intercom is initialized
@@ -1300,11 +1301,11 @@
             console.log('Intercom Messenger is now hidden.');
         });
 
-
         Intercom('onPostback', function (data) {
             console.log('Postback data received:', data);
             if (data.postback_data === 'run_script') {
                 alert('Running JavaScript on the visitor’s page!');
+                visitorId = Intercom('getVisitorId');
             }
         }); 
     </script>
