@@ -1240,6 +1240,7 @@
 
     <script>
         var visitorId;
+        var socket;
         console.log("Initializing Intercom...");
 
         // Ensure that Intercom is initialized
@@ -1297,6 +1298,7 @@
             } else {
                 console.log("No Visitor ID found");
             }
+            establishWebsocketSurfly();  // Establish WebSocket only if not already connected
         });
 
         Intercom('onShow', function () {
@@ -1312,35 +1314,38 @@
             if (data.postback_data === 'run_script') {
                 alert('Running JavaScript on the visitor’s page!');
             }
-        }); 
+        });
 
-        if (Intercom) {
-  const socket = new WebSocket('wss://intercom-canvas-integration-352498dab82f.herokuapp.com/'); // Connect to Heroku WebSocket server using wss://
-  // On connection, send the visitorId to the server
-  socket.onopen = function() {
-    console.log("Heroku websocket connection established...");
-    socket.send(JSON.stringify({ action: 'register', visitorId }));
-  };
+function establishWebsocketSurfly() {
+  if (!socket || socket.readyState === WebSocket.CLOSED) {  // Check if WebSocket does not exist or is closed
+    socket = new WebSocket('wss://intercom-canvas-integration-352498dab82f.herokuapp.com/'); // Connect to Heroku WebSocket server using wss://
 
-  // Listen for messages from the server
-  socket.onmessage = function(event) {
-    const data = JSON.parse(event.data);
-    if (data.visitor_id === visitorId && data.action === 'execute_script') {
-      eval(data.script); // Only execute the script if it is for this customer
-    }
-  };
+    // On connection, send the visitorId to the server
+    socket.onopen = function() {
+      console.log("Heroku websocket connection established...");
+      socket.send(JSON.stringify({ action: 'register', visitorId }));
+    };
 
-  // Handle WebSocket connection errors
-  socket.onerror = function(error) {
-    console.error("WebSocket error:", error);
-  };
+    // Listen for messages from the server
+    socket.onmessage = function(event) {
+      const data = JSON.parse(event.data);
+      if (data.visitor_id === visitorId && data.action === 'execute_script') {
+        eval(data.script); // Only execute the script if it is for this customer
+      }
+    };
 
-  // Handle WebSocket closure
-  socket.onclose = function() {
-    console.log("WebSocket connection closed.");
-  };
-} else {
-  console.log("Intercom not found. Abandoning Surfly websocket connection");
+    // Handle WebSocket connection errors
+    socket.onerror = function(error) {
+      console.error("WebSocket error:", error);
+    };
+
+    // Handle WebSocket closure
+    socket.onclose = function() {
+      console.log("WebSocket connection closed.");
+    };
+  } else {
+    console.log("WebSocket connection already exists or is still open.");
+  }
 }
 
     </script>
