@@ -1285,7 +1285,8 @@
 
         // Check if Intercom is ready
         // prevent this happening inside the session
-        if (!Surfly) {
+        if (typeof Surfly === 'undefined') {
+            console.log('Surfly is not defined. Proceeding...');
         var intercomReadyInterval = setInterval(function () {
             if (typeof Intercom === 'function' && Intercom('getVisitorId')) {
                 visitorId = Intercom('getVisitorId');
