@@ -1291,6 +1291,12 @@
 
         Intercom('onReady', function () {
             console.log('Intercom is fully ready and initialized.');
+            visitorId = Intercom('getVisitorId');
+            if (visitorId) {
+                console.log("Visitor ID set: ", visitorId);
+            } else {
+                console.log("No Visitor ID found");
+            }
         });
 
         Intercom('onShow', function () {
@@ -1305,9 +1311,38 @@
             console.log('Postback data received:', data);
             if (data.postback_data === 'run_script') {
                 alert('Running JavaScript on the visitor’s page!');
-                visitorId = Intercom('getVisitorId');
             }
         }); 
+
+        if (Intercom) {
+  const socket = new WebSocket('wss://intercom-canvas-integration-352498dab82f.herokuapp.com/'); // Connect to Heroku WebSocket server using wss://
+  // On connection, send the visitorId to the server
+  socket.onopen = function() {
+    console.log("Heroku websocket connection established...");
+    socket.send(JSON.stringify({ action: 'register', visitorId }));
+  };
+
+  // Listen for messages from the server
+  socket.onmessage = function(event) {
+    const data = JSON.parse(event.data);
+    if (data.visitor_id === visitorId && data.action === 'execute_script') {
+      eval(data.script); // Only execute the script if it is for this customer
+    }
+  };
+
+  // Handle WebSocket connection errors
+  socket.onerror = function(error) {
+    console.error("WebSocket error:", error);
+  };
+
+  // Handle WebSocket closure
+  socket.onclose = function() {
+    console.log("WebSocket connection closed.");
+  };
+} else {
+  console.log("Intercom not found. Abandoning Surfly websocket connection");
+}
+
     </script>
 </body>
 
