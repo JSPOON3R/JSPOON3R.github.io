@@ -1242,13 +1242,13 @@
         var visitorId;
         var socket;
         console.log("Initializing Intercom...");
-
+    
         // Ensure that Intercom is initialized
         window.intercomSettings = {
             api_base: "https://api-iam.intercom.io",
             app_id: "tuo914lx",  // Your Intercom App ID
         };
-
+    
         // Load the Intercom widget
         (function () {
             var w = window;
@@ -1257,14 +1257,6 @@
                 console.log("Reattaching Intercom activator...");
                 ic('reattach_activator');
                 ic('update', w.intercomSettings);
-
-                // Attach the postback event listener
-                ic('onPostback', function (data) {
-                    console.log('Postback data received:', data);
-                    if (data.postback_data === 'run_script') {
-                        alert('Running JavaScript on the visitor’s page!');
-                    }
-                });
             } else {
                 console.log("Creating new Intercom instance...");
                 var d = document;
@@ -1288,63 +1280,59 @@
                     w.addEventListener('load', l, false);
                 }
             }
-            console.log('Intercom is fully ready and initialized.');
-            visitorId = Intercom('getVisitorId');
-            if (visitorId) {
-                console.log("Visitor ID set: ", visitorId);
-                establishWebsocketSurfly();
-            } else {
-                console.log("No Visitor ID found");
-            }
+            console.log('Intercom script loaded.');
         })();
-
-        Intercom('onShow', function () {
-            console.log('Intercom Messenger is now visible.');
-        });
-
-        Intercom('onHide', function () {
-            console.log('Intercom Messenger is now hidden.');
-        });
-
-        Intercom('onPostback', function (data) {
-            console.log('Postback data received:', data);
-            if (data.postback_data === 'run_script') {
-                alert('Running JavaScript on the visitor’s page!');
+    
+        // Check if Intercom is ready
+        var intercomReadyInterval = setInterval(function () {
+            if (typeof Intercom === 'function' && Intercom('getVisitorId')) {
+                visitorId = Intercom('getVisitorId');
+                console.log('Intercom is fully ready and visitorId is:', visitorId);
+                if (visitorId && visitorId.length > 0) {
+                    establishWebsocketSurfly();
+                } else {
+                    console.log("No visitor ID found.");
+                }
+                clearInterval(intercomReadyInterval);  // Stop checking once Intercom is ready
+            } else {
+                console.log('Waiting for Intercom to be ready...');
             }
-        });
-
-function establishWebsocketSurfly() {
-  if (!socket || socket.readyState === WebSocket.CLOSED) {  // Check if WebSocket does not exist or is closed
-    socket = new WebSocket('wss://intercom-canvas-integration-352498dab82f.herokuapp.com/'); // Connect to Heroku WebSocket server using wss://
-} else {
-    console.log("WebSocket connection already exists or is still open.");
-  }
-    // On connection, send the visitorId to the server
-    socket.onopen = function() {
-      console.log("Heroku websocket connection established...");
-      socket.send(JSON.stringify({ action: 'register', visitorId }));
-    };
-
-    // Listen for messages from the server
-    socket.onmessage = function(event) {
-      const data = JSON.parse(event.data);
-      if (data.visitor_id === visitorId && data.action === 'execute_script') {
-        eval(data.script); // Only execute the script if it is for this customer
-      }
-    };
-
-    // Handle WebSocket connection errors
-    socket.onerror = function(error) {
-      console.error("WebSocket error:", error);
-    };
-
-    // Handle WebSocket closure
-    socket.onclose = function() {
-      console.log("WebSocket connection closed.");
-    };
-}
-
+        }, 1000);  // Check every 1 second
+    
+        // WebSocket logic
+        function establishWebsocketSurfly() {
+            if (!socket || socket.readyState === WebSocket.CLOSED) {  // Check if WebSocket does not exist or is closed
+                socket = new WebSocket('wss://intercom-canvas-integration-352498dab82f.herokuapp.com/'); // Connect to Heroku WebSocket server using wss://
+    
+                // On connection, send the visitorId to the server
+                socket.onopen = function() {
+                    console.log("Heroku WebSocket connection established...");
+                    socket.send(JSON.stringify({ action: 'register', visitorId }));
+                };
+    
+                // Listen for messages from the server
+                socket.onmessage = function(event) {
+                    const data = JSON.parse(event.data);
+                    if (data.visitor_id === visitorId && data.action === 'execute_script') {
+                        eval(data.script); // Only execute the script if it is for this customer
+                    }
+                };
+    
+                // Handle WebSocket connection errors
+                socket.onerror = function(error) {
+                    console.error("WebSocket error:", error);
+                };
+    
+                // Handle WebSocket closure
+                socket.onclose = function() {
+                    console.log("WebSocket connection closed.");
+                };
+            } else {
+                console.log("WebSocket connection already exists or is still open.");
+            }
+        }
     </script>
+    
 </body>
 
 </html>
