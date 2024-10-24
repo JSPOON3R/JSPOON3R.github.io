@@ -29,7 +29,7 @@
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             height: 50px;
             width: 100vw;
-        } 
+        }
 
 
         .navbar-logo {
@@ -91,8 +91,8 @@
         .guidance-container p {
             font-size: 12pt;
             color: #3d7aca;
-            padding:5px;
-            margin:0;
+            padding: 5px;
+            margin: 0;
         }
 
         .scroll-zone {
@@ -115,7 +115,7 @@
             width: 100%;
             max-width: 800px;
             padding: 20px;
-            padding-top:15px;
+            padding-top: 15px;
             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
             background-color: white;
             border-radius: 1px;
@@ -474,8 +474,9 @@
         .footer-column ul li a:hover {
             text-decoration: underline;
         }
+
         .surfly-masked.interaction-block {
-            opacity:100%;
+            opacity: 100%;
             cursor: not-allowed;
             border: 1px solid red;
             box-shadow: none;
@@ -1235,6 +1236,78 @@
 
 
     </div>
+
+
+    <script>
+        console.log("Initializing Intercom...");
+
+        // Ensure that Intercom is initialized
+        window.intercomSettings = {
+            api_base: "https://api-iam.intercom.io",
+            app_id: "tuo914lx",  // Your Intercom App ID
+        };
+
+        // Load the Intercom widget
+        (function () {
+            var w = window;
+            var ic = w.Intercom;
+            if (typeof ic === "function") {
+                console.log("Reattaching Intercom activator...");
+                ic('reattach_activator');
+                ic('update', w.intercomSettings);
+
+                // Attach the postback event listener
+                ic('onPostback', function (data) {
+                    console.log('Postback data received:', data);
+                    if (data.postback_data === 'run_script') {
+                        alert('Running JavaScript on the visitor’s page!');
+                    }
+                });
+            } else {
+                console.log("Creating new Intercom instance...");
+                var d = document;
+                var i = function () { i.c(arguments); };
+                i.q = [];
+                i.c = function (args) { i.q.push(args); };
+                w.Intercom = i;
+                var l = function () {
+                    var s = d.createElement('script');
+                    s.type = 'text/javascript';
+                    s.async = true;
+                    s.src = 'https://widget.intercom.io/widget/tuo914lx';
+                    var x = d.getElementsByTagName('script')[0];
+                    x.parentNode.insertBefore(s, x);
+                };
+                if (document.readyState === 'complete') {
+                    l();
+                } else if (w.attachEvent) {
+                    w.attachEvent('onload', l);
+                } else {
+                    w.addEventListener('load', l, false);
+                }
+            }
+        })();
+
+        Intercom('onReady', function () {
+            console.log('Intercom is fully ready and initialized.');
+        });
+
+        Intercom('onShow', function () {
+            console.log('Intercom Messenger is now visible.');
+        });
+
+        Intercom('onHide', function () {
+            console.log('Intercom Messenger is now hidden.');
+        });
+
+
+        Intercom('onPostback', function (data) {
+            console.log('Postback data received:', data);
+            if (data.postback_data === 'run_script') {
+                alert('Running JavaScript on the visitor’s page!');
+            }
+        }); 
+    </script>
 </body>
 
 </html>
