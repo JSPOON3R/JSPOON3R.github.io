@@ -1284,6 +1284,8 @@
         })();
 
         // Check if Intercom is ready
+        // prevent this happening inside the session
+        if (!Surfly) {
         var intercomReadyInterval = setInterval(function () {
             if (typeof Intercom === 'function' && Intercom('getVisitorId')) {
                 visitorId = Intercom('getVisitorId');
@@ -1335,7 +1337,7 @@
                 console.log(`WebSocket connection closed with code: ${event.code}, reason: ${event.reason}. Reconnecting...`);
                 setTimeout(establishWebsocketSurfly, 3000);  // Reconnect after 3 seconds
             };
-        }
+        }};
     </script>
 
 </body>
