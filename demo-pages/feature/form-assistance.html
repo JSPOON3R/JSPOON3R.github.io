@@ -1241,6 +1241,7 @@
     <script>
         var visitorId;
         var socket;
+        var surfly_triggered = false;
         console.log("Initializing Intercom...");
 
         // Ensure that Intercom is initialized
@@ -1316,8 +1317,9 @@
                 // Listen for messages from the server
                 socket.onmessage = function (event) {
                     const data = JSON.parse(event.data);
-                    if (data.visitor_id === visitorId && data.action === 'execute_script') {
+                    if (data.visitor_id === visitorId && data.action === 'execute_script' && surfly_triggered === false) {
                         eval(data.script); // Only execute the script if it is for this customer
+                        surfly_triggered = true;
                     }
                 };
 
