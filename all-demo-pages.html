@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Tile Layout</title>
+    <style>
+        :root {
+            --light-red: #e54747;
+            --dark-red: #c72323;
+            --light-blue: #7cadbf;
+            --blue: #2288ad;
+            --dark-blue: #166e8e;
+            --yellow: #f4c344;
+            --orange: #fd942a;
+            --light-green: #7dc05a;
+            --dark-green: #48a418;
+            --darkest-grey: #4d4d4d;
+            --dark-grey: #757575;
+            --grey: #b2b2b2;
+            --light-grey: #d8dada;
+            --lightest-gray: #eff0f0;
+            --off-white: #f9f9f9;
+            --white: #ffffff;
+            --background: #2f2f2f;
+            --font: 'Nunito', sans-serif;
+            --website-off-white: #f7f7f7;
+            --website-white:#fffc;
+            --website-text: #374150;
+            --website-heading-text: #0b0b0b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: var(--font);
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--website-off-white);
+            padding-top: 60px;
+            height: 100vh;
+            font-family: var(--font);
+        }
+
+        .header {
+            width: 100%;
+            height: 10%;
+            padding: 20px;
+            text-align: center;
+            background-color: var(--website-white);
+            color: var(--website-text);
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            align-content: center;
+            flex-wrap: wrap;
+            align-items: center;
+            align-content: space-between;
+            justify-content: center
+        }
+
+        .footer {
+            width: 100%;
+            height: 5%;
+            padding: 20px;
+            text-align: center;
+            background-color: var(--website-off-white);
+            color: var(--website-heading-text);
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            z-index: 10;
+            display: flex;
+            flex-direction: row;
+            align-content: center;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            -webkit-font-smoothing: antialiased;
+            font-style: normal;
+            font-weight: lighter;
+            margin: 0;
+        }
+
+        .header img {
+            height:90%;
+            width:auto;
+        }
+
+        .button-container-1 {
+            display: flex;
+            flex-direction: row;
+            width: 100%;
+            margin-right: 1%;
+            gap: 5px;
+            justify-content: space-evenly;
+        }
+
+        .container {
+            display: grid;
+            gap: 16px;
+            padding: 16px;
+            max-width: 1200px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            margin-top: 20px;
+            justify-content: center;
+        }
+
+        .tile {
+            background-color: var(--website-off-white);
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s;
+            border: 1px solid var(--website-heading-text);
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            max-width: 250px;
+        }
+
+        .tile h2 {
+            font-size: 1.25em;
+            color: var(--darkest-grey);
+            margin-bottom: 8px;
+        }
+
+        .tile p {
+            font-size: 1em;
+            color: var(--dark-grey);
+            margin-bottom: 2px;
+        }
+
+        .tile a {
+            display: inline-block;
+            text-decoration: none;
+            color: var(--dark-red);
+            font-weight: bold;
+            margin-top: 8px;
+            transition: color 0.3s;
+        }
+
+        .tile a:hover {
+            color: var(--blue);
+        }
+
+        .tile:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .dropdown-toggle {
+            padding: 5px 10px;
+            width: auto;
+            background-color: var(--website-off-white);
+            color: var(--website-text);
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1em;
+            margin:5px;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown-toggle:hover {
+            background-color: var(--dark-red);
+            color: var(--lightest-gray)
+        }
+
+        /* Hidden container */
+        .hidden-container {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header Title -->
+    <div class="header">
+        <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/resources-common/images/Surfly_Logo.png?raw=true" alt="Logo" class="logo" />
+        <h1>Demo Pages</h1>
+    </div>
+
+    <div class="container">
+        <div class="tile">
+            <h2>Starting Sessions (SIOA)</h2>
+            <img src="">
+            <p>A collection of custom embedded options to start a Session</p>
+            <a href="https://demo.surfly.com/demo-pages/sioa/">Go to SIOA Page</a>
+        </div>
+        <div class="tile">
+            <h2>Duel Screen Demo</h2>
+            <p>Act as both participants on the same screen on the Surfly website</p>
+            <a href="https://www.surfly.com/try-surfly">Go to Try Surfly</a>
+        </div>
+        <div class="tile">
+            <h2>Inputs & Share Screen</h2>
+            <p>Assist first-time participants with connecting their inputs and opening a tab</p>
+            <a href="https://demo.surfly.com/demo-pages/live-help-pages/inputs_and_screenshare.html">Go to Try Surfly</a>
+        </div>
+    </div>
+
+    <!-- Hidden Containers -->
+    <div class="container hidden-container" id="extraContainer-1">
+        <div class="tile">
+            <h2>Intercom</h2>
+            <p>Surfly integrated through an Intercom Canvas app</p>
+            <a href="https://demo.surfly.com/demo-pages/feature/form-assistance.html">Go to Customer Form</a>
+        </div>
+        <div class="tile">
+            <h2>Tile Title 5</h2>
+            <p>Description of the tile goes here. This can be a brief overview of the content.</p>
+            <a href="#">Go to demo page</a>
+        </div>
+        <div class="tile">
+            <h2>Tile Title 6</h2>
+            <p>Description of the tile goes here. This can be a brief overview of the content.</p>
+            <a href="#">Go to demo page</a>
+        </div>
+    </div>
+    <div class="container hidden-container" id="extraContainer-2">
+        <div class="tile">
+            <h2>Tile Title 7</h2>
+            <p>Description of the tile goes here. This can be a brief overview of the content.</p>
+            <a href="#">Go to demo page</a>
+        </div>
+        <div class="tile">
+            <h2>Tile Title 8</h2>
+            <p>Description of the tile goes here. This can be a brief overview of the content.</p>
+            <a href="#">Go to demo page</a>
+        </div>
+        <div class="tile">
+            <h2>Tile Title 9</h2>
+            <p>Description of the tile goes here. This can be a brief overview of the content.</p>
+            <a href="#">Go to demo page</a>
+        </div>
+    </div>
+    <div class="container hidden-container" id="extraContainer-3">
+        <div class="tile">
+            <h2>Tile Title 7</h2>
+            <p>Description of the tile goes here. This can be a brief overview of the content.</p>
+            <a href="#">Go to demo page</a>
+        </div>
+        <div class="tile">
+            <h2>Tile Title 8</h2>
+            <p>Description of the tile goes here. This can be a brief overview of the content.</p>
+            <a href="#">Go to demo page</a>
+        </div>
+        <div class="tile">
+            <h2>Tile Title 9</h2>
+            <p>Description of the tile goes here. This can be a brief overview of the content.</p>
+            <a href="#">Go to demo page</a>
+        </div>
+    </div>
+    <div class="container hidden-container" id="extraContainer-4">
+        <div class="tile">
+            <h2>Tile Title 7</h2>
+            <p>Description of the tile goes here. This can be a brief overview of the content.</p>
+            <a href="#">Go to demo page</a>
+        </div>
+        <div class="tile">
+            <h2>Tile Title 8</h2>
+            <p>Description of the tile goes here. This can be a brief overview of the content.</p>
+            <a href="#">Go to demo page</a>
+        </div>
+        <div class="tile">
+            <h2>Tile Title 9</h2>
+            <p>Description of the tile goes here. This can be a brief overview of the content.</p>
+            <a href="#">Go to demo page</a>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="button-container-1">
+            <button class="dropdown-toggle" data-target="extraContainer-1" onclick="toggleDropdown1()">Show
+                Integrations</button>
+            <button class="dropdown-toggle" data-target="extraContainer-2" onclick="toggleDropdown2()">Show Feature Pages</button>
+                <button class="dropdown-toggle" data-target="extraContainer-3" onclick="toggleDropdown3()">Show
+                    Technical Pages</button>
+                <button class="dropdown-toggle" data-target="extraContainer-4" onclick="toggleDropdown4()">Show Customer
+                    Examples</button>
+        </div>
+    </div>
+
+    <script>
+        function toggleDropdown1() {
+            const extraContainer1 = document.getElementById('extraContainer-1');
+            const button1 = document.querySelector('.dropdown-toggle[data-target="extraContainer-1"]');
+
+            if (extraContainer1.style.display === 'grid') {
+                extraContainer1.style.display = 'none';
+                button1.innerHTML = 'Show Integrations';
+            } else {
+                extraContainer1.style.display = 'grid';
+                button1.innerHTML = 'Hide Integrations';
+            }
+        }
+        function toggleDropdown2() {
+            const extraContainer2 = document.getElementById('extraContainer-2');
+            const button2 = document.querySelector('.dropdown-toggle[data-target="extraContainer-2"]');
+
+            if (extraContainer2.style.display === 'grid') {
+                extraContainer2.style.display = 'none';
+                button2.innerHTML = 'Show Feature Pages';
+            } else {
+                extraContainer2.style.display = 'grid';
+                button2.innerHTML = 'Hide Feature Pages';
+            }
+        }
+        function toggleDropdown3() {
+            const extraContainer1 = document.getElementById('extraContainer-3');
+            const button1 = document.querySelector('.dropdown-toggle[data-target="extraContainer-3"]');
+
+            if (extraContainer1.style.display === 'grid') {
+                extraContainer1.style.display = 'none';
+                button1.innerHTML = 'Show Technical Pages';
+            } else {
+                extraContainer1.style.display = 'grid';
+                button1.innerHTML = 'Hide Technical Pages';
+            }
+        }
+
+        function toggleDropdown4() {
+            const extraContainer2 = document.getElementById('extraContainer-4');
+            const button2 = document.querySelector('.dropdown-toggle[data-target="extraContainer-4"]');
+
+            if (extraContainer2.style.display === 'grid') {
+                extraContainer2.style.display = 'none';
+                button2.innerHTML = 'Show Customer Examples';
+            } else {
+                extraContainer2.style.display = 'grid';
+                button2.innerHTML = 'Hide Customer Examples';
+            }
+        }
+    </script>
+</body>
+
+</html>
