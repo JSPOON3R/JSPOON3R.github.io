@@ -119,6 +119,8 @@
         var settings = {
             // Surfly session options can be set here, or at the Company/Plan levels.
             widget_key: '8816869ecf624d4483f6befd75cb2a1f',
+            block_until_agent_joins: false,
+            videochat: false
         };
         Surfly.init(settings, function(initResult) {
             if (initResult.success) {
