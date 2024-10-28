@@ -133,6 +133,19 @@
             max-width: 250px;
         }
 
+        .int-tile {
+            background-color: #ebf6fa;
+        }
+        .feat-tile {
+            background-color: #fff3f3;
+        }
+        .tech-tile {
+            background-color: #f8fff4;
+        }
+        .cust-tile {
+            background-color: #fffcf4;
+        }
+
         .tile h2 {
             font-size: 1.25em;
             color: var(--darkest-grey);
@@ -177,8 +190,8 @@
         }
 
         .dropdown-toggle:hover {
-            background-color: var(--dark-red);
-            color: var(--lightest-gray)
+            background-color: var(--website-heading-text);
+            color: var(--website-off-white)
         }
 
         /* Hidden container */
@@ -200,87 +213,80 @@
             <h2>Starting Sessions (SIOA)</h2>
             <img src="">
             <p>A collection of custom embedded options to start a Session</p>
-            <a href="https://demo.surfly.com/demo-pages/sioa/">Go to SIOA Page</a>
+            <a href="https://demo.surfly.com/demo-pages/sioa/">Go to Page</a>
         </div>
         <div class="tile">
             <h2>Duel Screen Demo</h2>
             <p>Act as both participants on the same screen on the Surfly website</p>
-            <a href="https://www.surfly.com/try-surfly">Go to Try Surfly</a>
+            <a href="https://www.surfly.com/try-surfly">Go to Page</a>
         </div>
         <div class="tile">
-            <h2>Inputs & Share Screen</h2>
-            <p>Assist first-time participants with connecting their inputs and opening a tab</p>
-            <a href="https://demo.surfly.com/demo-pages/live-help-pages/inputs_and_screenshare.html">Go to Try Surfly</a>
+            <h2>Webtoppings</h2>
+            <p>Demonstrates Surfly's ability to modify websites in-session</p>
+            <a href="https://webtoppings.bar/">Go to Page</a>
         </div>
     </div>
 
-    <!-- Hidden Containers -->
+    <!-- Integrations -->
     <div class="container hidden-container" id="extraContainer-1">
-        <div class="tile">
+        <div class="tile int-tile">
             <h2>Intercom</h2>
             <p>Surfly integrated through an Intercom Canvas app</p>
-            <a href="https://demo.surfly.com/demo-pages/feature/form-assistance.html">Go to Customer Form</a>
+            <a href="https://demo.surfly.com/demo-pages/feature/form-assistance.html">Go to Page</a>
         </div>
-        <div class="tile">
-            <h2>Tile Title 5</h2>
-            <p>Description of the tile goes here. This can be a brief overview of the content.</p>
-            <a href="#">Go to demo page</a>
-        </div>
-        <div class="tile">
-            <h2>Tile Title 6</h2>
-            <p>Description of the tile goes here. This can be a brief overview of the content.</p>
-            <a href="#">Go to demo page</a>
+        <div class="tile int-tile">
+            <h2>NICE Start Page</h2>
+            <p>Landing Page to start a session integrated with NICE InContact</p>
+            <a href="https://demo.surfly.com/demo-pages/feature/nice_integration_landing_page">Go to Page</a>
         </div>
     </div>
+        <!-- Feature Demo -->
     <div class="container hidden-container" id="extraContainer-2">
-        <div class="tile">
-            <h2>Tile Title 7</h2>
-            <p>Description of the tile goes here. This can be a brief overview of the content.</p>
-            <a href="#">Go to demo page</a>
+        <div class="tile feat-tile">
+            <h2>Consent Pop-Up</h2>
+            <p>A Landing Page (with code snippet) that shows a custim pop up asking for consent</p>
+            <a href="https://demo.surfly.com/demo-pages/feature/basic_consent_popup">Go to Page</a>
         </div>
-        <div class="tile">
-            <h2>Tile Title 8</h2>
-            <p>Description of the tile goes here. This can be a brief overview of the content.</p>
-            <a href="#">Go to demo page</a>
+        <div class="tile feat-tile">
+            <h2>Masking</h2>
+            <p>Showcase Field & Element masking with custom styles<br></i>(Control Depdndent Appearance requires extension for demo)</i></p>
+            <a href="https://demo.surfly.com/demo-pages/feature/masking">Go to Page</a>
         </div>
-        <div class="tile">
-            <h2>Tile Title 9</h2>
-            <p>Description of the tile goes here. This can be a brief overview of the content.</p>
-            <a href="#">Go to demo page</a>
+        <div class="tile feat-tile">
+            <h2>Custom Control Panel (WIP)</h2>
+            <p>Showcase Surfly with a Custom UI</p>
+            <a href="">Go to Page</a>
         </div>
     </div>
+    <!--Technical Pages-->
     <div class="container hidden-container" id="extraContainer-3">
-        <div class="tile">
-            <h2>Tile Title 7</h2>
-            <p>Description of the tile goes here. This can be a brief overview of the content.</p>
-            <a href="#">Go to demo page</a>
+        <div class="tile tech-tile">
+            <h2>Session Builder</h2>
+            <p>Get to grips with the Surfly Javascript API</p>
+            <a href="https://demo.surfly.com/demo-pages/feature/session_builder.html">Go to Page</a>
         </div>
-        <div class="tile">
-            <h2>Tile Title 8</h2>
-            <p>Description of the tile goes here. This can be a brief overview of the content.</p>
-            <a href="#">Go to demo page</a>
+        <div class="tile tech-tile">
+            <h2>Surfly Guide</h2>
+            <p>A collection of useful help articles and explanations</p>
+            <a href="https://demo.surfly.com/guide/">Go to Page</a>
         </div>
-        <div class="tile">
-            <h2>Tile Title 9</h2>
-            <p>Description of the tile goes here. This can be a brief overview of the content.</p>
-            <a href="#">Go to demo page</a>
+        <div class="tile tech-tile" >
+            <h2>Multiple Tabs</h2>
+            <p>A simple demo of opening starting a Session with Multiple Tabs from the JS API</p>
+            <a href="https://demo.surfly.com/demo-pages/feature/open_additional_tabs.html">Go to Page</a>
+        </div>
+        <div class="tile tech-tile">
+            <h2>Instant Screen Share</h2>
+            <p>A Landing Page that goes directly into screenshare with 0 clicks</p>
+            <a href="https://demo.surfly.com/demo-pages/feature/automatic_screenshare">Go to Page</a>
         </div>
     </div>
+    <!--Customer Examples-->
     <div class="container hidden-container" id="extraContainer-4">
-        <div class="tile">
-            <h2>Tile Title 7</h2>
-            <p>Description of the tile goes here. This can be a brief overview of the content.</p>
-            <a href="#">Go to demo page</a>
-        </div>
-        <div class="tile">
-            <h2>Tile Title 8</h2>
-            <p>Description of the tile goes here. This can be a brief overview of the content.</p>
-            <a href="#">Go to demo page</a>
-        </div>
-        <div class="tile">
-            <h2>Tile Title 9</h2>
-            <p>Description of the tile goes here. This can be a brief overview of the content.</p>
-            <a href="#">Go to demo page</a>
+        <div class="tile cust-tile">
+            <h2>Landing Page & Mobile UI (BB)</h2>
+            <p>Created for a mobile-only Customer with an Agent Landing Page to initiate sessions</p>
+            <a href="https://demo.surfly.com/company/beyondbeauty/landingpage">Go to Page</a>
         </div>
     </div>
     <div class="footer">
@@ -296,56 +302,80 @@
     </div>
 
     <script>
+        function hideAllSections() {
+            // Hide all containers and reset button text
+            const sections = document.querySelectorAll('.hidden-container');
+            const buttons = document.querySelectorAll('.dropdown-toggle');
+    
+            sections.forEach(section => section.style.display = 'none');
+            buttons.forEach(button => {
+                if (button.dataset.target === "extraContainer-1") button.innerHTML = 'Show Integrations';
+                if (button.dataset.target === "extraContainer-2") button.innerHTML = 'Show Feature Pages';
+                if (button.dataset.target === "extraContainer-3") button.innerHTML = 'Show Technical Pages';
+                if (button.dataset.target === "extraContainer-4") button.innerHTML = 'Show Customer Examples';
+            });
+        }
+    
         function toggleDropdown1() {
             const extraContainer1 = document.getElementById('extraContainer-1');
             const button1 = document.querySelector('.dropdown-toggle[data-target="extraContainer-1"]');
-
+    
             if (extraContainer1.style.display === 'grid') {
+                // If the section is already visible, hide it
                 extraContainer1.style.display = 'none';
                 button1.innerHTML = 'Show Integrations';
             } else {
+                // Otherwise, hide all and show the selected section
+                hideAllSections();
                 extraContainer1.style.display = 'grid';
                 button1.innerHTML = 'Hide Integrations';
             }
         }
+    
         function toggleDropdown2() {
             const extraContainer2 = document.getElementById('extraContainer-2');
             const button2 = document.querySelector('.dropdown-toggle[data-target="extraContainer-2"]');
-
+    
             if (extraContainer2.style.display === 'grid') {
                 extraContainer2.style.display = 'none';
                 button2.innerHTML = 'Show Feature Pages';
             } else {
+                hideAllSections();
                 extraContainer2.style.display = 'grid';
                 button2.innerHTML = 'Hide Feature Pages';
             }
         }
+    
         function toggleDropdown3() {
-            const extraContainer1 = document.getElementById('extraContainer-3');
-            const button1 = document.querySelector('.dropdown-toggle[data-target="extraContainer-3"]');
-
-            if (extraContainer1.style.display === 'grid') {
-                extraContainer1.style.display = 'none';
-                button1.innerHTML = 'Show Technical Pages';
+            const extraContainer3 = document.getElementById('extraContainer-3');
+            const button3 = document.querySelector('.dropdown-toggle[data-target="extraContainer-3"]');
+    
+            if (extraContainer3.style.display === 'grid') {
+                extraContainer3.style.display = 'none';
+                button3.innerHTML = 'Show Technical Pages';
             } else {
-                extraContainer1.style.display = 'grid';
-                button1.innerHTML = 'Hide Technical Pages';
+                hideAllSections();
+                extraContainer3.style.display = 'grid';
+                button3.innerHTML = 'Hide Technical Pages';
             }
         }
-
+    
         function toggleDropdown4() {
-            const extraContainer2 = document.getElementById('extraContainer-4');
-            const button2 = document.querySelector('.dropdown-toggle[data-target="extraContainer-4"]');
-
-            if (extraContainer2.style.display === 'grid') {
-                extraContainer2.style.display = 'none';
-                button2.innerHTML = 'Show Customer Examples';
+            const extraContainer4 = document.getElementById('extraContainer-4');
+            const button4 = document.querySelector('.dropdown-toggle[data-target="extraContainer-4"]');
+    
+            if (extraContainer4.style.display === 'grid') {
+                extraContainer4.style.display = 'none';
+                button4.innerHTML = 'Show Customer Examples';
             } else {
-                extraContainer2.style.display = 'grid';
-                button2.innerHTML = 'Hide Customer Examples';
+                hideAllSections();
+                extraContainer4.style.display = 'grid';
+                button4.innerHTML = 'Hide Customer Examples';
             }
         }
     </script>
+    
+    
 </body>
 
 </html>
