@@ -124,6 +124,7 @@
             if (initResult.success) {
                 // API calls can now be made!
                 if (!Surfly.isInsideSession) {
+                    Surfly.session().startLeader();
                 }
             }
             else{
