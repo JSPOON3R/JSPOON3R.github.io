@@ -273,11 +273,9 @@
                     </div>
                 </div>
                 <div class="dropdown">
-                    <button class="button">Change Control</button>
-                    <div class="dropdown-content">
-                        <div class="dropdown-item" onclick="changeControlLeft()">TEST</div>
-                        <div class="dropdown-item">Option B</div>
-                        <div class="dropdown-item">Option C</div>
+                    <button class="button" id="changeControlButton">Change Control</button>
+                    <div class="dropdown-content" id="dropdownContent">
+                        <!-- Dropdown items will be populated here dynamically -->
                     </div>
                 </div>
                 <button class="button" onclick="endSurflySessionLeft()">End Session</button>
@@ -287,8 +285,18 @@
             <div class="status-panel">
                 <table class="status-table">
                     <tr>
+                        <th>Participants count</th>
+                        <td id="participants-count-left">
+                                <div id="onlineParticipantCount-left">0</div>
+                        </td>
+                    </tr>
+                    <tr>
                         <th>Participants in the session</th>
-                        <td id="participantsCount">X</td>
+                        <td id="participants-details-left">
+                                <ul id="participantListDisplay-left">
+                                    <li>N/A</li>
+                                </ul>
+                        </td>
                     </tr>
                     <tr>
                         <th>Current Tab</th>
@@ -302,7 +310,11 @@
             </div>
         </div>
 
-        <!-- Right Panel (Copy of Left Panel) -->
+        <!-- Right Panel (Copy of Left Panel) 
+         
+        **************************************
+        
+        -->
         <div class="half-panel">
             <h1>REST API</h1>
             <div class="input-group">
@@ -363,15 +375,13 @@
             </div>
         </div>
     </div>
-    <script>
-
-    </script>
 
     <script>
         //LEFT PANEL
 
         var followerLink;
-        var participantCount;
+        var participantCount = 0;
+        var participantList = [];
         var inControlParticipant;
         var hostParticipant;
         var currentTabURL;
@@ -423,10 +433,11 @@
                         })
                             .on('participant_joined', function (session, event) {
                                 console.log('Participant ', event.clientIndex, 'joined the session');
-                                console.log("session:");
-                                console.log(session);
-                                console.log("event:");
-                                console.log(event);
+                                countOnlineParticipants();
+                            })
+                            .on('participant_left', function (session, event) {
+                                console.log('Participant ', event.clientIndex, 'left the session');
+                                countOnlineParticipants();
                             })
                             .on('relocate_start', function (session, event) {
                                 console.log('relocate start event');
@@ -444,10 +455,7 @@
                             })
                             .on('host_changed', function (session, event) {
                                 console.log('host_changed event');
-                                console.log("session:");
-                                console.log(session);
-                                console.log("event:");
-                                console.log(event);
+                                countOnlineParticipants();
                             })
                             .on('tab_control', function (session, event) {
                                 console.log('tab_control event');
@@ -491,10 +499,38 @@
             console.log("tab relocated");
         }
 
-        function changeControlLeft() {
-            console.log("control switch requested");
-            console.log(SurflySession.getParticipants);
-        }
+// Function to dynamically populate and show dropdown with participant list
+function showControlDropdownLeft() {
+    const dropdownContent = document.getElementById("dropdownContent");
+    
+    // Clear existing dropdown content
+    dropdownContent.innerHTML = "";
+
+    // Populate dropdown with participantList entries
+    participantList.forEach(participant => {
+        // Create a dropdown item for each participant
+        const dropdownItem = document.createElement("div");
+        dropdownItem.classList.add("dropdown-item");
+        
+        // Set up inner HTML with large name and smaller email
+        dropdownItem.innerHTML = `
+            <strong>${participant.name}</strong><br>
+            <span style="font-size: 0.85em; color: grey;">${participant.email}</span>
+        `;
+
+        // Add click event to transfer control
+        dropdownItem.onclick = () => {
+            console.log("Control switch requested for:", participant.name);
+            SurflySession.transferTabControl(participant.index);
+        };
+
+        // Append the item to the dropdown content
+        dropdownContent.appendChild(dropdownItem);
+    });
+}
+
+// Event listener to trigger dropdown display
+document.getElementById("changeControlButton").addEventListener("click", showControlDropdown);
 
 
         function changeHostLeft() {
@@ -502,12 +538,58 @@
         }
 
         //manage the vars
+        //URL
         function updateCurrentTabURL(newURL) {
-    currentTabURL = newURL; 
-    document.getElementById("currentTab-left").textContent = currentTabURL; // Update the HTML element
-    console.log("Current tab URL updated to:", currentTabURL);
-}
+            currentTabURL = newURL;
+            document.getElementById("currentTab-left").innerHTML = currentTabURL; // Update the HTML element
+            console.log("Current tab URL updated to:", currentTabURL);
+        }
+        //Participant count
+        function countOnlineParticipants() {
+            return SurflySession.getParticipants()
+                .then(participants => {
+                    // Filter participants who are online
+                    const onlineParticipants = participants.filter(participant => participant.online);
 
+                    // Update participantCount with the number of online participants
+                    participantCount = onlineParticipants.length;
+
+                    // Update participantList with details of each online participant
+                    participantList = onlineParticipants.map(participant => ({
+                        name: participant.name,
+                        index: participant.client_index,
+                        email: participant.email
+                    }));
+
+                    // Update HTML display
+                    updateParticipantDisplay();
+
+                    return participantCount;
+                })
+                .catch(error => {
+                    console.error("Error fetching participants:", error);
+
+                    // Reset count and list on error
+                    participantCount = 0;
+                    participantList = [];
+
+                    // Update HTML display to reflect error state
+                    updateParticipantDisplay();
+                    return participantCount;
+                });
+        }
+
+        function updateParticipantDisplay() {
+            document.getElementById("onlineParticipantCount-left").innerHTML = participantCount;
+
+            // Update participant list display
+            const participantListElement = document.getElementById("participantListDisplay-left");
+            participantListElement.innerHTML = participantList.length > 0
+                ? participantList.map(participant =>
+                    `<li>Name: ${participant.name}, Index: ${participant.index}, Email: ${participant.email}</li>`
+                ).join('')
+                : "<li>No participants online</li>";
+        }
 
     </script>
     <script>
