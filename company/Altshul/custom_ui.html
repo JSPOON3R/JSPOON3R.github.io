@@ -275,7 +275,7 @@
                 <div class="dropdown">
                     <button class="button">Change Control</button>
                     <div class="dropdown-content">
-                        <div class="dropdown-item">Option A</div>
+                        <div class="dropdown-item" onclick="changeHostLeft()">TEST</div>
                         <div class="dropdown-item">Option B</div>
                         <div class="dropdown-item">Option C</div>
                     </div>
@@ -414,32 +414,44 @@
                         Surfly.on('session_created', function (session, event) {
                             console.log('Session', session.followerLink, 'has just started');
                             followerLink = session.followerLink;
-                            console.log(session);
-                            console.log(event);
+                            console.log("session:");
+                                console.log(session);
+                                console.log("event:");
+                                console.log(event);
                         })
                             .on('participant_joined', function (session, event) {
                                 console.log('Participant ', event.clientIndex, 'joined the session');
+                                console.log("session:");
                                 console.log(session);
+                                console.log("event:");
                                 console.log(event);
                             })
                             .on('relocate_start', function (session, event) {
                                 console.log('relocate start event');
+                                console.log("session:");
                                 console.log(session);
+                                console.log("event:");
                                 console.log(event);
                             })
                             .on('relocated', function (session, event) {
                                 console.log('relocated event');
+                                console.log("session:");
                                 console.log(session);
+                                console.log("event:");
                                 console.log(event);
                             })
                             .on('host_changed', function (session, event) {
                                 console.log('host_changed event');
+                                console.log("session:");
                                 console.log(session);
+                                console.log("event:");
                                 console.log(event);
                             })
                             .on('tab_control', function (session, event) {
                                 console.log('tab_control event');
+                                console.log("session:");
                                 console.log(session);
+                                console.log("event:");
                                 console.log(event);
                             })
                     }
