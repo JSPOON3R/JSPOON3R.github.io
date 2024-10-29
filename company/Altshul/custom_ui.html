@@ -447,6 +447,7 @@
                             })
                             .on('relocate_start', function (session, event) {
                                 console.log('relocate start event');
+                                updateCurrentTabURL(event.url);
                                 console.log("session:");
                                 console.log(session);
                                 console.log("event:");
@@ -454,6 +455,7 @@
                             })
                             .on('relocated', function (session, event) {
                                 console.log('relocated event');
+                                updateCurrentTabURL(event.url);
                                 console.log("session:");
                                 console.log(session);
                                 console.log("event:");
