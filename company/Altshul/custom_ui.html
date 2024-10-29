@@ -275,7 +275,7 @@
                 <div class="dropdown">
                     <button class="button">Change Control</button>
                     <div class="dropdown-content">
-                        <div class="dropdown-item" onclick="changeHostLeft()">TEST</div>
+                        <div class="dropdown-item" onclick="changeControlLeft()">TEST</div>
                         <div class="dropdown-item">Option B</div>
                         <div class="dropdown-item">Option C</div>
                     </div>
@@ -374,6 +374,7 @@
         var participantCount;
         var inControlParticipant;
         var hostParticipant;
+        var currentTabURL;
 
         var SurflySession;
         var settings = {
@@ -414,10 +415,11 @@
                         Surfly.on('session_created', function (session, event) {
                             console.log('Session', session.followerLink, 'has just started');
                             followerLink = session.followerLink;
+                            currentTabURL = session._sessionSettings.url;
                             console.log("session:");
-                                console.log(session);
-                                console.log("event:");
-                                console.log(event);
+                            console.log(session);
+                            console.log("event:");
+                            console.log(event);
                         })
                             .on('participant_joined', function (session, event) {
                                 console.log('Participant ', event.clientIndex, 'joined the session');
@@ -498,6 +500,7 @@
         function changeHostLeft() {
             console.log("host switch requested");
         }
+
 
 
     </script>
