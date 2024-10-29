@@ -363,6 +363,7 @@
                             console.log('Session', session.followerLink, 'has just started');
                             followerLink = session.followerLink;
                             updateCurrentTabURL(session._sessionSettings.url);
+                            updateCurrentHost(         )
                             countOnlineParticipants();
                             console.log("session:");
                             console.log(session);
@@ -400,7 +401,12 @@
                             })
                             .on('host_changed', function (session, event) {
                                 console.log('host_changed event');
+                                updateCurrentHost(newHIndex)
                                 countOnlineParticipants();
+                                console.log("session:");
+                                console.log(session);
+                                console.log("event:");
+                                console.log(event);
                             })
                             .on('tab_control', function (session, event) {
                                 updateCurrentControl(event.controlIndex);
@@ -508,8 +514,15 @@
 
                 // Add click event to transfer control using the unique index
                 dropdownItem.onclick = () => {
-                    console.log(`Control switch requested for index ${participant.index} (${participant.name})`);
-                    SurflySession.transferTabControl(participant.index);
+                    const newHostIndex = participant.index;
+                    console.log(`Host switch requested for index ${participant.index} (${participant.name})`);
+                    if (hostParticipant === myIndex) {
+                        SurflySession.makeHost(newHostIndex);
+                    } else if (hostParticipant !== myIndex) {
+                        SurflySession.requestToHost(newHostIndex);
+                    } else {
+                        console.log("Something went wrong with the Host switch")
+                    }
                 };
 
                 // Append the item to the dropdown content
@@ -518,7 +531,7 @@
         }
 
         // Event listener to trigger dropdown display
-        document.getElementById("changeControlButton").addEventListener("click", changeHostLeft);
+        document.getElementById("changeHostButton").addEventListener("click", changeHostLeft);
 
         //manage the vars
         //URL
