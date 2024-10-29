@@ -363,7 +363,7 @@
                             console.log('Session', session.followerLink, 'has just started');
                             followerLink = session.followerLink;
                             updateCurrentTabURL(session._sessionSettings.url);
-                            updateCurrentHost(         )
+                            updateCurrentHost(         );
                             countOnlineParticipants();
                             console.log("session:");
                             console.log(session);
@@ -401,7 +401,7 @@
                             })
                             .on('host_changed', function (session, event) {
                                 console.log('host_changed event');
-                                updateCurrentHost(newHIndex)
+
                                 countOnlineParticipants();
                                 console.log("session:");
                                 console.log(session);
