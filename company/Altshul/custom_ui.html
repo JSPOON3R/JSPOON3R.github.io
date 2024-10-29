@@ -278,6 +278,7 @@
                         <!-- Dropdown items will be populated here dynamically -->
                     </div>
                 </div>
+                <button class="button" onclick="toggleDraw()">Toggle Draw</button>
                 <button class="button" onclick="endSurflySessionLeft()">End Session</button>
             </div>
 
@@ -322,7 +323,7 @@
         var participantCount = 0;
         var participantList = [];
         var inControlParticipant;
-        var hostParticipant;
+        var hostParticipant = 0;
         var currentTabURL;
         var myIndex = 0;
 
@@ -338,7 +339,7 @@
             non_hosts_can_open_tabs: true,
             new_urls_allowed: true,
             hide_cursors: false,
-            hide_session_ui: false,
+            hide_session_ui: true,
             videochat: false,
             session_start_confirmation: false,
             start_with_invite_modal: false
@@ -363,7 +364,6 @@
                             console.log('Session', session.followerLink, 'has just started');
                             followerLink = session.followerLink;
                             updateCurrentTabURL(session._sessionSettings.url);
-                            updateCurrentHost(         );
                             countOnlineParticipants();
                             console.log("session:");
                             console.log(session);
@@ -401,7 +401,7 @@
                             })
                             .on('host_changed', function (session, event) {
                                 console.log('host_changed event');
-
+                                updateCurrentHost(event.to);
                                 countOnlineParticipants();
                                 console.log("session:");
                                 console.log(session);
@@ -443,8 +443,13 @@
         function endSurflySessionLeft() {
             console.log("session ended");
             SurflySession.end();
-            const iframe = document.getElementById("iframe");
+            const iframe = document.getElementById("session-iframe-left");
             iframe.src = "about:blank";
+        }
+
+        function toggleDraw() {
+            console.log("toggle draw");
+            SurflySession.toggleDrawing();
         }
 
         function relocateTabLeft() {
@@ -550,8 +555,9 @@
         //Host
         function updateCurrentHost(newHIndex) {
             hostParticipant = newHIndex;
-            document.getElementById("currentHost-left").innerHTML = hostParticipant;
-            console.log("Current Host updated to:", hostParticipant);
+            const participant = participantList.find(p => p.index === inControlParticipant);
+            document.getElementById("currentHost-left").innerHTML = participant ? participant.name : "Unknown";
+            console.log("Current Host updated to:", participant ? participant.name : "Unknown");
         }
         //Participant count / info
         function countOnlineParticipants() {
