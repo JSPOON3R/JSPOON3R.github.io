@@ -264,16 +264,14 @@
             <div class="button-grid">
                 <button class="button" onclick="copyLinkLeft()">Copy Link</button>
                 <div class="dropdown">
-                    <button class="button">Change Host</button>
-                    <div class="dropdown-content">
-                        <div class="dropdown-item">Option 1</div>
-                        <div class="dropdown-item">Option 2</div>
-                        <div class="dropdown-item">Option 3</div>
+                    <button class="button" id="changeHostButton">Change Host</button>
+                    <div class="dropdown-content" id="dropdownContent-host">
+                        <!-- Dropdown items will be populated here dynamically -->
                     </div>
                 </div>
                 <div class="dropdown">
                     <button class="button" id="changeControlButton">Change Control</button>
-                    <div class="dropdown-content" id="dropdownContent-left">
+                    <div class="dropdown-content" id="dropdownContent-control">
                         <!-- Dropdown items will be populated here dynamically -->
                     </div>
                 </div>
@@ -443,7 +441,7 @@
         }
 
         function updateControlDropdownLeft() {
-            const dropdownContent = document.getElementById("dropdownContent-left");
+            const dropdownContent = document.getElementById("dropdownContent-control");
 
             // Clear existing dropdown content
             dropdownContent.innerHTML = "";
@@ -478,8 +476,37 @@
 
 
         function changeHostLeft() {
-            console.log("host switch requested");
+            const dropdownContent = document.getElementById("dropdownContent-host");
+
+            // Clear existing dropdown content
+            dropdownContent.innerHTML = "";
+
+            // Populate dropdown with participantList entries using index as the unique identifier
+            participantList.forEach(participant => {
+                // Create a dropdown item for each participant
+                const dropdownItem = document.createElement("div");
+                dropdownItem.classList.add("dropdown-item");
+
+                // Set up inner HTML with participant's name and index to display
+                dropdownItem.innerHTML = `
+            <strong>${participant.name}</strong><br>
+            <span style="font-size: 0.85em; color: grey;">${participant.email}</span><br>
+            <span style="font-size: 0.75em; color: grey;">ID: ${participant.index}</span>
+        `;
+
+                // Add click event to transfer control using the unique index
+                dropdownItem.onclick = () => {
+                    console.log(`Control switch requested for index ${participant.index} (${participant.name})`);
+                    SurflySession.transferTabControl(participant.index);
+                };
+
+                // Append the item to the dropdown content
+                dropdownContent.appendChild(dropdownItem);
+            });
         }
+
+        // Event listener to trigger dropdown display
+        document.getElementById("changeControlButton").addEventListener("click", changeHostLeft);
 
         //manage the vars
         //URL
@@ -502,43 +529,43 @@
         }
         //Participant count / info
         function countOnlineParticipants() {
-    participantList = []; // Reset participantList
-    
-    return SurflySession.getParticipants()
-        .then(participants => {
-            // Filter participants who are online
-            const onlineParticipants = participants.filter(participant => participant.online);
+            participantList = []; // Reset participantList
 
-            // Update participantCount with the number of online participants
-            participantCount = onlineParticipants.length;
+            return SurflySession.getParticipants()
+                .then(participants => {
+                    // Filter participants who are online
+                    const onlineParticipants = participants.filter(participant => participant.online);
 
-            // Use array index as a unique identifier within participantList
-            participantList = onlineParticipants.map((participant, arrayIndex) => ({
-                name: participant.name,
-                index: arrayIndex, // Ensure uniqueness using array index
-                client_index: participant.client_index, // Retain original client index if needed
-                email: participant.email
-            }));
+                    // Update participantCount with the number of online participants
+                    participantCount = onlineParticipants.length;
 
-            // Update HTML display
-            updateParticipantDisplay();
-            updateControlDropdownLeft();
+                    // Use array index as a unique identifier within participantList
+                    participantList = onlineParticipants.map((participant, arrayIndex) => ({
+                        name: participant.name,
+                        index: arrayIndex, // Ensure uniqueness using array index
+                        client_index: participant.client_index, // Retain original client index if needed
+                        email: participant.email
+                    }));
 
-            return participantCount;
-        })
-        .catch(error => {
-            console.error("Error fetching participants:", error);
+                    // Update HTML display
+                    updateParticipantDisplay();
+                    updateControlDropdownLeft();
 
-            // Reset count and list on error
-            participantCount = 0;
-            participantList = [];
+                    return participantCount;
+                })
+                .catch(error => {
+                    console.error("Error fetching participants:", error);
 
-            // Update HTML display to reflect error state
-            updateParticipantDisplay();
-            updateControlDropdownLeft();
-            return participantCount;
-        });
-}
+                    // Reset count and list on error
+                    participantCount = 0;
+                    participantList = [];
+
+                    // Update HTML display to reflect error state
+                    updateParticipantDisplay();
+                    updateControlDropdownLeft();
+                    return participantCount;
+                });
+        }
 
         function updateParticipantDisplay() {
             document.getElementById("onlineParticipantCount-left").innerHTML = participantCount;
