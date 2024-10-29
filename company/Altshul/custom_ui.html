@@ -292,7 +292,7 @@
                     </tr>
                     <tr>
                         <th>Current Tab</th>
-                        <td id="currentTab">URL</td>
+                        <td id="currentTab-left">URL</td>
                     </tr>
                     <tr>
                         <th>Participant in Control</th>
@@ -415,7 +415,7 @@
                         Surfly.on('session_created', function (session, event) {
                             console.log('Session', session.followerLink, 'has just started');
                             followerLink = session.followerLink;
-                            currentTabURL = session._sessionSettings.url;
+                            updateCurrentTabURL(session._sessionSettings.url);
                             console.log("session:");
                             console.log(session);
                             console.log("event:");
@@ -501,6 +501,12 @@
             console.log("host switch requested");
         }
 
+        //manage the vars
+        function updateCurrentTabURL(newURL) {
+    currentTabURL = newURL; 
+    document.getElementById("currentTab-left").textContent = currentTabURL; // Update the HTML element
+    console.log("Current tab URL updated to:", currentTabURL);
+}
 
 
     </script>
