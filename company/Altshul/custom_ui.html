@@ -364,12 +364,7 @@
         </div>
     </div>
     <script>
-        (function (s, u, r, f, l, y) {
-            s[f] = s[f] || { init: function () { s[f].q = arguments } };
-            l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
-            l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
-        })
-            (window, document, 'script', 'Surfly');
+
     </script>
 
     <script>
@@ -382,7 +377,7 @@
 
         var SurflySession;
         var settings = {
-            widget_key: '99671227762b43c2a96daa066ee006e2',
+            widget_key: '59d22da7388f4d938595e42432c7742d',
             private_session: false,
             password_required: false,
             host_switching_allowed: true,
@@ -394,7 +389,8 @@
             hide_cursors: false,
             hide_session_ui: false,
             videochat: false,
-            session_start_confirmation: false
+            session_start_confirmation: false,
+            start_with_invite_modal: false
         };
 
         Surfly.init(settings, function (initResult) {
@@ -411,6 +407,13 @@
 
 
         function startSurflySessionLeft() {
+            delete Surfly;
+            (function (s, u, r, f, l, y) {
+            s[f] = s[f] || { init: function () { s[f].q = arguments } };
+            l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+            l.src = 'https://uat.surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+        })
+            (window, document, 'script', 'Surfly');
             var urlinput = document.querySelector('#start-url-left').value;
             SurflySession = Surfly.session({ url: urlinput }).startLeader("#session-iframe-left");
             Surfly.on('session_created', function (session, event) {
@@ -437,6 +440,8 @@
         function endSurflySessionLeft() {
             console.log("session ended");
             SurflySession.end();
+            const iframe = document.getElementById("iframe");
+            iframe.src = "about:blank";
         }
 
         function relocateTabLeft() {
