@@ -611,7 +611,7 @@
             const participantListElement = document.getElementById("participantListDisplay-left");
             participantListElement.innerHTML = participantList.length > 0
                 ? participantList.map(participant =>
-                    `<li><b>Name:</b> ${participant.name}, <b>Email:</b> <i>${participant.email}</i></li>`
+                    `<li><b>${participant.name}</b>, <b><i>${participant.email}</b></i></li>`
                 ).join('')
                 : "<li>No participants online</li>";
         }
