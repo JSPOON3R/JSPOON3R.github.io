@@ -377,8 +377,8 @@
                             .on('session_loaded', function (session, event) {
                                 console.log('session loaded successfully');
                                 countOnlineParticipants();
-                                updateCurrentControl(o);
-                                updateCurrentHost(o);
+                                updateCurrentControl(0);
+                                updateCurrentHost(0);
                             })
 
                             .on('participant_joined', function (session, event) {
