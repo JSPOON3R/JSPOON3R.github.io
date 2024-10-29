@@ -117,7 +117,6 @@
             max-width: 48vw;
             gap: 15px;
             width: 100%;
-            min-width: 100%;
             padding: 10px;
             justify-content: space-between;
         }
@@ -236,6 +235,10 @@
             font-weight: bold;
             color: var(--website-text);
         }
+
+        .hidden {
+            display:none;
+        }
     </style>
 </head>
 
@@ -250,7 +253,7 @@
             </div>
             <iframe src="about:blank" id="session-iframe-left"></iframe>
             <!-- Tab Controls -->
-            <div class="tab-controls">
+            <div class="tab-controls hidden">
                 <div class="button-input-group">
                     <input type="text" placeholder="URL">
                     <div class="tab-buttons">
@@ -360,6 +363,7 @@
                             console.log('Session', session.followerLink, 'has just started');
                             followerLink = session.followerLink;
                             updateCurrentTabURL(session._sessionSettings.url);
+                            countOnlineParticipants();
                             console.log("session:");
                             console.log(session);
                             console.log("event:");
