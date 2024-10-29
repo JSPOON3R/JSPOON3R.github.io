@@ -568,6 +568,7 @@
         }
         //Participant count / info
         function countOnlineParticipants() {
+            participantList = [];
             return SurflySession.getParticipants()
                 .then(participants => {
                     // Filter participants who are online
