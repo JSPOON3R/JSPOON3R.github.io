@@ -443,34 +443,34 @@
         }
 
         function updateControlDropdownLeft() {
-    const dropdownContent = document.getElementById("dropdownContent-left");
-    
-    // Clear existing dropdown content
-    dropdownContent.innerHTML = "";
+            const dropdownContent = document.getElementById("dropdownContent-left");
 
-    // Populate dropdown with participantList entries using index as the unique identifier
-    participantList.forEach(participant => {
-        // Create a dropdown item for each participant
-        const dropdownItem = document.createElement("div");
-        dropdownItem.classList.add("dropdown-item");
-        
-        // Set up inner HTML with participant's name and index to display
-        dropdownItem.innerHTML = `
+            // Clear existing dropdown content
+            dropdownContent.innerHTML = "";
+
+            // Populate dropdown with participantList entries using index as the unique identifier
+            participantList.forEach(participant => {
+                // Create a dropdown item for each participant
+                const dropdownItem = document.createElement("div");
+                dropdownItem.classList.add("dropdown-item");
+
+                // Set up inner HTML with participant's name and index to display
+                dropdownItem.innerHTML = `
             <strong>${participant.name}</strong><br>
             <span style="font-size: 0.85em; color: grey;">${participant.email}</span><br>
             <span style="font-size: 0.75em; color: grey;">ID: ${participant.index}</span>
         `;
 
-        // Add click event to transfer control using the unique index
-        dropdownItem.onclick = () => {
-            console.log(`Control switch requested for index ${participant.index} (${participant.name})`);
-            SurflySession.transferTabControl(participant.index);
-        };
+                // Add click event to transfer control using the unique index
+                dropdownItem.onclick = () => {
+                    console.log(`Control switch requested for index ${participant.index} (${participant.name})`);
+                    SurflySession.transferTabControl(participant.index);
+                };
 
-        // Append the item to the dropdown content
-        dropdownContent.appendChild(dropdownItem);
-    });
-}
+                // Append the item to the dropdown content
+                dropdownContent.appendChild(dropdownItem);
+            });
+        }
 
 
         // Event listener to trigger dropdown display
@@ -491,18 +491,19 @@
         //Control
         function updateCurrentControl(newCIndex) {
             inControlParticipant = newCIndex;
-            document.getElementById("currentControl-left").innerHTML = inControlParticipant; 
+            document.getElementById("currentControl-left").innerHTML = inControlParticipant;
             console.log("Current control participant updated to:", inControlParticipant);
         }
         //Host
         function updateCurrentHost(newHIndex) {
             hostParticipant = newHIndex;
-            document.getElementById("currentHost-left").innerHTML = hostParticipant; 
+            document.getElementById("currentHost-left").innerHTML = hostParticipant;
             console.log("Current Host updated to:", hostParticipant);
         }
         //Participant count / info
         function countOnlineParticipants() {
-            participantList = [];
+            participantList = []; // Ensure participantList is reset
+
             return SurflySession.getParticipants()
                 .then(participants => {
                     // Filter participants who are online
@@ -511,12 +512,19 @@
                     // Update participantCount with the number of online participants
                     participantCount = onlineParticipants.length;
 
-                    // Update participantList with details of each online participant
-                    participantList = onlineParticipants.map(participant => ({
-                        name: participant.name,
-                        index: participant.client_index,
-                        email: participant.email
-                    }));
+                    // Log each participant to ensure index uniqueness
+                    participantList = onlineParticipants.map(participant => {
+                        console.log("Mapping participant:", {
+                            name: participant.name,
+                            index: participant.client_index,
+                            email: participant.email
+                        });
+                        return {
+                            name: participant.name,
+                            index: participant.client_index,
+                            email: participant.email
+                        };
+                    });
 
                     // Update HTML display
                     updateParticipantDisplay();
@@ -538,6 +546,7 @@
                 });
         }
 
+
         function updateParticipantDisplay() {
             document.getElementById("onlineParticipantCount-left").innerHTML = participantCount;
 
@@ -545,7 +554,7 @@
             const participantListElement = document.getElementById("participantListDisplay-left");
             participantListElement.innerHTML = participantList.length > 0
                 ? participantList.map(participant =>
-                    `<li><b>${participant.name}</b>, <b><i>${participant.email}</b></i></li>`
+                    `<li>${participant.name}: <b><i>${participant.email}</b></i></li>`
                 ).join('')
                 : "<li>No participants online</li>";
         }
