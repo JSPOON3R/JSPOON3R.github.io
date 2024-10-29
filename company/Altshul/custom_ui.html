@@ -518,15 +518,15 @@ function updateControlDropdownLeft() {
         const dropdownItem = document.createElement("div");
         dropdownItem.classList.add("dropdown-item");
         
-        // Set up inner HTML with large name and smaller email
+        // Set up inner HTML with large name and unique index below the name
         dropdownItem.innerHTML = `
-            <b>${participant.index}</b><strong>${participant.name}</strong><br>
-            <span style="font-size: 0.85em; color: grey;">${participant.email}</span>
+            <strong>${participant.name}</strong><br>
+            <span style="font-size: 0.85em; color: grey;">Index: ${participant.index} | ${participant.email}</span>
         `;
 
-        // Add click event to transfer control
+        // Add click event to transfer control using the unique index
         dropdownItem.onclick = () => {
-            console.log("Control switch requested for:", participant.name);
+            console.log(`Control switch requested for: ${participant.name} (Index: ${participant.index})`);
             SurflySession.transferTabControl(participant.index);
         };
 
@@ -534,6 +534,7 @@ function updateControlDropdownLeft() {
         dropdownContent.appendChild(dropdownItem);
     });
 }
+
 
 // Event listener to trigger dropdown display
 document.getElementById("changeControlButton").addEventListener("click", updateControlDropdownLeft);
