@@ -321,6 +321,7 @@
         var inControlParticipant;
         var hostParticipant;
         var currentTabURL;
+        var myIndex = 0;
 
         var SurflySession;
         var settings = {
@@ -461,8 +462,15 @@
 
                 // Add click event to transfer control using the unique index
                 dropdownItem.onclick = () => {
+                    const newControlIndex = participant.index;
                     console.log(`Control switch requested for index ${participant.index} (${participant.name})`);
-                    SurflySession.transferTabControl(participant.index);
+                    if (inControlParticipant === myIndex) {
+                        SurflySession.transferTabControl(newControlIndex);
+                    } else if (inControlParticipant !== myIndex) {
+                        SurflySession.revokeTabControl(newControlIndex);
+                    } else {
+                        console.log("Something went wrong with the control switch")
+                    }
                 };
 
                 // Append the item to the dropdown content
