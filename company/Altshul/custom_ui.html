@@ -422,6 +422,26 @@
                                 console.log(session);
                                 console.log(event);
                             })
+                            .on('relocate_start', function (session, event) {
+                                console.log('relocate start event');
+                                console.log(session);
+                                console.log(event);
+                            })
+                            .on('relocated', function (session, event) {
+                                console.log('relocated event');
+                                console.log(session);
+                                console.log(event);
+                            })
+                            .on('host_changed', function (session, event) {
+                                console.log('host_changed event');
+                                console.log(session);
+                                console.log(event);
+                            })
+                            .on('tab_control', function (session, event) {
+                                console.log('tab_control event');
+                                console.log(session);
+                                console.log(event);
+                            })
                     }
                 }
                 else {
