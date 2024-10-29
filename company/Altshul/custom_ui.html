@@ -300,7 +300,7 @@
                         <td id="currentTab-left">N/A</td>
                     </tr>
                     <tr>
-                        <th>In Control of current tab</th>
+                        <th>In Control</th>
                         <td id="currentControl-left">N/A</td>
                     </tr>
                     <tr>
@@ -526,8 +526,9 @@
         //Control
         function updateCurrentControl(newCIndex) {
             inControlParticipant = newCIndex;
-            document.getElementById("currentControl-left").innerHTML = inControlParticipant;
-            console.log("Current control participant updated to:", inControlParticipant);
+            const participant = participantList.find(p => p.index === inControlParticipant);
+            document.getElementById("currentControl-left").innerHTML = participant ? participant.name : "Unknown";
+            console.log("Current control participant updated to:", participant ? participant.name : "Unknown");
         }
         //Host
         function updateCurrentHost(newHIndex) {
