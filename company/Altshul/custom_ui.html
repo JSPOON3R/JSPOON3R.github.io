@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Two Panel Layout</title>
+    <title>Custom UI</title>
     <style>
         /* Root CSS variables */
         :root {
@@ -393,7 +393,19 @@
             start_with_invite_modal: false
         };
 
-        Surfly.init(settings, function (initResult) {
+
+
+
+        function startSurflySessionLeft() {
+            delete Surfly;
+            (function (s, u, r, f, l, y) {
+            s[f] = s[f] || { init: function () { s[f].q = arguments } };
+            l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+            l.src = 'https://uat.surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+        })
+            (window, document, 'script', 'Surfly');
+
+            Surfly.init(settings, function (initResult) {
             if (initResult.success) {
                 if (!Surfly.isInsideSession) {
                     console.log("Surfly loaded successfully!")
@@ -405,15 +417,6 @@
 
         });
 
-
-        function startSurflySessionLeft() {
-            delete Surfly;
-            (function (s, u, r, f, l, y) {
-            s[f] = s[f] || { init: function () { s[f].q = arguments } };
-            l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
-            l.src = 'https://uat.surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
-        })
-            (window, document, 'script', 'Surfly');
             var urlinput = document.querySelector('#start-url-left').value;
             SurflySession = Surfly.session({ url: urlinput }).startLeader("#session-iframe-left");
             Surfly.on('session_created', function (session, event) {
