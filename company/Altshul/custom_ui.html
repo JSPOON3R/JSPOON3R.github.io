@@ -209,7 +209,7 @@
         }
 
         li {
-            list-style-type:none;
+            list-style-type: none;
         }
 
         /* Status panel as a table */
@@ -322,7 +322,7 @@
 
     <script>
         //LEFT PANEL
-
+        var leaderLink;
         var followerLink;
         var participantCount = 0;
         var participantList = [];
@@ -363,10 +363,11 @@
                     if (!Surfly.isInsideSession) {
                         console.log("Surfly loaded successfully!");
                         var urlinput = document.querySelector('#start-url-left').value;
-                        SurflySession = Surfly.session({ url: urlinput }).startLeader("#session-iframe-left");
+                        SurflySession = Surfly.session({ url: urlinput }).startFollower("#session-iframe-left");
                         Surfly.on('session_created', function (session, event) {
                             console.log('Session', session.followerLink, 'has just started');
                             followerLink = session.followerLink + "?url=" + urlinput;
+                            leaderLink = session.leaderLink + "?url=" + urlinput;
                             updateCurrentTabURL(session._sessionSettings.url);
                             countOnlineParticipants();
                             console.log("session:");
@@ -433,11 +434,11 @@
         };
 
         function copyLinkLeft() {
-            if (followerLink) {
-                navigator.clipboard.writeText(followerLink)
+            if (leaderLink) {
+                navigator.clipboard.writeText(leaderLink)
                     .then(() => {
-                        alert("Follower link copied to clipboard!");
-                        console.log("Follower link copied to clipboard");
+                        alert("Leader link copied to clipboard!");
+                        console.log("Leader link copied to clipboard");
                     })
                     .catch(err => {
                         console.error("Failed to copy: ", err);
