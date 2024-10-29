@@ -287,15 +287,15 @@
                     <tr>
                         <th>Participants count</th>
                         <td id="participants-count-left">
-                                <div id="onlineParticipantCount-left">0</div>
+                            <div id="onlineParticipantCount-left">0</div>
                         </td>
                     </tr>
                     <tr>
                         <th>Participants in the Session</th>
                         <td id="participants-details-left">
-                                <ul id="participantListDisplay-left">
-                                    <li>N/A</li>
-                                </ul>
+                            <ul id="participantListDisplay-left">
+                                <li>N/A</li>
+                            </ul>
                         </td>
                     </tr>
                     <tr>
@@ -304,11 +304,11 @@
                     </tr>
                     <tr>
                         <th>In Control of current tab</th>
-                        <td id="participantControl">N/A</td>
+                        <td id="currentControl-left">N/A</td>
                     </tr>
                     <tr>
                         <th>Session Host</th>
-                        <td id="participantHost">N/A</td>
+                        <td id="currentHost-left">N/A</td>
                     </tr>
                 </table>
             </div>
@@ -432,11 +432,11 @@
                             console.log("event:");
                             console.log(event);
                         })
-                        .on('session_loaded', function (session, event) {
+                            .on('session_loaded', function (session, event) {
                                 console.log('session loaded successfully');
                                 countOnlineParticipants();
                             })
-                        
+
                             .on('participant_joined', function (session, event) {
                                 console.log('Participant ', event.clientIndex, 'joined the session');
                                 countOnlineParticipants();
@@ -464,6 +464,7 @@
                                 countOnlineParticipants();
                             })
                             .on('tab_control', function (session, event) {
+                                updateCurrentControl(event.controlIndex);
                                 console.log('tab_control event');
                                 console.log("session:");
                                 console.log(session);
@@ -505,28 +506,28 @@
             console.log("tab relocated");
         }
 
-// Function to dynamically populate and show dropdown with participant list
-function updateControlDropdownLeft() {
+        function updateControlDropdownLeft() {
     const dropdownContent = document.getElementById("dropdownContent-left");
     
     // Clear existing dropdown content
     dropdownContent.innerHTML = "";
 
-    // Populate dropdown with participantList entries
+    // Populate dropdown with participantList entries using index as the unique identifier
     participantList.forEach(participant => {
         // Create a dropdown item for each participant
         const dropdownItem = document.createElement("div");
         dropdownItem.classList.add("dropdown-item");
         
-        // Set up inner HTML with large name and unique index below the name
+        // Set up inner HTML with participant's name and index to display
         dropdownItem.innerHTML = `
             <strong>${participant.name}</strong><br>
-            <span style="font-size: 0.85em; color: grey;">Index: ${participant.index} | ${participant.email}</span>
+            <span style="font-size: 0.85em; color: grey;">${participant.email}</span><br>
+            <span style="font-size: 0.75em; color: grey;">ID: ${participant.index}</span>
         `;
 
         // Add click event to transfer control using the unique index
         dropdownItem.onclick = () => {
-            console.log(`Control switch requested for: ${participant.name} (Index: ${participant.index})`);
+            console.log(`Control switch requested for index ${participant.index} (${participant.name})`);
             SurflySession.transferTabControl(participant.index);
         };
 
@@ -536,8 +537,8 @@ function updateControlDropdownLeft() {
 }
 
 
-// Event listener to trigger dropdown display
-document.getElementById("changeControlButton").addEventListener("click", updateControlDropdownLeft);
+        // Event listener to trigger dropdown display
+        document.getElementById("changeControlButton").addEventListener("click", updateControlDropdownLeft);
 
 
         function changeHostLeft() {
@@ -548,10 +549,22 @@ document.getElementById("changeControlButton").addEventListener("click", updateC
         //URL
         function updateCurrentTabURL(newURL) {
             currentTabURL = newURL;
-            document.getElementById("currentTab-left").innerHTML = currentTabURL; // Update the HTML element
+            document.getElementById("currentTab-left").innerHTML = currentTabURL;
             console.log("Current tab URL updated to:", currentTabURL);
         }
-        //Participant count
+        //Control
+        function updateCurrentControl(newCIndex) {
+            inControlParticipant = newCIndex;
+            document.getElementById("currentControl-left").innerHTML = inControlParticipant; 
+            console.log("Current control participant updated to:", inControlParticipant);
+        }
+        //Host
+        function updateCurrentHost(newHIndex) {
+            hostParticipant = newHIndex;
+            document.getElementById("currentHost-left").innerHTML = hostParticipant; 
+            console.log("Current Host updated to:", hostParticipant);
+        }
+        //Participant count / info
         function countOnlineParticipants() {
             return SurflySession.getParticipants()
                 .then(participants => {
