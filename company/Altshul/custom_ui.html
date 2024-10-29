@@ -366,7 +366,7 @@
                         SurflySession = Surfly.session({ url: urlinput }).startLeader("#session-iframe-left");
                         Surfly.on('session_created', function (session, event) {
                             console.log('Session', session.followerLink, 'has just started');
-                            followerLink = session.followerLink;
+                            followerLink = session.followerLink + "?url=" + urlinput;
                             updateCurrentTabURL(session._sessionSettings.url);
                             countOnlineParticipants();
                             console.log("session:");
@@ -384,6 +384,7 @@
                             .on('participant_joined', function (session, event) {
                                 console.log('Participant ', event.clientIndex, 'joined the session');
                                 countOnlineParticipants();
+                                window.close();
                             })
                             .on('participant_left', function (session, event) {
                                 console.log('Participant ', event.clientIndex, 'left the session');
