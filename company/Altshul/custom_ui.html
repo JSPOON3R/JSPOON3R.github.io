@@ -502,50 +502,43 @@
         }
         //Participant count / info
         function countOnlineParticipants() {
-            participantList = []; // Ensure participantList is reset
+    participantList = []; // Reset participantList
+    
+    return SurflySession.getParticipants()
+        .then(participants => {
+            // Filter participants who are online
+            const onlineParticipants = participants.filter(participant => participant.online);
 
-            return SurflySession.getParticipants()
-                .then(participants => {
-                    // Filter participants who are online
-                    const onlineParticipants = participants.filter(participant => participant.online);
+            // Update participantCount with the number of online participants
+            participantCount = onlineParticipants.length;
 
-                    // Update participantCount with the number of online participants
-                    participantCount = onlineParticipants.length;
+            // Use array index as a unique identifier within participantList
+            participantList = onlineParticipants.map((participant, arrayIndex) => ({
+                name: participant.name,
+                index: arrayIndex, // Ensure uniqueness using array index
+                client_index: participant.client_index, // Retain original client index if needed
+                email: participant.email
+            }));
 
-                    // Log each participant to ensure index uniqueness
-                    participantList = onlineParticipants.map(participant => {
-                        console.log("Mapping participant:", {
-                            name: participant.name,
-                            index: participant.client_index,
-                            email: participant.email
-                        });
-                        return {
-                            name: participant.name,
-                            index: participant.client_index,
-                            email: participant.email
-                        };
-                    });
+            // Update HTML display
+            updateParticipantDisplay();
+            updateControlDropdownLeft();
 
-                    // Update HTML display
-                    updateParticipantDisplay();
-                    updateControlDropdownLeft();
+            return participantCount;
+        })
+        .catch(error => {
+            console.error("Error fetching participants:", error);
 
-                    return participantCount;
-                })
-                .catch(error => {
-                    console.error("Error fetching participants:", error);
+            // Reset count and list on error
+            participantCount = 0;
+            participantList = [];
 
-                    // Reset count and list on error
-                    participantCount = 0;
-                    participantList = [];
-
-                    // Update HTML display to reflect error state
-                    updateParticipantDisplay();
-                    updateControlDropdownLeft();
-                    return participantCount;
-                });
-        }
-
+            // Update HTML display to reflect error state
+            updateParticipantDisplay();
+            updateControlDropdownLeft();
+            return participantCount;
+        });
+}
 
         function updateParticipantDisplay() {
             document.getElementById("onlineParticipantCount-left").innerHTML = participantCount;
