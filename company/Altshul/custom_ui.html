@@ -399,30 +399,29 @@
         function startSurflySessionLeft() {
             delete Surfly;
             (function (s, u, r, f, l, y) {
-            s[f] = s[f] || { init: function () { s[f].q = arguments } };
-            l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
-            l.src = 'https://uat.surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
-        })
-            (window, document, 'script', 'Surfly');
+                s[f] = s[f] || { init: function () { s[f].q = arguments } };
+                l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+                l.src = 'https://uat.surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+            })
+                (window, document, 'script', 'Surfly');
 
             Surfly.init(settings, function (initResult) {
-            if (initResult.success) {
-                if (!Surfly.isInsideSession) {
-                    console.log("Surfly loaded successfully!")
+                if (initResult.success) {
+                    if (!Surfly.isInsideSession) {
+                        console.log("Surfly loaded successfully!");
+                        var urlinput = document.querySelector('#start-url-left').value;
+                        SurflySession = Surfly.session({ url: urlinput }).startLeader("#session-iframe-left");
+                        Surfly.on('session_created', function (session, event) {
+                            console.log('Session', session.followerLink, 'has just started');
+                            followerLink = session.followerLink;
+                        })
+                    }
                 }
-            }
-            else {
-                console.log("Surfly was unable to initialize properly.")
-            }
+                else {
+                    console.log("Surfly was unable to initialize properly.")
+                }
 
-        });
-
-            var urlinput = document.querySelector('#start-url-left').value;
-            SurflySession = Surfly.session({ url: urlinput }).startLeader("#session-iframe-left");
-            Surfly.on('session_created', function (session, event) {
-                console.log('Session', session.followerLink, 'has just started');
-                followerLink = session.followerLink;
-            })
+            });
         };
 
         function copyLinkLeft() {
