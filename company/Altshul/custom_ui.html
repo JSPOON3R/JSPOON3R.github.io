@@ -417,6 +417,11 @@
                             console.log(session);
                             console.log(event);
                         })
+                            .on('participant_joined', function (session, event) {
+                                console.log('Participant ', event.clientIndex, 'joined the session');
+                                console.log(session);
+                                console.log(event);
+                            })
                     }
                 }
                 else {
