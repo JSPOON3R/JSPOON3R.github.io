@@ -414,6 +414,8 @@
                         Surfly.on('session_created', function (session, event) {
                             console.log('Session', session.followerLink, 'has just started');
                             followerLink = session.followerLink;
+                            console.log(session);
+                            console.log(event);
                         })
                     }
                 }
