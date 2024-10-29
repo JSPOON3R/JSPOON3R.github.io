@@ -448,6 +448,13 @@
             }
         }
 
+        function MessageforControl() {
+            surflyExtension.tabs.sendMessage(tabId, {
+                data: { command: "hello"}
+            });
+        }
+
+
         function endSurflySessionLeft() {
             console.log("session ended");
             SurflySession.end();
