@@ -520,7 +520,7 @@ function updateControlDropdownLeft() {
         
         // Set up inner HTML with large name and smaller email
         dropdownItem.innerHTML = `
-            <strong>${participant.name}</strong><br>
+            <b>${participant.index}</b><strong>${participant.name}</strong><br>
             <span style="font-size: 0.85em; color: grey;">${participant.email}</span>
         `;
 
