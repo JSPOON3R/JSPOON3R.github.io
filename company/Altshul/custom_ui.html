@@ -118,7 +118,7 @@
             gap: 15px;
             width: 100%;
             min-width: 100%;
-            padding: 5px;
+            padding: 10px;
             justify-content: space-between;
         }
 
@@ -127,7 +127,7 @@
             flex-direction: column;
             background-color: var(--lightest-gray);
             align-items: center;
-            padding: 5px;
+            padding: 20px;
             gap: 10px;
             flex: 1;
         }
@@ -143,8 +143,8 @@
         .tab-buttons {
             display: flex;
             flex-direction: row;
-            width: 100%;
-            justify-content: space-around;
+            width: 50%;
+            justify-content: space-evenly;
         }
 
         .tab-button.button {
@@ -170,7 +170,7 @@
         /* Button grid panel */
         .button-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
             gap: 15px;
             width: 90%;
             max-width: 48vw;
@@ -212,7 +212,6 @@
         /* Status panel as a table */
         .status-panel {
             width: 90%;
-            max-width: 48vw;
             border: 1px solid var(--grey);
             border-radius: 8px;
             background-color: var(--lightest-gray);
@@ -309,71 +308,6 @@
                     <tr>
                         <th>Session Host</th>
                         <td id="currentHost-left">N/A</td>
-                    </tr>
-                </table>
-            </div>
-        </div>
-
-        <!-- Right Panel (Copy of Left Panel) 
-         
-        **************************************
-        
-        -->
-        <div class="half-panel">
-            <h1>REST API</h1>
-            <div class="input-group">
-                <input type="text">
-                <button>Start Session</button>
-            </div>
-            <iframe src="about:blank" id="session-iframe-right"></iframe>
-
-            <!-- Tab Controls -->
-            <div class="tab-controls">
-                <div class="button-input-group">
-                    <input type="text" placeholder="URL">
-                    <div class="tab-buttons">
-                        <button class="button tab-button">Open new tab</button>
-                        <button class="button tab-button">Relocate tab</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Button Grid Panel -->
-            <div class="button-grid">
-                <button class="button">Copy Link</button>
-                <button class="button">End Session</button>
-                <div class="dropdown">
-                    <button class="button">Change Host</button>
-                    <div class="dropdown-content">
-                        <div class="dropdown-item">Option 1</div>
-                        <div class="dropdown-item">Option 2</div>
-                        <div class="dropdown-item">Option 3</div>
-                    </div>
-                </div>
-                <div class="dropdown">
-                    <button class="button">Change Control</button>
-                    <div class="dropdown-content">
-                        <div class="dropdown-item">Option A</div>
-                        <div class="dropdown-item">Option B</div>
-                        <div class="dropdown-item">Option C</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Status Panel as Table -->
-            <div class="status-panel">
-                <table class="status-table">
-                    <tr>
-                        <th>Participants in the session</th>
-                        <td id="participantsCount">X</td>
-                    </tr>
-                    <tr>
-                        <th>Current Tab</th>
-                        <td id="currentTab">URL</td>
-                    </tr>
-                    <tr>
-                        <th>Participant in Control</th>
-                        <td id="participantControl">Name</td>
                     </tr>
                 </table>
             </div>
