@@ -511,10 +511,12 @@
                     console.log(`Control switch requested for index ${participant.index} (${participant.name})`);
                     if (inControlParticipant === myIndex) {
                         SurflySession.transferTabControl(newControlIndex);
-                    } else if (inControlParticipant !== myIndex) {
+                    } else if (inControlParticipant !== myIndex && participantCount > 1) {
+                        SurflySession.revokeTabControl(newControlIndex);
+                    } else if (inControlParticipant !== myIndex && participantCount < 2) {
                         SurflySession.revokeTabControl(newControlIndex);
                     } else {
-                        console.log("Something went wrong with the control switch")
+                        console.log("Something went wrong with the control switch");
                     }
                 };
 
