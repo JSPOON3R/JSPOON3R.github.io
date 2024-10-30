@@ -381,8 +381,11 @@
                             .on('session_loaded', function (session, event) {
                                 console.log('session loaded successfully');
                                 countOnlineParticipants();
-                                updateCurrentControl(0);
-                                updateCurrentHost(0);
+                                setTimeout(() => {
+                                    updateCurrentControl(0);
+                                    updateCurrentHost(0);
+                                }, 2000);
+
                             })
 
                             .on('participant_joined', function (session, event) {
