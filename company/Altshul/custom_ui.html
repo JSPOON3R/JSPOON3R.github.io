@@ -361,7 +361,7 @@
             Surfly.init(settings, function (initResult) {
                 if (initResult.success) {
                     if (!Surfly.isInsideSession) {
-                        console.log("Surfly loaded successfully!");
+                        console.log("Surfly API loaded successfully!");
                         var urlinput = document.querySelector('#start-url-left').value;
                         SurflySession = Surfly.session({ url: urlinput }).startLeader("#session-iframe-left");
                         Surfly.on('session_created', function (session, event) {
