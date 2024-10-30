@@ -579,7 +579,7 @@
         //Host
         function updateCurrentHost(newHIndex) {
             hostParticipant = newHIndex;
-            const participant = participantList.find(p => p.index === inControlParticipant);
+            const participant = participantList.find(p => p.index === hostParticipant);
             document.getElementById("currentHost-left").innerHTML = participant ? participant.name : "Unknown";
             console.log("Current Host updated to:", participant ? participant.name : "Unknown");
         }
