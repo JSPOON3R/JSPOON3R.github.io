@@ -269,7 +269,7 @@
 
             <!-- Button Grid Panel -->
             <div class="button-grid">
-                <button class="button" onclick="copyLinkLeft()">Copy Link</button>
+                <button class="button" onclick="copyFollowerLink()">Copy Link</button>
                 <div class="dropdown">
                     <button class="button" id="changeHostButton">Change Host</button>
                     <div class="dropdown-content" id="dropdownContent-host">
@@ -363,7 +363,7 @@
                     if (!Surfly.isInsideSession) {
                         console.log("Surfly loaded successfully!");
                         var urlinput = document.querySelector('#start-url-left').value;
-                        SurflySession = Surfly.session({ url: urlinput }).startFollower("#session-iframe-left");
+                        SurflySession = Surfly.session({ url: urlinput }).startLeader("#session-iframe-left");
                         Surfly.on('session_created', function (session, event) {
                             console.log('Session', session.followerLink, 'has just started');
                             followerLink = session.followerLink + "?url=" + urlinput;
@@ -433,7 +433,7 @@
             });
         };
 
-        function copyLinkLeft() {
+        function copyLeaderLink() {
             if (leaderLink) {
                 navigator.clipboard.writeText(leaderLink)
                     .then(() => {
@@ -447,6 +447,22 @@
                 alert("No session exists to copy the link.");
             }
         }
+
+        function copyFollowerLink() {
+            if (followerLink) {
+                navigator.clipboard.writeText(followerLink)
+                    .then(() => {
+                        alert("Follower link copied to clipboard!");
+                        console.log("Follower link copied to clipboard");
+                    })
+                    .catch(err => {
+                        console.error("Failed to copy: ", err);
+                    });
+            } else {
+                alert("No session exists to copy the link.");
+            }
+        }
+
 
         function endSurflySessionLeft() {
             console.log("session ended");
