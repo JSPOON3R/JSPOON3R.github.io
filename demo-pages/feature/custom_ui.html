@@ -339,7 +339,6 @@
         var participantCount = 0;
         var participantList = [];
         var inControlParticipant = 0;
-        var hostParticipant = 0;
         var currentTabURL;
         var myIndex = 0;
 
@@ -407,7 +406,6 @@
                                 countOnlineParticipants();
                                 setTimeout(() => {
                                     updateCurrentControl(0);
-                                    updateCurrentHost(0);
                                 }, 2000);
 
                             })
@@ -544,47 +542,6 @@
         // Event listener to trigger dropdown display
         document.getElementById("changeControlButton").addEventListener("click", updateControlDropdownLeft);
 
-
-        function changeHostLeft() {
-            const dropdownContent = document.getElementById("dropdownContent-host");
-
-            // Clear existing dropdown content
-            dropdownContent.innerHTML = "";
-
-            // Populate dropdown with participantList entries using index as the unique identifier
-            participantList.forEach(participant => {
-                // Create a dropdown item for each participant
-                const dropdownItem = document.createElement("div");
-                dropdownItem.classList.add("dropdown-item");
-
-                // Set up inner HTML with participant's name and index to display
-                dropdownItem.innerHTML = `
-            <strong>${participant.name}</strong><br>
-            <span style="font-size: 0.85em; color: grey;">${participant.email}</span><br>
-            <span style="font-size: 0.75em; color: grey;">ID: ${participant.index}</span>
-        `;
-
-                // Add click event to transfer control using the unique index
-                dropdownItem.onclick = () => {
-                    const newHostIndex = participant.index;
-                    console.log(`Host switch requested for index ${participant.index} (${participant.name})`);
-                    if (hostParticipant === myIndex) {
-                        SurflySession.makeHost(newHostIndex);
-                    } else if (hostParticipant !== myIndex) {
-                        SurflySession.requestToHost(newHostIndex);
-                    } else {
-                        console.log("Something went wrong with the Host switch")
-                    }
-                };
-
-                // Append the item to the dropdown content
-                dropdownContent.appendChild(dropdownItem);
-            });
-        }
-
-        // Event listener to trigger dropdown display
-        document.getElementById("changeHostButton").addEventListener("click", changeHostLeft);
-
         //manage the vars
         //URL
         function updateCurrentTabURL(newURL) {
@@ -598,13 +555,6 @@
             const participant = participantList.find(p => p.index === inControlParticipant);
             document.getElementById("currentControl-left").innerHTML = participant ? participant.name : "Unknown";
             console.log("Current control participant updated to:", participant ? participant.name : "Unknown");
-        }
-        //Host
-        function updateCurrentHost(newHIndex) {
-            hostParticipant = newHIndex;
-            const participant = participantList.find(p => p.index === hostParticipant);
-            document.getElementById("currentHost-left").innerHTML = participant ? participant.name : "Unknown";
-            console.log("Current Host updated to:", participant ? participant.name : "Unknown");
         }
         //Participant count / info
         function countOnlineParticipants() {
