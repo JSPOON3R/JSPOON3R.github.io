@@ -344,7 +344,7 @@
 
         var SurflySession;
         var settings = {
-            widget_key: '99671227762b43c2a96daa066ee006e2',
+            widget_key: '59d22da7388f4d938595e42432c7742d',
             private_session: false,
             password_required: false,
             host_switching_allowed: true,
@@ -366,7 +366,7 @@
             (function (s, u, r, f, l, y) {
                 s[f] = s[f] || { init: function () { s[f].q = arguments } };
                 l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
-                l.src = 'https://app.surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+                l.src = 'https://uat.surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
             })
                 (window, document, 'script', 'Surfly');
 
@@ -556,6 +556,7 @@
             document.getElementById("currentControl-left").innerHTML = participant ? participant.name : "Unknown";
             console.log("Current control participant updated to:", participant ? participant.name : "Unknown");
         }
+
         //Participant count / info
         function countOnlineParticipants() {
             participantList = []; // Reset participantList
