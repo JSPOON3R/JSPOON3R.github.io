@@ -345,7 +345,7 @@
 
         var SurflySession;
         var settings = {
-            widget_key: '59d22da7388f4d938595e42432c7742d',
+            widget_key: '99671227762b43c2a96daa066ee006e2',
             private_session: false,
             password_required: false,
             host_switching_allowed: true,
@@ -375,8 +375,10 @@
                 if (initResult.success) {
                     if (!Surfly.isInsideSession) {
                         console.log("Surfly API loaded successfully!");
+
                         var urlinput = document.querySelector('#start-url-left').value;
-                        SurflySession = Surfly.session({ url: urlinput }).startLeader("#session-iframe-left");
+
+                        
                         Surfly.on('session_created', function (session, event) {
                             console.log('Session', session.followerLink, 'has just started');
                             followerLink = session.followerLink + "?url=" + urlinput;
