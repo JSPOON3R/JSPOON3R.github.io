@@ -378,7 +378,19 @@
 
                         var urlinput = document.querySelector('#start-url-left').value;
 
-                        
+                        if (urlinput) {
+                            if (/^\d{4}$/.test(urlinput)) { // Checks if the input is exactly 4 digits
+                                console.log("4-digit pin detected");
+                                SurflySession = Surfly.session().startLeader("#session-iframe-left");
+                            } else if (/^(http|https):\/\//.test(urlinput)) { // Checks if the input is a URL starting with http or https
+                                console.log("URL detected");
+                                SurflySession = Surfly.session({ url: urlinput }).startLeader("#session-iframe-left");
+                            } else {
+                                alert("Please enter a valid URL or pin");
+                            }
+                        } else {
+                            alert("Please enter a valid URL or pin");
+                        }
                         Surfly.on('session_created', function (session, event) {
                             console.log('Session', session.followerLink, 'has just started');
                             followerLink = session.followerLink + "?url=" + urlinput;
