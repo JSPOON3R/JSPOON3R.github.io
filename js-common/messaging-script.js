@@ -34,7 +34,6 @@ window.addEventListener("message", function(event) {
     }
 });
 
-// Function to create floating modal on the page
 function createFloatingModal() {
     const modal = document.createElement("div");
     modal.id = "floatingModal";
@@ -53,12 +52,39 @@ function createFloatingModal() {
     modal.style.flexDirection = "column";
     modal.innerHTML = `
         <h3 style="margin: 0 0 10px;">Messages</h3>
-        <div id="messageContainer" style="max-height: 200px; overflow-y: auto; font-size: 14px; line-height: 1.5;"></div>
+        <div id="messageContainer" style="max-height: 200px; overflow-y: auto; font-size: 14px; line-height: 1.5; margin-bottom: 10px;"></div>
+        <div style="display: flex; gap: 5px;">
+            <input type="text" id="replyInput" placeholder="Type a reply..." 
+                style="flex: 1; padding: 8px; border: 1px solid var(--grey); border-radius: 4px;">
+            <button id="replyButton" 
+                style="padding: 8px 12px; background-color: var(--website-text); color: var(--white); border: none; border-radius: 4px; cursor: pointer;">
+                Reply
+            </button>
+        </div>
     `;
+
     document.body.appendChild(modal);
+
+    // Add event listener for the reply button
+    document.getElementById("replyButton").addEventListener("click", sendReplyMessage);
 }
 
-// Function to add message to the floating modal
+// Function to handle sending reply messages
+function sendReplyMessage() {
+    const replyInput = document.getElementById("replyInput");
+    const message = replyInput.value.trim();
+    replyInput.value = ""; // Clear the input after sending
+
+    if (message) {
+        addMessageToModal("You: " + message);
+        Surfly.listSessions()[0].sendMessage({ message:message}, '*', window.location.origin);
+        console.log("Reply sent to session:", message);
+    } else {
+        alert("Please enter a reply message before sending.");
+    }
+}
+
+// Function to add message to the modal
 function addMessageToModal(message) {
     const messageContainer = document.getElementById("messageContainer");
     const messageElement = document.createElement("div");
