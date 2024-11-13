@@ -453,12 +453,8 @@
                             })
                         SurflySession.on('message', function (session, event) {
                             if (event.origin) {
-                                const messageLog = document.getElementById("messageLog");
-                                messageLog.appendChild(logEntry);
                                 console.log('Message Received outside session:', event.data.message);
-                            }
-
-                            if (event.data.message) {
+                                const messageLog = document.getElementById("messageLog");
                                 const logEntry = document.createElement("div");
                                 logEntry.textContent = `Child Page: ${event.data.message}`;
                                 messageLog.appendChild(logEntry);
