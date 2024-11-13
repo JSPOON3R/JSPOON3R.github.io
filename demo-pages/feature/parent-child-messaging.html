@@ -140,7 +140,7 @@
             text-align: center;
             transition: background-color 0.3s;
             width: 200px;
-            height:40px;
+            height: 40px;
         }
 
         .button:hover {
@@ -655,7 +655,7 @@
                 const logEntry = document.createElement("div");
                 logEntry.textContent = `You: ${message}`;
                 messageLog.appendChild(logEntry);
-                SurflySession.sendMessage({ message: message }, "*.surfly.com", window.location.origin);
+                SurflySession.sendMessage({ message: message }, "*", window.location.origin);
                 console.log("Message sent to session:", message);
             } else {
                 alert("Please enter a message before sending.");
