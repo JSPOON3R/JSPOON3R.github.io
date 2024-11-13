@@ -657,7 +657,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 const logEntry = document.createElement("div");
                 logEntry.textContent = `You: ${message}`;
                 messageLog.appendChild(logEntry);
-                SurflySession.sendMessage({ message: messageinput }, urlinput, window.location.origin);
+                SurflySession.sendMessage({ message: messageInput }, urlinput, window.location.origin);
                 console.log("Message sent to session:", message);
             } else {
                 alert("Please enter a message before sending.");
