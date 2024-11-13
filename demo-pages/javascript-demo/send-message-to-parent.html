@@ -62,7 +62,7 @@
             const input = document.getElementById("messageToParent");
     const messageinput = input.value;
     input.value = "";
-        Surfly.listSessions()[0].sendMessage({ message:messageinput}, 'https://demo.surfly.com', window.location.origin);
+        Surfly.listSessions()[0].sendMessage({ message:messageinput}, 'https://vipi.eu-1.sharedwithexpose.com', window.location.origin);
         addLogLine('Message sent');
         console.log("Message Sent from child page");
     };
