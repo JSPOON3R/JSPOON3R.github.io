@@ -451,7 +451,7 @@
                                 console.log(event);
                             })
                         SurflySession.on('message', function (session, event) {
-                            if (event.origin !== 'https://demo.surfly.com') {
+                            if (event.origin !== '*.surfly.com') {
                                 console.error('Message received from an untrusted origin:', event.origin);
                                 return;
                             }
@@ -655,7 +655,7 @@
                 const logEntry = document.createElement("div");
                 logEntry.textContent = `You: ${message}`;
                 messageLog.appendChild(logEntry);
-                SurflySession.sendMessage({ message: messageInput }, urlinput, window.location.origin);
+                SurflySession.sendMessage({ message: message }, "*.surfly.com", window.location.origin);
                 console.log("Message sent to session:", message);
             } else {
                 alert("Please enter a message before sending.");
