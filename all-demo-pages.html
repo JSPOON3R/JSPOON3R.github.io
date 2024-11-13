@@ -330,6 +330,7 @@
                 if (button.dataset.target === "extraContainer-2") button.innerHTML = 'Show Feature Pages';
                 if (button.dataset.target === "extraContainer-3") button.innerHTML = 'Show Technical Pages';
                 if (button.dataset.target === "extraContainer-4") button.innerHTML = 'Show Customer Examples';
+                if (button.dataset.target === "extraContainer-5") button.innerHTML = 'Show Slide Decks';
             });
         }
 
@@ -396,11 +397,11 @@
 
             if (extraContainer4.style.display === 'grid') {
                 extraContainer4.style.display = 'none';
-                button4.innerHTML = 'Show Customer Examples';
+                button4.innerHTML = 'Show Slide Decks';
             } else {
                 hideAllSections();
                 extraContainer4.style.display = 'grid';
-                button4.innerHTML = 'Hide Customer Examples';
+                button4.innerHTML = 'Hide Slide Decks';
             }
         }
     </script>
