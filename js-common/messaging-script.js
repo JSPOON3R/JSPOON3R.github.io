@@ -22,8 +22,7 @@ Surfly.init( function(initResult) {
     window.addEventListener("message", function(event) {
         console.log("Received message from origin:", event.origin);
         if (event.origin.includes("surfly.com")) {
-            console.log("Message received from " + event.origin + ": " + event.data.params.msg.message);
-            addLogLine("Parent Page: " + event.data.params.msg.message);
+            console.log("Message received from " + event.origin + " on child page: " + event.data.params.msg.message);
     
             // Show modal if it is hidden
             const floatingModal = document.getElementById("floatingModal");
