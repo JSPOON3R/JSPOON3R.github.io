@@ -137,14 +137,12 @@
         .button-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            /* Creates two equal-width columns */
             gap: 15px;
             width: 100%;
             margin-top: 20px;
         }
 
         .button {
-            padding: 10px;
             background-color: var(--website-text);
             color: var(--white);
             border: none;
@@ -152,13 +150,10 @@
             cursor: pointer;
             text-align: center;
             transition: background-color 0.3s;
-            height: 40px;
+            height: 30px;
             width: 100%;
-            /* Ensures buttons take up the full column width */
             box-sizing: border-box;
-            /* Ensures padding doesn't affect button size */
             font-size: 15px;
-            /* Adjust font size as needed */
         }
 
         .button:hover {
@@ -241,7 +236,7 @@
         }
 
         .message-input-container {
-            width: 60%;
+            width: 100%;
             display: flex;
             flex-direction: column;
             gap: 10px;
@@ -258,7 +253,7 @@
         }
 
         .message-title {
-            font-size: 1.2em;
+            font-size: 1em;
             color: var(--website-heading-text);
         }
 
@@ -275,8 +270,6 @@
 
         #sessionMessageInput {
             width: 100%;
-            max-width: 400px;
-
         }
     </style>
 </head>
@@ -337,15 +330,14 @@
             <!-- Message dropdown panel -->
             <div class="message-dropdown" id="messageDropdown">
                 <div class="message-input-container">
-                    <div class="message-title">iFrame Communication</div>
-                    <p>Send messages between the session and the parent page</p>
-                    <div class="message-input-group">
-                        <input type="text" id="sessionMessageInput" placeholder="Enter your message here">
-                        <button onclick="sendMessageToSession()">Send</button>
-                    </div>
+                    <div class="message-title"></div>
                 </div>
                 <div class="message-log-container">
                     <div id="messageLog" class="message-log"></div>
+                </div>
+                <div class="message-input-group">
+                    <input type="text" id="sessionMessageInput" placeholder="Enter your message here">
+                    <button onclick="sendMessageToSession()">Send</button>
                 </div>
             </div>
         </div>
@@ -474,6 +466,7 @@
                                 boldText.textContent = "Child Page:";
                                 logEntry.appendChild(boldText);
                                 logEntry.appendChild(document.createTextNode(" " + event.data.message));
+                                logEntry.style.backgroundColor = "#fffc"; 
                                 messageLog.appendChild(logEntry);
                                 messageLog.scrollTop = messageLog.scrollHeight;
                             }
