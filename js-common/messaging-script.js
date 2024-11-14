@@ -41,6 +41,7 @@ function createFloatingModal() {
     modal.style.bottom = "20px";
     modal.style.right = "20px";
     modal.style.width = "300px";
+    modal.style.maxHeight = "200px";
     modal.style.backgroundColor = "var(--website-off-white)";
     modal.style.border = "1px solid var(--grey)";
     modal.style.borderRadius = "8px";
@@ -57,7 +58,7 @@ function createFloatingModal() {
             <input type="text" id="replyInput" placeholder="Type a reply..." 
                 style="flex: 1; padding: 8px; border: 1px solid var(--grey); border-radius: 4px;">
             <button id="replyButton" 
-                style="padding: 8px 12px; background-color: var(--website-text); color: var(--white); border: none; border-radius: 4px; cursor: pointer;">
+                style="padding: 8px 12px; background-color: #374150; color: #f7f7f7; border: none; border-radius: 4px; cursor: pointer;">
                 Reply
             </button>
         </div>
