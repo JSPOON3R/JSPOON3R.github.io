@@ -43,17 +43,46 @@
         body,
         html {
             height: 100%;
-            width: 80%;
-            display: flex;
-            justify-content: center;
-            background-color: var(--website-white);
-            color: var(--website-text);
+            width: 100%;
         }
 
         .container {
             display: flex;
-            width: 100%;
+            flex-direction: row;
+            /* Set to row to place child elements side by side */
+            width: 100vw;
             height: 100vh;
+        }
+
+        .container-left {
+            width: 64%;
+            display: flex;
+            flex-direction: column;
+            margin: 1%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        .container-right {
+            gap:20px;
+            width: 34%;
+            display: flex;
+            flex-direction: column;
+            margin: 1%;
+            padding: 10px;
+            box-sizing: border-box;
+            justify-content: center;
+            justify-content: flex-start;
+        }
+
+        .header {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 10px;
         }
 
         h1 {
@@ -96,7 +125,7 @@
         /* Iframe styling */
         iframe {
             width: 100%;
-            height: 70%;
+            height: 100%;
             border: 1px solid var(--light-grey);
             border-radius: 4px;
         }
@@ -105,15 +134,13 @@
             list-style-type: none;
         }
 
-        /* Button grid */
         .button-grid {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: wrap;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            /* Creates two equal-width columns */
             gap: 15px;
-            padding: 10px;
-            width: max-content;
+            width: 100%;
+            margin-top: 20px;
         }
 
         .button {
@@ -125,26 +152,25 @@
             cursor: pointer;
             text-align: center;
             transition: background-color 0.3s;
-            width: 200px;
             height: 40px;
+            width: 100%;
+            /* Ensures buttons take up the full column width */
+            box-sizing: border-box;
+            /* Ensures padding doesn't affect button size */
+            font-size: 15px;
+            /* Adjust font size as needed */
         }
 
         .button:hover {
             background-color: var(--dark-blue);
         }
 
-        .bottom-container {
-            display: flex;
-            flex-direction: row;
-            align-items: flex-start;
-            align-items: top;
-            justify-content: space-apart;
-            width: 90%;
-        }
-
         /* Dropdown styling */
         .dropdown {
             position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: center;
         }
 
         .dropdown-content {
@@ -177,8 +203,7 @@
 
         /* Status panel */
         .status-panel {
-            width: 800px;
-            min-width: 800px;
+            width: 100%;
             padding: 10px;
             font-size: 1em;
             color: var(--website-heading-text);
@@ -207,8 +232,7 @@
         /* Message dropdown */
         .message-dropdown {
             display: none;
-            flex-direction: row;
-            width: 800px;
+            flex-direction: column;
             background-color: var(--website-off-white);
             border-radius: 4px;
             padding: 10px;
@@ -229,7 +253,7 @@
         }
 
         .message-log-container {
-            width: 40%;
+            width: 100%;
             overflow-y: auto;
         }
 
@@ -259,52 +283,55 @@
 
 <body>
     <div class="container">
-            <h1>Basic Custom UI</h1>
-            <div class="input-group">
-                <input type="text" id="start-url-left">
-                <button onclick="startSurflySessionLeft()">Start Session</button>
+        <div class="container-left">
+            <div class="header">
+                <h1>Basic Custom UI</h1>
+                <div class="input-group">
+                    <input type="text" id="start-url-left">
+                    <button onclick="startSurflySessionLeft()">Start Session</button>
+                </div>
             </div>
             <iframe src="about:blank" id="session-iframe-left"></iframe>
-
-            <div class="bottom-container">
-                <!-- Status Panel as Table -->
-                <div class="status-panel">
-                    <table class="status-table">
-                        <tr>
-                            <th>Participants count</th>
-                            <td id="onlineParticipantCount-left">0</td>
-                        </tr>
-                        <tr>
-                            <th>Participants in the Session</th>
-                            <td id="participants-details-left">
-                                <ul id="participantListDisplay-left">
-                                    <li>N/A</li>
-                                </ul>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Current tab</th>
-                            <td id="currentTab-left">N/A</td>
-                        </tr>
-                        <tr>
-                            <th>In Control</th>
-                            <td id="currentControl-left">N/A</td>
-                        </tr>
-                    </table>
-                </div>
-                <!-- Button Grid Panel -->
-                <div class="button-grid">
-                    <button class="button" onclick="copyFollowerLink()">Copy Link</button>
-                    <div class="dropdown" onclick="">
-                        <button class="button" id="changeControlButton" onclick="updateControlDropdownLeft()">Change
-                            Control</button>
-                        <div class="dropdown-content" id="dropdownContent-control">
-                            <!-- Dropdown items will be populated here dynamically -->
-                        </div>
+        </div>
+        <div class="container-right">
+            <!-- Button Grid Panel -->
+            <div class="button-grid">
+                <button class="button" onclick="copyFollowerLink()">Copy Link</button>
+                <div class="dropdown" onclick="">
+                    <button class="button" id="changeControlButton" onclick="updateControlDropdownLeft()">Change
+                        Control</button>
+                    <div class="dropdown-content" id="dropdownContent-control">
+                        <!-- Dropdown items will be populated here dynamically -->
                     </div>
-                    <button class="button" onclick="endSurflySessionLeft()">End Session</button>
-                    <button class="button" onclick="toggleMessageDropdown()">Show Parent-Child Messaging</button>
                 </div>
+                <button class="button" onclick="endSurflySessionLeft()">End Session</button>
+                <button class="button" onclick="toggleMessageDropdown()">Show Parent-Child Messaging</button>
+            </div>
+
+            <!-- Status Panel as Table -->
+            <div class="status-panel">
+                <table class="status-table">
+                    <tr>
+                        <th>Participants count</th>
+                        <td id="onlineParticipantCount-left">0</td>
+                    </tr>
+                    <tr>
+                        <th>Participants in the Session</th>
+                        <td id="participants-details-left">
+                            <ul id="participantListDisplay-left">
+                                <li>N/A</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Current tab</th>
+                        <td id="currentTab-left">N/A</td>
+                    </tr>
+                    <tr>
+                        <th>In Control</th>
+                        <td id="currentControl-left">N/A</td>
+                    </tr>
+                </table>
             </div>
 
             <!-- Message dropdown panel -->
@@ -321,6 +348,7 @@
                     <div id="messageLog" class="message-log"></div>
                 </div>
             </div>
+        </div>
     </div>
 
     <script>
@@ -447,7 +475,7 @@
                                 logEntry.appendChild(boldText);
                                 logEntry.appendChild(document.createTextNode(" " + event.data.message));
                                 messageLog.appendChild(logEntry);
-                                messageLog.scrollTop = messageLog.scrollHeight; 
+                                messageLog.scrollTop = messageLog.scrollHeight;
                             }
                         });
 
