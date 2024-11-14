@@ -1,15 +1,15 @@
 console.log('script_embedded injected');
 
 // Load Surfly script
-(function(s, u, r, f, l, y) {
-    s[f] = s[f] || { init: function() { s[f].q = arguments }};
+(function (s, u, r, f, l, y) {
+    s[f] = s[f] || { init: function () { s[f].q = arguments } };
     l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
     l.src = 'https://uat.surfly.com/surfly.js';
     y.parentNode.insertBefore(l, y);
 })(window, document, 'script', 'Surfly');
 
 // Initialize Surfly and check if loaded
-Surfly.init(function(initResult) {
+Surfly.init(function (initResult) {
     if (initResult.success) {
         console.log('Surfly loaded in iFrame page');
     } else {
@@ -18,21 +18,29 @@ Surfly.init(function(initResult) {
 });
 
 // Message listener
-window.addEventListener("message", function(event) {
+window.addEventListener("message", function (event) {
     console.log("Received message from origin:", event.origin);
     if (event.origin.includes("surfly.com")) {
         console.log("Message received from " + event.origin + " on child page: " + event.data.params.msg.message);
         const message = event.data.params.msg.message;
-        
-        // Show or create modal on first message
         if (!document.getElementById("floatingModal")) {
-            createFloatingModal(); // Create modal if it doesn't exist
+            createFloatingModal();
         }
-        
-        // Display the received message
-        addMessageToModal("<b>Parent Page:</b> " + message);
+        addMessageToModal("Parent Page: ", message);
     }
 });
+
+function addMessageToModal(prefixText, messageText) {
+    const messageContainer = document.getElementById("messageContainer");
+    const messageElement = document.createElement("div");
+    const boldText = document.createElement("b");
+    boldText.textContent = prefixText;
+    messageElement.appendChild(boldText);
+    messageElement.appendChild(document.createTextNode(" " + messageText));
+    messageContainer.appendChild(messageElement);
+    messageContainer.scrollTop = messageContainer.scrollHeight;
+}
+
 
 function createFloatingModal() {
     const modal = document.createElement("div");
@@ -41,7 +49,8 @@ function createFloatingModal() {
     modal.style.bottom = "20px";
     modal.style.right = "20px";
     modal.style.width = "300px";
-    modal.style.maxHeight = "250px"; 
+    modal.style.maxHeight = "250px";
+    modal.style.minHeight = "250px";
     modal.style.backgroundColor = "var(--website-off-white)";
     modal.style.border = "1px solid var(--grey)";
     modal.style.borderRadius = "8px";
@@ -51,7 +60,7 @@ function createFloatingModal() {
     modal.style.fontFamily = "Nunito, sans-serif";
     modal.style.display = "flex";
     modal.style.flexDirection = "column";
-    modal.style.overflow = "hidden"; 
+    modal.style.overflow = "hidden";
 
     modal.innerHTML = `
         <h3 style="margin: 0 0 10px;">Messages</h3>
@@ -71,20 +80,35 @@ function createFloatingModal() {
 }
 
 
-// Function to handle sending reply messages
 function sendReplyMessage() {
     const replyInput = document.getElementById("replyInput");
     const message = replyInput.value.trim();
-    replyInput.value = ""; // Clear the input after sending
+    replyInput.value = "";
 
     if (message) {
-        addMessageToModal("<b>You:</b> " + message);
-        Surfly.listSessions()[0].sendMessage({ message:message}, '*', window.location.origin);
+        addMessageToModal("You: ", message);
+        Surfly.listSessions()[0].sendMessage({ message: message }, '*', window.location.origin);
         console.log("Reply sent to session:", message);
     } else {
         alert("Please enter a reply message before sending.");
     }
 }
+
+function addMessageToModal(prefixText, messageText) {
+    const messageContainer = document.getElementById("messageContainer");
+
+    const messageElement = document.createElement("div");
+
+    const boldText = document.createElement("b");
+    boldText.textContent = prefixText;
+
+    messageElement.appendChild(boldText);
+    messageElement.appendChild(document.createTextNode(" " + messageText));
+
+    messageContainer.appendChild(messageElement);
+    messageContainer.scrollTop = messageContainer.scrollHeight;
+}
+
 
 // Function to add message to the modal
 function addMessageToModal(message) {

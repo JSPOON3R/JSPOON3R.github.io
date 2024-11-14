@@ -459,10 +459,15 @@
                                 console.log('Message Received outside session:', event.data.message);
                                 const messageLog = document.getElementById("messageLog");
                                 const logEntry = document.createElement("div");
-                                logEntry.textContent = `<b>Child Page:</b> ${event.data.message}`;
+                                const boldText = document.createElement("b");
+                                boldText.textContent = "Child Page:";
+                                logEntry.appendChild(boldText);
+                                logEntry.appendChild(document.createTextNode(" " + event.data.message));
                                 messageLog.appendChild(logEntry);
+                                messageLog.scrollTop = messageLog.scrollHeight; 
                             }
                         });
+
 
                     }
                 }
@@ -648,15 +653,20 @@
 
             if (message) {
                 const logEntry = document.createElement("div");
-                logEntry.textContent = `<b>You:</b> ${message}`;
+                const boldText = document.createElement("b");
+                boldText.textContent = "You:";
+                logEntry.appendChild(boldText);
+                logEntry.appendChild(document.createTextNode(" " + message));
                 messageLog.appendChild(logEntry);
                 messageLog.scrollTop = messageLog.scrollHeight;
+
                 SurflySession.sendMessage({ message: message }, "*", window.location.origin);
                 console.log("Message sent to session:", message);
             } else {
                 alert("Please enter a message before sending.");
             }
         }
+
     </script>
 </body>
 
