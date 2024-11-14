@@ -41,7 +41,7 @@ function createFloatingModal() {
     modal.style.bottom = "20px";
     modal.style.right = "20px";
     modal.style.width = "300px";
-    modal.style.maxHeight = "200px";
+    modal.style.maxHeight = "250px"; 
     modal.style.backgroundColor = "var(--website-off-white)";
     modal.style.border = "1px solid var(--grey)";
     modal.style.borderRadius = "8px";
@@ -51,9 +51,11 @@ function createFloatingModal() {
     modal.style.fontFamily = "Nunito, sans-serif";
     modal.style.display = "flex";
     modal.style.flexDirection = "column";
+    modal.style.overflow = "hidden"; 
+
     modal.innerHTML = `
         <h3 style="margin: 0 0 10px;">Messages</h3>
-        <div id="messageContainer" style="max-height: 200px; overflow-y: auto; font-size: 14px; line-height: 1.5; margin-bottom: 10px;"></div>
+        <div id="messageContainer" style="flex: 1; max-height: 200px; overflow-y: auto; font-size: 14px; line-height: 1.5; margin-bottom: 10px;"></div>
         <div style="display: flex; gap: 5px;">
             <input type="text" id="replyInput" placeholder="Type a reply..." 
                 style="flex: 1; padding: 8px; border: 1px solid var(--grey); border-radius: 4px;">
@@ -65,10 +67,9 @@ function createFloatingModal() {
     `;
 
     document.body.appendChild(modal);
-
-    // Add event listener for the reply button
     document.getElementById("replyButton").addEventListener("click", sendReplyMessage);
 }
+
 
 // Function to handle sending reply messages
 function sendReplyMessage() {
@@ -77,7 +78,7 @@ function sendReplyMessage() {
     replyInput.value = ""; // Clear the input after sending
 
     if (message) {
-        addMessageToModal("You: " + message);
+        addMessageToModal("<b>You:</b> " + message);
         Surfly.listSessions()[0].sendMessage({ message:message}, '*', window.location.origin);
         console.log("Reply sent to session:", message);
     } else {
