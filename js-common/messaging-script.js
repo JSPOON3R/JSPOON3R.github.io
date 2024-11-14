@@ -30,7 +30,7 @@ window.addEventListener("message", function(event) {
         }
         
         // Display the received message
-        addMessageToModal("Parent Page: " + message);
+        addMessageToModal("<b>Parent Page:</b> " + message);
     }
 });
 
