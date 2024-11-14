@@ -80,8 +80,6 @@
             flex-direction: row;
             justify-content: space-between;
             align-items: center;
-            padding: 10px;
-            margin-top: 10px;
             margin-bottom: 10px;
         }
 
@@ -94,7 +92,7 @@
         .input-group {
             display: flex;
             width: 100%;
-            max-width: 400px;
+            max-width: 500px;
         }
 
         .input-group input[type="text"],
@@ -139,7 +137,6 @@
             grid-template-columns: repeat(2, 1fr);
             gap: 15px;
             width: 100%;
-            margin-top: 20px;
         }
 
         .button {
@@ -235,13 +232,6 @@
             margin-top: 1px;
         }
 
-        .message-input-container {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
         .message-input-group {
             display: flex;
             gap: 0px;
@@ -250,11 +240,6 @@
         .message-log-container {
             width: 100%;
             overflow-y: auto;
-        }
-
-        .message-title {
-            font-size: 1em;
-            color: var(--website-heading-text);
         }
 
         .message-log {
@@ -329,9 +314,6 @@
 
             <!-- Message dropdown panel -->
             <div class="message-dropdown" id="messageDropdown">
-                <div class="message-input-container">
-                    <div class="message-title"></div>
-                </div>
                 <div class="message-log-container">
                     <div id="messageLog" class="message-log"></div>
                 </div>
