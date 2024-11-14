@@ -30,6 +30,7 @@ window.addEventListener("message", function (event) {
     }
 });
 
+// Function to add message to the modal
 function addMessageToModal(prefixText, messageText) {
     const messageContainer = document.getElementById("messageContainer");
     const messageElement = document.createElement("div");
@@ -41,7 +42,7 @@ function addMessageToModal(prefixText, messageText) {
     messageContainer.scrollTop = messageContainer.scrollHeight;
 }
 
-
+// Create floating modal with minimize/maximize functionality
 function createFloatingModal() {
     const modal = document.createElement("div");
     modal.id = "floatingModal";
@@ -49,8 +50,6 @@ function createFloatingModal() {
     modal.style.bottom = "20px";
     modal.style.right = "20px";
     modal.style.width = "300px";
-    modal.style.maxHeight = "250px";
-    modal.style.minHeight = "250px";
     modal.style.backgroundColor = "var(--website-off-white)";
     modal.style.border = "1px solid var(--grey)";
     modal.style.borderRadius = "8px";
@@ -61,11 +60,11 @@ function createFloatingModal() {
     modal.style.display = "flex";
     modal.style.flexDirection = "column";
     modal.style.overflow = "hidden";
-    
+
     modal.innerHTML = `
         <h3 style="margin: 0 0 10px;">Messages</h3>
         <div id="messageContainer" style="flex: 1; max-height: 200px; overflow-y: auto; font-size: 14px; line-height: 1.5; margin-bottom: 10px;"></div>
-        <div style="display: flex; gap: 5px;">
+        <div id="inputContainer" style="display: flex; gap: 5px;">
             <input type="text" id="replyInput" placeholder="Type a reply..." 
                 style="flex: 1; padding: 8px; border: 1px solid var(--grey); border-radius: 4px;">
             <button id="replyButton" 
@@ -75,6 +74,7 @@ function createFloatingModal() {
         </div>
     `;
     
+    // Minimize/Maximize button
     const toggleButton = document.createElement("span");
     toggleButton.id = "toggleButton";
     toggleButton.innerHTML = "+"; 
@@ -85,30 +85,33 @@ function createFloatingModal() {
     toggleButton.style.fontSize = "18px";
     toggleButton.style.color = "#374150";
     toggleButton.title = "Minimize/Maximize";
-    
-    // Append toggle button to the modal
     modal.appendChild(toggleButton);
-    
+
+    // Toggle button functionality
     let isMinimized = false;
     toggleButton.addEventListener("click", function () {
         isMinimized = !isMinimized;
+        const messageContainer = document.getElementById("messageContainer");
+        const inputContainer = document.getElementById("inputContainer");
+
         if (isMinimized) {
-            modal.style.height = "30px";
-            modal.style.overflow = "hidden";
-            toggleButton.innerHTML = "+"; 
+            messageContainer.style.display = "none";
+            inputContainer.style.display = "none";
+            toggleButton.innerHTML = "+";
+            modal.style.height = "auto";
         } else {
-            modal.style.height = "250px"; 
-            modal.style.overflow = "auto";
-            toggleButton.innerHTML = "-"; 
+            messageContainer.style.display = "block";
+            inputContainer.style.display = "flex";
+            toggleButton.innerHTML = "-";
+            modal.style.height = "250px";
         }
     });
-    
+
     document.body.appendChild(modal);
     document.getElementById("replyButton").addEventListener("click", sendReplyMessage);
-    
 }
 
-
+// Function to send reply message
 function sendReplyMessage() {
     const replyInput = document.getElementById("replyInput");
     const message = replyInput.value.trim();
@@ -121,29 +124,4 @@ function sendReplyMessage() {
     } else {
         alert("Please enter a reply message before sending.");
     }
-}
-
-function addMessageToModal(prefixText, messageText) {
-    const messageContainer = document.getElementById("messageContainer");
-
-    const messageElement = document.createElement("div");
-
-    const boldText = document.createElement("b");
-    boldText.textContent = prefixText;
-
-    messageElement.appendChild(boldText);
-    messageElement.appendChild(document.createTextNode(" " + messageText));
-
-    messageContainer.appendChild(messageElement);
-    messageContainer.scrollTop = messageContainer.scrollHeight;
-}
-
-
-// Function to add message to the modal
-function addMessageToModal(message) {
-    const messageContainer = document.getElementById("messageContainer");
-    const messageElement = document.createElement("div");
-    messageElement.textContent = message;
-    messageContainer.appendChild(messageElement);
-    messageContainer.scrollTop = messageContainer.scrollHeight; // Auto-scroll to latest message
 }
