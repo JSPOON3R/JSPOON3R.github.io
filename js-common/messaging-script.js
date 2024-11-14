@@ -61,7 +61,7 @@ function createFloatingModal() {
     modal.style.display = "flex";
     modal.style.flexDirection = "column";
     modal.style.overflow = "hidden";
-
+    
     modal.innerHTML = `
         <h3 style="margin: 0 0 10px;">Messages</h3>
         <div id="messageContainer" style="flex: 1; max-height: 200px; overflow-y: auto; font-size: 14px; line-height: 1.5; margin-bottom: 10px;"></div>
@@ -74,9 +74,38 @@ function createFloatingModal() {
             </button>
         </div>
     `;
-
+    
+    const toggleButton = document.createElement("span");
+    toggleButton.id = "toggleButton";
+    toggleButton.innerHTML = "+"; 
+    toggleButton.style.position = "absolute";
+    toggleButton.style.top = "10px";
+    toggleButton.style.right = "10px";
+    toggleButton.style.cursor = "pointer";
+    toggleButton.style.fontSize = "18px";
+    toggleButton.style.color = "#374150";
+    toggleButton.title = "Minimize/Maximize";
+    
+    // Append toggle button to the modal
+    modal.appendChild(toggleButton);
+    
+    let isMinimized = false;
+    toggleButton.addEventListener("click", function () {
+        isMinimized = !isMinimized;
+        if (isMinimized) {
+            modal.style.height = "30px";
+            modal.style.overflow = "hidden";
+            toggleButton.innerHTML = "+"; 
+        } else {
+            modal.style.height = "250px"; 
+            modal.style.overflow = "auto";
+            toggleButton.innerHTML = "-"; 
+        }
+    });
+    
     document.body.appendChild(modal);
     document.getElementById("replyButton").addEventListener("click", sendReplyMessage);
+    
 }
 
 
