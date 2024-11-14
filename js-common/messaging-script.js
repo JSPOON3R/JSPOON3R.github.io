@@ -50,7 +50,7 @@ function createFloatingModal() {
     modal.style.bottom = "20px";
     modal.style.right = "20px";
     modal.style.width = "300px";
-    modal.style.backgroundColor = "var(--website-off-white)";
+    modal.style.backgroundColor = "#f7f7f7";
     modal.style.border = "1px solid var(--grey)";
     modal.style.borderRadius = "8px";
     modal.style.boxShadow = "0px 4px 8px rgba(0, 0, 0, 0.2)";
