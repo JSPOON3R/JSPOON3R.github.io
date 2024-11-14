@@ -56,21 +56,6 @@
             height: 100vh;
         }
 
-        .half-panel {
-            flex: 1;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            border-right: 1px solid var(--website-off-white);
-        }
-
-        .half-panel:last-child {
-            border-right: none;
-            align-items: flex-start;
-        }
-
         h1 {
             font-size: 1.8em;
             color: var(--website-heading-text);
@@ -274,7 +259,6 @@
 
 <body>
     <div class="container">
-        <div class="half-panel">
             <h1>Basic Custom UI</h1>
             <div class="input-group">
                 <input type="text" id="start-url-left">
@@ -337,7 +321,6 @@
                     <div id="messageLog" class="message-log"></div>
                 </div>
             </div>
-        </div>
     </div>
 
     <script>
