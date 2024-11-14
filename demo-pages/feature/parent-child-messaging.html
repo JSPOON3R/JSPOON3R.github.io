@@ -260,6 +260,7 @@
             height: 100%;
             border-radius: 10px;
             max-height: 150px;
+            min-height: 150px;
         }
 
         #sessionMessageInput {
@@ -457,7 +458,7 @@
                                 console.log('Message Received outside session:', event.data.message);
                                 const messageLog = document.getElementById("messageLog");
                                 const logEntry = document.createElement("div");
-                                logEntry.textContent = `Child Page: ${event.data.message}`;
+                                logEntry.textContent = `<b>Child Page:</b> ${event.data.message}`;
                                 messageLog.appendChild(logEntry);
                             }
                         });
@@ -646,7 +647,7 @@
 
             if (message) {
                 const logEntry = document.createElement("div");
-                logEntry.textContent = `You: ${message}`;
+                logEntry.textContent = `<b>You:</b> ${message}`;
                 messageLog.appendChild(logEntry);
                 messageLog.scrollTop = messageLog.scrollHeight;
                 SurflySession.sendMessage({ message: message }, "*", window.location.origin);
