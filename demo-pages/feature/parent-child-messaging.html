@@ -259,6 +259,7 @@
             background-color: var(--website-white);
             height: 100%;
             border-radius: 10px;
+            max-height: 150px;
         }
 
         #sessionMessageInput {
@@ -647,6 +648,7 @@
                 const logEntry = document.createElement("div");
                 logEntry.textContent = `You: ${message}`;
                 messageLog.appendChild(logEntry);
+                messageLog.scrollTop = messageLog.scrollHeight;
                 SurflySession.sendMessage({ message: message }, "*", window.location.origin);
                 console.log("Message sent to session:", message);
             } else {
