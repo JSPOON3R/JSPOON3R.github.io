@@ -40,39 +40,47 @@
             font-family: var(--font);
         }
 
-        p {
-            background-color: var(--website-white);
-            max-width: 50%;
-            border-radius: 12px;
-        }
-
         body,
         html {
             height: 100%;
             width: 100%;
-            display: flex;
-            background-color: var(--website-white);
-            color: var(--website-text);
         }
 
         .container {
             display: flex;
-            width: 100%;
+            flex-direction: row;
+            /* Set to row to place child elements side by side */
+            width: 100vw;
             height: 100vh;
         }
 
-        .half-panel {
-            flex: 1;
-            padding: 20px;
+        .container-left {
+            width: 64%;
             display: flex;
             flex-direction: column;
-            align-items: center;
-            gap: 20px;
-            border-right: 1px solid var(--website-off-white);
+            margin: 1%;
+            padding: 10px;
+            box-sizing: border-box;
         }
 
-        .half-panel:last-child {
-            border-right: none;
+        .container-right {
+            gap:20px;
+            width: 34%;
+            display: flex;
+            flex-direction: column;
+            margin: 1%;
+            padding: 10px;
+            box-sizing: border-box;
+            justify-content: center;
+            justify-content: flex-start;
+        }
+
+        .header {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
         }
 
         h1 {
@@ -80,14 +88,15 @@
             color: var(--website-heading-text);
         }
 
-        /* Input box with a button beside it */
+        /* Input group with button */
         .input-group {
             display: flex;
             width: 100%;
-            max-width: 400px;
+            max-width: 500px;
         }
 
-        .input-group input[type="text"] {
+        .input-group input[type="text"],
+        .message-input-group input[type="text"] {
             flex: 1;
             padding: 10px;
             border: 1px solid var(--grey);
@@ -95,69 +104,42 @@
             border-radius: 4px 0 0 4px;
         }
 
-        .input-group button {
+        .input-group button,
+        .message-input-group button {
             padding: 10px 20px;
             background-color: var(--website-text);
             color: var(--white);
             border: none;
             border-radius: 0 4px 4px 0;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
 
-        .input-group button:hover {
+        .input-group button:hover,
+        .message-input-group button:hover {
             background-color: var(--dark-blue);
         }
 
         /* Iframe styling */
         iframe {
             width: 100%;
-            height: 70%;
+            height: 100%;
             border: 1px solid var(--light-grey);
             border-radius: 4px;
         }
 
-        /* Tab controls */
-        .tab-controls {
-            display: flex;
-            width: 90%;
-            max-width: 48vw;
+        li {
+            list-style-type: none;
+        }
+
+        .button-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 15px;
             width: 100%;
-            padding: 10px;
-            justify-content: space-between;
-        }
-
-        .button-input-group {
-            display: flex;
-            flex-direction: column;
-            background-color: var(--lightest-gray);
-            align-items: center;
-            padding: 20px;
-            gap: 10px;
-            flex: 1;
-        }
-
-        .button-input-group input[type="text"] {
-            flex: 1;
-            padding: 8px;
-            border: 1px solid var(--grey);
-            border-radius: 4px;
-            width: 90%;
-        }
-
-        .tab-buttons {
-            display: flex;
-            flex-direction: row;
-            width: 50%;
-            justify-content: space-evenly;
-        }
-
-        .tab-button.button {
-            width: 40%;
         }
 
         .button {
-            padding: 10px;
             background-color: var(--website-text);
             color: var(--white);
             border: none;
@@ -165,27 +147,22 @@
             cursor: pointer;
             text-align: center;
             transition: background-color 0.3s;
+            height: 30px;
             width: 100%;
-            max-width: 400px;
+            box-sizing: border-box;
+            font-size: 15px;
         }
 
         .button:hover {
             background-color: var(--dark-blue);
         }
 
-        /* Button grid panel */
-        .button-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(60%, 1fr));
-            gap: 15px;
-            width: 30%;
-            padding: 10px;
-            max-width: 48vw;
-        }
-
         /* Dropdown styling */
         .dropdown {
             position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: center;
         }
 
         .dropdown-content {
@@ -216,35 +193,20 @@
             background-color: var(--light-grey);
         }
 
-        li {
-            list-style-type: none;
-        }
-
-        .bottom-container {
-            display: flex;
-            flex-direction: row;
-            align-items: flex-start;
-            align-items: top;
-            justify-content: space-evenly;
-            width: 100%;
-        }
-
-        /* Status panel as a table */
+        /* Status panel */
         .status-panel {
-            width: 70%;
-            max-width: 800px;
+            width: 100%;
             padding: 10px;
             font-size: 1em;
             color: var(--website-heading-text);
+            background-color: var(--website-off-white);
+            border-radius: 10px;
+            overflow: hidden;
         }
 
         .status-table {
             width: 100%;
             border-collapse: collapse;
-            border-radius: 10px;
-            background-color: var(--website-off-white);
-            padding: 5px;
-            overflow: hidden;
         }
 
         .status-table th,
@@ -259,79 +221,111 @@
             color: var(--website-text);
         }
 
-        .hidden {
+        /* Message dropdown */
+        .message-dropdown {
             display: none;
+            flex-direction: column;
+            background-color: var(--website-off-white);
+            border-radius: 4px;
+            padding: 10px;
+            gap: 10px;
+            margin-top: 1px;
+        }
+
+        .message-input-group {
+            display: flex;
+            gap: 0px;
+        }
+
+        .message-log-container {
+            width: 100%;
+            overflow-y: auto;
+        }
+
+        .message-log {
+            margin-top: 0px;
+            font-size: 0.9em;
+            color: var(--website-text);
+            background-color: var(--website-white);
+            height: 100%;
+            border-radius: 10px;
+            max-height: 150px;
+            min-height: 150px;
+        }
+
+        #sessionMessageInput {
+            width: 100%;
         }
     </style>
 </head>
 
 <body>
     <div class="container">
-        <!-- Left Panel -->
-        <div class="half-panel">
-            <h1>Basic Custom UI</h1>
-            <div class="input-group">
-                <input type="text" id="start-url-left">
-                <button onclick="startSurflySessionLeft()">Start Session</button>
+        <div class="container-left">
+            <div class="header">
+                <h1>Basic Custom UI</h1>
+                <div class="input-group">
+                    <input type="text" id="start-url-left">
+                    <button onclick="startSurflySessionLeft()">Start Session</button>
+                </div>
             </div>
             <iframe src="about:blank" id="session-iframe-left"></iframe>
-            <!-- Tab Controls -->
-            <div class="tab-controls hidden">
-                <div class="button-input-group">
-                    <input type="text" placeholder="https://demo.surfly.com/company/Altshul/altshul_button.html">
-                    <div class="tab-buttons">
-                        <button class="button tab-button">Open new tab</button>
-                        <button class="button tab-button">Relocate tab</button>
+        </div>
+        <div class="container-right">
+            <!-- Button Grid Panel -->
+            <div class="button-grid">
+                <button class="button" onclick="copyFollowerLink()">Copy Link</button>
+                <div class="dropdown" onclick="">
+                    <button class="button" id="changeControlButton" onclick="updateControlDropdownLeft()">Change
+                        Control</button>
+                    <div class="dropdown-content" id="dropdownContent-control">
+                        <!-- Dropdown items will be populated here dynamically -->
                     </div>
                 </div>
+                <button class="button" onclick="endSurflySessionLeft()">End Session</button>
+                <button class="button" onclick="toggleMessageDropdown()">Show Parent-Child Messaging</button>
             </div>
 
-            <div class="bottom-container">
-                <!-- Status Panel as Table -->
-                <div class="status-panel">
-                    <table class="status-table">
-                        <tr>
-                            <th>Participants count</th>
-                            <td id="participants-count-left">
-                                <div id="onlineParticipantCount-left">0</div>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Participants in the Session</th>
-                            <td id="participants-details-left">
-                                <ul id="participantListDisplay-left">
-                                    <li>N/A</li>
-                                </ul>
-                            </td>
-                        </tr>
-                        <tr>
-                            <th>Current tab</th>
-                            <td id="currentTab-left">N/A</td>
-                        </tr>
-                        <tr>
-                            <th>In Control</th>
-                            <td id="currentControl-left">N/A</td>
-                        </tr>
-                    </table>
+            <!-- Status Panel as Table -->
+            <div class="status-panel">
+                <table class="status-table">
+                    <tr>
+                        <th>Participants count</th>
+                        <td id="onlineParticipantCount-left">0</td>
+                    </tr>
+                    <tr>
+                        <th>Participants in the Session</th>
+                        <td id="participants-details-left">
+                            <ul id="participantListDisplay-left">
+                                <li>N/A</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>Current tab</th>
+                        <td id="currentTab-left">N/A</td>
+                    </tr>
+                    <tr>
+                        <th>In Control</th>
+                        <td id="currentControl-left">N/A</td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Message dropdown panel -->
+            <div class="message-dropdown" id="messageDropdown">
+                <div class="message-log-container">
+                    <div id="messageLog" class="message-log"></div>
                 </div>
-                <!-- Button Grid Panel -->
-                <div class="button-grid">
-                    <button class="button" onclick="copyFollowerLink()">Copy Link</button>
-                    <div class="dropdown">
-                        <button class="button" id="changeControlButton">Change Control</button>
-                        <div class="dropdown-content" id="dropdownContent-control">
-                            <!-- Dropdown items will be populated here dynamically -->
-                        </div>
-                    </div>
-                    <!--<button class="button" onclick="toggleDraw()">Toggle Draw</button> -->
-                    <button class="button" onclick="endSurflySessionLeft()">End Session</button>
+                <div class="message-input-group">
+                    <input type="text" id="sessionMessageInput" placeholder="Enter your message here">
+                    <button onclick="sendMessageToSession()">Send</button>
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        //pre-fill url box
         document.getElementById("start-url-left").value = "https://www.wikipedia.com";
         //LEFT PANEL
         var leaderLink;
@@ -341,6 +335,7 @@
         var inControlParticipant = 0;
         var currentTabURL;
         var myIndex = 0;
+        var urlinput
 
         var SurflySession;
         var settings = {
@@ -358,7 +353,8 @@
             videochat: false,
             chat_enabled: false,
             session_start_confirmation: false,
-            start_with_invite_modal: false
+            start_with_invite_modal: false,
+            script_embedded: "https://demo.surfly.com/js-common/messaging-script.js"
         };
 
         function startSurflySessionLeft() {
@@ -375,12 +371,12 @@
                     if (!Surfly.isInsideSession) {
                         console.log("Surfly API loaded successfully!");
 
-                        var urlinput = document.querySelector('#start-url-left').value;
+                        urlinput = document.querySelector('#start-url-left').value;
 
                         if (urlinput) {
                             if (/^\d{4}$/.test(urlinput)) { // Checks if the input is exactly 4 digits
                                 console.log("4-digit pin detected");
-                                SurflySession = Surfly.session().startLeader("#session-iframe-left");
+                                SurflySession = Surfly.session().startFollower();
                             } else if (/^(http|https):\/\//.test(urlinput)) { // Checks if the input is a URL starting with http or https
                                 console.log("URL detected");
                                 SurflySession = Surfly.session({ url: urlinput }).startLeader("#session-iframe-left");
@@ -443,6 +439,22 @@
                                 console.log("event:");
                                 console.log(event);
                             })
+                        SurflySession.on('message', function (session, event) {
+                            if (event.origin) {
+                                console.log('Message Received outside session:', event.data.message);
+                                const messageLog = document.getElementById("messageLog");
+                                const logEntry = document.createElement("div");
+                                const boldText = document.createElement("b");
+                                boldText.textContent = "Child Page:";
+                                logEntry.appendChild(boldText);
+                                logEntry.appendChild(document.createTextNode(" " + event.data.message));
+                                logEntry.style.backgroundColor = "#fffc"; 
+                                messageLog.appendChild(logEntry);
+                                messageLog.scrollTop = messageLog.scrollHeight;
+                            }
+                        });
+
+
                     }
                 }
                 else {
@@ -539,9 +551,6 @@
         }
 
 
-        // Event listener to trigger dropdown display
-        document.getElementById("changeControlButton").addEventListener("click", updateControlDropdownLeft);
-
         //manage the vars
         //URL
         function updateCurrentTabURL(newURL) {
@@ -609,9 +618,40 @@
                 : "<li>No participants online</li>";
         }
 
-    </script>
-    <script>
-        //RIGHT PANEL
+        function toggleMessageDropdown() {
+            const dropdown = document.getElementById("messageDropdown");
+            const button = document.querySelector(".button-grid button[onclick='toggleMessageDropdown()']");
+
+            if (dropdown.style.display === "flex") {
+                dropdown.style.display = "none";
+                button.innerHTML = "Show Parent-Child Messaging";
+            } else {
+                dropdown.style.display = "flex";
+                button.innerHTML = "Hide Parent-Child Messaging";
+            }
+        }
+
+        function sendMessageToSession() {
+            const messageInput = document.getElementById("sessionMessageInput");
+            const messageLog = document.getElementById("messageLog");
+            const message = messageInput.value.trim();
+            messageInput.value = "";
+
+            if (message) {
+                const logEntry = document.createElement("div");
+                const boldText = document.createElement("b");
+                boldText.textContent = "You:";
+                logEntry.appendChild(boldText);
+                logEntry.appendChild(document.createTextNode(" " + message));
+                messageLog.appendChild(logEntry);
+                messageLog.scrollTop = messageLog.scrollHeight;
+
+                SurflySession.sendMessage({ message: message }, "*", window.location.origin);
+                console.log("Message sent to session:", message);
+            } else {
+                alert("Please enter a message before sending.");
+            }
+        }
 
     </script>
 </body>
