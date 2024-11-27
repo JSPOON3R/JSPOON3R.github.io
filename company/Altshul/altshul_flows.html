@@ -78,14 +78,15 @@
         .header {
             display: flex;
             flex-direction: row;
-            justify-content: space-between;
+            justify-content: space-evenly;
             align-items: center;
             margin-bottom: 10px;
         }
 
-        h1 {
-            font-size: 1.8em;
+        p {
+            font-size: 1em;
             color: var(--website-heading-text);
+            margin-bottom:5px;
         }
 
         /* Input group with button */
@@ -118,6 +119,12 @@
         .input-group button:hover,
         .message-input-group button:hover {
             background-color: var(--dark-blue);
+        }
+
+        .input-container {
+            display:flex;
+            flex-direction:column;
+            width:50%;
         }
 
         /* Iframe styling */
@@ -263,18 +270,27 @@
     <div class="container">
         <div class="container-left">
             <div class="header">
-                <h1>Basic Custom UI</h1>
+                <div class="input-container">
+                <p>Signature Flow:</p>
                 <div class="input-group">
                     <input type="text" id="start-url-left">
-                    <button onclick="startSurflySessionLeft()">Start Session</button>
+                    <button onclick="startSurflySessionLeft()">Start as Leader</button>
                 </div>
+            </div>
+            <div class="input-container">
+                <p>Upload Flow:</p>
+                <div class="input-group">
+                    <input type="text" id="start-url-right">
+                    <button onclick="startSurflySessionLeft()">Start as Leader</button>
+                </div>
+            </div>
             </div>
             <iframe src="about:blank" id="session-iframe-left"></iframe>
         </div>
         <div class="container-right">
             <!-- Button Grid Panel -->
             <div class="button-grid">
-                <button class="button" onclick="copyFollowerLink()">Copy Link</button>
+                <button class="button" onclick="copyFollowerLink()">Copy Follower Link</button>
                 <div class="dropdown" onclick="">
                     <button class="button" id="changeControlButton" onclick="updateControlDropdownLeft()">Change
                         Control</button>
@@ -326,7 +342,8 @@
     </div>
 
     <script>
-        document.getElementById("start-url-left").value = "https://www.wikipedia.com";
+        document.getElementById("start-url-left").value = "https://altshulershaham-dev.outsystemsenterprise.com/Auth?AppName=JoinHishtalmut_Onboarding&FormToken=f959d4c4-15b6-44d1-94a8-7bd282f47233&UserToken=14E85288-90C6-EA11-8116-000C299666B1";
+        document.getElementById("start-url-right").value = "https://altshulershaham-dev.outsystemsenterprise.com/Auth?AppName=JoinHishtalmut_Onboarding&FormToken=2a1b9ec7-ddb5-4284-bfa0-e2ab8450e83a&UserToken=14E85288-90C6-EA11-8116-000C299666B1";
         //LEFT PANEL
         var leaderLink;
         var followerLink;
@@ -335,7 +352,8 @@
         var inControlParticipant = 0;
         var currentTabURL;
         var myIndex = 0;
-        var urlinput
+        var urlinput;
+        var newTab;
 
         var SurflySession;
         var settings = {
@@ -481,7 +499,7 @@
 
         function copyFollowerLink() {
             if (followerLink) {
-                navigator.clipboard.writeText(followerLink)
+                navigator.clipboard.writeText(followerLink + "?url=" + newTab)
                     .then(() => {
                         alert("Follower link copied to clipboard!");
                         console.log("Follower link copied to clipboard");
@@ -573,7 +591,7 @@
             return SurflySession.getParticipants()
                 .then(participants => {
                     // Filter participants who are online
-                    const onlineParticipants = participants.filter(participant => participant.online);
+                    const onlineParticipants = participants.filter(participant => participant.online);de
 
                     // Update participantCount with the number of online participants
                     participantCount = onlineParticipants.length;
