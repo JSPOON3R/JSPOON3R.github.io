@@ -321,11 +321,11 @@
                 <option value="">Select Name</option>
             </select>
             <!-- Password Input -->
-            <div id="passwordContainer" style="display: none;">
+            <form id="passwordContainer" style="display: none;">
                 <input type="password" id="passwordInput" placeholder="Enter Password"
                     style="width: 100%; padding: 5px; margin-bottom: 10px;">
                 <button id="submitPassword" style="padding: 5px; width: 100%;">Submit</button>
-            </div>
+            </form>
         </div>
     </div>
 
@@ -529,85 +529,67 @@
 
         //Audit log password functionality:
         document.addEventListener("DOMContentLoaded", () => {
-            const teamNameDropdown = document.getElementById("teamNameDropdown");
-            const passwordContainer = document.getElementById("passwordContainer");
-            const passwordInput = document.getElementById("passwordInput");
-            const submitPasswordButton = document.getElementById("submitPassword");
+    const teamNameDropdown = document.getElementById("teamNameDropdown");
+    const passwordContainer = document.getElementById("passwordForm"); // Updated ID
+    const passwordInput = document.getElementById("passwordInput");
+    const passwordForm = document.getElementById("passwordForm");
+    const submitPasswordButton = document.getElementById("submitPassword");
 
-            // Populate Dropdown with Team Names
-            teamName.forEach(name => {
-                const option = document.createElement("option");
-                option.value = name;
-                option.textContent = name;
-                teamNameDropdown.appendChild(option);
-            });
+    // Populate Dropdown with Team Names
+    const teamName = ["john", "marko", "thomas", "mihai", "ayush"];
+    teamName.forEach((name) => {
+        const option = document.createElement("option");
+        option.value = name;
+        option.textContent = name;
+        teamNameDropdown.appendChild(option);
+    });
 
-            // Show Password Input on Dropdown Selection
-            teamNameDropdown.addEventListener("change", () => {
-                if (teamNameDropdown.value) {
-                    passwordContainer.style.display = "block";
-                } else {
-                    passwordContainer.style.display = "none";
-                    passwordInput.value = ""; // Clear the password input
-                }
-            });
+    // Show Password Input on Dropdown Selection
+    teamNameDropdown.addEventListener("change", () => {
+        if (teamNameDropdown.value) {
+            passwordContainer.style.display = "block";
+        } else {
+            passwordContainer.style.display = "none";
+            passwordInput.value = ""; // Clear the password input
+        }
+    });
 
-            // Handle Password Submission
-            submitPasswordButton.addEventListener("click", async () => {
-                const selectedName = teamNameDropdown.value;
-                const enteredPassword = passwordInput.value;
+    // Handle Password Submission
+    passwordForm.addEventListener("submit", async (event) => {
+    event.preventDefault();
+    const selectedName = teamNameDropdown.value;
+    const enteredPassword = passwordInput.value;
 
-                if (!selectedName || !enteredPassword) {
-                    alert("Please select a name and enter a password.");
-                    return;
-                }
+    if (!selectedName || !enteredPassword) {
+        alert("Please select a name and enter a password.");
+        return;
+    }
 
-                // Fetch the secret password (simulated in this case, as you cannot directly access GitHub secrets from client-side)
-                const AUDIT_LOG_VIEWER_PASSWORD = "your_secret_password"; // Replace with a server call if hosted elsewhere
-
-                if (enteredPassword === AUDIT_LOG_VIEWER_PASSWORD) {
-                    // Relocate to audit log URL
-                    window.location.href = `${auditLogUrl}${selectedName}`;
-                } else {
-                    // Clear the input and do nothing
-                    alert("Incorrect Password. Please try again.");
-                    passwordInput.value = "";
-                }
-            });
-        });
-
-
-        //TESTING
-        submitPasswordButton.addEventListener("click", async () => {
-            const selectedName = teamNameDropdown.value;
-            const enteredPassword = passwordInput.value;
-
-            if (!selectedName || !enteredPassword) {
-                alert("Please select a name and enter a password.");
-                return;
+    try {
+        const response = await fetch(
+            "https://demo.surfly.com/.github/workflows/validate-password.yml",
+            {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ password: enteredPassword }),
             }
+        );
 
-            try {
-                const response = await fetch("https://demo.surfly.com/.github/workflows/validate-password.yml", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ password: enteredPassword }),
-                });
-
-                if (response.ok) {
-                    // Relocate to the audit log URL
-                    window.location.href = `${auditLogUrl}${selectedName}`;
-                } else {
-                    const { error } = await response.json();
-                    alert(error || "Invalid password. Please try again.");
-                    passwordInput.value = ""; // Clear input
-                }
-            } catch (err) {
-                console.error("Error validating password:", err);
-            }
-        });
-
-
+        if (response.ok) {
+            console.log("GitHub responded: Password validated successfully.");
+            window.location.href = `${auditLogUrl}${selectedName}`;
+        } else {
+            const { error } = await response.json();
+            console.error("GitHub responded with an error:", error || "Unknown error.");
+            alert(error || "Invalid password. Please try again.");
+            passwordInput.value = "";
+        }
+    } catch (err) {
+        console.error("No response from GitHub or network error:", err);
+        alert("Unable to validate the password. Please try again later.");
+    }
+});
+});
     </script>
 
 
