@@ -479,7 +479,7 @@
     </div>
 
     <script>
-        var validatePasswordUrl = "https://script.google.com/macros/s/AKfycbx9rLxReiU5G_xI2_jI_tDFAA3RhuTWdRQKlLAUn2WqSFsp1B6H0jQvG1jsSEhAEzuspA/exec?name=";
+        var AUDIT_LOG_VALIDATION_URL = "https://script.google.com/macros/s/AKfycbx9rLxReiU5G_xI2_jI_tDFAA3RhuTWdRQKlLAUn2WqSFsp1B6H0jQvG1jsSEhAEzuspA/exec?name=";
         var auditLogUrl = validatePasswordUrl + "?name=";
         const teamName = [
             "john",
@@ -570,7 +570,8 @@
     });
 
     // Handle Password Submission
-    submitPasswordButton.addEventListener("click", async () => {
+    submitPasswordButton.addEventListener("click", async (event) => {
+  event.preventDefault();
   const selectedName = teamNameDropdown.value;
   const enteredPassword = passwordInput.value;
 
@@ -580,20 +581,20 @@
   }
 
   try {
-    const response = await fetch(validatePasswordUrl, {
+    const response = await fetch(AUDIT_LOG_VALIDATION_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ password: enteredPassword }),
     });
 
-    if (response.ok) {
-      const data = await response.json();
+    const data = await response.json();
+
+    if (data.status === 200) {
       console.log(data.message); // "Password validated"
       window.location.href = `${auditLogUrl}${selectedName}`;
     } else {
-      const { error } = await response.json();
-      console.error("Validation failed:", error);
-      alert(error || "Invalid password. Please try again.");
+      console.error("Validation failed:", data.error);
+      alert(data.error || "Invalid password. Please try again.");
       passwordInput.value = ""; // Clear the input field
     }
   } catch (err) {
