@@ -479,7 +479,8 @@
     </div>
 
     <script>
-        var auditLogUrl = "https://script.google.com/macros/s/AKfycbySGmqT8Vz3GE3D3eO9ODIrqC8kfIvg0hg2hZZYJXDTg_pWX5L_VMeTQP4eKfemNSsGiw/exec?name="
+        var validatePasswordUrl = "https://script.google.com/macros/s/AKfycbx9rLxReiU5G_xI2_jI_tDFAA3RhuTWdRQKlLAUn2WqSFsp1B6H0jQvG1jsSEhAEzuspA/exec?name=";
+        var auditLogUrl = validatePasswordUrl + "?name=";
         const teamName = [
             "john",
             "marko",
@@ -570,39 +571,36 @@
 
     // Handle Password Submission
     submitPasswordButton.addEventListener("click", async () => {
-        const selectedName = teamNameDropdown.value;
-        const enteredPassword = passwordInput.value;
+  const selectedName = teamNameDropdown.value;
+  const enteredPassword = passwordInput.value;
 
-        if (!selectedName || !enteredPassword) {
-            alert("Please select a name and enter a password.");
-            return;
-        }
+  if (!selectedName || !enteredPassword) {
+    alert("Please select a name and enter a password.");
+    return;
+  }
 
-        try {
-            const response = await fetch(
-                "https://demo.surfly.com/.github/workflows/validate-password.yml",
-                {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ password: enteredPassword }),
-                }
-            );
-
-            if (response.ok) {
-                console.log("GitHub responded: Password validated successfully.");
-                const auditLogUrl = "https://script.google.com/macros/s/AKfycbySGmqT8Vz3GE3D3eO9ODIrqC8kfIvg0hg2hZZYJXDTg_pWX5L_VMeTQP4eKfemNSsGiw/exec?name=";
-                window.location.href = `${auditLogUrl}${selectedName}`;
-            } else {
-                const { error } = await response.json();
-                console.error("GitHub responded with an error:", error || "Unknown error.");
-                alert(error || "Invalid password. Please try again.");
-                passwordInput.value = ""; // Clear the input field
-            }
-        } catch (err) {
-            console.error("Network or server error:", err);
-            alert("Unable to validate the password. Please try again later.");
-        }
+  try {
+    const response = await fetch(validatePasswordUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ password: enteredPassword }),
     });
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log(data.message); // "Password validated"
+      window.location.href = `${auditLogUrl}${selectedName}`;
+    } else {
+      const { error } = await response.json();
+      console.error("Validation failed:", error);
+      alert(error || "Invalid password. Please try again.");
+      passwordInput.value = ""; // Clear the input field
+    }
+  } catch (err) {
+    console.error("Network or server error:", err);
+    alert("Unable to validate the password. Please try again later.");
+  }
+});
 });
 
 
