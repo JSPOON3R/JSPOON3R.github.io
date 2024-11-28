@@ -215,6 +215,12 @@
             border-color: var(--website-heading-text);
         }
 
+        #passwordForm {
+    display: none; /* Start hidden */
+    flex-direction: column; /* Ensure proper alignment when visible */
+    gap: 10px; /* Optional for spacing */
+}
+
         #passwordContainer {
             display: flex;
         }
@@ -530,10 +536,9 @@
         //Audit log password functionality:
         document.addEventListener("DOMContentLoaded", () => {
     const teamNameDropdown = document.getElementById("teamNameDropdown");
-    const passwordContainer = document.getElementById("passwordForm");
+    const passwordContainer = document.getElementById("passwordForm"); // Password form container
     const passwordInput = document.getElementById("passwordInput");
     const passwordForm = document.getElementById("passwordForm");
-    const submitPasswordButton = document.getElementById("submitPassword");
 
     // Populate Dropdown with Team Names
     const teamName = ["john", "marko", "thomas", "mihai", "ayush"];
@@ -546,13 +551,12 @@
 
     // Show Password Input on Dropdown Selection
     teamNameDropdown.addEventListener("change", () => {
+        console.log("Dropdown changed, selected value:", teamNameDropdown.value);
         if (teamNameDropdown.value) {
-            console.log("Name selected:", teamNameDropdown.value);
-            passwordContainer.style.display = "block"; // Ensure this matches your CSS expectations
+            passwordContainer.style.display = "block"; // Make the password container visible
         } else {
-            console.log("No name selected, hiding password input.");
-            passwordContainer.style.display = "none";
-            passwordInput.value = ""; // Clear the password input
+            passwordContainer.style.display = "none"; // Hide the password container if no name is selected
+            passwordInput.value = ""; // Clear the password input field
         }
     });
 
@@ -592,6 +596,7 @@
         }
     });
 });
+
 
     </script>
 
