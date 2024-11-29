@@ -216,10 +216,14 @@
         }
 
         #passwordForm {
-    display: none; /* Start hidden */
-    flex-direction: column; /* Ensure proper alignment when visible */
-    gap: 10px; /* Optional for spacing */
-}
+            display: none;
+            /* Start hidden */
+            flex-direction: column;
+            /* Ensure proper alignment when visible */
+            gap: 10px;
+            /* Optional for spacing */
+            display: block;
+        }
 
         #passwordContainer {
             display: flex;
@@ -328,12 +332,12 @@
             </select>
             <!-- Password Input -->
             <div id="passwordContainer" style="display: none;">
-                <input type="password" id="passwordInput" placeholder="Enter Password" 
-                       style="width: 100%; padding: 5px; margin-bottom: 10px;">
+                <input type="password" id="passwordInput" placeholder="Enter Password"
+                    style="width: 100%; padding: 5px; margin-bottom: 10px;">
                 <button id="submitPassword" style="padding: 5px; width: 100%;">Submit</button>
             </div>
         </div>
-        
+
     </div>
 
 
@@ -479,14 +483,13 @@
     </div>
 
     <script>
-        var AUDIT_LOG_VALIDATION_URL = "https://script.google.com/macros/s/AKfycbx9rLxReiU5G_xI2_jI_tDFAA3RhuTWdRQKlLAUn2WqSFsp1B6H0jQvG1jsSEhAEzuspA/exec?name=";
-        var auditLogUrl = validatePasswordUrl + "?name=";
+        var auditLogUrl = "https://script.google.com/macros/s/AKfycbyIfGDVW5Ngl3uQCz8XhVEMf1ZbrxEyZegqMRtp_fN1olOH-R_HB2_o8zcqshPK91rk/exec" + "?name=";
         const teamName = [
-            "john",
-            "marko",
-            "thomas",
-            "mihai",
-            "ayush",
+            "John",
+            "Marko",
+            "Thomas",
+            "Mihai",
+            "Ayush",
         ];
         const texts = [
             "Integrations",
@@ -512,7 +515,7 @@
 
         function toggleDropdown(targetNumber) {
             const extraContainer = document.getElementById(`extraContainer-${targetNumber}`);
-            placeholderText = document.getElementById(`placeholderText`);
+            const placeholderText = document.getElementById(`placeholderText`);
             const button = document.querySelector(`.dropdown-toggle[data-target="extraContainer-${targetNumber}"]`);
             const text = texts[targetNumber - 1];
 
@@ -528,86 +531,34 @@
             }
         }
 
-        // Initialize button text and add event listeners
-        document.querySelectorAll('.dropdown-toggle').forEach((button, index) => {
-            button.innerHTML = 'Show ' + texts[index];
-            const targetNumber = index + 1;
-            button.addEventListener('click', () => toggleDropdown(targetNumber));
-        });
-
-        //Audit log password functionality:
         document.addEventListener("DOMContentLoaded", () => {
-    const teamNameDropdown = document.getElementById("teamNameDropdown");
-    const passwordContainer = document.getElementById("passwordContainer");
-    const passwordInput = document.getElementById("passwordInput");
-    const submitPasswordButton = document.getElementById("submitPassword");
+            const teamNameDropdown = document.getElementById("teamNameDropdown");
 
-    // Check if elements exist in the DOM
-    if (!teamNameDropdown || !passwordContainer || !passwordInput || !submitPasswordButton) {
-        console.error("One or more required elements are missing in the DOM.");
-        return;
-    }
+            // Populate Dropdown with Team Names
+            teamName.forEach((name) => {
+                const option = document.createElement("option");
+                option.value = name;
+                option.textContent = name;
+                teamNameDropdown.appendChild(option);
+            });
 
-    // Populate Dropdown with Team Names
-    const teamName = ["john", "marko", "thomas", "mihai", "ayush"];
-    teamName.forEach((name) => {
-        const option = document.createElement("option");
-        option.value = name;
-        option.textContent = name;
-        teamNameDropdown.appendChild(option);
-    });
+            // Initialize button text and add event listeners
+            document.querySelectorAll('.dropdown-toggle').forEach((button, index) => {
+                button.innerHTML = 'Show ' + texts[index];
+                const targetNumber = index + 1;
+                button.addEventListener('click', () => toggleDropdown(targetNumber));
+            });
 
-    // Show Password Input on Dropdown Selection
-    teamNameDropdown.addEventListener("change", () => {
-        if (teamNameDropdown.value) {
-            console.log(`Dropdown changed: Selected ${teamNameDropdown.value}`);
-            passwordContainer.style.display = "block";
-        } else {
-            console.log("Dropdown cleared. Hiding password input.");
-            passwordContainer.style.display = "none";
-            passwordInput.value = ""; // Clear the input field
-        }
-    });
-
-    // Handle Password Submission
-    submitPasswordButton.addEventListener("click", async (event) => {
-  event.preventDefault();
-  const selectedName = teamNameDropdown.value;
-  const enteredPassword = passwordInput.value;
-
-  if (!selectedName || !enteredPassword) {
-    alert("Please select a name and enter a password.");
-    return;
-  }
-
-  try {
-    const response = await fetch(AUDIT_LOG_VALIDATION_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ password: enteredPassword }),
-    });
-
-    const data = await response.json();
-
-    if (data.status === 200) {
-      console.log(data.message); // "Password validated"
-      window.location.href = `${auditLogUrl}${selectedName}`;
-    } else {
-      console.error("Validation failed:", data.error);
-      alert(data.error || "Invalid password. Please try again.");
-      passwordInput.value = ""; // Clear the input field
-    }
-  } catch (err) {
-    console.error("Network or server error:", err);
-    alert("Unable to validate the password. Please try again later.");
-  }
-});
-});
-
-
-
-
+            // Redirect on dropdown selection
+            teamNameDropdown.addEventListener("change", () => {
+                if (teamNameDropdown.value) {
+                    console.log(`Redirecting to URL for ${teamNameDropdown.value}`);
+                    window.location.href = `${auditLogUrl}${teamNameDropdown.value}`;
+                }
+            });
+        });
     </script>
+
 
 
 
