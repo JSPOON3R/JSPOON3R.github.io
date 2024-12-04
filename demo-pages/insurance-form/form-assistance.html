@@ -24,7 +24,7 @@
             position: fixed;
             display: flex;
             justify-content: space-evenly;
-            align-items: center;
+            align-items: self-end;
             padding: 0;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
             height: 50px;
@@ -480,6 +480,143 @@
             cursor: not-allowed;
             border: 1px solid red;
             box-shadow: none;
+        }
+
+        /* Pop-up Overlay */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.5);
+            /* Semi-transparent background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            visibility: hidden;
+            /* Hidden by default */
+            opacity: 0;
+            transition: visibility 0s, opacity 0.3s ease-in-out;
+        }
+
+        /* Pop-up Container */
+        .popup {
+            background-color: #ffffff;
+            width: 300px;
+            max-width: 90%;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        /* Pop-up Title */
+        .popup h1 {
+            font-size: 30px;
+            color: #3d7aca;
+            margin-bottom: 15px;
+        }
+
+        /* Disclaimer Text */
+        .disclaimer {
+            font-size: 14px;
+            color: #555555;
+            margin-bottom: 20px;
+        }
+
+        /* PIN Container */
+        .pin-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .pin-digit {
+            font-size: 36px;
+            font-weight: bold;
+            color: #002147;
+            background-color: #f1f4ff;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 5px;
+            border: 2px solid #3d7aca;
+        }
+
+        /* Close Button */
+        .close-button {
+            background-color: #3d7aca;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 14px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .close-button:hover {
+            background-color: #005ea6;
+        }
+
+        /* Animation for Fade-in */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Dropdown Styling */
+        #nameDropdown {
+            width: 70%;
+            padding: 10px;
+            font-size: 14px;
+            color: #009EE1;
+            background-color: #F1F4FF;
+            /* Matches the input fields */
+            border: 1px solid #009EE1;
+            /* Matches the form borders */
+            border-radius: 4px;
+            box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+            /* Subtle shadow for a polished look */
+            font-family: Arial, sans-serif;
+            /* Matches the general page font */
+            appearance: none;
+            /* Removes default browser styles for dropdowns */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 5'%3E%3Cpath d='M0 0l5 5 5-5z' fill='%23009EE1'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 10px 5px;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Focus State */
+        #nameDropdown:focus {
+            border-color: #005ea6;
+            /* Darker shade for focus */
+            box-shadow: 0px 0px 4px rgba(0, 94, 166, 0.5);
+            /* Light blue glow for focus */
+            outline: none;
+        }
+
+        /* Disabled State */
+        #nameDropdown:disabled {
+            background-color: #e0e0e0;
+            color: #a1a1a1;
+            border-color: #d0d0d0;
+            cursor: not-allowed;
         }
     </style>
 </head>
@@ -1137,6 +1274,34 @@
                 </div>
             </div>
         </div>
+        <!--PIN POP UP-->
+        <div class="popup-overlay" id="pin-popup-overlay">
+            <div class="popup">
+                <h1>Co-browsing Support</h1>
+                <p class="disclaimer">Please share your <b>4 digit pin</b> with the Support Agent.
+                </p>
+                <div class="pin-container">
+                    <span class="pin-digit">1</span>
+                    <span class="pin-digit">2</span>
+                    <span class="pin-digit">3</span>
+                    <span class="pin-digit">4</span>
+                </div>
+            </div>
+        </div>
+        <!--NAME POP UP-->
+        <div class="popup-overlay" id="name-popup-overlay">
+            <div class="popup">
+                <select id="nameDropdown" class="dropdown">
+                    <option value="">-- Select Your Name --</option>
+                    <option value="marko">Marko</option>
+                    <option value="thomas">Thomas</option>
+                    <option value="ayush">Ayush</option>
+                    <option value="mihai">Mihai</option>
+                    <option value="john">John</option>
+                </select>
+                <button class="close-button" onclick="setNameAndWidgetKey()">Submit</button>
+            </div>
+        </div>
         <footer>
             <div class="footer-container">
                 <div class="footer-column">
@@ -1220,15 +1385,14 @@
                 </div>
 
                 <div class="footer-column">
-                    <h3>About Bupa</h3>
+                    <h3>Contact Us</h3>
                     <ul>
-                        <li><a href="https://www.bupa.co.uk/health-information">Health information</a></li>
-                        <li><a href="https://www.bupa.co.uk/health-information/a-to-z">A-Z</a></li>
-                        <li><a href="https://www.bupa.co.uk/health-information/health-topics">Health Topics</a></li>
-                        <li><a href="https://www.bupa.co.uk/health-information/health-blog">Health Blog</a></li>
-                        <li><a href="https://www.bupa.co.uk/health-information/cancer">Cancer</a></li>
-                        <li><a href="https://www.bupa.co.uk/health-information/dementia">Dementia</a></li>
-                        <li><a href="https://www.bupa.co.uk/health-information/mental-health">Mental health</a></li>
+                        <li><a>Co-browsing</a></li>
+                        <li><a>Co-browsing (with intake)</a></li>
+                        <li><a>Video Call</a></li>
+                        <li><a>Video & Co-browsing</a></li>
+                        <li><a>Pin escalation <i>default</i></a></li>
+                        <li><a>Pin escalation <i>custom</i></a></li>
                     </ul>
                 </div>
             </div>
@@ -1237,8 +1401,157 @@
 
     </div>
 
-
     <script>
+        var widgetKeys = {
+            "marko": "6e2bf5fe08de41ae9f24a75e37c2249a",
+            "thomas": "4af7f6620fbb4ab58d2c70f5d4fee0e6",
+            "john": "99671227762b43c2a96daa066ee006e2",
+            "mihai": "638a1769085c43029306423920b7ed59",
+            "ayush": "8816869ecf624d4483f6befd75cb2a1f",
+        };
+
+        var widgetKey = "";
+
+        // Define session settings variables
+        var coBrowsingSettings = { name: "Co-browsing Settings" };
+        var coBrowsingIntakeSettings = { name: "Co-browsing with Intake Settings" };
+        var videoCallSettings = { name: "Video Call Settings" };
+        var videoCobrowsingSettings = { name: "Video and Co-browsing Settings" };
+        var pinFlowDefault = { name: "Pin Escalation Default Settings" };
+        var pinFlowCustom = { name: "Pin Escalation Custom Settings" };
+
+        // Define a global SessionSettings variable
+        var SessionSettings;
+
+        // Event Listener for List Items
+        document.querySelectorAll("ul li a").forEach(function (link) {
+            link.addEventListener("click", function (event) {
+                var linkText = event.target.textContent.trim(); // Get the text of the clicked link
+
+                // Update SessionSettings based on clicked link
+                switch (linkText) {
+                    case "Co-browsing":
+                        SessionSettings = coBrowsingSettings;
+                        startSurflySession();
+                        break;
+                    case "Co-browsing (with intake)":
+                        SessionSettings = coBrowsingIntakeSettings;
+                        startSurflySession();
+                        break;
+                    case "Video Call":
+                        SessionSettings = videoCallSettings;
+                        startSurflySession();
+                        break;
+                    case "Video & Co-browsing":
+                        SessionSettings = videoCobrowsingSettings;
+                        startSurflySession();
+                        break;
+                    case "Pin escalation default":
+                        SessionSettings = pinFlowDefault;
+                        startSurflySession();
+                        break;
+                    case "Pin escalation custom":
+                        SessionSettings = pinFlowCustom;
+                        showPinPopup();
+                        break;
+                    default:
+                        console.log("No matching settings found for:", linkText);
+                }
+
+                // Log the updated SessionSettings for debugging
+                console.log("Updated SessionSettings:", SessionSettings);
+            });
+        });
+
+        // Function to get the query parameter value by name
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+        // Function to set the widgetKey if the name matches
+        function checkQueryAndSetWidgetKey() {
+            const name = getQueryParam("name");
+            if (name && widgetKeys.hasOwnProperty(name.toLowerCase())) {
+                widgetKey = widgetKeys[name.toLowerCase()];
+                console.log("Widget Key set to:", widgetKey);
+            } else {
+                showNamePopup();
+            }
+        }
+        // Show the name selection popup if no name param
+        function showNamePopup() {
+            const popupOverlay = document.getElementById('name-popup-overlay');
+            popupOverlay.style.visibility = 'visible';
+            popupOverlay.style.opacity = '1';
+        }
+
+        // Close the popup
+        function closeNamePopup() {
+            const popupOverlay = document.getElementById('name-popup-overlay');
+            popupOverlay.style.visibility = 'hidden';
+            popupOverlay.style.opacity = '0';
+        }
+
+        // Handle name selection from dropdown
+        function setNameAndWidgetKey() {
+            const selectedName = document.getElementById('nameDropdown').value;
+            if (selectedName && widgetKeys.hasOwnProperty(selectedName.toLowerCase())) {
+                widgetKey = widgetKeys[selectedName.toLowerCase()];
+                console.log("Widget Key set to:", widgetKey);
+                closeNamePopup();
+            } else {
+                alert("Please select a valid name.");
+            }
+        }
+
+        // Check for query parameter on load
+        window.onload = function () {
+            checkQueryAndSetWidgetKey();
+        };
+
+        //PIN POP UP
+        function showPinPopup() {
+            const popupOverlay = document.getElementById('pin-popup-overlay');
+            popupOverlay.style.visibility = 'visible';
+            popupOverlay.style.opacity = '1';
+        }
+
+        function closePinPopup() {
+            const popupOverlay = document.getElementById('pin-popup-overlay');
+            popupOverlay.style.visibility = 'hidden';
+            popupOverlay.style.opacity = '0';
+        }
+
+
+        function startSurflySession() {
+            (function (s, u, r, f, l, y) {
+                s[f] = s[f] || { init: function () { s[f].q = arguments } };
+                l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+                l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+            })(window, document, 'script', 'Surfly');
+
+            var SurflySession;
+            var settings = {
+                "widget_key": widgetKey,
+                "tags": [
+                    "form-assistance"
+                ]
+            };
+
+            Surfly.init(settings, function (init) {
+                if (init.success && !Surfly.isInsideSession) {
+                    console.log("init success");
+                    SurflySession = Surfly.session().create()
+                        .on("session_created", function (session, event) {
+                            SurflySession.startLeader();
+                        })
+                }
+            });
+        }
+    </script>
+    <script>
+        /*
+        //INTERCOM STUFF
         var visitorId;
         var socket;
         var surfly_triggered = false;
@@ -1288,63 +1601,65 @@
         // prevent this happening inside the session
         if (typeof Surfly === 'undefined' && surfly_triggered === false) {
             console.log('Surfly is not defined. Proceeding...');
-        var intercomReadyInterval = setInterval(function () {
-            if (typeof Intercom === 'function' && Intercom('getVisitorId')) {
-                visitorId = Intercom('getVisitorId');
-                console.log('Intercom is fully ready and visitorId is:', visitorId);
-                if (visitorId && visitorId.length > 0) {
-                    establishWebsocketSurfly();
-                } 
-                else if (surfly_triggered === true) {
-                clearInterval(intercomReadyInterval);
-                }
-                else {
-                    console.log("No visitor ID found.");
-                }
-                clearInterval(intercomReadyInterval);  // Stop checking once Intercom is ready
-            } else {
-                console.log('Waiting for Intercom to be ready...');
-            }
-        }, 1000);  // Check every 1 second
-
-        // WebSocket logic
-        function establishWebsocketSurfly() {
-            if (!socket || socket.readyState === WebSocket.CLOSED) {  // Check if WebSocket does not exist or is closed
-                socket = new WebSocket('wss://intercom-canvas-integration-352498dab82f.herokuapp.com/'); // Connect to Heroku WebSocket server using wss://
-
-                // On connection, send the visitorId to the server
-                socket.onopen = function () {
-                    console.log("Heroku WebSocket connection established...");
-                    socket.send(JSON.stringify({ action: 'register', visitorId }));
-                };
-
-                // Listen for messages from the server
-                socket.onmessage = function (event) {
-                    const data = JSON.parse(event.data);
-                    if (data.visitor_id === visitorId && data.action === 'execute_script' && surfly_triggered === false) {
-                        eval(data.script); // Only execute the script if it is for this customer
-                        surfly_triggered = true;
+            var intercomReadyInterval = setInterval(function () {
+                if (typeof Intercom === 'function' && Intercom('getVisitorId')) {
+                    visitorId = Intercom('getVisitorId');
+                    console.log('Intercom is fully ready and visitorId is:', visitorId);
+                    if (visitorId && visitorId.length > 0) {
+                        establishWebsocketSurfly();
                     }
-                };
+                    else if (surfly_triggered === true) {
+                        clearInterval(intercomReadyInterval);
+                    }
+                    else {
+                        console.log("No visitor ID found.");
+                    }
+                    clearInterval(intercomReadyInterval);  // Stop checking once Intercom is ready
+                } else {
+                    console.log('Waiting for Intercom to be ready...');
+                }
+            }, 1000);  // Check every 1 second
 
-                // Handle WebSocket connection errors
-                socket.onerror = function (error) {
-                    console.error("WebSocket error:", error);
-                };
+            // WebSocket logic
+            function establishWebsocketSurfly() {
+                if (!socket || socket.readyState === WebSocket.CLOSED) {  // Check if WebSocket does not exist or is closed
+                    socket = new WebSocket('wss://intercom-canvas-integration-352498dab82f.herokuapp.com/'); // Connect to Heroku WebSocket server using wss://
 
-                // Handle WebSocket closure
-                socket.onclose = function () {
-                    console.log("WebSocket connection closed.");
+                    // On connection, send the visitorId to the server
+                    socket.onopen = function () {
+                        console.log("Heroku WebSocket connection established...");
+                        socket.send(JSON.stringify({ action: 'register', visitorId }));
+                    };
+
+                    // Listen for messages from the server
+                    socket.onmessage = function (event) {
+                        const data = JSON.parse(event.data);
+                        if (data.visitor_id === visitorId && data.action === 'execute_script' && surfly_triggered === false) {
+                            eval(data.script); // Only execute the script if it is for this customer
+                            surfly_triggered = true;
+                        }
+                    };
+
+                    // Handle WebSocket connection errors
+                    socket.onerror = function (error) {
+                        console.error("WebSocket error:", error);
+                    };
+
+                    // Handle WebSocket closure
+                    socket.onclose = function () {
+                        console.log("WebSocket connection closed.");
+                    };
+                } else {
+                    console.log("WebSocket connection already exists or is still open.");
+                }
+
+                socket.onclose = function (event) {
+                    console.log(`WebSocket connection closed with code: ${event.code}, reason: ${event.reason}. Reconnecting...`);
+                    setTimeout(establishWebsocketSurfly, 3000);  // Reconnect after 3 seconds
                 };
-            } else {
-                console.log("WebSocket connection already exists or is still open.");
             }
-
-            socket.onclose = function (event) {
-                console.log(`WebSocket connection closed with code: ${event.code}, reason: ${event.reason}. Reconnecting...`);
-                setTimeout(establishWebsocketSurfly, 3000);  // Reconnect after 3 seconds
-            };
-        }};
+        };
+        */
     </script>
 
 </body>
