@@ -36,7 +36,7 @@
         input[type="text"],
         input[type="email"] {
             width: 100%;
-            padding: 0px;
+            padding: 8px;
             margin: 10px 0;
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -70,15 +70,45 @@
             background-color: #45a049;
         }
 
-        @media (max-width: 600px) {
-            .container {
-                padding: 15px;
-            }
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
 
-            input,
-            canvas {
-                font-size: 1rem;
-            }
+        .modal-content {
+            background-color: #fff;
+            margin: 15% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 80%;
+            max-width: 400px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+        }
+
+        #file-name {
+            margin-top: 10px;
+            font-size: 1rem;
+            color: #555;
         }
     </style>
 </head>
@@ -99,10 +129,25 @@
                 <label for="signature">Signature:</label>
                 <canvas id="signature"></canvas>
             </div>
+
             <button type="button" onclick="clearSignature()">Clear</button>
             <button type="button" onclick="submitForm()">Submit</button>
+
+            <!-- Button to open the modal -->
+            <button type="button" onclick="openModal()">Upload File</button>
+
+            <!-- Display uploaded file name -->
+            <p id="file-name"></p>
         </form>
-      <!-- <button type="button" onclick="startSession()" style="background-color:red">TEST</button> --> 
+    </div>
+
+    <!-- Modal -->
+    <div id="fileModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h3>Upload a File</h3>
+            <input type="file" id="fileInput" onchange="displayFileName()">
+        </div>
     </div>
 
     <script>
@@ -120,9 +165,8 @@
             ctx.lineCap = 'round';
             ctx.strokeStyle = '#000';
 
-            const rect = canvas.getBoundingClientRect();
-            const x = event.clientX - rect.left;
-            const y = event.clientY - rect.top;
+            const x = event.offsetX;
+            const y = event.offsetY;
 
             ctx.lineTo(x, y);
             ctx.stroke();
@@ -153,74 +197,34 @@
             alert('Form submitted!');
         }
 
+        // Modal functions
+        function openModal() {
+            document.getElementById('fileModal').style.display = 'block';
+        }
 
+        function closeModal() {
+            document.getElementById('fileModal').style.display = 'none';
+        }
+
+        function displayFileName() {
+            const fileInput = document.getElementById('fileInput');
+            const fileNameDisplay = document.getElementById('file-name');
+            if (fileInput.files.length > 0) {
+                fileNameDisplay.textContent = `File uploaded: ${fileInput.files[0].name}`;
+                closeModal();
+            } else {
+                fileNameDisplay.textContent = '';
+            }
+        }
+
+        // Close modal if clicking outside of it
+        window.onclick = function (event) {
+            const modal = document.getElementById('fileModal');
+            if (event.target === modal) {
+                closeModal();
+            }
+        }
     </script>
-
-<!--
-    <script>
-        //SURFLY CODE
-
-        function startSession() {
-
-            (function (s, u, r, f, l, y) {
-                s[f] = s[f] || { init: function () { s[f].q = arguments } };
-                l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
-                l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
-            })(window, document, 'script', 'Surfly');
-
-            var SurflySession;
-            var settings = {
-                "url": "https://demo.surfly.com/company/Altshul/altshul_please_wait.html",
-                "block_until_agent_joins": false, //allow the customer to browse while they wait
-                "start_with_loading_screen": false, //remove Surfly red loading screen from session
-                "chat_enabled": true,
-                "default_invitations_enabled": false,
-                "start_with_invite_modal": false,
-                "skip_queue": true, //do not place interaction into Surfly queue
-                "document_editor_enabled": false,
-                "download_trigger_enabled": false,
-                "filesharing_enabled": false,
-                "host_switching_allowed": true,
-                "invitations_allowed": true,
-                "new_urls_allowed": true,
-                "non_hosts_can_open_tabs": true,
-                "original_file_download_allowed": false,
-                "screensharing_enabled": true,
-                "session_start_confirmation": true,
-                "session_start_confirmation": true, //give the cusotmer a step to understand they will start co-browsing
-                "url_mangling": true, //ensure the sessions commits nothing in Agent's browser local memory 
-                "videochat_enabled": false,
-                "allow_opening_urls_from_query_parameter": true, //to enable the agent to open a new tab with the join link
-                "widget_key": "99671227762b43c2a96daa066ee006e2",
-                "tags": [
-                    "Session-Builder"
-                ]
-            };
-
-            Surfly.init(settings, function (init) {
-                if (init.success && !Surfly.isInsideSession) {
-                    console.log("init success");
-                    SurflySession = Surfly.session().create()
-                        .on("session_created", function (session, event) {
-                            SurflySession.startLeader();
-                        })
-                        .on("session_started", function (session, event) {
-                            window.alert("join link copied to clipboard");
-                            navigator.clipboard.writeText(session.followerLink + "?url=https://demo.surfly.com/company/Altshul/altshul_button.html").catch(function (err) {
-                                console.error("Failed to copy the link: ", err);
-                            });
-                        })
-                        .on('host_changed', function (session, event) {
-                            //for troubleshooting / visibility
-                            console.log("host rights obtained: ", event.gained);
-                            console.log("New host: ", event.to);
-                            console.log("My index: ", event.myIndex);
-                        })
-                }
-            });
-        };
-    </script>
--->
 </body>
 
 </html>
