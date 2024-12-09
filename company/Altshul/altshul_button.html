@@ -133,7 +133,6 @@
             </div>
 
             <button type="button" onclick="clearSignature()">Clear</button>
-            <button type="button" onclick="submitForm()">Submit</button>
 
             <!-- Button to open the modal -->
             <button type="button" onclick="openModal()">Upload File</button>
@@ -186,25 +185,6 @@
 
         function clearSignature() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
-
-        function submitForm() {
-            const name = document.getElementById('name').value;
-            const email = document.getElementById('email').value;
-            const signatureData = canvas.toDataURL();
-
-            if (!name || !email || signatureData === canvas.toDataURL()) {
-                alert('Please fill out all fields and provide a signature.');
-                return;
-            }
-
-            console.log({
-                name: name,
-                email: email,
-                signature: signatureData
-            });
-
-            alert('Form submitted!');
         }
 
         // Modal functions
