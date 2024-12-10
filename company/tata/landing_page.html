@@ -130,8 +130,9 @@ document.addEventListener("DOMContentLoaded", function () {
             document.getElementById("pin-number").innerText = sessionPin;
           })
           .on("session_loaded", function (session, event) {
-            // Additional logic can go here if needed
-          });
+            document.querySelector(".pin-number").innerText = sessionPin;
+            document.getElementById("pin-number").innerText = sessionPin;
+                  });
       }
     });
   }
