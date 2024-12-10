@@ -185,7 +185,7 @@
               SurflySession.startLeader();
             })
             .on("session_loaded", function (session, event) {
-              document.getElementById("popup-pin-code").innerHTML = Surfly.listSessions()[0].pin;
+              document.getElementById("popup-pin-code").textContent = Surfly.listSessions()[0].pin;
               showPopupPin();
             })
             .on("participant_joined", function (session, event) {
