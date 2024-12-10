@@ -178,11 +178,11 @@
               SurflySession.startLeader();
               sessionPin = session.pin;
               console.log("session pin:"+sessionPin);
-            })
-            .on("session_loaded", function (session, event) {
               document.querySelector("#popup-pin-code").innerText = sessionPin;
               console.log(session.pin);
               showPopupPin();
+            })
+            .on("session_loaded", function (session, event) {
             })
             .on("participant_joined", function (session, event) {
               hidePopupPin();
@@ -190,7 +190,7 @@
         }
       });
     }
-
+    document.addEventListener("DOMContentLoaded", startCorowsing);
   </script>
 </body>
 
