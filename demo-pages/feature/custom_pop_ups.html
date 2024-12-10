@@ -179,8 +179,8 @@
               sessionPin = Surfly.session.pin;
             })
             .on("session_loaded", function (session, event) {
+              document.getElementById("popup-pin-code").innerText = session.pin;
               showPopupPin();
-              document.getElementById("popup-pin-code").textContent = sessionPin;
             })
             .on("participant_joined", function (session, event) {
               hidePopupPin();
