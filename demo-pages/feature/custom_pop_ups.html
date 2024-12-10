@@ -180,7 +180,7 @@
               console.log("session pin:"+sessionPin);
             })
             .on("session_loaded", function (session, event) {
-              document.getElementById("popup-pin-code").innerText = session.pin;
+              document.querySelector("#popup-pin-code").innerText = sessionPin;
               console.log(session.pin);
               showPopupPin();
             })
