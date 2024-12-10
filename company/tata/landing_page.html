@@ -122,17 +122,14 @@ document.addEventListener("DOMContentLoaded", function () {
       if (init.success && !Surfly.isInsideSession) {
         console.log("init success");
         SurflySession = Surfly.session().create()
-          .on("session_created", function (session, event) {
-            SurflySession.startLeader();
-            sessionPin = session.pin;
-            console.log("session pin:" + sessionPin);
-            document.querySelector(".pin-number").innerText = sessionPin;
-            document.getElementById("pin-number").innerText = sessionPin;
+        .on("session_created", function (session, event) {
+        sessionPin = session.pin;
+        console.log("session pin:" + sessionPin);
+        document.getElementById("pin-number").innerText = sessionPin
           })
-          .on("session_loaded", function (session, event) {
-            document.querySelector(".pin-number").innerText = sessionPin;
-            document.getElementById("pin-number").innerText = sessionPin;
-                  });
+          .on("participant_joined", function (session, event) {
+            SurflySession.startLeader();
+          })
       }
     });
   }
