@@ -127,7 +127,7 @@
       <p class="popup-text">Please wait for your agent to join</p>
       <p class="popup-pin-code"></p>
       <div class="popup-buttons">
-        <button class="popup-btn cancel-btn" onclick="hidePopupConsent()">End Session</button>
+        <button class="popup-btn cancel-btn" onclick="endSession()">End Session</button>
       </div>
     </div>
   </div>
@@ -190,6 +190,10 @@
             })
         }
       });
+    }
+
+    function endSession() {
+      Surflysession.endSession();
     }
   </script>
 </body>
