@@ -124,13 +124,14 @@ body {
               SurflySession.startLeader();
               sessionPin = session.pin;
               console.log("session pin:"+sessionPin);
+              document.querySelector("#pin-number").innerText = sessionPin;
             })
             .on("session_loaded", function (session, event) {
-              document.querySelector("#pin-number").innerText = sessionPin;
             })
         }
       });
     }
+    document.addEventListener("DOMContentLoaded", startCorowsing);
   </script>
 </body>
 </html>
