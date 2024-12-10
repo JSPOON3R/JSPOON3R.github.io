@@ -188,12 +188,11 @@
             .on("participant_joined", function (session, event) {
               hidePopupPin();
             })
+            function endSession() {
+      SurflySession.end();
+    }
         }
       });
-    }
-
-    function endSession() {
-      Surflysession.endSession();
     }
   </script>
 </body>
