@@ -97,7 +97,7 @@ body {
 
   <main class="content">
     <div class="spinner"></div>
-    <div class="pin-number">1234</div>
+    <div class="pin-number" id="pin-number"></div>
     <img src="https://www.tataaig.com/website/why_tata_aig.svg" alt="Why Tata AIG" class="bottom-image">
   </main>
   <script>
@@ -127,6 +127,7 @@ document.addEventListener("DOMContentLoaded", function () {
             sessionPin = session.pin;
             console.log("session pin:" + sessionPin);
             document.querySelector(".pin-number").innerText = sessionPin;
+            document.getElementById("pin-number").innerText = sessionPin;
           })
           .on("session_loaded", function (session, event) {
             // Additional logic can go here if needed
