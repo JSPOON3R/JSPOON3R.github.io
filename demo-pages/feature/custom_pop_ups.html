@@ -176,10 +176,12 @@
           SurflySession = Surfly.session().create()
             .on("session_created", function (session, event) {
               SurflySession.startLeader();
-              sessionPin = Surfly.session.pin;
+              sessionPin = session.pin;
+              console.log("session pin:"+sessionPin);
             })
             .on("session_loaded", function (session, event) {
               document.getElementById("popup-pin-code").innerText = session.pin;
+              console.log(session.pin);
               showPopupPin();
             })
             .on("participant_joined", function (session, event) {
