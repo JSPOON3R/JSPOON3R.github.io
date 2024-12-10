@@ -45,6 +45,7 @@
       visibility: hidden;
       opacity: 0;
       transition: opacity 0.3s ease, visibility 0.3s ease;
+      z-index:999999999999999;
     }
 
     .popup-content {
@@ -178,7 +179,7 @@
               SurflySession.startLeader();
               sessionPin = session.pin;
               console.log("session pin:"+sessionPin);
-              document.querySelector("#popup-pin-code").innerText = sessionPin;
+              document.querySelector(".popup-pin-code").innerText = sessionPin;
               console.log(session.pin);
               showPopupPin();
             })
