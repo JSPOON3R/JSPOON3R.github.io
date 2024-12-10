@@ -125,7 +125,7 @@
   <div class="popup-p" id="popup-pin">
     <div class="popup-content">
       <p class="popup-text">Please wait for your agent to join</p>
-      <p class="popup-pin-code"></p>
+      <p class="popup-pin-code" id="popup-pin-code"></p>
       <div class="popup-buttons">
         <button class="popup-btn cancel-btn" onclick="endSession()">End Session</button>
       </div>
@@ -167,7 +167,8 @@
       var sessionPin;
       var settings = {
         widget_key: "d97af65cf4d24a7f86783f8cd38cfe8e",
-        block_until_agent_joins: false
+        block_until_agent_joins: false,
+        session_autorestore_enabled: false
         //Disable the default Surfly pin code pop up
       };
 
