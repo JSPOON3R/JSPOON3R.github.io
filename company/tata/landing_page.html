@@ -128,8 +128,12 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById("pin-number").innerText = sessionPin
           })
           .on("participant_joined", function (session, event) {
+            console.log("participant_joined");
             SurflySession.startLeader();
-            SurflySession.relocate("https://www.tataaig.com/")
+          })
+          .on("session_loaded", function (session, event) {
+            console.log("session_loaded");
+            SurflySession.relocate("https://www.tataaig.com/");
           })
       }
     });
