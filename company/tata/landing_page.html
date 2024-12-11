@@ -113,8 +113,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var SurflySession;
     var sessionPin;
     var settings = {
-      widget_key: "8816869ecf624d4483f6befd75cb2a1f",
-      url: "https://www.tataaig.com/",
+      widget_key: "99671227762b43c2a96daa066ee006e2",
       block_until_agent_joins: false,
       videochat: false
     };
@@ -130,7 +129,7 @@ document.addEventListener("DOMContentLoaded", function () {
           })
           .on("participant_joined", function (session, event) {
             SurflySession.startLeader();
-            SurflySession.openTab("https://www.tataaig.com/")
+            SurflySession.relocate("https://www.tataaig.com/")
           })
       }
     });
