@@ -1,94 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Start a Shared Browsing Session</title>
-<style>
+  <style>
     /* Base reset */
-body {
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  background-color: #F5F5F5;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, 
-               "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  color: #071E54;
-  overflow: hidden; /* Prevent scrolling */
-}
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: #F5F5F5;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial,
+        "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      color: #071E54;
+      overflow: hidden;
+      /* Prevent scrolling */
+    }
 
-/* Header styling */
-.header {
-  position: absolute;
-  top: 20px;
-  left: 20px;
-  display: flex;
-  align-items: center;
-}
+    /* Header styling */
+    .header {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      align-items: center;
+    }
 
-.logo {
-  height: 100px;
-  margin-right: 50px;
-}
+    .logo {
+      height: 100px;
+      margin-right: 50px;
+    }
 
-.title {
-  font-size: 1.8rem;
-  font-weight: lighter;
-  color: #071E54;
-}
+    .title {
+      font-size: 1.8rem;
+      font-weight: lighter;
+      color: #071E54;
+    }
 
-/* Main content styling */
-.content {
-  text-align: center;
-  position: relative;
-  width: 100%;
-  height: 100%;
-  display: flex
-;
-    flex-direction: column;
-    align-items: center;
-}
+    /* Main content styling */
+    .content {
+      text-align: center;
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-/* Spinner (loading wheel) */
-.spinner {
-  width: 50px;
-  height: 50px;
-  border: 6px solid #516081;
-  border-top: 6px solid #264A9F;
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-top: 15%;
-}
+    /* Spinner (loading wheel) */
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 6px solid #516081;
+      border-top: 6px solid #264A9F;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-top: 15%;
+    }
 
-/* Spinner animation */
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
+    /* Spinner animation */
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
 
-/* Large 4-digit pin number */
-.pin-number { 
-    font-size: 9rem;
-    font-weight: bold;
-    color: #264A9F;
-    margin-bottom:50px;
-}
+      to {
+        transform: rotate(360deg);
+      }
+    }
 
-/* Bottom image styling */
-.bottom-image {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  max-width: 2600px;
-}
+    /* Large 4-digit pin number */
+    .pin-number {
+      font-size: 9rem;
+      font-weight: bold;
+      color: #264A9F;
+      margin-bottom: 50px;
+    }
 
-</style>
+    /* Bottom image styling */
+    .bottom-image {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      max-width: 2600px;
+    }
+  </style>
 </head>
+
 <body>
   <header class="header">
     <img src="https://www.tataaig.com/logo-min.png" alt="Logo" class="logo">
@@ -102,38 +108,44 @@ body {
   </main>
   <script>
 
-document.addEventListener("DOMContentLoaded", function () {
-  function startCorowsing() {
-    (function (s, u, r, f, l, y) {
-      s[f] = s[f] || { init: function () { s[f].q = arguments } };
-      l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
-      l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
-    })(window, document, 'script', 'Surfly');
+    document.addEventListener("DOMContentLoaded", function () {
+      function startCorowsing() {
+        (function (s, u, r, f, l, y) {
+          s[f] = s[f] || { init: function () { s[f].q = arguments } };
+          l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+          l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+        })(window, document, 'script', 'Surfly');
 
-    var SurflySession;
-    var sessionPin;
-    var settings = {
-      widget_key: "99671227762b43c2a96daa066ee006e2",
-      hide_until_agent_joins: true,
-      block_until_agent_joins:false,
-      videochat: false
-    };
+        var SurflySession;
+        var sessionPin;
+        var settings = {
+          widget_key: "99671227762b43c2a96daa066ee006e2",
+          hide_until_agent_joins: true,
+          block_until_agent_joins: false,
+          videochat: false,
+          session_start_confirmation: false
 
-    Surfly.init(settings, function (init) {
-      if (init.success && !Surfly.isInsideSession) {
-        console.log("init success");
-        SurflySession = Surfly.session().create()
-        .on("session_created", function (session, event) {
-        sessionPin = session.pin;
-        console.log("session pin:" + sessionPin);
-        document.getElementById("pin-number").innerText = sessionPin
-          })
-          .startLeader();
+        };
+
+        Surfly.init(settings, function (init) {
+          if (init.success && !Surfly.isInsideSession) {
+            console.log("init success");
+            SurflySession = Surfly.session().create()
+              .on("session_created", function (session, event) {
+                sessionPin = session.pin;
+                console.log("session pin:" + sessionPin);
+                document.getElementById("pin-number").innerText = sessionPin
+              })
+              .startLeader()
+              .on("participant_joined", function (session, event) {
+                Surflysession.relocate("https://www.tataaig.com/");
+              })
+          }
+        });
       }
+      startCorowsing();
     });
-  }
-startCorowsing();
-});
   </script>
 </body>
+
 </html>
