@@ -156,14 +156,13 @@
 
     //SURFLY JAVASCRIPT
 
+    var SurflySession;
     function startCorowsing() {
       (function (s, u, r, f, l, y) {
         s[f] = s[f] || { init: function () { s[f].q = arguments } };
         l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
         l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
       })(window, document, 'script', 'Surfly');
-
-      var SurflySession;
       var sessionPin;
       var settings = {
         widget_key: "d97af65cf4d24a7f86783f8cd38cfe8e",
