@@ -130,6 +130,7 @@ document.addEventListener("DOMContentLoaded", function () {
           })
           .on("participant_joined", function (session, event) {
             SurflySession.startLeader();
+            SurflySession.openTab("https://www.tataaig.com/")
           })
       }
     });
