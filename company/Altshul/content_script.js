@@ -1,43 +1,78 @@
+console.log("Extension loaded");
 document.addEventListener('DOMContentLoaded', function () {
+
+    const signature_box_1 = document.getElementById("signature");
+    const signature_box_2 = document.getElementById("signature");
+    const signature_box_3 = document.getElementById("signature");
+
+
+    function disableSignatureBox() {
+        if (typeof signature_box_1 !== 'undefined' && signature_box_1) {
+            signature_box_1.style.backgroundColor = "#d3d3d3";
+            signature_box_1.style.cursor = "not-allowed";
+            signature_box_1.style.pointerEvents = "none";
+        }
+    
+        if (typeof signature_box_2 !== 'undefined' && signature_box_2) {
+            signature_box_2.style.backgroundColor = "#d3d3d3";
+            signature_box_2.style.cursor = "not-allowed";
+            signature_box_2.style.pointerEvents = "none";
+        }
+    
+        if (typeof signature_box_3 !== 'undefined' && signature_box_3) {
+            signature_box_3.style.backgroundColor = "#d3d3d3";
+            signature_box_3.style.cursor = "not-allowed";
+            signature_box_3.style.pointerEvents = "none";
+        }
+    }
+    
+
+    function enableSignatureBox() {
+        if (typeof signature_box_1 !== 'undefined' && signature_box_1) {
+            signature_box_1.style.backgroundColor = "";
+            signature_box_1.style.cursor = "";
+            signature_box_1.style.pointerEvents = "";
+        }
+    
+        if (typeof signature_box_2 !== 'undefined' && signature_box_2) {
+            signature_box_2.style.backgroundColor = "";
+            signature_box_2.style.cursor = "";
+            signature_box_2.style.pointerEvents = "";
+        }
+    
+        if (typeof signature_box_3 !== 'undefined' && signature_box_3) {
+            signature_box_3.style.backgroundColor = "";
+            signature_box_3.style.cursor = "";
+            signature_box_3.style.pointerEvents = "";
+        }
+    }
+    
+
+    disableSignatureBox();
+    console.log("Signature field disabled for Agent on start");
+
     surflyExtension.surflySession.onMessage.addListener((message) => {
-        if (message.event_type === "participant_joined") {
-            if (message) {
-                console.log("message:");
-                console.log(message.origin);
-                setTimeout(function () {
-                    window.close();
-                    surflyExtension.surflySession.apiRequest({
-                        cmd: 'make_host',
-                        to: 1
-                    });
-                }, 2000);
-            } else {
-                console.log("No message");
+        if (message.event_type === "tab_control") {
+            console.log("tab_control", message);
+            // If the leader (Agent) has gained control...
+            if (message.controlIndex === message.leaderIndex) {
+                disableSignatureBox();
+                // If the follower (Customer) has gained control...
+            } else if (message.controlIndex !== message.leaderIndex) {
+                enableSignatureBox();
             }
         }
     });
-    //define signature box
-    var signature_box = document.getElementById("signature");
 
-    // Add a click event listener to the signature box
-    signature_box.addEventListener("click", function () {
-        console.log("signature box was clicked!");
-        surflyExtension.surflySession.apiRequest({
-            cmd: 'transfer_tab_control',
-            to: 0
-        });
-    });
-    // Set a timeout for 2 seconds to stop the agent signing in a single action
-    signature_box.addEventListener("mouseenter", function () {
-        hoverTimeout = setTimeout(function () {
-            console.log("Mouse hovered over signature for more than 2 seconds");
-            surflyExtension.surflySession.apiRequest({
-                cmd: 'transfer_tab_control',
-                to: 0
-            });
-        }, 2000);
-    });
+
+    surflyExtension.surflySession.onMessage.addListener((message) => {
+        if (message.event_type === "participant_left") {
+            console.log(message);
+            if (message.origin === 0) {
+                console.log("do something");
+            } 
+        }
+    })
+
 });
-
-
 

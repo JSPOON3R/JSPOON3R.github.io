@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsive Tile Layout</title>
+    <style>
+        /* STRUCTURE */
+        :root {
+            --light-red: #e54747;
+            --dark-red: #c72323;
+            --light-blue: #7cadbf;
+            --blue: #2288ad;
+            --dark-blue: #166e8e;
+            --yellow: #f4c344;
+            --orange: #fd942a;
+            --light-green: #7dc05a;
+            --dark-green: #48a418;
+            --darkest-grey: #4d4d4d;
+            --dark-grey: #757575;
+            --grey: #b2b2b2;
+            --light-grey: #d8dada;
+            --lightest-grey: #eff0f0;
+            --off-white: #f9f9f9;
+            --white: #ffffff;
+            --black: #000000;
+            --background: #2f2f2f;
+            --font: 'Nunito', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body {
+            height: 100%;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            display: grid;
+            grid-template-columns: 1fr;
+            grid-template-rows: 1fr;
+            overflow: hidden;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 20% auto 20%;
+            grid-template-rows: 1fr;
+            height: 100vh;
+            width: 100vw;
+            padding: 20px;
+            gap: 10px;
+            /* Adds spacing between tiles */
+        }
+
+        /* Left and Right column tiles */
+        .left-column,
+        .right-column {
+            display: grid;
+            grid-template-rows: repeat(3, 1fr);
+            height: 100%;
+            gap: 10px;
+            /* Adds spacing between stacked tiles */
+        }
+
+        /* Center large tile */
+        .center-column {
+            height: 100%;
+        }
+
+        .tile {
+            background-color: var(--lightest-grey);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+            border: 1px solid #fff;
+            border-radius: 10px;
+            /* Rounds the borders */
+            overflow: hidden;
+            /* Ensures content does not escape */
+        }
+
+        /* Hover animation only for small tiles */
+        .left-column .tile:hover,
+        .right-column .tile:hover {
+            transform: scale(1.03);
+        }
+
+        /* No hover effect for the large tile */
+        .center-column .tile {
+            transition: none;
+        }
+
+        /* For Mobile View */
+        @media (max-width: 768px) {
+            .container {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: 20% 60% 20%;
+                height: 100vh;
+                width: 100vw;
+                gap: 12px;
+            }
+
+            /* Small tiles at top (1, 2, 3) */
+            .left-column {
+                grid-column: 1 / 4;
+                grid-row: 1;
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: 1fr;
+                gap: 10px;
+            }
+
+            /* Center large tile in the middle row */
+            .center-column {
+                grid-column: 1 / 4;
+                grid-row: 2;
+                height: 100%;
+            }
+
+            /* Small tiles at bottom (4, 5, 6) */
+            .right-column {
+                grid-column: 1 / 4;
+                grid-row: 3;
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: 1fr;
+                gap: 10px;
+            }
+
+            .tile {
+                width: 100%;
+                height: 100%;
+            }
+        }
+
+        /* STRUCTURE END */
+        /* TILE 1 */
+
+        .tile1 .button-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+            gap: 10px;
+            height: 100%;
+            width: 100%;
+        }
+
+        .icon-button {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: var(--lightest-grey);
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .icon-button:hover {
+            background-color: var(--light-grey);
+        }
+
+        .icon-button img {
+            max-width: 50%;
+            max-height: 50%;
+        }
+
+        /* TILE 1 */
+
+        /* BIG TILE */
+        #search-container {
+            display: flex;
+            align-items: start;
+            border-radius: 15px;
+            justify-content: start;
+            overflow: hidden;
+            margin-bottom: 40px;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+            width: 80%;
+        }
+
+        #search-input {
+            width: 90%;
+            padding: 15px;
+            padding-left: 20px;
+            border: none;
+            border-radius: 15px 0 0 15px;
+            outline: none;
+            font-size: 1em;
+        }
+
+        #search-button {
+            width: 10%;
+            padding: 15px 20px;
+            border: none;
+            height: 100%;
+            border-radius: 0 15px 15px 0;
+            background-color: #ffffff;
+            color: #333;
+            font-size: 0.8em;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            outline: none;
+        }
+
+        #search-button:hover {
+            background-color: #f1f1f1;
+        }
+
+        .flex-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
+        }
+
+        /* BIG TILE */
+
+        /* Add Notes Tile (Sticky Note) */
+        .note-tile {
+            position: relative;
+            padding: 15px;
+            background-color: var(--lightest-grey);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .note-textarea {
+            flex-grow: 1;
+            width: 100%;
+            height: 80%;
+            border: 1px solid var(--light-grey);
+            background-color: var(--off-white);
+            font-size: 1rem;
+            color: var(--darkest-grey);
+            resize: none;
+            outline: none;
+            padding: 10px;
+            border-radius: 5px;
+        }
+
+        /* Add Note Button */
+        .add-note-button {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background-color: var(--dark-blue);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .add-note-button:hover {
+            background-color: var(--blue);
+        }
+
+        /* Note tile */
+
+        /* Agenda Tile */
+
+/* Agenda Tile */
+/* Agenda Tile */
+.agenda-tile {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    background-color: var(--lightest-grey);
+    overflow: hidden;
+    height: 300px; /* Fixed height for the agenda tile */
+    width: 100%; /* Ensures it takes full available width */
+    box-sizing: border-box; /* Ensure padding is included in the height calculation */
+}
+
+.agenda-list {
+    flex-grow: 1;
+    overflow-y: auto; /* Enable vertical scrolling if content exceeds height */
+    margin-bottom: 20px;
+    padding-right: 5px; /* Prevent content from being hidden by the scrollbar */
+    max-height: calc(100% - 40px); /* Ensure it doesn't exceed the container's height */
+}
+
+.agenda-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: var(--off-white);
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    color: var(--darkest-grey);
+    height: 50px;
+    min-height: 50px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    transition: opacity 0.3s ease;
+}
+
+.agenda-number {
+    margin-right: 10px;
+    font-weight: lighter;
+    color: var(--grey);
+}
+
+.agenda-text {
+    flex-grow: 1;
+    margin-right: 20px;
+    border: none;
+    background-color: transparent;
+    outline: none;
+    font-size: 1rem;
+    color: var(--darkest-grey);
+    height: 100%;
+    border-bottom: none; /* Remove underline during editing */
+}
+
+.agenda-text:focus {
+    border-bottom: none;
+}
+
+/* Checkbox styles */
+.agenda-checkbox {
+    height: 100%;
+    width: 30px;
+    background-color: var(--off-white);
+    background-image: none;
+    border: 1px solid var(--grey);
+    border-radius: 3px;
+    cursor: pointer;
+    appearance: none;
+    outline: none;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.agenda-checkbox:checked {
+    background-color: var(--lightest-grey);
+    background-image: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="%2348a418" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"%3E%3Cpolyline points="20 6 9 17 4 12" /%3E%3C/svg%3E');
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 2px solid var(--dark-green);
+}
+
+/* Small X button */
+.remove-agenda-item {
+    background: none;
+    border: none;
+    color: var(--light-red);
+    padding: 0;
+    cursor: pointer;
+    margin-left: 10px;
+    font-size: .8rem;
+    opacity:50%;
+    height: 100%;
+    line-height: 1;
+    transition: opacity 0.3s ease;
+}
+
+.remove-agenda-item:hover {
+    color: var(--light-red);
+}
+
+.add-agenda-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: var(--dark-blue);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.3s ease;
+}
+
+.add-agenda-button:hover {
+    background-color: var(--light-green);
+}
+
+/* Scrollbar */
+.agenda-list::-webkit-scrollbar {
+    width: 5px;
+}
+
+.agenda-list::-webkit-scrollbar-thumb {
+    background-color: var(--grey);
+    border-radius: 10px;
+}
+
+    
+        /* Agenda Tile */
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Left Column Tiles (for Desktop) -->
+        <div class="left-column">
+            <div class="tile tile1">
+                <div class="button-grid">
+                    <button class="icon-button">
+                        <img src="" alt="Screen Share">
+                    </button>
+                    <button class="icon-button">
+                        <img src="" alt="Upload Document">
+                    </button>
+                    <button class="icon-button">
+                        <img src="" alt="Stream Camera">
+                    </button>
+                    <button class="icon-button">
+                        <img src="" alt="?">
+                    </button>
+                </div>
+            </div>
+            <div class="tile agenda-tile">
+                <div class="agenda-list" id="agenda-list">
+                    <div class="agenda-item">
+                        <span class="agenda-number">1</span>
+                        <input type="text" class="agenda-text" value="Agenda Item 1">
+                        <input type="checkbox" class="agenda-checkbox">
+                        <button class="remove-agenda-item">X</button>
+                    </div>
+                </div>
+                <button class="add-agenda-button" id="add-agenda-button">+</button>
+            </div>
+            
+            
+
+
+            <div class="tile note-tile">
+                <textarea class="note-textarea" placeholder="Add notes to session..."></textarea>
+                <button class="add-note-button">+</button>
+            </div>
+        </div>
+
+        <!-- Center Large Tile -->
+        <div class="center-column">
+            <div class="tile" style="height: 100%;">
+                <div class="flex-container">
+                    <div id="search-container">
+                        <input id="search-input" type="text" placeholder="Search...">
+                        <button id="search-button">❯</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column Tiles (for Desktop) -->
+        <div class="right-column">
+            <div class="tile">Technical Info</div>
+            <div class="tile">Something else</div>
+            <div class="tile">Snake</div>
+        </div>
+    </div>
+</body>
+<script>
+    //AGENDA TILE
+
+ // Get references to the agenda list and add button
+const agendaList = document.getElementById('agenda-list');
+const addAgendaButton = document.getElementById('add-agenda-button');
+
+// Function to add a new agenda item
+function addAgendaItem() {
+    // Create a new agenda item div
+    const newItem = document.createElement('div');
+    newItem.classList.add('agenda-item');
+
+    // Create the number span
+    const numberSpan = document.createElement('span');
+    numberSpan.classList.add('agenda-number');
+    numberSpan.textContent = agendaList.children.length + 1;
+
+    // Create the editable text input
+    const textInput = document.createElement('input');
+    textInput.type = 'text';
+    textInput.classList.add('agenda-text');
+    textInput.value = 'New Agenda Item';
+
+    // Create the checkbox input
+    const checkboxInput = document.createElement('input');
+    checkboxInput.type = 'checkbox';
+    checkboxInput.classList.add('agenda-checkbox');
+
+    // Add event listener to change opacity when checkbox is checked
+    checkboxInput.addEventListener('change', () => {
+        if (checkboxInput.checked) {
+            newItem.style.opacity = '0.5';
+        } else {
+            newItem.style.opacity = '1';
+        }
+    });
+
+    // Create the remove button
+    const removeButton = document.createElement('button');
+    removeButton.classList.add('remove-agenda-item');
+    removeButton.textContent = 'X';
+
+    // Add remove functionality to the button
+    removeButton.addEventListener('click', function () {
+        removeAgendaItem(newItem);
+    });
+
+    // Append all elements to the new item div
+    newItem.appendChild(numberSpan);
+    newItem.appendChild(textInput);
+    newItem.appendChild(checkboxInput);
+    newItem.appendChild(removeButton);
+
+    // Append the new item to the agenda list
+    agendaList.appendChild(newItem);
+
+    // Adjust the numbers for all items
+    updateAgendaNumbers();
+}
+
+// Function to remove an agenda item
+function removeAgendaItem(item) {
+    // Remove the item from the DOM
+    agendaList.removeChild(item);
+
+    // Adjust the numbers for all items
+    updateAgendaNumbers();
+}
+
+// Function to update agenda item numbers after addition/removal
+function updateAgendaNumbers() {
+    const items = agendaList.getElementsByClassName('agenda-item');
+    for (let i = 0; i < items.length; i++) {
+        const numberSpan = items[i].getElementsByClassName('agenda-number')[0];
+        numberSpan.textContent = i + 1;
+    }
+}
+
+// Add event listeners to existing checkboxes for opacity change
+document.querySelectorAll('.agenda-checkbox').forEach(checkbox => {
+    const parentItem = checkbox.closest('.agenda-item');
+    checkbox.addEventListener('change', () => {
+        if (checkbox.checked) {
+            parentItem.style.opacity = '0.5';
+        } else {
+            parentItem.style.opacity = '1';
+        }
+    });
+});
+
+// Add click event listener to the "+" button
+addAgendaButton.addEventListener('click', addAgendaItem);
+
+//AGENDA
+
+</script>
+
+</html>

@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Tab Page</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        body {
+            margin: 0;
+            height: 100vh;
+            background-image: url('https://console-ui-assets.s3.amazonaws.com/landing-page-background-image/8df6a49ef1d5468cd1452a319720956a');
+            background-color: rgb(236, 236, 236);
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        #clock {
+            font-size: 4em;
+            color: white;
+            text-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            padding-top: 50px;
+            align-items: start;
+            flex: 1;
+        }
+
+        #search-container {
+            display: flex;
+            align-items: start;
+            border-radius: 15px;
+            justify-content: start;
+            overflow: hidden;
+            margin-bottom: 40px;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
+        }
+
+        #search-input {
+            width: 400px;
+            padding: 15px;
+            padding-left: 20px;
+            border: none;
+            border-radius: 15px 0 0 15px;
+            outline: none;
+            font-size: 1.2em;
+        }
+
+        #search-button {
+            padding: 15px 20px;
+            border: none;
+            border-radius: 0 15px 15px 0;
+            background-color: #ffffff;
+            color: #333;
+            font-size: 0.8em;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            outline: none;
+        }
+
+        #search-button:hover {
+            background-color: #f1f1f1;
+        }
+
+        .flex-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 50%;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="flex-container">
+        <div id="clock"></div>
+    </div>
+
+    <div class="flex-container">
+        <div id="search-container">
+            <input id="search-input" type="text" placeholder="Search...">
+            <button id="search-button">❯</button>
+        </div>
+    </div>
+
+    <!-- Include Day.js -->
+    <script src="https://cdn.jsdelivr.net/npm/dayjs/dayjs.min.js"></script>
+    <script>
+        function updateClock() {
+            var now = dayjs().format('HH:mm:ss');
+            document.getElementById('clock').textContent = now;
+        }
+
+        function performSearch(query) {
+            if (query.trim() !== '') {
+                surflyExtension.surflySession.apiRequest({
+                    cmd: 'relocate',
+                    url: `https://www.google.com/search?q=${encodeURIComponent(query)}`,
+                    newTab: false,
+                });
+            }
+        }
+
+        document.getElementById('search-button').addEventListener('click', function() {
+            var query = document.getElementById('search-input').value;
+            performSearch(query);
+        });
+
+        document.getElementById('search-input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                var query = document.getElementById('search-input').value;
+                performSearch(query);
+            }
+        });
+
+        setInterval(updateClock, 1000);
+        updateClock();
+    </script>
+</body>
+</html>
