@@ -13885,7 +13885,7 @@
       visibility: hidden;
       opacity: 0;
       transition: opacity 0.3s ease, visibility 0.3s ease;
-      z-index:999999999999999;
+      z-index: 999999999999999;
     }
 
     .popup-content {
@@ -13903,15 +13903,15 @@
     .popup-text {
       margin-bottom: 2rem;
       font-size: 2rem;
-      font-weight:normal;
+      font-weight: normal;
       line-height: 100%;
     }
 
     .popup-text-3 {
       margin-bottom: 1rem;
-    font-size: 1.3rem;
-    font-weight: 800;
-    line-height: 100%;
+      font-size: 1.3rem;
+      font-weight: 800;
+      line-height: 100%;
     }
 
     .popup-text-2 {
@@ -13921,8 +13921,8 @@
 
     .popup-pin-code {
       margin-bottom: 2rem;
-    font-size: 4rem;
-    font-weight: bold;
+      font-size: 4rem;
+      font-weight: bold;
     }
 
     .popup-buttons {
@@ -13964,11 +13964,12 @@
     }
 
     .orange {
-      color:#F4A768;
-      font-size:2rem;
+      color: #F4A768;
+      font-size: 2rem;
     }
+
     .blue {
-      color:#0087a0;
+      color: #0087a0;
     }
 
     sentinel {}
@@ -14014,86 +14015,88 @@
   style="position: relative; min-height: 100%; top: 0px;">
 
 
-<!--SURFLY-->
-<script>
-  //POP UP JAVASSCRIPT
+  <!--SURFLY-->
+  <script>
+    //POP UP JAVASSCRIPT
 
-  // Function to show the consent pop-up
-  function showPopupConsent() {
-    document.getElementById("popup-consent").classList.add("show");
-  }
+    // Function to show the consent pop-up
+    function showPopupConsent() {
+      document.getElementById("popup-consent").classList.add("show");
+    }
 
-  function showPopupConsent2() {
-    document.getElementById("popup-consent-2").classList.add("show");
-  }
+    function showPopupConsent2() {
+      document.getElementById("popup-consent-2").classList.add("show");
+    }
 
-  // Function to hide the consent pop-up
-  function hidePopupConsent() {
-    document.getElementById("popup-consent").classList.remove("show");
-    document.getElementById("popup-consent-2").classList.remove("show");
-  }
-  // Function to show the pin pop-up
-  function showPopupPin() {
-    document.getElementById("popup-pin").classList.add("show");
-  }
+    // Function to hide the consent pop-up
+    function hidePopupConsent() {
+      document.getElementById("popup-consent").classList.remove("show");
+      document.getElementById("popup-consent-2").classList.remove("show");
+    }
+    // Function to show the pin pop-up
+    function showPopupPin() {
+      document.getElementById("popup-pin").classList.add("show");
+    }
 
-  // Function to hide the pin pop-up
-  function hidePopupPin() {
-    document.getElementById("popup-pin").classList.remove("show");
-  }
+    // Function to hide the pin pop-up
+    function hidePopupPin() {
+      document.getElementById("popup-pin").classList.remove("show");
+    }
 
-  //SURFLY JAVASCRIPT
+    //SURFLY JAVASCRIPT
 
-  var SurflySession;
-  function startCorowsing() {
-    if (Surfly) {
-    delete Surfly
-  }
-    (function (s, u, r, f, l, y) {
-      s[f] = s[f] || { init: function () { s[f].q = arguments } };
-      l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
-      l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
-    })(window, document, 'script', 'Surfly');
-    var sessionPin;
-    var settings = {
-      widget_key: "99671227762b43c2a96daa066ee006e2",
-      block_until_agent_joins: false,
-      session_autorestore_enabled: false
-      //Disable the default Surfly pin code pop up
-    };
-
-    Surfly.init(settings, function (init) {
-      if (init.success && !Surfly.isInsideSession) {
-        console.log("init success");
-        SurflySession = Surfly.session().startLeader()
-          .on("session_created", function (session, event) {
-            sessionPin = session.pin;
-            console.log("session pin:"+sessionPin);
-            document.querySelector(".popup-pin-code").innerText = sessionPin;
-            console.log(session.pin);
-            showPopupPin();
-          })
-          .on("session_loaded", function (session, event) {
-            hidePopupConsent()
-          })
-          .on("participant_joined", function (session, event) {
-            hidePopupPin();
-          })
+    var SurflySession;
+    function startCorowsing() {
+      if (typeof Surfly !== 'undefined') {
+        delete Surfly;
       }
-    });
-  }
 
-  function endSession() {
-    SurflySession.end();
-  }
-</script>
+      (function (s, u, r, f, l, y) {
+        s[f] = s[f] || { init: function () { s[f].q = arguments } };
+        l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+        l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+      })(window, document, 'script', 'Surfly');
+      var sessionPin;
+      var settings = {
+        widget_key: "99671227762b43c2a96daa066ee006e2",
+        block_until_agent_joins: false,
+        session_autorestore_enabled: false
+        //Disable the default Surfly pin code pop up
+      };
+
+      Surfly.init(settings, function (init) {
+        if (init.success && !Surfly.isInsideSession) {
+          console.log("init success");
+          SurflySession = Surfly.session().startLeader()
+            .on("session_created", function (session, event) {
+              sessionPin = session.pin;
+              console.log("session pin:" + sessionPin);
+              document.querySelector(".popup-pin-code").innerText = sessionPin;
+              console.log(session.pin);
+              showPopupPin();
+            })
+            .on("session_loaded", function (session, event) {
+              hidePopupConsent()
+            })
+            .on("participant_joined", function (session, event) {
+              hidePopupPin();
+            })
+        }
+      });
+    }
+
+    function endSession() {
+      SurflySession.end();
+    }
+  </script>
 
   <!-- Hidden Consent Pop-Up -->
   <div class="popup-c" id="popup-consent">
     <div class="popup-content">
       <p class="popup-text"><span class="blue">Welcome to Live Support</span></p>
       <p class="popup-text-3">Are you already speaking to an Agent?</p>
-      <p class="popup-text-2" style="margin-top:50px;"><span class="blue">If not, please call:<br> </span><span class="orange"><B>+41 62 836 81 81</B></span></p>
+      <p class="popup-text-2" style="margin-top:50px;"><span class="blue">If not, please call:<br> </span><span
+          class="orange"><B>+41 62 836 81 81</B></span></p>
       <div class="popup-buttons">
         <button class="popup-btn cancel-btn" onclick="hidePopupConsent()">Go Back</button>
         <button class="popup-btn continue-btn" onclick="startCorowsing()">Continue</button>
@@ -14104,7 +14107,8 @@
     <div class="popup-content">
       <p class="popup-text"><span class="blue">Welcome to Live Support</span></p>
       <p class="popup-text-3">You are about to start a live browsing session with an Agent</p>
-      <p class="popup-text-2"><span class="blue">Click continue to proceed with </span><span class="orange"><B><br>Live Support</B></span></p>
+      <p class="popup-text-2"><span class="blue">Click continue to proceed with </span><span class="orange"><B><br>Live
+            Support</B></span></p>
       <div class="popup-buttons">
         <button class="popup-btn cancel-btn" onclick="hidePopupConsent()">Go Back</button>
         <button class="popup-btn continue-btn" onclick="startCorowsing()">Continue</button>
@@ -14266,44 +14270,29 @@
             fill="#f08228"></path>
         </g>
       </symbol>
-<!-- SURFLY -->      
-<symbol id="icon--eyeball" viewBox="0 0 44 44">
-  <g fill="none" fill-rule="nonzero" transform="translate(0.5 0.5)">
-    <!-- Outer eye shape -->
-    <path
-      d="M22 4C12 4 3.4 14 1 22c2.4 8 11 18 21 18s18.6-10 21-18c-2.4-8-11-18-21-18z"
-      fill="#F4A768"></path>
+      <!-- SURFLY -->
+      <symbol id="icon--eyeball" viewBox="0 0 44 44">
+        <g fill="none" fill-rule="nonzero" transform="translate(0.5 0.5)">
+          <!-- Outer eye shape -->
+          <path d="M22 4C12 4 3.4 14 1 22c2.4 8 11 18 21 18s18.6-10 21-18c-2.4-8-11-18-21-18z" fill="#F4A768"></path>
 
-    <!-- Iris -->
-    <circle
-      cx="22"
-      cy="22"
-      r="8"
-      fill="#43A2B5"></circle>
+          <!-- Iris -->
+          <circle cx="22" cy="22" r="8" fill="#43A2B5"></circle>
 
-    <!-- Pupil -->
-    <circle
-      cx="22"
-      cy="22"
-      r="4"
-      fill="#000"></circle>
+          <!-- Pupil -->
+          <circle cx="22" cy="22" r="4" fill="#000"></circle>
 
-    <!-- Highlight -->
-    <circle
-      cx="24"
-      cy="20"
-      r="1.5"
-      fill="#fff"></circle>
+          <!-- Highlight -->
+          <circle cx="24" cy="20" r="1.5" fill="#fff"></circle>
 
-    <!-- Eye outline for a consistent stroke -->
-    <path
-      d="M22 2C10.6 2 1 14 0 22c1 8 10.6 20 22 20s21-12 22-20c-1-8-10.6-20-22-20z"
-      fill="none" stroke="#F4A768" stroke-width="1"></path>
-  </g>
-</symbol>
+          <!-- Eye outline for a consistent stroke -->
+          <path d="M22 2C10.6 2 1 14 0 22c1 8 10.6 20 22 20s21-12 22-20c-1-8-10.6-20-22-20z" fill="none"
+            stroke="#F4A768" stroke-width="1"></path>
+        </g>
+      </symbol>
 
 
-      
+
       <symbol id="icon--sticky-download-white" viewBox="0 0 23 26">
         <g fill="none" fill-rule="nonzero" transform="translate(.6.2)">
           <path
@@ -14921,8 +14910,8 @@
                   </a>
                 </div>
 
-  <!--SURFLY -->
-    
+                <!--SURFLY -->
+
                 <div class="circle-button icon-downloads" onclick="showPopupConsent2()">
                   <a>
                     <div class="icon-wrapper">
@@ -17755,8 +17744,9 @@
               </svg>
             </a>
             <a href="#" onclick="showPopupConsent()" title="Seite drucken">
-              <img class="sprite-icon--m2" src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/resources-common/icons/cobro-eye-black-thick.png?raw=true">
-                <use xlink:href="#icon--print"></use>
+              <img class="sprite-icon--m2"
+                src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/resources-common/icons/cobro-eye-black-thick.png?raw=true">
+              <use xlink:href="#icon--print"></use>
             </a>
           </div>
 
