@@ -14070,8 +14070,9 @@
         block_until_agent_joins: false,
         session_autorestore_enabled: false,
         start_with_invite_modal: false,
-        session_start_confirmation: false
-        //Disable the default Surfly pin code pop up
+        session_start_confirmation: false,
+        videochat: false,
+        hide_element_by_selector: "#edit-client-number, #edit-company"
       };
 
       Surfly.init(settings, function (init) {
@@ -14112,7 +14113,11 @@
         block_until_agent_joins: false,
         session_autorestore_enabled: false,
         start_with_invite_modal: false,
-        session_start_confirmation: false
+        session_start_confirmation: false,
+        videochat: true,
+        start_with_videochat_on: true,
+        videochat_prompt: true,
+        hide_element_by_selector: "#edit-client-number, #edit-company"
         //Disable the default Surfly pin code pop up
       };
 
