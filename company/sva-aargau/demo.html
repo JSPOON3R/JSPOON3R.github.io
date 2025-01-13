@@ -14046,6 +14046,7 @@
 
   var SurflySession;
   function startCorowsing() {
+    delete Surfly
     (function (s, u, r, f, l, y) {
       s[f] = s[f] || { init: function () { s[f].q = arguments } };
       l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
@@ -14053,7 +14054,7 @@
     })(window, document, 'script', 'Surfly');
     var sessionPin;
     var settings = {
-      widget_key: "d97af65cf4d24a7f86783f8cd38cfe8e",
+      widget_key: "99671227762b43c2a96daa066ee006e2",
       block_until_agent_joins: false,
       session_autorestore_enabled: false
       //Disable the default Surfly pin code pop up
@@ -14071,7 +14072,7 @@
             showPopupPin();
           })
           .on("session_loaded", function (session, event) {
-
+            hidePopupConsent()
           })
           .on("participant_joined", function (session, event) {
             hidePopupPin();
@@ -14093,7 +14094,7 @@
       <p class="popup-text-2" style="margin-top:50px;"><span class="blue">If not, please call:<br> </span><span class="orange"><B>+41 62 836 81 81</B></span></p>
       <div class="popup-buttons">
         <button class="popup-btn cancel-btn" onclick="hidePopupConsent()">Go Back</button>
-        <button class="popup-btn continue-btn" onclick="startCorowsing()" onclick="hidePopupConsent()">Continue</button>
+        <button class="popup-btn continue-btn" onclick="startCorowsing()">Continue</button>
       </div>
     </div>
   </div>
@@ -14104,7 +14105,7 @@
       <p class="popup-text-2"><span class="blue">Click continue to proceed with </span><span class="orange"><B><br>Live Support</B></span></p>
       <div class="popup-buttons">
         <button class="popup-btn cancel-btn" onclick="hidePopupConsent()">Go Back</button>
-        <button class="popup-btn continue-btn" onclick="startCorowsing()" onclick="hidePopupConsent()">Continue</button>
+        <button class="popup-btn continue-btn" onclick="startCorowsing()">Continue</button>
       </div>
     </div>
   </div>
