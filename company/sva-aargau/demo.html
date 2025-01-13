@@ -13921,7 +13921,8 @@
 
     .popup-pin-code {
       margin-bottom: 2rem;
-      font-size: 2rem;
+    font-size: 4rem;
+    font-weight: bold;
     }
 
     .popup-buttons {
@@ -14070,6 +14071,7 @@
             showPopupPin();
           })
           .on("session_loaded", function (session, event) {
+
           })
           .on("participant_joined", function (session, event) {
             hidePopupPin();
@@ -14091,7 +14093,7 @@
       <p class="popup-text-2" style="margin-top:50px;"><span class="blue">If not, please call:<br> </span><span class="orange"><B>+41 62 836 81 81</B></span></p>
       <div class="popup-buttons">
         <button class="popup-btn cancel-btn" onclick="hidePopupConsent()">Go Back</button>
-        <button class="popup-btn continue-btn" onclick="startCorowsing()">Continue</button>
+        <button class="popup-btn continue-btn" onclick="startCorowsing()" onclick="hidePopupConsent()">Continue</button>
       </div>
     </div>
   </div>
@@ -14102,14 +14104,14 @@
       <p class="popup-text-2"><span class="blue">Click continue to proceed with </span><span class="orange"><B><br>Live Support</B></span></p>
       <div class="popup-buttons">
         <button class="popup-btn cancel-btn" onclick="hidePopupConsent()">Go Back</button>
-        <button class="popup-btn continue-btn" onclick="startCorowsing()">Continue</button>
+        <button class="popup-btn continue-btn" onclick="startCorowsing()" onclick="hidePopupConsent()">Continue</button>
       </div>
     </div>
   </div>
   <!-- Hidden Pin Pop-Up -->
   <div class="popup-p" id="popup-pin">
     <div class="popup-content">
-      <p class="popup-text">Please wait for your agent to join</p>
+      <p class="popup-text blue">Please wait for your agent to join</p>
       <p class="popup-pin-code" id="popup-pin-code"></p>
       <div class="popup-buttons">
         <button class="popup-btn cancel-btn" onclick="endSession()">End Session</button>
