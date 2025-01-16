@@ -4,15 +4,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Responsive Upload File Pop-Up</title>
+    <title>Upload File</title>
     <style>
-        /* Base reset */
         body {
             margin: 0;
             font-family: 'Neue Helvetica Condensed 47 Light', 'NarkisBlockCon-Thin_MFW', sans-serif, arial;
         }
 
-        /* Full-screen pop-up styling */
         .popup {
             position: fixed;
             top: 0;
@@ -24,7 +22,6 @@
             align-items: center;
         }
 
-        /* Pop-up content box */
         .popup-content {
             background-color: #fff;
             width: 100%;
@@ -39,7 +36,6 @@
             box-sizing: border-box;
         }
 
-        /* Explanation text styling */
         .explanation {
             font-size: 1rem;
             margin: 0;
@@ -47,7 +43,6 @@
             word-wrap: break-word;
         }
 
-        /* Upload button styling */
         .upload-btn {
             padding: 0.8rem 1.5rem;
             font-size: 1rem;
@@ -72,16 +67,25 @@
             <p class="explanation">
                 Please upload your file here. Your agent will then add your file to the application.
             </p>
-            <button class="upload-btn" onclick="customerUpload()">Upload File</button>
+            <input type="file" id="fileInput" style="display: none" onchange="handleFileSelect(event)">
+            <button class="upload-btn" id="fileupload" onclick="document.getElementById('fileInput').click()">
+                Upload File
+            </button>
+
+
         </div>
     </div>
-</body>
-<script>
-        function customerUpload() {
-            surflyExtension.surflySession.apiRequest({
-    cmd: 'upload_file',
-});
-    };
+    <script>
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                surflyExtension.surflySession.apiRequest({
+                    cmd: 'upload_file',
+                    file: file,
+                });
+            }
+        }
     </script>
+</body>
 
 </html>

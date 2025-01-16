@@ -1,128 +1,501 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Tab Page</title>
+    <title>Responsive Tile Layout</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+:root {
+    /* Dark Mode Color Scheme */
+    --black: #000000;
+    --darkest-grey: #1c1c1c;
+    --dark-grey: #2a2a2a;
+    --grey: #444444;
+    --light-grey: #666666;
+    --lightest-grey: #888888;
+    --off-white: #d9d9d9;
+    --white: #ffffff;
+    --light-red: #ff6b6b;
+    --dark-red: #c72323;
+    --light-blue: #5a9fd4;
+    --blue: #0077cc;
+    --dark-blue: #004466;
+    --yellow: #f4c344;
+    --orange: #fd942a;
+    --light-green: #7dc05a;
+    --dark-green: #48a418;
+    --background: #121212;
+    --font: 'Nunito', sans-serif;
+}
 
-        body {
-            margin: 0;
-            height: 100vh;
-            background-image: url('https://console-ui-assets.s3.amazonaws.com/landing-page-background-image/8df6a49ef1d5468cd1452a319720956a');
-            background-color: rgb(236, 236, 236);
-            background-size: cover;
-            background-position: center;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            font-family: 'Poppins', sans-serif;
-        }
+/* General Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        #clock {
-            font-size: 4em;
-            color: white;
-            text-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
-            text-align: center;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            padding-top: 50px;
-            align-items: start;
-            flex: 1;
-        }
+html,
+body {
+    height: 100%;
+    font-family: var(--font), Arial, sans-serif;
+    background-color: var(--background);
+    color: var(--white);
+    overflow: hidden;
+}
 
-        #search-container {
-            display: flex;
-            align-items: start;
-            border-radius: 15px;
-            justify-content: start;
-            overflow: hidden;
-            margin-bottom: 40px;
-            box-shadow: 0 0 40px rgba(0, 0, 0, 0.5);
-        }
+body {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+}
 
-        #search-input {
-            width: 400px;
-            padding: 15px;
-            padding-left: 20px;
-            border: none;
-            border-radius: 15px 0 0 15px;
-            outline: none;
-            font-size: 1.2em;
-        }
+/* Container Layout */
+.container {
+    display: grid;
+    grid-template-columns: 20% auto 20%;
+    grid-template-rows: 1fr;
+    height: 100vh;
+    width: 100vw;
+    padding: 20px;
+    gap: 10px;
+    background-color: var(--background);
+    overflow: hidden;
+}
 
-        #search-button {
-            padding: 15px 20px;
-            border: none;
-            border-radius: 0 15px 15px 0;
-            background-color: #ffffff;
-            color: #333;
-            font-size: 0.8em;
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            outline: none;
-        }
+.left-column,
+.right-column {
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    gap: 10px;
+    height: 100%;
+    min-height: 0; /* Allow columns to shrink within container */
+}
 
-        #search-button:hover {
-            background-color: #f1f1f1;
-        }
 
-        .flex-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 50%;
-            width: 100%;
-        }
+/* Center Column */
+.center-column {
+    height: 100%;
+}
+
+/* Tile Styling */
+.tile {
+    background-color: var(--dark-grey);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 1.5rem;
+    border: 1px solid var(--grey);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+/* Button Grid */
+.tile1 .button-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 10px;
+    height: 100%;
+    width: 100%;
+}
+
+.icon-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--grey);
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 10px;
+    color: var(--white);
+    transition: background-color 0.3s ease;
+}
+
+.icon-button:hover {
+    background-color: var(--light-grey);
+}
+
+/* Agenda Tile */
+.agenda-tile {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--dark-grey);
+    min-height: 0;       /* Allows it to shrink within the parent */
+    overflow: hidden;    /* Prevent the tile itself from expanding */
+}
+
+.agenda-list {
+    flex: 1;            /* Allows the list to take available space */
+    min-height: 0;      /* Prevents it from forcing parent to expand */
+    overflow-y: auto;   /* Scroll if content exceeds the height */
+    padding-right: 5px; /* Avoid scrollbar overlap */
+}
+
+.agenda-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background-color: var(--grey);
+    border-radius: 5px;
+    margin-bottom: 10px;
+    font-size: 1rem;
+    color: var(--white);
+    height: 50px;
+    min-height: 50px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+    transition: opacity 0.3s ease;
+}
+
+.agenda-number {
+    margin-right: 10px;
+    color: var(--off-white);
+}
+
+.agenda-checkbox {
+    width: 30px;
+    height: 100%;
+    cursor: pointer;
+    border: 1px solid var(--light-grey);
+    border-radius: 3px;
+    background-color: var(--dark-grey);
+}
+
+.add-agenda-button {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: var(--dark-blue);
+    color: var(--white);
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-agenda-button:hover {
+    background-color: var(--blue);
+}
+
+/* Scrollbar Customization */
+.agenda-list::-webkit-scrollbar {
+    width: 5px;
+}
+
+.agenda-list::-webkit-scrollbar-thumb {
+    background-color: var(--light-grey);
+    border-radius: 10px;
+}
+
     </style>
 </head>
-<body>
-    <div class="flex-container">
-        <div id="clock"></div>
-    </div>
 
-    <div class="flex-container">
-        <div id="search-container">
-            <input id="search-input" type="text" placeholder="Search...">
-            <button id="search-button">❯</button>
+<body>
+    <div class="container">
+        <!-- Left Column Tiles (for Desktop) -->
+        <div class="left-column">
+            <div class="tile tile1">
+                <div class="button-grid">
+                    <button class="icon-button">
+                    SHARE<BR>SCREEN</button>
+                    <button class="icon-button">
+                        STREAM<BR>CAMERA
+                    </button>
+                    <button class="icon-button">
+                        UPLOAD<BR>FILE
+                    </button>
+                    <button class="icon-button">
+                        CUSTOM<BR>BUTTON
+                    </button>
+                </div>
+            </div>
+            <div class="tile agenda-tile">
+                <div class="agenda-list" id="agenda-list">
+                    <div class="agenda-item">
+                        <span class="agenda-number">1</span>
+                        <input type="text" class="agenda-text" value="Agenda Item 1">
+                        <input type="checkbox" class="agenda-checkbox">
+                        <button class="remove-agenda-item">X</button>
+                    </div>
+                </div>
+                <button class="add-agenda-button" id="add-agenda-button">+</button>
+            </div>
+            
+            
+
+
+            <div class="tile note-tile">
+                <textarea class="note-textarea" placeholder="Add notes to session..."></textarea>
+                <button class="add-note-button">+</button>
+            </div>
+        </div>
+
+        <!-- Center Large Tile -->
+        <div class="center-column">
+            <div class="tile" style="height: 100%;">
+                <div class="flex-container">
+                    <div id="search-container">
+                        <input id="search-input" type="text" placeholder="Search...">
+                        <button id="search-button">❯</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Column Tiles (for Desktop) -->
+        <div class="right-column">
+            <div class="tile">Technical Info</div>
+            <div class="tile">Something else</div>
+            <div class="tile">
+                <div class="snake-content">
+                    <h2 class="snake-title">Waiting?</h2>
+                    <div class="snake-buttons">
+                    <button class="btn" id="play-snake-btn">Play Snake</button>
+                </div>
+                    <div id="snake-game" class="hidden">
+                        <canvas id="snake-canvas" width="100" height="100"></canvas>
+                        <button class="btn" id="exit-snake-btn">Exit Game</button>
+                        <div id="game-over-message" class="hidden">
+                            <h3>Game Over</h3>
+                            <button class="btn" id="restart-btn">Restart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
         </div>
     </div>
-
-    <!-- Include Day.js -->
-    <script src="https://cdn.jsdelivr.net/npm/dayjs/dayjs.min.js"></script>
-    <script>
-        function updateClock() {
-            var now = dayjs().format('HH:mm:ss');
-            document.getElementById('clock').textContent = now;
-        }
-
-        function performSearch(query) {
-            if (query.trim() !== '') {
-                surflyExtension.surflySession.apiRequest({
-                    cmd: 'relocate',
-                    url: `https://www.google.com/search?q=${encodeURIComponent(query)}`,
-                    newTab: false,
-                });
-            }
-        }
-
-        document.getElementById('search-button').addEventListener('click', function() {
-            var query = document.getElementById('search-input').value;
-            performSearch(query);
-        });
-
-        document.getElementById('search-input').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                var query = document.getElementById('search-input').value;
-                performSearch(query);
-            }
-        });
-
-        setInterval(updateClock, 1000);
-        updateClock();
-    </script>
 </body>
+<script>
+    //AGENDA TILE
+
+ // Get references to the agenda list and add button
+const agendaList = document.getElementById('agenda-list');
+const addAgendaButton = document.getElementById('add-agenda-button');
+
+// Function to add a new agenda item
+function addAgendaItem() {
+    // Create a new agenda item div
+    const newItem = document.createElement('div');
+    newItem.classList.add('agenda-item');
+
+    // Create the number span
+    const numberSpan = document.createElement('span');
+    numberSpan.classList.add('agenda-number');
+    numberSpan.textContent = agendaList.children.length + 1;
+
+    // Create the editable text input
+    const textInput = document.createElement('input');
+    textInput.type = 'text';
+    textInput.classList.add('agenda-text');
+    textInput.value = 'New Agenda Item';
+
+    // Create the checkbox input
+    const checkboxInput = document.createElement('input');
+    checkboxInput.type = 'checkbox';
+    checkboxInput.classList.add('agenda-checkbox');
+
+    // Add event listener to change opacity when checkbox is checked
+    checkboxInput.addEventListener('change', () => {
+        if (checkboxInput.checked) {
+            newItem.style.opacity = '0.5';
+        } else {
+            newItem.style.opacity = '1';
+        }
+    });
+
+    // Create the remove button
+    const removeButton = document.createElement('button');
+    removeButton.classList.add('remove-agenda-item');
+    removeButton.textContent = 'X';
+
+    // Add remove functionality to the button
+    removeButton.addEventListener('click', function () {
+        removeAgendaItem(newItem);
+    });
+
+    // Append all elements to the new item div
+    newItem.appendChild(numberSpan);
+    newItem.appendChild(textInput);
+    newItem.appendChild(checkboxInput);
+    newItem.appendChild(removeButton);
+
+    // Append the new item to the agenda list
+    agendaList.appendChild(newItem);
+
+    // Adjust the numbers for all items
+    updateAgendaNumbers();
+}
+
+// Function to remove an agenda item
+function removeAgendaItem(item) {
+    // Remove the item from the DOM
+    agendaList.removeChild(item);
+
+    // Adjust the numbers for all items
+    updateAgendaNumbers();
+}
+
+// Function to update agenda item numbers after addition/removal
+function updateAgendaNumbers() {
+    const items = agendaList.getElementsByClassName('agenda-item');
+    for (let i = 0; i < items.length; i++) {
+        const numberSpan = items[i].getElementsByClassName('agenda-number')[0];
+        numberSpan.textContent = i + 1;
+    }
+}
+
+// Add event listeners to existing checkboxes for opacity change
+document.querySelectorAll('.agenda-checkbox').forEach(checkbox => {
+    const parentItem = checkbox.closest('.agenda-item');
+    checkbox.addEventListener('change', () => {
+        if (checkbox.checked) {
+            parentItem.style.opacity = '0.5';
+        } else {
+            parentItem.style.opacity = '1';
+        }
+    });
+});
+
+// Add click event listener to the "+" button
+addAgendaButton.addEventListener('click', addAgendaItem);
+
+//AGENDA
+
+</script>
+<script>
+
+    //SNAKE
+    document.addEventListener('DOMContentLoaded', function () {
+        const playButton = document.getElementById('play-snake-btn');
+        const snakeGame = document.getElementById('snake-game');
+        const exitButton = document.getElementById('exit-snake-btn');
+        const restartButton = document.getElementById('restart-btn');
+        const gameOverMessage = document.getElementById('game-over-message');
+        let canvas, ctx;
+
+        let snake, direction, food, gameInterval, gameOver;
+
+        function initializeCanvas() {
+            canvas = document.getElementById('snake-canvas');
+            ctx = canvas.getContext('2d');
+        }
+
+        function initializeGame() {
+            snake = [{ x: 150, y: 150 }];
+            direction = { x: 10, y: 0 };
+            food = { x: Math.floor(Math.random() * 29) * 10, y: Math.floor(Math.random() * 29) * 10 };
+            gameOver = false;
+            drawSnake();
+        }
+
+        function drawSnake() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'green';
+            snake.forEach(part => {
+                ctx.fillRect(part.x, part.y, 10, 10);
+            });
+
+            // Draw food
+            ctx.fillStyle = 'red';
+            ctx.fillRect(food.x, food.y, 10, 10);
+        }
+
+        function moveSnake() {
+            const head = { x: snake[0].x + direction.x, y: snake[0].y + direction.y };
+
+            // Handle border crossing (teleport snake across edges)
+            if (head.x < 0) {
+                head.x = canvas.width - 10;
+            } else if (head.x >= canvas.width) {
+                head.x = 0;
+            } else if (head.y < 0) {
+                head.y = canvas.height - 10;
+            } else if (head.y >= canvas.height) {
+                head.y = 0;
+            }
+
+            // Check for collision with itself
+            if (snake.some(part => part.x === head.x && part.y === head.y)) {
+                endGame();
+                return;
+            }
+
+            snake.unshift(head); // Add new head
+
+            // Check if the snake eats the food
+            if (head.x === food.x && head.y === food.y) {
+                // Place new food
+                food = { x: Math.floor(Math.random() * 29) * 10, y: Math.floor(Math.random() * 29) * 10 };
+            } else {
+                snake.pop(); // Remove last part if not eating food
+            }
+
+            drawSnake();
+        }
+
+        function handleKeydown(event) {
+            switch (event.key) {
+                case 'ArrowUp':
+                    if (direction.y === 0) direction = { x: 0, y: -10 };
+                    break;
+                case 'ArrowDown':
+                    if (direction.y === 0) direction = { x: 0, y: 10 };
+                    break;
+                case 'ArrowLeft':
+                    if (direction.x === 0) direction = { x: -10, y: 0 };
+                    break;
+                case 'ArrowRight':
+                    if (direction.x === 0) direction = { x: 10, y: 0 };
+                    break;
+            }
+        }
+
+        function startSnakeGame() {
+            playButton.classList.add('hidden');
+            snakeGame.classList.remove('hidden');
+            gameOverMessage.classList.add('hidden');
+
+            // Initialize canvas and game state
+            initializeCanvas();
+            initializeGame();
+
+            gameInterval = setInterval(moveSnake, 100);
+            window.addEventListener('keydown', handleKeydown);
+        }
+
+        function endGame() {
+            gameOver = true;
+            clearInterval(gameInterval);
+            gameOverMessage.classList.remove('hidden');
+        }
+
+        function restartGame() {
+            gameOverMessage.classList.add('hidden');
+            initializeGame();
+            gameInterval = setInterval(moveSnake, 100);
+        }
+
+        function exitSnakeGame() {
+            playButton.classList.remove('hidden');
+            snakeGame.classList.add('hidden');
+            gameOverMessage.classList.add('hidden');
+            clearInterval(gameInterval);
+            window.removeEventListener('keydown', handleKeydown);
+        }
+
+        playButton.addEventListener('click', startSnakeGame);
+        exitButton.addEventListener('click', exitSnakeGame);
+        restartButton.addEventListener('click', restartGame);
+    });
+        //SNAKE
+</script>
 </html>
