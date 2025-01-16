@@ -17922,6 +17922,7 @@
                     function startCobrowse() {
                       let customerWidgetKey = "134f5fd2ac8842c0a1cd6062818eee74"; //set customer widget key to variable
                       window.parent.Surfly.settings.widget_key = customerWidgetKey; //set customer widget key to widget_key high level
+                      window.parent.Surfly.settings.block_until_agent_joins = false;
                       if (window.parent.Surfly.settings.widget_key === customerWidgetKey) {
                         // check if it worked to avoid null
                         console.log('widget key change correctly', customerWidgetKey);
