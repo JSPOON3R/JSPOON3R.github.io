@@ -17994,7 +17994,7 @@
                                 .on("session_created", function (session, event) {
                                     sessionPin = session.pin;
                                     console.log("session pin:" + sessionPin);
-                                    document.getElementById("pin-code-surfly");
+                                    document.getElementById("pin-code-surfly").innerText = sessionPin;
                                     console.log(session.pin);
                                 })
                                 .on("session_loaded", function (session, event) {
