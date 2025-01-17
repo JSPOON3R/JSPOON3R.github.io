@@ -16967,7 +16967,7 @@
     <meta name="savepage-comments" content="">
 
 
-    
+
 </head>
 
 
@@ -17000,18 +17000,18 @@
         <!--SURFLY-->
 
 
-    <div class="popup-container hidden-surfly" id="popup-container">
-        <div class="popup-title">Let's Connect</div>
-        <img class="popup-image"
-            src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdTlrM29zYXpycGZleDBoNWFyb2cyeThsaWFjenJ5aDA5cHRocGM1ciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/LwxzFXEymTsf6/giphy.gif"
-            alt="Circular Gif">
-        <div class="popup-text">Please share your pin</div>
-        <div class="popup-code" id="pin-code-surfly"></div>
-        <button class="popup-button" id="cancel-session">Cancel</button>
-    </div>
+        <div class="popup-container hidden-surfly" id="popup-container">
+            <div class="popup-title">Let's Connect</div>
+            <img class="popup-image"
+                src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdTlrM29zYXpycGZleDBoNWFyb2cyeThsaWFjenJ5aDA5cHRocGM1ciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/LwxzFXEymTsf6/giphy.gif"
+                alt="Circular Gif">
+            <div class="popup-text">Please share your pin</div>
+            <div class="popup-code" id="pin-code-surfly"></div>
+            <button class="popup-button" id="cancel-session">Cancel</button>
+        </div>
 
 
-    <!--SURFLY-->
+        <!--SURFLY-->
 
 
 
@@ -17923,19 +17923,19 @@
 
 
                 document.addEventListener("DOMContentLoaded", function () {
-    console.log("DOM content loaded...");
+                    console.log("DOM content loaded...");
 
-    document.getElementById("eye-icon").addEventListener("click", function () {
-        console.log("eye button clicked...");
-        document.getElementById("popup-container").classList.remove("hidden-surfly");
-        startCobrowse_1();
-    });
-});
+                    document.getElementById("eye-icon").addEventListener("click", function () {
+                        console.log("eye button clicked...");
+                        document.getElementById("popup-container").classList.remove("hidden-surfly");
+                        startCobrowse_1();
+                    });
+                });
 
 
-                    function hidePopupSurfly() {
-                        document.getElementById("popup-container").classList.add("hidden-surfly");
-                    }
+                function hidePopupSurfly() {
+                    document.getElementById("popup-container").classList.add("hidden-surfly");
+                }
 
                 function startCobrowse() {
                     let customerWidgetKey = "134f5fd2ac8842c0a1cd6062818eee74"; //set customer widget key to variable
@@ -17984,7 +17984,13 @@
                         videochat: true,
                         start_with_videochat_on: true,
                         start_with_fullscreen_videochat: false,
-                        hide_element_by_selector: "#address1, #address2,#ContactDetail_TownCity, #ContactDetail_Postcode, #cardNumber, #expiryMonth, #expiryYear, #securityCode, #submitButton"
+                        hide_element_by_selector: "#address1, #address2,#ContactDetail_TownCity, #ContactDetail_Postcode, #cardNumber, #expiryMonth, #expiryYear, #securityCode, #submitButton",
+                        blocklist: [
+                            {
+                                "pattern": "^https?://www\\.universaldestinationsandexperiences\\.com(/.*)?",
+                                "redirect": "https://demo.surfly.com/pages-common/blocked-universal"
+                            }
+                        ]
                     };
 
                     Surfly.init(settings, function (init) {
@@ -17993,14 +17999,14 @@
                             SurflySession = Surfly.session().startLeader()
                                 .on("session_created", function (session, event) {
                                     sessionPin = session.pin;
-                                    console.log("sessessionPin: "+sessionPin);
-                                                        // Safely update the element
-                    const pinCodeElement = document.getElementById("pin-code-surfly");
-                    if (pinCodeElement) {
-                        pinCodeElement.innerText = sessionPin;
-                    } else {
-                        console.error("Element with ID 'pin-code-surfly' not found.");
-                    }
+                                    console.log("sessessionPin: " + sessionPin);
+                                    // Safely update the element
+                                    const pinCodeElement = document.getElementById("pin-code-surfly");
+                                    if (pinCodeElement) {
+                                        pinCodeElement.innerText = sessionPin;
+                                    } else {
+                                        console.error("Element with ID 'pin-code-surfly' not found.");
+                                    }
                                     console.log("session pin:" + sessionPin);
                                     console.log(session.pin);
                                 })
@@ -18302,7 +18308,7 @@
                         <p>© Disney. All rights reserved.</p>
                         <!--SURFLY-->
                         <div class="eye-container">
-                            <IMG class="eye-icon" id="eye-icon" 
+                            <IMG class="eye-icon" id="eye-icon"
                                 src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/resources-common/icons/cobro_eye_thick%20-%20WHITE.png?raw=true">
                         </div>
                     </small>
