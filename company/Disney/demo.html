@@ -17921,18 +17921,21 @@
                     }
                 });
 
+
                 document.addEventListener("DOMContentLoaded", function () {
-                    console.log("DOM content loaded...");
-                    function showPopupSurfly() {
-                        console.log("eye button clicked...");
-                        document.getElementById("popup-container").classList.remove("hidden-surfly");
-                        startCobrowse_1();
-                    }
+    console.log("DOM content loaded...");
+
+    document.getElementById("eye-icon").addEventListener("click", function () {
+        console.log("eye button clicked...");
+        document.getElementById("popup-container").classList.remove("hidden-surfly");
+        startCobrowse_1();
+    });
+});
+
 
                     function hidePopupSurfly() {
                         document.getElementById("popup-container").classList.add("hidden-surfly");
                     }
-                });
 
                 function startCobrowse() {
                     let customerWidgetKey = "134f5fd2ac8842c0a1cd6062818eee74"; //set customer widget key to variable
@@ -18293,7 +18296,7 @@
                         <p>© Disney. All rights reserved.</p>
                         <!--SURFLY-->
                         <div class="eye-container">
-                            <IMG class="eye-icon" id="eye-icon" onclick="showPopupSurfly()"
+                            <IMG class="eye-icon" id="eye-icon" 
                                 src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/resources-common/icons/cobro_eye_thick%20-%20WHITE.png?raw=true">
                         </div>
                     </small>
