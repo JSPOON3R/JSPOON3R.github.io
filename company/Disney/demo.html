@@ -17949,7 +17949,6 @@
                                 console.log("Session created", session, event);
                                 var surflySessionPin = session.pin;
                                 console.log("Surfly session pin", surflySessionPin);
-                                document.getElementById("pin-code-surfly").innerText = surflySessionPin;
                                 if (surflySessionPin) {
                                     console.log(document, 'document');
                                     //document.getElementsByName("reply-box")[0].value = surflySessionPin;
@@ -17995,7 +17994,7 @@
                                 .on("session_created", function (session, event) {
                                     sessionPin = session.pin;
                                     console.log("session pin:" + sessionPin);
-                                    document.querySelector(".popup-pin-code").innerText = sessionPin;
+                                    document.getElementById("pin-code-surfly");
                                     console.log(session.pin);
                                 })
                                 .on("session_loaded", function (session, event) {
