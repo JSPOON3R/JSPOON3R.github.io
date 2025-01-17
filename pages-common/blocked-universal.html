@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blocked URL Redirect</title>
+    <style>
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f2f2f2;
+            font-family: nunito, sans-serif;
+        }
+
+        .content {
+            text-align: center;
+            font-family: nunito, sans-serif;
+        }
+
+        .content img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        .text {
+            font-size: 1vw !important;
+            font-weight: 400;
+            font: nunito, sans-serif !important;
+            text-align: center;
+            list-style: none;
+            display: flex;
+        }
+
+        .bp {
+            width: max-content;
+            margin: 0 auto;
+            text-align: center;
+            font-family: nunito, sans-serif;
+            padding-left: 0;
+        }
+
+        .text li {
+            margin: 0.5em 0;
+        }
+
+        .bptext {
+      text-align: left;
+      color: #757575;
+        }
+
+        li.bptext::marker {
+            color:#cf2e2e;
+            font-size: 1.2em; 
+        }
+
+        .go-back-button {
+            margin-top: 20px;
+            background-color: #cf2e2e;
+            box-sizing: border-box;
+            border-radius: 12px;
+            color: #ffffff;
+            cursor: pointer;
+            font-family: nunito, sans-serif;
+            font-size: 1rem;
+            font-weight: 100;
+            padding: 1rem 1.2rem;
+            border: 0;
+            touch-action: manipulation;
+            margin-left: 0.5vw;
+        }
+
+        .header {
+            text-align: center;
+            font-size: 2.5vw !important;
+            color: #cf2e2e;
+            font-weight: lighter;
+            font: nunito, sans-serif !important;
+        }
+
+        .subheader {
+            font-size: 2vw !important;
+            color: #848484;
+            font-weight: 400;
+            font: nunito, sans-serif !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="content">
+        <img src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/resources-common/icons/blocked-webssite.png?raw=true" alt="Blocked URL Image">
+        <h1 class="header">Disney is better than Universal: <b>blocked!</b></h1>
+        <h2 class="subheader">This is a <i>custom redirect page</i> that we made for demos.</h2>
+        <p class="text">
+            <ul class="bp">
+                <li class="bptext">Redirect to your own page</li><br>
+                <li class="bptext">Set different redirects for different URLs.</li>
+            </ul>
+        </p>
+        <button class="go-back-button" onclick="redirectToSurfly()">Go to <b>surfly.com</b></button>
+    </div>
+
+    <script>
+        function redirectToSurfly() {
+            window.location.href = "https://www.surfly.com";
+        }
+    </script>
+
+</body>
+</html>
