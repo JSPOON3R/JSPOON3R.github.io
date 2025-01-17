@@ -16970,7 +16970,7 @@
                     <!--SURFLY-->
 
 
-                    <div class="popup-container hidden-surfly">
+                    <div class="popup-container hidden-surfly" id="popup-container">
                         <div class="popup-title">Let's Connect</div>
                         <img class="popup-image"
                             src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdTlrM29zYXpycGZleDBoNWFyb2cyeThsaWFjenJ5aDA5cHRocGM1ciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/LwxzFXEymTsf6/giphy.gif"
@@ -16993,7 +16993,7 @@
                         brandembassy('init', 1022, 'chat_4bc8d701-a316-4b5f-bc12-9c45f766dbd0');
                         brandembassy('setAllowedExternalMessageTypes', ['MESSAGE_SENT', 'MESSAGE_RECEIVED']);
                         window.addEventListener("message", function (event) {
-                          console.log(event, 'listener event');
+                          //console.log(event, 'listener event');
                           // Ensure the data structure is as expected
                           if (event.data && event.data.actionType === "MESSAGE_RECEIVED") {
                             console.log(event.data.actionType, 'ACTION TYPE');
@@ -17010,12 +17010,12 @@
                         document.addEventListener("DOMContentLoaded", function () {
                             console.log("DOM content loaded...")
                         function showPopupSurfly() {
-          document.getElementById("eye-icon").classList.remove("hidden-surfly");
+          document.getElementById("popup-container").classList.remove("hidden-surfly");
           startCobrowse_1();
         }
     
         function hidePopupSurfly() {
-          document.getElementById("eye-icon").classList.add("hidden-surfly");
+          document.getElementById("popup-container").classList.add("hidden-surfly");
         }
     });
                     
