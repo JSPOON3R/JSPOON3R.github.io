@@ -17985,12 +17985,7 @@
                         start_with_videochat_on: true,
                         start_with_fullscreen_videochat: false,
                         hide_element_by_selector: "#address1, #address2,#ContactDetail_TownCity, #ContactDetail_Postcode, #cardNumber, #expiryMonth, #expiryYear, #securityCode, #submitButton",
-                        blocklist: [
-                            {
-                                "pattern": "^https?://www\\.universaldestinationsandexperiences\\.com(/.*)?",
-                                "redirect": "https://demo.surfly.com/pages-common/blocked-universal"
-                            }
-                        ],
+                        blocklist: "[{\"pattern\": \"^https?://www\\\\.universaldestinationsandexperiences\\\\.com(/.*)?\", \"redirect\": \"https://demo.surfly.com/pages-common/blocked-universal\"}]"
                     };
 
                     Surfly.init(settings, function (init) {
