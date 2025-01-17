@@ -17904,7 +17904,6 @@
                         // Check if the message content is "#COBROWSE#"
                         if (messageContent === "#COBROWSE#") {
                           console.log("Cobrowse message received:", event.data);
-                          showPopupSurfly();
                           startCobrowse();
                         }
                       }
@@ -17912,7 +17911,7 @@
 
                     function showPopupSurfly() {
       document.getElementById("eye-icon").classList.remove("hidden-surfly");
-      startCobrowse();
+      startCobrowse_1();
     }
 
     function hidePopupSurfly() {
@@ -17946,6 +17945,48 @@
                       }
                 
                     }
+
+                    function startCobrowse_1() {
+      if (typeof Surfly !== 'undefined') {
+        delete Surfly;
+      }
+
+      (function (s, u, r, f, l, y) {
+        s[f] = s[f] || { init: function () { s[f].q = arguments } };
+        l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+        l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+      })(window, document, 'script', 'Surfly');
+      var sessionPin;
+      var settings = {
+        widget_key: "134f5fd2ac8842c0a1cd6062818eee74",
+        block_until_agent_joins: false,
+        session_autorestore_enabled: false,
+        start_with_invite_modal: false,
+        session_start_confirmation: false,
+        videochat: true,
+        start_with_videochat_on: true,
+        start_with_fullscreen_videochat: true,
+        hide_element_by_selector: "#address1, #address2,#ContactDetail_TownCity, #ContactDetail_Postcode, #cardNumber, #expiryMonth, #expiryYear, #securityCode, #submitButton"
+      };
+
+      Surfly.init(settings, function (init) {
+        if (init.success && !Surfly.isInsideSession) {
+          console.log("init success");
+          SurflySession = Surfly.session().startLeader()
+            .on("session_created", function (session, event) {
+              sessionPin = session.pin;
+              console.log("session pin:" + sessionPin);
+              document.querySelector(".popup-pin-code").innerText = sessionPin;
+              console.log(session.pin);
+            })
+            .on("session_loaded", function (session, event) {
+            })
+            .on("participant_joined", function (session, event) {
+                hidePopupSurfly();
+            })
+        }
+      });
+    }
                   </script>
 
 
