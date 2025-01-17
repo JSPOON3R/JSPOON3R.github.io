@@ -16965,6 +16965,134 @@
         content="Standard Items; Retain cross-origin frames; Merge CSS images; Remove unsaved URLs; Load lazy images in existing content; Max frame depth = 5; Max resource size = 50MB; Max resource time = 10s;">
     <meta name="savepage-version" content="33.9">
     <meta name="savepage-comments" content="">
+
+
+                    <!--SURFLY-->
+
+
+                    <div class="popup-container hidden-surfly">
+                        <div class="popup-title">Let's Connect</div>
+                        <img class="popup-image"
+                            src="https://media0.giphy.com/media/v1.Y2lkPTc5MGI3NjExdTlrM29zYXpycGZleDBoNWFyb2cyeThsaWFjenJ5aDA5cHRocGM1ciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/LwxzFXEymTsf6/giphy.gif"
+                            alt="Circular Gif">
+                            <div class="popup-text">Your Rep will tell you what to do</div>
+                        <div class="popup-code" id="pin-code-surfly"></div>
+                        <button class="popup-button" id="cancel-session">Cancel</button>
+                    </div>
+    
+                    <script>
+    
+    
+                        (function (n, u) {
+                          window.BrandEmbassy = n,
+                            window[n] = window[n] || function () { (window[n].q = window[n].q || []).push(arguments); }, window[n].u = u,
+                            e = document.createElement("script"), e.async = 1, e.src = u + "?" + Math.round(Date.now() / 1e3 / 3600),
+                            document.head.appendChild(e);
+                        })('brandembassy', 'https://livechat-static-de-na1.niceincontact.com/4/chat.js');
+                    
+                        brandembassy('init', 1022, 'chat_4bc8d701-a316-4b5f-bc12-9c45f766dbd0');
+                        brandembassy('setAllowedExternalMessageTypes', ['MESSAGE_SENT', 'MESSAGE_RECEIVED']);
+                        window.addEventListener("message", function (event) {
+                          console.log(event, 'listener event');
+                          // Ensure the data structure is as expected
+                          if (event.data && event.data.actionType === "MESSAGE_RECEIVED") {
+                            console.log(event.data.actionType, 'ACTION TYPE');
+                            const messageContent = event.data.action.message;
+                    
+                            // Check if the message content is "#COBROWSE#"
+                            if (messageContent === "#COBROWSE#") {
+                              console.log("Cobrowse message received:", event.data);
+                              startCobrowse();
+                            }
+                          }
+                        });
+    
+                        document.addEventListener("DOMContentLoaded", function () {
+                            console.log("DOM content loaded...")
+                        function showPopupSurfly() {
+          document.getElementById("eye-icon").classList.remove("hidden-surfly");
+          startCobrowse_1();
+        }
+    
+        function hidePopupSurfly() {
+          document.getElementById("eye-icon").classList.add("hidden-surfly");
+        }
+    });
+                    
+                        function startCobrowse() {
+                          let customerWidgetKey = "134f5fd2ac8842c0a1cd6062818eee74"; //set customer widget key to variable
+                          window.parent.Surfly.settings.widget_key = customerWidgetKey; //set customer widget key to widget_key high level
+                          if (window.parent.Surfly.settings.widget_key === customerWidgetKey) {
+                            // check if it worked to avoid null
+                            console.log('widget key change correctly', customerWidgetKey);
+                            Surfly.session().on(
+                              'session_created',
+                              function (session, event) {
+                                console.log("Session created", session, event);
+                                var surflySessionPin = session.pin;
+                                console.log("Surfly session pin", surflySessionPin);
+                                document.getElementById("pin-code-surfly").innerText = surflySessionPin;
+                                if (surflySessionPin) {
+                                  console.log(document, 'document');
+                                  //document.getElementsByName("reply-box")[0].value = surflySessionPin;
+                                }
+                              }
+                            ).on('session_started', function (session, event) {
+                              console.log("Session started", session, event);
+                    
+                            }).on('participant_joined', function (session, event) {
+                                hidePopupSurfly();
+                            }).startLeader();
+                          }
+                    
+                        }
+    
+                        function startCobrowse_1() {
+          if (typeof Surfly !== 'undefined') {
+            delete Surfly;
+          }
+    
+          (function (s, u, r, f, l, y) {
+            s[f] = s[f] || { init: function () { s[f].q = arguments } };
+            l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+            l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+          })(window, document, 'script', 'Surfly');
+          var sessionPin;
+          var settings = {
+            widget_key: "134f5fd2ac8842c0a1cd6062818eee74",
+            block_until_agent_joins: false,
+            session_autorestore_enabled: false,
+            start_with_invite_modal: false,
+            session_start_confirmation: false,
+            videochat: true,
+            start_with_videochat_on: true,
+            start_with_fullscreen_videochat: true,
+            hide_element_by_selector: "#address1, #address2,#ContactDetail_TownCity, #ContactDetail_Postcode, #cardNumber, #expiryMonth, #expiryYear, #securityCode, #submitButton"
+          };
+    
+          Surfly.init(settings, function (init) {
+            if (init.success && !Surfly.isInsideSession) {
+              console.log("init success");
+              SurflySession = Surfly.session().startLeader()
+                .on("session_created", function (session, event) {
+                  sessionPin = session.pin;
+                  console.log("session pin:" + sessionPin);
+                  document.querySelector(".popup-pin-code").innerText = sessionPin;
+                  console.log(session.pin);
+                })
+                .on("session_loaded", function (session, event) {
+                })
+                .on("participant_joined", function (session, event) {
+                    hidePopupSurfly();
+                })
+            }
+          });
+        }
+                      </script>
+    
+    
+                    <!--SURFLY-->
+
 </head>
 
 
