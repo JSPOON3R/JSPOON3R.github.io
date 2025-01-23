@@ -1,0 +1,14 @@
+{
+    "manifest_version": 3,
+    "name": "Accessibility Tools",
+    "version": "1.0",
+    "chrome_url_overrides": {
+      "newtab": "startpage.html"
+    },
+    "content_scripts": [
+      {
+        "js": ["accessibility.js"]
+      }
+    ]
+
+}
