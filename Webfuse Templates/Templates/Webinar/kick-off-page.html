@@ -1045,7 +1045,7 @@
                 const session = space.session();
 
                 // Start the session
-                const response = await session.create();
+                const response = await session.start();
                 
                 console.log('Session response:', response);
                 console.log('Space:', space);
