@@ -1,0 +1,1323 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png"
+        href="https://cdn.prod.website-files.com/66fa5c211b77ce188d5275f6/6752cfb0d2935e66e4d7d1a1_favicon-webfuse.png">
+    <title>Webinar Home</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --background-color--background-primary: var(--base-color-brand--dark);
+            --background-color--dark-blue: #0a205e;
+            --background-color--dark-green: #1f3c30;
+            --base-color-brand--off-white: #f7f7f7;
+            --base-color-brand--light-gray: silver;
+            --link-color--link-alternate: var(--base-color-brand--off-white);
+            --radius--radius-main: 1rem;
+            --base-color-brand--blue: #3d93ef;
+            --base-color-brand--purple: #4d65ff;
+            --base-color-brand--dark: #0b0b0b;
+            --base-color-neutral--black: black;
+            --base-color-neutral--white: white;
+            --radius--radius-round: 100vw;
+            --text-color--text-alternate: var(--base-color-brand--dark);
+            --text-color--text-error: var(--base-color-system--error-red);
+            --base-color-brand--surfly-red\<deleted\|variable-1afb0c92-2bd9-c4f4-1504-2eef5d82bb1d\>: #e54747;
+            --base-color-brand--anti-flash-white\<deleted\|variable-e1fd5e82-b7f7-46af-b5ce-491069f79607\>: #ececec;
+            --background-color--background-alternate: var(--base-color-brand--off-white);
+            --link-color--link-primary: var(--base-color-brand--dark);
+            --text-color--text-primary: var(--base-color-brand--off-white);
+            --radius--radius-small: .5rem;
+            --base-color-neutral--neutral-lighter: #ccc;
+            --base-color-neutral--neutral-lightest: #eee;
+            --base-color-neutral--neutral-light: #aaa;
+            --base-color-neutral--neutral: #666;
+            --base-color-neutral--neutral-dark: #444;
+            --base-color-neutral--neutral-darker: #222;
+            --base-color-neutral--neutral-darkest: #111;
+            --base-color-system--success-green: #027a48;
+            --base-color-system--success-light-green: #57ff53;
+            --base-color-system--success-green-light: #ecfdf3;
+            --base-color-system--error-red: #b42318;
+            --base-color-system--error-red-light: #fef3f2;
+            --radius--radius-large: 1.5rem;
+            --background-color--background-success: var(--base-color-system--success-green-light);
+            --background-color--background-error: var(--base-color-system--error-red-light);
+            --border-color--border-alternate: var(--base-color-brand--off-white);
+            --text-color--text-success: var(--base-color-system--success-green);
+        }
+
+        body {
+            overflow: hidden;
+            color: var(--base-color-brand--off-white);
+            font-family: Inter, sans-serif;
+            width: 100vw;
+            height: 100vh;
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.4;
+            background: linear-gradient(to top left, var(--background-color--dark-green), var(--base-color-brand--dark), var(--background-color--dark-blue));
+            background-size: 200% 200%;
+            animation: gradientBreathing 10s infinite ease-in-out alternate;
+            margin: 0;
+            padding: 0;
+        }
+
+        .no-js {
+            visibility: hidden;
+        }
+
+        /* Breathing animation */
+        @keyframes gradientBreathing {
+            0% {
+                background-position: 50% 50%;
+            }
+
+            50% {
+                background-position: 100% 0%;
+            }
+
+            100% {
+                background-position: 50% 50%;
+            }
+        }
+
+        .page-container {
+            display: flex;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .left-side {
+            width: 50%;
+            height: 100%;
+            display: flex;
+            justify-content: flex-start;
+            padding: 3em 0 0 2em;
+            align-items: flex-start;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .right-side {
+            width: 50%;
+            height: 100%;
+        }
+
+        .content-wrapper {
+            width: 80%;
+            max-width: 600px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .heading {
+            color: var(--webfuse-white);
+            font-size: 4rem;
+            margin: 0;
+        }
+
+        .blue {
+            color: var(--base-color-brand--blue);
+        }
+
+        .sub-heading {
+            color: var(--webfuse-white);
+            font-size: 1.5rem;
+            margin: 0%;
+            opacity: 1;
+            font-weight: lighter;
+        }
+
+        .search-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            width: 100%;
+            gap: 10px;
+            opacity: 95%;
+            align-items: center;
+        }
+
+        input[type="text"]:focus {
+            outline: 1px solid var(--base-color-brand--blue);
+        }
+
+        input[type="text"]::placeholder {
+            color: var(--base-color-neutral--neutral);
+            font-size: .9rem;
+            opacity: 0.4;
+        }
+
+        input[type="text"] {
+            background-color: var(--base-color-brand--off-white);
+            color: var(--base-color-neutral--neutral-darker);
+            border: 1.5px solid var(--base-color-brand--light-gray);
+            border-radius: var(--radius--radius-round);
+            width: 80%;
+            min-width: 200px;
+            max-width: 600px;
+            height: auto;
+            min-height: 2rem;
+            margin-bottom: 0;
+            padding: .1rem 1.2rem .1rem 1.2rem;
+            font-size: 1.2rem;
+            line-height: 1.6;
+            ;
+        }
+
+        /* ========== BUTTONS ========== */
+
+        .buttons-container {
+            overflow: visible;
+            max-width: 100%;
+            transition: max-width 0.5s ease-in-out, opacity 0.5s ease-in-out;
+            transition: justify-content 0.5s ease-in-out;
+        }
+
+        .buttons-container button {
+            color: var(--webfuse-offwhite);
+            font-size: 1rem;
+            white-space: nowrap;
+            text-align: center;
+            background-image: linear-gradient(144deg, #2e5bd5 10%, #64b8c1);
+            border: 1.5px #8dbac8;
+            border-radius: 50vw;
+            padding: .75rem 1.25rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            opacity: 1;
+            transform: scaleX(1);
+            transition: transform 0.5s ease-in,
+                transform 0.5s ease-out,
+                opacity 0.5s ease-in,
+                opacity 0.5s ease-out;
+        }
+
+        .section-break {
+            text-align: center;
+            opacity: 100%;
+            width: 100%;
+        }
+
+        .line {
+            border: 0;
+            border-top: 1px solid var(--base-color-brand--off-white);
+            margin-bottom: 1rem;
+            width: 100%;
+            opacity: 5%;
+        }
+
+        .line-2 {
+            border: 0;
+            border-top: 1px solid var(--base-color-brand--off-white);
+            margin-bottom: 1rem;
+            width: 100%;
+            opacity: 2%;
+        }
+
+        .line-3 {
+            border: 0;
+            border-top: 1px solid var(--base-color-brand--off-white);
+            margin-top: .6rem;
+            width: 60%;
+            opacity: 3%;
+        }
+
+        .logo {
+            position: fixed;
+            top: 15%;
+            left: 50%;
+            /* Move the left edge to the middle */
+            transform: translateX(-50%);
+            /* Shift it back by half of its width */
+            width: 5rem;
+            height: auto;
+            z-index: 10;
+            filter: brightness(0) invert(1);
+            opacity: 0%;
+        }
+
+        .link-container {
+            display: flex;
+            gap: 0.5rem 1rem;
+            border-radius: 10px;
+            justify-items: start;
+            max-height: 20vh;
+            width: auto;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .link-button {
+            padding: .5rem 1rem !important;
+            font-size: .8rem !important;
+            height: 1.5rem;
+            /* Ensures same height */
+            margin-left: 1em;
+        }
+
+        .link-container input,
+        .link-container select {
+            appearance: none;
+            /* Remove default styling */
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background-color: var(--base-color-brand--off-white);
+            color: var(--base-color-neutral--neutral-darker);
+            border: 1.5px solid var(--base-color-brand--light-gray);
+            border-radius: var(--radius--radius-round);
+            padding: .1rem 1.2rem .1rem 1.2rem;
+            font-size: .7rem;
+            min-width: unset;
+            width: fit-content;
+            min-height: unset;
+            height: 1rem;
+            /* Ensures same height */
+            text-align: center;
+            /* Ensures the text aligns with input */
+            display: flex;
+            align-items: center;
+        }
+
+        .link-container input {
+            color: var(--base-color-neutral--neutral-darker);
+        }
+
+        .link-container input:focus,
+        .link-container select:focus {
+            outline: 1px solid var(--base-color-brand--blue);
+        }
+
+        .link-container input::placeholder,
+        .link-container select::placeholder {
+            color: var(--base-color-neutral--neutral);
+            font-size: .7rem;
+        }
+
+
+        .search-button {
+            color: var(--webfuse-offwhite);
+            font-size: 1rem;
+            white-space: nowrap;
+            text-align: center;
+            background-image: linear-gradient(144deg, #2e5bd5 10%, #64b8c1);
+            border: 1.5px #8dbac8;
+            border-radius: 50vw;
+            padding: .75rem 1.25rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            opacity: 1;
+            transform: scaleX(1);
+            transition: transform 0.5s ease-in,
+                transform 0.5s ease-out,
+                opacity 0.5s ease-in,
+                opacity 0.5s ease-out;
+        }
+
+        /* Add hover effect */
+        .search-button:hover {
+            opacity: 0.9;
+            transform: scale(0.98);
+        }
+
+        label {
+            text-align: right;
+            display: flex;
+            align-items: center;
+            font-size: 0.7rem;
+            height: 2rem;
+            white-space: nowrap;
+        }
+
+
+        .dropdown-select {
+            display: none;
+        }
+
+        /* Style the dropdown options */
+        .dropdown-select option {
+            background-color: var(--base-color-brand--dark);
+            color: var(--base-color-brand--off-white);
+            padding: 1rem;
+            font-size: 0.9rem;
+        }
+
+        /* Style the dropdown when open */
+        .dropdown-select:focus {
+            outline: 1px solid var(--base-color-brand--blue);
+            border-radius: var(--radius--radius-round);
+        }
+
+        /* Style hover state of options */
+        .dropdown-select option:hover,
+        .dropdown-select option:focus {
+            background-color: var(--base-color-brand--blue);
+            color: var(--base-color-brand--off-white);
+        }
+
+        /* Special styles for host name dropdown */
+        .sub-heading .dropdown-select {
+            display: inline-block;
+            margin-left: 0.5rem;
+            padding: 0.2rem 2rem 0.2rem 1rem;
+            /* Adjusted padding for arrow */
+            font-size: 0.9rem;
+            opacity: 1;
+            background-position: right 0.5rem top 50%;
+            background-size: 0.5rem auto;
+        }
+
+        .generate-button {
+            color: var(--webfuse-offwhite);
+            font-size: 1rem;
+            white-space: nowrap;
+            text-align: center;
+            background-image: linear-gradient(144deg, #025c36 10%, #027a48);
+            border: 1.5px #8dbac8;
+            border-radius: 50vw;
+            padding: .75rem 1.25rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            align-self: self-start;
+            margin-bottom: 1rem;
+            opacity: 1;
+            transform: scaleX(1);
+            transition: transform 0.5s ease-in,
+                transform 0.5s ease-out,
+                opacity 0.5s ease-in,
+                opacity 0.5s ease-out;
+        }
+
+        .generate-button:hover {
+            opacity: 0.9;
+            transform: scale(0.98);
+        }
+
+        /* Toggle switch styles */
+        .toggle-container {
+            display: flex;
+            gap: 2rem;
+            width: 100%;
+            margin: 1rem 0;
+        }
+
+        .toggle-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .toggle-label {
+            color: var(--base-color-brand--off-white);
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 48px;
+            height: 24px;
+        }
+
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 18px;
+            width: 18px;
+            left: 3px;
+            bottom: 3px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background-color: var(--base-color-brand--blue);
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(24px);
+        }
+
+        /* Add these new styles */
+        .custom-select-wrapper {
+            position: relative;
+            display: inline-block;
+            user-select: none;
+        }
+
+        .custom-select {
+            position: relative;
+            display: inline-block;
+            min-width: 150px;
+            /* Match minimum width */
+        }
+
+        .custom-select__trigger {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.25rem 1rem;
+            font-size: 1rem;
+            background-image: linear-gradient(144deg, #2e5bd5 10%, #64b8c1);
+            color: var(--base-color-brand--off-white);
+            border: 1.5px #8dbac8;
+            border-radius: 50vw;
+            cursor: pointer;
+            opacity: 1;
+            transform: scaleX(1);
+            transition: transform 0.5s ease-in, transform 0.5s ease-out, opacity 0.5s ease-in, opacity 0.5s ease-out;
+            min-width: 60px;
+        }
+
+        .custom-select__trigger:hover {
+            opacity: 0.9;
+            transform: scale(0.98);
+        }
+
+        .custom-options {
+            position: absolute;
+            display: block;
+            top: 100%;
+            left: 0;
+            right: 0;
+            border: 2px solid var(--base-color-brand--blue);
+            border-radius: 5px;
+            background-color: var(--base-color-brand--dark);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            z-index: 2;
+            margin-top: 5px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            min-width: 150px;
+            /* Add minimum width */
+            width: max-content;
+            /* Ensure it fits longest option */
+        }
+
+        .custom-select.open .custom-options {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: all;
+        }
+
+        .custom-option {
+            position: relative;
+            display: block;
+            padding: 12px 22px;
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--base-color-brand--off-white);
+            cursor: pointer;
+            background-color: var(--base-color-brand--dark);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            white-space: nowrap;
+            /* Prevent text wrapping */
+        }
+
+        .custom-option:last-child {
+            border-bottom: none;
+        }
+
+        .custom-option:hover {
+            background-color: var(--base-color-brand--blue);
+        }
+
+        .custom-option.selected {
+            color: var(--base-color-brand--off-white);
+            background-color: var(--base-color-brand--blue);
+        }
+
+        .webinar-summary {
+            padding: 2em 2em;
+            color: var(--base-color-brand--off-white);
+        }
+
+        .webinar-summary h2 {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .summary-section {
+            margin-bottom: 2rem;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .summary-section.visible {
+            opacity: 1;
+        }
+
+        .summary-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            opacity: 0.7;
+        }
+
+        .summary-value {
+            color: var(--base-color-brand--blue);
+            font-size: 1rem;
+            padding: 0.5rem 0;
+        }
+
+        .tab-list {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            max-width: 100%;
+        }
+
+        .tab-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background-color: var(--base-color-brand--dark);
+            color: var(--base-color-brand--light-gray);
+            border-radius: 50vh;
+            padding: .5rem .8rem;
+            height: 1.5rem;
+            transition: box-shadow 0.2s ease-in-out;
+            max-width: 200px;
+            /* Limit width */
+        }
+
+        .tab-item:hover {
+            box-shadow: 0 0 2px var(--base-color-brand--off-white);
+        }
+
+        .tab-icon {
+            color: var(--base-color-brand--off-white);
+            width: 1.4rem;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .tab-icon svg {
+            width: 1.5em;
+            height: 1.5em;
+        }
+
+        .tab-content {
+            position: relative;
+            z-index: 2;
+            /* Ensure content is above scrim */
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            max-width: calc(100% - 2rem);
+            overflow: hidden;
+            margin-left: 0.5rem;
+        }
+
+        .tab-url {
+            font-size: 0.8rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 150px;
+            /* Limit text width */
+        }
+
+        .tab-item-scrim {
+            background-image: linear-gradient(90deg, #0000, #0b0b0b7a);
+            border-radius: 50vh;
+            position: absolute;
+            inset: 0%;
+            z-index: 1;
+            /* Keep scrim below other elements */
+            pointer-events: none;
+            /* Make sure it doesn't interfere with clicks */
+        }
+
+        .remove-tab {
+            display: none;
+            color: var(--base-color-brand--off-white);
+            margin-left: 0.5rem;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s ease-in-out;
+            font-size: 20px;
+            line-height: 1;
+            position: relative;
+            z-index: 3;
+            /* Ensure it's above the scrim */
+        }
+
+        .tab-item:hover .remove-tab {
+            display: inline;
+        }
+
+        .remove-tab:hover {
+            opacity: 1;
+        }
+
+        .generate-button-container {
+            margin-top: 2rem;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+        }
+
+        .generate-button-container.visible {
+            opacity: 1;
+        }
+
+        .webinar-summary {
+            position: relative;
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .generate-button-container {
+            margin-top: auto;
+            padding-bottom: 2rem;
+        }
+
+        .multiple-presenters-section {
+            opacity: 1 !important;
+            /* Override the default hidden state */
+            display: block !important;
+            /* Always show this section */
+        }
+
+        .additional-presenters {
+            width: 100%;
+            margin-top: 1rem;
+        }
+
+        .presenter-inputs {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+
+        .presenter-inputs input {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .add-presenter-button {
+            color: var(--webfuse-offwhite);
+            font-size: 1rem;
+            white-space: nowrap;
+            text-align: center;
+            background-image: linear-gradient(144deg, #2e5bd5 10%, #64b8c1);
+            border: 1.5px #8dbac8;
+            border-radius: 50vw;
+            padding: .75rem 1.25rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .presenter-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .presenter-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+            background-color: var(--base-color-brand--dark);
+            color: var(--base-color-brand--light-gray);
+            border-radius: 50vh;
+            padding: .5rem .8rem;
+            height: 1.5rem;
+            transition: box-shadow 0.2s ease-in-out;
+        }
+
+        .presenter-item:hover {
+            box-shadow: 0 0 2px var(--base-color-brand--off-white);
+        }
+
+        .presenter-icon {
+            color: var(--base-color-brand--off-white);
+            width: 1.4rem;
+            height: 100%;
+            display: flex;
+            align-items: center;
+        }
+
+        .presenter-content {
+            display: flex;
+            flex-direction: column;
+            margin-left: 0.5rem;
+        }
+
+        .presenter-name {
+            font-size: 0.8rem;
+            color: var(--base-color-brand--off-white);
+        }
+
+        .presenter-email {
+            font-size: 0.7rem;
+            opacity: 0.7;
+        }
+
+        .remove-presenter {
+            display: none;
+            color: var(--base-color-brand--off-white);
+            margin-left: 0.5rem;
+            cursor: pointer;
+            opacity: 0.7;
+            transition: opacity 0.2s ease-in-out;
+            font-size: 20px;
+            line-height: 1;
+        }
+
+        .presenter-item:hover .remove-presenter {
+            display: block;
+        }
+
+        .remove-presenter:hover {
+            opacity: 1;
+        }
+
+        /* Add this after the multiple-presenters-section div in the right panel */
+        <div class="summary-section additional-presenters-section" style="display: none;"><div class="presenter-list-summary">< !-- Additional presenters will be added here --></div></div>.additional-presenters-section {
+            margin-top: -1rem;
+            /* Bring it closer to the Multiple Presenters section */
+            margin-bottom: 2rem;
+        }
+
+        .presenter-list-summary {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .multiple-presenters-section .presenter-item {
+            margin-top: 0.5rem;
+        }
+
+        .webinar-links-section {
+            margin-top: 2rem;
+            width: 100%;
+        }
+
+        .webinar-links-section h2 {
+            color: var(--base-color-brand--off-white);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            opacity: 0.9;
+        }
+
+        .link-item {
+            margin-bottom: 1.5rem;
+        }
+
+        .link-item h3 {
+            color: var(--base-color-brand--off-white);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            opacity: 0.7;
+        }
+
+        .link-content {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            background-color: var(--base-color-brand--dark);
+            padding: 0.75rem 1rem;
+            border-radius: var(--radius--radius-round);
+        }
+
+        .link-url {
+            color: var(--base-color-brand--light-gray);
+            font-size: 0.9rem;
+            flex: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .copy-link {
+            color: var(--webfuse-offwhite);
+            font-size: 0.9rem;
+            white-space: nowrap;
+            text-align: center;
+            background-image: linear-gradient(144deg, #2e5bd5 10%, #64b8c1);
+            border: none;
+            border-radius: 50vw;
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            transition: opacity 0.2s ease-in-out;
+        }
+
+        .copy-link:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<body class="no-js">
+    <img class="logo"
+        src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/resources-common/icons/webfuse-icon-white.png?raw=true"
+        alt="Logo">
+    <div class="page-container">
+        <div class="left-side">
+            <div class="content-wrapper">
+                <h1 class="heading">Webinar <span class="blue">Kick Off</span></h1>
+                <h1 class="sub-heading">Presenter: <div class="custom-select-wrapper">
+                        <div class="custom-select">
+                            <div class="custom-select__trigger">
+                                <span>Select Host</span>
+                            </div>
+                            <div class="custom-options">
+                                <span class="custom-option" data-value="1">John</span>
+                                <span class="custom-option" data-value="2">Ayush</span>
+                                <span class="custom-option" data-value="3">Mihai</span>
+                                <span class="custom-option" data-value="4">Marko</span>
+                                <span class="custom-option" data-value="5">Thomas</span>
+                            </div>
+                        </div>
+                    </div>
+                </h1>
+                <div class="section-break">
+                    <hr class="line">
+                </div>
+                <div class="search-container">
+                    <input type="text" placeholder="Add starting tab to webinar..." autofocus id="urlInput" />
+                    <button class="search-button">Add URL</button>
+                </div>
+                <div class="dropdown-container">
+                    <div class="custom-select-wrapper">
+                        <div class="custom-select">
+                            <div class="custom-select__trigger">
+                                <span>Select Template</span>
+                            </div>
+                            <div class="custom-options">
+                                <span class="custom-option" data-value="1">Webinar Basic</span>
+                                <span class="custom-option" data-value="2">Product Introduction</span>
+                                <span class="custom-option" data-value="3">How-to Tutorial</span>
+                                <span class="custom-option" data-value="4">Sales Demo</span>
+                                <span class="custom-option" data-value="5">Technical Support</span>
+                                <span class="custom-option" data-value="6">Customer Training</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="custom-select-wrapper">
+                        <div class="custom-select">
+                            <div class="custom-select__trigger">
+                                <span>Select Duration</span>
+                            </div>
+                            <div class="custom-options">
+                                <span class="custom-option" data-value="1">30 Minutes</span>
+                                <span class="custom-option" data-value="2">45 Minutes</span>
+                                <span class="custom-option" data-value="3">1 Hour</span>
+                                <span class="custom-option" data-value="4">2 Hours</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="toggle-container">
+                    <div class="toggle-wrapper">
+                        <span class="toggle-label">Multiple Presenters</span>
+                        <label class="switch">
+                            <input type="checkbox">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                </div>
+                <div class="additional-presenters" style="display: none;">
+                    <div class="presenter-inputs">
+                        <input type="text" placeholder="Presenter Name" id="presenterName" />
+                        <input type="text" placeholder="Presenter Email" id="presenterEmail" />
+                        <button class="add-presenter-button">Add Presenter</button>
+                    </div>
+                    <div class="presenter-list">
+                        <!-- Presenters will be added here dynamically -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="right-side">
+            <div class="webinar-summary">
+                <h2>Webinar Summary</h2>
+                <div class="summary-section presenter-section" style="display: none;">
+                    <h3>Presenter</h3>
+                    <div class="summary-value">Not selected</div>
+                </div>
+                <div class="summary-section tabs-section" style="display: none;">
+                    <h3>Starting Tabs</h3>
+                    <div class="tab-list">
+                        <!-- Tabs will be added here dynamically -->
+                    </div>
+                </div>
+                <div class="summary-section template-section" style="display: none;">
+                    <h3>Template</h3>
+                    <div class="summary-value">Not selected</div>
+                </div>
+                <div class="summary-section duration-section" style="display: none;">
+                    <h3>Duration</h3>
+                    <div class="summary-value">Not selected</div>
+                </div>
+                <div class="summary-section multiple-presenters-section">
+                    <h3>Multiple Presenters</h3>
+                    <div class="summary-value">No</div>
+                    <div class="presenter-list-summary">
+                        <!-- Additional presenters will be added here -->
+                    </div>
+                </div>
+                <div class="generate-button-container" style="display: none;">
+                    <button class="generate-button">Generate Webinar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        let SpaceId;
+        let widgetKey;
+
+        const johnSettings = {
+            SpaceId: 502,
+            widgetKey: 'wk_5znkrZbkr0an_N_Bswoh71aF_ORxwrhY'
+        }
+
+        //Webfuse JS
+        function startWebfuse() {
+            (function (w, e, b, f, u, s) {
+                w[f] = w[f] || {
+                    initSpace: function () {
+                        return new Promise(resolve => {
+                            w[f].q = arguments;
+                            w[f].resolve = resolve;
+                        });
+                    },
+                };
+                u = e.createElement(b);
+                s = e.getElementsByTagName(b)[0];
+                u.async = 1;
+                u.src = 'https://surfly.com/surfly.js';
+                s.parentNode.insertBefore(u, s);
+            })(window, document, 'script', 'Webfuse');
+
+            Webfuse.initSpace(
+                widgetKey, // Widget Key (required)
+                SpaceId, // Space ID (required)
+                {}, // Integration Settings (optional)
+            )
+                .then(space => {
+                    console.log('Space:', space);
+                    console.log('Space ID:', space.id);
+                    console.log('Space slug:', space.slug);
+                })
+                .catch(error => {
+                    console.error('Failed:', error);
+                });
+        };
+
+
+
+
+        // Remove no-js class on page load
+        document.addEventListener("DOMContentLoaded", function () {
+            requestAnimationFrame(() => {
+                document.body.classList.remove("no-js");
+            });
+        });
+
+
+        // Custom dropdown functionality
+        document.addEventListener("DOMContentLoaded", function () {
+            document.querySelectorAll('.custom-select-wrapper').forEach(select => {
+                const trigger = select.querySelector('.custom-select__trigger');
+                const options = select.querySelector('.custom-options');
+
+                // Determine which type of selector this is
+                const isPresenter = trigger.querySelector('span').textContent.includes('Host');
+                const isTemplate = trigger.querySelector('span').textContent.includes('Template');
+                const isDuration = trigger.querySelector('span').textContent.includes('Duration');
+
+                // Toggle dropdown
+                trigger.addEventListener('click', () => {
+                    select.querySelector('.custom-select').classList.toggle('open');
+                });
+
+                // Select option
+                select.querySelectorAll('.custom-option').forEach(option => {
+                    option.addEventListener('click', () => {
+                        if (!option.classList.contains('selected')) {
+                            const selected = select.querySelector('.custom-option.selected');
+                            if (selected) selected.classList.remove('selected');
+                            option.classList.add('selected');
+                            trigger.querySelector('span').textContent = option.textContent;
+
+                            // Update summary based on selection type
+                            if (isPresenter) {
+                                updateSummarySection('presenter', option.textContent);
+                                // Update global variables if John is selected
+                                if (option.textContent === 'John') {
+                                    SpaceId = johnSettings.SpaceId;
+                                    widgetKey = johnSettings.widgetKey;
+                                    console.log('Updated settings for John:', { SpaceId, widgetKey });
+                                }
+                            } else if (isTemplate) {
+                                updateSummarySection('template', option.textContent);
+                            } else if (isDuration) {
+                                updateSummarySection('duration', option.textContent);
+                            }
+                        }
+                        select.querySelector('.custom-select').classList.remove('open');
+                    });
+                });
+
+                // Close when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (!select.contains(e.target)) {
+                        select.querySelector('.custom-select').classList.remove('open');
+                    }
+                });
+            });
+        });
+
+        function checkAllSectionsAndShowGenerate() {
+            const presenterVisible = document.querySelector('.presenter-section').style.display !== 'none';
+            const tabsVisible = document.querySelector('.tabs-section').style.display !== 'none';
+            const templateVisible = document.querySelector('.template-section').style.display !== 'none';
+            const durationVisible = document.querySelector('.duration-section').style.display !== 'none';
+
+            const generateContainer = document.querySelector('.generate-button-container');
+
+            if (presenterVisible && tabsVisible && templateVisible && durationVisible) {
+                generateContainer.style.display = 'block';
+                setTimeout(() => {
+                    generateContainer.classList.add('visible');
+                }, 50);
+            } else {
+                generateContainer.style.display = 'none';
+                generateContainer.classList.remove('visible');
+            }
+        }
+
+        function updateSummarySection(type, value) {
+            const section = document.querySelector(`.${type}-section`);
+            const valueElement = section.querySelector('.summary-value');
+
+            section.style.display = 'block';
+            valueElement.textContent = value;
+
+            setTimeout(() => {
+                section.classList.add('visible');
+            }, 50);
+
+            checkAllSectionsAndShowGenerate();
+        }
+
+        document.querySelector('.search-button').addEventListener('click', function () {
+            const urlInput = document.getElementById('urlInput');
+            const url = urlInput.value.trim();
+
+            if (url) {
+                addTab(url);
+                urlInput.value = ''; // Clear input
+            }
+        });
+
+        function addTab(url) {
+            const tabList = document.querySelector('.tab-list');
+            const tabsSection = document.querySelector('.tabs-section');
+
+            // Show the tabs section if it was hidden
+            tabsSection.style.display = 'block';
+            setTimeout(() => {
+                tabsSection.classList.add('visible');
+            }, 50);
+
+            const tabItem = document.createElement('div');
+            tabItem.className = 'tab-item';
+
+            tabItem.innerHTML = `
+                <div class="tab-icon">
+                    <svg class="icon_svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+                    </svg>
+                </div>
+                <div class="tab-content">
+                    <span class="tab-url">${url}</span>
+                    <span class="remove-tab">×</span>
+                </div>
+                <div class="tab-item-scrim"></div>
+            `;
+
+            // Add click handler for remove button
+            const removeButton = tabItem.querySelector('.remove-tab');
+            removeButton.addEventListener('click', function (e) {
+                e.stopPropagation();
+                tabItem.remove();
+
+                if (tabList.children.length === 0) {
+                    tabsSection.style.display = 'none';
+                    tabsSection.classList.remove('visible');
+                    checkAllSectionsAndShowGenerate();
+                }
+            });
+
+            tabList.appendChild(tabItem);
+            checkAllSectionsAndShowGenerate();
+        }
+
+        // Update the DOMContentLoaded event listener
+        document.addEventListener("DOMContentLoaded", function () {
+            // Hide all summary sections initially
+            document.querySelectorAll('.summary-section').forEach(section => {
+                section.style.display = 'none';
+            });
+        });
+
+        // Update the toggle change event listener
+        document.querySelector('.toggle-container input[type="checkbox"]').addEventListener('change', function (e) {
+            const multiplePresenterValue = document.querySelector('.multiple-presenters-section .summary-value');
+            multiplePresenterValue.textContent = this.checked ? 'Yes' : 'No';
+
+            const additionalPresenters = document.querySelector('.additional-presenters');
+            additionalPresenters.style.display = this.checked ? 'block' : 'none';
+
+            // Remove all presenters when toggled off
+            if (!this.checked) {
+                const presenterListSummary = document.querySelector('.multiple-presenters-section .presenter-list-summary');
+                while (presenterListSummary.firstChild) {
+                    presenterListSummary.removeChild(presenterListSummary.firstChild);
+                }
+            }
+        });
+
+        // Add presenter functionality
+        document.querySelector('.add-presenter-button').addEventListener('click', function () {
+            const nameInput = document.getElementById('presenterName');
+            const emailInput = document.getElementById('presenterEmail');
+
+            const name = nameInput.value.trim();
+            const email = emailInput.value.trim();
+
+            if (name && email) {
+                addPresenter(name, email);
+                nameInput.value = '';
+                emailInput.value = '';
+            }
+        });
+
+        function addPresenter(name, email) {
+            // Add only to the right side summary
+            const presenterListSummary = document.querySelector('.multiple-presenters-section .presenter-list-summary');
+            const presenterItem = document.createElement('div');
+            presenterItem.className = 'presenter-item';
+
+            presenterItem.innerHTML = `
+                <div class="presenter-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                </div>
+                <div class="presenter-content">
+                    <span class="presenter-name">${name}</span>
+                    <span class="presenter-email">${email}</span>
+                </div>
+                <span class="remove-presenter">×</span>
+            `;
+
+            // Add remove functionality
+            const removeButton = presenterItem.querySelector('.remove-presenter');
+            removeButton.addEventListener('click', function (e) {
+                e.stopPropagation();
+                presenterItem.remove();
+            });
+
+            presenterListSummary.appendChild(presenterItem);
+        }
+
+        // Update the generate button click handler
+        document.querySelector('.generate-button').addEventListener('click', function () {
+            // Create webinar links section
+            const linksSection = document.createElement('div');
+            linksSection.className = 'webinar-links-section';
+            linksSection.innerHTML = `
+                <h2>Webinar Links</h2>
+                <div class="link-item">
+                    <h3>My Link</h3>
+                    <div class="link-content">
+                        <span class="link-url">magic-link.com/asdkbsdifbas</span>
+                        <button class="copy-link">Copy</button>
+                    </div>
+                </div>
+                <div class="link-item">
+                    <h3>Guest Link</h3>
+                    <div class="link-content">
+                        <span class="link-url">magic-link.com/asdkbsdifbas</span>
+                        <button class="copy-link">Copy</button>
+                    </div>
+                </div>
+            `;
+
+            // Add host links for additional presenters if any
+            const presenters = document.querySelectorAll('.presenter-list-summary .presenter-name');
+            presenters.forEach(presenter => {
+                const hostLinkItem = document.createElement('div');
+                hostLinkItem.className = 'link-item';
+                hostLinkItem.innerHTML = `
+                    <h3>Host Link for ${presenter.textContent}</h3>
+                    <div class="link-content">
+                        <span class="link-url">magic-link.com/asdkbsdifbas</span>
+                        <button class="copy-link">Copy</button>
+                    </div>
+                `;
+                linksSection.appendChild(hostLinkItem);
+            });
+
+            // Find the additional presenters section and insert the links section after it
+            const additionalPresenters = document.querySelector('.additional-presenters');
+            additionalPresenters.insertAdjacentElement('afterend', linksSection);
+
+            if (widgetKey && SpaceId) {
+                startWebfuse();
+            }
+        });
+    </script>
+
+</body>
+
+</html>
