@@ -1040,18 +1040,21 @@
                 SpaceId,   // Space ID (required)
                 {},        // Integration Settings (optional)
             )
-                .then(async space => {
-                    // Create a new session
-                    const session = space.session().create();
+            .then(async space => {
+                // Create a new session
+                const session = space.session();
 
-                    console.log('Space:', space);
-                    console.log('Space ID:', space.id);
-                    console.log('Space slug:', space.slug);
-                    console.log(session);
-                })
-                .catch(error => {
-                    console.error('Failed:', error);
-                });
+                // Start the session
+                const response = await session.create();
+                
+                console.log('Session response:', response);
+                console.log('Space:', space);
+                console.log('Space ID:', space.id);
+                console.log('Space slug:', space.slug);
+            })
+            .catch(error => {
+                console.error('Failed:', error);
+            });
         }
 
         // Remove no-js class on page load
