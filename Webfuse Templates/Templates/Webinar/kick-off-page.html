@@ -1037,21 +1037,22 @@
 
             Webfuse.initSpace(
                 widgetKey, // Widget Key (required)
-                SpaceId, // Space ID (required)
-                {}, // Integration Settings (optional)
+                SpaceId,   // Space ID (required)
+                {},        // Integration Settings (optional)
             )
-                .then(space => {
+                .then(async space => {
+                    // Create a new session
+                    const session = space.session();
+
                     console.log('Space:', space);
                     console.log('Space ID:', space.id);
                     console.log('Space slug:', space.slug);
+                    console.log(session);
                 })
                 .catch(error => {
                     console.error('Failed:', error);
                 });
-        };
-
-
-
+        }
 
         // Remove no-js class on page load
         document.addEventListener("DOMContentLoaded", function () {
