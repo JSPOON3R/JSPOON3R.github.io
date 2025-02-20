@@ -1102,22 +1102,22 @@
         });
 
         function checkAllSectionsAndShowGenerate() {
-            const presenterVisible = document.querySelector('.presenter-section').style.display !== 'none';
-            const tabsVisible = document.querySelector('.tabs-section').style.display !== 'none';
-            const templateVisible = document.querySelector('.template-section').style.display !== 'none';
+    const presenterVisible = document.querySelector('.presenter-section').style.display !== 'none';
+    const templateVisible = document.querySelector('.template-section').style.display !== 'none';
 
-            const generateContainer = document.querySelector('.generate-button-container');
+    const generateContainer = document.querySelector('.generate-button-container');
 
-            if (presenterVisible && templateVisible) {
-                generateContainer.style.display = 'block';
-                setTimeout(() => {
-                    generateContainer.classList.add('visible');
-                }, 50);
-            } else {
-                generateContainer.style.display = 'none';
-                generateContainer.classList.remove('visible');
-            }
-        }
+    // Show generate button if either presenter or template is selected
+    if (presenterVisible && templateVisible) {
+        generateContainer.style.display = 'block';
+        setTimeout(() => {
+            generateContainer.classList.add('visible');
+        }, 50);
+    } else {
+        generateContainer.style.display = 'none';
+        generateContainer.classList.remove('visible');
+    }
+}
 
         function updateSummarySection(type, value) {
             const section = document.querySelector(`.${type}-section`);
