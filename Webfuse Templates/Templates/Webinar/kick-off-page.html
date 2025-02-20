@@ -1062,13 +1062,9 @@
                     const expirationDate = new Date();
                     expirationDate.setTime(expirationDate.getTime() + 1 * 60 * 60 * 1000);
                     document.cookie = `${cookieName}=true; expires=${expirationDate.toUTCString()}; path=/`;
-                    window.location.href = session.leaderLink;
-                }).catch((error) => {
-                    if (error.code === 'private_access_not_allowed') {
-                        router.push({ name: 'private-space' });
-                    } else {
-                        handleError(error);
-                    }
+                    console.log(session);
+                }).catch(error => {
+                    console.error('Failed:', error);
                 });
             });
         }
