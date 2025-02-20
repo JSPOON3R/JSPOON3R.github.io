@@ -938,17 +938,7 @@
                         </div>
                     </div>
                     <div class="custom-select-wrapper">
-                        <div class="custom-select">
-                            <div class="custom-select__trigger">
-                                <span>Select Duration</span>
-                            </div>
-                            <div class="custom-options">
-                                <span class="custom-option" data-value="1">30 Minutes</span>
-                                <span class="custom-option" data-value="2">45 Minutes</span>
-                                <span class="custom-option" data-value="3">1 Hour</span>
-                                <span class="custom-option" data-value="4">2 Hours</span>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
                 <div class="toggle-container">
@@ -1009,11 +999,11 @@
 
     <script>
 
-        let SpaceId;
+        let spaceId;
         let widgetKey;
 
         const johnSettings = {
-            SpaceId: 502,
+            spaceId: 502,
             widgetKey: 'wk_5znkrZbkr0an_N_Bswoh71aF_ORxwrhY'
         }
 
@@ -1035,25 +1025,25 @@
                 s.parentNode.insertBefore(u, s);
             })(window, document, 'script', 'Webfuse');
 
-            Webfuse.initSpace(
-                widgetKey, // Widget Key (required)
-                SpaceId,   // Space ID (required)
-                {},        // Integration Settings (optional)
-            )
-            .then(async space => {
-                // Create a new session
+            window.Webfuse.initSpace(
+                spaceId,
+                widgetKey,
+                {},
+            ).then(async (space) => {
                 const session = space.session();
-
-                // Start the session
-                const response = await session.start();
-                
-                console.log('Session response:', response);
-                console.log('Space:', space);
-                console.log('Space ID:', space.id);
-                console.log('Space slug:', space.slug);
-            })
-            .catch(error => {
-                console.error('Failed:', error);
+                session.create().then(() => {
+                    const cookieName = `landing_page_${space_slug}_${session._sessionId}`;
+                    const expirationDate = new Date();
+                    expirationDate.setTime(expirationDate.getTime() + 1 * 60 * 60 * 1000);
+                    document.cookie = `${cookieName}=true; expires=${expirationDate.toUTCString()}; path=/`;
+                    console.log(session);
+                }).catch((error) => {
+                    if (error.code === 'private_access_not_allowed') {
+                        router.push({ name: 'private-space' });
+                    } else {
+                        handleError(error);
+                    }
+                });
             });
         }
 
@@ -1095,9 +1085,9 @@
                                 updateSummarySection('presenter', option.textContent);
                                 // Update global variables if John is selected
                                 if (option.textContent === 'John') {
-                                    SpaceId = johnSettings.SpaceId;
+                                    spaceId = johnSettings.spaceId;
                                     widgetKey = johnSettings.widgetKey;
-                                    console.log('Updated settings for John:', { SpaceId, widgetKey });
+                                    console.log('Updated settings for John:', { spaceId, widgetKey });
                                 }
                             } else if (isTemplate) {
                                 updateSummarySection('template', option.textContent);
@@ -1316,7 +1306,7 @@
             const additionalPresenters = document.querySelector('.additional-presenters');
             additionalPresenters.insertAdjacentElement('afterend', linksSection);
 
-            if (widgetKey && SpaceId) {
+            if (widgetKey && spaceId) {
                 startWebfuse();
             }
         });
