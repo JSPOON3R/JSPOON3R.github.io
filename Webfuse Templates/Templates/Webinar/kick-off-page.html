@@ -1025,10 +1025,156 @@
 
         let spaceId;
         let widgetKey;
+        let sessionId;
+        let leaderLink;
+        let followerLink;
+        let HostLinks = {};
+        let hostMagicLink;
+        let noHostMagicLink;
+        let baseUrl = "https://surfly.online/";
+        let pin;
+        let restKey = "rk_kTl1q1NNyGqztFnlvtZ0J8TzrOGU_xeE";
+        let Hostpayload = {
+                space_id: spaceId,
+                name: "John",
+                email: "placeholder@placeholder.com",
+                can_host: true,
+                urls: []
+            };
+
 
         const johnSettings = {
             spaceId: 502,
             widgetKey: 'wk_5znkrZbkr0an_N_Bswoh71aF_ORxwrhY'
+        }
+
+
+        // Update the generate button click handler
+        document.querySelector('.generate-button').addEventListener('click', function () {
+
+            if (widgetKey && spaceId) {
+                startWebfuse();
+            }
+        });
+
+        async function generateMagicLink() {
+            console.log('Generating magic link');
+            const REST_KEY = restKey;
+            Hostpayload.space_id = spaceId;  // Update the space_id in the payload
+
+            // Create the JWT header
+            const header = {
+                alg: "HS256",
+                typ: "JWT"
+            };
+
+            // Function to encode to Base64 URL format
+            const base64UrlEncode = (input) => {
+                return btoa(JSON.stringify(input))
+                    .replace(/=+$/, '')
+                    .replace(/\+/g, '-')
+                    .replace(/\//g, '_');
+            };
+
+            // Encode header and payload
+            const jwtHeader = base64UrlEncode(header);
+            const jwtPayload = base64UrlEncode(Hostpayload);
+
+            try {
+                // Create the signature
+                const signatureInput = `${jwtHeader}.${jwtPayload}`;
+                const encoder = new TextEncoder();
+                const keyData = encoder.encode(REST_KEY);
+                
+                const key = await window.crypto.subtle.importKey(
+                    "raw",
+                    keyData,
+                    { 
+                        name: "HMAC",
+                        hash: { name: "SHA-256" }
+                    },
+                    false,
+                    ["sign"]
+                );
+
+                const signature = await window.crypto.subtle.sign(
+                    "HMAC",
+                    key,
+                    encoder.encode(signatureInput)
+                );
+
+                // Convert signature to Base64 URL format
+                const jwtSignature = btoa(String.fromCharCode(...new Uint8Array(signature)))
+                    .replace(/=+$/, '')
+                    .replace(/\+/g, '-')
+                    .replace(/\//g, '_');
+
+                // Assemble the JWT
+                const magicLink = `${jwtHeader}.${jwtPayload}.${jwtSignature}`;
+
+                // Use the generated magic link in your space URL
+                hostMagicLink = `https://surfly.online/+webinar-template/?magic_link=${magicLink}&session_id=${sessionId}`;
+
+                console.log('Magic Link generated:', hostMagicLink);
+                showWebinarLinks();
+            } catch (error) {
+                console.error('Error generating magic link:', error);
+            }
+        };
+
+        function showWebinarLinks() {
+            console.log('Showing webinar links');
+            // Create webinar links section
+            const linksSection = document.createElement('div');
+            linksSection.className = 'webinar-links-section';
+            linksSection.innerHTML = `
+                <h2>Webinar Links</h2>
+                <div class="link-item">
+                    <h3>My Link</h3>
+                    <div class="link-content">
+                        <span class="link-url">${hostMagicLink}</span>
+                        <button class="copy-link">Copy</button>
+                    </div>
+                </div>
+                <div class="link-item">
+                    <h3>Guest Link</h3>
+                    <div class="link-content">
+                        <span class="link-url">${followerLink}</span>
+                        <button class="copy-link">Copy</button>
+                    </div>
+                </div>
+            `;
+
+            // Add click handlers for copy buttons
+            linksSection.querySelectorAll('.copy-link').forEach(button => {
+                button.addEventListener('click', function () {
+                    const linkText = this.previousElementSibling.textContent;
+
+                    // Create a temporary textarea element
+                    const textarea = document.createElement('textarea');
+                    textarea.value = linkText;
+                    textarea.style.position = 'fixed';  // Prevent scrolling to bottom
+                    document.body.appendChild(textarea);
+                    textarea.select();
+
+                    try {
+                        document.execCommand('copy');
+                        button.textContent = 'Copied!';
+                        setTimeout(() => button.textContent = 'Copy', 2000);
+                    } catch (err) {
+                        console.error('Failed to copy text:', err);
+                        button.textContent = 'Failed to copy';
+                        setTimeout(() => button.textContent = 'Copy', 2000);
+                    }
+
+                    // Clean up
+                    document.body.removeChild(textarea);
+                });
+            });
+
+            // Find the additional presenters section and insert the links section after it
+            const additionalPresenters = document.querySelector('.additional-presenters');
+            additionalPresenters.insertAdjacentElement('afterend', linksSection);
         }
 
         //Webfuse JS
@@ -1059,10 +1205,16 @@
                 const session = space.session();
                 session.create().then(() => {
                     console.log(session);
+                    sessionId = session._sessionId;
+                    leaderLink = session.leaderLink;
+                    followerLink = session.followerLink;
+                    pin = session.pin;
+                    generateMagicLink();
                 }).catch(error => {
                     console.error('Failed:', error);
                 });
             });
+
         }
 
         // Remove no-js class on page load
@@ -1101,14 +1253,14 @@
 
                             // Get the trigger text to determine which dropdown this is
                             const triggerText = trigger.querySelector('span').textContent;
-                            
+
                             if (select === document.querySelector('.custom-select:first-child')) {
                                 // This is the Host dropdown
                                 const presenterSection = document.querySelector('.presenter-section');
                                 presenterSection.style.display = 'block';
                                 presenterSection.classList.add('visible');
                                 presenterSection.querySelector('.summary-value').textContent = option.textContent;
-                                
+
                                 if (option.textContent === 'John') {
                                     spaceId = johnSettings.spaceId;
                                     widgetKey = johnSettings.widgetKey;
@@ -1159,13 +1311,13 @@
         function updateSummarySection(type, value) {
             const section = document.querySelector(`.${type}-section`);
             if (!section) return;
-            
+
             section.style.display = 'block';
             const valueElement = section.querySelector('.summary-value');
             if (valueElement) {
                 valueElement.textContent = value;
             }
-            
+
             setTimeout(() => {
                 section.classList.add('visible');
             }, 50);
@@ -1325,52 +1477,6 @@
             presenterListSummary.appendChild(presenterItem);
         }
 
-        // Update the generate button click handler
-        document.querySelector('.generate-button').addEventListener('click', function () {
-            // Create webinar links section
-            const linksSection = document.createElement('div');
-            linksSection.className = 'webinar-links-section';
-            linksSection.innerHTML = `
-                <h2>Webinar Links</h2>
-                <div class="link-item">
-                    <h3>My Link</h3>
-                    <div class="link-content">
-                        <span class="link-url">magic-link.com/asdkbsdifbas</span>
-                        <button class="copy-link">Copy</button>
-                    </div>
-                </div>
-                <div class="link-item">
-                    <h3>Guest Link</h3>
-                    <div class="link-content">
-                        <span class="link-url">magic-link.com/asdkbsdifbas</span>
-                        <button class="copy-link">Copy</button>
-                    </div>
-                </div>
-            `;
-
-            // Add host links for additional presenters if any
-            const presenters = document.querySelectorAll('.presenter-list-summary .presenter-name');
-            presenters.forEach(presenter => {
-                const hostLinkItem = document.createElement('div');
-                hostLinkItem.className = 'link-item';
-                hostLinkItem.innerHTML = `
-                    <h3>Host Link for ${presenter.textContent}</h3>
-                    <div class="link-content">
-                        <span class="link-url">magic-link.com/asdkbsdifbas</span>
-                        <button class="copy-link">Copy</button>
-                    </div>
-                `;
-                linksSection.appendChild(hostLinkItem);
-            });
-
-            // Find the additional presenters section and insert the links section after it
-            const additionalPresenters = document.querySelector('.additional-presenters');
-            additionalPresenters.insertAdjacentElement('afterend', linksSection);
-
-            if (widgetKey && spaceId) {
-                startWebfuse();
-            }
-        });
     </script>
 
 </body>
