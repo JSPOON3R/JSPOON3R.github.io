@@ -1050,8 +1050,8 @@
             })(window, document, 'script', 'Webfuse');
 
             window.Webfuse.initSpace(
-                store.spaceLandingPage.widget_key?.value,
-                store.spaceLandingPage.space.value,
+                widgetKey.value,
+                spaceId.value,
                 {},
             ).then(async (space) => {
                 const session = space.session();
