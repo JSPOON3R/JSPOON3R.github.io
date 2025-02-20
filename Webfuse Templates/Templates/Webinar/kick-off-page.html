@@ -1072,6 +1072,12 @@
             hostPayload.space_id = spaceId;
             Guestpayload.space_id = spaceId;
 
+            // Create the JWT header
+            const header = {
+                alg: "HS256",
+                typ: "JWT"
+            };
+
             // Function to encode to Base64 URL format
             const base64UrlEncode = (input) => {
                 return btoa(JSON.stringify(input))
@@ -1080,17 +1086,59 @@
                     .replace(/\//g, '_');
             };
 
-            // Encode header and payload
-            const jwtHeader = base64UrlEncode(header);
-            const jwtPayload = base64UrlEncode(hostPayload);
-
             try {
-                // Generate Host Link with hostPayload
-                const hostJWT = await generateJWT(hostPayload);
-                hostMagicLink = `https://surfly.online/+webinar-template/?magic_link=${hostJWT}&session_id=${sessionId}`;
+                // Generate Host Link
+                const jwtHeader = base64UrlEncode(header);
+                const hostJwtPayload = base64UrlEncode(hostPayload);
+                const guestJwtPayload = base64UrlEncode(Guestpayload);
+
+                const encoder = new TextEncoder();
+                const keyData = encoder.encode(REST_KEY);
                 
-                // Generate Guest Link with Guestpayload
-                const guestJWT = await generateJWT(Guestpayload);
+                const key = await window.crypto.subtle.importKey(
+                    "raw",
+                    keyData,
+                    {
+                        name: "HMAC",
+                        hash: { name: "SHA-256" }
+                    },
+                    false,
+                    ["sign"]
+                );
+
+                // Generate host signature
+                const hostSignatureInput = `${jwtHeader}.${hostJwtPayload}`;
+                const hostSignature = await window.crypto.subtle.sign(
+                    "HMAC",
+                    key,
+                    encoder.encode(hostSignatureInput)
+                );
+
+                // Generate guest signature
+                const guestSignatureInput = `${jwtHeader}.${guestJwtPayload}`;
+                const guestSignature = await window.crypto.subtle.sign(
+                    "HMAC",
+                    key,
+                    encoder.encode(guestSignatureInput)
+                );
+
+                // Convert signatures to Base64 URL format
+                const hostJwtSignature = btoa(String.fromCharCode(...new Uint8Array(hostSignature)))
+                    .replace(/=+$/, '')
+                    .replace(/\+/g, '-')
+                    .replace(/\//g, '_');
+
+                const guestJwtSignature = btoa(String.fromCharCode(...new Uint8Array(guestSignature)))
+                    .replace(/=+$/, '')
+                    .replace(/\+/g, '-')
+                    .replace(/\//g, '_');
+
+                // Assemble the JWTs
+                const hostJWT = `${jwtHeader}.${hostJwtPayload}.${hostJwtSignature}`;
+                const guestJWT = `${jwtHeader}.${guestJwtPayload}.${guestJwtSignature}`;
+
+                // Create the final magic links
+                hostMagicLink = `https://surfly.online/+webinar-template/?magic_link=${hostJWT}&session_id=${sessionId}`;
                 noHostMagicLink = `https://surfly.online/+webinar-template/?magic_link=${guestJWT}&session_id=${sessionId}`;
 
                 console.log('Magic Links generated:', { hostMagicLink, noHostMagicLink });
