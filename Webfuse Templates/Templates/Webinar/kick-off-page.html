@@ -116,7 +116,7 @@
 
         .heading {
             color: var(--webfuse-white);
-            font-size: 4rem;
+            font-size: 2.4rem;
             margin: 0;
         }
 
@@ -567,7 +567,7 @@
         }
 
         .summary-section {
-            margin-bottom: 2rem;
+            margin-bottom: 0;
             opacity: 0;
             transition: opacity 0.3s ease-in-out;
         }
@@ -1056,11 +1056,7 @@
             ).then(async (space:any) => {
                 const session = space.session();
                 session.create().then(() => {
-                    const cookieName = `landing_page_${space_slug}_${session._sessionId}`;
-                    const expirationDate = new Date();
-                    expirationDate.setTime(expirationDate.getTime() + 1 * 60 * 60 * 1000);
-                    document.cookie = `${cookieName}=true; expires=${expirationDate.toUTCString()}; path=/`;
-                    console.log(session);
+                     console.log(session);
                 }).catch((error:any) => {
                     if (error.code === 'private_access_not_allowed') {
                         router.push({ name: 'private-space' });
