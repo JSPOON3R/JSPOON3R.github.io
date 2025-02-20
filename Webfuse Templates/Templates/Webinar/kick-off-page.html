@@ -979,10 +979,6 @@
                     <h3>Template</h3>
                     <div class="summary-value">Not selected</div>
                 </div>
-                <div class="summary-section duration-section" style="display: none;">
-                    <h3>Duration</h3>
-                    <div class="summary-value">Not selected</div>
-                </div>
                 <div class="summary-section multiple-presenters-section">
                     <h3>Multiple Presenters</h3>
                     <div class="summary-value">No</div>
@@ -1064,7 +1060,6 @@
                 // Determine which type of selector this is
                 const isPresenter = trigger.querySelector('span').textContent.includes('Host');
                 const isTemplate = trigger.querySelector('span').textContent.includes('Template');
-                const isDuration = trigger.querySelector('span').textContent.includes('Duration');
 
                 // Toggle dropdown
                 trigger.addEventListener('click', () => {
@@ -1091,8 +1086,6 @@
                                 }
                             } else if (isTemplate) {
                                 updateSummarySection('template', option.textContent);
-                            } else if (isDuration) {
-                                updateSummarySection('duration', option.textContent);
                             }
                         }
                         select.querySelector('.custom-select').classList.remove('open');
@@ -1112,11 +1105,10 @@
             const presenterVisible = document.querySelector('.presenter-section').style.display !== 'none';
             const tabsVisible = document.querySelector('.tabs-section').style.display !== 'none';
             const templateVisible = document.querySelector('.template-section').style.display !== 'none';
-            const durationVisible = document.querySelector('.duration-section').style.display !== 'none';
 
             const generateContainer = document.querySelector('.generate-button-container');
 
-            if (presenterVisible && tabsVisible && templateVisible && durationVisible) {
+            if (presenterVisible && templateVisible) {
                 generateContainer.style.display = 'block';
                 setTimeout(() => {
                     generateContainer.classList.add('visible');
