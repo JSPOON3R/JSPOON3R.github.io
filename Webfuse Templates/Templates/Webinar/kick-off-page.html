@@ -1034,13 +1034,20 @@
         let baseUrl = "https://surfly.online/";
         let pin;
         let restKey = "rk_kTl1q1NNyGqztFnlvtZ0J8TzrOGU_xeE";
-        let Hostpayload = {
-                space_id: spaceId,
-                name: "John",
-                email: "placeholder@placeholder.com",
-                can_host: true,
-                urls: []
-            };
+        let hostPayload = {
+            space_id: spaceId,
+            name: "John",
+            email: "placeholder@placeholder.com",
+            can_host: true,
+            urls: []
+        };
+        let Guestpayload = {
+            space_id: spaceId,
+            name: "Guest",
+            email: "placeholder@placeholder.com",
+            can_host: false,
+            urls: []
+        };
 
 
         const johnSettings = {
@@ -1058,15 +1065,12 @@
         });
 
         async function generateMagicLink() {
-            console.log('Generating magic link');
+            console.log('Generating magic links');
             const REST_KEY = restKey;
-            Hostpayload.space_id = spaceId;  // Update the space_id in the payload
-
-            // Create the JWT header
-            const header = {
-                alg: "HS256",
-                typ: "JWT"
-            };
+            
+            // Update space_id in both payloads
+            hostPayload.space_id = spaceId;
+            Guestpayload.space_id = spaceId;
 
             // Function to encode to Base64 URL format
             const base64UrlEncode = (input) => {
@@ -1078,59 +1082,32 @@
 
             // Encode header and payload
             const jwtHeader = base64UrlEncode(header);
-            const jwtPayload = base64UrlEncode(Hostpayload);
+            const jwtPayload = base64UrlEncode(hostPayload);
 
             try {
-                // Create the signature
-                const signatureInput = `${jwtHeader}.${jwtPayload}`;
-                const encoder = new TextEncoder();
-                const keyData = encoder.encode(REST_KEY);
+                // Generate Host Link with hostPayload
+                const hostJWT = await generateJWT(hostPayload);
+                hostMagicLink = `https://surfly.online/+webinar-template/?magic_link=${hostJWT}&session_id=${sessionId}`;
                 
-                const key = await window.crypto.subtle.importKey(
-                    "raw",
-                    keyData,
-                    { 
-                        name: "HMAC",
-                        hash: { name: "SHA-256" }
-                    },
-                    false,
-                    ["sign"]
-                );
+                // Generate Guest Link with Guestpayload
+                const guestJWT = await generateJWT(Guestpayload);
+                noHostMagicLink = `https://surfly.online/+webinar-template/?magic_link=${guestJWT}&session_id=${sessionId}`;
 
-                const signature = await window.crypto.subtle.sign(
-                    "HMAC",
-                    key,
-                    encoder.encode(signatureInput)
-                );
-
-                // Convert signature to Base64 URL format
-                const jwtSignature = btoa(String.fromCharCode(...new Uint8Array(signature)))
-                    .replace(/=+$/, '')
-                    .replace(/\+/g, '-')
-                    .replace(/\//g, '_');
-
-                // Assemble the JWT
-                const magicLink = `${jwtHeader}.${jwtPayload}.${jwtSignature}`;
-
-                // Use the generated magic link in your space URL
-                hostMagicLink = `https://surfly.online/+webinar-template/?magic_link=${magicLink}&session_id=${sessionId}`;
-
-                console.log('Magic Link generated:', hostMagicLink);
+                console.log('Magic Links generated:', { hostMagicLink, noHostMagicLink });
                 showWebinarLinks();
             } catch (error) {
-                console.error('Error generating magic link:', error);
+                console.error('Error generating magic links:', error);
             }
-        };
+        }
 
         function showWebinarLinks() {
-            console.log('Showing webinar links');
             // Create webinar links section
             const linksSection = document.createElement('div');
             linksSection.className = 'webinar-links-section';
             linksSection.innerHTML = `
                 <h2>Webinar Links</h2>
                 <div class="link-item">
-                    <h3>My Link</h3>
+                    <h3>Host Link</h3>
                     <div class="link-content">
                         <span class="link-url">${hostMagicLink}</span>
                         <button class="copy-link">Copy</button>
@@ -1139,7 +1116,7 @@
                 <div class="link-item">
                     <h3>Guest Link</h3>
                     <div class="link-content">
-                        <span class="link-url">${followerLink}</span>
+                        <span class="link-url">${noHostMagicLink}</span>
                         <button class="copy-link">Copy</button>
                     </div>
                 </div>
