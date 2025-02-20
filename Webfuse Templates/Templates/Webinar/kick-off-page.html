@@ -728,7 +728,7 @@
 
         .add-presenter-button {
             color: var(--webfuse-offwhite);
-            font-size: 1rem;
+            font-size: .8rem;
             white-space: nowrap;
             text-align: center;
             background-image: linear-gradient(144deg, #2e5bd5 10%, #64b8c1);
@@ -1053,11 +1053,11 @@
                 spaceId,
                 widgetKey,
                 {},
-            ).then(async (space:any) => {
+            ).then(async (space) => {
                 const session = space.session();
                 session.create().then(() => {
                      console.log(session);
-                }).catch((error:any) => {
+                }).catch((error) => {
                     if (error.code === 'private_access_not_allowed') {
                         router.push({ name: 'private-space' });
                     } else {
