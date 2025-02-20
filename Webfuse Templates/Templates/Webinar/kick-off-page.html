@@ -1058,10 +1058,6 @@
             ).then(async (space) => {
                 const session = space.session();
                 session.create().then(() => {
-                    const cookieName = `landing_page_${space_slug}_${session._sessionId}`;
-                    const expirationDate = new Date();
-                    expirationDate.setTime(expirationDate.getTime() + 1 * 60 * 60 * 1000);
-                    document.cookie = `${cookieName}=true; expires=${expirationDate.toUTCString()}; path=/`;
                     console.log(session);
                 }).catch(error => {
                     console.error('Failed:', error);
