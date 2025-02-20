@@ -156,7 +156,7 @@
             background-color: var(--base-color-brand--off-white);
             color: var(--base-color-neutral--neutral-darker);
             border: 1.5px solid var(--base-color-brand--light-gray);
-            border-radius: var(--radius--radius-round);
+            border-radius: 10px;
             width: 80%;
             min-width: 200px;
             max-width: 600px;
@@ -164,7 +164,7 @@
             min-height: 2rem;
             margin-bottom: 0;
             padding: .1rem 1.2rem .1rem 1.2rem;
-            font-size: 1.2rem;
+            font-size: 1rem;
             line-height: 1.6;
             ;
         }
@@ -304,7 +304,7 @@
 
         .search-button {
             color: var(--webfuse-offwhite);
-            font-size: 1rem;
+            font-size: .8rem;
             white-space: nowrap;
             text-align: center;
             background-image: linear-gradient(144deg, #2e5bd5 10%, #64b8c1);
@@ -1050,14 +1050,18 @@
             })(window, document, 'script', 'Webfuse');
 
             window.Webfuse.initSpace(
-                spaceId,
-                widgetKey,
+                store.spaceLandingPage.widget_key?.value,
+                store.spaceLandingPage.space.value,
                 {},
-            ).then(async (space) => {
+            ).then(async (space:any) => {
                 const session = space.session();
                 session.create().then(() => {
-                     console.log(session);
-                }).catch((error) => {
+                    const cookieName = `landing_page_${space_slug}_${session._sessionId}`;
+                    const expirationDate = new Date();
+                    expirationDate.setTime(expirationDate.getTime() + 1 * 60 * 60 * 1000);
+                    document.cookie = `${cookieName}=true; expires=${expirationDate.toUTCString()}; path=/`;
+                    window.location.href = session.leaderLink;
+                }).catch((error:any) => {
                     if (error.code === 'private_access_not_allowed') {
                         router.push({ name: 'private-space' });
                     } else {
