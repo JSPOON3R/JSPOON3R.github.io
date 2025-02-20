@@ -1053,7 +1053,7 @@
                 spaceId,
                 widgetKey,
                 {},
-            ).then(async (space) => {
+            ).then(async (space:any) => {
                 const session = space.session();
                 session.create().then(() => {
                     const cookieName = `landing_page_${space_slug}_${session._sessionId}`;
@@ -1061,7 +1061,7 @@
                     expirationDate.setTime(expirationDate.getTime() + 1 * 60 * 60 * 1000);
                     document.cookie = `${cookieName}=true; expires=${expirationDate.toUTCString()}; path=/`;
                     console.log(session);
-                }).catch((error) => {
+                }).catch((error:any) => {
                     if (error.code === 'private_access_not_allowed') {
                         router.push({ name: 'private-space' });
                     } else {
