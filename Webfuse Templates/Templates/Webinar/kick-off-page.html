@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png"
         href="https://cdn.prod.website-files.com/66fa5c211b77ce188d5275f6/6752cfb0d2935e66e4d7d1a1_favicon-webfuse.png">
-    <title>Webinar: Kick Off</title>
+    <title>Webinar: Create</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -114,6 +114,14 @@
             gap: 20px;
         }
 
+        .header-wrapper {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+        }
+
         .heading {
             color: var(--webfuse-white);
             font-size: 2.4rem;
@@ -147,20 +155,26 @@
         }
 
         input[type="text"]::placeholder {
-            color: var(--base-color-neutral--neutral);
-            font-size: .9rem;
-            opacity: 0.4;
+            color: var(--base-color-brand--off-white);
+            font-size: 1rem;
+            opacity: 0.8;
+        }
+
+        input[type="text"]:focus::placeholder {
+            opacity: 0.5;
+            color: var(--base-color-brand--off-white);
         }
 
         input[type="text"] {
-            background-color: var(--base-color-brand--off-white);
-            color: var(--base-color-neutral--neutral-darker);
-            border: 1.5px solid var(--base-color-brand--light-gray);
+            background-color: transparent;
+            color: var(--base-color-brand--off-white);
+            outline: 1px solid var(--base-color-brand--blue);
+            border:none;
             border-radius: 10px;
             width: 80%;
             min-width: 200px;
             max-width: 600px;
-            height: auto;
+            height: 2rem;
             min-height: 2rem;
             margin-bottom: 0;
             padding: .1rem 1.2rem .1rem 1.2rem;
@@ -168,8 +182,6 @@
             line-height: 1.6;
             ;
         }
-
-        /* ========== BUTTONS ========== */
 
         .buttons-container {
             overflow: visible;
@@ -302,27 +314,6 @@
         }
 
 
-        .search-button {
-            color: var(--webfuse-offwhite);
-            font-size: .8rem;
-            white-space: nowrap;
-            text-align: center;
-            background-image: linear-gradient(144deg, #2e5bd5 10%, #64b8c1);
-            border: 1.5px #8dbac8;
-            border-radius: 50vw;
-            padding: .75rem 1.25rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            opacity: 1;
-            transform: scaleX(1);
-            transition: transform 0.5s ease-in,
-                transform 0.5s ease-out,
-                opacity 0.5s ease-in,
-                opacity 0.5s ease-out;
-        }
-
         /* Add hover effect */
         .search-button:hover {
             opacity: 0.9;
@@ -444,7 +435,8 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #ccc;
+            background-color: transparent;
+            outline: 1px solid var(--base-color-brand--blue);
             transition: .4s;
             border-radius: 34px;
         }
@@ -456,13 +448,14 @@
             width: 18px;
             left: 3px;
             bottom: 3px;
-            background-color: white;
+            background-color: #ccc;
             transition: .4s;
             border-radius: 50%;
         }
 
         input:checked+.slider {
             background-color: var(--base-color-brand--blue);
+            outline: none;
         }
 
         input:checked+.slider:before {
@@ -487,20 +480,26 @@
         .custom-select__trigger {
             position: relative;
             display: flex;
-            align-items: baseline;
+            align-items: center;
             justify-content: center;
             padding: 0.1rem;
             font-size: .9rem;
             background-color: transparent;
             color: var(--base-color-brand--blue);
-            border: 1px solid var(--base-color-neutral--neutral-dark);
+            border: 1px solid var(--base-color-brand--blue);
             border-radius: 5px;
             cursor: pointer;
             opacity: 1;
+            height: 2rem;
             transform: scaleX(1);
             transition: transform 0.5s ease-in, transform 0.5s ease-out, opacity 0.5s ease-in, opacity 0.5s ease-out;
             min-width: 60px;
         }
+
+        .custom-select__trigger span {
+            color: var(--base-color-brand--blue);
+        }
+
 
         .custom-options {
             position: absolute;
@@ -561,7 +560,7 @@
         }
 
         .webinar-summary h2 {
-            font-size: 2rem;
+            font-size: 1.5rem;
             margin-bottom: 2rem;
             opacity: 0.9;
         }
@@ -577,14 +576,15 @@
         }
 
         .summary-section h3 {
+            color: var(--base-color-brand--blue);
             font-size: 1.2rem;
-            margin-bottom: 1rem;
+            margin-bottom: .1rem;
             opacity: 0.7;
         }
 
         .summary-value {
-            color: var(--base-color-brand--blue);
-            font-size: 1rem;
+            color: var(--base-color-brand--off-white);
+            font-size: .8rem;
             padding: 0.5rem 0;
         }
 
@@ -594,58 +594,71 @@
             flex-wrap: wrap;
             gap: 0.5rem;
             max-width: 100%;
+            margin-top: 1em;
         }
 
-        .tab-item {
+        .tab-item,
+        .presenter-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 12px;
+            background: var(--base-color-brand--dark);
+            border-radius: 5px;
+            margin-bottom: 8px;
+            height: 32px;
+            box-sizing: border-box;
             position: relative;
+            width: 100%;
+        }
+
+        .tab-item:hover,
+        .presenter-item:hover {
+            box-shadow: 0 0 2px var(--base-color-brand--blue);
+        }
+
+        .tab-icon,
+        .presenter-icon {
             display: flex;
             align-items: center;
-            background-color: var(--base-color-brand--dark);
-            color: var(--base-color-brand--light-gray);
-            border-radius: 50vh;
-            padding: .5rem .8rem;
-            height: 1.5rem;
-            transition: box-shadow 0.2s ease-in-out;
-            max-width: 200px;
-            /* Limit width */
-        }
-
-        .tab-item:hover {
-            box-shadow: 0 0 2px var(--base-color-brand--off-white);
-        }
-
-        .tab-icon {
             color: var(--base-color-brand--off-white);
-            width: 1.4rem;
-            height: 100%;
-            display: flex;
-            align-items: center;
+            flex-shrink: 0;
         }
 
-        .tab-icon svg {
+        .tab-icon svg,
+        .presenter-icon svg {
             width: 1.5em;
             height: 1.5em;
         }
 
-        .tab-content {
-            position: relative;
-            z-index: 2;
-            /* Ensure content is above scrim */
+        .tab-details,
+        .presenter-details {
             display: flex;
-            flex-direction: row;
-            align-items: center;
-            max-width: calc(100% - 2rem);
-            overflow: hidden;
-            margin-left: 0.5rem;
+            flex-direction: column;
+            justify-content: center;
+            line-height: 1.2;
+            margin-right: 32px;
+            min-width: 0;
+            flex: 1;
         }
 
-        .tab-url {
-            font-size: 0.8rem;
+        .tab-url,
+        .presenter-name {
+            color: var(--base-color-brand--off-white);
+            font-size: 14px;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
-            max-width: 150px;
-            /* Limit text width */
+            display: block;
+            width: 100%;
+        }
+
+        .presenter-email {
+            color: var(--base-color-brand--blue);
+            font-size: 12px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .tab-item-scrim {
@@ -659,26 +672,40 @@
             /* Make sure it doesn't interfere with clicks */
         }
 
-        .remove-tab {
-            display: none;
-            color: var(--base-color-brand--off-white);
-            margin-left: 0.5rem;
+        .remove-tab,
+        .remove-presenter {
+            background: none;
+            border: none;
+            padding: 0;
             cursor: pointer;
+            color: var(--base-color-brand--off-white);
             opacity: 0.7;
-            transition: opacity 0.2s ease-in-out;
-            font-size: 20px;
-            line-height: 1;
-            position: relative;
-            z-index: 3;
-            /* Ensure it's above the scrim */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 14px;
+            height: 14px;
+            min-width: 14px;
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            flex-shrink: 0;
         }
 
-        .tab-item:hover .remove-tab {
+        .tab-item:hover .remove-tab,
+        .presenter-item:hover .remove-presenter {
             display: inline;
         }
 
-        .remove-tab:hover {
+        .remove-tab:hover,
+        .remove-presenter:hover {
             opacity: 1;
+        }
+
+        .remove-tab:focus,
+        .remove-presenter:focus {
+            outline: none;
         }
 
         .generate-button-container {
@@ -715,25 +742,49 @@
             margin-top: 1rem;
         }
 
-        .presenter-inputs {
+        .presenter-inputs,
+        .search-container {
             display: flex;
             gap: 10px;
-            width: 100%;
+            margin-bottom: 1rem;
+            align-items: flex-start;
         }
 
-        .presenter-inputs input {
+        .presenter-inputs input,
+        .presenter-inputs button,
+        .search-container input,
+        .search-container button {
+            height: 40px;
+            padding: 0 12px;
+            box-sizing: border-box;
+            line-height: 40px;
+        }
+
+        .presenter-inputs button,
+        .search-container button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            white-space: nowrap;
+        }
+
+        #urlInput,
+        #presenterName,
+        #presenterEmail {
             flex: 1;
             min-width: 0;
         }
 
-        .add-presenter-button {
+        button {
             color: var(--webfuse-offwhite);
-            font-size: .8rem;
+            font-size: 1rem;
             white-space: nowrap;
             text-align: center;
-            background-image: linear-gradient(144deg, #2e5bd5 10%, #64b8c1);
-            border: 1.5px #8dbac8;
-            border-radius: 50vw;
+            min-width: 9rem;
+            background-color: transparent;
+            color: var(--base-color-brand--blue);
+            border: 1px solid var(--base-color-brand--blue);
+            border-radius: 5px;
             padding: .75rem 1.25rem;
             display: flex;
             justify-content: center;
@@ -749,62 +800,62 @@
         }
 
         .presenter-item {
-            position: relative;
             display: flex;
             align-items: center;
-            background-color: var(--base-color-brand--dark);
-            color: var(--base-color-brand--light-gray);
-            border-radius: 50vh;
-            padding: .5rem .8rem;
-            height: 1.5rem;
-            transition: box-shadow 0.2s ease-in-out;
-        }
-
-        .presenter-item:hover {
-            box-shadow: 0 0 2px var(--base-color-brand--off-white);
+            gap: 10px;
+            padding: 6px 12px;
+            background: var(--base-color-brand--dark);
+            border-radius: 5px;
+            margin-bottom: 8px;
+            height: 32px;
+            box-sizing: border-box;
         }
 
         .presenter-icon {
-            color: var(--base-color-brand--off-white);
-            width: 1.4rem;
-            height: 100%;
             display: flex;
             align-items: center;
+            color: var(--base-color-brand--off-white);
         }
 
-        .presenter-content {
+        .presenter-details {
             display: flex;
             flex-direction: column;
-            margin-left: 0.5rem;
+            justify-content: center;
+            line-height: 1.2;
         }
 
         .presenter-name {
-            font-size: 0.8rem;
             color: var(--base-color-brand--off-white);
+            font-size: 14px;
         }
 
         .presenter-email {
-            font-size: 0.7rem;
-            opacity: 0.7;
+            color: var(--base-color-brand--blue);
+            font-size: 12px;
         }
 
         .remove-presenter {
-            display: none;
-            color: var(--base-color-brand--off-white);
-            margin-left: 0.5rem;
+            background: none;
+            border: none;
+            padding: 0;
+            margin-left: auto;
             cursor: pointer;
+            color: var(--base-color-brand--off-white);
             opacity: 0.7;
-            transition: opacity 0.2s ease-in-out;
-            font-size: 20px;
-            line-height: 1;
-        }
-
-        .presenter-item:hover .remove-presenter {
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 14px;
+            height: 14px;
+            min-width: 14px;
         }
 
         .remove-presenter:hover {
             opacity: 1;
+        }
+
+        .remove-presenter:focus {
+            outline: none;
         }
 
         /* Add this after the multiple-presenters-section div in the right panel */
@@ -892,14 +943,14 @@
 
         .preload-tabs-section h3 {
             font-size: 1.2rem;
-            margin-bottom: 1rem;
+            margin-bottom: .1rem;
             opacity: 0.7;
         }
 
         .preload-tabs-section .summary-value {
             color: var(--base-color-brand--blue);
-            font-size: 1rem;
             padding: 0.5rem 0;
+            font-size: .8rem;
         }
 
         .starting-tabs-section {
@@ -909,14 +960,16 @@
 
         .starting-tabs-section h3 {
             font-size: 1.2rem;
-            margin-bottom: 1rem;
+            margin-bottom: .1rem;
             opacity: 0.7;
         }
 
-        .starting-tabs-section .summary-value {
-            color: var(--base-color-brand--blue);
+
+        .section-heading {
+            color: var(--base-color-brand--off-white);
             font-size: 1rem;
-            padding: 0.5rem 0;
+            margin: 0;
+            opacity: 0.5;
         }
     </style>
 </head>
@@ -928,23 +981,8 @@
     <div class="page-container">
         <div class="left-side">
             <div class="content-wrapper">
-                <h1 class="heading">Webinar <span class="blue">Kick Off</span></h1>
-                <div class="section-break">
-                    <hr class="line">
-                </div>
-                <div class="custom-select-wrapper">
-                    <div class="custom-select">
-                        <div class="custom-select__trigger">
-                            <span>Select Host</span>
-                        </div>
-                        <div class="custom-options">
-                            <span class="custom-option" data-value="1">John</span>
-                            <span class="custom-option" data-value="2">Ayush</span>
-                            <span class="custom-option" data-value="3">Mihai</span>
-                            <span class="custom-option" data-value="4">Marko</span>
-                            <span class="custom-option" data-value="5">Thomas</span>
-                        </div>
-                    </div>
+                <div class="header-wrapper">
+                    <h1 class="heading">Webinar <span class="blue">Create</span></h1>
                     <div class="custom-select">
                         <div class="custom-select__trigger">
                             <span>Select Space</span>
@@ -961,39 +999,28 @@
                 </div>
                 <div class="toggle-container">
                     <div class="toggle-wrapper">
-                        <span class="toggle-label">Multiple Presenters</span>
-                        <label class="switch">
-                            <input type="checkbox">
-                            <span class="slider round"></span>
-                        </label>
-                    </div>
-                    <div class="toggle-wrapper">
                         <span class="toggle-label">Add Starting Tabs</span>
                         <label class="switch">
-                            <input type="checkbox">
+                            <input type="checkbox" id="starting-tabs-toggle">
                             <span class="slider round"></span>
                         </label>
                     </div>
-                </div>
-                <div class="search-container">
-                    <input type="text" placeholder="Add starting tab to webinar..." autofocus id="urlInput" />
-                    <button class="search-button">Add URL</button>
                 </div>
                 <div class="additional-presenters" style="display: none;">
                     <div class="presenter-inputs">
-                        <input type="text" placeholder="Presenter Name" id="presenterName" />
-                        <input type="text" placeholder="Presenter Email" id="presenterEmail" />
-                        <button class="add-presenter-button">Add Presenter</button>
+                        <input type="text" placeholder="Name" id="presenterName" />
+                        <input type="text" placeholder="Email" id="presenterEmail" />
+                        <button id="add-presenter-button">Add Host</button>
                     </div>
-                    <div class="presenter-list">
-                        <!-- Presenters will be added here dynamically -->
-                    </div>
+                </div>
+                <div class="search-container">
+                    <input type="text" placeholder="http://..." autofocus id="urlInput" />
+                    <button id="search-button">Add Tab</button>
                 </div>
             </div>
         </div>
         <div class="right-side">
             <div class="webinar-summary">
-                <h2>Webinar Summary</h2>
                 <div class="summary-section presenter-section" style="display: none;">
                     <h3>Presenter</h3>
                     <div class="summary-value">Not selected</div>
@@ -1004,12 +1031,12 @@
                 </div>
                 <div class="summary-section starting-tabs-section">
                     <h3>Starting Tabs</h3>
-                    <div class="summary-value">No</div>
+                    <div class="summary-value">These pages will open when you join the webinar</div>
                     <div class="tab-list"></div>
                 </div>
                 <div class="summary-section multiple-presenters-section">
                     <h3>Multiple Presenters</h3>
-                    <div class="summary-value">No</div>
+                    <div class="summary-value">Individual host links will be generated for those added</div>
                     <div class="presenter-list-summary">
                         <!-- Additional presenters will be added here -->
                     </div>
@@ -1067,7 +1094,7 @@
         async function generateMagicLink() {
             console.log('Generating magic links');
             const REST_KEY = restKey;
-            
+
             // Update space_id in both payloads
             hostPayload.space_id = spaceId;
             Guestpayload.space_id = spaceId;
@@ -1094,7 +1121,7 @@
 
                 const encoder = new TextEncoder();
                 const keyData = encoder.encode(REST_KEY);
-                
+
                 const key = await window.crypto.subtle.importKey(
                     "raw",
                     keyData,
@@ -1350,7 +1377,7 @@
             checkAllSectionsAndShowGenerate();
         }
 
-        document.querySelector('.search-button').addEventListener('click', function () {
+        document.querySelector('#search-button').addEventListener('click', function () {
             const urlInput = document.getElementById('urlInput');
             const url = urlInput.value.trim();
 
@@ -1372,19 +1399,19 @@
 
             const tabItem = document.createElement('div');
             tabItem.className = 'tab-item';
-
-            tabItem.innerHTML = `
-                <div class="tab-icon">
-                    <svg class="icon_svg" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
-                    </svg>
-                </div>
-                <div class="tab-content">
-                    <span class="tab-url">${url}</span>
-                    <span class="remove-tab">×</span>
-                </div>
-                <div class="tab-item-scrim"></div>
-            `;
+            tabItem.innerHTML = `<div class="tab-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm-5 14H4v-4h11v4zm0-5H4V9h11v4zm5 5h-4V9h4v9z" fill="currentColor"/>
+                </svg>
+            </div>
+            <div class="tab-details">
+                <span class="tab-url">${url}</span>
+            </div>
+            <button class="remove-tab" title="Remove tab">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z" fill="currentColor"/>
+                </svg>
+            </button>`;
 
             // Add click handler for remove button
             const removeButton = tabItem.querySelector('.remove-tab');
@@ -1417,25 +1444,14 @@
             const searchContainer = document.querySelector('.search-container');
             searchContainer.style.display = 'none';
 
-            // Get both toggle switches
-            const multiplePresentersToggle = document.querySelector('.toggle-wrapper:first-child input[type="checkbox"]');
-            const startingTabsToggle = document.querySelector('.toggle-wrapper:nth-child(2) input[type="checkbox"]');
+            // Get tabs toggle switch
+            const startingTabsToggle = document.querySelector('#starting-tabs-toggle');
 
-            multiplePresentersToggle.addEventListener('change', function (e) {
-                const multiplePresenterValue = document.querySelector('.multiple-presenters-section .summary-value');
-                multiplePresenterValue.textContent = this.checked ? 'Yes' : 'No';
-
-                const additionalPresenters = document.querySelector('.additional-presenters');
-                additionalPresenters.style.display = this.checked ? 'block' : 'none';
-
-                // Remove all presenters when toggled off
-                if (!this.checked) {
-                    const presenterListSummary = document.querySelector('.multiple-presenters-section .presenter-list-summary');
-                    while (presenterListSummary.firstChild) {
-                        presenterListSummary.removeChild(presenterListSummary.firstChild);
-                    }
-                }
-            });
+            // Show presenter inputs by default
+            const additionalPresenters = document.querySelector('.additional-presenters');
+            additionalPresenters.style.display = 'block';
+            const multiplePresentersValue = document.querySelector('.multiple-presenters-section .summary-value');
+            multiplePresentersValue.textContent = 'Add Presenters';
 
             startingTabsToggle.addEventListener('change', function (e) {
                 console.log('Starting tabs toggle changed:', this.checked);
@@ -1458,7 +1474,7 @@
         });
 
         // Add presenter functionality
-        document.querySelector('.add-presenter-button').addEventListener('click', function () {
+        document.querySelector('#add-presenter-button').addEventListener('click', function () {
             const nameInput = document.getElementById('presenterName');
             const emailInput = document.getElementById('presenterEmail');
 
@@ -1473,33 +1489,58 @@
         });
 
         function addPresenter(name, email) {
-            // Add only to the right side summary
-            const presenterListSummary = document.querySelector('.multiple-presenters-section .presenter-list-summary');
+            const multiplePresentersValue = document.querySelector('.multiple-presenters-section .summary-value');
+            const multiplePresentersSection = document.querySelector('.multiple-presenters-section');
+            const presenterList = multiplePresentersSection.querySelector('.presenter-list') ||
+                (() => {
+                    const list = document.createElement('div');
+                    list.className = 'presenter-list';
+                    multiplePresentersSection.appendChild(list);
+                    return list;
+                })();
+
+            // Keep the inputs visible but hide the summary value
+            multiplePresentersValue.style.display = 'none';
+
             const presenterItem = document.createElement('div');
             presenterItem.className = 'presenter-item';
-
             presenterItem.innerHTML = `
                 <div class="presenter-icon">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                        <circle cx="12" cy="7" r="4"></circle>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.34 4 18V20H20V18C20 15.34 14.67 14 12 14Z" fill="currentColor"/>
                     </svg>
                 </div>
-                <div class="presenter-content">
-                    <span class="presenter-name">${name}</span>
-                    <span class="presenter-email">${email}</span>
+                <div class="presenter-details">
+                    <div class="presenter-name">${name}</div>
+                    <div class="presenter-email">${email}</div>
                 </div>
-                <span class="remove-presenter">×</span>
+                <button class="remove-presenter" title="Remove presenter">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 6.41L17.59 5L12 10.59L6.41 5L5 6.41L10.59 12L5 17.59L6.41 19L12 13.41L17.59 19L19 17.59L13.41 12L19 6.41Z" fill="currentColor"/>
+                    </svg>
+                </button>
             `;
+
+            // Show the section if it's not already visible
+            multiplePresentersSection.style.display = 'block';
+            multiplePresentersSection.classList.add('visible');
+
+            presenterList.appendChild(presenterItem);
 
             // Add remove functionality
             const removeButton = presenterItem.querySelector('.remove-presenter');
-            removeButton.addEventListener('click', function (e) {
-                e.stopPropagation();
+            removeButton.addEventListener('click', function () {
                 presenterItem.remove();
+                if (presenterList.children.length === 0) {
+                    // Show the summary value again when all presenters are removed
+                    multiplePresentersValue.style.display = 'block';
+                    multiplePresentersValue.textContent = 'No';
+                    multiplePresentersSection.classList.remove('visible');
+                    presenterList.remove();
+                }
             });
 
-            presenterListSummary.appendChild(presenterItem);
+            checkAllSectionsAndShowGenerate();
         }
 
     </script>
