@@ -1343,13 +1343,12 @@
         });
 
         function checkAllSectionsAndShowGenerate() {
-            const presenterVisible = document.querySelector('.presenter-section').style.display !== 'none';
             const templateVisible = document.querySelector('.template-section').style.display !== 'none';
 
             const generateContainer = document.querySelector('.generate-button-container');
 
             // Show generate button if either presenter or template is selected
-            if (presenterVisible && templateVisible) {
+            if (templateVisible) {
                 generateContainer.style.display = 'block';
                 setTimeout(() => {
                     generateContainer.classList.add('visible');
