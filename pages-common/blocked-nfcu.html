@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="shortcut icon"
+        href="https://www.navyfederal.org/etc.clientlibs/nfculibs/clientlibs/uife/clientlib-uife-nfculibs-site/resources/images/favicon.ico"
+        type="image/x-icon">
+    <title>Blocked URL Redirect</title>
+    <style>
+        :root {
+            --dark-blue: #032955;
+            --blue: #144881;
+            --light-blue: #0667BA;
+            --background-off-white: #f9f9f9;
+            --text-grey: #444;
+            --orange: #ED780F;
+            --amn-font: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, BlinkMacSystemFont, Helvetica Neue, Arial, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+        }
+
+        body {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            justify-content: space-around;
+            min-height: 100vh;
+            margin: 0;
+            background-color: var(--background-off-white);
+            font-family: var(--amn-font);
+            flex-direction: column;
+            background-color: var(--dark-blue);
+        }
+
+        .content {
+            text-align: center;
+            font-family: nunito, sans-serif;
+            width:50vw;
+            min-width:800px;
+            background-color: var(--background-off-white);
+            height:100vh;
+        }
+
+        .content img {
+            text-align: center;
+    font-family: nunito, sans-serif;
+    width: 50vw;
+    min-width: 800px;
+    background-color: var(--background-off-white);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    align-content: center;
+
+        }
+
+        .text {
+            font-size: 1vw !important;
+            font-weight: 400;
+            font: var(--amn-font) !important;
+            text-align: center;
+            list-style: none;
+            display: flex;
+        }
+
+        .bp {
+            width: max-content;
+            margin: 0 auto;
+            text-align: center;
+            font-family: var(--amn-font);
+            padding-left: 0;
+        }
+
+        .text li {
+            margin: 0.5em 0;
+            font-size: 2em;
+        }
+
+        .bptext {
+            text-align: left;
+            color: var(--text-grey);
+            font-size: 1em !important;
+
+        }
+
+        li.bptext::marker {
+            color: var(--orange);
+            font-size: 1.5em;
+        }
+
+        .go-back-button {
+            margin-top: 20px;
+            background-color: var(--dark-blue);
+            box-sizing: border-box;
+            border-radius: 12px;
+            color: var(--background-off-white);
+            cursor: pointer;
+            font-family: var(--amn-font);
+            font-size: 1.5em;
+            font-weight: 100;
+            padding: 1rem 1.2rem;
+            border: 0;
+            touch-action: manipulation;
+            margin-left: 0.5vw;
+        }
+
+        .go-back-button:hover {
+            background-color: var(--blue);
+        }
+
+        .header {
+            text-align: center;
+            font: var(--amn-font);
+            font-size: 4em !important;
+            font-weight: lighter;
+            line-height: 1;
+            color: var(--dark-blue);
+            padding: 0;
+            margin: 0;
+            margin-top: 6rem;
+        }
+
+        .header2 {
+            text-align: center;
+            font-size: 2em !important;
+            color: var(--dark-blue);
+            font-weight: lighter;
+            font: var(--amn-font);
+            padding:0;
+        }
+
+        .blocked {
+            color: var(--orange);
+            font-weight: normal;
+            padding:0;
+            height:100%;
+        }
+
+        .subtext {
+            font-size: .7em !important;
+            color: var(--text-grey);
+            font-weight: 100;
+        }
+
+        .subheader {
+            font-size: .7em !important;
+            color: var(--text-grey);
+            font-weight: 100;
+            font: var(--amn-font);
+            margin: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="content">
+      <!--    
+        <h2 class="subheader">This is a <span class="blocked">custom redirect page</span> that we made for demos.</h2>
+  <p class="text">
+        <ul class="bp">
+            <li class="bptext">Redirect to your own page</li><br>
+            <li class="bptext">Set different redirects for different URLs.</li>
+        </ul>
+        </p>
+        -->
+        <h1 class="header"><span class="blocked">Oops! <br>We've blocked that one<br><br></span></h1>
+        <img src="https://dm-assets.navyfederal.org/is/image/nfcu/partners-in-security-1?qlt=80&wid=1600&dpr=off" alt="Blocked URL Image">
+
+        <h1 class="header2"> Our Members Are the Mission ® <br></span> <span class="subtext">(we'll try to protect you from bad decisions)<br></span></h1>
+            <button class="go-back-button" onclick="redirectToSurfly()">Return to <b>navyfederal.org</b></button>
+
+    </div>
+
+    <script>
+        function redirectToSurfly() {
+            window.location.href = "https://www.navyfederal.org/";
+        }
+    </script>
+
+</body>
+
+</html>
