@@ -104,6 +104,15 @@ channel.addEventListener("message", (event) => {
         document.getElementById("webinarFrame").src = url;
     }
 });
+window.addEventListener("storage", (event) => {
+    if (event.key === "webinar_update") {
+        const data = JSON.parse(event.newValue);
+        if (data && data.url) {
+            updateIframe(data.url);
+        }
+    }
+});
+
 
 </script>
 
