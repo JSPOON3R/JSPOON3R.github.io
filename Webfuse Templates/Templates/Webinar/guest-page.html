@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Webinar: Guest</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
+    <style>
+        :root {
+            --background-color--background-primary: var(--base-color-brand--dark);
+            --background-color--dark-blue: #0a205e;
+            --background-color--dark-green: #1f3c30;
+            --base-color-brand--off-white: #f7f7f7;
+            --base-color-brand--light-gray: silver;
+            --link-color--link-alternate: var(--base-color-brand--off-white);
+            --radius--radius-main: 1rem;
+            --base-color-brand--blue: #3d93ef;
+            --base-color-brand--purple: #4d65ff;
+            --base-color-brand--dark: #0b0b0b;
+            --base-color-neutral--black: black;
+            --base-color-neutral--white: white;
+            --radius--radius-round: 100vw;
+            --text-color--text-alternate: var(--base-color-brand--dark);
+            --text-color--text-error: var(--base-color-system--error-red);
+            --base-color-system--success-green: #027a48;
+            --base-color-system--success-green-light: #ecfdf3;
+            --base-color-system--error-red: #b42318;
+            --base-color-system--error-red-light: #fef3f2;
+            --radius--radius-large: 1.5rem;
+            --background-color--background-success: var(--base-color-system--success-green-light);
+            --background-color--background-error: var(--base-color-system--error-red-light);
+            --border-color--border-alternate: var(--base-color-brand--off-white);
+            --text-color--text-success: var(--base-color-system--success-green);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Inter, sans-serif;
+            background: linear-gradient(to top left, var(--background-color--dark-green), var(--base-color-brand--dark), var(--background-color--dark-blue));
+            color: var(--base-color-brand--off-white);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .header {
+            width: 100%;
+            text-align: center;
+            padding: 1.5rem 0;
+            font-size: 2rem;
+            font-weight: bold;
+            position: relative;
+            z-index: 2;
+        }
+
+        .blue {
+            color: var(--base-color-brand--blue);
+        }
+
+        .iframe-container {
+            flex-grow: 1;
+            width: 90vw;
+            max-height: 85vh;
+            border: 5px solid var(--base-color-brand--blue);
+            border-radius: var(--radius--radius-main);
+            overflow: hidden;
+            position: relative;
+            background: var(--background-color--background-alternate);
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background-color: var(--base-color-neutral--white);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        Webinar <span class="blue">Guest</span>
+    </div>
+
+    <div class="iframe-container">
+        <iframe src="about:blank"></iframe>
+    </div>
+</body>
+
+</html>
