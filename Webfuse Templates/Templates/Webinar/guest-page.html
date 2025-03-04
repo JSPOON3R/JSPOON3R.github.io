@@ -88,8 +88,23 @@
     </div>
 
     <div class="iframe-container">
-        <iframe src="about:blank"></iframe>
+        <iframe id="webinarFrame" src="https://demo.surfly.com/Webfuse%20Templates/Templates/Webinar/waiting-room.html"></iframe>
     </div>
 </body>
+<script>
+    const channel = new BroadcastChannel("webinar_channel");
+
+channel.addEventListener("message", (event) => {
+    const { type, url } = event.data;
+
+    if (type === "UPDATE_IFRAME" && url) {
+        console.log("Received new webinar URL:", url);
+        
+        // Update the iframe dynamically
+        document.getElementById("webinarFrame").src = url;
+    }
+});
+
+</script>
 
 </html>
