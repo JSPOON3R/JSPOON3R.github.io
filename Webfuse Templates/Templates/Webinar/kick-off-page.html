@@ -1192,6 +1192,7 @@
                     <h3>Guest Link</h3>
                     <div class="link-content">
                         <span class="link-url">${noHostMagicLink}</span>
+                        <button class="copy-link trigger-webinar">Go Live</button>
                         <button class="copy-link">Copy</button>
                     </div>
                 </div>
@@ -1202,7 +1203,11 @@
                 button.addEventListener('click', function () {
                     const linkText = this.previousElementSibling.textContent;
 
-                    // Create a temporary textarea element
+                    if (this.classList.contains('trigger-webinar')) {
+console.log("lalalalala");
+
+        } else {
+               // Create a temporary textarea element
                     const textarea = document.createElement('textarea');
                     textarea.value = linkText;
                     textarea.style.position = 'fixed';  // Prevent scrolling to bottom
@@ -1221,7 +1226,8 @@
 
                     // Clean up
                     document.body.removeChild(textarea);
-                });
+                };
+            })
             });
 
             // Find the additional presenters section and insert the links section after it
