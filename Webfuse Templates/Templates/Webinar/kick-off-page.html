@@ -169,7 +169,7 @@
             background-color: transparent;
             color: var(--base-color-brand--off-white);
             outline: 1px solid var(--base-color-brand--blue);
-            border:none;
+            border: none;
             border-radius: 10px;
             width: 80%;
             min-width: 200px;
@@ -1203,8 +1203,8 @@
                 button.addEventListener('click', function () {
                     const linkText = this.previousElementSibling.textContent;
 
-                     // Create a temporary textarea element
-                     const textarea = document.createElement('textarea');
+                    // Create a temporary textarea element
+                    const textarea = document.createElement('textarea');
                     textarea.value = linkText;
                     textarea.style.position = 'fixed';  // Prevent scrolling to bottom
                     document.body.appendChild(textarea);
@@ -1212,25 +1212,28 @@
 
                     if (this.classList.contains('trigger-webinar')) {
                         const channel = new BroadcastChannel("webinar_channel");
-                        const webinarURL = linkText; 
-                        console.log("Sending webinar URL:", webinarURL);
-                        channel.postMessage({ type: "UPDATE_IFRAME", url: webinarURL });
-                        localStorage.setItem("webinar_update", JSON.stringify({ url: webinarURL, timestamp: Date.now() }));
-        } else {
-                    try {
-                        document.execCommand('copy');
-                        button.textContent = 'Copied!';
-                        setTimeout(() => button.textContent = 'Copy', 2000);
-                    } catch (err) {
-                        console.error('Failed to copy text:', err);
-                        button.textContent = 'Failed to copy';
-                        setTimeout(() => button.textContent = 'Copy', 2000);
-                    }
+                        const webinarURL = linkText;
+                        console.log("Broadcasting webinar URL:", webinarURL);
+                        // Send via BroadcastChannel (Same browser)
+                        channel.postMessage({ type: "UPDATE_IFRAME", url: webinarURL, timestamp });
+                        // Send via localStorage (Cross-browser)
+                        localStorage.setItem("webinar_update", JSON.stringify({ url: webinarURL, timestamp }));
 
-                    // Clean up
-                    document.body.removeChild(textarea);
-                };
-            })
+                    } else {
+                        try {
+                            document.execCommand('copy');
+                            button.textContent = 'Copied!';
+                            setTimeout(() => button.textContent = 'Copy', 2000);
+                        } catch (err) {
+                            console.error('Failed to copy text:', err);
+                            button.textContent = 'Failed to copy';
+                            setTimeout(() => button.textContent = 'Copy', 2000);
+                        }
+
+                        // Clean up
+                        document.body.removeChild(textarea);
+                    };
+                })
             });
 
             // Find the additional presenters section and insert the links section after it
@@ -1318,16 +1321,16 @@
                             const triggerText = trigger.querySelector('span').textContent;
 
 
-                                if (option.dataset.value === "1") {
-                                    console.log("2");
-                                    spaceId = johnSettings.spaceId;
-                                    widgetKey = johnSettings.widgetKey;
-                                }
-                                const templateSection = document.querySelector('.template-section');
-                                const templateValue = document.querySelector('.template-section .summary-value');
-                                templateValue.textContent = "Webinar Basic";
-                                templateSection.style.display = "block";
-                                templateSection.style.opacity = 1;
+                            if (option.dataset.value === "1") {
+                                console.log("2");
+                                spaceId = johnSettings.spaceId;
+                                widgetKey = johnSettings.widgetKey;
+                            }
+                            const templateSection = document.querySelector('.template-section');
+                            const templateValue = document.querySelector('.template-section .summary-value');
+                            templateValue.textContent = "Webinar Basic";
+                            templateSection.style.display = "block";
+                            templateSection.style.opacity = 1;
 
                             checkAllSectionsAndShowGenerate();
                         }
