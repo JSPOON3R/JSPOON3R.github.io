@@ -1215,6 +1215,7 @@
                         const webinarURL = linkText; 
                         console.log("Sending webinar URL:", webinarURL);
                         channel.postMessage({ type: "UPDATE_IFRAME", url: webinarURL });
+                        localStorage.setItem("webinar_update", JSON.stringify({ url: webinarURL, timestamp: Date.now() }));
         } else {
                     try {
                         document.execCommand('copy');
