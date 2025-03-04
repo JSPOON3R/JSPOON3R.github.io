@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webinar Waiting Room</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Inter, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(-45deg, #1f3c30, #0a205e, #3d93ef);
+            background-size: 300% 300%;
+            animation: gradientAnimation 10s infinite ease-in-out alternate;
+            color: white;
+            text-align: center;
+            flex-direction: column;
+            overflow: hidden;
+            position: relative;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
+        }
+
+        .message {
+            font-size: 1.8rem;
+            font-weight: bold;
+            opacity: 0;
+            animation: fadeIn 2s ease-in forwards;
+            z-index: 2;
+            position: relative;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Waves Container */
+        .waves {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 35vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* SVG Waves */
+        .wave {
+            position: absolute;
+            width: 200%;
+            height: 100%;
+            left: 0;
+            animation: waveMove 8s infinite linear;
+        }
+
+        /* Different Speeds for Layering Effect */
+        .wave1 { opacity: 0.4; bottom: 0; animation-duration: 12s; }
+        .wave2 { opacity: 0.6; bottom: 5px; animation-duration: 14s; }
+        .wave3 { opacity: 0.8; bottom: 10px; animation-duration: 16s; }
+
+        /* Wave Movement */
+        @keyframes waveMove {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+    </style>
+</head>
+<body>
+    <div class="message">Your webinar will begin shortly</div>
+
+    <!-- Waves Container -->
+    <div class="waves">
+        <!-- Layered Waves for Seamless Effect -->
+        <svg class="wave wave1" viewBox="0 0 1440 320" preserveAspectRatio="none">
+            <path fill="white" d="M0,96L48,122.7C96,149,192,203,288,197.3C384,192,480,128,576,101.3C672,75,768,85,864,128C960,171,1056,245,1152,256C1248,267,1344,213,1392,186.7L1440,160V320H0Z"></path>
+        </svg>
+        <svg class="wave wave2" viewBox="0 0 1440 320" preserveAspectRatio="none">
+            <path fill="white" d="M0,128L60,133.3C120,139,240,149,360,154.7C480,160,600,160,720,133.3C840,107,960,53,1080,48C1200,43,1320,85,1380,106.7L1440,128V320H0Z"></path>
+        </svg>
+        <svg class="wave wave3" viewBox="0 0 1440 320" preserveAspectRatio="none">
+            <path fill="white" d="M0,160L40,149.3C80,139,160,117,240,128C320,139,400,181,480,202.7C560,224,640,224,720,197.3C800,171,880,117,960,112C1040,107,1120,149,1200,176C1280,203,1360,213,1400,218.7L1440,224V320H0Z"></path>
+        </svg>
+    </div>
+</body>
+</html>
