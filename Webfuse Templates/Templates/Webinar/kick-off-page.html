@@ -1203,17 +1203,19 @@
                 button.addEventListener('click', function () {
                     const linkText = this.previousElementSibling.textContent;
 
-                    if (this.classList.contains('trigger-webinar')) {
-console.log("lalalalala");
-
-        } else {
-               // Create a temporary textarea element
-                    const textarea = document.createElement('textarea');
+                     // Create a temporary textarea element
+                     const textarea = document.createElement('textarea');
                     textarea.value = linkText;
                     textarea.style.position = 'fixed';  // Prevent scrolling to bottom
                     document.body.appendChild(textarea);
                     textarea.select();
 
+                    if (this.classList.contains('trigger-webinar')) {
+                        const channel = new BroadcastChannel("webinar_channel");
+                        const webinarURL = linkText; 
+                        console.log("Sending webinar URL:", webinarURL);
+                        channel.postMessage({ type: "UPDATE_IFRAME", url: webinarURL });
+        } else {
                     try {
                         document.execCommand('copy');
                         button.textContent = 'Copied!';
@@ -1234,6 +1236,7 @@ console.log("lalalalala");
             const additionalPresenters = document.querySelector('.additional-presenters');
             additionalPresenters.insertAdjacentElement('afterend', linksSection);
         }
+
 
         //Webfuse JS
         function startWebfuse() {
