@@ -92,43 +92,19 @@
     </div>
 </body>
 <script>
-const channel = new BroadcastChannel("webinar_channel");
-let lastUpdateTimestamp = 0;
+    const channel = new BroadcastChannel("webinar_channel");
 
-// Function to update the iframe
-function updateIframe(url) {
-    console.log("Updating iframe for all guests with:", url);
-    document.getElementById("webinarFrame").src = url;
-}
-
-// Listen for messages via BroadcastChannel (Same browser)
 channel.addEventListener("message", (event) => {
-    const { type, url, timestamp } = event.data;
-    if (type === "UPDATE_IFRAME" && url && timestamp > lastUpdateTimestamp) {
-        lastUpdateTimestamp = timestamp;
-        updateIframe(url);
+    const { type, url } = event.data;
+
+    if (type === "UPDATE_IFRAME" && url) {
+        console.log("Received new webinar URL:", url);
+        
+        // Update the iframe dynamically
+        document.getElementById("webinarFrame").src = url;
     }
 });
 
-// Listen for localStorage changes (Cross-browser support, but not reliable in Firefox/Safari)
-window.addEventListener("storage", (event) => {
-    if (event.key === "webinar_update") {
-        const data = JSON.parse(event.newValue);
-        if (data && data.url && data.timestamp > lastUpdateTimestamp) {
-            lastUpdateTimestamp = data.timestamp;
-            updateIframe(data.url);
-        }
-    }
-});
-
-// Fallback: Check localStorage every 2 seconds (Fixes Safari & Firefox)
-setInterval(() => {
-    const data = JSON.parse(localStorage.getItem("webinar_update"));
-    if (data && data.url && data.timestamp > lastUpdateTimestamp) {
-        lastUpdateTimestamp = data.timestamp;
-        updateIframe(data.url);
-    }
-}, 2000);
 </script>
 
 </html>
