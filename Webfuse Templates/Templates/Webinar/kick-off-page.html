@@ -1213,6 +1213,7 @@
                     if (this.classList.contains('trigger-webinar')) {
                         const channel = new BroadcastChannel("webinar_channel");
                         const webinarURL = linkText;
+                        const timestamp = Date.now();
                         console.log("Broadcasting webinar URL:", webinarURL);
                         // Send via BroadcastChannel (Same browser)
                         channel.postMessage({ type: "UPDATE_IFRAME", url: webinarURL, timestamp });
