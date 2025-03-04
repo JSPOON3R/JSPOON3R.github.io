@@ -1216,8 +1216,6 @@
                         console.log("Broadcasting webinar URL:", webinarURL);
                         // Send via BroadcastChannel (Same browser)
                         channel.postMessage({ type: "UPDATE_IFRAME", url: webinarURL, timestamp });
-                        // Send via localStorage (Cross-browser)
-                        localStorage.setItem("webinar_update", JSON.stringify({ url: webinarURL, timestamp }));
 
                     } else {
                         try {
