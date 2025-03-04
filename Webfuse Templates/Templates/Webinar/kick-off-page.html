@@ -1298,6 +1298,7 @@
                 select.querySelectorAll('.custom-option').forEach(option => {
                     option.addEventListener('click', () => {
                         if (!option.classList.contains('selected')) {
+                            console.log("1");
                             const selected = select.querySelector('.custom-option.selected');
                             if (selected) selected.classList.remove('selected');
                             option.classList.add('selected');
@@ -1306,24 +1307,17 @@
                             // Get the trigger text to determine which dropdown this is
                             const triggerText = trigger.querySelector('span').textContent;
 
-                            if (select === document.querySelector('.custom-select:first-child')) {
-                                // This is the Host dropdown
-                                const presenterSection = document.querySelector('.presenter-section');
-                                presenterSection.style.display = 'block';
-                                presenterSection.classList.add('visible');
-                                presenterSection.querySelector('.summary-value').textContent = option.textContent;
 
-                                if (option.textContent === 'John') {
+                                if (option.dataset.value === "1") {
+                                    console.log("2");
                                     spaceId = johnSettings.spaceId;
                                     widgetKey = johnSettings.widgetKey;
                                 }
-                            } else {
-                                // This is the Space dropdown
                                 const templateSection = document.querySelector('.template-section');
-                                templateSection.style.display = 'block';
-                                templateSection.classList.add('visible');
-                                templateSection.querySelector('.summary-value').textContent = option.textContent;
-                            }
+                                const templateValue = document.querySelector('.template-section .summary-value');
+                                templateValue.textContent = "Webinar Basic";
+                                templateSection.style.display = "block";
+                                templateSection.style.opacity = 1;
 
                             checkAllSectionsAndShowGenerate();
                         }
