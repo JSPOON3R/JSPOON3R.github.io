@@ -1,100 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Webinar Waiting Room</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Inter, sans-serif;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <link rel="icon" type="image/png"
+  href="https://cdn.prod.website-files.com/66fa5c211b77ce188d5275f6/6752cfb0d2935e66e4d7d1a1_favicon-webfuse.png">
+<title>Webinar: Waiting Room</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    html, body {
+      margin: 0; 
+      padding: 0; 
+      box-sizing: border-box;
+      overflow-x: hidden; /* no horizontal scrollbars if waves move left/right */
+      font-family: sans-serif;
+      background: linear-gradient(135deg, #1f3c30, #0a205e, #3d93ef);
+      background-size: 300% 300%;
+      animation: bgGradient 12s ease-in-out infinite alternate;
+      height: 100vh;
+      position: relative;
+    }
 
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background: linear-gradient(-45deg, #1f3c30, #0a205e, #3d93ef);
-            background-size: 300% 300%;
-            animation: gradientAnimation 10s infinite ease-in-out alternate;
-            color: white;
-            text-align: center;
-            flex-direction: column;
-            overflow: hidden;
-            position: relative;
-        }
-
-        @keyframes gradientAnimation {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 100% 50%; }
-        }
-
-        .message {
-            font-size: 1.8rem;
-            font-weight: bold;
-            opacity: 0;
-            animation: fadeIn 2s ease-in forwards;
-            z-index: 2;
-            position: relative;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        /* Waves Container */
-        .waves {
-            position: absolute;
-            bottom: 0;
-            left: 0;
+    .header {
             width: 100%;
-            height: 35vh;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        /* SVG Waves */
-        .wave {
+            text-align: center;
+            padding: 1.5rem 0;
+            font-size: 3rem;
+            font-weight: lighter;
             position: absolute;
-            width: 200%;
-            height: 100%;
-            left: 0;
-            animation: waveMove 8s infinite linear;
+            color:white;
+            top: 40vh;
+            z-index: 4;
         }
 
-        /* Different Speeds for Layering Effect */
-        .wave1 { opacity: 0.4; bottom: 0; animation-duration: 12s; }
-        .wave2 { opacity: 0.6; bottom: 5px; animation-duration: 14s; }
-        .wave3 { opacity: 0.8; bottom: 10px; animation-duration: 16s; }
-
-        /* Wave Movement */
-        @keyframes waveMove {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-50%); }
+        #dots {
+            display: inline-block;
+            width: 2ch; /* Space reserved for 3 dots */
+            text-align: left;
         }
-    </style>
+
+    @keyframes bgGradient {
+      0%   { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+
+    /* Container that holds all the waves at the bottom */
+    .waves {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 55vh;       /* Adjust how tall your wave band is */
+      overflow: hidden;   /* Hide wave edges if they move too far */
+    }
+
+    /* Each wave is 200% viewport width, so edges won’t appear as it floats */
+    .wave {
+      position: absolute;
+      bottom: 0;
+      width: 200%;
+      height: 100%;
+    }
+
+    /* The <svg> itself is stretched to fill .wave */
+    .wave svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Different waves: offset in speed & direction for unsynchronized motion */
+    .wave1 {
+      opacity: 0.1;
+      animation: waveFloat1 6s ease-in-out infinite;
+      z-index: 1; /* Put wave1 in front or behind as you wish */
+    }
+    .wave2 {
+      opacity: 0.1;
+      animation: waveFloat2 9s ease-in-out infinite;
+      z-index: 2;
+    }
+    .wave3 {
+      opacity: 0.1;
+      animation: waveFloat3 12s ease-in-out infinite;
+      z-index: 3;
+    }
+
+    /* Gentle left/right float animations */
+    /* Keep the amplitude smaller than half the extra width 
+       so the viewport never sees wave edges. */
+    @keyframes waveFloat1 {
+      0%   { transform: translateX(35vw); transform: translateY(2vh); }
+      50%  { transform: translateX(-40vw); transform: translateY(4vh); }
+      100% { transform: translateX(35vw); transform: translateY(2vh); }
+    }
+    @keyframes waveFloat2 {
+      0%   { transform: translateX(-25vw); transform: translateY(2vh); }
+      50%  { transform: translateX(35vw); transform: translateY(3vh); }
+      100% { transform: translateX(-25vw); transform: translateY(2vh); }
+    }
+    @keyframes waveFloat3 {
+      0%   { transform: translateX(20vw);transform: translateY(3vh); }
+      50%  { transform: translateX(-34vw);transform: translateY(5vh);  }
+      100% { transform: translateX(20vw); transform: translateY(3vh); }
+    }
+  </style>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const dotsElement = document.getElementById("dots");
+            let count = 0;
+
+            setInterval(() => {
+                count = (count + 1) % 4; // Cycle through 0, 1, 2, 3
+                dotsElement.textContent = ".".repeat(count || 0); // Ensure at least one dot
+            }, 500); // Change ellipsis every 500ms
+        });
+    </script>
 </head>
 <body>
-    <div class="message">Your webinar will begin shortly</div>
 
-    <!-- Waves Container -->
-    <div class="waves">
-        <!-- Layered Waves for Seamless Effect -->
-        <svg class="wave wave1" viewBox="0 0 1440 320" preserveAspectRatio="none">
-            <path fill="white" d="M0,96L48,122.7C96,149,192,203,288,197.3C384,192,480,128,576,101.3C672,75,768,85,864,128C960,171,1056,245,1152,256C1248,267,1344,213,1392,186.7L1440,160V320H0Z"></path>
-        </svg>
-        <svg class="wave wave2" viewBox="0 0 1440 320" preserveAspectRatio="none">
-            <path fill="white" d="M0,128L60,133.3C120,139,240,149,360,154.7C480,160,600,160,720,133.3C840,107,960,53,1080,48C1200,43,1320,85,1380,106.7L1440,128V320H0Z"></path>
-        </svg>
-        <svg class="wave wave3" viewBox="0 0 1440 320" preserveAspectRatio="none">
-            <path fill="white" d="M0,160L40,149.3C80,139,160,117,240,128C320,139,400,181,480,202.7C560,224,640,224,720,197.3C800,171,880,117,960,112C1040,107,1120,149,1200,176C1280,203,1360,213,1400,218.7L1440,224V320H0Z"></path>
-        </svg>
+<div class="header">Your Webinar will begin shortly<span id="dots"></span></div>
+
+  <div class="waves">
+    <!-- Wave 1 -->
+    <div class="wave wave1">
+      <svg viewBox="0 0 200 100" preserveAspectRatio="none">
+        <!-- 
+          A simple “C” curve that forms a smooth arc across 
+          the top (y=0..20) and fills down to y=100.
+          Feel free to adjust the control points for a different shape.
+        -->
+        <path 
+        d="M -231 101 C -157 -29 -117 41 -49 69 S 32 25 96 35 S 371 104 300 100 L 349 100 L -204 100 Z" 
+        fill="white" 
+      />
+      
+      </svg>
     </div>
+
+    <!-- Wave 2 -->
+    <div class="wave wave2">
+      <svg viewBox="0 0 200 100" preserveAspectRatio="none">
+        <path 
+        d="M -231 101 C -160 -49 -117 41 -51 52 S 32 25 96 35 S 371 104 300 100 L 349 100 L -204 100 Z" 
+        fill="white" 
+      />
+      </svg>
+    </div>
+
+    <!-- Wave 3 -->
+    <div class="wave wave3">
+      <svg viewBox="0 0 200 100" preserveAspectRatio="none">
+        <path 
+        d="M -252 99 C -151 -37 -117 41 -33 51 S 32 25 96 35 S 371 104 300 100 L 349 100 L -204 100 Z"
+        fill="white" 
+      />
+      </svg>
+    </div>
+  </div>
+
 </body>
 </html>
