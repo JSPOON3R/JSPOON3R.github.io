@@ -14,8 +14,8 @@
       box-sizing: border-box;
       overflow-x: hidden; /* no horizontal scrollbars if waves move left/right */
       font-family: sans-serif;
-      background: linear-gradient(135deg, #1f3c30, #0a205e, #3d93ef);
-      background-size: 300% 300%;
+      background: linear-gradient(135deg, #0a205e, #3d93ef);
+      background-size: 200% 200%;
       animation: bgGradient 12s ease-in-out infinite alternate;
       height: 100vh;
       position: relative;
@@ -25,7 +25,7 @@
             width: 100%;
             text-align: center;
             padding: 1.5rem 0;
-            font-size: 3rem;
+            font-size: 2rem;
             font-weight: lighter;
             position: absolute;
             color:white;
@@ -113,7 +113,7 @@
             setInterval(() => {
                 count = (count + 1) % 4; // Cycle through 0, 1, 2, 3
                 dotsElement.textContent = ".".repeat(count || 0); // Ensure at least one dot
-            }, 500); // Change ellipsis every 500ms
+            }, 1000); // Change ellipsis every 500ms
         });
     </script>
 </head>
