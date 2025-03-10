@@ -100,18 +100,21 @@
             font-weight: bold;
         }
 
-        .iframe-container {
-            flex: 8;
-            /* 80% of the space */
-            min-width: 1000px;
-            /* Minimum width required */
-            width: 100%;
-            height: 100%;
+        .waiting-iframe-container,
+        .session-iframe-container {
             border: 3px solid white;
             border-radius: var(--radius--radius-main);
             overflow: hidden;
-            position: relative;
+            position: fixed;
+            top: 5%;
+            left: 2.5%;
+            width: 70%;
+            height: 94%;
             background: var(--background-color--background-alternate);
+        }
+
+        .session-iframe-container {
+            z-index: -1;
         }
 
         iframe {
@@ -122,20 +125,19 @@
         }
 
         .chat-container {
-            flex: 2;
             /* Adjusted for better scaling */
             background-color: black;
             border: 3px solid white;
-            width: 100%;
-            height: 100%;
             border-radius: var(--radius--radius-main);
             display: flex;
             flex-direction: column;
             /* Ensures chat messages and input align properly */
-            position: relative;
+            position: fixed;
             overflow: hidden;
-            min-height: 400px;
-            /* Prevents collapse */
+            top: 5%;
+            width: 23%;
+            height: 94%;
+            right: 2.5%;
             max-height: 100vh;
             /* Ensures it doesn’t overflow */
         }
@@ -242,9 +244,12 @@
         </div>
     </div>
     <div class="body-container">
-        <div class="iframe-container">
-            <iframe id="webinarFrame"
+        <div class="waiting-iframe-container">
+            <iframe id="waitingFrame"
                 src="https://demo.surfly.com/Webfuse%20Templates/Templates/Webinar/waiting-room.html"></iframe>
+        </div>
+        <div class="session-iframe-container">
+            <iframe id="sessionFrame" src=""></iframe>
         </div>
         <div class="chat-container">
             <!-- Chat Messages Display -->
@@ -257,7 +262,6 @@
             </div>
         </div>
     </div>
-    <div class="footer-container">text</div>
 </body>
 <script>
     const channel = new BroadcastChannel("webinar_channel");
@@ -305,7 +309,8 @@
     });
 </script>
 <script>
-    let existingSession;
+    const sessionFrame = document.getElementById("sessionFrame");
+    const sessionFrameContainer = document.querySelector(".session-iframe-container");
     (function (w, e, b, f, u, s) {
         w[f] = w[f] || {
             initSpace: function () {
@@ -322,42 +327,64 @@
         s.parentNode.insertBefore(u, s);
     })(window, document, 'script', 'Webfuse');
 
+
+
     Webfuse.initSpace(
-        'wk_5znkrZbkr0an_N_Bswoh71aF_ORxwrhY', // Widget Key (required)
-        502, // Space ID (required)
+        'wk_IGKyVolVK9ycsqCgSUoCjfc9NSsBvYXz',
+        524,
         {}, // Integration Settings (optional)
     )
+
         .then(async space => {
             console.log('Space:', space);
             console.log('Space ID:', space.id);
             console.log('Space slug:', space.slug);
 
-            if (Webfuse.listSessions()[0]) {
-                existingSession = Webfuse.listSessions()[0];
-                console.log("Existing session: " + existingSession);
-                waitForHost();
-                return;
-            } else {
-                console.log("No active sessions. Starting Webfuse");
-            }
+            // console.log('Space:', space._webfuse._allsessions._paused);
 
             const session = space.session();
-            const response = await session.create();
-            waitForHost();
+            const activeSession = Webfuse.listSessions()[0];
+
+            // Start the session
+            await session.create()
+            sessionFrame.src = session.followerLink;
         })
         .catch(error => {
             console.error('Failed:', error);
         })
 
-    function waitForHost() {
-        surflyExtension.runtime.onMessage.addListener((message, sender) => {
-            const session = Webfuse.listSessions()[0];
-            const iframe = document.getElementById("webinarFrame");
-            if (message = "start_webinar") {
-                iframe.src = session.followerLink;
+
+    window.addEventListener('message', (event) => {
+        console.log("window listener received a message:", event);
+        console.log("Message data:", event.data);
+        console.log("Message origin:", event.origin);
+        if (event.data.params.clientIndex === 1) {
+            if (sessionFrameContainer) {
+                sessionFrameContainer.style.zIndex = "1";
+            } else {
+                console.error("sessionFrameContainer not found in the DOM!");
             }
-        });
+        }
+    });
+
+
+    window.addEventListener("message", (event) => {
+    if (event.data && event.data.type === "log") {
+        console.log("[IFRAME LOG]:", event.data.message);
     }
+});
+
+
+window.addEventListener("storage", (event) => {
+    if (event.key === "webinarStart") {
+        console.log("Webinar Started: Storage event detected in another frame.");
+        if (sessionFrameContainer) {
+                sessionFrameContainer.style.zIndex = "1";
+            } else {
+                console.error("sessionFrameContainer not found in the DOM!");
+            }
+    }
+});
 
 </script>
 
