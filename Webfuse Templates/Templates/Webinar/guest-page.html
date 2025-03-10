@@ -375,16 +375,32 @@
 });
 
 
-window.addEventListener("storage", (event) => {
-    if (event.key === "webinarStart") {
-        console.log("Webinar Started: Storage event detected in another frame.");
-        if (sessionFrameContainer) {
+
+let WebinarStart = localStorage.getItem("webinarStart");
+let checkingInterval;
+const checkFrequency = 1000;
+
+function startChecking() {
+    checkingInterval = setInterval(() => {
+        WebinarStart = localStorage.getItem("webinarStart");
+
+        if (WebinarStart) {
+            console.log("Webinar Started: Detected localStorage change.");
+            clearInterval(checkingInterval);
+            if (sessionFrameContainer) {
                 sessionFrameContainer.style.zIndex = "1";
             } else {
                 console.error("sessionFrameContainer not found in the DOM!");
             }
-    }
-});
+        }
+        else {
+            console.log("waiting for webinar host...")
+        }
+    }, checkFrequency);
+}
+
+// Start polling
+startChecking();
 
 </script>
 
