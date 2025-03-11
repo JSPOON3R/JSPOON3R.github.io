@@ -8,18 +8,74 @@
 <title>Webinar: Waiting Room</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
   <style>
+        :root {
+            --background-color--background-primary: var(--base-color-brand--dark);
+            --background-color--dark-blue: #0a205e;
+            --background-color--dark-green: #1f3c30;
+            --base-color-brand--off-white: #f7f7f7;
+            --base-color-brand--light-gray: silver;
+            --link-color--link-alternate: var(--base-color-brand--off-white);
+            --radius--radius-main: 1rem;
+            --base-color-brand--blue: #3d93ef;
+            --base-color-brand--light-blue: #81beff;
+            --base-color-brand--purple: #4d65ff;
+            --base-color-brand--dark: #0b0b0b;
+            --base-color-neutral--black: black;
+            --base-color-neutral--white: white;
+            --radius--radius-round: 100vw;
+            --text-color--text-alternate: var(--base-color-brand--dark);
+            --text-color--text-error: var(--base-color-system--error-red);
+            --base-color-brand--surfly-red\<deleted\|variable-1afb0c92-2bd9-c4f4-1504-2eef5d82bb1d\>: #e54747;
+            --base-color-brand--anti-flash-white\<deleted\|variable-e1fd5e82-b7f7-46af-b5ce-491069f79607\>: #ececec;
+            --background-color--background-alternate: var(--base-color-brand--off-white);
+            --link-color--link-primary: var(--base-color-brand--dark);
+            --text-color--text-primary: var(--base-color-brand--off-white);
+            --radius--radius-small: .5rem;
+            --base-color-neutral--neutral-lighter: #ccc;
+            --base-color-neutral--neutral-lightest: #eee;
+            --base-color-neutral--neutral-light: #aaa;
+            --base-color-neutral--neutral: #666;
+            --base-color-neutral--neutral-dark: #444;
+            --base-color-neutral--neutral-darker: #222;
+            --base-color-neutral--neutral-darkest: #111;
+            --base-color-system--success-green: #027a48;
+            --base-color-system--success-light-green: #57ff53;
+            --base-color-system--success-green-light: #ecfdf3;
+            --base-color-system--error-red: #b42318;
+            --base-color-system--error-red-light: #fef3f2;
+            --radius--radius-large: 1.5rem;
+            --background-color--background-success: var(--base-color-system--success-green-light);
+            --background-color--background-error: var(--base-color-system--error-red-light);
+            --border-color--border-alternate: var(--base-color-brand--off-white);
+            --text-color--text-success: var(--base-color-system--success-green);
+        }
+
     html, body {
       margin: 0; 
       padding: 0; 
       box-sizing: border-box;
       overflow-x: hidden; /* no horizontal scrollbars if waves move left/right */
       font-family: sans-serif;
-      background: linear-gradient(135deg, #0a205e, #3d93ef);
-      background-size: 200% 200%;
-      animation: bgGradient 12s ease-in-out infinite alternate;
+      background: linear-gradient(to top left, var(--background-color--dark-green), var(--base-color-brand--dark), var(--background-color--dark-blue));
+            background-size: 200% 200%;
+            animation: gradientBreathing 10s infinite ease-in-out alternate;
       height: 100vh;
       position: relative;
     }
+
+    @keyframes gradientBreathing {
+            0% {
+                background-position: 50% 50%;
+            }
+
+            50% {
+                background-position: 100% 0%;
+            }
+
+            100% {
+                background-position: 50% 50%;
+            }
+        }
 
     .header {
             width: 100%;
