@@ -1,8 +1,12 @@
-//MAGIC LINK GENERATE: START
+console.log("background scriot loaded ");
+
+//MAGIC LINK GENERATE: START 
+// 
+/*
 let sessionId;
 
 // Message listener
-surflyExtension.runtime.onMessage.addListener((message, sender) => {
+browser.runtime.onMessage.addListener((message, sender) => {
     console.log("message in bg script: ", message);
     
     if (!message.data) {
@@ -74,9 +78,10 @@ async function generateMagicLink(payload) {
     const newMagicLink = `https://surfly.online/+webinar-template/?magic_link=${magicLink}&session_id==${sessionId}`;
 
     console.log(`Magic Link: ${newMagicLink}`);
-    surflyExtension.runtime.sendMessage({
+    browser.runtime.sendMessage({
         data: {newMagicLink}
     });
 };
 
 //MAGIC LINK GENERATE: END
+*/

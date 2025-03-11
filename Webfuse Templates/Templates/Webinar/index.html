@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Webinar: Guest</title>
+    <link rel="icon" type="image/png"
+        href="https://cdn.prod.website-files.com/66fa5c211b77ce188d5275f6/6752cfb0d2935e66e4d7d1a1_favicon-webfuse.png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
+    <style>
+    :root {
+        --background-color--dark-blue: #0a205e;
+        --base-color-brand--off-white: #f7f7f7;
+        --base-color-brand--light-gray: silver;
+        --base-color-brand--blue: #3d93ef;
+        --base-color-brand--dark: #0b0b0b;
+        --base-color-neutral--white: white;
+    }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Inter, sans-serif;
+            background: linear-gradient(to bottom right, var(--base-color-brand--dark), var(--background-color--dark-blue), var(--base-color-brand--dark));
+            background-size: 200% 200%;
+            animation: gradientBreathing 10s infinite ease-in-out alternate;
+            color: var(--base-color-brand--off-white);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .top-container {
+            width: 95%;
+            display: flex;
+            height: 5%;
+        }
+
+        .body-container {
+            display: flex;
+            position: fixed;
+            top: 5%;
+            width: 95%;
+            height: 94%;
+            gap: 10px;
+        }
+
+        .header {
+            width: 100%;
+            text-align: start;
+            font-size: 1.5rem;
+            font-weight: lighter;
+            position: relative;
+            align-self: center;
+            z-index: 2;
+        }
+
+        .counter {
+            width: 100%;
+            text-align: end;
+            font-size: 1rem;
+            font-weight: lighter;
+            position: relative;
+            display: flex;
+            z-index: 2;
+            flex-direction: row;
+            align-items: center;
+            justify-content: flex-end;
+        }
+
+        .user-icon {
+            width: 2rem;
+            height: auto;
+            animation: spin-pause 3s ease-in-out infinite;
+            color: var(--base-color-brand--blue);
+        }
+
+        .blue {
+            color: var(--base-color-brand--blue);
+            font-weight: normal;
+        }
+
+        .waiting-iframe-container,
+        .session-iframe-container {
+            border-radius: 12px;
+            border: 1px solid white;
+            background: var(--base-color-brand--light-gray);
+            box-shadow: var(--base-color-brand--light-gray);
+            overflow: hidden;
+            position: fixed;
+            top: 5%;
+            left: 2%;
+            width: 96%;
+            height: 94%;
+            background: var(--background-color--background-alternate);
+        }
+
+        .session-iframe-container {
+            z-index: -1;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background-color: var(--base-color-neutral--white);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="top-container">
+        <div class="header">
+            Webinar: <span id="host-name" class="blue">Guest Page</span>
+        </div>
+        <div class="counter">
+            <p id="participant-count-display">...
+            </p>
+            <svg class="user-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="30" height="30"
+                fill="currentColor" viewBox="0 0 24 24">
+                <path fill-rule="evenodd"
+                    d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z"
+                    clip-rule="evenodd" />
+            </svg>
+        </div>
+    </div>
+    <div class="body-container">
+        <div class="waiting-iframe-container">
+            <iframe id="waitingFrame"
+                src="https://demo.surfly.com/Webfuse%20Templates/Templates/Webinar/waiting-room.html"></iframe>
+        </div>
+        <div class="session-iframe-container">
+            <iframe id="sessionFrame" src=""></iframe>
+        </div>
+    </div>
+</body>
+<script>
+    const sessionFrame = document.getElementById("sessionFrame");
+    const sessionFrameContainer = document.querySelector(".session-iframe-container");
+    const participantCount = document.getElementById("participant-count-display");
+    let unpausedCount = 0;
+    (function (w, e, b, f, u, s) {
+        w[f] = w[f] || {
+            initSpace: function () {
+                return new Promise(resolve => {
+                    w[f].q = arguments;
+                    w[f].resolve = resolve;
+                });
+            },
+        };
+        u = e.createElement(b);
+        s = e.getElementsByTagName(b)[0];
+        u.async = 1;
+        u.src = 'https://surfly.online/surfly.js';
+        s.parentNode.insertBefore(u, s);
+    })(window, document, 'script', 'Webfuse');
+
+
+    let webinarSession;
+    Webfuse.initSpace(
+        'wk_IGKyVolVK9ycsqCgSUoCjfc9NSsBvYXz',
+        524,
+        {}, // Integration Settings (optional)
+    )
+        .then(async space => {
+            console.log('Space:', space);
+            console.log('Space ID:', space.id);
+            console.log('Space slug:', space.slug);
+
+            const session = space.session();
+            webinarSession = session;
+            // Start the session
+            await session.start("#sessionFrame")
+            session.on('session_created', function (session) {
+                console.log('Session created');
+            });
+            session.on('session_started', function (session) {
+                console.log('Session started');
+                webinarWaitingRoom = setInterval(getTabInfo, 1000);
+                participantCounter = setInterval(getParticipantInfo, 5000);
+            });
+            console.log(webinarSession);
+        })
+        .catch(error => {
+            console.error('Failed:', error);
+        })
+
+
+    async function getTabInfo() {
+        const sessionTabs = await webinarSession.getTabs();
+
+        if (sessionTabs.length > 0) {
+            const firstTab = sessionTabs[0]; // Get the first tab
+
+            if (!firstTab.paused) {
+                unpausedCount++;
+                console.log(`Unpaused count: ${unpausedCount}`);
+
+                if (unpausedCount >= 10) {
+                    if (sessionFrameContainer) {
+                        sessionFrameContainer.style.zIndex = "1";
+                        clearInterval(webinarWaitingRoom);
+                        console.log("The Webinar is starting");
+                    }
+                }
+            } else {
+                if (unpausedCount > 0) {
+                    console.log("Tab paused. Resetting count.");
+                }
+                unpausedCount = 0;
+            }
+        }
+    }
+
+    async function getParticipantInfo() {
+        const sessionParticipants = await webinarSession.getParticipants();
+        const onlineCount = sessionParticipants.filter(p => p.online).length;
+        participantCount.textContent = onlineCount;
+    }
+</script>
+
+</html>
