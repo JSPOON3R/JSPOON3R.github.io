@@ -328,80 +328,52 @@
     })(window, document, 'script', 'Webfuse');
 
 
-
+    let webinarSession;
     Webfuse.initSpace(
         'wk_IGKyVolVK9ycsqCgSUoCjfc9NSsBvYXz',
         524,
         {}, // Integration Settings (optional)
     )
-
         .then(async space => {
             console.log('Space:', space);
             console.log('Space ID:', space.id);
             console.log('Space slug:', space.slug);
 
-            // console.log('Space:', space._webfuse._allsessions._paused);
-
             const session = space.session();
-            const activeSession = Webfuse.listSessions()[0];
-
+            webinarSession = session;
             // Start the session
-            await session.create()
-            sessionFrame.src = session.followerLink;
+            await session.start("#sessionFrame")
+            session.on('session_created', function (session) {
+                console.log('Session created');
+            });
+            session.on('session_started', function (session) {
+                console.log('Session started');
+                setInterval(getSessionInfo, 5000);
+            });
+            console.log(webinarSession);
         })
         .catch(error => {
             console.error('Failed:', error);
         })
 
 
-    window.addEventListener('message', (event) => {
-        console.log("window listener received a message:", event);
-        console.log("Message data:", event.data);
-        console.log("Message origin:", event.origin);
-        if (event.data.params.clientIndex === 1) {
+    async function getSessionInfo() {
+
+        const sessionTabs = await webinarSession.getTabs();
+        console.log(sessionTabs);
+        if (sessionTabs.some(tab => tab.title === "Webinar Home")) {
+            console.log("Webinar Started");
             if (sessionFrameContainer) {
                 sessionFrameContainer.style.zIndex = "1";
             } else {
                 console.error("sessionFrameContainer not found in the DOM!");
             }
+
         }
-    });
+        const sessionParticipants = await webinarSession.getParticipants();
+        console.log(sessionParticipants);
 
-
-    window.addEventListener("message", (event) => {
-    if (event.data && event.data.type === "log") {
-        console.log("[IFRAME LOG]:", event.data.message);
     }
-});
-
-
-
-let WebinarStart = localStorage.getItem("webinarStart");
-let checkingInterval;
-const checkFrequency = 1000;
-
-function startChecking() {
-    checkingInterval = setInterval(() => {
-        WebinarStart = localStorage.getItem("webinarStart");
-
-        if (WebinarStart) {
-            console.log("Webinar Started: Detected localStorage change.");
-            clearInterval(checkingInterval);
-            if (sessionFrameContainer) {
-                sessionFrameContainer.style.zIndex = "1";
-            } else {
-                console.error("sessionFrameContainer not found in the DOM!");
-            }
-        }
-        else {
-            console.log("waiting for webinar host...")
-        }
-    }, checkFrequency);
-}
-
-// Start polling
-startChecking();
-
 </script>
 
 </html>
