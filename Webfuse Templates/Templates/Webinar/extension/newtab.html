@@ -6,8 +6,31 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/png"
         href="https://cdn.prod.website-files.com/66fa5c211b77ce188d5275f6/6752cfb0d2935e66e4d7d1a1_favicon-webfuse.png">
-    <title>Webinar Home</title>
+    <title>Quick Start</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="preload" as="image"
+        href="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/new-product.png?raw=true">
+    <link rel="preload" as="image"
+        href="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/your-website.png?raw=true">
+    <link rel="preload" as="image"
+        href="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/google-suite.png?raw=true">
+    <link rel="preload" as="image"
+        href="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/Notion-logo.png?raw=true">
+    <link rel="preload" as="image"
+        href="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/miro-logo.png?raw=true">
+    <link rel="preload" as="image"
+        href="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/gpt.png?raw=true">
+    <link rel="preload" as="image"
+        href="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/shopify.png?raw=true">
+    <link rel="preload" as="image"
+        href="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/stripe.png?raw=true">
+    <link rel="preload" as="image"
+        href="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/youtube.png?raw=true">
+    <link rel="preload" as="image"
+        href="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/salesforce.png?raw=true">
+    <link rel="preload" as="image"
+        href="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/asana.png?raw=true">
+
     <style>
         :root {
             --background-color--background-primary: var(--base-color-brand--dark);
@@ -18,6 +41,7 @@
             --link-color--link-alternate: var(--base-color-brand--off-white);
             --radius--radius-main: 1rem;
             --base-color-brand--blue: #3d93ef;
+            --base-color-brand--light-blue: #aed2f8;
             --base-color-brand--purple: #4d65ff;
             --base-color-brand--dark: #0b0b0b;
             --base-color-neutral--black: black;
@@ -93,7 +117,7 @@
             display: flex;
             flex-direction: column;
             width: 60%;
-            gap: 10px;
+            gap: 20px;
             justify-content: center;
             align-items: center;
             text-align: -webkit-center;
@@ -133,25 +157,26 @@
 
         input[type="text"]::placeholder {
             color: var(--base-color-neutral--neutral);
-            font-size: .9rem;
+            font-size: 1rem;
             opacity: 0.4;
+            text-align: center;
         }
 
         input[type="text"] {
             background-color: var(--base-color-brand--off-white);
-            color: var(--base-color-neutral--neutral-darker);
-            border: 1.5px solid var(--base-color-brand--light-gray);
-            border-radius: var(--radius--radius-round);
+            color: var(--base-color-brand--dark);
+            outline: none;
+            border: none;
+            border-radius: 15px;
             width: 80%;
             min-width: 200px;
             max-width: 600px;
-            height: auto;
-            min-height: 2rem;
+            height: 2.5rem;
+            min-height: 2.5rem;
             margin-bottom: 0;
             padding: .1rem 1.2rem .1rem 1.2rem;
-            font-size: 1.2rem;
+            font-size: 1rem;
             line-height: 1.6;
-            ;
         }
 
         /* ========== BUTTONS ========== */
@@ -179,6 +204,7 @@
             justify-content: center;
             align-items: center;
             cursor: pointer;
+            gap: 5px;
             opacity: 1;
             transform: scaleX(1);
             transition: transform 0.5s ease-in,
@@ -187,27 +213,18 @@
                 opacity 0.5s ease-out;
         }
 
-
-        /* === BUTTONS Container === */
         .buttons-1 {
             display: flex;
             gap: 1rem;
-            /*
-    We'll allow .5s transitions on these 3 properties,
-    but we won't set max-width inside the CSS states.
-  */
             transition: max-width 0.5s ease-in-out,
                 opacity 0.5s ease-in-out,
                 transform 0.5s ease-in-out;
-
         }
 
-        /* Collapsed: no forced max-width in CSS—JS does it inline later. */
         .buttons-1.collapsed {
             max-width: fit-content;
         }
 
-        /* Expanding: visually do the "slide" or "fade" only */
         .buttons-1.expanding {
             opacity: 0.7;
             transform: translateX(10px);
@@ -237,6 +254,10 @@
                 transform 0.5s ease-in-out,
         }
 
+        .buttons-1 svg {
+            color: var(--base-color-brand--light-blue);
+        }
+
 
         .buttons-2 {
             display: flex;
@@ -245,87 +266,97 @@
         }
 
 
-        .link-button-2 button{
-   all:unset;
-}
+        .link-button-2 button {
+            all: unset;
+        }
 
-.link-button-2 img{
-width:1.5rem;
-}
+        .link-button-2 img {
+            width: 1.5rem;
+        }
 
 
-    /* Buttons container */
-.buttons-3 {
-    display: flex;
-    gap: 0;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    transition: gap 0.5s ease-in-out;
-    opacity: 1; 
-    margin-top:1em;
-}
+        /* Buttons container */
+        .buttons-3 {
+            display: flex;
+            gap: 0;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            transition: gap 0.5s ease-in-out;
+            opacity: 1;
+            margin-top: 1em;
+        }
 
-/* Hide left & right icons initially */
-.left-icon, .right-icon {
-    opacity: 0;
-    transform: translateX(0);
-    position: absolute;
-    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
-}
+        /* Hide left & right icons initially */
+        .left-icon,
+        .right-icon {
+            opacity: 0;
+            transform: translateX(0);
+            position: absolute;
+            transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+        }
 
-/* Center Icon (Main Button) */
-.center-icon button img {
-    transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
-}
+        /* Center Icon (Main Button) */
+        .center-icon button img {
+            transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
+        }
 
-/* Hover Effect for Main Icon */
-.buttons-3:hover .center-icon button img {
-    transform: scale(0.6); /* Shrinks */
-    opacity: 0.7; /* Becomes less visible */
-}
+        /* Hover Effect for Main Icon */
+        .buttons-3:hover .center-icon button img {
+            transform: scale(0.6);
+            /* Shrinks */
+            opacity: 0.7;
+            /* Becomes less visible */
+        }
 
-/* Expand Left & Right Icons when Hovering */
-.buttons-3:hover {
-    gap: 5rem; /* Create space between buttons */
-}
+        /* Expand Left & Right Icons when Hovering */
+        .buttons-3:hover {
+            gap: 5rem;
+            /* Create space between buttons */
+        }
 
-.buttons-3:hover .left-icon {
-    opacity: .9;
-    transform: translateX(-2.5rem);
-}
+        .buttons-3:hover .left-icon {
+            opacity: .9;
+            transform: translateX(-2.5rem);
+        }
 
-.buttons-3:hover .right-icon {
-    opacity: .9;
-    transform: translateX(2.5rem);
-}
+        .buttons-3:hover .right-icon {
+            opacity: .9;
+            transform: translateX(2.5rem);
+        }
 
-/* Reverse transition after 1s */
-.buttons-3:not(:hover) .left-icon,
-.buttons-3:not(:hover) .right-icon {
-    transition-delay: 1s; /* Apply same delay */
-    opacity: 0;
-    transform: translateX(0) scale(1); /* Resets position and size */
-}
+        /* Reverse transition after 1s */
+        .buttons-3:not(:hover) .left-icon,
+        .buttons-3:not(:hover) .right-icon {
+            transition-delay: 1s;
+            /* Apply same delay */
+            opacity: 0;
+            transform: translateX(0) scale(1);
+            /* Resets position and size */
+        }
 
-.buttons-3:not(:hover) .center-icon button img {
-    transition-delay: 1s; /* Apply same delay */
-    opacity: .7;
-    transform: translateX(0) scale(1); /* Resets position and size */
-}
+        .buttons-3:not(:hover) .center-icon button img {
+            transition-delay: 1s;
+            /* Apply same delay */
+            opacity: .7;
+            transform: translateX(0) scale(1);
+            /* Resets position and size */
+        }
 
-.tooltip-js {
-    position: absolute;
-    background: rgba(0, 0, 0, 0.8); /* Semi-transparent black */
-    color: white;
-    padding: 6px 10px;
-    border-radius: 5px;
-    font-size: 14px;
-    white-space: nowrap;
-    display: none;
-    pointer-events: none; /* Prevents interference with mouse events */
-    transition: opacity 0.2s ease-in-out;
-}
+        .tooltip-js {
+            position: absolute;
+            background: rgba(0, 0, 0, 0.8);
+            /* Semi-transparent black */
+            color: white;
+            padding: 6px 10px;
+            border-radius: 5px;
+            font-size: 14px;
+            white-space: nowrap;
+            display: none;
+            pointer-events: none;
+            /* Prevents interference with mouse events */
+            transition: opacity 0.2s ease-in-out;
+        }
 
 
 
@@ -334,7 +365,7 @@ width:1.5rem;
             opacity: 0%;
             position: relative;
             width: 100%;
-            height: 5rem;
+            height: 7rem;
             overflow-x: hidden;
             overflow-y: hidden;
             display: flex;
@@ -363,8 +394,8 @@ width:1.5rem;
 
         .bookmark-icon {
             width: auto;
-            height: 2rem;
-            margin-bottom: 0.5rem;
+            height: 4rem;
+            margin-bottom: 0rem;
             opacity: 1;
             position: relative;
             z-index: 3;
@@ -690,9 +721,6 @@ width:1.5rem;
 </head>
 
 <body class="no-js">
-    <img class="logo"
-        src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/resources-common/icons/webfuse-icon-white.png?raw=true"
-        alt="Logo">
     <div class="info-panel-right">
         <p id="datetime"></p>
     </div>
@@ -706,7 +734,7 @@ width:1.5rem;
         <p id="participant-count-display">
         </p>
     </div>
-    
+
     <div class="central-container">
         <div class="buttons-2">
             <div class="eyebrow_wrap" id="toggleButton" data-state="off">
@@ -714,8 +742,8 @@ width:1.5rem;
                 <div class="eyebrow_tag">on</div>
             </div>
         </div>
-        <h1 class="heading">Webinar: <span class="blue">Start Page</span></h1>
-        <h1 class="sub-heading">New Tab opened by <b><span id="tab-owner-sub-heading" class="blue">...</span></b></h1>
+        <h1 class="heading">Webinar: <span class="blue">Quick Share</span></h1>
+        <h1 class="sub-heading">Hosted by <b><span id="tab-owner-sub-heading" class="blue">...</span></b></h1>
         <div class="section-break">
             <hr class="line">
         </div>
@@ -725,87 +753,87 @@ width:1.5rem;
                     <a target="_blank" rel="noopener"
                         href="https://demo.surfly.com/demo-pages/live-help-pages/inputs_and_screenshare.html">
                         <img class="bookmark-icon"
-                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAAD2klEQVR4nO3dW6hnUxwH8MW45NK4RMSD5gFJKemgiAem1CBlpDzwomleREriwSWXeFDukqYYyuXRbUoilzSNUpOIXGrSFIoz7o0x89Fq9l//8+/MOHMu//9aa/8+dd5Ou73P9/zW2nuttddOKYQQQgghhBBCCI3BvfgGr+EBXIvTsWzS59ZL2Gh2f+BjrMPNWInjJ32+TcOB2G7fTONDPI0bcTGOmfS1NKFrmhbDLnyL1/HKGH5ewOO4B1fjZOyXaoeLtGMrHsN5qVa4XJs+wqpUG0xp2waclGqBQ/G7tv2K1akWWK99u3BbqgFW4C/9cGeqAa7TH2tTDXATdmrf3zgrVXQb/KP2fZ5vaFIN8jBIN8j4m7bdn2qCY3EL3sc/2rMdp6UadVWTh+WfxRfa8U4rY2A5oMtwX/c0vFW9rkktwpE4H2vwSDdEn+dUSvd9PvfUB3aHlO9oSvdoah0Ow7vqkG9azkytUlcYA5uwf2qNOsMYWJNaou4wsp/y81dqgfrDGFiXatdQGIO5kwtTrRoLY+DTvEQq1QaH4wNtWptq0mhlDNuCg1INGq+Mum6De1AZwzalkvUsjMEd14mpRD1qpkZdn0rTw8oY9kQqSc/DyN5IpehxMzXss1SCqIz/fDXpLCKMmTZPOoxopmbaOMkw+t6Bz+a5CKMsN0yiMqKZ2rNzawkjvx79tbZtGevChwX0GdtwNo7uXrBs1d21VMbUyHE2aPM9khVVhTF0vKPws7Y8VEUztYjHK9kPOKLGymjx7mxnfpNsHGFEZczNreMIIyqjlEVyURlz9iIOiDB6FMYhhXTg07gUnyjT+rFsZ4inCgljqjvGcrytp2HklzJ3lBLGAA7udoTrTxjdhV9SWhiFPbeML4zuwlftw8lFGEstr7brVt1FGJOsjJFQXrZ3URnj1M1VbN7L4Fn0GePWdaJ34ctus5Xv8CRO2MPvRgdegoLCmM4rBbXQZzQw1rUN53Tbcbxn4V5a8uGQ1sNIMx8g/++mpLkwSmqmpmY53jK8NY/jPV9jM1V0GBmu7BYatB1GhlcLD2N1n8JYuVh/vAhjEeDhCKMg3cdQojJK0W1cWWIztaMXfcYonDGHLcUjjHHCg/MIY1Hn6FPfK2NY3jy4+xTeLyMXm7d2PXWp5+gzXBVhzP5ff0G3Cf8p45ijzyKMQuboswijkDn6DFdEM1XAHH2WJ8Xm8QGy9jrwSc/RD+D2CGPCc/QLGCGIyljsOfpR3e9FGKWwe8F1VEZhD6NvRjNV3qdenxkZS/sTdzT5ZYJa4Lju2SZPli2f9PmEEEIIIYRUsH8BWdG7hn89z+IAAAAASUVORK5CYII="
-                            alt="helping-hand"><br>Assistance
+                            src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/new-product.png?raw=true"
+                            alt="helping-hand"><br>Product Demo
                     </a>
                 </div>
                 <div class="bookmark">
                     <a target="_blank" rel="noopener" href="https://help.surfly.com">
                         <img class="bookmark-icon"
-                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAACZUlEQVR4nO3dP6iNcRzH8Z8/uWIh2czY/JkM3FkppGSzuErOKDHcSQwGo1LKTZRBRt1S12K9KWUwsCJFyjXI5a2n7ug5F4Pf+/mdz6ue/fv7vU/P+dU5PU8pEREREeMAe4BZ4B6wACw2ej0DbgMHlZ8I4Djwksl0E1hbDIAtwHztHRGYNcTYAbyqvRMSX7sPZ80Ym4DntXdB5ljNILdqr17oXK0Yu4DvtVcvNKoVpDvuhSFId7wD3v9mmKBOkL3ZeVeQo/3zTLxRjSBnJ37bZUFGYwaadKMEcUkQmQSRSRCZBJFJEJkEkUkQmQSRSRCZBJFJEJkEkUkQmQSRSRCZBJFJEJkEkUkQmQSRSRCZBJFJEJkEkUkQmQSRSRCZBJFJEJkEkUkQmQSRSRCZBJFJEJkEkUkQmQSRSRCZBJFJEJkEkUkQmQSRSRCZBJFJEJkEkUkQmQSROZ9H/LmcSBCPb8D2BPG49t9j5DGxvR4A64cW5FMD18+etZ2sEuMvg7wDLgO7gQ2lAcCHoQa5D2wujWGgQeaANaVBDDDIG2CqNIoBBpkpDWNgQX4A20rDGFiQt6VxSIPM9Az1ujQOaZAjPUMtad4HO2FB9tPvQGkY0iAbgS89g82VhmEMsjLYo57BloFDpVGIg5wac9vqht5XGoQ4SPe2zxervMr6Ynd7Kw3BGmRluMOs7jPwELgKXGrgWupZ55liANz4gyiTYBm4YAiyDnhcezdEUXYaokwBd2rvhsTpYtH9Jwn4yGSbLibAVuD6mNNIyxa0P8ytfLdMA1eAu8ATYLHR6ykw29oRPyIiIsq/+QWJscoPMdI5rQAAAABJRU5ErkJggg=="
-                            alt="external-guide-coding-tanah-basah-basic-outline-tanah-basah"><br>New Product
+                            src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/your-website.png?raw=true"
+                            alt="external-guide-coding-tanah-basah-basic-outline-tanah-basah"><br>Your Website
                     </a>
                 </div>
                 <div class="bookmark">
                     <a target="_blank" rel="noopener" href="https://docs.surfly.com">
                         <img class="bookmark-icon"
-                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAAEGklEQVR4nO2dT4hVVRzHb0g2UtgiHJSxNi20GsVAdONmRsihcCEV1EIqn7qYUVr5Z6OCogsVXUcRRdEiyI1U1AQRBIILKS38hwr+CVr0h7K0Jv3IgfPwMt1/c999737fPb8P3N05v3PmfOace+5559wbRYZhGIZhGEYfAMwDJoAPgcmGX58DB4ChSBHgTeAPwuNXYGWkBHCIsLkMzI4UANbV3RoijEYKAD/W3RIivK4g4+m6W0GIloKQF+tuBSEkhGyouxWEkBDSqrsVhDAhYpgQMUyIGCZEDBMihgkRw4SIYULEMCFimBAxTIgYJmQad4CTwHHgZ3qPCYnhfstfHVv0fNhvtOglJiTGzoSV6AHgBr2jsUJuAXdnkH7KbT9Kqd/HCenv+jKqpnFCLgIjwCxgLrAb+K9AvsmM+n0VS+di7fKxZ/myXJlV0SghZ4DBhPhHCuTdnFK3R4C/Y+kOJ6QZ9GVXQWOEnAXmp8RfVmC4GkzJ++q0tEsydlueruDvaISQxJ7RBhjuYLj6ZFraZzLSVtFT+l7ID1kyHMC+ioYrx96ktNOkuDoFKaSIjDHg35Kzq1cS0rtYY12U0rdC3D1jQU7c5wpMTb/MyH8sJc8/wNqcssveU/pSyPUCPWNNweeEmQxXcVzsNQV6yo0QhLxWkYypGQ5XZaS8EYKQ4YxYC3P+s8vOrtJwZS3MiLM0BCHrcuKNF1w2KTtctXFljFe8b7kvhbib5UCHUqY6HK6KyBgo8VzSl0IcXwBzcuJuypBSZnbVxsXcklP2bP+bCqEIwR+YzOspEylSyg5XLtZEgZ7h6kZoQopKeafC4ertLspohJDc4QtYXuFw9WwXhqnGCcnsKcBTFc6uFnWpZzROSKoUYEeFs6ttXZTROCGOr4HHY7FfBv7iPt92+DDoYr0Uy/OEL7MqGiekvSL7HXCN//NRhw+Dba76MrJWksvQSCFZnAceSKjDRjQITohjT1yKu1EDP6FBkEIcJ4CDwPvAn+gQrBBVTIgYJkQMEyKGCRHDhIhhQsQwIWKYEDFMiBgmRAwTIoYJEcOEiGFCxDAhYpgQMeSF/O5PS30j8K2PyR5cY4pCTrn9T1nnQIzeCPnend1L2hVi9F7IW8BDvSzXSCHvnIchAvCo32/rPoX0gX8rT9Ov0UgN4DHgKHCb8GhFSvhTq1cIl1akgt/S+Rth04oU8KePztXdGgLICNlad0uIICPELY8YCAgBnjQTWkKev1+f4GkpCFkfvAYxIS/EKhQ6LQUhi+tuBSHqF+IALtTdEiLICNled0uIICNkTuBrWDqf727jXuwC3CRsRiIlgFU1fUhFgUvAg5EawBDwnv/aTSj8AqyIlPFvGHXvTnwX+FRgi85kF67PgP15L4U2DMMwDMMwopq5B5oJ6wL+T2a8AAAAAElFTkSuQmCC"
+                            src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/google-suite.png?raw=true"
                             alt="external-guide-coding-tanah-basah-glyph-tanah-basah">
-                        <br>Tech Docs
+                        <br>Google Suite
                     </a>
                 </div>
                 <div class="bookmark hidden">
                     <a target="_blank" rel="noopener" href="https://docs.surfly.com/session-options/">
                         <img class="bookmark-icon"
-                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAx0lEQVR4nO3awQnCQBQG4decKKg1eRCbUqIN6SHR+4i5J4qSdTc7XwPCRBL4eRGSJEkTA1bACbgBD+ACbKMGwI5hh5gzYMF7m8gVaZyn+s1SAnS1B2hrD9BkGyDRS3AdFX8G91EDYAkcgStwf/3tZ//kJUmS9CVntGHOaKSa0cjXRzPanAN0tQdoaw/QJAnwD85o4YzWc0aTJElSIfAUbpAbHjmfwo2hgFO4MfErCjiFKyVAW3uApsgAn3DDCze8nhueJElRkicc/4lG/jBWJQAAAABJRU5ErkJggg=="
+                            src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/Notion-logo.png?raw=true"
                             alt="sorting-options--v1">
-                        <br>Configurations
+                        <br>Notion
                     </a>
                 </div>
                 <div class="bookmark hidden">
                     <a target="_blank" rel="noopener" href="https://help.surfly.com/en/masking">
                         <img class="bookmark-icon"
-                            src="data:image/png;base64,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"
+                            src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/miro-logo.png?raw=true"
                             alt="external-hidden-communication-roondy-lafs">
-                        <br>Masking
+                        <br>Miro
                     </a>
                 </div>
                 <div class="bookmark hidden">
                     <a target="_blank" rel="noopener" href="https://help.surfly.com/en/guide-to-audit-logs">
                         <img class="bookmark-icon"
-                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAAFbElEQVR4nO2dbYgVVRiARzdLDKzWvj/Vkjbth+WvwsqsHzcqogWNEPpRWPTLgmDNiiJCt0AIgmopJHORvoQ+IAIRMgpCSyKizBT6biuSPqh2TfeJwz1Lt7vnzsfOuXPfe877wPy53Jk58z5z5s7MPe97kkRRFEVRhAEcAywErgJWdMlyHbAcOB84OgkB4FLgReA3upt/gF3AILA46TaA44FXCJddQD8wLZEOMBfYSxy8bS5piVSA2cAnxMUfwKpEIsCzhMdnwL6M74wDA4kkgEXAYcJjgz2++cBjwMGU765JpABsJEw2NB3nScBztlc0cwS4JpEA8AURCJkAuAUYc3z/R+DURMCDn+uMCVaIAagBhxzrbE46CXAO4TKYceyrHeuYk/Oi6gxMblQf4fJ0juN/1bHeC9VEPz4hH+Y4/rOA0ab1zO/LnGoMxCXEsDRHDJ5nMrdVYyA+IQeAUzJicLljva3VWYhLiOEr4AZgeosYzLCvURrZX72NeIQ0PmfsAF5yLM1P8Yc78l9KZEKKUv1DogpJZYEKkUWfCpGFChGGChGGChGGChGGChGGChGGChGGChGGChGGChGGChGGChGGChGGChGGChGGChGGChGGChFG1woxo8h3A9uFLB/bfI8ohfwMXJAIg3pe/aEYhTycCAV4OUYhaxOhUE9fi07I58BxiTCoJ3r+GqMQw3fAM7Z8xaCAZYsHGV0tJFT6VIgsTHbyAHCy9hBZjNmUhavbXrQm8kvWmL013lEgNfxT4C7gBBXij2/tj/+ZDSfmAvvZTzm3MdqWXhNRDzliX6uYinM9GYUUVtjvjhcocmN+a3qlCDFlnR6xjRrwuGy0aWhl+AZ4EDhjCrG5EHiiwC20yVO8o9NC9pizqlQjUgDOnsIzhekNb9pEz5a9IS/ALOBWW40uz+/S7E4KuafsAWcBbMvZlhFgPTAvaRPAxcCQI2u3kXM7KeRRr0fsAHgnow3v2ev+jKTaCnx32ldHzZzXSSG/A5d5PdoG7EFnUUs6hHm5Kk3IBD/YqgkHPC5pFeBUiGBqXk/7QHpIJ6l5jXKx+KkQBypEGDXtIbKoqRBZ1FTI/9lmh90s8bwsAzapkGJ85ON9URr2/wrtIb4qf5YFeEiF5Gd3u//WpP7mVntIATbba/58z8ti4PEc+7++nSdExsnygKM982J/Ur/Za5SLxc/MutDMabELWe01ysXi96SjPb2xC7nba5SLxW/YUc20J3Yh671GuVj83mpqy0jZDYYg5HVvES4ePzOkqJE9ZTcYgpAvvUW4WOzmONoyXHajIQgZN/Mveot0/thd6WjLvWU3GoIQw43eIp0/dmYsWjPLym40FCHD3iKdP3ZmnG8jfwEzy240FCF/Ayd6i3Z23K5wtOE1HxsORUilt7927G8zK31sOCQhf7Zz1GJDzK517Pt7L0NqAxMyMenwUV4i745XL/A1k/EzfWug0+YNeQnO5FjNbDGs1czgM8vXTkKdWPI+LwH6L07TbYKOi36f+wp16tVx4H6PJ+3WFvvZ5GMfsUxOjK3mMOW5pMytNPAubj4AjvVro77ThYFO3z3BzsZ8wgJxWZJy9djf1jmqbCWGkDkI3JQzFj3AupRqQvvMDKFtk9GQgGJyBUNnS1pKs8l+SrlEYe+yUieq9CllLrCX8BkBVjkml1xn30e14qnK5zY0r7FTbu9CY7vNT1+acXUwkm6vVIRDzCVmGmtPVXUkM5rxHPZ+R4rQtMJ0UVPCD1huEyu7cVkJvDEFUWvbPUw2aoB+x3/grX64F3W6vVFAvQjAYIvnrl+ANa1mlVbaiH3oM+OSJyo/DHmpVaIkZaRMs28pTvcdx38BX4eHWk/fpcsAAAAASUVORK5CYII="
+                            src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/gpt.png?raw=true"
                             alt="secured-file--v3">
-                        <br>Audit Logs
+                        <br>ChatGPT
                     </a>
                 </div>
                 <div class="bookmark hidden">
                     <a target="_blank" rel="noopener" href="https://www.surfly.com/security-and-compliance">
                         <img class="bookmark-icon"
-                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAYAAABXAvmHAAAACXBIWXMAAAsTAAALEwEAmpwYAAABXUlEQVR4nO2YT0rDQBSHH1i3Fk9QCp5BoeAJXLjq0q1XcFtw4zmkq95BEEGwZ1AkJxBKXWngk8EUYvpnZlLTvhfmW4YwM98wL++XEUkkEoltACbAsViFXzLgXAwLOHLgDjgUS7DMFDgRwwKOGXC97cCXwCPwyT8TILBgDHTrLN6dxcaIEHC8A4PYnUeRgOMbGAGdEAF3bLQJLHgG+j6BOXoFpt4vFDugxnx5cI9gB0TOl0V1aWUCE/U5ifWN7EoswDIvVqNEbjnMZZbj9LhW3klYBzgC7sUiwBnwWm1K6gEOgBvga1VXVQ3QA542xQK1AEPgw5dr1BYqG6i83zgSWahvMQOqEAA61UINHXDvAqwp1NABaZ6ZT6Bf/DhrFXgIPUKj4ipDm8CFV6C0mEFxqaRF4DZ48aUFdYu4uy+BuTs2UTvfqkbWmijRijBXBjg1GadXFfifh4lEIiGR/ACXHiBWqs4tEQAAAABJRU5ErkJggg=="
+                            src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/shopify.png?raw=true"
                             alt="data-in-both-directions">
-                        <br>Data
+                        <br>Shopify
                     </a>
                 </div>
                 <div class="bookmark hidden">
                     <a target="_blank" rel="noopener" href="https://help.surfly.com/en/service-level-objectives">
                         <img class="bookmark-icon"
-                            src="data:image/png;base64,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"
+                            src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/stripe.png?raw=true"
                             alt="data-backup">
-                        <br>SLO
+                        <br>Stripe
                     </a>
                 </div>
                 <div class="bookmark hidden">
                     <a target="_blank" rel="noopener" href="https://docs.surfly.com/category/javascript-api">
                         <img class="bookmark-icon"
-                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAAEcUlEQVR4nO2dXchlUxjHD4NB+R7jI59lTJhRCIniwrfECJlppFwQJR/lToorTC6MEikamaFBSckFKS6QNGUYJMWFxsQU42u8w8xPq56Xc857zl5r7bX2zDPn/f/q3O29n7Wf31l77fXsdc7u9YQQQgghhBDCKcDpwBpgEyKVTZazxbVlLAOmkpshhgm5W1qzZ0hGOVNVeop1OVGH1TWEaMyoxw81hOyo2KDZzvYaQkRFJMQZEuIMCXGGhDhDQpwhIc6QEGdIiDMkxBkS4gwJcYaEOENCnCEhzpAQZ0iIMyTEGRLiDAlxhoQ4Q0KcISHOkBBnSIgzJMQZEuIMCXGGhDhDQpwhIc6QEGdMrJBe3XZvB94C7gPOBY4B9gX2AeYBZwO3Aa+V/t5SQuKsAhZkfEGPBp4yidlIyHh+BW4ouHJcAvxCJhIymr+Ai0qTA5wJ/EYGEjKaO4oT87+UJWQgITPZAOxVS4hJeYFEJGQmtyYk+CjgUvscG9n2BOAdEpGQQf4B5kcS/Ajwd98+4W7qJeCAoe3mAPcAv5OBhAzybUTGcsbzMTDXtlsEfEQLJGSQDyNCXqaZx4GHSiaHEjLI+xEhr9MxEjLIhoiQUB7pFAkZZEsYjBuEzLFSSmdIyEzOiSUllFSAb+gACZnJipSkWG8Jf234CRWRkNFFxUNzEgOcb6X3VhXefiRkNGvbJAY4CXjOJpitkJDxPNA2OcBpwLu0QEKaeaxtoRHYA7grd5IoIXE+ABYW9JaLbVxKQkLS2AasBI5sKeXy1AFfQvIITxKfBU5tIeXRlAAS0o7w17hvA5dlCDnEKgGNSEg568I4kSjlmdjBJKQOocc83VQHMyE3zlYh23ZRux+MxFwwaUJeBZ4o/Q/1MLdIOMaPVkR8JaN93yWMIxMh5OvpARTYOzzZi2z/ZqTNR0T2Xwsc3rft5sR2TkXizt3dhfwZShjTz6qnAQ4KT/ca9ruyFy9tjO0VI7a/ENia0N7PI3GPix2gVwrd8QZwYqT8fbMtJvgD+NkWGixLaPM1Tb1izD7X2hekaWC/KRL3vNhJJ6Q8enJdkXyPn8uYceiKhP1OsXFsuLd8AVyfsH/o7Y1kn8yIIF3x2fClqgZW9PtqRLwvw08MEo+xf5itA2eFMSYj9qexky46OQvSJSuLG5i31vbJXkcA16WccI1AXXN3lYz0/rvLWR8ZB26vFW/odvf7lJOtEaxrQpLur5SYVQnxQlX2zhrxLObBdrORRI2AO4s14edjLdu4n1Vpc3g+JLMwN2ekjBv9lMSbDroz2RwuYcMLmxvatidwtd0gtOEn4N5wycnMycn2/KR/UXYSrUX0Bd8VbLHLzy22sHm+Jf8wqxeFecaKMXdTbdhqq0qCnAuA44EDbS40zwRcBTwMvFfy5rrdVcjEIiETKEQvlqzHjhpC9OpVZ69eXV2xQbOdF2sIWazXd1chrGhZVCzEpCyVlGIZjaX7tj0lXL42lrVtVrExXKbCA7OqMoQQQgghhBCiV49/AXRFmx2yMnEsAAAAAElFTkSuQmCC"
+                            src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/youtube.png?raw=true"
                             alt="javascript">
-                        <br>Javascript
+                        <br>Youtube
                     </a>
                 </div>
                 <div class="bookmark hidden">
                     <a target="_blank" rel="noopener" href="https://docs.surfly.com/api/v2/">
                         <img class="bookmark-icon"
-                            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAAFw0lEQVR4nO2dW4hVVRiA99SUaTXV2IOhllAYFArVUxRoJBF0cyqK0iCCTKwIwwzsQvhg0XTRLg8TQT0UBFGIJjVk7ukGlpqEVBCBFVk9pNgN7PrFz1kTp9O57Mu/1l77rPXBZmDgnP9f+ztrX9b+19pJEolEIpFIJBKJWAU4FrgEWAe8ALwObAaeB+4GzgMG7WYRSYC5wDPAL/TmG+B+4Li465SRXzuwFjhEfr4DrtHOKViA44E3Kc+DwEDV7ak1wJFAqiDjXylVt6nW0DhfaHNt0m8AA8DFwJ3mr/qhADgX+NuCkG+BoaRfAA4DNrY0cgtwtHKcN7DH6qRfAJZ2aOSElhTgVOBPi0I+A45K+gHgiS4NLSwFOAa4A3jfsoxJ5F5mEzAivT6pK8DKHg3NJcWcj24FfqA6PgUWJDUettirIUXuooFx/OAvMxQz4MuJWoYlFmXcVgC/l5ECDAM78I+xSqUAc4Cdlho3AUzpcJiSKzNfWVWNjcbO0bwTbsd9bWLKOcNnpPfPq0LGkDl22mRHS8ypZsDPd16p6nBlm4mWmDdQD2SUYFY/CrmuJeZL1Idl/SZktE3Mz6kPYz4JmdPlc4szXPaOdvjsT9SHTVYFaAgBTgN+LSLDfD4KURaytoeMR3v8CGSYoi48ldRAyCNFekbT51+lPtxmZccrC1nQ4cFRTxnm80uoB3J/NlN9p1s6qa9sqgCRv3flHJw8gP+Mq+3oHDtHBvjaIT1gOMNI7TlF6p7kUIDf/AHMT6oA+KhNQjstxzwceA9/WWez/b12znzgq6ZkvnTx66DRO3284nqx8ieI8twCuMhs0xzGPQl4G394UmrBkpChUSYqNbg/VyhCnoBeVfW+8ArgRHPT6eowJoUU7wI3A0fY+JVJ9cRqU45fxbba5DCodDl+ObAceAB4SGlbA9xoivtO0Nn7/09+GrAdf9ju8jzkHcC9+MeaJFQ8LRbY4rD9w2Y21UIvrpAcFCkUIXXU9guB/U1x9zh/7NomqSCFAFOA770oTmhJLFQhZ3WIfdB27F6JhSpkYafgtmP3SiwKaSEKcdRDgOmTA39ZeoiZo+h2tlQIPYTGzv/CfPdB4PZuQsxg6ZipjJFnO9uAUzRzClYIMAv4sV2MbvHb/O9DJ8PqAQhZrpjX6Vp5aQj52hS4DRUsyh4x3+FayC3oMVcrr7JCpBDhTIVY84DfHAuZac4bZfnAp0OW5g6acBnPxLwiQ+lqN/ZJxaVmTmWFbFaM95prISbuSEEp+5wcqnIKkQG46Ur3AQeqEFJQilsZOU/qW4EZJeLMAN6qeuiE7FLcyyhw2SsN2WWWO8qz7cr5y0wtt7mXlGpkhHAf0gnzUKrdgmYyJH9GUhWhChGAS1tWgNhTWc+YJGQhTY9wRcwF8RGuB0K8I/QeUnchUum+vkCBmXxmtw0hNOrKrq+wwE+2VWor4+UQ8nCZsRyzQM2ophAa9zY+TZPeWHq8K6OQvUolnoNmuoKWkGfxjyUuhKiVxsh3oSfkE/zjaRdCdpUK8t94uxWF9FoIrQqec3UOKT3/Abg6Y6w04/cFLUQmMm4wTw0X5dwWm8Uv5TuyEIV4Rhp7iF+kUYhfpFGIX6RRiF+kUYhfpFFIDQvlCPg+xMtCOQIWsq1UEEuFcgQsxMtCOQIW4mWhHAEL8bJQjsCFeFcoB3yMf2xwKcQVacbcH8M/LgtZyBDwDn4gcxEfLyWj7kKaiifknYU3yeL3ObZu6wcvy7ktVZvuVnchRYkLB0Qh2QilhwDnm1e9Tha3yTz0TjQXwa3wcQaVa1LlNspqoWU41PpiGWv0uxAaPUMDWXxgqlZe3RKWO3Df2KrYPjlMaXG2Vl7dEpbSHt9Yr9i+KxXfdtB1PXuthE/27G0D+4HZiu0bVFp1NdPrNLSSnm16yniBcSqtbdxMW5htoX0yZeEeM/SfN6+Xzav6qn/HbSQSiUQikUgk6c4/0If+vVyPCb0AAAAASUVORK5CYII="
+                            src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/salesforce.png?raw=true"
                             alt="external-api-web-services-solid-solidglyph-m-oki-orlando">
-                        <br>REST API
+                        <br>Salesforce
                     </a>
                 </div>
                 <div class="bookmark hidden">
                     <a target="_blank" rel="noopener" href="https://docs.surfly.com/webhooks/">
                         <img class="bookmark-icon"
-                            src="data:image/png;base64,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"
+                            src="https://github.com/JSPOON3R/JSPOON3R.github.io/blob/main/Webfuse%20Templates/Templates/Webinar/resources/asana.png?raw=true"
                             alt="webhook">
-                        <br>Webhooks
+                        <br>Asana
                     </a>
                 </div>
             </div>
@@ -821,53 +849,46 @@ width:1.5rem;
         </div>
         <div class="buttons-container">
             <div class="buttons-1">
-                <button href="#" id="startScreensharing">Share Screen</button>
-                <button href="#" id="shareFile">Share a File</button>
-                <button href="#" id="show-participants" class="hidden">Toggle Annotations</button>
-            </div>
-        </div>
-        <div class="buttons-container">
-            <div class="buttons-3">
-                <div class="link-button-2 left-icon">
-                    <button href="#" id="copy-guest-magic-link" data-tooltip="Copy Participant Link">
-                        <img src="data:image/png;base64,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"
-                            alt="groups--v2"> </button>
-                </div>
-                <div class="link-button-2 center-icon">
-                    <button href="#">
-                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAAEzklEQVR4nO2dSYhcRRjHnxpNxAWjYMQlKmbB4HIwJC7gLu4YMBiN6EVMFBdyUyHoGBFiRu+ZuCSumbggOBHRi5OMCEL0IDFqXOJBMB6cJJCgMc785COFNvO6uvv1VFdVZ/4/eAx09+tX3b95tXz1VXVRCCGEEEIIIYQQQgghhBBCHAQ4ApgF3ALc6Y6bgZn2nHuZ6CTAJGAB8B6wGz+7gHeB2+wcWemMjMXAj1Rnu909khJOxInAR4yfD4GpEjM+GWcD2wjHD9bGSEp7MmYDOwmPvedsSakm41hgK53jO+B4SWldyDt0ng0S0pqMm4jH9ZLSWMZhwBcRhWyxa0qKX8gC4nOrhPiFDCQQ8r6E1JdxNPBXAiF/AlMkpSzkStJxuYSUhTycUMiDElIW8nxCIaskpCykL6GQ1RJSFrImoZA+CSkLeSGhkF4JKQt5NKGQhySkLOSahEKukpCykGOAvxPI2G+DUgmpA2GmaqsyIBkegLsSCFkkIX4hRwK/RJTxs9KEmgDcHVGI0oNanKTaGEGGhfo1OdUKwNQ2k+JaZQdwktqOCgAXupTQ0AwDF0hGGwAzXCpoyEb8XMkYB8ApwGAAGZuAaZIRrqG/w9X9VfkVuB84XDICA0wB7gU+cXPhPuy5j4F7NF8eNylirluos9Qdi9xjik0JIYQQma+6nWG5uC6Ha4XLVLFjg/u7ClgOPOJW556VutyH2orbq4FngaEm3dxG7AE+B56zDEUtma4+ALwCeNXFnDrBH8CbwHWK9vpFTAaWAN8Tl28sjdTm84Pc1t2OhTOA+1x4IwWjwOvAqcVEB7gI+JJ07ARuKCY6rrF+BjiQUMaWZneFK+elrkrrrenR9brHLun6+XjgZOBT0jLYqM1wE2OvuN5ZM2y/lZe7csLL7dzTTvg8JF/ZGnhP+c4EXgNG2nhfO2cdML3oBuw/CPidtOwGzvGUz+Za9gW4xl5gYZEz9iUAv5GWUeB2z7jnafd8yGv1ZDnGAU4IPCfeLm94ymcyOkVPkRPuv+8D0nPAYmCeaqrKnbHZhXBaZTSr6gt4gDx4ydOAV2kz1tec21/hvH1ZNPTA6S12G2Mwq075rDdVhWU15y6reO66IjXAWvLga884YySikJGk4xRgDvAPebCiTvls0EdEIcaL0UXUFHg1+TC3znKHPQmE7EoSZgGOc4OjHNgPHDWmfBZ/IoEQY34KITeSD9/WKZ8FBVMJWZpCyBPkw2DF7TveAh7zHP9VfS4Rz/e69Vlt35GZkIEKu0VsDvgdDGWzW0Tk5WjtCOmLIOSznIRMy6jLu6lO+WxyyUd/gCrL0pHy2nHI+tzkwfZiojfqNbOCP5FHUHHymLJdnFDIvCRCXKFnuhSb3AaGk5r8zEWnhAwn/00Tt35jeeSNAMbyeJ1y2Rx4bCFrisxyr04DLgOujXyc55lOjhlctE7O+dG/+G6Cg6mqsYSsTftpuwBgesWYW3/NuY26tmOxa5yR9tN2CcDCilO4Qw0GfS0nVogGuOyQTvFko2sLfyJGTwfSgJ7KMg2oy6qvvQFk2HuomgqYmNHXZizOutFv24+YBSmM+B8bM1jqUIs7EQ27kH5pvCMC48Is890OEStrliOsdI/NSx4OEUIIIYQQQghRHHL8CzR0qJV3Os0OAAAAAElFTkSuQmCC" alt="add-user-male--v1">                </div>
-                <div class="link-button-2 right-icon">
-                    <button href="#" id="create-magic-link" data-tooltip="Create Presenter Link">
-                        <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGQAAABkCAYAAABw4pVUAAAACXBIWXMAAAsTAAALEwEAmpwYAAAFE0lEQVR4nO2cXagWRRjHJzMqi1CzKDM8ncAoCpKMhCCtRInsrkAJwr6uogiissKgLLAoA+uiU8SbBSfIY10EgZI3XRhBmRYcgsjoQ4zSrNQ+OOYvhrNByjuz8+677+7MM88P9urdfWaf+e87+5+PHWMURVEURVFiAZgCXA08AbwObAE+BN4C1gM3A6e3fZ/iAc4A1gI/Us6fwCbgkrbvWyTAHcDP9M4R4GVgWts5iAA4EVhH/+wE5radT9IAJxTNTl38AJzXdl7JAjxJ/ezQ5quaGNcAR0sq9zdgDHgKeBx4BdgdIMoL9T8+8puqj0oc1COuJx1YDnzluf5vYLj5zBIFuNFTmb8AVwXEmFH0TVy81kw2AgA2OirRNmFLe4gzE/jGEesAcNJgMxEAMBXY56jEtyvEW+H5lywZTBaCAC7yVOB1Ffsxrg7lo4PJQhDAYk+Pu1ITA7zjiPlS/RkIA3cTs7ePmC86Yo7Ve/cCYXKkthsH+4jZccQcrffuBQIsws35FWN+7Ii3of4MhMGkVXX10O+vEG+uJ95dg8lCGMAXjgrc0+vEk6e5sswzuQ+JBJ63xlOJdvR3SmCcWz3/jh0m43Gpe4uh77+A94ELSq45BzjsEeVdYHpJmfcBE54Yq0xuFBXTzXKOAyeXXFs2KbWvGOG9zMYq5tnnALcDn5ZcO57dsIlHjKBeN3Aq8CXh2I5jCPZfs9DkRIAYlhsC4lxcDALWyT0mJwLF2GtXkJiweAuB/TUIYV/uq01OBIphJ5eurzDg+FkfYvxqh2RMbtjR0wAxlgXGmg7cBDxbuCq7aqQq1uFtBUaK5UQXGukAl5a8WL1iMDkPstTOdxcLEUJf0lX5HnizcGUzjTSAN/oQYznwNe1xuFjhMtUIenfYuW6XGM5pV+CBgNUlTfEBcIoRMiDoYmXJYoajxEX6ix+AIU+CQ56p1d3Eh31AFpgMBVnW48t3NfDwcYddX9WNTpdz/zML/wSUOWIyFGSt5wndFGJPPe+tJQF2+nnP9eMmQ0FedZz/Xg/l2pdwt7GqswOvv81xDwdMhoJ0HOd3eij3CuD3465/rIYVkodMyrQlyP/KthNaz1UYklFB6hakH1SQYyujo4IIbLL6Qf8hx1ZGRwUZEPoPSUsQ+2nacJdjzHH+mOP8QRx3Ou7hj+L3aRIFSZkJYDNwpkkJwYKkuUo+A0GOAKeZVMhAEKd9jxIVJDJUEBm2dzjCw96r+CYrmUQQkoeYRBCSh5hEEJKHmEQQkoeYRBCSR1kio8Ui5xSO0RwEkcKQSQUVJDKA2cjnXJMSxWdqUtljUgO4peS78FSZsBvimBQB5gNPOxzMNk/CIw0drgdmm+N8m8vlJrONySwzGijfLrJ2scjkRrHLgosFDZR/paf8/Ha7Lj57O+SokBUNlL/S831h0KY44gA+d1TKmgbKtvuidGOXyRXPZpQbW/xKeLPJFeAZR6Vsb6Bs19bl60yuAHc7KuWnBsp27d2b7zZ/bVlf1PLGZX1RyxuX9UUtb1zWF7W8cVlf1PLGZX1RyxuX9UUtbzzWF7W8cVlf1PLGZX1RyxuX9UUtb1zWF7W8cVlf1PLGZX1RyxtUSdc2YX3xW97FdZUj3fqu77JfYtXDxnIxp+16SMX6NkG+CxsqWN8myHdhQwXr2wT5LmxwATxEezzYdv7RAZwFfNeCGN8Cs9rOP+bvSjbYDiHwyYCP7UVZs9vOW1EURVEUI49/AadDBlfKaXcJAAAAAElFTkSuQmCC" alt="external-speech-voting-elections-tanah-basah-basic-outline-tanah-basah">
-
-                </div>
+                <button href="#" id="startScreensharing">
+                    Share Screen
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M20 16H4V4h16v12zm0-14H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h6v2H7v2h10v-2h-3v-2h6c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z" />
+                    </svg>
+                </button>
+                <button href="#" id="shareFile">
+                    Share a File
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M12 16c-.55 0-1-.45-1-1V9.83l-1.59 1.58c-.36.36-.93.39-1.3.03a.9959.9959 0 010-1.41l3.29-3.29c.39-.39 1.02-.39 1.41 0l3.29 3.29c.36.36.39.93.03 1.3a.9959.9959 0 01-1.41 0L13 9.83V15c0 .55-.45 1-1 1zM5 20c-.55 0-1-.45-1-1s.45-1 1-1h14c.55 0 1 .45 1 1s-.45 1-1 1H5z" />
+                    </svg>
+                </button>
+                <button href="#" id="toggle-annotations" class="hidden">
+                    Toggle Annotations
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path
+                            d="M3 17.25V21h3.75l11.06-11.06-3.75-3.75L3 17.25zm17.71-10.04c.39-.39.39-1.02 0-1.41l-2.54-2.54a.9959.9959 0 00-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z" />
+                    </svg>
+                </button>
+                <button href="#" id="toggle-annotations" class="hidden">
+                    Unpause Tabs
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24"
+                        fill="currentColor">
+                        <path d="M8 5v14l11-7z" />
+                    </svg>
+                </button>
             </div>
         </div>
     </div>
-    <div id="magic-link-container" class="magic-links hidden">
-        <div class="link-container">
-
-            <label for="name">Name:</label>
-            <input type="text" id="name">
-
-            <label for="email">Email:</label>
-            <input type="text" id="email">
-
-            <label for="urls">URLs:</label>
-            <div>
-                <input type="text" id="urls">
-            </div>
-        </div>
-        <button class="link-button" id="generate-link-button">Create Host Link</button>
     </div>
-    </div>
-
     <script>
+        /***************
+        PAGE DISPLAY JS: START
+        ***************/
         document.addEventListener("DOMContentLoaded", function () {
-            /***************
-             * BOOKMARKS
-             * (unchanged from your existing logic)
-             ***************/
             const bookmarks = document.querySelector(".bookmarks");
             const bookmarksContainer = document.querySelector(".bookmarks-container");
             const hiddenBookmarks = document.querySelectorAll(".bookmarks .bookmark.hidden");
@@ -891,12 +912,10 @@ width:1.5rem;
                 }
             }
 
-            // Set up bookmarks on load
             bookmarks.scrollLeft = 0;
             updateCollapsedWidth();
             bookmarksContainer.style.opacity = "100%";
 
-            // Scroll reset logic
             let scrollResetTimeout;
             bookmarksContainer.addEventListener("mouseleave", function () {
                 scrollResetTimeout = setTimeout(() => {
@@ -907,22 +926,14 @@ width:1.5rem;
                 clearTimeout(scrollResetTimeout);
             });
 
-            /***************
-         * BUTTONS
-         ***************/
             const buttons = document.querySelector(".buttons-1");
             const hiddenButtons = document.querySelectorAll(".buttons-1 button.hidden");
 
-            /** 
-             * Calculate the final collapsed width, 
-             * i.e. sum the first 2 non-.hidden buttons + gap.
-             */
             function calculateButtonsCollapsedWidth() {
                 let totalWidth = 0;
                 const computedStyle = getComputedStyle(buttons);
                 const gap = parseFloat(computedStyle.gap) || 8;
 
-                // First 2 "visible" buttons 
                 const visibleBtns = document.querySelectorAll(
                     ".buttons-1 button:not(.hidden):nth-child(-n+2)"
                 );
@@ -935,67 +946,47 @@ width:1.5rem;
                 return totalWidth;
             }
 
-            // ====== INITIALLY COLLAPSED ON PAGE LOAD =====
             buttons.classList.add("collapsed");
 
-            // This ensures it looks collapsed right away
             buttons.style.maxWidth = `${calculateButtonsCollapsedWidth()}px`;
 
-            // Make sure the “hidden” ones remain hidden (if needed):
             hiddenButtons.forEach(btn => btn.classList.add("hidden"));
 
-            // Function to toggle
             function toggleButtons() {
                 if (buttons.classList.contains("expanded")) {
-                    /** ========== COLLAPSE ========== */
                     requestAnimationFrame(() => {
                         buttons.classList.add("collapsing");
                         buttons.classList.remove("expanded");
 
                         setTimeout(() => {
-                            // 1) Hide extra hidden buttons after the animation
                             hiddenButtons.forEach((btn) => {
                                 btn.classList.add("hidden");
                                 btn.classList.remove("visible-text");
                             });
-
-                            // 2) Switch final classes
                             buttons.classList.remove("collapsing");
                             buttons.classList.add("collapsed");
 
-                            // 3) Inline style for final collapsed width
                             const collapsedWidth = calculateButtonsCollapsedWidth();
                             buttons.style.maxWidth = `${collapsedWidth}px`;
-                        }, 500); // match your .5s transitions
+                        }, 500);
                     });
                 } else {
-                    /** ========== EXPAND ========== */
                     requestAnimationFrame(() => {
                         buttons.classList.add("expanding");
 
                         setTimeout(() => {
-                            // 1) Remove expanding, add expanded
                             buttons.classList.remove("expanding");
                             buttons.classList.add("expanded");
-
-                            // 2) Show all hidden buttons
                             hiddenButtons.forEach((btn) => {
                                 btn.classList.remove("hidden");
                                 btn.classList.add("visible-text");
                             });
-
-                            // 3) Inline style for final expanded width
                             buttons.style.maxWidth = "100%";
                         }, 500);
                     });
                 }
             }
-
-            /****************************************
-             * SHARED TOGGLE CLICK (Bookmarks & Buttons)
-             ****************************************/
             toggleWrap.addEventListener("click", function () {
-                // ======= BOOKMARKS Logic ======= 
                 if (bookmarks.classList.contains("expanded")) {
                     bookmarksContainer.scrollLeft = 0;
                     requestAnimationFrame(() => {
@@ -1027,19 +1018,10 @@ width:1.5rem;
                         hiddenBookmarks.forEach(bookmark => bookmark.classList.remove("hidden"));
                     }, 500);
                 }
-
-                // ======= BUTTONS Logic ======= 
                 toggleButtons();
 
             });
 
-            requestAnimationFrame(() => {
-                document.body.classList.remove("no-js");
-            });
-        });
-
-        //view toggle functionality: start
-        document.addEventListener("DOMContentLoaded", function () {
             const toggleButton = document.getElementById("toggleButton");
             const toggleTag = toggleButton.querySelector(".eyebrow_tag");
 
@@ -1054,46 +1036,50 @@ width:1.5rem;
                     toggleTag.textContent = "off";
                 }
             });
-        });
-        //view toggle functionality: end
 
-        //URL bar: start
+            requestAnimationFrame(() => {
+                document.body.classList.remove("no-js");
+            });
+        });
+        /***************
+        PAGE DISPLAY JS: END
+         ***************/
+    </script>
+
+    <script>
+        /***************
+        WEBINAR FUNCTIONALITY JS: START
+         ***************/
+        //URL bar: google search input
         function goTo(event) {
             let url = document.getElementById("urlInput").value;
             if (!url.startsWith("http://") && !url.startsWith("https://")) {
                 url = `https://www.google.com/search?q=${url}`;
             }
+            browser.virtualSession.apiRequest({
+                cmd: "relocate",
+                url: url,
+                newTab: false,
+            });
 
-            if (myIndex === controlIndex) {
-                surflyExtension.surflySession.apiRequest({
-                    cmd: "relocate",
-                    url: url,
-                    newTab: false,
-                });
-            } else {
-                surflyExtension.runtime.sendMessage({
-                    type: "navigate",
-                    url: url,
-                    clientIndex: controlIndex,
-                });
-            }
         }
-        //URL bar: end
 
-        //Surfly functions: start
+        //Surfly functions: screen share & file upload
         function startScreensharing() {
-            surflyExtension.surflySession.apiRequest({
+            sbrowser.virtualSession.apiRequest({
                 cmd: "start_screensharing",
             });
         }
 
         function shareFile(file) {
-            surflyExtension.surflySession.apiRequest({
+            browser.virtualSession.apiRequest({
                 cmd: "upload_file",
                 file: file,
             });
         }
 
+
+        //Surfly listners: screen share & file upload
         document.getElementById("startScreensharing").addEventListener("click", startScreensharing);
         document.getElementById("shareFile").addEventListener("click", () => {
             const input = document.createElement("input")
@@ -1106,199 +1092,29 @@ width:1.5rem;
             input.click();
         });
 
-        //Surfly functions: end
-
-        //click listners
-
-
-        /***************
-* Magic Links
-***************/
-        document.addEventListener('DOMContentLoaded', () => {
-            function toggleMagicLinks() {
-                const magicLinkDiv = document.getElementById('magic-link-container');
-                if (magicLinkDiv.classList.contains("hidden")) {
-                    magicLinkDiv.classList.remove("hidden");
-                } else {
-                    magicLinkDiv.classList.add("hidden");
-                }
-            };
-
-            document.getElementById("generate-link-button").addEventListener("click", () => {
-                requestLinkHost();
+        //Surfly fetch participant list
+        function updateParticipantCount() {
+            browser.virtualSession.apiRequest({
+                cmd: "pause_tabs",
             });
-            document.getElementById("copy-guest-magic-link").addEventListener("click", () => {
-                requestLinkGuest();
-            });
+            console.log("pausing tabs...");
+        };
 
-
-
-
-            document.getElementById("create-magic-link").addEventListener("click", () => {
-                toggleMagicLinks();
-            });
-
-        });
-
-
-
-
-        //Particiant index JS: start
-        let myIndex = null;
-        let controlIndex = null;
-        let leaderIndex = null
-        let myName = null;
-        let myEmail = null;
-        let startPageUpdated = false;
-        let participantListUpdated = false;
-        let sessionId;
-
-
-        //Surfly Functions
-        function getSessionTabs() {
-            surflyExtension.surflySession.apiRequest({
-                cmd: "get_session_tabs",
-            });
-            console.log("fetching tabs...");
-        }
-
-        function getSessionParticipants() {
-            surflyExtension.surflySession.apiRequest({
-                cmd: "get_session_participants",
-            });
-            console.log("fetching paticipants...");
-        }
-
-
-        //Page functions
-
-        //session id from url
-        function getSessionId() {
-    try {
-        // Get the full URL from the top frame (browser address bar)
-        const browserUrl = window.top.location.href;
-
-        // Create a URL object to parse it
-        const urlObj = new URL(browserUrl);
-
-        // Extract the session ID from the last part of the path
-        return urlObj.pathname.split('/').filter(Boolean).pop();
-    } catch (error) {
-        console.error("Cannot access the top frame due to CORS restrictions.");
-        return null;
-    }
-}
-
-        //tooltip for invite links
-// Tooltip for invite links
-document.addEventListener("DOMContentLoaded", function () {
-    const icons = document.querySelectorAll(".left-icon, .right-icon"); // Select both left & right icons
-
-    icons.forEach(icon => {
-        const tooltip = document.createElement("div");
-        tooltip.className = "tooltip-js";
-        tooltip.innerText = icon.querySelector("button").getAttribute("data-tooltip"); // Get tooltip text
-        document.body.appendChild(tooltip);
-
-        icon.addEventListener("mouseenter", (e) => {
-            tooltip.style.display = "block";
-            tooltip.style.top = e.pageY + 10 + "px"; // Offset for better positioning
-            tooltip.style.left = e.pageX + 10 + "px";
-        });
-
-        icon.addEventListener("mouseleave", () => {
-            tooltip.style.display = "none";
-        });
-
-        icon.addEventListener("mousemove", (e) => {
-            tooltip.style.top = e.pageY + 10 + "px";
-            tooltip.style.left = e.pageX + 10 + "px";
-        });
-    });
-});
-
-
-
-        //Update name on start page
-        //update startPageUpdated to true once finished 
-        function updateTabOwnerName() {
-            if (myIndex !== null && leaderIndex !== null && myIndex === leaderIndex) {
-                console.log("updating tab owner names")
-                //let headingName = document.getElementById("tab-owner-heading");
-                let subHeadingName = document.getElementById("tab-owner-sub-heading");
-                if (subHeadingName) {
-                    //headingName.textContent = myName;
-                    subHeadingName.textContent = myName;
-                    document.title = myName + ": New Tab";
-                    startPageUpdated = true;
-                    console.log("startPageUpdated: ", startPageUpdated);
-                }
-            }
-        }
-
-        function updateParticipantCount(message) {
+        //Listen for participant list response
+        browser.onMessage.addListener(messageData => {
             if (message.participants && Array.isArray(message.participants)) {
                 const onlineParticipants = message.participants.filter(participant => participant.online === true);
-                const participantCount = onlineParticipants.length; // Count only online participants
+                const participantCount = onlineParticipants.length;
                 document.getElementById("participant-count-display").innerText = participantCount;
             }
+        });
+
+        //pause tabs function
+        function pauseTabs() {
+            browser.virtualSession.apiRequest({
+                cmd: "get_session_participants",
+            });
         }
-
-
-        //Surfly listners
-        // get session tabs
-        //check if user has tab with leader index equal to their index
-        //If so, trigger start page updates
-        surflyExtension.surflySession.onMessage.addListener((message) => {
-            if (message.msg === "get_session_tabs" && message.tabs) {
-                const myTab = message.tabs.find(tab => tab.leader_index = myIndex);
-
-                if (myTab) {
-                    leaderIndex = myTab.leader_index;
-                    console.log("My Index:", myIndex, " New tab leader Index: ", leaderIndex);
-                    if (!startPageUpdated) {
-                        updateTabOwnerName();
-                    }
-                }
-            }
-        });
-
-        // Message listener for participant joined/left
-        surflyExtension.surflySession.onMessage.addListener((message) => {
-            if (message.event_type === "participant_joined" || message.event_type === "participant_left") {
-                console.log("Join/Leave event: ", message);
-                participantListUpdated = false;
-                console.log("participantListUpdated: ", participantListUpdated);
-                //getSessionParticipants(); too regular for webinar
-            }
-        });
-
-
-        // Set up message listener for participant data
-        surflyExtension.surflySession.onMessage.addListener((message) => {
-            if (message.msg === "get_session_participants" && message.participants) {
-                updateParticipantCount(message);
-                if (!startPageUpdated && !participantListUpdated) {
-                    console.log("Updating participant list and start page");
-                    // Find the active tab
-                    const selfParticipant = message.participants.find(participants => participants.self);
-
-                    if (selfParticipant && !startPageUpdated) {
-                        myIndex = selfParticipant.client_index;
-                        myEmail = selfParticipant.email;
-                        myName = selfParticipant.name;
-                        console.log("My client index:", myIndex);
-                        console.log("My email:", myEmail);
-                        console.log("My name:", myName);
-                        getSessionTabs();
-                    }
-                }
-
-                else if (startPageUpdated && !participantListUpdated) {
-                    console.log("Updating participant list only");
-                }
-            }
-        });
 
 
         // Update date and time: start
@@ -1317,75 +1133,18 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         document.addEventListener('DOMContentLoaded', () => {
+            pauseTabs();
             updateDateTime();
+            updateParticipantCount();
             setTimeout(getSessionParticipants, 500);
             setInterval(updateDateTime, 1000);
-            setInterval(getSessionParticipants, 5000);
-            sessionId = getSessionId();
+            setInterval(updateParticipantCount, 5000);
         });
         // Update date and time: end
+        /***************
+WEBINAR FUNCTIONALITY JS: END
+ ***************/
     </script>
-    <script>
-        function requestLinkHost() {
-            console.log("host payload");
-            const spaceId = 502;
-            const name = document.getElementById('name').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const urlsInput = document.getElementById('urls').value.trim();
-            const urls = urlsInput ? urlsInput.split(',').map(url => url.trim()) : [];
-
-
-            const payload = {
-                space_id: spaceId,
-                name: name || "Host",
-                email: email || "placeholder@placeholder.com",
-                can_host: true,
-                urls: urls || "",
-            };
-
-            console.log("Generated Payload:", payload);
-
-            surflyExtension.runtime.sendMessage({
-                data: {
-                    request: "magic_link",
-                    payload: payload
-                }
-            });
-        }
-
-        function requestLinkGuest() {
-            console.log("guest payload");
-            const spaceId = 502;
-            const payload = {
-                space_id: spaceId,
-                name: "Participant",
-                email: "placeholder@placeholder.com",
-                can_host: false,
-                urls: []
-            };
-
-            console.log("Generated Payload:", payload);
-            console.log("Magic link session:", sessionId);
-
-            surflyExtension.runtime.sendMessage({
-                data: {
-                    request: "magic_link",
-                    payload: payload,
-                    sessionId: sessionId
-                }
-            });
-
-        }
-
-        //Receive Magic Link
-        surflyExtension.runtime.onMessage.addListener((message, sender) => {
-            console.log("Received message in popup:", message);
-            if (message.data.newMagicLink) {
-                console.log("Magic Link recived: ", message.data.newMagicLink);
-            }
-        });
-    </script>
-
 </body>
 
 </html>
