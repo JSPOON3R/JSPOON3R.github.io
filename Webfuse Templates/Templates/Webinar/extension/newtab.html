@@ -190,8 +190,7 @@
         }
 
         /* BUTTON STYLES */
-        .buttons-1 button,
-        .magic-links button {
+        .buttons-1 button {
             color: var(--webfuse-offwhite);
             font-size: 1rem;
             white-space: nowrap;
@@ -264,102 +263,6 @@
             flex-direction: row;
             gap: 1rem;
         }
-
-
-        .link-button-2 button {
-            all: unset;
-        }
-
-        .link-button-2 img {
-            width: 1.5rem;
-        }
-
-
-        /* Buttons container */
-        .buttons-3 {
-            display: flex;
-            gap: 0;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            transition: gap 0.5s ease-in-out;
-            opacity: 1;
-            margin-top: 1em;
-        }
-
-        /* Hide left & right icons initially */
-        .left-icon,
-        .right-icon {
-            opacity: 0;
-            transform: translateX(0);
-            position: absolute;
-            transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
-        }
-
-        /* Center Icon (Main Button) */
-        .center-icon button img {
-            transition: transform 0.5s ease-in-out, opacity 0.5s ease-in-out;
-        }
-
-        /* Hover Effect for Main Icon */
-        .buttons-3:hover .center-icon button img {
-            transform: scale(0.6);
-            /* Shrinks */
-            opacity: 0.7;
-            /* Becomes less visible */
-        }
-
-        /* Expand Left & Right Icons when Hovering */
-        .buttons-3:hover {
-            gap: 5rem;
-            /* Create space between buttons */
-        }
-
-        .buttons-3:hover .left-icon {
-            opacity: .9;
-            transform: translateX(-2.5rem);
-        }
-
-        .buttons-3:hover .right-icon {
-            opacity: .9;
-            transform: translateX(2.5rem);
-        }
-
-        /* Reverse transition after 1s */
-        .buttons-3:not(:hover) .left-icon,
-        .buttons-3:not(:hover) .right-icon {
-            transition-delay: 1s;
-            /* Apply same delay */
-            opacity: 0;
-            transform: translateX(0) scale(1);
-            /* Resets position and size */
-        }
-
-        .buttons-3:not(:hover) .center-icon button img {
-            transition-delay: 1s;
-            /* Apply same delay */
-            opacity: .7;
-            transform: translateX(0) scale(1);
-            /* Resets position and size */
-        }
-
-        .tooltip-js {
-            position: absolute;
-            background: rgba(0, 0, 0, 0.8);
-            /* Semi-transparent black */
-            color: white;
-            padding: 6px 10px;
-            border-radius: 5px;
-            font-size: 14px;
-            white-space: nowrap;
-            display: none;
-            pointer-events: none;
-            /* Prevents interference with mouse events */
-            transition: opacity 0.2s ease-in-out;
-        }
-
-
-
 
         .bookmarks-container {
             opacity: 0%;
@@ -536,14 +439,6 @@
             opacity: 2%;
         }
 
-        .line-3 {
-            border: 0;
-            border-top: 1px solid var(--base-color-brand--off-white);
-            margin-top: .6rem;
-            width: 60%;
-            opacity: 3%;
-        }
-
         .info-panel-right {
             position: fixed;
             top: 20px;
@@ -593,129 +488,12 @@
             }
         }
 
-
         .info-panel-left p {
             margin: 0;
             font-size: .8rem;
             color: var(--base-color-brand--off-white);
             opacity: .7;
             font-weight: lighter;
-        }
-
-
-        .logo {
-            position: fixed;
-            top: 15%;
-            left: 50%;
-            /* Move the left edge to the middle */
-            transform: translateX(-50%);
-            /* Shift it back by half of its width */
-            width: 5rem;
-            height: auto;
-            z-index: 10;
-            filter: brightness(0) invert(1);
-            opacity: 0%;
-        }
-    </style>
-    <style>
-        .magic-links {
-            position: fixed;
-            display: flex;
-            bottom: 1vh;
-            left: 0;
-            width: 95vw;
-            flex-direction: row;
-            align-items: center;
-            justify-content: space-between;
-            padding: .5em 2.5vw .5em 2.5vw;
-            flex-wrap: nowrap;
-            background: var(--base-color-brand--dark);
-            opacity: 1;
-            height: auto;
-            transition: opacity 0.2s ease-in-out,
-                height 0.2s ease-in-out;
-            overflow: scroll;
-            align-items: baseline;
-        }
-
-        .magic-links.hidden {
-            opacity: 0;
-            height: 0;
-        }
-
-        .link-container {
-            display: flex;
-            gap: 0.5rem 1rem;
-            border-radius: 10px;
-            justify-items: start;
-            max-height: 20vh;
-            width: auto;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .link-button {
-            padding: .5rem 1rem !important;
-            font-size: .8rem !important;
-            height: 1.5rem;
-            /* Ensures same height */
-            margin-left: 1em;
-        }
-
-        .link-container input,
-        .link-container select {
-            appearance: none;
-            /* Remove default styling */
-            -webkit-appearance: none;
-            -moz-appearance: none;
-            background-color: var(--base-color-brand--off-white);
-            color: var(--base-color-neutral--neutral-darker);
-            border: 1.5px solid var(--base-color-brand--light-gray);
-            border-radius: var(--radius--radius-round);
-            padding: .1rem 1.2rem .1rem 1.2rem;
-            font-size: .7rem;
-            min-width: unset;
-            width: fit-content;
-            min-height: unset;
-            height: 1rem;
-            /* Ensures same height */
-            text-align: center;
-            /* Ensures the text aligns with input */
-            display: flex;
-            align-items: center;
-        }
-
-        .link-container input {
-            color: var(--base-color-neutral--neutral-darker);
-        }
-
-
-        .link-container input:focus,
-        .link-container select:focus {
-            outline: 1px solid var(--base-color-brand--blue);
-        }
-
-        .link-container input::placeholder,
-        .link-container select::placeholder {
-            color: var(--base-color-neutral--neutral);
-            font-size: .7rem;
-        }
-
-
-        label {
-            text-align: right;
-            display: flex;
-            align-items: center;
-            font-size: 0.7rem;
-            height: 2rem;
-            white-space: nowrap;
-        }
-
-        .small-text {
-            font-size: 0.5rem;
-            opacity: 0.7;
-            margin-left: 10px;
         }
     </style>
 </head>
@@ -734,7 +512,6 @@
         <p id="participant-count-display">
         </p>
     </div>
-
     <div class="central-container">
         <div class="buttons-2">
             <div class="eyebrow_wrap" id="toggleButton" data-state="off">
@@ -1092,25 +869,42 @@
             input.click();
         });
 
+
         //Surfly fetch participant list
-        function updateParticipantCount() {
+        function pauseTabs() {
             browser.virtualSession.apiRequest({
                 cmd: "pause_tabs",
             });
             console.log("pausing tabs...");
         };
 
+        function getTabs() {
+            browser.virtualSession.apiRequest({
+                cmd: "get_session_tabs",
+            });
+            console.log("fetching tabs...");
+        };
+
+        //Listen for tab list response
+        browser.virtualSession.onMessage.addListener(messageData => {
+            if (messageData.participants && Array.isArray(messageData.participants)) {
+                const onlineParticipants = messageData.participants.filter(participant => participant.online === true);
+                const participantCount = onlineParticipants.length;
+                document.getElementById("participant-count-display").innerText = participantCount;
+            }
+        });
+
         //Listen for participant list response
-        browser.onMessage.addListener(messageData => {
-            if (message.participants && Array.isArray(message.participants)) {
-                const onlineParticipants = message.participants.filter(participant => participant.online === true);
+        browser.virtualSession.onMessage.addListener(messageData => {
+            if (messageData.participants && Array.isArray(messageData.participants)) {
+                const onlineParticipants = messageData.participants.filter(participant => participant.online === true);
                 const participantCount = onlineParticipants.length;
                 document.getElementById("participant-count-display").innerText = participantCount;
             }
         });
 
         //pause tabs function
-        function pauseTabs() {
+        function updateParticipantCount() {
             browser.virtualSession.apiRequest({
                 cmd: "get_session_participants",
             });
@@ -1133,10 +927,9 @@
         }
 
         document.addEventListener('DOMContentLoaded', () => {
-            pauseTabs();
+            setTimeout(pauseTabs, 2000);
             updateDateTime();
             updateParticipantCount();
-            setTimeout(getSessionParticipants, 500);
             setInterval(updateDateTime, 1000);
             setInterval(updateParticipantCount, 5000);
         });
