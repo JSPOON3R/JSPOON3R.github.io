@@ -627,7 +627,7 @@
         <div class="buttons-container">
             <div class="buttons-1">
                 <button href="#" id="startScreensharing">
-                    Share Screen
+
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                         fill="currentColor">
                         <path
@@ -635,7 +635,7 @@
                     </svg>
                 </button>
                 <button href="#" id="shareFile">
-                    Share a File
+
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
                         fill="currentColor">
                         <path
@@ -643,7 +643,7 @@
                     </svg>
                 </button>
                 <button href="#" id="toggle-annotations" class="hidden">
-                    Toggle Annotations
+
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
                         fill="currentColor">
                         <path
@@ -827,11 +827,11 @@
         /***************
         WEBINAR FUNCTIONALITY JS: START
          ***************/
-        //URL bar: google search input
+        //URL bar: bing search input
         function goTo(event) {
             let url = document.getElementById("urlInput").value;
             if (!url.startsWith("http://") && !url.startsWith("https://")) {
-                url = `https://www.google.com/search?q=${url}`;
+                url = `https://www.bing.com/search?q=${url}`;
             }
             browser.virtualSession.apiRequest({
                 cmd: "relocate",
@@ -843,9 +843,8 @@
 
         //Surfly functions: screen share & file upload
         function startScreensharing() {
-            sbrowser.virtualSession.apiRequest({
-                cmd: "start_screensharing",
-            });
+            console.log("lalalala");
+            browser.virtualSession.startScreensharing();
         }
 
         function shareFile(file) {
@@ -857,17 +856,21 @@
 
 
         //Surfly listners: screen share & file upload
-        document.getElementById("startScreensharing").addEventListener("click", startScreensharing);
-        document.getElementById("shareFile").addEventListener("click", () => {
-            const input = document.createElement("input")
-            input.type = "file";
-            input.accept = "*/*";
-            input.onchange = (event) => {
-                const file = event.target.files[0];
-                shareFile(file);
-            };
-            input.click();
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("startScreensharing").addEventListener("click", startScreensharing);
+
+            document.getElementById("shareFile").addEventListener("click", () => {
+                const input = document.createElement("input");
+                input.type = "file";
+                input.accept = "*/*";
+                input.onchange = (event) => {
+                    const file = event.target.files[0];
+                    shareFile(file);
+                };
+                input.click();
+            });
         });
+
 
 
         //Surfly fetch participant list
