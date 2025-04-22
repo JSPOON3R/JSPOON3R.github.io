@@ -169,7 +169,8 @@
             console.log('Space ID:', space.id);
             console.log('Space slug:', space.slug);
 
-            const session = space.session();
+            if (!Webfuse.listSessions()[0]) {
+                const session = space.session();
             webinarSession = session;
             // Start the session
             await session.start("#sessionFrame")
@@ -178,10 +179,15 @@
             });
             session.on('session_started', function (session) {
                 console.log('Session started: ',session);
-                webinarWaitingRoom = setInterval(getTabInfo, 1000);
-                participantCounter = setInterval(getParticipantInfo, 5000);
             });
             console.log(webinarSession);
+            }
+            else {
+                webinarSession = Webfuse.listSessions()[0]
+                console.log(webinarSession);
+            }
+            webinarWaitingRoom = setInterval(getTabInfo, 1000);
+            participantCounter = setInterval(getParticipantInfo, 5000);
         })
         .catch(error => {
             console.error('Failed:', error);
