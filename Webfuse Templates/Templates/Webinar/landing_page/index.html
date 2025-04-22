@@ -177,7 +177,7 @@
                 console.log('Session created');
             });
             session.on('session_started', function (session) {
-                console.log('Session started');
+                console.log('Session started: ',session);
                 webinarWaitingRoom = setInterval(getTabInfo, 1000);
                 participantCounter = setInterval(getParticipantInfo, 5000);
             });
