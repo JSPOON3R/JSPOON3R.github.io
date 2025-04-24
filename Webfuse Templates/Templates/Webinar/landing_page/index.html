@@ -9,14 +9,14 @@
         href="https://cdn.prod.website-files.com/66fa5c211b77ce188d5275f6/6752cfb0d2935e66e4d7d1a1_favicon-webfuse.png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
     <style>
-    :root {
-        --background-color--dark-blue: #0a205e;
-        --base-color-brand--off-white: #f7f7f7;
-        --base-color-brand--light-gray: silver;
-        --base-color-brand--blue: #3d93ef;
-        --base-color-brand--dark: #0b0b0b;
-        --base-color-neutral--white: white;
-    }
+        :root {
+            --background-color--dark-blue: #0a205e;
+            --base-color-brand--off-white: #f7f7f7;
+            --base-color-brand--light-gray: silver;
+            --base-color-brand--blue: #3d93ef;
+            --base-color-brand--dark: #0b0b0b;
+            --base-color-neutral--white: white;
+        }
 
         body {
             margin: 0;
@@ -69,7 +69,7 @@
             align-items: center;
             justify-content: flex-end;
         }
-        
+
         .user-icon {
             width: 2rem;
             height: auto;
@@ -107,13 +107,17 @@
             border: none;
             background-color: var(--base-color-neutral--white);
         }
+
+        .waiting-iframe-container {
+            opacity: 0;
+        }
     </style>
 </head>
 
 <body>
     <div class="top-container">
         <div class="header">
-            Webinar: <span id="host-name" class="blue">Guest Page</span>
+            Webinar: <span id="webinar-title" class="blue">Guest Page</span>
         </div>
         <div class="counter">
             <p id="participant-count-display">...
@@ -137,93 +141,121 @@
     </div>
 </body>
 <script>
-    const sessionFrame = document.getElementById("sessionFrame");
-    const sessionFrameContainer = document.querySelector(".session-iframe-container");
-    const participantCount = document.getElementById("participant-count-display");
-    let unpausedCount = 0;
-    (function (w, e, b, f, u, s) {
-        w[f] = w[f] || {
-            initSpace: function () {
-                return new Promise(resolve => {
-                    w[f].q = arguments;
-                    w[f].resolve = resolve;
-                });
-            },
-        };
-        u = e.createElement(b);
-        s = e.getElementsByTagName(b)[0];
-        u.async = 1;
-        u.src = 'https://webfuse.com/surfly.js';
-        s.parentNode.insertBefore(u, s);
-    })(window, document, 'script', 'Webfuse');
+    // 🧠 Only run in top-level window
+    if (typeof Webfuse !== "undefined" && Webfuse.listSessions && Webfuse.listSessions().length > 0) {
+        console.warn("🚫 Webfuse session already active — skipping landing logic");
+    } else {
 
+        // 🧠 Wait until Surfly is loaded
+        (function (w, e, b, f, u, s) {
+            w[f] = w[f] || {
+                initSpace: function () {
+                    return new Promise(resolve => {
+                        w[f].q = arguments;
+                        w[f].resolve = resolve;
+                    });
+                },
+            };
+            u = e.createElement(b);
+            s = e.getElementsByTagName(b)[0];
+            u.async = 1;
+            u.onload = function () {
+                console.log("✅ Surfly script loaded");
+                runWebinarLogic();
+            };
+            u.src = 'https://webfuse.com/surfly.js';
+            s.parentNode.insertBefore(u, s);
+        })(window, document, 'script', 'Webfuse');
 
-    let webinarSession;
-    Webfuse.initSpace(
-        'wk_4vf32ZjqFVoK8hzIijbXIDHFKT__iYOP',
-        330,
-        {}, // Integration Settings (optional)
-    )
-        .then(async space => {
-            console.log('Space:', space);
-            console.log('Space ID:', space.id);
-            console.log('Space slug:', space.slug);
-
-            if (!Webfuse.listSessions()[0]) {
-                const session = space.session();
-            webinarSession = session;
-            // Start the session
-            await session.start("#sessionFrame")
-            session.on('session_created', function (session) {
-                console.log('Session created');
-            });
-            session.on('session_started', function (session) {
-                console.log('Session started: ',session);
-            });
-            console.log(webinarSession);
+        function runWebinarLogic() {
+            if (Webfuse.listSessions && Webfuse.listSessions().length > 0) {
+                console.warn("🚫 Webfuse session already active — skipping landing logic");
+                return;
             }
-            else {
-                webinarSession = Webfuse.listSessions()[0]
-                console.log(webinarSession);
+
+            console.log("🔥 Running session logic");
+
+            const sessionFrame = document.getElementById("sessionFrame");
+            const sessionFrameContainer = document.querySelector(".session-iframe-container");
+            const sessionIFrame = document.getElementById("sessionFrame");
+            const waitingContainer = document.querySelector('.waiting-iframe-container');
+            const participantCount = document.getElementById("participant-count-display");
+            const eligibleHostEmails = ["john+2@surfly.com"];
+
+            let unpausedCount = 0;
+            let hostChecked = false;
+            let webinarSession;
+
+            Webfuse.initSpace('wk_4vf32ZjqFVoK8hzIijbXIDHFKT__iYOP', 330, {})
+
+
+            
+                .then(async space => {
+                    console.log('Space:', space);
+                    const session = space.session();
+                    webinarSession = session;
+
+                    session.on('session_created', () => {
+                        console.log("Session created");
+                        const followerLink = session.followerLink;
+                        console.log("Follower link:", followerLink);
+                        sessionIFrame.src = followerLink;
+                    });
+                    session.on('session_started', () => {
+                        console.log("Session started");
+                        webinarWaitingRoom = setInterval(getTabInfo, 1000);
+                        participantCounter = setInterval(getParticipantInfo, 5000);
+                    });
+                
+
+                })
+                .catch(err => console.error("Init failed:", err));
+
+            function checkForHost(selfParticipant) {
+                const isEligible = eligibleHostEmails.includes(selfParticipant.email);
+                if (isEligible) {
+                    console.log("Host identified:", selfParticipant.email);
+                    exposeSession();
+                    document.getElementById("webinar-title").textContent = "Host Page";
+                }
+                hostChecked = true;
             }
-            webinarWaitingRoom = setInterval(getTabInfo, 1000);
-            participantCounter = setInterval(getParticipantInfo, 5000);
-        })
-        .catch(error => {
-            console.error('Failed:', error);
-        })
 
+            function exposeSession() {
+                if (sessionFrameContainer) {
+                    sessionFrameContainer.style.zIndex = "1";
+                    clearInterval(webinarWaitingRoom);
+                    console.log("Existing waiting room...");
+                }
+                if (waitingContainer) waitingContainer.remove();
+            }
 
-    async function getTabInfo() {
-        const sessionTabs = await webinarSession.getTabs();
-
-        if (sessionTabs.length > 0) {
-            const firstTab = sessionTabs[0]; // Get the first tab
-
-            if (!firstTab.paused) {
-                unpausedCount++;
-                console.log(`Unpaused count: ${unpausedCount}`);
-
-                if (unpausedCount >= 10) {
-                    if (sessionFrameContainer) {
-                        sessionFrameContainer.style.zIndex = "1";
-                        clearInterval(webinarWaitingRoom);
-                        console.log("The Webinar is starting");
+            async function getTabInfo() {
+                const tabs = await webinarSession.getTabs();
+                console.log("still checking tabs");
+                if (tabs.length > 0) {
+                    const first = tabs[0];
+                    if (!first.paused) {
+                        unpausedCount++;
+                        console.log(`Unpaused count: ${unpausedCount}`);
+                        if (unpausedCount >= 10) exposeSession();
+                    } else {
+                        if (unpausedCount > 0) console.log("Tab paused. Resetting count.");
+                        unpausedCount = 0;
                     }
                 }
-            } else {
-                if (unpausedCount > 0) {
-                    console.log("Tab paused. Resetting count.");
-                }
-                unpausedCount = 0;
             }
-        }
-    }
 
-    async function getParticipantInfo() {
-        const sessionParticipants = await webinarSession.getParticipants();
-        const onlineCount = sessionParticipants.filter(p => p.online).length;
-        participantCount.textContent = onlineCount;
-    }
+            async function getParticipantInfo() {
+                const participants = await webinarSession.getParticipants();
+                const selfParticipant = participants.find(p => p.self);
+                const onlineCount = participants.filter(p => p.online).length;
+                participantCount.textContent = onlineCount;
+                if (!hostChecked) checkForHost(selfParticipant);
+            }
+        };
+    };
 </script>
+
+
 </html>
