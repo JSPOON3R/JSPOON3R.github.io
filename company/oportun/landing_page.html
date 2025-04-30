@@ -129,7 +129,7 @@
 }
 
 .modal-box {
-  background: white;
+  background: #f4f4f9;
   padding: 2rem;
   border-radius: 10px;
   position: relative;
@@ -153,8 +153,12 @@
   display: inline-block;
   margin-top: 1rem;
   text-decoration: none;
-  color: #007bff;
+  color: #6CDB8B;
+  background-color: #000;
+  border-radius: 20px;
   font-weight: bold;
+  padding: 15px 20px;
+  font-size:1.5em;
 }
 
 </style>
@@ -183,8 +187,8 @@
     <div id="rejoin-modal" class="modal-overlay">
         <div class="modal-box">
           <button class="modal-close" onclick="closeModal()">×</button>
-          <p>Would you like to rejoin your active session?</p>
-          <a id="rejoin-link" href="#" target="_blank">Rejoin Session</a>
+          <p>Would you like to return to your active session?</p>
+          <a id="rejoin-link" href="#" target="_blank">Continue Session</a>
         </div>
       </div>
 
@@ -205,7 +209,11 @@
                 block_until_agent_joins: false,
                 videochat: false,
                 hide_element_by_selector: "input",
-                url: "demo.surfly.com//company/oportun/start_page_oportun.html"
+                url: "demo.surfly.com//company/oportun/start_page_oportun.html",
+                document_viewer: "multi-format",
+                document_editor_enabled: true,
+                original_file_download_allowed: false,
+                download_trigger_enabled: false
             };
 
             Surfly.init(settings, function (initResult) {
@@ -216,9 +224,14 @@
                         surflySession = Surfly.session().create()
                             .on("session_created", function (session, event) {
                                 followerLink = surflySession.followerLink;
-                                document.cookie = `followerLink=${encodeURIComponent(followerLink)}; max-age=600000; path=/`;
+                                //offer return option for 30 mins on same browser
+                                document.cookie = `followerLink=${encodeURIComponent(followerLink)}; max-age=300000; path=/`;
                                 console.log("Follower link cookie added:", getCookie("followerLink"));
                                 surflySession.startLeader();
+                            })
+                            .on("session_ended", function (session, event) {
+                                //delete the stored follower link
+                                document.cookie = "followerLink=; max-age=0; path=/";
                             });
 
                     } else if (activeSessions) {
