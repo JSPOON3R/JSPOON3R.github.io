@@ -108,60 +108,63 @@
         }
 
         .modal-overlay {
-  position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 100vh;
-  background: rgba(0, 0, 0, 0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  visibility: hidden;
-  opacity: 0;
-  transition: opacity 0.3s ease, visibility 0.3s ease;
-  pointer-events: none; /* prevent background blocking when hidden */
-}
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            pointer-events: none;
+            /* prevent background blocking when hidden */
+        }
 
-.modal-overlay.show {
-  visibility: visible;
-  opacity: 1;
-  pointer-events: all;
-}
+        .modal-overlay.show {
+            visibility: visible;
+            opacity: 1;
+            pointer-events: all;
+        }
 
-.modal-box {
-  background: #f4f4f9;
-  padding: 2rem;
-  border-radius: 10px;
-  position: relative;
-  width: 90%;
-  max-width: 400px;
-  text-align: center;
-  z-index: 10000; /* ensures it's above any other content */
-}
+        .modal-box {
+            background: #f4f4f9;
+            padding: 2rem;
+            border-radius: 10px;
+            position: relative;
+            width: 90%;
+            max-width: 400px;
+            text-align: center;
+            z-index: 10000;
+            /* ensures it's above any other content */
+        }
 
-.modal-close {
-  position: absolute;
-  top: 10px;
-  right: 15px;
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-}
+        .modal-close {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
 
-.modal-box a {
-  display: inline-block;
-  margin-top: 1rem;
-  text-decoration: none;
-  color: #6CDB8B;
-  background-color: #000;
-  border-radius: 20px;
-  font-weight: bold;
-  padding: 15px 20px;
-  font-size:1.5em;
-}
-
-</style>
+        .modal-box a {
+            display: inline-block;
+            margin-top: 1rem;
+            text-decoration: none;
+            color: #6CDB8B;
+            background-color: #000;
+            border-radius: 20px;
+            font-weight: bold;
+            padding: 15px 20px;
+            font-size: 1.5em;
+        }
+    </style>
     </style>
 </head>
 
@@ -186,11 +189,11 @@
 
     <div id="rejoin-modal" class="modal-overlay">
         <div class="modal-box">
-          <button class="modal-close" onclick="closeModal()">×</button>
-          <p>Would you like to return to your active session?</p>
-          <a id="rejoin-link" href="#" target="_blank">Continue Session</a>
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <p>Would you like to return to your active session?</p>
+            <a id="rejoin-link" href="#" target="_blank">Continue Session</a>
         </div>
-      </div>
+    </div>
 
     <script>
         function startSession() {
@@ -205,7 +208,7 @@
 
             var settings = {
                 // Surfly session options can be set here, or at the Company/Plan levels.
-                widget_key: '99671227762b43c2a96daa066ee006e2',
+                widget_key: widgetKey,
                 block_until_agent_joins: false,
                 videochat: false,
                 hide_element_by_selector: "input",
@@ -213,7 +216,8 @@
                 document_viewer: "multi-format",
                 document_editor_enabled: true,
                 original_file_download_allowed: false,
-                download_trigger_enabled: false
+                download_trigger_enabled: false,
+                start_with_invite_modal: false
             };
 
             Surfly.init(settings, function (initResult) {
@@ -245,27 +249,35 @@
         };
     </script>
 
-<script>
+    <script>
 
-const storedFollowerLink = getCookie("followerLink");
+const params = window.location.search;
+let widgetKey;
+if (params === '?thomas') {
+  widgetKey = '4af7f6620fbb4ab58d2c70f5d4fee0e6'
+} else  {
+  widgetKey = '99671227762b43c2a96daa066ee006e2'
+}
+
+        const storedFollowerLink = getCookie("followerLink");
         if (storedFollowerLink) {
-           openModal(storedFollowerLink);
+            openModal(storedFollowerLink);
         }
 
-function getCookie(name) {
+        function getCookie(name) {
             const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
             return match ? decodeURIComponent(match[2]) : null;
         }
 
-    function openModal(linkHref) {
-      document.getElementById("rejoin-link").href = linkHref;
-      document.getElementById("rejoin-modal").classList.add("show");
-    }
-  
-    function closeModal() {
-      document.getElementById("rejoin-modal").classList.remove("show");
-    }
-  </script>
+        function openModal(linkHref) {
+            document.getElementById("rejoin-link").href = linkHref;
+            document.getElementById("rejoin-modal").classList.add("show");
+        }
+
+        function closeModal() {
+            document.getElementById("rejoin-modal").classList.remove("show");
+        }
+    </script>
 </body>
 
 </html>
