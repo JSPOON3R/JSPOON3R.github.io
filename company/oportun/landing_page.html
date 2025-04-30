@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mobile Background Button</title>
+    <title>Oportun: Start</title>
+    <link rel="icon" type="image/png"
+    href="https://play-lh.googleusercontent.com/E7WzVtuHJzwcvdvD0jpjt3t4hHZ8jg_pkrqpLLwzIB3C1TPBXhSYRx_4aZRnY9s6PDI">
     <style>
         /* Basic reset */
         * {
@@ -17,11 +19,11 @@
         /* Full screen background with centered content */
         body,
         html {
-            height: 100%;
-            width: 100%;
+            height: 100vh;
+            width: 100vw;
             display: flex;
             flex-direction: column;
-            justify-content: flex-end;
+            justify-content: end;
             align-items: center;
             overflow: hidden;
             position: relative;
@@ -31,22 +33,35 @@
         /* Background Circle */
         .background-circle {
             position: absolute;
-    top: -150%;
-    right: -130%;
-    width: 200%;
-    height: 200%;
-    background-color: #c7eed1;
-    border-radius: 50%;
+            top: -150%;
+            right: -130%;
+            width: 200%;
+            height: 200%;
+            background-color: #c7eed1;
+            border-radius: 50%;
         }
 
         p {
-            margin-bottom:20px;
-            font-size:1.5em;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+
+        h2 {
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+
+        .subheading {
+            margin-bottom: 20px;
+            font-size: .5em;
+            color: #6CDB8B;
         }
 
         /* Container for content */
         .container {
             width: 90%;
+            height: 80vh;
             max-width: 400px;
             text-align: center;
             position: relative;
@@ -54,6 +69,7 @@
             flex-direction: column;
             align-items: center;
             gap: 20px;
+            justify-content: space-evenly;
         }
 
         /* Logo at the top left */
@@ -68,7 +84,8 @@
         .main-image {
             max-width: 100%;
             border-radius: 15px;
-            margin-bottom:10%;
+            margin-bottom: 10%;
+            opacity:.8;
         }
 
         /* Button at the bottom */
@@ -97,45 +114,50 @@
     <div class="background-circle"></div>
 
     <!-- Logo in the top left -->
-    <img src="https://images.crunchbase.com/image/upload/c_pad,f_auto,q_auto:eco,dpr_1/ydyoi7bvv5ccopkx0lph" alt="Logo" class="logo">
+    <img src="https://images.crunchbase.com/image/upload/c_pad,f_auto,q_auto:eco,dpr_1/ydyoi7bvv5ccopkx0lph" alt="Logo"
+        class="logo">
 
     <!-- Main content container -->
     <div class="container">
-        <p>Get Live Assistance from a trained Agent with Co-browsing.<br><br> Your Agent can guide you through the steps to take</p>
-        <img src="https://play-lh.googleusercontent.com/wtjK2wkEgnuraNe9dOthgvp05a5a6eLCZdJA8PQooMfyeJIYUhNyLukvH4E4x1HF1N51" alt="Main Image" class="main-image">
-
+        <h2>Live Assistance<br><span class="subheading">Agent Guided</span></h2>
+        <img src="https://play-lh.googleusercontent.com/wtjK2wkEgnuraNe9dOthgvp05a5a6eLCZdJA8PQooMfyeJIYUhNyLukvH4E4x1HF1N51"
+            alt="Main Image" class="main-image">
+        <p>Tap the button to connect.<br><br> We'll guide you through the steps</p>
         <!-- Button at the bottom -->
-        <button class="button" onclick="startSession()">Tap To Start Co-browsing</button>
-          <!-- Main Image in the middle -->
+        <button class="button" onclick="startSession()">Tap To Connect</button>
+        <!-- Main Image in the middle -->
     </div>
 
     <script>
         function startSession() {
-        (function(s,u,r,f,l,y){s[f]=s[f]||{init:function(){s[f].q=arguments}};
-        l=u.createElement(r);y=u.getElementsByTagName(r)[0];l.async=1;
-        l.src='https://surfly.com/surfly.js';y.parentNode.insertBefore(l,y);})
-        (window,document,'script','Surfly');
-        
-        var settings = {
-            // Surfly session options can be set here, or at the Company/Plan levels.
-            widget_key: '8816869ecf624d4483f6befd75cb2a1f',
-            block_until_agent_joins: false,
-            videochat: false,
-            hide_element_by_selector: "input"
-        };
-        Surfly.init(settings, function(initResult) {
-            if (initResult.success) {
-                // API calls can now be made!
-                if (!Surfly.isInsideSession) {
-                    Surfly.session().startLeader();
+            (function (s, u, r, f, l, y) {
+                s[f] = s[f] || { init: function () { s[f].q = arguments } };
+                l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+                l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+            })
+                (window, document, 'script', 'Surfly');
+
+            var settings = {
+                // Surfly session options can be set here, or at the Company/Plan levels.
+                widget_key: '99671227762b43c2a96daa066ee006e2',
+                block_until_agent_joins: false,
+                videochat: false,
+                hide_element_by_selector: "input",
+                url: "demo.surfly.com//company/oportun/start_page_oportun.html"
+            };
+            Surfly.init(settings, function (initResult) {
+                if (initResult.success) {
+                    // API calls can now be made!
+                    if (!Surfly.isInsideSession) {
+                        Surfly.session().startLeader();
+                    }
                 }
-            }
-            else{
-                console.log("Surfly was unable to initialize properly.")
-            }
-        });
-    };
-        </script>
+                else {
+                    console.log("Surfly was unable to initialize properly.")
+                }
+            });
+        };
+    </script>
 </body>
 
 </html>
