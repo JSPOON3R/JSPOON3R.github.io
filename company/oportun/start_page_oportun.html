@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mobile Start Page</title>
+    <link rel="icon" type="image/png"
+    href="https://play-lh.googleusercontent.com/E7WzVtuHJzwcvdvD0jpjt3t4hHZ8jg_pkrqpLLwzIB3C1TPBXhSYRx_4aZRnY9s6PDI">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body,
+        html {
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: start;
+            align-items: center;
+            overflow-y: auto;
+            background-color: #f4f4f9;
+            position: relative;
+        }
+
+        .background-circle {
+            position: absolute;
+            top: -150%;
+            right: -130%;
+            width: 200%;
+            height: 200%;
+            background-color: #c7eed1;
+            border-radius: 50%;
+        }
+
+        .bookmark-grid-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 100vh;
+            width: 100vw;
+            align-items: center;
+            z-index: 1;
+        }
+
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            max-width: 120px;
+        }
+
+        span {
+            margin: 5px;
+        }
+
+        .main-image {
+            max-width: 100%;
+            border-radius: 15px;
+            margin: 20px 0;
+            opacity: .8;
+        }
+
+        .section {
+            width: 90%;
+            max-width: 500px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .section h3 {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .bookmark-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            width: 100%;
+            padding: 10px 0;
+            justify-items: center;
+            background-color: #e7e7ee;
+            border: 1px solid #6CDB8B;
+            border-radius:12px;
+            padding:1em;
+        }
+
+        .bookmark {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            font-weight:normal;
+            font-size: 1em;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .bookmark img {
+            width: 50px;
+            height: 50px;
+            object-fit: contain;
+            border-radius: 12px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background-circle"></div>
+
+    <img src="https://s.yimg.com/ny/api/res/1.2/CnUVDRLreziM8hCNocEZBw--/YXBwaWQ9aGlnaGxhbmRlcjt3PTQyMDtoPTEwNg--/https://media.zenfs.com/en/globenewswire.com/df5fbe398cef731f35a77bec7a115589"
+        alt="Logo" class="logo">
+    <div class="bookmark-grid-container">
+        <div class="section">
+            <h3>Visit your Bank</h3>
+            <div class="bookmark-grid">
+                <a href="https://www.chase.com" class="bookmark" target="_blank">
+                    <img src="https://logo.clearbit.com/chase.com" alt="Chase">
+                    <span>Chase</span>
+                </a>
+                <a href="https://www.wellsfargo.com" class="bookmark" target="_blank">
+                    <img src="https://logo.clearbit.com/wellsfargo.com" alt="Wells Fargo">
+                    <span>Wells Fargo</span>
+                </a>
+                <a href="https://www.bankofamerica.com" class="bookmark" target="_blank">
+                    <img src="https://icons.veryicon.com/png/o/business/bank-logo-collection/bank-of-america-logo.png"
+                        alt="Bank of America">
+                    <span>BoA</span>
+                </a>
+                <a href="https://www.citi.com" class="bookmark" target="_blank">
+                    <img src="https://logo.clearbit.com/citi.com" alt="Citi">
+                    <span>Citi</span>
+                </a>
+                <a href="https://www.capitalone.com" class="bookmark" target="_blank">
+                    <img src="https://logo.clearbit.com/capitalone.com" alt="Capital One">
+                    <span>Capital One</span>
+                </a>
+                <a href="https://www.usbank.com" class="bookmark" target="_blank">
+                    <img src="https://logo.clearbit.com/usbank.com" alt="U.S. Bank">
+                    <span>U.S. Bank</span>
+                </a>
+
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Our Products</h3>
+            <div class="bookmark-grid">
+                <a href="https://oportun.com/loans" class="bookmark" target="_blank">
+                    <img src="https://images.crunchbase.com/image/upload/c_pad,f_auto,q_auto:eco,dpr_1/ydyoi7bvv5ccopkx0lph"
+                        alt="Loans">
+                    <span>Loans</span>
+                </a>
+                <a href="https://oportun.com/save" class="bookmark" target="_blank">
+                    <img src="https://images.crunchbase.com/image/upload/c_pad,f_auto,q_auto:eco,dpr_1/ydyoi7bvv5ccopkx0lph"
+                        alt="Save">
+                    <span>Save</span>
+                </a>
+                <a href="https://oportun.com/credit-cards" class="bookmark" target="_blank">
+                    <img src="https://images.crunchbase.com/image/upload/c_pad,f_auto,q_auto:eco,dpr_1/ydyoi7bvv5ccopkx0lph"
+                        alt="Credit Cards">
+                    <span>Credit Cards</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
