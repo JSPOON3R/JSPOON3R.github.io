@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Oportun: Start</title>
     <link rel="icon" type="image/png"
-    href="https://play-lh.googleusercontent.com/E7WzVtuHJzwcvdvD0jpjt3t4hHZ8jg_pkrqpLLwzIB3C1TPBXhSYRx_4aZRnY9s6PDI">
+        href="https://play-lh.googleusercontent.com/E7WzVtuHJzwcvdvD0jpjt3t4hHZ8jg_pkrqpLLwzIB3C1TPBXhSYRx_4aZRnY9s6PDI">
     <style>
         /* Basic reset */
         * {
@@ -85,7 +85,7 @@
             max-width: 100%;
             border-radius: 15px;
             margin-bottom: 10%;
-            opacity:.8;
+            opacity: .8;
         }
 
         /* Button at the bottom */
@@ -106,6 +106,58 @@
         .button:hover {
             background-color: #333;
         }
+
+        .modal-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100vw; height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity 0.3s ease, visibility 0.3s ease;
+  pointer-events: none; /* prevent background blocking when hidden */
+}
+
+.modal-overlay.show {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal-box {
+  background: white;
+  padding: 2rem;
+  border-radius: 10px;
+  position: relative;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  z-index: 10000; /* ensures it's above any other content */
+}
+
+.modal-close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.modal-box a {
+  display: inline-block;
+  margin-top: 1rem;
+  text-decoration: none;
+  color: #007bff;
+  font-weight: bold;
+}
+
+</style>
     </style>
 </head>
 
@@ -128,8 +180,18 @@
         <!-- Main Image in the middle -->
     </div>
 
+    <div id="rejoin-modal" class="modal-overlay">
+        <div class="modal-box">
+          <button class="modal-close" onclick="closeModal()">×</button>
+          <p>Would you like to rejoin your active session?</p>
+          <a id="rejoin-link" href="#" target="_blank">Rejoin Session</a>
+        </div>
+      </div>
+
     <script>
         function startSession() {
+            delete Surfly;
+            let surflySession;
             (function (s, u, r, f, l, y) {
                 s[f] = s[f] || { init: function () { s[f].q = arguments } };
                 l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
@@ -145,19 +207,52 @@
                 hide_element_by_selector: "input",
                 url: "demo.surfly.com//company/oportun/start_page_oportun.html"
             };
+
             Surfly.init(settings, function (initResult) {
                 if (initResult.success) {
-                    // API calls can now be made!
+
                     if (!Surfly.isInsideSession) {
-                        Surfly.session().startLeader();
+                        console.log("No sessions active - starting new");
+                        surflySession = Surfly.session().create()
+                            .on("session_created", function (session, event) {
+                                followerLink = surflySession.followerLink;
+                                document.cookie = `followerLink=${encodeURIComponent(followerLink)}; max-age=600000; path=/`;
+                                console.log("Follower link cookie added:", getCookie("followerLink"));
+                                surflySession.startLeader();
+                            });
+
+                    } else if (activeSessions) {
+                        console.log("Active sessions detected");
                     }
-                }
-                else {
-                    console.log("Surfly was unable to initialize properly.")
+                } else {
+                    console.log("Surfly was unable to initialize properly.");
                 }
             });
+
         };
     </script>
+
+<script>
+
+function getCookie(name) {
+            const match = document.cookie.match(new RegExp('(^| )' + name + '=([^;]+)'));
+            return match ? decodeURIComponent(match[2]) : null;
+        }
+
+        const storedFollowerLink = getCookie("followerLink");
+        if (!storedFollowerLink) {
+           openModal(storedFollowerLink);
+        }
+
+    function openModal(linkHref) {
+      document.getElementById("rejoin-link").href = linkHref;
+      document.getElementById("rejoin-modal").classList.add("show");
+    }
+  
+    function closeModal() {
+      document.getElementById("rejoin-modal").classList.remove("show");
+    }
+  </script>
 </body>
 
 </html>
