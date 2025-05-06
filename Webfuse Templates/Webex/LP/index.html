@@ -112,41 +112,6 @@
     </table>
 
     <script>
-
-        // 1. Log parent and top window comparison
-try {
-    const isTop = window === window.top;
-    console.log("Is top window?", isTop);
-    console.log("Parent === Window?", window.parent === window);
-} catch (e) {
-    console.warn("❌ Accessing window.top/parent failed:", e);
-}
-
-// 2. Check for __WEBEX__ bridge object
-if (typeof window.__WEBEX__ === "undefined") {
-    console.error("❌ Webex SDK bridge (__WEBEX__) is not injected.");
-} else {
-    console.log("✅ Webex SDK bridge (__WEBEX__) found:", window.__WEBEX__);
-}
-
-// 3. Try accessing Webex Iframe Sandbox attributes (if applicable)
-try {
-    const frameEl = window.frameElement;
-    if (frameEl) {
-        console.log("✅ Frame element found:", frameEl);
-        console.log("Sandbox attributes:", frameEl.getAttribute('sandbox'));
-    } else {
-        console.warn("❌ No frameElement detected (not iframed?)");
-    }
-} catch (e) {
-    console.warn("❌ Accessing frameElement failed (possibly sandboxed):", e);
-}
-
-const scripts = [...document.scripts];
-const sdkScript = scripts.find(s => s.src && s.src.includes("webex/embedded-app-sdk"));
-console.log("SDK script tag found:", sdkScript?.src || "❌ Not found");
-
-
         const meetingIdCell = document.getElementById("meetingIdCell");
         const sessionIdCell = document.getElementById("sessionIdCell");
         const consoleErrorCell = document.getElementById("consoleErrorCell").querySelector('pre');
@@ -248,6 +213,40 @@ console.log("SDK script tag found:", sdkScript?.src || "❌ Not found");
                 meetingIdCell.innerText = 'SDK init failed';
             });
         }
+
+
+                // 1. Log parent and top window comparison
+try {
+    const isTop = window === window.top;
+    console.log("Is top window?", isTop);
+    console.log("Parent === Window?", window.parent === window);
+} catch (e) {
+    console.warn("❌ Accessing window.top/parent failed:", e);
+}
+
+// 2. Check for __WEBEX__ bridge object
+if (typeof window.__WEBEX__ === "undefined") {
+    console.error("❌ Webex SDK bridge (__WEBEX__) is not injected.");
+} else {
+    console.log("✅ Webex SDK bridge (__WEBEX__) found:", window.__WEBEX__);
+}
+
+// 3. Try accessing Webex Iframe Sandbox attributes (if applicable)
+try {
+    const frameEl = window.frameElement;
+    if (frameEl) {
+        console.log("✅ Frame element found:", frameEl);
+        console.log("Sandbox attributes:", frameEl.getAttribute('sandbox'));
+    } else {
+        console.warn("❌ No frameElement detected (not iframed?)");
+    }
+} catch (e) {
+    console.warn("❌ Accessing frameElement failed (possibly sandboxed):", e);
+}
+
+const scripts = [...document.scripts];
+const sdkScript = scripts.find(s => s.src && s.src.includes("webex/embedded-app-sdk"));
+console.log("SDK script tag found:", sdkScript?.src || "❌ Not found");
     </script>
 </body>
 
