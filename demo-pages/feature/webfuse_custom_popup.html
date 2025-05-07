@@ -45,7 +45,7 @@
       visibility: hidden;
       opacity: 0;
       transition: opacity 0.3s ease, visibility 0.3s ease;
-      z-index:999999999999999;
+      z-index: 999999999999999;
     }
 
     .popup-content {
@@ -133,78 +133,76 @@
   </div>
 
   <script>
-// Move these OUTSIDE of DOMContentLoaded so they are global
-function showPopupConsent() {
-  document.getElementById("popup-consent").classList.add("show");
-}
-
-function hidePopupConsent() {
-  document.getElementById("popup-consent").classList.remove("show");
-}
-
-function showPopupPin() {
-  document.getElementById("popup-pin").classList.add("show");
-}
-
-function hidePopupPin() {
-  document.getElementById("popup-pin").classList.remove("show");
-}
-
-let webfuseSession;
-
-function startCorowsing() {
-  const sessionIframe = document.getElementById("session-iframe");
-
-  (function (w, e, b, f, u, s) {
-    w[f] = w[f] || {
-      initSpace: function () {
-        return new Promise(resolve => {
-          w[f].q = arguments;
-          w[f].resolve = resolve;
-        });
-      },
-    };
-    u = e.createElement(b);
-    s = e.getElementsByTagName(b)[0];
-    u.async = 1;
-    u.src = 'https://webfuse.com/surfly.js';
-    s.parentNode.insertBefore(u, s);
-  })(window, document, 'script', 'Webfuse');
-
-  Webfuse.initSpace(
-    'wk_XbCxJrGR_lvq8cqxthNYGvmExKDAlZi9',
-    394,
-    {
-        url: "https://bing.com"
+    // Move these OUTSIDE of DOMContentLoaded so they are global
+    function showPopupConsent() {
+      document.getElementById("popup-consent").classList.add("show");
     }
-  )
-    .then(async space => {
-      console.log('Space loaded:', space);
-      webfuseSession = space.session();
 
-      webfuseSession.on("session_created", function (session, event) {
-        const sessionPin = webfuseSession.pin;
-        console.log("Session pin:", sessionPin);
-        document.querySelector(".popup-pin-code").innerText = sessionPin;
-        showPopupPin();
-      });
+    function hidePopupConsent() {
+      document.getElementById("popup-consent").classList.remove("show");
+    }
 
-      webfuseSession.on("participant_joined", function (session, event) {
-        hidePopupPin();
-        hidePopupConsent();
-      });
+    function showPopupPin() {
+      document.getElementById("popup-pin").classList.add("show");
+    }
 
-      await webfuseSession.start();
-      console.log('Session started:', webfuseSession);
-    })
-    .catch(error => {
-      console.error('Failed:', error);
-    });
-}
+    function hidePopupPin() {
+      document.getElementById("popup-pin").classList.remove("show");
+    }
 
-function endSession() {
-  webfuseSession?.end();
-}
+    let webfuseSession;
+
+    function startCorowsing() {
+      const sessionIframe = document.getElementById("session-iframe");
+
+      (function (w, e, b, f, u, s) {
+        w[f] = w[f] || {
+          initSpace: function () {
+            return new Promise(resolve => {
+              w[f].q = arguments;
+              w[f].resolve = resolve;
+            });
+          },
+        };
+        u = e.createElement(b);
+        s = e.getElementsByTagName(b)[0];
+        u.async = 1;
+        u.src = 'https://webfuse.com/surfly.js';
+        s.parentNode.insertBefore(u, s);
+      })(window, document, 'script', 'Webfuse');
+
+      Webfuse.initSpace(
+        'wk_XbCxJrGR_lvq8cqxthNYGvmExKDAlZi9',
+        394,
+        {}
+      )
+        .then(async space => {
+          console.log('Space loaded:', space);
+          webfuseSession = space.session();
+
+          webfuseSession.on("session_created", function (session, event) {
+            const sessionPin = webfuseSession.pin;
+            console.log("Session pin:", sessionPin);
+            document.querySelector(".popup-pin-code").innerText = sessionPin;
+            showPopupPin();
+          });
+
+          webfuseSession.on("participant_joined", function (session, event) {
+            hidePopupPin();
+            hidePopupConsent();
+          });
+
+          await webfuseSession.start();
+          console.log('Session started:', webfuseSession);
+        })
+        .catch(error => {
+          console.error('Failed:', error);
+        });
+    }
+
+    function endSession() {
+      webfuseSession?.end();
+    }
   </script>
 </body>
 
