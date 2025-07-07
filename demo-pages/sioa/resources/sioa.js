@@ -186,7 +186,7 @@ if (hasQueryParam("nodir")) {
 
 //Pedro
 if (!hasQueryParam("john") && !hasQueryParam("thomas") && !hasQueryParam("mihai") && !hasQueryParam("marko") && !hasQueryParam("nodir") && !hasQueryParam("pedro")) {
-    nodirButton.addEventListener("click", function () {
+    pedroButton.addEventListener("click", function () {
         widgetkey = "61c30ab2090a46d488cc5f41cc624fb4";
         shouldLoadScript = true;
         console.log("shouldloadscript is: " + shouldLoadScript + " and new widget key is " + widgetkey);
