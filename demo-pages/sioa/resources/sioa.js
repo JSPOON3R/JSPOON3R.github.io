@@ -8,6 +8,7 @@ var markoButton = document.getElementById("markoButton");
 var johnButton = document.getElementById("johnButton");
 var nodirButton = document.getElementById("nodirButton");
 var mihaiButton = document.getElementById("mihaiButton");
+var pedroButton = document.getElementById("pedroButton");
 var hasSentAgentMessage = false;
 
 //Activate Surfly for correct person
@@ -35,7 +36,7 @@ function hasQueryParam(param) {
 // If no, create an event listener to do these things when the name button is clicked
 
 // Thomas
-if (!hasQueryParam("john") && !hasQueryParam("thomas") && !hasQueryParam("mihai") && !hasQueryParam("marko") && !hasQueryParam("nodir")) {
+if (!hasQueryParam("john") && !hasQueryParam("thomas") && !hasQueryParam("mihai") && !hasQueryParam("marko") && !hasQueryParam("nodir" && !hasQueryParam("pedro"))) {
     tomButton.addEventListener("click", function () {
         // Your event handler logic here
         widgetkey = "4af7f6620fbb4ab58d2c70f5d4fee0e6";
@@ -66,7 +67,7 @@ if (hasQueryParam("thomas")) {
 }
 
 //Marko
-if (!hasQueryParam("john") && !hasQueryParam("thomas") && !hasQueryParam("mihai") && !hasQueryParam("marko") && !hasQueryParam("nodir")) {
+if (!hasQueryParam("john") && !hasQueryParam("thomas") && !hasQueryParam("mihai") && !hasQueryParam("marko") && !hasQueryParam("nodir" && !hasQueryParam("pedro"))) {
     markoButton.addEventListener("click", function () {
         widgetkey = "4e3d97b9f9c549b798eb8735a4b7c619";
         shouldLoadScript = true;
@@ -82,7 +83,7 @@ if (!hasQueryParam("john") && !hasQueryParam("thomas") && !hasQueryParam("mihai"
 }
 // Trigger the same actions if the query parameter is present
 if (hasQueryParam("marko")) {
-    widgetkey = "8816869ecf624d4483f6befd75cb2a1f";
+    widgetkey = "4e3d97b9f9c549b798eb8735a4b7c619";
     shouldLoadScript = true;
     console.log("shouldloadscript is: " + shouldLoadScript + " and new widget key is " + widgetkey);
     loadSurfly();
@@ -96,7 +97,7 @@ if (hasQueryParam("marko")) {
 
 
 //John
-if (!hasQueryParam("john") && !hasQueryParam("thomas") && !hasQueryParam("mihai") && !hasQueryParam("marko") && !hasQueryParam("nodir")) {
+if (!hasQueryParam("john") && !hasQueryParam("thomas") && !hasQueryParam("mihai") && !hasQueryParam("marko") && !hasQueryParam("nodir" && !hasQueryParam("pedro"))) {
     johnButton.addEventListener("click", function () {
         widgetkey = "99671227762b43c2a96daa066ee006e2";
         shouldLoadScript = true;
@@ -126,7 +127,7 @@ if (hasQueryParam("john")) {
 
 
 //Mihai
-if (!hasQueryParam("john") && !hasQueryParam("thomas") && !hasQueryParam("mihai") && !hasQueryParam("marko") && !hasQueryParam("nodir")) {
+if (!hasQueryParam("john") && !hasQueryParam("thomas") && !hasQueryParam("mihai") && !hasQueryParam("marko") && !hasQueryParam("nodir" && !hasQueryParam("pedro"))) {
     mihaiButton.addEventListener("click", function () {
         widgetkey = "638a1769085c43029306423920b7ed59";
         shouldLoadScript = true;
@@ -155,9 +156,9 @@ if (hasQueryParam("mihai")) {
 }
 
 //Nodir
-if (!hasQueryParam("john") && !hasQueryParam("thomas") && !hasQueryParam("mihai") && !hasQueryParam("marko") && !hasQueryParam("nodir")) {
+if (!hasQueryParam("john") && !hasQueryParam("thomas") && !hasQueryParam("mihai") && !hasQueryParam("marko") && !hasQueryParam("nodir" && !hasQueryParam("pedro"))) {
     nodirButton.addEventListener("click", function () {
-        widgetkey = "638a1769085c43029306423920b7ed59";
+        widgetkey = "178ae961b9134d0680eb2cb1605c35b9";
         shouldLoadScript = true;
         console.log("shouldloadscript is: " + shouldLoadScript + " and new widget key is " + widgetkey);
         loadSurfly();
@@ -183,6 +184,34 @@ if (hasQueryParam("nodir")) {
     chatIcon.style.opacity = "1";
 }
 
+//Pedro
+if (!hasQueryParam("john") && !hasQueryParam("thomas") && !hasQueryParam("mihai") && !hasQueryParam("marko") && !hasQueryParam("nodir" && !hasQueryParam("pedro"))) {
+    nodirButton.addEventListener("click", function () {
+        widgetkey = "61c30ab2090a46d488cc5f41cc624fb4";
+        shouldLoadScript = true;
+        console.log("shouldloadscript is: " + shouldLoadScript + " and new widget key is " + widgetkey);
+        loadSurfly();
+        teamname = "Pedro";
+        const popupContainer = document.getElementById("selectnamepopup");
+        popupContainer.style.display = "none";
+        console.log(`Pedro settings Loaded`);
+        var chatIcon = document.getElementById("chat-icon");
+        chatIcon.style.opacity = "1";
+    });
+}
+// Trigger the same actions if the query parameter is present
+if (hasQueryParam("pedro")) {
+    widgetkey = "61c30ab2090a46d488cc5f41cc624fb4";
+    shouldLoadScript = true;
+    console.log("shouldloadscript is: " + shouldLoadScript + " and new widget key is " + widgetkey);
+    loadSurfly();
+    teamname = "Pedro";
+    const popupContainer = document.getElementById("selectnamepopup");
+    popupContainer.style.display = "none";
+    console.log(`Pedro settings Loaded`);
+    var chatIcon = document.getElementById("chat-icon");
+    chatIcon.style.opacity = "1";
+}
 
 //LOAD SURFLY
 //runs after the correct user has been identified
