@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple Link Tool</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background: linear-gradient(to top left, #1f3c30, #0b0b0b, #0a205e);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Inter', sans-serif;
+            color: #f7f7f7;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 600px;
+            padding: 2rem;
+        }
+
+        .input-group {
+            display: flex;
+            width: 100%;
+            gap: 1rem;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 0.6rem 1rem;
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: 1px solid #3d93ef;
+            background-color: transparent;
+            color: #f7f7f7;
+        }
+
+        input::placeholder {
+            color: #f7f7f7;
+            opacity: 0.7;
+        }
+
+        button {
+            padding: 0.6rem 1.25rem;
+            border: none;
+            border-radius: 100vw;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            color: #fff;
+        }
+
+        button:hover {
+            opacity: 0.9;
+            transform: scale(0.98);
+        }
+
+        .button-color {
+            background: linear-gradient(144deg, #2e5bd5 10%, #64b8c1);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="input-group">
+            <input type="text" placeholder="Enter URL..." id="urlInput" />
+        </div>
+        <button class="button-color" id="generateLinkBtn">Generate Magic Link</button>
+    </div>
+
+    <script>
+        backgroundScriptMessage =
+        {
+            action: "magic-link",
+            newTabLink: "https://demo.surfly.com/company/Primaholding/contract_demo.pdf",
+            sessionId: ""
+        }
+
+
+        async function getSession() {
+            chrome.webfuseSession.getSessionInfo();
+        }
+
+
+        document.getElementById("generateLinkBtn").addEventListener("click", () => {
+            getSession();
+            const input = document.getElementById("urlInput").value.trim();
+
+            if (input) {
+                backgroundScriptMessage.newTabLink = input;
+                console.log("Saved newTabLink:", backgroundScriptMessage.newTabLink);
+            } else {
+                console.log("Input empty, using original newTabLink:", backgroundScriptMessage.newTabLink);
+            }
+        });
+
+
+        chrome.webfuseSession.onMessage.addListener(message => {
+            if (message.msg === "get_session_info") {
+                console.log("sessionInfo: ", message.sessionInfo);
+                backgroundScriptMessage.sessionId = message.sessionInfo.sessionId;
+                browser.runtime.sendMessage(backgroundScriptMessage);
+                console.log("message sent to background script");
+            }
+        })
+    </script>
+</body>
+
+</html>
