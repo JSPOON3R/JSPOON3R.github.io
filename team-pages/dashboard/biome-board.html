@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,8 +14,10 @@
             width: 100%;
             height: 100%;
             display: none;
-            opacity: 0; /* Initial opacity */
-            transition: opacity 1s ease; /* Smooth transition */
+            opacity: 0;
+            /* Initial opacity */
+            transition: opacity 1s ease;
+            /* Smooth transition */
         }
 
         /* Customize each view */
@@ -32,37 +35,44 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            height: 10px; /* Height of the loading bar */
-            background-color: white; /* Background color of the loading bar */
+            height: 10px;
+            /* Height of the loading bar */
+            background-color: white;
+            /* Background color of the loading bar */
             overflow: hidden;
             z-index: 999;
         }
 
         #loaded-progress {
             height: 100%;
-            width: 0; /* Initial width (0% loaded) */
-            background-color: rgb(255, 0, 0); /* Color of the loaded progress */
-            transition: width 20s linear; /* Smooth transition */
+            width: 0;
+            /* Initial width (0% loaded) */
+            background-color: rgb(255, 0, 0);
+            /* Color of the loaded progress */
+            transition: width 20s linear;
+            /* Smooth transition */
         }
     </style>
 </head>
+
 <body>
     <!-- Define your dashboard views -->
     <div id="view1" class="view">
         <iframe width="100%" height="100%"
-        src="https://lookerstudio.google.com/embed/reporting/1bb83e73-4aef-4e2b-9023-02ba09bdb9cd/page/p_x1ug00adcd"
-        frameborder="0" style="border:0" allowfullscreen
-        sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+            src="https://lookerstudio.google.com/embed/reporting/1bb83e73-4aef-4e2b-9023-02ba09bdb9cd/page/p_x1ug00adcd"
+            frameborder="0" style="border:0" allowfullscreen
+            sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
     </div>
     <div id="view2" class="view">
-        <iframe width="100%" height="100%"
-        src="https://lookerstudio.google.com/embed/reporting/d456e34b-f77b-4e54-9523-d44b7a62ecef/page/p_7upil5wled"
-        frameborder="0" style="border:0" allowfullscreen
-        sandbox="allow-storage-access-by-user-activation allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"></iframe>
+        <iframe width="100%" height="100%" seamless frameBorder="0" scrolling="no"
+            src="https://superset.surfly-dev.com/superset/explore/p/EmOwlYxgDxd/?standalone=1&height=400">
+        </iframe>
     </div>
     <div id="view3" class="view">
-        <iframe frameBorder="0" width="100%" height="100%" src="https://kwize.com/quote-of-the-day/embed/&txt=0&font=&color=ebebeb&background=000000&fid=success"></iframe>
+        <iframe frameBorder="0" width="100%" height="100%"
+            src="https://kwize.com/quote-of-the-day/embed/&txt=0&font=&color=ebebeb&background=000000&fid=success"></iframe>
     </div>
+
 
     <!-- Loading bar -->
     <div id="loading-bar">
@@ -84,17 +94,17 @@
 
                 // Fade out current view
                 views[currentIndex].style.opacity = 0;
-                setTimeout(function() {
+                setTimeout(function () {
                     views[currentIndex].style.display = 'none';
                     // Increment index and handle wrap-around
                     currentIndex = (currentIndex + 1) % views.length;
                     // Display next view
                     views[currentIndex].style.display = 'block';
                     // Fade in next view
-                    setTimeout(function() {
+                    setTimeout(function () {
                         views[currentIndex].style.opacity = 1;
                         // Smoothly transition loading bar to blue
-                        setTimeout(function() {
+                        setTimeout(function () {
                             document.getElementById('loaded-progress').style.transition = 'width 30s linear'; // Restore transition
                             document.getElementById('loaded-progress').style.width = '100%';
                         }, 100); // Delay to ensure smooth transition starts immediately
@@ -112,4 +122,5 @@
         };
     </script>
 </body>
+
 </html>
