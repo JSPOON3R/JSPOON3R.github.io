@@ -6,42 +6,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Insurance Application</title>
 
-    <script>
-        var initOpts = {
-            projectKey: "oo1uNpt7ZG86S84fiJwa",
-            defaultInputMode: 2,
-            obscureTextNumbers: false,
-            obscureTextEmails: true,
-        };
-        var startOpts = { userID: "" };
-        (function (A, s, a, y, e, r) {
-            r = window.OpenReplay = [e, r, y, [s - 1, e]];
-            s = document.createElement('script'); s.src = A; s.async = !a;
-            document.getElementsByTagName('head')[0].appendChild(s);
-            r.start = function (v) { r.push([0]) };
-            r.stop = function (v) { r.push([1]) };
-            r.setUserID = function (id) { r.push([2, id]) };
-            r.setUserAnonymousID = function (id) { r.push([3, id]) };
-            r.setMetadata = function (k, v) { r.push([4, k, v]) };
-            r.event = function (k, p, i) { r.push([5, k, p, i]) };
-            r.issue = function (k, p) { r.push([6, k, p]) };
-            r.isActive = function () { return false };
-            r.getSessionToken = function () { };
-        })("//static.openreplay.com/latest/openreplay-assist.js", 1, 0, initOpts, startOpts);
+<!-- OpenReplay Tracking Code with Assist -->
+<script>
+  var initOpts = {
+    projectKey: "oo1uNpt7ZG86S84fiJwa",
+    // if self-hosted, add: ingestPoint: "https://openreplay.mydomain.com/ingest",
+    defaultInputMode: 2,
+    obscureTextNumbers: false,
+    obscureTextEmails: true
+  };
+  var startOpts = { userID: "" };
 
-        import trackerAssist from '@openreplay/tracker-assist';
-import { tracker } from '@openreplay/tracker';
+  (function (A, s, a, y, e, r) {
+    r = window.OpenReplay = [e, r, y, [s - 1, e]];
+    s = document.createElement('script'); s.src = A; s.async = !a;
+    document.getElementsByTagName('head')[0].appendChild(s);
+    r.start = function () { r.push([0]) };
+    r.stop = function () { r.push([1]) };
+    r.setUserID = function (id) { r.push([2, id]) };
+    r.setUserAnonymousID = function (id) { r.push([3, id]) };
+    r.setMetadata = function (k, v) { r.push([4, k, v]) };
+    r.event = function (k, p, i) { r.push([5, k, p, i]) };
+    r.issue = function (k, p) { r.push([6, k, p]) };
+    r.isActive = function () { return false };
+    r.getSessionToken = function () {};
+  })("//static.openreplay.com/latest/openreplay-assist.js", 1, 0, initOpts, startOpts);
 
-
-tracker.configure({
-  projectKey: 'oo1uNpt7ZG86S84fiJwa',
-  ingestPoint: "https://openreplay.mydomain.com/ingest", // when dealing with the self-hosted version of OpenReplay
-});
-tracker.use(trackerAssist()); // check the list of available options below
-        tracker.setMetadata('plan', 'Preeeeemium');
-tracker.start();
-
-    </script>
+  // Example usage with the snippet API:
+  OpenReplay.setMetadata('plan', 'Premium');
+  OpenReplay.start(); // start recording (you can pass { userID: '...' } here)
+</script>
     <style>
         body {
             font-family: Arial, sans-serif;
