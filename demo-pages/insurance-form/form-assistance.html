@@ -29,7 +29,18 @@
             r.getSessionToken = function () { };
         })("//static.openreplay.com/latest/openreplay-assist.js", 1, 0, initOpts, startOpts);
 
+        import trackerAssist from '@openreplay/tracker-assist';
+import { tracker } from '@openreplay/tracker';
+
+
+tracker.configure({
+  projectKey: 'oo1uNpt7ZG86S84fiJwa',
+  ingestPoint: "https://openreplay.mydomain.com/ingest", // when dealing with the self-hosted version of OpenReplay
+});
+tracker.use(trackerAssist()); // check the list of available options below
         tracker.setMetadata('plan', 'Preeeeemium');
+tracker.start();
+
     </script>
     <style>
         body {
