@@ -2,259 +2,118 @@
 <html lang="en">
 <head>
 <meta charset="utf-8" />
-<title>Static Iframe + Header/CSP Inspector</title>
+<title>Static Iframe + Raw Header/CORS Observations</title>
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <style>
-  :root {
-    --bg:#0d1117; --card:#161b22; --border:#30363d; --text:#e6edf3; --muted:#9da7b3;
-    --ok:#2ecc71; --warn:#f1c40f; --bad:#e74c3c; --accent:#4c8dff;
-  }
+  :root{--bg:#0d1117;--card:#161b22;--border:#30363d;--text:#e6edf3;--muted:#9da7b3;--accent:#4c8dff}
   *{box-sizing:border-box}
-  body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,Segoe UI,Roboto,Helvetica,Arial}
-  header{padding:20px}
+  body{margin:0;background:var(--bg);color:var(--text);font-family:ui-sans-serif,system-ui,Segoe UI,Roboto,Helvetica,Arial}
+  header{padding:16px}
   h1{margin:0 0 6px;font-size:18px}
   .sub{color:var(--muted);font-size:14px}
-  .wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;padding:0 16px 16px}
-  .card{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden}
-  .head{display:flex;gap:10px;align-items:center;padding:10px;border-bottom:1px solid var(--border)}
-  .body{padding:12px}
+  .wrap{display:grid;gap:12px;padding:0 12px 12px}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:10px;overflow:hidden}
+  .head{display:flex;gap:8px;align-items:center;padding:10px;border-bottom:1px solid var(--border)}
+  .body{padding:10px}
+  .row{display:flex;gap:8px;align-items:center;width:100%}
   input[type=text]{flex:1;padding:10px 12px;border-radius:10px;border:1px solid var(--border);background:#0b1320;color:var(--text)}
-  input::placeholder{color:#647089}
-  button{padding:10px 14px;border-radius:10px;border:1px solid transparent;background:var(--accent);color:#fff;font-weight:600;cursor:pointer}
-  button.ghost{background:transparent;border-color:var(--border);color:var(--text)}
+  input::placeholder{color:#6b768a}
+  button{padding:10px 14px;border-radius:10px;border:1px solid var(--border);background:var(--accent);color:#fff;font-weight:600;cursor:pointer}
+  button.ghost{background:transparent;color:var(--text)}
   iframe{width:100%;height:60vh;border:0;background:#0b0d12}
-  .pill{display:inline-flex;align-items:center;border-radius:999px;padding:6px 10px;font-size:12px;font-weight:700;border:1px solid}
-  .ok{color:var(--ok);background:rgba(46,204,113,.12);border-color:rgba(46,204,113,.35)}
-  .warn{color:var(--warn);background:rgba(241,196,15,.12);border-color:rgba(241,196,15,.35)}
-  .bad{color:var(--bad);background:rgba(231,76,60,.12);border-color:rgba(231,76,60,.35)}
-  table{width:100%;border-collapse:collapse;font-size:13px}
-  th,td{padding:8px 10px;border-bottom:1px dashed var(--border);vertical-align:top;text-align:left}
-  th{color:var(--muted);width:220px;font-weight:500}
-  .mono{font-family:ui-monospace,SFMono-Regular,Consolas,Menlo,monospace;font-size:12.5px}
-  details summary{cursor:pointer;color:var(--muted)}
-  @media (max-width: 980px){.wrap{grid-template-columns:1fr} iframe{height:52vh}}
+  pre.mono{font-family:ui-monospace,SFMono-Regular,Consolas,Menlo,monospace;font-size:12.5px;white-space:pre-wrap;word-break:break-word;background:#0b0f17;border:1px solid var(--border);border-radius:8px;padding:10px;margin:0}
+  /* Thin curl bar */
+  .curl-card .head{display:none}
+  .curl-card .body{padding:8px 10px}
+  .curl-card pre{max-height:42px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .curl-card .row{justify-content:flex-end}
 </style>
 </head>
 <body>
 <header>
-  <h1>Static Iframe + Header/CSP Inspector</h1>
-  <div class="sub">Loads a URL in an iframe and <em>attempts</em> to read headers via <code>fetch()</code>. Cross-origin headers require CORS on the target.</div>
+  <h1>Static Iframe + Raw Header/CORS Observations</h1>
+  <div class="sub">Loads URL in an iframe and attempts a same-URL <code>fetch()</code>. Shows raw data or <code>null</code> when unavailable.</div>
 </header>
 
 <div class="wrap">
-  <!-- LEFT: loader -->
-  <section class="card">
+  <!-- URL form + iframe -->
+  <section class="card loader-card">
     <div class="head">
-      <form id="urlForm" class="row" style="display:flex;gap:10px;flex:1">
+      <form id="urlForm" class="row">
         <input id="urlInput" type="text" placeholder="https://example.com" autocomplete="off" />
         <button type="submit">Load</button>
-        <button class="ghost" type="button" id="clearBtn">Clear</button>
+        <button type="button" class="ghost" id="clearBtn" title="Clear iframe">Clear</button>
       </form>
     </div>
     <div class="body">
       <iframe id="viewer" referrerpolicy="strict-origin-when-cross-origin"></iframe>
-      <div class="sub" style="margin-top:8px">
-        Tip: If the frame stays blank, it may be blocked by <code>X-Frame-Options</code> or <code>CSP frame-ancestors</code>.
-      </div>
     </div>
   </section>
 
-  <!-- RIGHT: diagnostics -->
-  <section class="card">
-    <div class="head" style="justify-content:space-between">
-      <strong>Diagnostics</strong>
-      <div id="verdict" class="pill warn">Awaiting URL…</div>
-    </div>
-    <div class="body">
-      <table id="kv" aria-label="Headers table"></table>
-      <div style="margin-top:10px">
-        <details>
-          <summary>Why headers might be missing</summary>
-          <div class="sub" style="margin-top:8px">
-            Browsers block access to cross-origin headers unless the target enables CORS for this page’s origin and
-            <code>Access-Control-Expose-Headers</code> includes the header names (e.g., <code>X-Frame-Options</code>, <code>Content-Security-Policy</code>).
-            Without that, this page only gets an <em>opaque</em> response and cannot show header values.
-          </div>
-        </details>
+  <!-- Thin CURL bar below the iframe -->
+  <section class="card curl-card">
+    <div class="body" style="display:grid;gap:8px">
+      <pre id="curlText" class="mono">curl -I 'https://example.com'</pre>
+      <div class="row">
+        <button type="button" id="copyCurlBtn">Copy</button>
       </div>
     </div>
   </section>
 </div>
-
 <script>
+(function(){
   const form = document.getElementById('urlForm');
   const input = document.getElementById('urlInput');
   const iframe = document.getElementById('viewer');
   const clearBtn = document.getElementById('clearBtn');
-  const verdictEl = document.getElementById('verdict');
-  const kv = document.getElementById('kv');
+  const curlText = document.getElementById('curlText');
+  const copyCurlBtn = document.getElementById('copyCurlBtn');
 
-  let loadTimer;
+  function buildCurl(url){
+    const u = url || '';
+    const quoted = `'${u.replace(/'/g, "'\\''")}'`;
+    return `curl -I ${quoted}`.trim();
+  }
 
-  form.addEventListener('submit', async (e) => {
+  function updateCurlBox(url){
+    curlText.textContent = buildCurl(url);
+  }
+
+  form.addEventListener('submit', (e) => {
     e.preventDefault();
     let url = (input.value || '').trim();
     if (!url) return;
     if (!/^https?:\/\//i.test(url)) url = 'https://' + url;
 
-    // Reset UI
-    setVerdict('Checking…', 'warn');
-    renderRows([]);
-    clearTimeout(loadTimer);
-
-    // Load the iframe
+    // Load iframe
     iframe.removeAttribute('src');
-    // give a tiny delay to ensure a new navigation
-    setTimeout(() => { iframe.src = url; }, 0);
-
-    // Heuristic: if no load within 4s, likely blocked or slow
-    loadTimer = setTimeout(() => {
-      if (!iframeComplete(iframe)) {
-        setVerdict('No load event yet — possible XFO/CSP block (or slow server)', 'warn');
-      }
-    }, 4000);
-
-    // Try to fetch headers (best-effort)
-    try {
-      const { rows, note, statusText, headerMap } = await tryFetchHeaders(url);
-      renderRows(rows);
-      if (rows.length) {
-        // If we can read headers, try to infer
-        const xfo = (headerMap['x-frame-options'] || '').toLowerCase();
-        const csp = (headerMap['content-security-policy'] || '').toLowerCase();
-        if (xfo.includes('deny')) setVerdict('Blocked: X-Frame-Options=DENY', 'bad');
-        else if (xfo.includes('sameorigin')) setVerdict('Blocked (cross-origin): X-Frame-Options=SAMEORIGIN', 'bad');
-        else if (/\bframe-ancestors\s+[^;]+/i.test(csp)) {
-          const fa = (csp.match(/\bframe-ancestors\s+([^;]+)/i) || [,'(present)'])[1].trim();
-          setVerdict('Controlled by CSP frame-ancestors: ' + fa, 'warn');
-        } else {
-          setVerdict(statusText || 'Headers readable (no XFO; check CSP on target)', 'ok');
-        }
-      } else {
-        setVerdict(note || 'Cross-origin headers unavailable (CORS)', 'warn');
-      }
-    } catch (err) {
-      setVerdict('Fetch error: ' + (err && err.message || err), 'warn');
-    }
+    setTimeout(() => {
+      iframe.src = url;
+      updateCurlBox(url);
+    }, 0);
   });
 
   clearBtn.addEventListener('click', () => {
     iframe.removeAttribute('src');
-    renderRows([]);
-    setVerdict('Cleared', 'warn');
-    input.focus();
   });
 
-  iframe.addEventListener('load', () => {
-    clearTimeout(loadTimer);
-    // If we got here and headers were unreadable, still mark as loaded
-    if (iframe.src) {
-      // Try to detect same-origin (rare in cross-origin usage)
-      try {
-        // Accessing contentDocument will throw on cross-origin
-        const same = !!iframe.contentDocument;
-        if (same) setVerdict('Loaded (same-origin)', 'ok');
-        else setVerdict('Loaded (cross-origin)', 'ok');
-      } catch {
-        setVerdict('Loaded (cross-origin)', 'ok');
-      }
-    }
-  });
-
-  function iframeComplete(ifr) {
-    try { return !!(ifr.contentDocument && ifr.contentDocument.readyState === 'complete'); }
-    catch { return false; }
-  }
-
-  async function tryFetchHeaders(url) {
-    // Try a CORS GET first so we have the best chance to read headers.
-    // Note: many servers won’t grant CORS, so the response will be opaque.
-    let resp;
+  copyCurlBtn && copyCurlBtn.addEventListener('click', async () => {
     try {
-      resp = await fetch(url, { method: 'GET', mode: 'cors', redirect: 'follow', credentials: 'omit' });
+      await navigator.clipboard.writeText(curlText.textContent || '');
     } catch (e) {
-      // As a fallback, try no-cors to at least detect reachability (still opaque).
-      try {
-        resp = await fetch(url, { method: 'GET', mode: 'no-cors' });
-      } catch (e2) {
-        throw e2;
-      }
+      /* noop */
     }
+  });
 
-    const rows = [];
-    const headerMap = {};
-    const opaque = resp.type === 'opaque';
-
-    if (!opaque) {
-      // We can read headers only if CORS allowed it.
-      const interesting = [
-        'x-frame-options',
-        'content-security-policy',
-        'location',
-        'referrer-policy',
-        'permissions-policy',
-        'strict-transport-security',
-        'x-content-type-options',
-        'content-type',
-        'date',
-        'server',
-        'vary',
-        'via',
-        'content-length'
-      ];
-
-      interesting.forEach(name => {
-        const v = resp.headers.get(name);
-        if (v !== null) {
-          rows.push([nameHeader(name), v]);
-          headerMap[name] = v;
-        }
-      });
-
-      // Surface status/redirect info
-      rows.unshift(['Status', `${resp.status} ${resp.statusText || ''}`.trim()]);
-      if (resp.redirected) {
-        rows.splice(1, 0, ['Redirected', String(resp.redirected)]);
-        rows.splice(2, 0, ['Final URL', resp.url]);
-      }
-
-      return { rows, note: '', statusText: `${resp.status} ${resp.statusText}`, headerMap };
-    } else {
-      // Opaque: cannot read headers; explain why and how to make them visible.
-      const note =
-        'Cross-origin response is opaque — headers hidden. ' +
-        'To expose headers, the target must send CORS headers allowing this origin and ' +
-        'Access-Control-Expose-Headers including the header names.';
-      const basic = [
-        ['Status', '(opaque — not readable)'],
-        ['Why no headers?', 'Target did not grant CORS or used non-exposing policy.'],
-        ['How to expose?', 'Send Access-Control-Allow-Origin: <your-origin> and Access-Control-Expose-Headers: X-Frame-Options, Content-Security-Policy, ...']
-      ];
-      return { rows: basic, note, statusText: '', headerMap };
-    }
-  }
-
-  function nameHeader(k){ return k.split('-').map(s=>s[0].toUpperCase()+s.slice(1)).join('-'); }
-
-  function renderRows(pairs){
-    if (!pairs.length) {
-      kv.innerHTML = '<tr><td class="sub" colspan="2">No headers to show yet.</td></tr>';
-      return;
-    }
-    kv.innerHTML = '<thead><tr><th>Header</th><th>Value</th></tr></thead><tbody>'
-      + pairs.map(([k,v]) => `<tr><th>${escapeHtml(k)}</th><td class="mono">${escapeHtml(v)}</td></tr>`).join('')
-      + '</tbody>';
-  }
-
-  function setVerdict(text, tone){
-    verdictEl.textContent = text;
-    verdictEl.className = 'pill ' + (tone || 'warn');
-  }
-
-  function escapeHtml(s){
-    return String(s ?? '')
-      .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-  }
+  // Boot with example.com preloaded
+  document.addEventListener('DOMContentLoaded', () => {
+    const defaultUrl = 'https://example.com';
+    input.value = defaultUrl;
+    updateCurlBox(defaultUrl);
+    form.dispatchEvent(new Event('submit'));
+  });
+})();
 </script>
+
 </body>
 </html>
