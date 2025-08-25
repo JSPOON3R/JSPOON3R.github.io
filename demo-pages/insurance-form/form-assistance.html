@@ -34,7 +34,7 @@
 
   // Example usage with the snippet API:
   OpenReplay.setMetadata('plan', 'Premium');
-  OpenReplay.start(); // start recording (you can pass { userID: '...' } here)
+  // Do not auto-start; we start after the user provides a name (or via ?name= query param)
 </script>
     <style>
         body {
@@ -1499,12 +1499,15 @@
             const urlParams = new URLSearchParams(window.location.search);
             return urlParams.get(param);
         }
-        // Function to set the widgetKey if the name matches
+        // Function to set the widgetKey if the name matches, and set OpenReplay user/start if valid
         function checkQueryAndSetWidgetKey() {
             const name = getQueryParam("name");
             if (name && widgetKeys.hasOwnProperty(name.toLowerCase())) {
                 widgetKey = widgetKeys[name.toLowerCase()];
                 console.log("Widget Key set to:", widgetKey);
+                // Set OpenReplay user and start recording now that we have a name
+                OpenReplay.setUserID(name);
+                OpenReplay.start();
             } else {
                 showNamePopup();
             }
@@ -1526,10 +1529,12 @@
         // Handle name selection from dropdown
         function setNameAndWidgetKey() {
             const selectedName = document.getElementById('nameDropdown').value;
-            tracker.setUserID(selectedName);
             if (selectedName && widgetKeys.hasOwnProperty(selectedName.toLowerCase())) {
                 widgetKey = widgetKeys[selectedName.toLowerCase()];
                 console.log("Widget Key set to:", widgetKey);
+                // Set the OpenReplay user and start recording once we have a valid name
+                OpenReplay.setUserID(selectedName);
+                OpenReplay.start();
                 closeNamePopup();
             } else {
                 alert("Please select a valid name.");
@@ -1556,6 +1561,10 @@
 
 
         function startSurflySession() {
+            if (!widgetKey) {
+                showNamePopup();
+                return;
+            }
             (function (s, u, r, f, l, y) {
                 s[f] = s[f] || { init: function () { s[f].q = arguments } };
                 l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
