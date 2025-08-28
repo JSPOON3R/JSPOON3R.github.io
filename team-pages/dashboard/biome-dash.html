@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>TV Dashboard Rotator</title>
+  <style>
+    :root{
+      --headerH: 7vh;        /* Top control strip height (≤7% as requested) */
+      --footerH: 10px;       /* Loading bar height */
+      --fadeMs: 600ms;       /* Fade duration for slide transitions */
+      --bg: #0b1220;         /* Page background */
+      --ui: #121a2b;         /* Header background */
+      --text: #e7eefc;       /* Header text */
+      --muted: #9bb4ff;      /* Subtle accents */
+      --btn: #1c2a49;        /* Button background */
+      --btnActive: #27406f;  /* Active/hover */
+      --progress: #7fc8ff;   /* Light blue loading bar */
+    }
+
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+
+    /* Layout: fixed header (7%), fixed footer (progress), main takes the rest */
+    .page {
+      display: grid;
+      grid-template-rows: var(--headerH) 1fr var(--footerH);
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden; /* Prevent scrollbars on TVs */
+    }
+
+    /* Header with buttons */
+    header {
+      position: sticky; /* Ensures it's always visible and never overlaps main */
+      top: 0;
+      z-index: 10;
+      background: var(--ui);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 14px;
+      box-shadow: 0 2px 10px rgba(0,0,0,.25);
+    }
+
+    header .title {
+      font-weight: 700;
+      letter-spacing: .3px;
+      margin-right: 8px;
+      white-space: nowrap;
+    }
+
+    .btns {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex: 1;
+      overflow: hidden; /* Allow buttons to wrap with scroll on smaller screens */
+    }
+
+    .btns-inner {
+      display: flex;
+      gap: 8px;
+      overflow-x: auto;
+      scrollbar-width: thin;
+      -webkit-overflow-scrolling: touch;
+      padding-bottom: 4px;
+      mask-image: linear-gradient(to right, transparent, black 16px, black calc(100% - 16px), transparent);
+    }
+
+    button.tab {
+      appearance: none;
+      background: var(--btn);
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 12px;
+      padding: 10px 14px;
+      font-size: clamp(12px, 1.8vh, 16px);
+      cursor: pointer;
+      transition: background .2s ease, transform .05s ease;
+      white-space: nowrap;
+    }
+
+    button.tab:hover,
+    button.tab[aria-current="true"] {
+      background: var(--btnActive);
+    }
+
+    button.tab:active { transform: translateY(1px); }
+
+    /* Main stage that holds the iframes */
+    main {
+      position: relative;
+      background: black; /* Better contrast for dashboards and avoids flashes */
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0; /* full bleed, but header/footer reserve space via grid */
+      opacity: 0;
+      transition: opacity var(--fadeMs) ease-in-out;
+      pointer-events: none;
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Make iframes truly fill the available area under header and above footer */
+    iframe.dashboard {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: #000; /* prevents white gaps while loading */
+    }
+
+    /* Footer progress bar */
+    footer {
+      position: sticky;
+      bottom: 0;
+      z-index: 10;
+      background: transparent; /* Bar itself provides color */
+    }
+
+    .progress-rail {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: rgba(255,255,255,.08);
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      position: absolute;
+      left: 0; bottom: 0; top: 0;
+      width: 0%;
+      background: var(--progress);
+      will-change: width;
+      transition: none; /* set programmatically each run */
+      opacity: 0;       /* Start state is nothing (hidden) */
+    }
+
+    .progress-fill.run {
+      opacity: 1;
+    }
+
+    /* No text selection on TV */
+    * { user-select: none; }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="title">Dashboards</div>
+      <div class="btns">
+        <div class="btns-inner" id="tabs"></div>
+      </div>
+      <div id="clock" aria-hidden="true" style="opacity:.6;font-variant-numeric:tabular-nums"></div>
+    </header>
+
+    <main id="stage" aria-live="polite" aria-atomic="true"></main>
+
+    <footer>
+      <div class="progress-rail" aria-hidden="true">
+        <div id="progress" class="progress-fill"></div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    /*************************************
+     * CONFIGURE YOUR DASHBOARD SECTIONS *
+     *************************************
+     * Add, remove, or reorder entries in SECTIONS.
+     * Each object needs a unique title and a url.
+     * Newly added sections are auto-included in:
+     *  - the rotation cycle (30s each)
+     *  - the top buttons (for quick jump)
+     */
+    const SECONDS_PER_SLIDE = 30;         // 30 seconds display per iframe
+    const DISPLAY_MS = SECONDS_PER_SLIDE * 1000;
+    const FADE_MS = 600;                  // Keep in sync with --fadeMs
+
+    const SECTIONS = [
+      { title: "Team Target", url: "https://superset.surfly-dev.com/superset/explore/p/EmOwlrv6Dxd/" },
+       { title: "Opportunities", url: "https://superset.surfly-dev.com/superset/dashboard/p/REy3mvqMOZg/" },
+      { title: "Surfly Trials", url: "https://lookerstudio.google.com/embed/reporting/1bb83e73-4aef-4e2b-9023-02ba09bdb9cd/page/p_x1ug00adcd" },
+      // 👉 Add more like this:
+      // { title: "Marketing (GA4)", url: "https://datastudio.google.com/embed/reporting/your-ga4-id/page/1" },
+    ];
+
+    /*********************
+     * CORE PAGE LOGIC   *
+     *********************/
+    const stage = document.getElementById('stage');
+    const tabs = document.getElementById('tabs');
+    const progress = document.getElementById('progress');
+    const clock = document.getElementById('clock');
+
+    let current = -1;      // no slide visible at start
+    let timer = null;      // rotation timer
+
+    // Build slides & top buttons
+    const slides = SECTIONS.map((sec, idx) => {
+      // Create slide container
+      const wrapper = document.createElement('section');
+      wrapper.className = 'slide';
+      wrapper.setAttribute('role', 'region');
+      wrapper.setAttribute('aria-label', sec.title);
+
+      // Create iframe
+      const iframe = document.createElement('iframe');
+      iframe.className = 'dashboard';
+      iframe.loading = 'eager'; // TVs often idle-load anyway; eager improves first render
+      iframe.referrerPolicy = 'no-referrer';
+      iframe.src = sec.url;
+
+      wrapper.appendChild(iframe);
+      stage.appendChild(wrapper);
+
+      // Create corresponding tab button
+      const btn = document.createElement('button');
+      btn.className = 'tab';
+      btn.type = 'button';
+      btn.textContent = sec.title;
+      btn.addEventListener('click', () => jumpTo(idx));
+
+      tabs.appendChild(btn);
+      return { wrapper, iframe, btn, title: sec.title };
+    });
+
+    function setActive(index) {
+      slides.forEach((s, i) => {
+        const isActive = i === index;
+        s.wrapper.classList.toggle('active', isActive);
+        s.btn.setAttribute('aria-current', isActive ? 'true' : 'false');
+      });
+    }
+
+    function restartProgress() {
+      // Hide and reset the bar instantly
+      progress.classList.remove('run');
+      progress.style.transition = 'none';
+      progress.style.width = '0%';
+      progress.style.opacity = '0';
+
+      // Force reflow to flush styles so the next transition runs
+      void progress.offsetWidth;
+
+      // Start the fill animation for the full display window
+      progress.style.transition = `width ${DISPLAY_MS}ms linear`;
+      progress.classList.add('run');
+      progress.style.opacity = '1'; // bar appears anew
+      // Kick off the growth to 100%
+      requestAnimationFrame(() => { progress.style.width = '100%'; });
+    }
+
+    function scheduleNext() {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        const next = (current + 1) % slides.length;
+        show(next);
+      }, DISPLAY_MS);
+    }
+
+    function show(index) {
+      if (index === current) {
+        // If same slide requested, just ensure timers & progress are aligned
+        restartProgress();
+        scheduleNext();
+        return;
+      }
+
+      // During the fade, hide the bar (it should disappear between slides)
+      progress.style.opacity = '0';
+      progress.classList.remove('run');
+
+      // Swap slides
+      const prev = current;
+      current = index;
+      setActive(current);
+
+      // After fade completes, restart timing & bar
+      setTimeout(() => {
+        restartProgress();
+        scheduleNext();
+      }, FADE_MS);
+    }
+
+    function jumpTo(index) {
+      clearTimeout(timer);
+      show(index);
+    }
+
+    // Optional: allow URL hash to pick a starting slide by title or index
+    function parseStartIndexFromHash() {
+      const h = decodeURIComponent(location.hash.replace('#', '').trim());
+      if (!h) return 0;
+      // try index
+      const n = Number(h);
+      if (Number.isInteger(n) && n >= 0 && n < slides.length) return n;
+      // try title match (case-insensitive)
+      const i = slides.findIndex(s => s.title.toLowerCase() === h.toLowerCase());
+      return i >= 0 ? i : 0;
+    }
+
+    // Run clock (optional, small helper for situational awareness)
+    function tickClock(){
+      const now = new Date();
+      clock.textContent = now.toLocaleString(undefined, { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    }
+    setInterval(tickClock, 1000); tickClock();
+
+    // Start!
+    if (slides.length === 0) {
+      const empty = document.createElement('div');
+      empty.style.display = 'grid';
+      empty.style.placeItems = 'center';
+      empty.style.height = '100%';
+      empty.style.color = 'var(--muted)';
+      empty.textContent = 'No sections configured. Edit SECTIONS[] in the HTML.';
+      stage.appendChild(empty);
+    } else {
+      show(parseStartIndexFromHash());
+    }
+
+    // Keyboard shortcuts for quick control (optional)
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'PageDown') jumpTo((current + 1) % slides.length);
+      if (e.key === 'ArrowLeft'  || e.key === 'PageUp')   jumpTo((current - 1 + slides.length) % slides.length);
+      if (e.key === 'Home') jumpTo(0);
+      if (e.key === 'End')  jumpTo(slides.length - 1);
+    });
+
+    // Handle visibility changes: when tab becomes visible again, resync timer
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) {
+        // Restart progress to keep alignment with 30s window after wake
+        restartProgress();
+        scheduleNext();
+      }
+    });
+
+    // Resize observer (not strictly needed, but ensures iframes always fit)
+    new ResizeObserver(() => {/* reserved for future use */}).observe(document.body);
+  </script>
+</body>
+</html>
