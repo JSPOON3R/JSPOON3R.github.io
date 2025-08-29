@@ -278,7 +278,8 @@
         const closed_mrr_last_q = "https://superset.surfly-dev.com/superset/explore/p/yRZWLnbgkqY/?standalone=1";
         const expected_mrr_this_q = "https://superset.surfly-dev.com/superset/explore/p/1bn6Vv568e5/?standalone=1";
         const closed_deal_list_this_q = "https://superset.surfly-dev.com/superset/explore/p/KGj6pmxWvpP/?standalone=1";
-        const open_opportunities = "https://superset.surfly-dev.com/superset/explore/p/AE9wo44gb5j/?standalone=1";
+        const open_opportunities = "https://superset.surfly-dev.com/superset/explore/p/bMagNkx6PGD/?standalone=1";
+        const open_opps_expected_mrr_by_month = "https://superset.surfly-dev.com/superset/explore/p/Garw9Gz6MYe/?standalone=1";
         const surfly_trials = "https://lookerstudio.google.com/embed/reporting/1bb83e73-4aef-4e2b-9023-02ba09bdb9cd/page/p_x1ug00adcd";
         const sf_team_page = "https://webfuse.com/+biome-dash-sf/";
 
@@ -300,10 +301,11 @@
             },
                         {
                 title: "Open Opportunities",
-                layout: { cols: 1, rows: 1, gap: 0, keepAlive: true },
+                layout: { cols: 2, rows: 1, gap: 0, keepAlive: true },
                 panels: [
                     // Big left: full height of the left column
-                    { name: "Open Opportunities (sorted by expected close date)", url: open_opportunities}
+                    { name: "All Open Opportunities (sorted by expected close date)", url: open_opportunities},
+                     { name: "MRR Forecast this Q (Each Month)", url: open_opportunities}
                 ]
             },
              {
