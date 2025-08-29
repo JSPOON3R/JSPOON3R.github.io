@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Sales Team Dash</title>
+    <style>
+        :root {
+            --headerH: 6vh;
+            /* Top control strip height (≤7% as requested) */
+            --footerH: 10px;
+            /* Loading bar height */
+            --fadeMs: 600ms;
+            /* Fade duration for slide transitions */
+            --bg: #0b1220;
+            /* Page background */
+            --ui: #121a2b;
+            /* Header background */
+            --text: #e7eefc;
+            /* Header text */
+            --muted: #9bb4ff;
+            /* Subtle accents */
+            --btn: #1c2a49;
+            /* Button background */
+            --btnActive: #27406f;
+            /* Active/hover */
+            --progress: #7fc8ff;
+            /* Light blue loading bar */
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            background: var(--bg);
+            color: var(--text);
+            font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+        }
+
+        /* Layout: fixed header (7%), fixed footer (progress), main takes the rest */
+        .page {
+            display: grid;
+            grid-template-rows: var(--headerH) 1fr var(--footerH);
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            /* Prevent scrollbars on TVs */
+        }
+
+        /* Header with buttons */
+        header {
+            position: sticky;
+            /* Ensures it's always visible and never overlaps main */
+            top: 0;
+            z-index: 10;
+            background: var(--ui);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 6px 12px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .25);
+        }
+
+        header .title {
+            font-weight: 700;
+            letter-spacing: .3px;
+            margin-right: 8px;
+            white-space: nowrap;
+        }
+
+        .btns {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+            overflow: hidden;
+            /* Allow buttons to wrap with scroll on smaller screens */
+        }
+
+        .btns-inner {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            scrollbar-width: thin;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 4px;
+        }
+
+        button.tab {
+            appearance: none;
+            background: var(--btn);
+            color: var(--text);
+            border: 1px solid rgba(255, 255, 255, .08);
+            border-radius: 12px;
+            padding: 8px 12px;
+            font-size: clamp(11px, 1.5vh, 15px);
+            cursor: pointer;
+            transition: background .2s ease, transform .05s ease;
+            white-space: nowrap;
+        }
+
+        button.tab:hover,
+        button.tab[aria-current="true"] {
+            background: var(--btnActive);
+        }
+
+        button.tab:active {
+            transform: translateY(1px);
+        }
+
+        /* Main stage that holds the iframes */
+        main {
+            position: relative;
+            background: black;
+            /* Better contrast for dashboards and avoids flashes */
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            /* full bleed, but header/footer reserve space via grid */
+            opacity: 0;
+            transition: opacity var(--fadeMs) ease-in-out;
+            pointer-events: none;
+        }
+
+        .slide.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Make iframes truly fill the available area under header and above footer */
+        iframe.dashboard {
+            width: 100%;
+            height: 100%;
+            border: 0;
+            background: #000;
+            /* prevents white gaps while loading */
+        }
+
+        /* Multi-iframe grid per section */
+        .panel-grid {
+            display: grid;
+            height: 100%;
+            width: 100%;
+        }
+
+        .panel {
+            position: relative;
+            min-width: 0; /* prevent overflow in grid items */
+            overflow: hidden; /* ensure content does not spill into next grid row */
+        }
+
+        .panel iframe.dashboard {
+            position: absolute;
+            inset: 0;            /* fill the panel */
+            width: 100%;
+            height: 100%;
+            border: 0;
+            background: #000;
+        }
+
+        /* Panel title overlays above the iframe */
+        .panel-title {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            font-size: 0.9em;
+            font-weight: 600;
+            padding: 2px 4px;
+            background: rgba(0,0,0,0.6);
+            color: var(--muted);
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            pointer-events: none; /* allow clicks through title to iframe */
+            z-index: 1;
+        }
+        .panel iframe.dashboard {
+            display: block;
+        }
+
+        /* Clock formatting (top-right) */
+        #clock {
+            margin-left: auto;           /* push to the right */
+            padding: 0 4px;              /* very little padding */
+            display: flex;               /* center vertically */
+            align-items: center;
+            gap: 6px;                    /* space between tokens */
+            font-variant-numeric: tabular-nums;
+            line-height: 1;              /* keep compact */
+            opacity: .9;
+        }
+        #clock .q, #clock .w, #clock .time { color: var(--progress); }
+        #clock .divider { color: rgba(255,255,255,0.2); }
+
+        /* Footer progress bar */
+        footer {
+            position: sticky;
+            bottom: 0;
+            z-index: 10;
+            background: transparent;
+            /* Bar itself provides color */
+        }
+
+        .progress-rail {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, .08);
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            top: 0;
+            width: 0%;
+            background: var(--progress);
+            will-change: width;
+            transition: none;
+            /* set programmatically each run */
+            opacity: 0;
+            /* Start state is nothing (hidden) */
+        }
+
+        .progress-fill.run {
+            opacity: 1;
+        }
+
+        /* No text selection on TV */
+        * {
+            user-select: none;
+        }
+
+        /* Host for rebuilt CSV table (replaces iframe for open_opportunities) */
+        .table-host {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            background: #000;
+            color: var(--text);
+        }
+        .table-host .status {
+            padding: 8px 10px;
+            font-size: clamp(12px, 1.6vh, 16px);
+            color: var(--muted);
+        }
+        .table-host .table-wrapper {
+            position: relative;
+            flex: 1 1 auto;
+            overflow: auto;
+        }
+        .table-host table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed;               /* helps scale nicely */
+            font-size: clamp(12px, 1.6vh, 16px);
+        }
+        .table-host thead th {
+            position: sticky; top: 0;
+            background: #0a3ea9;              /* distinct blue */
+            color: #fff;
+            font-weight: 800;
+            font-size: clamp(13px, 1.8vh, 18px);
+            padding: 10px 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            z-index: 1;
+        }
+        .table-host tbody td {
+            padding: 10px 12px;               /* bigger rows */
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        .table-host tbody tr:nth-child(even) td {
+            background: rgba(255,255,255,0.03);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="page">
+        <header>
+            <div class="title" aria-hidden="true"></div>
+            <div class="btns">
+                <div class="btns-inner" id="tabs"></div>
+            </div>
+            <div id="clock" aria-hidden="true"></div>
+        </header>
+
+        <main id="stage" aria-live="polite" aria-atomic="true"></main>
+
+        <footer>
+            <div class="progress-rail" aria-hidden="true">
+                <div id="progress" class="progress-fill"></div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        /*************************************
+         * CONFIGURE YOUR DASHBOARD SECTIONS *
+         *************************************
+         * Add, remove, or reorder entries in SECTIONS.
+         * Each object needs a unique title and a url.
+         * Newly added sections are auto-included in:
+         *  - the rotation cycle (30s each)
+         *  - the top buttons (for quick jump)
+         */
+        const SECONDS_PER_SLIDE = 30;         // 30 seconds display per iframe
+        const DISPLAY_MS = SECONDS_PER_SLIDE * 1000;
+        const FADE_MS = 600; // Keep in sync with --fadeMs
+
+
+        //iframe links
+        const team_target_meter = "https://superset.surfly-dev.com/superset/explore/p/4db6Bzb623x/?standalone=1";
+        const closed_mrr_last_q = "https://superset.surfly-dev.com/superset/explore/p/yRZWLnbgkqY/?standalone=1";
+        const expected_mrr_this_q = "https://superset.surfly-dev.com/superset/explore/p/1bn6Vv568e5/?standalone=1";
+        const closed_deal_list_this_q = "https://superset.surfly-dev.com/superset/explore/p/KGj6pmxWvpP/?standalone=1";
+        const open_opportunities = "https://superset.surfly-dev.com/superset/explore/p/bMagNkx6PGD/?standalone=1";
+        const open_opps_expected_mrr_by_month = "https://superset.surfly-dev.com/superset/explore/p/Garw9Gz6MYe/?standalone=1";
+        const surfly_trials = "https://lookerstudio.google.com/embed/reporting/1bb83e73-4aef-4e2b-9023-02ba09bdb9cd/page/p_x1ug00adcd";
+        const sf_team_page = "https://webfuse.com/+biome-dash-sf/";
+
+
+        const SECTIONS = [
+            {
+                title: "Targets (SS)",
+                layout: { cols: 2, rows: 2, gap: 8, keepAlive: true },
+                panels: [
+                    // Big left: full height of the left column
+                    { name: "Team Target", url: team_target_meter, rowSpan: 2 },
+
+                    // Right column (top)
+                    { name: "MRR Forecast this Q (by expected close date)", url: expected_mrr_this_q },
+
+                    // Right column (bottom)
+                    { name: "Closed MRR last Q", url: closed_mrr_last_q }
+                ]
+            },
+                         {
+                title: "Quarterly Targets (SF)",
+                layout: { cols: 1, rows: 1, gap: 8, keepAlive: true },
+                panels: [
+                    // Big left: full height of the left column
+                    { name: "Salesforce Embed", url: sf_team_page}
+                ]
+            },
+                        {
+                title: "Open Opportunities",
+                layout: { cols: 2, rows: 1, gap: 8, keepAlive: true },
+                panels: [
+                    // Big left: full height of the left column
+                    { name: "All Open Opportunities (sorted by expected close date)", url: open_opportunities},
+                     { name: "MRR Forecast this Q (Each Month)", url: open_opps_expected_mrr_by_month}
+                ]
+            },
+             {
+                title: "Surfly Trials",
+                layout: { cols: 1, rows: 1, gap: 8, keepAlive: true },
+                panels: [
+                    // Big left: full height of the left column
+                    { name: "Enterprise Trial Overview", url: surfly_trials}
+                ]
+            }
+            // Example of another section showing how to add more panels later:
+            /*
+            {
+                title: "Marketing (Example)",
+                layout: { autoFit: true, gap: 10, keepAlive: true },
+                panels: [
+                    // { name: "GA4 Overview", url: "https://datastudio.google.com/embed/reporting/your-ga4-id/page/1" },
+                    // { name: "Traffic", url: "https://…" },
+                ]
+            }
+                */
+        ];
+
+        /*********************
+         * CORE PAGE LOGIC   *
+         *********************/
+        const stage = document.getElementById('stage');
+        const tabs = document.getElementById('tabs');
+        const progress = document.getElementById('progress');
+        const clock = document.getElementById('clock');
+
+        let current = -1;      // no slide visible at start
+        let timer = null;      // rotation timer
+
+        // Build slides & top buttons
+        const slides = SECTIONS.map((sec, idx) => {
+            // Create slide container
+            const wrapper = document.createElement('section');
+            wrapper.className = 'slide';
+            wrapper.setAttribute('role', 'region');
+            wrapper.setAttribute('aria-label', sec.title);
+            wrapper.dataset.keepAlive = (sec.layout && sec.layout.keepAlive) ? '1' : '0';
+
+            // Create grid container
+            const grid = document.createElement('div');
+            grid.className = 'panel-grid';
+            const gapPx = (sec.layout && typeof sec.layout.gap === 'number') ? sec.layout.gap : 8;
+            grid.style.gap = gapPx + 'px';
+            grid.style.height = '100%';
+            grid.style.width = '100%';
+
+            if (sec.layout && sec.layout.autoFit) {
+                grid.style.gridTemplateColumns = 'repeat(auto-fit, minmax(480px, 1fr))';
+            } else {
+                const cols = (sec.layout && sec.layout.cols) || 2;
+                const rows = (sec.layout && sec.layout.rows) || 'auto';
+                grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+                if (rows === 'auto') {
+                    grid.style.gridAutoRows = '1fr';
+                } else {
+                    grid.style.gridTemplateRows = `repeat(${rows}, 1fr)`;
+                }
+            }
+
+            // Create one panel (with iframe) per entry
+            (sec.panels || []).forEach((p) => {
+                const cell = document.createElement('div');
+                cell.className = 'panel';
+                if (p.colSpan) cell.style.gridColumn = `span ${p.colSpan}`;
+                if (p.rowSpan) cell.style.gridRow = `span ${p.rowSpan}`;
+
+                const titleDiv = document.createElement('div');
+                titleDiv.className = 'panel-title';
+                titleDiv.textContent = p.name || sec.title;
+
+                // Only replace the open_opportunities panel with a CSV-built table.
+                const isOpenOpps = (typeof open_opportunities !== 'undefined') && p.url === open_opportunities;
+
+                if (isOpenOpps) {
+                    const host = document.createElement('div');
+                    host.className = 'table-host';
+                    host.dataset.url = p.url; // keep original URL for token parsing
+
+                    const status = document.createElement('div');
+                    status.className = 'status';
+                    status.textContent = 'Preparing data…';
+                    host.appendChild(status);
+
+                    const wrap = document.createElement('div');
+                    wrap.className = 'table-wrapper';
+                    host.appendChild(wrap);
+
+                    cell.appendChild(host);
+                } else {
+                    const iframe = document.createElement('iframe');
+                    iframe.className = 'dashboard';
+                    iframe.title = p.name || sec.title;
+                    iframe.loading = 'eager';
+                    iframe.referrerPolicy = 'no-referrer';
+                    iframe.dataset.src = p.url;
+                    iframe.src = 'about:blank';
+
+                    cell.appendChild(iframe);
+                }
+
+                cell.appendChild(titleDiv);
+                grid.appendChild(cell);
+            });
+
+            wrapper.appendChild(grid);
+            stage.appendChild(wrapper);
+
+            // Create corresponding tab button
+            const btn = document.createElement('button');
+            btn.className = 'tab';
+            btn.type = 'button';
+            btn.textContent = sec.title;
+            btn.addEventListener('click', () => jumpTo(idx));
+
+            tabs.appendChild(btn);
+            return { wrapper, btn, title: sec.title };
+        });
+
+        // ===== CSV rebuild helpers for "open_opportunities" panel =====
+
+        // Very small CSV parser that handles quoted fields and commas
+        function parseCSV(text) {
+            const rows = [];
+            let i = 0, cur = '', row = [], inQuotes = false;
+            while (i < text.length) {
+                const ch = text[i++];
+                if (inQuotes) {
+                    if (ch === '"') {
+                        if (text[i] === '"') { cur += '"'; i++; } // escaped quote
+                        else { inQuotes = false; }
+                    } else {
+                        cur += ch;
+                    }
+                } else {
+                    if (ch === '"') inQuotes = true;
+                    else if (ch === ',') { row.push(cur); cur = ''; }
+                    else if (ch === '\r') { /* ignore */ }
+                    else if (ch === '\n') { row.push(cur); rows.push(row); row = []; cur = ''; }
+                    else { cur += ch; }
+                }
+            }
+            if (cur.length || row.length) { row.push(cur); rows.push(row); }
+            return rows;
+        }
+
+        async function getCsrf(base) {
+            try {
+                const r = await fetch(new URL('/api/v1/security/csrf_token/', base), {
+                    credentials: 'include'
+                });
+                if (!r.ok) throw new Error('csrf ' + r.status);
+                const j = await r.json();
+                return j.result;
+            } catch (e) {
+                throw new Error('CSRF fetch failed: ' + e.message);
+            }
+        }
+
+        async function resolveChartIdFromPermalink(base, urlStr) {
+            const u = new URL(urlStr);
+            const m = u.pathname.match(/\/p\/([^/]+)/);
+            if (!m) throw new Error('No permalink token in URL');
+            const token = m[1];
+
+            // Try both permalink endpoints (Superset versions differ)
+            const endpoints = [
+                new URL('/api/v1/explore/permalink/?token=' + encodeURIComponent(token), base),
+                new URL('/api/v1/explore/permalink/' + encodeURIComponent(token), base),
+            ];
+            for (const ep of endpoints) {
+                try {
+                    const r = await fetch(ep, { credentials: 'include' });
+                    if (!r.ok) continue;
+                    const j = await r.json();
+                    const form = j.result?.form_data || j.form_data || j.result;
+                    const id = form?.slice_id || form?.chartId || form?.chart_id;
+                    if (id) return id;
+                } catch (e) { /* try next */ }
+            }
+            throw new Error('Could not resolve chart ID from permalink');
+        }
+
+        async function fetchCsvForChart(base, chartId) {
+            const csrf = await getCsrf(base);
+            const url = new URL(`/api/v1/chart/${chartId}/data?result_format=csv&result_type=full`, base);
+            const res = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'X-CSRFToken': csrf,
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Accept': 'text/csv'
+                },
+                credentials: 'include',
+            });
+            if (!res.ok) throw new Error('CSV ' + res.status);
+            return await res.text();
+        }
+
+        function renderCsvIntoHost(hostEl, csvText) {
+            const wrap = hostEl.querySelector('.table-wrapper');
+            const status = hostEl.querySelector('.status');
+            const rows = parseCSV(csvText);
+            if (!rows.length) {
+                status.textContent = 'No data returned.';
+                return;
+            }
+            const [header, ...body] = rows;
+            const limited = body.slice(0, 10); // cap to 10 rows
+
+            // Build table
+            const table = document.createElement('table');
+            const thead = document.createElement('thead');
+            const trh = document.createElement('tr');
+            header.forEach(h => {
+                const th = document.createElement('th');
+                th.textContent = h;
+                trh.appendChild(th);
+            });
+            thead.appendChild(trh);
+            table.appendChild(thead);
+
+            const tbody = document.createElement('tbody');
+            limited.forEach(r => {
+                const tr = document.createElement('tr');
+                r.forEach(c => {
+                    const td = document.createElement('td');
+                    td.title = c;
+                    td.textContent = c;
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+            table.appendChild(tbody);
+
+            // Mount
+            wrap.innerHTML = '';
+            wrap.appendChild(table);
+            status.textContent = ''; // clear status
+        }
+
+        function startOpenOppsLoader() {
+            // Find our special host
+            document.querySelectorAll('.table-host').forEach(host => {
+                const urlStr = host.dataset.url;
+                if (!urlStr) return;
+
+                const base = new URL(urlStr).origin;
+
+                async function attempt() {
+                    const status = host.querySelector('.status');
+                    try {
+                        status.textContent = 'Fetching chart…';
+                        const chartId = await resolveChartIdFromPermalink(base, urlStr);
+
+                        status.textContent = `Chart ${chartId} → CSV…`;
+                        const csv = await fetchCsvForChart(base, chartId);
+
+                        renderCsvIntoHost(host, csv);
+                        console.log('✅ Rebuilt table from Superset CSV.');
+                        return true;
+                    } catch (e) {
+                        console.warn('⏳ Retry in 10s – reason:', e.message);
+                        status.textContent = 'Waiting for Superset login or permissions… retrying in 10s';
+                        return false;
+                    }
+                }
+
+                // first try immediately, then cyclic retry until success
+                attempt().then(ok => {
+                    if (ok) return;
+                    const handle = setInterval(async () => {
+                        const ok2 = await attempt();
+                        if (ok2) clearInterval(handle);
+                    }, 10_000);
+                });
+            });
+        }
+
+        function primeIframes(wrapper) {
+            wrapper.querySelectorAll('iframe.dashboard[data-src]').forEach((ifr) => {
+                if (!ifr.src || ifr.src === 'about:blank') {
+                    ifr.src = ifr.dataset.src;
+                }
+            });
+        }
+
+        function blankIframes(wrapper) {
+            wrapper.querySelectorAll('iframe.dashboard').forEach((ifr) => {
+                ifr.src = 'about:blank';
+            });
+        }
+
+        function setActive(index) {
+            slides.forEach((s, i) => {
+                const isActive = i === index;
+                s.wrapper.classList.toggle('active', isActive);
+                s.btn.setAttribute('aria-current', isActive ? 'true' : 'false');
+            });
+        }
+
+        function restartProgress() {
+            // Hide and reset the bar instantly
+            progress.classList.remove('run');
+            progress.style.transition = 'none';
+            progress.style.width = '0%';
+            progress.style.opacity = '0';
+
+            // Force reflow to flush styles so the next transition runs
+            void progress.offsetWidth;
+
+            // Start the fill animation for the full display window
+            progress.style.transition = `width ${DISPLAY_MS}ms linear`;
+            progress.classList.add('run');
+            progress.style.opacity = '1'; // bar appears anew
+            // Kick off the growth to 100%
+            requestAnimationFrame(() => { progress.style.width = '100%'; });
+        }
+
+        function scheduleNext() {
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                const next = (current + 1) % slides.length;
+                show(next);
+            }, DISPLAY_MS);
+        }
+
+        function show(index) {
+            if (index === current) {
+                restartProgress();
+                scheduleNext();
+                return;
+            }
+
+            // During the fade, hide the bar
+            progress.style.opacity = '0';
+            progress.classList.remove('run');
+
+            const prev = current;
+            current = index;
+            setActive(current);
+
+            const prevWrapper = (prev >= 0 && slides[prev]) ? slides[prev].wrapper : null;
+            const curWrapper = slides[current].wrapper;
+
+            // After fade completes, (1) load current iframes, (2) maybe blank previous
+            setTimeout(() => {
+                // Load current section's iframes lazily
+                primeIframes(curWrapper);
+
+                // Optionally free resources from previous section
+                if (prevWrapper) {
+                    const keep = prevWrapper.dataset.keepAlive === '1';
+                    if (!keep) blankIframes(prevWrapper);
+                }
+
+                restartProgress();
+                scheduleNext();
+            }, FADE_MS);
+        }
+
+        function jumpTo(index) {
+            clearTimeout(timer);
+            show(index);
+        }
+
+        // Optional: allow URL hash to pick a starting slide by title or index
+        function parseStartIndexFromHash() {
+            const h = decodeURIComponent(location.hash.replace('#', '').trim());
+            if (!h) return 0;
+            // try index
+            const n = Number(h);
+            if (Number.isInteger(n) && n >= 0 && n < slides.length) return n;
+            // try title match (case-insensitive)
+            const i = slides.findIndex(s => s.title.toLowerCase() === h.toLowerCase());
+            return i >= 0 ? i : 0;
+        }
+
+        // Run clock (optional, small helper for situational awareness)
+        function tickClock() {
+            const now = new Date();
+
+            // Quarter as Q{1-4} + {YY}
+            const q = Math.floor(now.getMonth() / 3) + 1;
+            const yy = String(now.getFullYear()).slice(-2);
+            const qHtml = `<span class="q">Q${q}</span><span class="yy">${yy}</span>`;
+
+            // ISO week number
+            function isoWeek(d) {
+                const date = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+                const dayNum = date.getUTCDay() || 7; // Sun=7
+                date.setUTCDate(date.getUTCDate() + 4 - dayNum);
+                const yearStart = new Date(Date.UTC(date.getUTCFullYear(), 0, 1));
+                const weekNo = Math.ceil((((date - yearStart) / 86400000) + 1) / 7);
+                return weekNo;
+            }
+            const week = isoWeek(now);
+            const wHtml = `<span class="w">W${String(week).padStart(2, '0')}</span>`;
+
+            // Date like 29th August
+            const day = now.getDate();
+            const suffix = (n) => {
+                const s = ["th", "st", "nd", "rd"]; const v = n % 100;
+                return s[(v - 20) % 10] || s[v] || s[0];
+            };
+            const months = [
+                'January','February','March','April','May','June',
+                'July','August','September','October','November','December'
+            ];
+            const dateHtml = `<span class="date">${day}${suffix(day)} ${months[now.getMonth()]}</span>`;
+
+            // Time HH:MM:SS (24h)
+            const timeStr = now.toLocaleTimeString(undefined, { hour12: false });
+            const timeHtml = `<span class="time">${timeStr}</span>`;
+
+            clock.innerHTML = `${qHtml} <span class="divider">|</span> ${wHtml} <span class="divider">|</span> ${dateHtml} <span class="divider">|</span> ${timeHtml}`;
+        }
+        setInterval(tickClock, 1000); tickClock();
+
+        // Start!
+        if (slides.length === 0) {
+            const empty = document.createElement('div');
+            empty.style.display = 'grid';
+            empty.style.placeItems = 'center';
+            empty.style.height = '100%';
+            empty.style.color = 'var(--muted)';
+            empty.textContent = 'No sections configured. Edit SECTIONS[] in the HTML.';
+            stage.appendChild(empty);
+        } else {
+            show(parseStartIndexFromHash());
+            // Kick off CSV table loader (only acts on open_opportunities panel)
+            startOpenOppsLoader();
+        }
+
+        // Keyboard shortcuts for quick control (optional)
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === 'PageDown') jumpTo((current + 1) % slides.length);
+            if (e.key === 'ArrowLeft' || e.key === 'PageUp') jumpTo((current - 1 + slides.length) % slides.length);
+            if (e.key === 'Home') jumpTo(0);
+            if (e.key === 'End') jumpTo(slides.length - 1);
+        });
+
+        // Handle visibility changes: when tab becomes visible again, resync timer
+        document.addEventListener('visibilitychange', () => {
+            if (!document.hidden) {
+                // Restart progress to keep alignment with 30s window after wake
+                restartProgress();
+                scheduleNext();
+            }
+        });
+
+        // Resize observer (not strictly needed, but ensures iframes always fit)
+        new ResizeObserver(() => {/* reserved for future use */ }).observe(document.body);
+    </script>
+</body>
+
+</html>
