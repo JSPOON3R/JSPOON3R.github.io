@@ -329,6 +329,39 @@
         const surfly_trials = "https://lookerstudio.google.com/embed/reporting/1bb83e73-4aef-4e2b-9023-02ba09bdb9cd/page/p_x1ug00adcd";
         const sf_team_page = "https://webfuse.com/+biome-dash-sf/";
 
+        // Chart id for open_opportunities panel (null = resolve from permalink)
+        let open_opportunities_chart_id = null; // ← put numeric slice_id here when known
+        // Runtime overrides for chart id: window var, query/hash param, or localStorage
+        (function () {
+            try {
+                // global window override
+                if (typeof window.OPEN_OPPS_CHART_ID === 'number' && Number.isFinite(window.OPEN_OPPS_CHART_ID)) {
+                    open_opportunities_chart_id = window.OPEN_OPPS_CHART_ID;
+                }
+                // query/hash param: open_opps_id
+                const q = new URLSearchParams(location.search);
+                const h = new URLSearchParams((location.hash || '').replace(/^#/, ''));
+                const cand = q.get('open_opps_id') || h.get('open_opps_id');
+                if (!open_opportunities_chart_id && cand && /^\d+$/.test(cand)) {
+                    open_opportunities_chart_id = Number(cand);
+                    try { localStorage.setItem('open_opps_id', String(open_opportunities_chart_id)); } catch (_) {}
+                }
+                // localStorage fallback
+                if (!open_opportunities_chart_id) {
+                    const st = localStorage.getItem('open_opps_id');
+                    if (st && /^\d+$/.test(st)) {
+                        open_opportunities_chart_id = Number(st);
+                    }
+                }
+                if (open_opportunities_chart_id) {
+                    console.log('ℹ️ Using open_opportunities chart id:', open_opportunities_chart_id);
+                } else {
+                    console.log('ℹ️ No open_opportunities chart id set; will attempt permalink resolution.');
+                }
+            } catch (e) {
+                console.warn('open_opps_id override parse failed:', e);
+            }
+        })();
 
         const SECTIONS = [
             {
