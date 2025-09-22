@@ -282,12 +282,13 @@
         const open_opps_expected_mrr_by_month = "https://superset.surfly-dev.com/superset/explore/p/Garw9Gz6MYe/?standalone=1";
         const surfly_trials = "https://lookerstudio.google.com/embed/reporting/1bb83e73-4aef-4e2b-9023-02ba09bdb9cd/page/p_x1ug00adcd";
         const sf_team_page = "https://webfuse.com/+biome-dash-sf/";
+        const quarter_deal_breakdown = "https://superset.surfly-dev.com/superset/explore/p/GM8wzrVnwzA/";
 
 
         const SECTIONS = [
             {
                 title: "Targets (SS)",
-                layout: { cols: 2, rows: 2, gap: 8, keepAlive: true },
+                layout: { cols: 2, rows: 3, gap: 8, keepAlive: true },
                 panels: [
                     // Big left: full height of the left column
                     { name: "Team Target", url: team_target_meter, rowSpan: 2 },
@@ -296,7 +297,9 @@
                     { name: "MRR Forecast this Q (by expected close date)", url: expected_mrr_this_q },
 
                     // Right column (bottom)
-                    { name: "Closed MRR last Q", url: closed_mrr_last_q }
+                    { name: "Closed MRR last Q", url: closed_mrr_last_q },
+
+                    { name: "Closed MRR last Q", url: quarter_deal_breakdown, colSpan: 2 }
                 ]
             },
                          {
