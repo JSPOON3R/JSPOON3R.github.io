@@ -15,7 +15,7 @@
 
 .duh-card{
   background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01));
-  border: 1px solid var(--border);
+      border: 1px solid var(--ink-dim);
   border-radius: var(--radius);
   padding: 18px;
   box-shadow: var(--shadow);
