@@ -400,7 +400,7 @@
     // Try to fetch a file; return the absolute URL if it exists, else null
     async function resolveIfExists(path) {
       try {
-        const r = await fetch(path, { method: 'GET' });
+        const r = await fetch(encodeURI(path), { method: 'GET' });
         if (r.ok) return path;
       } catch { }
       return null;
@@ -476,16 +476,19 @@
         }
         // Local static server mode
         const rel = path.replace(`${BASE_PATH}/`, "");
-        const r = await fetch(rel);
+        const r = await fetch(encodeURI(rel));
         if (!r.ok) throw new Error(`Failed to fetch ${rel}`);
         return await r.text();
       }
 
       // Load markdown + embed
       let infoMd = "", instructionsMd = "", iframeHtml = "";
-      try { infoMd = await fetchText(`${entryRoot}/demo-space-info.md`); } catch { }
-      try { instructionsMd = await fetchText(`${entryRoot}/instructions.md`); } catch { }
-      try { iframeHtml = await fetchText(`${entryRoot}/embed.html`); } catch { }
+      try { infoMd = await fetchText(`${entryRoot}/demo-space-info.md`); }
+      catch (e) { console.warn('info md fetch failed:', e); }
+      try { instructionsMd = await fetchText(`${entryRoot}/instructions.md`); }
+      catch (e) { console.warn('instructions md fetch failed:', e); }
+      try { iframeHtml = await fetchText(`${entryRoot}/embed.html`); }
+      catch (e) { console.warn('embed html fetch failed:', e); }
 
       const { useCase, icp, keyFeatures, useBullets, icpBullets, keyBullets } = parseInfoMarkdown(infoMd);
       const { setupHtml, demoHtml } = splitInstructions(instructionsMd);
