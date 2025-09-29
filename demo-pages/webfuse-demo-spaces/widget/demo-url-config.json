@@ -2,7 +2,7 @@
   "tiles": [
     {
       "id": "abnamro-pin-demo",
-      "label": "ABNAmro Pin Flow",
+      "label": "ABN-Amro Pin Flow",
       "url": "https://demo.surfly.com/demo-pages/webfuse-demo-pages/abnamro-pin-demo",
       "icon": "fa6-solid:ellipsis"
     }
