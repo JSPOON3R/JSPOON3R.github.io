@@ -225,6 +225,91 @@
       border-radius: 6px;
       box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .03)
     }
+
+    /* —— Spacing above the page heading —— */
+header { padding-top: 84px; } /* was 54px */
+
+/* —— Section headings: bigger + gradient —— */
+.card h3,
+.entry .title {
+  font-weight: 800;
+  letter-spacing: .2px;
+  background: linear-gradient(90deg, var(--brand), var(--brand-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+
+/* Slightly larger headings in cards for readability */
+.card h3 {
+  font-size: clamp(20px, 2.4vw, 24px);
+  margin-bottom: 10px;
+}
+
+/* —— Markdown typography: simple, readable text —— */
+/* Applies to rendered markdown inside your .card blocks (from instructions.md, etc.) */
+.card :where(p, li) {
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+.card :where(ul, ol) {
+  margin: 8px 0 10px 20px;
+  padding: 0;
+}
+.card li + li { margin-top: 4px; }
+.card a { text-decoration: underline; }
+
+/* Optional: make inline code a touch more subtle inside text blocks */
+.card :where(p, li) code {
+  padding: .08rem .34rem;
+  border-radius: 6px;
+  background: rgba(255,255,255,.06);
+  border: 1px solid var(--border);
+  color: #cfe1ff;
+}
+
+/* —— Three-up bullets: ensure clean text inside boxes —— */
+.three-up .bullet h4 {
+  font-weight: 700;
+  line-height: 1.35;
+}
+.three-up .bullet p {
+  color: var(--ink-dim);
+  font-size: .97rem;
+  line-height: 1.55;
+}
+
+/* —— Gentle white flashing glow behind embedded buttons —— */
+.embed-slot iframe {
+  border-radius: 10px; /* soft edges on glow */
+  box-shadow: 0 0 0 0 rgba(255,255,255,0.18);
+  animation: pulseGlow 2.8s ease-in-out infinite;
+}
+
+/* If an embed is not an iframe, still try to glow the first child */
+.embed-slot > :first-child {
+  border-radius: 10px;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.18); }
+  50%      { box-shadow: 0 0 16px 6px rgba(255,255,255,0.14); }
+}
+
+/* Respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  .embed-slot iframe { animation: none; }
+}
+
+.three-up .bullet h4 {
+  background: linear-gradient(90deg, var(--brand), var(--brand-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
   </style>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
