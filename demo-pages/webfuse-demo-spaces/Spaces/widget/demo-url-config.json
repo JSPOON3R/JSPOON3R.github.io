@@ -1,0 +1,22 @@
+{
+  "tiles": [
+    {
+      "id": "widget-demo",
+      "label": "Widget Demo Page",
+      "url": "https://example.com/widget-demo",
+      "icon": "fa6-solid:wand-magic-sparkles"
+    },
+    {
+      "id": "archive",
+      "label": "Archive Page",
+      "url": "https://example.com/archive",
+      "icon": "fa6-solid:box-archive"
+    },
+    {
+      "id": "playground",
+      "label": "Playground",
+      "url": "https://example.com/playground",
+      "icon": "fa6-solid:vials"
+    }
+  ]
+}
