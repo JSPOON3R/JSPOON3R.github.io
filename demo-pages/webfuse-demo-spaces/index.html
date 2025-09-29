@@ -1,0 +1,312 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Sales team demo Spaces</title>
+  <style>
+    :root {
+      --maxw: 1280px; /* widened */
+      --divider: #d8d8de;
+      --muted: #6b7280;
+      --bg: #fafafa;
+      --card: #ffffff;
+      --border: #e5e7eb;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: var(--bg);
+      color: #111827;
+      line-height: 1.55;
+    }
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(250,250,250,0.8);
+      backdrop-filter: blur(6px);
+      border-bottom: 1px solid var(--border);
+    }
+    .wrap {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 14px 20px;
+    }
+    h1 {
+      font-size: 18px;
+      margin: 0;
+      font-weight: 600;
+      color: #111827;
+    }
+    .hint {
+      font-size: 13px;
+      color: var(--muted);
+      margin-top: 4px;
+    }
+    main.wrap { padding-top: 18px; }
+    .entry {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 18px;
+      margin: 24px 0;
+      position: relative;
+    }
+    /* top & bottom dividers that span almost full width */
+    .entry::before, .entry::after {
+      content: "";
+      display: block;
+      height: 1px;
+      background: var(--divider);
+      position: absolute;
+      left: 10px; right: 10px;
+    }
+    .entry::before { top: -12px; }
+    .entry::after  { bottom: -12px; }
+    .titlebar {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .title {
+      font-weight: 700;
+      font-size: 18px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .embed-slot {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      min-height: 35px;
+    }
+    .two-col {
+      display: grid;
+      grid-template-columns: 7fr 3fr; /* 70/30 split */
+      gap: 16px;
+      align-items: start;
+    }
+    .block {
+      border: 1px dashed var(--border);
+      border-radius: 10px;
+      padding: 12px;
+      background: #fff;
+    }
+    .block h3 {
+      margin: 0 0 6px 0;
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      color: #374151;
+    }
+    .md {
+      margin-top: 14px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px;
+      background: #fff;
+    }
+    .loading, .error {
+      color: var(--muted);
+      font-size: 14px;
+      padding: 10px 0;
+    }
+    .error { color: #b91c1c; }
+    .footer-note {
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      margin: 30px 0 60px;
+    }
+    code, pre { background: #f5f5f7; border-radius: 6px; }
+    pre { padding: 12px; overflow: auto; }
+    @media (max-width: 780px) {
+      .titlebar { grid-template-columns: 1fr; }
+      .embed-slot { justify-content: flex-start; }
+      .two-col { grid-template-columns: 1fr; }
+    }
+  </style>
+  <!-- Lightweight Markdown parser -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>Sales team demo Spaces</h1>
+      <div class="hint">Drop new entries as folders in <code>/Spaces</code>. No need to edit this page.</div>
+    </div>
+  </header>
+  <main class="wrap">
+    <div id="status" class="loading">Loading demo spaces…</div>
+    <div id="entries"></div>
+    <div class="footer-note">Tip: Each entry folder should include <code>demo-space-info.md</code>, <code>instructions.md</code>, and optionally <code>embed.html</code>.</div>
+  </main>
+
+<script>
+/**
+ * CONFIG — Set these if hosting on GitHub Pages so the page can auto-discover entries.
+ * If left blank, the page will try a local fallback (./Spaces/index.json) if present.
+ */
+// CONFIG: GitHub repository and folder structure
+const GITHUB_OWNER = "JSPOON3R";               // GitHub username or org
+const GITHUB_REPO  = "JSPOON3R.github.io";            // Repo name
+const GITHUB_BRANCH = "main";                  // Usually "main" or "gh-pages"
+const BASE_PATH = "demo-pages/webfuse-demo-spaces"; // Path from repo root to where index.html lives
+
+// Utility: basic escape
+const esc = (s) => (s || "").replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+
+// Render helper for one entry
+async function renderEntry(entryName) {
+const entryRoot = `${BASE_PATH}/Spaces/${entryName}`;
+  // Try to fetch files either via GitHub API or via relative paths
+  async function fetchText(path) {
+    // If GitHub config is present, use the API to fetch content (base64)
+    if (GITHUB_OWNER && GITHUB_REPO) {
+const api = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${BASE_PATH}/Spaces?ref=${encodeURIComponent(GITHUB_BRANCH)}`;      const r = await fetch(api);
+      if (!r.ok) throw new Error(`Failed to fetch ${path} from GitHub API`);
+      const j = await r.json();
+      if (j.encoding === "base64") {
+        return atob(j.content.replace(/\n/g, ""));
+      } else if (typeof j.content === "string") {
+        return j.content;
+      } else {
+        // For raw files (like HTML) we can try fetching the raw URL
+        const raw = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${encodeURIComponent(GITHUB_BRANCH)}/${path}`;
+        const r2 = await fetch(raw);
+        if (!r2.ok) throw new Error(`Failed to fetch raw ${path}`);
+        return await r2.text();
+      }
+    } else {
+      // Local/relative fetch (works when viewing locally with a simple server)
+      const r = await fetch(path);
+      if (!r.ok) throw new Error(`Failed to fetch ${path}`);
+      return await r.text();
+    }
+  }
+
+  // Load content files
+  let infoMd = "", instructionsMd = "", iframeHtml = "";
+  try { infoMd = await fetchText(`${entryRoot}/demo-space-info.md`); } catch {}
+  try { instructionsMd = await fetchText(`${entryRoot}/instructions.md`); } catch {}
+  try { iframeHtml = await fetchText(`${entryRoot}/embed.html`); } catch {}
+
+  const container = document.createElement("section");
+  container.className = "entry";
+  const title = entryName.replace(/[-_]/g, " ");
+
+  const parsedInfo = parseInfoMarkdown(infoMd);
+
+  container.innerHTML = `
+    <div class="titlebar">
+      <div class="title">${esc(title)}</div>
+      <div class="embed-slot">
+        ${iframeHtml ? iframeHtml : '<div class="hint">Add <code>embed.html</code> to show a button</div>'}
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="block">
+        <h3>Use Case</h3>
+        <div class="md">${marked.parse(parsedInfo.useCase || "_(missing)_")}</div>
+      </div>
+      <div class="block">
+        <h3>ICP</h3>
+        <div class="md">${marked.parse(parsedInfo.icp || "_(missing)_")}</div>
+      </div>
+    </div>
+
+    <div class="md">
+      <h3 style="margin:0 0 8px 0;">Key Functionality to Showcase</h3>
+      ${marked.parse(parsedInfo.kfs || "_(missing: add a **# Key Functionality to Showcase** section to demo-space-info.md)_")}
+    </div>
+
+    <div class="md">
+      <h3 style="margin:0 0 8px 0;">Instructions</h3>
+      ${marked.parse(instructionsMd || "_(missing instructions.md)_")}
+    </div>
+  `;
+  return container;
+}
+
+/**
+ * Parse the info markdown into sections by headings:
+ * "Use Case", "ICP", and "Key Functionality to Showcase".
+ * If headings are missing, we treat everything as Use Case.
+ */
+function parseInfoMarkdown(md) {
+  if (!md) return { useCase: "", icp: "", kfs: "" };
+  const lines = md.split(/\r?\n/);
+  let section = "use";
+  let use = [], icp = [], kfs = [];
+  for (let i=0;i<lines.length;i++) {
+    const line = lines[i];
+    if (/^\s*#{1,6}\s*ICP\b/i.test(line)) { section = "icp"; continue; }
+    if (/^\s*#{1,6}\s*Use\s*Case\b/i.test(line)) { section = "use"; continue; }
+    if (/^\s*#{1,6}\s*Key\s*Functionality\s*to\s*Showcase\b/i.test(line)) { section = "kfs"; continue; }
+    if (section === "icp") icp.push(line);
+    else if (section === "kfs") kfs.push(line);
+    else use.push(line);
+  }
+  return { useCase: use.join("\n").trim(), icp: icp.join("\n").trim(), kfs: kfs.join("\n").trim() };
+}
+
+// Discover entries: (1) GitHub API if configured; (2) local Spaces/index.json; (3) fallback to hardcoded list
+async function discoverEntries() {
+  const status = document.getElementById("status");
+  const entriesHost = document.getElementById("entries");
+  try {
+    let folders = [];
+
+    if (GITHUB_OWNER && GITHUB_REPO) {
+      const api = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/Spaces?ref=${encodeURIComponent(GITHUB_BRANCH)}`;
+      const r = await fetch(api);
+      if (r.ok) {
+        const list = await r.json();
+        folders = (Array.isArray(list) ? list : []).filter(x => x.type === "dir").map(x => x.name);
+      } else {
+        throw new Error("GitHub API listing failed");
+      }
+    } else {
+      // Local fallback
+      try {
+        const r = await fetch("Spaces/index.json");
+        if (r.ok) {
+          const j = await r.json();
+          folders = Array.isArray(j.folders) ? j.folders : [];
+        }
+      } catch {}
+      // If still empty, attempt to use a baked-in sample
+      if (folders.length === 0) {
+        folders = ["Webfuse-Workspace-Import"];
+      }
+    }
+
+    status.remove();
+
+    for (const folder of folders) {
+      try {
+        const node = await renderEntry(folder);
+        entriesHost.appendChild(node);
+      } catch (e) {
+        const err = document.createElement("div");
+        err.className = "error";
+        err.textContent = `Failed to load "${folder}": ${e.message}`;
+        entriesHost.appendChild(err);
+      }
+    }
+  } catch (e) {
+    status.className = "error";
+    status.textContent = "Failed to load spaces: " + e.message;
+  }
+}
+
+discoverEntries();
+</script>
+</body>
+</html>
