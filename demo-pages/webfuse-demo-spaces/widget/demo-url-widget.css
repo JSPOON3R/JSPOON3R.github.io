@@ -59,7 +59,7 @@
   background: linear-gradient(180deg, rgba(124,92,255,.22), rgba(36,199,214,.12));
   border: 1px solid rgba(124,92,255,.35);
 }
-.duh-label{ font-weight:600 }
+.duh-label{ font-weight:600;     color: white; }
 
 .duh-form{
   margin-top: 14px;
