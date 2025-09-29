@@ -5,24 +5,30 @@ on:
     paths:
       - 'demo-pages/webfuse-demo-spaces/Spaces/**'
 
+permissions:
+  contents: write   
 jobs:
   build-index:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # default token is fine; gets perms from the block above
+          fetch-depth: 0
 
       - name: Generate index.json
         shell: bash
         run: |
           cd demo-pages/webfuse-demo-spaces/Spaces
           ls -1d */ 2>/dev/null | sed 's#/##' | jq -R . | jq -s '{folders: .}' > index.json || echo '{"folders":[]}' > index.json
-          echo "Generated:"
+          echo "Generated index.json:"
           cat index.json
 
       - name: Commit & push index.json
         run: |
-          git config user.name "github-actions[bot]"
+          git config user.name  "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add demo-pages/webfuse-demo-spaces/Spaces/index.json
-          git commit -m "Update Spaces/index.json" || echo "No changes"
+          git commit -m "Update Spaces/index.json" || { echo 'No changes'; exit 0; }
           git push
