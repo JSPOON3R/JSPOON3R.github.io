@@ -328,6 +328,42 @@
       color: var(--ink);
       font-size: .9rem;
     }
+
+    .media-card {
+      background: linear-gradient(180deg, rgba(255, 255, 255, .03), rgba(255, 255, 255, .01));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+      margin-top: 16px;
+    }
+
+    .media-card h3 {
+      margin: 0 0 8px;
+      background: linear-gradient(90deg, var(--brand), var(--brand-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
+      font-weight: 800;
+      letter-spacing: .2px;
+      font-size: clamp(16px, 2.4vw, 20px);
+    }
+
+    .media-wrap {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--panel);
+      padding: 10px;
+    }
+
+    .media-wrap video,
+    .media-wrap img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
   </style>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
@@ -345,13 +381,13 @@
   </main>
 
   <script>
-const IS_PAGES = location.hostname === "demo.surfly.com";
-const GITHUB_OWNER  = IS_PAGES ? "" : "JSPOON3R";
-const GITHUB_REPO   = IS_PAGES ? "" : "JSPOON3R.github.io";
-const GITHUB_BRANCH = "main";
+    const IS_PAGES = location.hostname === "demo.surfly.com";
+    const GITHUB_OWNER = IS_PAGES ? "" : "JSPOON3R";
+    const GITHUB_REPO = IS_PAGES ? "" : "JSPOON3R.github.io";
+    const GITHUB_BRANCH = "main";
 
-// Your repo-root path to the app folder is the same either way:
-const BASE_PATH     = "demo-pages/webfuse-demo-spaces";
+    // Your repo-root path to the app folder is the same either way:
+    const BASE_PATH = "demo-pages/webfuse-demo-spaces";
 
     // Helpers
     const esc = (s) => (s || "").replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
@@ -359,6 +395,66 @@ const BASE_PATH     = "demo-pages/webfuse-demo-spaces";
       `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${encodeURIComponent(path)}?ref=${encodeURIComponent(GITHUB_BRANCH)}`;
     const ghRawUrl = (path) =>
       `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${encodeURIComponent(GITHUB_BRANCH)}/${path}`;
+
+
+    // Try to fetch a file; return the absolute URL if it exists, else null
+    async function resolveIfExists(path) {
+      try {
+        const r = await fetch(path, { method: 'GET' });
+        if (r.ok) return path;
+      } catch { }
+      return null;
+    }
+
+    // Look for a best-effort media asset inside the space's src/ folder.
+    // You can add more candidates if you like.
+    async function findSpaceMedia(entryRoot) {
+      const candidates = [
+        `${entryRoot}/src/demo.mov`,
+        `${entryRoot}/src/overview.mov`,
+        `${entryRoot}/src/teaser.mov`,
+        `${entryRoot}/src/demo.mp4`,
+        `${entryRoot}/src/overview.mp4`,
+        `${entryRoot}/src/teaser.mp4`,
+        `${entryRoot}/src/preview.webm`,
+        `${entryRoot}/src/preview.gif`,
+        `${entryRoot}/src/preview.png`,
+        `${entryRoot}/src/preview.jpg`
+      ];
+      for (const p of candidates) {
+        const hit = await resolveIfExists(p);
+        if (hit) return hit;
+      }
+      return null;
+    }
+
+    // Render the right HTML depending on type
+    function renderMediaHTML(url) {
+      const ext = (url.split('.').pop() || '').toLowerCase();
+      if (['mov', 'mp4', 'webm'].includes(ext)) {
+        // Note: many browsers can play .mov if the codec is H.264/AAC; if not, consider transcoding to .mp4
+        return `
+      <div class="media-card">
+        <h3>Demo Video</h3>
+        <div class="media-wrap">
+          <video controls preload="metadata">
+            <source src="${url}" type="${ext === 'webm' ? 'video/webm' : 'video/mp4'}">
+            Your browser can’t play this video. <a href="${url}" target="_blank" rel="noopener">Download</a>.
+          </video>
+        </div>
+      </div>
+    `;
+      }
+      // Fallback for images/gifs
+      return `
+    <div class="media-card">
+      <h3>Demo Preview</h3>
+      <div class="media-wrap">
+        <img src="${url}" alt="Demo preview">
+      </div>
+    </div>
+  `;
+    }
 
     /* ---------- Render one entry ---------- */
     async function renderEntry(entryName) {
@@ -403,37 +499,41 @@ const BASE_PATH     = "demo-pages/webfuse-demo-spaces";
       container.className = "entry";
       const title = entryName.replace(/[-_]/g, " ");
 
+      const mediaUrl = await findSpaceMedia(entryRoot);
+      const mediaHtml = mediaUrl ? renderMediaHTML(mediaUrl) : "";
+
       container.innerHTML = `
-    <div class="titlebar">
-      <div class="title gradient-ink">${esc(title)}</div>
-      <div class="embed-slot">
-        ${iframeHtml ? iframeHtml : '<div class="hint">Add <span class="kbd">embed.html</span> to show a button</div>'}
-      </div>
+  <div class="titlebar">
+    <div class="title gradient-ink">${esc(title)}</div>
+    <div class="embed-slot">
+      ${iframeHtml ? iframeHtml : '<div class="hint">Add <span class="kbd">embed.html</span> to show a button</div>'}
     </div>
+  </div>
 
-    <div class="card">
-      <h3 class="gradient-ink">Use Case</h3>
-      <div class="three-up">${useGrid}</div>
-    </div>
+  <div class="card">
+      ${mediaHtml}
+    <h3 class="gradient-ink">Use Case</h3>
+    <div class="three-up">${renderThreeUp(useBullets.length ? useBullets : paragraphize(useCase))}</div>
+  </div>
 
-    <div class="card">
-      <h3 class="gradient-ink">ICP</h3>
-      <div class="three-up">${icpGrid}</div>
-    </div>
+  <div class="card">
+    <h3 class="gradient-ink">ICP</h3>
+    <div class="three-up">${renderThreeUp(icpBullets.length ? icpBullets : paragraphize(icp))}</div>
+  </div>
 
-    <div class="card">
-      <h3 class="gradient-ink">Key Features &amp; Functionality</h3>
-      <div class="three-up">${kfGrid}</div>
-    </div>
+  <div class="card">
+    <h3 class="gradient-ink">Key Features &amp; Functionality</h3>
+    <div class="three-up">${renderThreeUp(keyBullets.length ? keyBullets : paragraphize(keyFeatures))}</div>
+  </div>
 
-    <div class="card">
-      ${marked.parse(setupHtml || "_(missing **## Set Up** in instructions.md)_")}
-    </div>
+  <div class="card">
+    ${marked.parse(setupHtml || "_(missing **## Set Up** in instructions.md)_")}
+  </div>
 
-    <div class="card">
-      ${marked.parse(demoHtml || "_(missing **## How to Demo** in instructions.md)_")}
-    </div>
-  `;
+  <div class="card">
+    ${marked.parse(demoHtml || "_(missing **## How to Demo** in instructions.md)_")}
+  </div>
+`;
       return container;
     }
 

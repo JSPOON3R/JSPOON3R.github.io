@@ -18,7 +18,7 @@
       <div class="duh-titlebar">
         <div>
           <div class="duh-title">Create Demo Page URL</div>
-          <div class="duh-sub">Pick a base page, enter your <code class="kbd">spaceId</code> and <code class="kbd">widgetKey</code>, then generate a sharable/demoable URL.</div>
+          <div class="duh-sub">Pick a demo page & enter your <code class="kbd">spaceId</code> and <code class="kbd">widgetKey</code> to generate demo link</div>
         </div>
       </div>
 
