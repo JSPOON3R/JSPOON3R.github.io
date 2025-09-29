@@ -149,46 +149,50 @@
 
 <script>
 /**
- * CONFIG — Set these if hosting on GitHub Pages so the page can auto-discover entries.
- * If left blank, the page will try a local fallback (./Spaces/index.json) if present.
+ * CONFIG — Works on GitHub Pages (via GitHub API) and locally (via relative fetch).
+ * For GitHub mode, set all three constants below.
+ * For local testing, you can leave OWNER/REPO blank and run a static server.
  */
-// CONFIG: GitHub repository and folder structure
 const GITHUB_OWNER  = "JSPOON3R";
 const GITHUB_REPO   = "JSPOON3R.github.io";
 const GITHUB_BRANCH = "main";
-const BASE_PATH     = "demo-pages/webfuse-demo-spaces";
-// Utility: basic escape
-const esc = (s) => (s || "").replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const BASE_PATH     = "demo-pages/webfuse-demo-spaces"; // path from repo root to the folder with index.html
 
-// Render helper for one entry
+// Helpers
+const esc = (s) => (s || "").replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const ghApiUrl = (path) =>
+  `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${encodeURIComponent(path)}?ref=${encodeURIComponent(GITHUB_BRANCH)}`;
+const ghRawUrl = (path) =>
+  `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${encodeURIComponent(GITHUB_BRANCH)}/${path}`;
+
+// Render one entry
 async function renderEntry(entryName) {
-const entryRoot = `${BASE_PATH}/Spaces/${entryName}`;
-  // Try to fetch files either via GitHub API or via relative paths
+  const entryRoot = `${BASE_PATH}/Spaces/${entryName}`;
+
   async function fetchText(path) {
-    // If GitHub config is present, use the API to fetch content (base64)
+    // GitHub mode
     if (GITHUB_OWNER && GITHUB_REPO) {
-const api = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${BASE_PATH}/Spaces?ref=${encodeURIComponent(GITHUB_BRANCH)}`;      if (!r.ok) throw new Error(`Failed to fetch ${path} from GitHub API`);
+      const api = ghApiUrl(path);
+      const r = await fetch(api);
+      if (!r.ok) throw new Error(`Failed to fetch ${path} from GitHub API`);
       const j = await r.json();
-      if (j.encoding === "base64") {
+      if (j && j.encoding === "base64" && typeof j.content === "string") {
         return atob(j.content.replace(/\n/g, ""));
-      } else if (typeof j.content === "string") {
-        return j.content;
-      } else {
-        // For raw files (like HTML) we can try fetching the raw URL
-        const raw = `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${encodeURIComponent(GITHUB_BRANCH)}/${path}`;
-        const r2 = await fetch(raw);
-        if (!r2.ok) throw new Error(`Failed to fetch raw ${path}`);
-        return await r2.text();
       }
-    } else {
-      // Local/relative fetch (works when viewing locally with a simple server)
-      const r = await fetch(path);
-      if (!r.ok) throw new Error(`Failed to fetch ${path}`);
-      return await r.text();
+      // Some files (e.g., HTML) may not come base64-encoded; fall back to raw
+      const raw = ghRawUrl(path);
+      const r2 = await fetch(raw);
+      if (!r2.ok) throw new Error(`Failed to fetch raw ${path}`);
+      return await r2.text();
     }
+    // Local mode (index.html served from the folder that contains /Spaces)
+    // Since index.html lives in BASE_PATH, relative request should be just "Spaces/...", not including BASE_PATH again.
+    const rel = path.replace(`${BASE_PATH}/`, "");
+    const r = await fetch(rel);
+    if (!r.ok) throw new Error(`Failed to fetch ${rel}`);
+    return await r.text();
   }
 
-  // Load content files
   let infoMd = "", instructionsMd = "", iframeHtml = "";
   try { infoMd = await fetchText(`${entryRoot}/demo-space-info.md`); } catch {}
   try { instructionsMd = await fetchText(`${entryRoot}/instructions.md`); } catch {}
@@ -197,7 +201,6 @@ const api = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/content
   const container = document.createElement("section");
   container.className = "entry";
   const title = entryName.replace(/[-_]/g, " ");
-
   const parsedInfo = parseInfoMarkdown(infoMd);
 
   container.innerHTML = `
@@ -232,18 +235,13 @@ const api = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/content
   return container;
 }
 
-/**
- * Parse the info markdown into sections by headings:
- * "Use Case", "ICP", and "Key Functionality to Showcase".
- * If headings are missing, we treat everything as Use Case.
- */
+/** Parse "Use Case", "ICP", and "Key Functionality to Showcase" sections */
 function parseInfoMarkdown(md) {
   if (!md) return { useCase: "", icp: "", kfs: "" };
   const lines = md.split(/\r?\n/);
   let section = "use";
   let use = [], icp = [], kfs = [];
-  for (let i=0;i<lines.length;i++) {
-    const line = lines[i];
+  for (const line of lines) {
     if (/^\s*#{1,6}\s*ICP\b/i.test(line)) { section = "icp"; continue; }
     if (/^\s*#{1,6}\s*Use\s*Case\b/i.test(line)) { section = "use"; continue; }
     if (/^\s*#{1,6}\s*Key\s*Functionality\s*to\s*Showcase\b/i.test(line)) { section = "kfs"; continue; }
@@ -254,7 +252,7 @@ function parseInfoMarkdown(md) {
   return { useCase: use.join("\n").trim(), icp: icp.join("\n").trim(), kfs: kfs.join("\n").trim() };
 }
 
-// Discover entries: (1) GitHub API if configured; (2) local Spaces/index.json; (3) fallback to hardcoded list
+// Discover entries
 async function discoverEntries() {
   const status = document.getElementById("status");
   const entriesHost = document.getElementById("entries");
@@ -262,16 +260,18 @@ async function discoverEntries() {
     let folders = [];
 
     if (GITHUB_OWNER && GITHUB_REPO) {
-      const api = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/Spaces?ref=${encodeURIComponent(GITHUB_BRANCH)}`;
+      const api = ghApiUrl(`${BASE_PATH}/Spaces`); // <-- IMPORTANT: include BASE_PATH
       const r = await fetch(api);
       if (r.ok) {
         const list = await r.json();
-        folders = (Array.isArray(list) ? list : []).filter(x => x.type === "dir").map(x => x.name);
+        folders = (Array.isArray(list) ? list : [])
+          .filter(x => x.type === "dir")
+          .map(x => x.name);
       } else {
         throw new Error("GitHub API listing failed");
       }
     } else {
-      // Local fallback
+      // Local fallback (serve with a static server; file:// will not work)
       try {
         const r = await fetch("Spaces/index.json");
         if (r.ok) {
@@ -279,7 +279,6 @@ async function discoverEntries() {
           folders = Array.isArray(j.folders) ? j.folders : [];
         }
       } catch {}
-      // If still empty, attempt to use a baked-in sample
       if (folders.length === 0) {
         folders = ["Webfuse-Workspace-Import"];
       }
@@ -305,8 +304,6 @@ async function discoverEntries() {
 }
 
 discoverEntries();
-
-console.log("Listing API:", api);
 </script>
 </body>
 </html>
