@@ -2,9 +2,9 @@
   "tiles": [
     {
       "id": "abnamro-pin-demo",
-      "label": "Widget Demo Page",
-      "url": "https://example.com/widget-demo",
-      "icon": "fa6-solid:wand-magic-sparkles"
+      "label": "ABNAmro Pin Flow",
+      "url": "https://demo.surfly.com/demo-pages/webfuse-demo-pages/abnamro-pin-demo",
+      "icon": "streamline:interface-dashboard-layout-square-app-application-dashboard-home-layout-square"
     }
   ]
 }
