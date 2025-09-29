@@ -28,12 +28,12 @@
         <div class="duh-row">
           <div class="duh-field">
             <label for="duh-space">spaceId</label>
-            <input id="duh-space" class="duh-input" placeholder="e.g. abc123" />
+            <input id="duh-space" class="duh-input" placeholder="from the space url in Studio" />
           </div>
 
           <div class="duh-field">
             <label for="duh-widget">widgetKey</label>
-            <input id="duh-widget" class="duh-input" placeholder="paste your widgetKey…" />
+            <input id="duh-widget" class="duh-input" placeholder="Create a widget key for the demo space you imported & paste" />
           </div>
 
           <div class="duh-actions">
