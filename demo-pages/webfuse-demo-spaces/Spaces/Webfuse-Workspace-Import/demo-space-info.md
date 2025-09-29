@@ -10,7 +10,7 @@ Sales reps can import a prebuilt Webfuse demo space with a single click, so they
 - Sales engineers needing consistent environment setup
 - Teams standardizing discovery + demo flows
 
-# Key Functionality to Showcase
+# Key Features & Functionality
 - B2B SaaS teams with product-led demos
 - Sales engineers needing consistent environment setup
 - Teams standardizing discovery + demo flows

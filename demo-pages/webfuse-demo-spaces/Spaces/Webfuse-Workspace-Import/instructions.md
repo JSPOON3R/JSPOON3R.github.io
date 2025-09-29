@@ -1,13 +1,14 @@
-## Core Features
+## Set Up
 
-a list of the core featurs, app and such that will be showcased in this demo
+1. instructions
+2. to get started
 
-## Flow
+## How to Demo
 
-1. Click the **Import Demo Space** button on the right.
-2. Once the space appears in Webfuse, launch it and verify assets loaded.
-3. Skim the **Use Case** and **ICP** panels above so you can tailor the pitch.
-4. For customizations, add or update files under `Spaces/Webfuse-Workspace-Import/src/` and re-import.
+3. Click the **Import Demo Space** button on the right.
+4. Once the space appears in Webfuse, launch it and verify assets loaded.
+5. Skim the **Use Case** and **ICP** panels above so you can tailor the pitch.
+6. For customizations, add or update files under `Spaces/Webfuse-Workspace-Import/src/` and re-import.
 
 ### Presentation Tips
 - Keep your talk track in this folder (or link to a doc).
