@@ -61,7 +61,6 @@
     header {
       position: relative;
       padding: 54px 0 8px;
-      border-bottom: 1px solid var(--border)
     }
 
     h1 {
@@ -240,7 +239,7 @@
     .entry .title {
       font-weight: 800;
       letter-spacing: .2px;
-      background: linear-gradient(90deg, var(--brand), var(--brand-2));
+      background: linear-gradient(1deg, var(--brand), var(--brand-2));
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -337,18 +336,6 @@
       padding: 18px;
       box-shadow: var(--shadow);
       margin-top: 16px;
-    }
-
-    .media-card h3 {
-      margin: 0 0 8px;
-      background: linear-gradient(90deg, var(--brand), var(--brand-2));
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      color: transparent;
-      font-weight: 800;
-      letter-spacing: .2px;
-      font-size: clamp(16px, 2.4vw, 20px);
     }
 
     .media-wrap {
@@ -516,17 +503,17 @@
 
   <div class="card">
       ${mediaHtml}
-    <h3 class="gradient-ink">Use Case</h3>
+    <h3>Use Case</h3>
     <div class="three-up">${renderThreeUp(useBullets.length ? useBullets : paragraphize(useCase))}</div>
   </div>
 
   <div class="card">
-    <h3 class="gradient-ink">ICP</h3>
+    <h3>ICP</h3>
     <div class="three-up">${renderThreeUp(icpBullets.length ? icpBullets : paragraphize(icp))}</div>
   </div>
 
   <div class="card">
-    <h3 class="gradient-ink">Key Features &amp; Functionality</h3>
+    <h3>Key Features &amp; Functionality</h3>
     <div class="three-up">${renderThreeUp(keyBullets.length ? keyBullets : paragraphize(keyFeatures))}</div>
   </div>
 
