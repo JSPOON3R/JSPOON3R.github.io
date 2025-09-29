@@ -53,7 +53,7 @@
   box-shadow: 0 0 0 1px rgba(124,92,255,.35), var(--shadow);
 }
 
-.duh-icon { color: var(--ink); }
+.duh-icon { color: var(--brand); }
 iconify-icon { display: inline-block; }
 .duh-label{ font-weight:600;     color: white; }
 
