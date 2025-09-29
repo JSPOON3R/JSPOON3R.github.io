@@ -153,11 +153,10 @@
  * If left blank, the page will try a local fallback (./Spaces/index.json) if present.
  */
 // CONFIG: GitHub repository and folder structure
-const GITHUB_OWNER = "JSPOON3R";               // GitHub username or org
-const GITHUB_REPO  = "JSPOON3R.github.io";            // Repo name
-const GITHUB_BRANCH = "main";                  // Usually "main" or "gh-pages"
-const BASE_PATH = "demo-pages/webfuse-demo-spaces"; // Path from repo root to where index.html lives
-
+const GITHUB_OWNER  = "JSPOON3R";
+const GITHUB_REPO   = "JSPOON3R.github.io";
+const GITHUB_BRANCH = "main";
+const BASE_PATH     = "demo-pages/webfuse-demo-spaces";
 // Utility: basic escape
 const esc = (s) => (s || "").replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
 
@@ -168,8 +167,7 @@ const entryRoot = `${BASE_PATH}/Spaces/${entryName}`;
   async function fetchText(path) {
     // If GitHub config is present, use the API to fetch content (base64)
     if (GITHUB_OWNER && GITHUB_REPO) {
-const api = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${BASE_PATH}/Spaces?ref=${encodeURIComponent(GITHUB_BRANCH)}`;      const r = await fetch(api);
-      if (!r.ok) throw new Error(`Failed to fetch ${path} from GitHub API`);
+const api = `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${BASE_PATH}/Spaces?ref=${encodeURIComponent(GITHUB_BRANCH)}`;      if (!r.ok) throw new Error(`Failed to fetch ${path} from GitHub API`);
       const j = await r.json();
       if (j.encoding === "base64") {
         return atob(j.content.replace(/\n/g, ""));
@@ -307,6 +305,8 @@ async function discoverEntries() {
 }
 
 discoverEntries();
+
+console.log("Listing API:", api);
 </script>
 </body>
 </html>
