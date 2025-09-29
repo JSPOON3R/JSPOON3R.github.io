@@ -9,7 +9,3 @@
 2. Open the assisted space you are using on the "Active Sessions" tab
 3. Scroll to the bottom and click "Start Co-Browsing"
 4. Respind in Studio
-
-### Presentation Tips
-- Ensure the Prospect knows this is a low effort, custom flow 
-- Mention that the Session can be picked up outside of Webfuse with Webhooks
