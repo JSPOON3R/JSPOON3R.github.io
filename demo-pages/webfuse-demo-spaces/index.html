@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Iconify (for any icons used by your widget) -->
+  <!-- Iconify (icons for widget + caret) -->
   <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
   <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
 
@@ -20,20 +20,21 @@
       --bg:#0b0d12;
       --bg-soft:#11141b;
       --panel:#141826;
-      --panel-hi:#1a2030;           /* slightly lighter panel for readability */
-      --panel-card:rgba(255,255,255,.08); /* lighter card layer */
+      --panel-hi:#1a2030;               /* slightly lighter for readability */
+      --panel-card:rgba(255,255,255,.08);
       --ink:#e7ecf5;
-      --ink-dim:#bfc6d1;            /* a bit brighter than before */
+      --ink-dim:#c8cfdb;
+      --ink-muted:#b4bccb;
       --brand:#7c5cff;
       --brand-2:#24c7d6;
       --accent:#00e5a8;
-      --border:rgba(255,255,255,.14);/* slightly stronger border */
+      --border:rgba(255,255,255,.16);
       --shadow:0 10px 30px rgba(0,0,0,.35);
       --radius:14px;
       --maxw:1280px;
       --divider:rgba(255,255,255,.10);
-      --h-card:18px;                /* title size (matches widget's .duh-title) */
-      --h-section:22px;             /* Use Case / ICP / Setup / HowTo */
+      --h-card:18px;                    /* widget title size */
+      --h-section:18px;                 /* Use Case / ICP headings (smaller now) */
     }
 
     *{ box-sizing:border-box }
@@ -73,44 +74,37 @@
 
     main.wrap{ padding:18px 28px 48px }
 
-    /* ---------- Collapsible sections (details/summary) ---------- */
-    details.entry{
+    /* ---------- Collapsible (shared style for widget + space sections) ---------- */
+    details.collapsible{
       border:1px solid var(--border);
       border-radius: var(--radius);
       background:
-        linear-gradient(180deg, var(--panel-card), rgba(255,255,255,.04)),
+        linear-gradient(180deg, var(--panel-card), rgba(255,255,255,.05)),
         var(--panel-hi);
       box-shadow: var(--shadow);
-      margin: 26px 0;
-      position: relative;
+      margin: 16px 0 22px;
     }
-    details.entry::before, details.entry::after{
-      content:""; display:block; height:1px; background:var(--divider);
-      position:absolute; left:10px; right:10px;
+    summary.collab-summary{
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding:14px 16px; cursor:pointer; list-style:none; color:#fff;
+      font-weight:800; font-size: var(--h-card);
     }
-    details.entry::before{ top:-12px }
-    details.entry::after{ bottom:-12px }
-
-    summary.titlebar{
-      display:grid; grid-template-columns: 1fr auto; gap:12px;
-      align-items:center; padding:16px 20px; cursor:pointer; list-style:none;
+    summary.collab-summary::-webkit-details-marker{ display:none; }
+    .collab-title{ display:flex; align-items:center; gap:10px; }
+    .caret{
+      display:inline-flex; align-items:center; justify-content:center;
+      width:26px; height:26px; border-radius:8px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      margin-left:10px; font-size:12px; color:#fff;
+      transition: transform .15s ease;
     }
-    summary.titlebar::-webkit-details-marker{ display:none; }
+    details[open] .caret{ transform: rotate(90deg); }
+    .collab-body{ padding: 0 16px 14px; }
 
-    .title{
-      font-weight:800; font-size: var(--h-card); color:#fff; /* match widget title */
-      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
-    }
-
-    .embed-slot{
-      display:flex; align-items:center; justify-content:flex-end; min-height:35px;
-    }
-
-    .content-pad{ padding: 0 20px 18px; }
-
-    /* ---------- Section cards (lighter for readability) ---------- */
+    /* ---------- Cards (lighter for readability) ---------- */
     .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
+      background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
       border:1px solid var(--border);
       border-radius: var(--radius);
       padding:18px;
@@ -118,36 +112,36 @@
       margin-top:16px;
     }
 
-    /* Section headings (Use Case / ICP / Setup / How to Demo) */
+    /* Use Case / ICP headings: smaller, thinner, darker, embedded look */
     .section-heading{
       margin:0 0 10px;
-      color:#fff;                 /* white (same as widget title color) */
-      font-weight:900;
-      font-size: var(--h-section);
+      color: var(--ink-muted);          /* slightly darker */
+      font-weight:700;                  /* thinner than before */
+      font-size: var(--h-section);      /* smaller now */
       letter-spacing:.2px;
-      text-align:center;          /* centered per request */
-    }
-    /* Make Use Case a bit larger than the base section size */
-    .section-heading.usecase{ font-size: calc(var(--h-section) + 2px); }
-
-    /* Bolder content for Use Case & ICP */
-    .bold-content :where(p, li){ font-weight:650; font-size:1.02rem; line-height:1.7; color:#fff; }
-    .bold-content :where(ul,ol){ margin:10px 0 10px 20px; }
-
-    /* Two-up layout for Setup + How to Demo */
-    .two-col{
-      display:grid; gap:16px; grid-template-columns: 1fr 1fr;
-    }
-    @media (max-width: 920px){
-      .two-col{ grid-template-columns: 1fr; }
+      text-align:center;
+      opacity: .95;
     }
 
-    /* Purple ordered list numbers */
+    /* Two-up layouts */
+    .two-col{ display:grid; gap:16px; grid-template-columns: 1fr 1fr; }
+    @media (max-width: 920px){ .two-col{ grid-template-columns: 1fr; } }
+
+    /* Centered paragraph blocks that stretch full width */
+    .centered-block{ display:grid; gap:10px; align-items:center; justify-items:center; }
+    .centered-block p{
+      margin:.35rem 0; text-align:center; width:100%;
+      line-height:1.7;
+      font-weight:640;                   /* keep content strong for readability */
+      color:#f3f6ff;
+    }
+
+    /* Ordered list numbers purple (applies to content from MD) */
     .card ol{ counter-reset: step; margin: 10px 0 0 22px; }
     .card ol li{ margin:.45rem 0; line-height:1.6; }
     .card ol li::marker{ color: var(--brand); font-weight:800; }
 
-    /* Markdown base text inside normal (non-bold) areas */
+    /* Markdown general text in cards */
     .card :where(p, li){ color:var(--ink); font-size:1rem; line-height:1.7; }
     .card :where(ul,ol){ margin:8px 0 10px 20px; padding:0; }
     .card li+li{ margin-top:4px; }
@@ -162,14 +156,12 @@
       box-shadow: inset 0 0 0 1px rgba(255,255,255,.03);
     }
 
-    /* Gentle glow for embedded button iframes */
+    /* Gentle glow for any embedded iframe button */
     .embed-slot iframe{
       border-radius:10px; border:1px solid var(--ink-dim);
       box-shadow:0 0 0 0 rgba(255,255,255,.18);
       animation:pulseGlow 2.8s ease-in-out infinite;
     }
-    .embed-slot> :first-child{ border-radius:10px; height:28px; }
-
     @keyframes pulseGlow{
       0%,100%{ box-shadow:0 0 0 0 rgba(255,255,255,.18); }
       50%{ box-shadow:0 0 16px 6px rgba(255,255,255,.14); }
@@ -179,35 +171,13 @@
     }
 
     /* Media */
-    .media-card{ background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
+    .media-card{
+      background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
       border:1px solid var(--border); border-radius: var(--radius);
-      padding:18px; box-shadow: var(--shadow); margin-top:16px; }
+      padding:18px; box-shadow: var(--shadow); margin-top:16px;
+    }
     .media-wrap{ border:1px solid var(--border); border-radius:12px; background:#0f1422; padding:10px; }
     .media-wrap video, .media-wrap img{ display:block; width:100%; height:auto; border-radius:8px; }
-
-    /* Collapsible caret indicator */
-    .caret{
-      display:inline-flex; align-items:center; justify-content:center;
-      width:26px; height:26px; border-radius:8px;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.06);
-      margin-left:10px; font-size:12px; color:#fff;
-      transition: transform .15s ease;
-    }
-    details[open] .caret{ transform: rotate(90deg); }
-
-    /* Collapsible: Demo Link Generator container */
-    .widget-wrap{
-      border:1px solid var(--border); border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
-      box-shadow: var(--shadow);
-      margin: 16px 0 22px;
-    }
-    .widget-summary{
-      display:flex; align-items:center; gap:10px; cursor:pointer;
-      padding:14px 16px; list-style:none; color:#fff; font-weight:800; font-size: var(--h-card);
-    }
-    .widget-summary::-webkit-details-marker{ display:none; }
 
     .loading, .error{ color:var(--ink-dim); font-size:14px; padding:10px 0 }
     .error{ color:#ff6b6b }
@@ -224,13 +194,16 @@
 
   <main class="wrap">
 
-    <!-- Collapsible Demo Link Generator -->
-    <details class="widget-wrap" open>
-      <summary class="widget-summary">
-        <span>Demo Link Generator</span>
+    <!-- Collapsible Demo Link Generator (loads minimised) -->
+    <details class="collapsible" id="demo-link-collapsible">
+      <summary class="collab-summary">
+        <span class="collab-title">
+          <iconify-icon icon="mdi:link-variant" width="18" height="18"></iconify-icon>
+          <span>Demo Link Generator</span>
+        </span>
         <span class="caret">▶</span>
       </summary>
-      <div style="padding: 0 16px 14px;">
+      <div class="collab-body">
         <div id="demo-url-helper"></div>
       </div>
     </details>
@@ -246,6 +219,12 @@
     const GITHUB_BRANCH = "main";
     const BASE_PATH     = "demo-pages/webfuse-demo-spaces";
 
+    // Ensure the Demo Link Generator starts collapsed
+    (function ensureCollapsed(){
+      const d = document.getElementById('demo-link-collapsible');
+      if (d) d.removeAttribute('open');
+    })();
+
     // Helpers
     const esc = (s) => (s || "").replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
     const ghApiUrl = (path) =>
@@ -253,16 +232,17 @@
     const ghRawUrl = (path) =>
       `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${encodeURIComponent(GITHUB_BRANCH)}/${path}`;
 
-    // Try to fetch a file; return the absolute URL if it exists, else null
+    // Try to fetch a file; return an encoded absolute URL if it exists, else null
     async function resolveIfExists(path){
       try{
-        const r = await fetch(encodeURI(path), { method:'GET' });
-        if (r.ok) return path;
+        const encoded = encodeURI(path);
+        const r = await fetch(encoded, { method:'GET' });
+        if (r.ok) return encoded;        // return encoded URL so <video> doesn't 404 on spaces
       }catch{}
       return null;
     }
 
-    // Look for media in /src/ (now includes recording.mp4 explicitly)
+    // Look for media in /src/ (explicitly prioritise recording.mp4)
     async function findSpaceMedia(entryRoot){
       const candidates = [
         `${entryRoot}/src/recording.mp4`,
@@ -336,7 +316,7 @@
       const parts = md.split(/\r?\n(?=##\s+)/);
       let setup="", demo="";
       for (const block of parts){
-        if (/^##\s*Set\s*Up\b/i.test(block))     setup = block;
+        if (/^##\s*Set\s*Up\b/i.test(block))       setup = block;
         if (/^##\s*How\s*to\s*Demo\b/i.test(block)) demo = block;
       }
       return {
@@ -350,13 +330,12 @@
       return chunks.length ? chunks : (text ? [text] : []);
     }
 
-    function renderParagraphBlock(textArray, extraClasses=""){
-      // Render markdown paragraphs as a simple block (not the old three-up).
+    function renderParagraphBlock(textArray){
       const html = textArray.map(t => `<p>${esc(t)}</p>`).join("");
-      return `<div class="${extraClasses}">${html}</div>`;
+      return `<div class="centered-block">${html}</div>`;
     }
 
-    /* ---------- Render one entry (as collapsible details) ---------- */
+    /* ---------- Render one entry (collapsible like widget) ---------- */
     async function renderEntry(entryName){
       const entryRoot = `${BASE_PATH}/Spaces/${entryName}`;
 
@@ -379,7 +358,7 @@
         return await r.text();
       }
 
-      // Load markdown + embed
+      // Load markdown + optional embed button
       let infoMd="", instructionsMd="", iframeHtml="";
       try{ infoMd        = await fetchText(`${entryRoot}/demo-space-info.md`); } catch(e){ console.warn('info md fetch failed:', e); }
       try{ instructionsMd= await fetchText(`${entryRoot}/instructions.md`);   } catch(e){ console.warn('instructions md fetch failed:', e); }
@@ -393,43 +372,44 @@
       const mediaUrl  = await findSpaceMedia(entryRoot);
       const mediaHtml = mediaUrl ? renderMediaHTML(mediaUrl) : "";
 
-      const useBlock = renderParagraphBlock(useBullets.length ? useBullets : paragraphize(useCase), "bold-content");
-      const icpBlock = renderParagraphBlock(icpBullets.length ? icpBullets : paragraphize(icp), "bold-content");
+      const useBlock = renderParagraphBlock(useBullets.length ? useBullets : paragraphize(useCase));
+      const icpBlock = renderParagraphBlock(icpBullets.length ? icpBullets : paragraphize(icp));
 
       const node = document.createElement("details");
-      node.className = "entry";
-      node.open = false; // start collapsed
+      node.className = "collapsible";
+      node.open = false; // load collapsed
 
       node.innerHTML = `
-        <summary class="titlebar">
-          <div class="title">${esc(title)}</div>
-          <div class="embed-slot">
-            ${iframeHtml ? iframeHtml : '<div class="hint">Add <span class="kbd">embed.html</span> to show a button</div>'}
-            <span class="caret">▶</span>
-          </div>
+        <summary class="collab-summary">
+          <span class="collab-title">
+            <span>${esc(title)}</span>
+          </span>
+          <span class="embed-slot">${iframeHtml || ""}</span>
+          <span class="caret">▶</span>
         </summary>
 
-        <div class="content-pad">
+        <div class="collab-body">
           ${mediaHtml}
 
-          <div class="card">
-            <h3 class="section-heading usecase">Use Case</h3>
-            ${useBlock}
-          </div>
-
-          <div class="card">
-            <h3 class="section-heading">ICP</h3>
-            ${icpBlock}
-          </div>
-
+          <!-- Use Case & ICP side-by-side -->
           <div class="two-col">
             <div class="card">
-              <h3 class="section-heading">Set Up</h3>
-              ${marked.parse(setupHtml || "_(missing **## Set Up** in instructions.md)_")}
+              <h3 class="section-heading">Use Case</h3>
+              ${useBlock}
             </div>
             <div class="card">
-              <h3 class="section-heading">How to Demo</h3>
-              ${marked.parse(demoHtml || "_(missing **## How to Demo** in instructions.md)_")}
+              <h3 class="section-heading">ICP</h3>
+              ${icpBlock}
+            </div>
+          </div>
+
+          <!-- Setup & How to Demo side-by-side. We only print the MD content (including its own headings). -->
+          <div class="two-col">
+            <div class="card">
+              ${marked.parse(setupHtml || "")}
+            </div>
+            <div class="card">
+              ${marked.parse(demoHtml || "")}
             </div>
           </div>
         </div>
