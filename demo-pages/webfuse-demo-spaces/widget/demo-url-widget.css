@@ -52,13 +52,14 @@
   box-shadow: 0 0 0 1px rgba(124,92,255,.35), var(--shadow);
 }
 
-.duh-icon{
+.duh-icon { 
   display:grid; place-items:center;
   width: 36px; height: 36px;
   border-radius: 10px;
   background: linear-gradient(180deg, rgba(124,92,255,.22), rgba(36,199,214,.12));
   border: 1px solid rgba(124,92,255,.35);
 }
+iconify-icon { display: inline-block; }
 .duh-label{ font-weight:600;     color: white; }
 
 .duh-form{
