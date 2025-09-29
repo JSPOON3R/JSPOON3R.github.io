@@ -156,8 +156,5 @@
     const txt = urlEl.textContent.trim();
     if (!txt) return;
     window.open(txt, "_blank", "noopener");
-    setTimeout(() => {
-      alert("Tip: press Ctrl+D (Windows) or ⌘+D (Mac) to bookmark the page.");
-    }, 300);
   });
 })();
