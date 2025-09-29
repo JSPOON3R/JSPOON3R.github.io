@@ -3,8 +3,11 @@
 - Phone Escalation
 
 # ICP
-Support/Sales flows with existing telephony set up. They'll be looking for an easy way to add co-browsing to an existing flow. This slots nicely into established workflows and requires minimal training for adoption. 
+- Support/Sales flows with existing telephony set up. 
+- Looking for an easy way to add co-browsing to existing flow. 
+- Minimal training / adoption effort
 
 # Key Features & Functionality
-- Simple pin flow to demo starting a session via phone escalation
-- Recording/Audit logs will be available in the History tab 
+- Simple pin escalation
+- Custom JS for inbound UI
+- Recording/Audit available in the History tab post session

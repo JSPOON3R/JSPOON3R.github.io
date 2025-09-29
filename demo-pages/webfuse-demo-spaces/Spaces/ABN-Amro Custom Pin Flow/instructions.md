@@ -5,10 +5,10 @@
 4. Save or bookmark it so you don't have to do it again 
 
 ## How to Demo
-3. Open the demo page via your custom link
-4. Open the assisted space you are using on the "Active Sessions" tab
-5. Scroll to the bottom and click "Start Co-Browsing"
-6. Respind in Studio
+1. Open the demo page via your custom link
+2. Open the assisted space you are using on the "Active Sessions" tab
+3. Scroll to the bottom and click "Start Co-Browsing"
+4. Respind in Studio
 
 ### Presentation Tips
 - Ensure the Prospect knows this is a low effort, custom flow 
