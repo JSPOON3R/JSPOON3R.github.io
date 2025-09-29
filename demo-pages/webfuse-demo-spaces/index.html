@@ -4,355 +4,215 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Iconify (for any icons used by your widget) -->
   <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
   <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
+
+  <!-- Demo Link Generator widget -->
   <script type="module" src="widget/demo-url-widget.js"></script>
   <link rel="stylesheet" href="widget/demo-url-widget.css">
+
   <title>Sales Team Demo Spaces</title>
+
   <style>
-    :root {
-      --bg: #0b0d12;
-      --bg-soft: #11141b;
-      --panel: #141826;
-      --ink: #e7ecf5;
-      --ink-dim: #9aa4b2;
-      --brand: #7c5cff;
-      --brand-2: #24c7d6;
-      --accent: #00e5a8;
-      --border: rgba(255, 255, 255, .08);
-      --shadow: 0 10px 30px rgba(0, 0, 0, .35);
-      --radius: 14px;
-      --maxw: 1280px;
-      --divider: rgba(255, 255, 255, .08);
+    :root{
+      --bg:#0b0d12;
+      --bg-soft:#11141b;
+      --panel:#141826;
+      --panel-hi:#1a2030;           /* slightly lighter panel for readability */
+      --panel-card:rgba(255,255,255,.08); /* lighter card layer */
+      --ink:#e7ecf5;
+      --ink-dim:#bfc6d1;            /* a bit brighter than before */
+      --brand:#7c5cff;
+      --brand-2:#24c7d6;
+      --accent:#00e5a8;
+      --border:rgba(255,255,255,.14);/* slightly stronger border */
+      --shadow:0 10px 30px rgba(0,0,0,.35);
+      --radius:14px;
+      --maxw:1280px;
+      --divider:rgba(255,255,255,.10);
+      --h-card:18px;                /* title size (matches widget's .duh-title) */
+      --h-section:22px;             /* Use Case / ICP / Setup / HowTo */
     }
 
-    * {
-      box-sizing: border-box
-    }
+    *{ box-sizing:border-box }
 
-    html,
-    body {
-      height: 100%
-    }
+    html, body{ height:100% }
 
-    body {
-      margin: 0;
+    body{
+      margin:0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      color: var(--ink);
+      color:var(--ink);
       background:
-        radial-gradient(1200px 800px at 20% -10%, rgba(124, 92, 255, .25), transparent 60%),
-        radial-gradient(1000px 600px at 110% 10%, rgba(36, 199, 214, .18), transparent 60%),
+        radial-gradient(1200px 800px at 20% -10%, rgba(124,92,255,.22), transparent 60%),
+        radial-gradient(1000px 600px at 110% 10%, rgba(36,199,214,.16), transparent 60%),
         var(--bg);
       background-attachment: fixed;
       background-repeat: no-repeat;
     }
 
-    a {
-      color: var(--brand-2);
-      text-decoration: none
-    }
+    a{ color:var(--brand-2); text-decoration:none }
 
-    .wrap {
-      max-width: var(--maxw);
-      margin: 0 auto;
-      padding: 0 28px
-    }
+    .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 28px }
 
-    header {
-      position: relative;
-      padding: 54px 0 8px;
-    }
+    header{ position:relative; padding:84px 0 8px; } /* extra top space */
 
-    h1 {
+    h1{
       font-size: clamp(36px, 4vw, 48px);
-      line-height: 1.15;
-      margin: 20px 0px;
-      text-align: center
+      line-height:1.15; margin:20px 0; text-align:center;
     }
 
-    .gradient-ink {
-      background: linear-gradient(90deg, var(--brand), var(--brand-2));
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      color: transparent
+    .gradient-ink{
+      background:linear-gradient(90deg, var(--brand), var(--brand-2));
+      -webkit-background-clip:text; background-clip:text;
+      -webkit-text-fill-color:transparent; color:transparent;
     }
 
-    .hint {
-      text-align: center;
-      color: var(--ink-dim);
-      font-size: 14px;
-      margin: 8px 0 0
-    }
+    .hint{ text-align:center; color:var(--ink-dim); font-size:14px; margin:8px 0 0 }
 
-    main.wrap {
-      padding: 18px 28px 48px
-    }
+    main.wrap{ padding:18px 28px 48px }
 
-    .entry {
-      background: linear-gradient(180deg, rgba(255, 255, 255, .03), rgba(255, 255, 255, .01));
-      border: 1px solid var(--border);
+    /* ---------- Collapsible sections (details/summary) ---------- */
+    details.entry{
+      border:1px solid var(--border);
       border-radius: var(--radius);
-      padding: 20px;
+      background:
+        linear-gradient(180deg, var(--panel-card), rgba(255,255,255,.04)),
+        var(--panel-hi);
+      box-shadow: var(--shadow);
       margin: 26px 0;
       position: relative;
-      box-shadow: var(--shadow)
+    }
+    details.entry::before, details.entry::after{
+      content:""; display:block; height:1px; background:var(--divider);
+      position:absolute; left:10px; right:10px;
+    }
+    details.entry::before{ top:-12px }
+    details.entry::after{ bottom:-12px }
+
+    summary.titlebar{
+      display:grid; grid-template-columns: 1fr auto; gap:12px;
+      align-items:center; padding:16px 20px; cursor:pointer; list-style:none;
+    }
+    summary.titlebar::-webkit-details-marker{ display:none; }
+
+    .title{
+      font-weight:800; font-size: var(--h-card); color:#fff; /* match widget title */
+      white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
     }
 
-    .entry::before,
-    .entry::after {
-      content: "";
-      display: block;
-      height: 1px;
-      background: var(--divider);
-      position: absolute;
-      left: 10px;
-      right: 10px
+    .embed-slot{
+      display:flex; align-items:center; justify-content:flex-end; min-height:35px;
     }
 
-    .entry::before {
-      top: -12px
-    }
+    .content-pad{ padding: 0 20px 18px; }
 
-    .entry::after {
-      bottom: -12px
-    }
-
-    .titlebar {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 12px;
-      align-items: center;
-      margin-bottom: 14px
-    }
-
-    .title {
-      font-weight: 400;
-      font-size: 1.5rem;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis
-    }
-
-    .embed-slot {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      min-height: 35px
-    }
-
-    .subtitle {
-      color: var(--ink-dim);
-      margin: 0 0 6px;
-      font-size: 14px
-    }
-
-    /* 3-up cards per section */
-    .three-up {
-      display: grid;
-      gap: 16px;
-      margin-top: 8px;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-
-    @media (max-width:980px) {
-      .three-up {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width:640px) {
-      .three-up {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .bullet {
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 16px 14px;
-      background: var(--panel);
-      display: flex;
-      flex-direction: column;
-      gap: 6px
-    }
-
-    .bullet h4 {
-      margin: 0;
-      font-size: 1rem
-    }
-
-    .bullet p {
-      margin: 0;
-      color: var(--ink-dim);
-      font-size: .95rem;
-      line-height: 1.5
-    }
-
-    .card {
-      background: linear-gradient(180deg, rgba(255, 255, 255, .03), rgba(255, 255, 255, .01));
-      border: 1px solid var(--border);
+    /* ---------- Section cards (lighter for readability) ---------- */
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
+      border:1px solid var(--border);
       border-radius: var(--radius);
-      padding: 18px;
+      padding:18px;
       box-shadow: var(--shadow);
-      margin-top: 16px;
+      margin-top:16px;
     }
 
-    .card h3 {
-      margin: 0 0 8px;
-      color: var(--ink);
-      font-size: 1rem;
+    /* Section headings (Use Case / ICP / Setup / How to Demo) */
+    .section-heading{
+      margin:0 0 10px;
+      color:#fff;                 /* white (same as widget title color) */
+      font-weight:900;
+      font-size: var(--h-section);
+      letter-spacing:.2px;
+      text-align:center;          /* centered per request */
+    }
+    /* Make Use Case a bit larger than the base section size */
+    .section-heading.usecase{ font-size: calc(var(--h-section) + 2px); }
+
+    /* Bolder content for Use Case & ICP */
+    .bold-content :where(p, li){ font-weight:650; font-size:1.02rem; line-height:1.7; color:#fff; }
+    .bold-content :where(ul,ol){ margin:10px 0 10px 20px; }
+
+    /* Two-up layout for Setup + How to Demo */
+    .two-col{
+      display:grid; gap:16px; grid-template-columns: 1fr 1fr;
+    }
+    @media (max-width: 920px){
+      .two-col{ grid-template-columns: 1fr; }
     }
 
-    .loading,
-    .error {
-      color: var(--ink-dim);
-      font-size: 14px;
-      padding: 10px 0
-    }
+    /* Purple ordered list numbers */
+    .card ol{ counter-reset: step; margin: 10px 0 0 22px; }
+    .card ol li{ margin:.45rem 0; line-height:1.6; }
+    .card ol li::marker{ color: var(--brand); font-weight:800; }
 
-    .error {
-      color: #ff6b6b
-    }
+    /* Markdown base text inside normal (non-bold) areas */
+    .card :where(p, li){ color:var(--ink); font-size:1rem; line-height:1.7; }
+    .card :where(ul,ol){ margin:8px 0 10px 20px; padding:0; }
+    .card li+li{ margin-top:4px; }
+    .card a{ text-decoration: underline; }
 
-    code,
-    .kbd {
+    .kbd, code{
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-      font-size: .95rem;
-      color: #b9c4ff;
-      background: linear-gradient(180deg, rgba(124, 92, 255, .22), rgba(36, 199, 214, .12)), #0f1330;
-      border: 1px solid rgba(124, 92, 255, .45);
-      padding: .18rem .42rem;
-      border-radius: 6px;
-      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .03)
+      font-size:.95rem; color:#cfe1ff;
+      background: linear-gradient(180deg, rgba(124,92,255,.22), rgba(36,199,214,.12)), #0f1330;
+      border:1px solid rgba(124,92,255,.45);
+      padding:.18rem .42rem; border-radius:6px;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.03);
     }
 
-    /* —— Spacing above the page heading —— */
-    header {
-      padding-top: 84px;
+    /* Gentle glow for embedded button iframes */
+    .embed-slot iframe{
+      border-radius:10px; border:1px solid var(--ink-dim);
+      box-shadow:0 0 0 0 rgba(255,255,255,.18);
+      animation:pulseGlow 2.8s ease-in-out infinite;
+    }
+    .embed-slot> :first-child{ border-radius:10px; height:28px; }
+
+    @keyframes pulseGlow{
+      0%,100%{ box-shadow:0 0 0 0 rgba(255,255,255,.18); }
+      50%{ box-shadow:0 0 16px 6px rgba(255,255,255,.14); }
+    }
+    @media (prefers-reduced-motion: reduce){
+      .embed-slot iframe{ animation:none; }
     }
 
-    /* was 54px */
+    /* Media */
+    .media-card{ background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
+      border:1px solid var(--border); border-radius: var(--radius);
+      padding:18px; box-shadow: var(--shadow); margin-top:16px; }
+    .media-wrap{ border:1px solid var(--border); border-radius:12px; background:#0f1422; padding:10px; }
+    .media-wrap video, .media-wrap img{ display:block; width:100%; height:auto; border-radius:8px; }
 
-    /* —— Section headings: bigger + gradient —— */
-    .card h3,
-    .entry .title {
-      font-weight: 800;
-      letter-spacing: .2px;
-      background: linear-gradient(1deg, var(--brand), var(--brand-2));
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      color: transparent;
+    /* Collapsible caret indicator */
+    .caret{
+      display:inline-flex; align-items:center; justify-content:center;
+      width:26px; height:26px; border-radius:8px;
+      border:1px solid var(--border);
+      background: rgba(255,255,255,.06);
+      margin-left:10px; font-size:12px; color:#fff;
+      transition: transform .15s ease;
     }
+    details[open] .caret{ transform: rotate(90deg); }
 
-    /* —— Markdown typography: simple, readable text —— */
-    /* Applies to rendered markdown inside your .card blocks (from instructions.md, etc.) */
-    .card :where(p, li) {
-      color: var(--ink);
-      font-size: 1rem;
-      line-height: 1.7;
-    }
-
-    .card :where(ul, ol) {
-      margin: 8px 0 10px 20px;
-      padding: 0;
-    }
-
-    .card li+li {
-      margin-top: 4px;
-    }
-
-    .card a {
-      text-decoration: underline;
-    }
-
-    /* Optional: make inline code a touch more subtle inside text blocks */
-    .card :where(p, li) code {
-      padding: .08rem .34rem;
-      border-radius: 6px;
-      background: rgba(255, 255, 255, .06);
-      border: 1px solid var(--border);
-      color: #cfe1ff;
-    }
-
-    /* —— Three-up bullets: ensure clean text inside boxes —— */
-    .three-up .bullet h4 {
-      font-weight: 200;
-      line-height: 1;
-      color: var(--ink);
-      font-size: 1rem;
-    }
-
-    .three-up .bullet p {
-      color: var(--ink-dim);
-      font-size: .97rem;
-      line-height: 1.55;
-    }
-
-    /* —— Gentle white flashing glow behind embedded buttons —— */
-    .embed-slot iframe {
-      border-radius: 10px;
-      border: 1px solid var(--ink-dim);
-      /* soft edges on glow */
-      box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.18);
-      animation: pulseGlow 2.8s ease-in-out infinite;
-    }
-
-    /* If an embed is not an iframe, still try to glow the first child */
-    .embed-slot> :first-child {
-      border-radius: 10px;
-      height: 28px;
-    }
-
-    @keyframes pulseGlow {
-
-      0%,
-      100% {
-        box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.18);
-      }
-
-      50% {
-        box-shadow: 0 0 16px 6px rgba(255, 255, 255, 0.14);
-      }
-    }
-
-    /* Respect reduced motion preferences */
-    @media (prefers-reduced-motion: reduce) {
-      .embed-slot iframe {
-        animation: none;
-      }
-    }
-
-    .three-up .bullet h4 {
-      color: var(--ink);
-      font-size: .9rem;
-    }
-
-    .media-card {
-      background: linear-gradient(180deg, rgba(255, 255, 255, .03), rgba(255, 255, 255, .01));
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 18px;
+    /* Collapsible: Demo Link Generator container */
+    .widget-wrap{
+      border:1px solid var(--border); border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
       box-shadow: var(--shadow);
-      margin-top: 16px;
+      margin: 16px 0 22px;
     }
+    .widget-summary{
+      display:flex; align-items:center; gap:10px; cursor:pointer;
+      padding:14px 16px; list-style:none; color:#fff; font-weight:800; font-size: var(--h-card);
+    }
+    .widget-summary::-webkit-details-marker{ display:none; }
 
-    .media-wrap {
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      background: var(--panel);
-      padding: 10px;
-    }
-
-    .media-wrap video,
-    .media-wrap img {
-      display: block;
-      width: 100%;
-      height: auto;
-      border-radius: 8px;
-    }
+    .loading, .error{ color:var(--ink-dim); font-size:14px; padding:10px 0 }
+    .error{ color:#ff6b6b }
   </style>
+
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 
@@ -363,284 +223,261 @@
   </header>
 
   <main class="wrap">
-    <div id="demo-url-helper"></div>
+
+    <!-- Collapsible Demo Link Generator -->
+    <details class="widget-wrap" open>
+      <summary class="widget-summary">
+        <span>Demo Link Generator</span>
+        <span class="caret">▶</span>
+      </summary>
+      <div style="padding: 0 16px 14px;">
+        <div id="demo-url-helper"></div>
+      </div>
+    </details>
+
     <div id="status" class="loading">Loading demo spaces…</div>
     <div id="entries"></div>
   </main>
 
   <script>
     const IS_PAGES = location.hostname === "demo.surfly.com";
-    const GITHUB_OWNER = IS_PAGES ? "" : "JSPOON3R";
-    const GITHUB_REPO = IS_PAGES ? "" : "JSPOON3R.github.io";
+    const GITHUB_OWNER  = IS_PAGES ? "" : "JSPOON3R";
+    const GITHUB_REPO   = IS_PAGES ? "" : "JSPOON3R.github.io";
     const GITHUB_BRANCH = "main";
-
-    // Your repo-root path to the app folder is the same either way:
-    const BASE_PATH = "demo-pages/webfuse-demo-spaces";
+    const BASE_PATH     = "demo-pages/webfuse-demo-spaces";
 
     // Helpers
-    const esc = (s) => (s || "").replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
+    const esc = (s) => (s || "").replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
     const ghApiUrl = (path) =>
       `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${encodeURIComponent(path)}?ref=${encodeURIComponent(GITHUB_BRANCH)}`;
     const ghRawUrl = (path) =>
       `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${encodeURIComponent(GITHUB_BRANCH)}/${path}`;
 
-
     // Try to fetch a file; return the absolute URL if it exists, else null
-    async function resolveIfExists(path) {
-      try {
-        const r = await fetch(encodeURI(path), { method: 'GET' });
+    async function resolveIfExists(path){
+      try{
+        const r = await fetch(encodeURI(path), { method:'GET' });
         if (r.ok) return path;
-      } catch { }
+      }catch{}
       return null;
     }
 
-    // Look for a best-effort media asset inside the space's src/ folder.
-    // You can add more candidates if you like.
-    async function findSpaceMedia(entryRoot) {
+    // Look for media in /src/ (now includes recording.mp4 explicitly)
+    async function findSpaceMedia(entryRoot){
       const candidates = [
-        `${entryRoot}/src/demo.mov`,
-        `${entryRoot}/src/overview.mov`,
-        `${entryRoot}/src/teaser.mov`,
+        `${entryRoot}/src/recording.mp4`,
         `${entryRoot}/src/demo.mp4`,
         `${entryRoot}/src/overview.mp4`,
         `${entryRoot}/src/teaser.mp4`,
         `${entryRoot}/src/preview.webm`,
+        `${entryRoot}/src/demo.mov`,
+        `${entryRoot}/src/overview.mov`,
+        `${entryRoot}/src/teaser.mov`,
         `${entryRoot}/src/preview.gif`,
         `${entryRoot}/src/preview.png`,
-        `${entryRoot}/src/preview.jpg`
+        `${entryRoot}/src/preview.jpg`,
       ];
-      for (const p of candidates) {
+      for (const p of candidates){
         const hit = await resolveIfExists(p);
         if (hit) return hit;
       }
       return null;
     }
 
-    // Render the right HTML depending on type
-    function renderMediaHTML(url) {
+    function renderMediaHTML(url){
       const ext = (url.split('.').pop() || '').toLowerCase();
-      if (['mov', 'mp4', 'webm'].includes(ext)) {
-        // Note: many browsers can play .mov if the codec is H.264/AAC; if not, consider transcoding to .mp4
+      if (['mp4','webm','mov'].includes(ext)){
+        const mime = ext === 'webm' ? 'video/webm' : 'video/mp4';
         return `
-      <div class="media-card">
-        <h3>Demo Video</h3>
-        <div class="media-wrap">
-          <video controls preload="metadata">
-            <source src="${url}" type="${ext === 'webm' ? 'video/webm' : 'video/mp4'}">
-            Your browser can’t play this video. <a href="${url}" target="_blank" rel="noopener">Download</a>.
-          </video>
-        </div>
-      </div>
-    `;
+          <div class="media-card">
+            <div class="media-wrap">
+              <video controls preload="metadata" playsinline>
+                <source src="${url}" type="${mime}">
+                Your browser can’t play this video. <a href="${url}" target="_blank" rel="noopener">Download</a>.
+              </video>
+            </div>
+          </div>
+        `;
       }
-      // Fallback for images/gifs
       return `
-    <div class="media-card">
-      <h3>Demo Preview</h3>
-      <div class="media-wrap">
-        <img src="${url}" alt="Demo preview">
-      </div>
-    </div>
-  `;
+        <div class="media-card">
+          <div class="media-wrap"><img src="${url}" alt="Demo preview"></div>
+        </div>
+      `;
     }
 
-    /* ---------- Render one entry ---------- */
-    async function renderEntry(entryName) {
+    /* ---------- Parse info markdown (Use Case & ICP only) ---------- */
+    function parseInfoMarkdown(md){
+      const out = { useCase:"", icp:"", useBullets:[], icpBullets:[] };
+      if (!md) return out;
+      const lines = md.split(/\r?\n/);
+      let section = "use";
+      for (const line of lines){
+        if (/^\s*#{1,6}\s*Use\s*Case\b/i.test(line)) { section = "use"; continue; }
+        if (/^\s*#{1,6}\s*ICP\b/i.test(line))       { section = "icp"; continue; }
+
+        const bullet = line.match(/^\s*[-*]\s+(.*)$/)?.[1];
+        if (bullet){
+          if (section === "use") out.useBullets.push(bullet.trim());
+          else if (section === "icp") out.icpBullets.push(bullet.trim());
+        }else{
+          if (section === "use") out.useCase += line + "\n";
+          else if (section === "icp") out.icp += line + "\n";
+        }
+      }
+      out.useCase = out.useCase.trim();
+      out.icp     = out.icp.trim();
+      return out;
+    }
+
+    /* ---------- Split instructions into Setup & How to Demo ---------- */
+    function splitInstructions(md){
+      if (!md) return { setupHtml:"", demoHtml:"" };
+      const parts = md.split(/\r?\n(?=##\s+)/);
+      let setup="", demo="";
+      for (const block of parts){
+        if (/^##\s*Set\s*Up\b/i.test(block))     setup = block;
+        if (/^##\s*How\s*to\s*Demo\b/i.test(block)) demo = block;
+      }
+      return {
+        setupHtml: setup ? marked.parse(setup) : "",
+        demoHtml:  demo  ? marked.parse(demo)  : ""
+      };
+    }
+
+    function paragraphize(text){
+      const chunks=(text||"").trim().split(/\n{2,}/).map(s=>s.trim()).filter(Boolean);
+      return chunks.length ? chunks : (text ? [text] : []);
+    }
+
+    function renderParagraphBlock(textArray, extraClasses=""){
+      // Render markdown paragraphs as a simple block (not the old three-up).
+      const html = textArray.map(t => `<p>${esc(t)}</p>`).join("");
+      return `<div class="${extraClasses}">${html}</div>`;
+    }
+
+    /* ---------- Render one entry (as collapsible details) ---------- */
+    async function renderEntry(entryName){
       const entryRoot = `${BASE_PATH}/Spaces/${entryName}`;
 
-      async function fetchText(path) {
-        if (GITHUB_OWNER && GITHUB_REPO) {
+      async function fetchText(path){
+        if (GITHUB_OWNER && GITHUB_REPO){
           const api = ghApiUrl(path);
           const r = await fetch(api);
           if (!r.ok) throw new Error(`Failed to fetch ${path} from GitHub API`);
           const j = await r.json();
-          if (j && j.encoding === "base64" && typeof j.content === "string") {
-            return atob(j.content.replace(/\n/g, ""));
+          if (j && j.encoding === "base64" && typeof j.content === "string"){
+            return atob(j.content.replace(/\n/g,""));
           }
-          // Fallback to raw when not returned base64 by API
           const r2 = await fetch(ghRawUrl(path));
           if (!r2.ok) throw new Error(`Failed to fetch raw ${path}`);
           return await r2.text();
         }
-        // Local static server mode
-        const rel = path.replace(`${BASE_PATH}/`, "");
+        const rel = path.replace(`${BASE_PATH}/`,"");
         const r = await fetch(encodeURI(rel));
         if (!r.ok) throw new Error(`Failed to fetch ${rel}`);
         return await r.text();
       }
 
       // Load markdown + embed
-      let infoMd = "", instructionsMd = "", iframeHtml = "";
-      try { infoMd = await fetchText(`${entryRoot}/demo-space-info.md`); }
-      catch (e) { console.warn('info md fetch failed:', e); }
-      try { instructionsMd = await fetchText(`${entryRoot}/instructions.md`); }
-      catch (e) { console.warn('instructions md fetch failed:', e); }
-      try { iframeHtml = await fetchText(`${entryRoot}/embed.html`); }
-      catch (e) { console.warn('embed html fetch failed:', e); }
+      let infoMd="", instructionsMd="", iframeHtml="";
+      try{ infoMd        = await fetchText(`${entryRoot}/demo-space-info.md`); } catch(e){ console.warn('info md fetch failed:', e); }
+      try{ instructionsMd= await fetchText(`${entryRoot}/instructions.md`);   } catch(e){ console.warn('instructions md fetch failed:', e); }
+      try{ iframeHtml    = await fetchText(`${entryRoot}/embed.html`);        } catch(e){ /* optional */ }
 
-      const { useCase, icp, keyFeatures, useBullets, icpBullets, keyBullets } = parseInfoMarkdown(infoMd);
+      const { useCase, icp, useBullets, icpBullets } = parseInfoMarkdown(infoMd);
       const { setupHtml, demoHtml } = splitInstructions(instructionsMd);
 
-      // Build 3-up grids for each section. If there are no list items, we make cards from paragraphs.
-      const useGrid = renderThreeUp(useBullets.length ? useBullets : paragraphize(useCase));
-      const icpGrid = renderThreeUp(icpBullets.length ? icpBullets : paragraphize(icp));
-      const kfGrid = renderThreeUp(keyBullets.length ? keyBullets : paragraphize(keyFeatures));
+      const title = entryName.replace(/[-_]/g," ");
 
-      const container = document.createElement("section");
-      container.className = "entry";
-      const title = entryName.replace(/[-_]/g, " ");
-
-      const mediaUrl = await findSpaceMedia(entryRoot);
+      const mediaUrl  = await findSpaceMedia(entryRoot);
       const mediaHtml = mediaUrl ? renderMediaHTML(mediaUrl) : "";
 
-      container.innerHTML = `
-  <div class="titlebar">
-    <div class="title gradient-ink">${esc(title)}</div>
-    <div class="embed-slot">
-      ${iframeHtml ? iframeHtml : '<div class="hint">Add <span class="kbd">embed.html</span> to show a button</div>'}
-    </div>
-  </div>
+      const useBlock = renderParagraphBlock(useBullets.length ? useBullets : paragraphize(useCase), "bold-content");
+      const icpBlock = renderParagraphBlock(icpBullets.length ? icpBullets : paragraphize(icp), "bold-content");
 
-  <div class="card">
-      ${mediaHtml}
-    <h3>Use Case</h3>
-    <div class="three-up">${renderThreeUp(useBullets.length ? useBullets : paragraphize(useCase))}</div>
-  </div>
+      const node = document.createElement("details");
+      node.className = "entry";
+      node.open = false; // start collapsed
 
-  <div class="card">
-    <h3>ICP</h3>
-    <div class="three-up">${renderThreeUp(icpBullets.length ? icpBullets : paragraphize(icp))}</div>
-  </div>
+      node.innerHTML = `
+        <summary class="titlebar">
+          <div class="title">${esc(title)}</div>
+          <div class="embed-slot">
+            ${iframeHtml ? iframeHtml : '<div class="hint">Add <span class="kbd">embed.html</span> to show a button</div>'}
+            <span class="caret">▶</span>
+          </div>
+        </summary>
 
-  <div class="card">
-    <h3>Key Features &amp; Functionality</h3>
-    <div class="three-up">${renderThreeUp(keyBullets.length ? keyBullets : paragraphize(keyFeatures))}</div>
-  </div>
+        <div class="content-pad">
+          ${mediaHtml}
 
-  <div class="card">
-    ${marked.parse(setupHtml || "_(missing **## Set Up** in instructions.md)_")}
-  </div>
+          <div class="card">
+            <h3 class="section-heading usecase">Use Case</h3>
+            ${useBlock}
+          </div>
 
-  <div class="card">
-    ${marked.parse(demoHtml || "_(missing **## How to Demo** in instructions.md)_")}
-  </div>
-`;
-      return container;
-    }
+          <div class="card">
+            <h3 class="section-heading">ICP</h3>
+            ${icpBlock}
+          </div>
 
-    /* ---------- Parse info markdown ---------- */
-    function parseInfoMarkdown(md) {
-      const out = { useCase: "", icp: "", keyFeatures: "", useBullets: [], icpBullets: [], keyBullets: [] };
-      if (!md) return out;
-
-      const lines = md.split(/\r?\n/);
-      let section = "use";
-      for (const line of lines) {
-        if (/^\s*#{1,6}\s*Use\s*Case\b/i.test(line)) { section = "use"; continue; }
-        if (/^\s*#{1,6}\s*ICP\b/i.test(line)) { section = "icp"; continue; }
-        if (/^\s*#{1,6}\s*Key\s*Features?\s*&?\s*Functionality\b/i.test(line)) { section = "key"; continue; }
-
-        const bullet = line.match(/^\s*[-*]\s+(.*)$/)?.[1];
-        if (bullet) {
-          if (section === "use") out.useBullets.push(bullet.trim());
-          else if (section === "icp") out.icpBullets.push(bullet.trim());
-          else out.keyBullets.push(bullet.trim());
-        } else {
-          if (section === "use") out.useCase += line + "\n";
-          else if (section === "icp") out.icp += line + "\n";
-          else out.keyFeatures += line + "\n";
-        }
-      }
-      out.useCase = out.useCase.trim();
-      out.icp = out.icp.trim();
-      out.keyFeatures = out.keyFeatures.trim();
-      return out;
-    }
-
-    /* ---------- Split instructions into two stacked cards ---------- */
-    function splitInstructions(md) {
-      if (!md) return { setupHtml: "", demoHtml: "" };
-      const parts = md.split(/\r?\n(?=##\s+)/); // split on H2s
-      let setup = "", demo = "";
-      for (const block of parts) {
-        if (/^##\s*Set\s*Up\b/i.test(block)) setup = block;
-        if (/^##\s*How\s*to\s*Demo\b/i.test(block)) demo = block;
-      }
-      return {
-        setupHtml: setup ? marked.parse(setup) : "",
-        demoHtml: demo ? marked.parse(demo) : ""
-      };
-    }
-
-    /* ---------- Utilities for 3-up rendering ---------- */
-    function paragraphize(text) {
-      const chunks = (text || "").trim().split(/\n{2,}/).map(s => s.trim()).filter(Boolean);
-      return chunks.length ? chunks : (text ? [text] : []);
-    }
-    function renderThreeUp(items) {
-      // Each item becomes a .bullet card. If an item contains markdown, we parse it lightly.
-      return items.map(it => {
-        // promote first sentence as a mini heading (nice visual), rest as paragraph
-        const firstPeriod = it.indexOf(". ");
-        let h = "", p = "";
-        if (firstPeriod > 0 && firstPeriod < 120) {
-          h = it.slice(0, firstPeriod + 1);
-          p = it.slice(firstPeriod + 1);
-        } else {
-          h = it;
-          p = "";
-        }
-        return `
-      <div class="bullet">
-        <h4>${esc(h)}</h4>
-        ${p ? `<p>${esc(p)}</p>` : ""}
-      </div>
-    `;
-      }).join("");
+          <div class="two-col">
+            <div class="card">
+              <h3 class="section-heading">Set Up</h3>
+              ${marked.parse(setupHtml || "_(missing **## Set Up** in instructions.md)_")}
+            </div>
+            <div class="card">
+              <h3 class="section-heading">How to Demo</h3>
+              ${marked.parse(demoHtml || "_(missing **## How to Demo** in instructions.md)_")}
+            </div>
+          </div>
+        </div>
+      `;
+      return node;
     }
 
     /* ---------- Discover entries ---------- */
-    async function discoverEntries() {
+    async function discoverEntries(){
       const status = document.getElementById("status");
       const entriesHost = document.getElementById("entries");
-      try {
+      try{
         let folders = [];
 
-        if (GITHUB_OWNER && GITHUB_REPO) {
+        if (GITHUB_OWNER && GITHUB_REPO){
           const api = ghApiUrl(`${BASE_PATH}/Spaces`);
           const r = await fetch(api);
-          if (r.ok) {
+          if (r.ok){
             const list = await r.json();
             folders = (Array.isArray(list) ? list : []).filter(x => x.type === "dir").map(x => x.name);
-          } else {
+          }else{
             throw new Error("GitHub API listing failed");
           }
-        } else {
-          // Local fallback (serve via http, not file://)
-          try {
+        }else{
+          try{
             const r = await fetch("Spaces/index.json");
-            if (r.ok) {
+            if (r.ok){
               const j = await r.json();
               folders = Array.isArray(j.folders) ? j.folders : [];
             }
-          } catch { }
+          }catch{}
           if (folders.length === 0) folders = ["Webfuse-Workspace-Import"];
         }
 
         status.remove();
 
-        for (const folder of folders) {
-          try {
+        for (const folder of folders){
+          try{
             const node = await renderEntry(folder);
             entriesHost.appendChild(node);
-          } catch (e) {
+          }catch(e){
             const err = document.createElement("div");
             err.className = "error";
             err.textContent = `Failed to load "${folder}": ${e.message}`;
             entriesHost.appendChild(err);
           }
         }
-      } catch (e) {
+      }catch(e){
         status.className = "error";
         status.textContent = "Failed to load spaces: " + e.message;
       }
@@ -648,5 +485,4 @@
     discoverEntries();
   </script>
 </body>
-
 </html>

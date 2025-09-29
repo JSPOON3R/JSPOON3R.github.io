@@ -43,10 +43,10 @@
       </div>
 
       <div class="duh-result" id="duh-result">
-        <div class="duh-url" id="duh-url"></div>
+        <div class="duh-url gradient-ink" id="duh-url"></div>
         <div style="display:flex; gap:10px; margin-top:10px;">
-          <button id="duh-copy" class="duh-copy">Copy URL</button>
-          <button id="duh-open" class="duh-open">Open & Bookmark</button>
+          <button id="duh-copy" class="duh-copy">Copy</button>
+          <button id="duh-open" class="duh-open">Open</button>
         </div>
       </div>
     </section>
@@ -149,7 +149,6 @@
       range.selectNodeContents(urlEl);
       sel.removeAllRanges();
       sel.addRange(range);
-      alert("Press Ctrl/Cmd+C to copy");
     }
   });
 
