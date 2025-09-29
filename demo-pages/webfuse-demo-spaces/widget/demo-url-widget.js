@@ -17,7 +17,6 @@
     <section class="duh-card">
       <div class="duh-titlebar">
         <div>
-          <div class="duh-title">Demo Link Generator</div>
           <div class="duh-sub">Pick a demo page & enter your <code class="kbd">spaceId</code> and <code class="kbd">widgetKey</code> to generate demo link</div>
         </div>
       </div>

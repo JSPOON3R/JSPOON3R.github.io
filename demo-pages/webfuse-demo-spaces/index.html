@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- Iconify (icons for widget + caret) -->
+  <!-- Iconify (icons for widget + caret + link icon) -->
   <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
   <script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js"></script>
 
@@ -33,8 +33,8 @@
       --radius:14px;
       --maxw:1280px;
       --divider:rgba(255,255,255,.10);
-      --h-card:18px;                    /* widget title size */
-      --h-section:18px;                 /* Use Case / ICP headings (smaller now) */
+      --h-card:18px;                    /* widget/section title size (white) */
+      --h-section:16px;                 /* Use Case / ICP headings (smaller) */
     }
 
     *{ box-sizing:border-box }
@@ -78,29 +78,37 @@
     details.collapsible{
       border:1px solid var(--border);
       border-radius: var(--radius);
-      background:
-        linear-gradient(180deg, var(--panel-card), rgba(255,255,255,.05)),
-        var(--panel-hi);
       box-shadow: var(--shadow);
       margin: 16px 0 22px;
     }
     summary.collab-summary{
-      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      display:grid;
+      grid-template-columns: auto 1fr auto; /* embed button | title | caret */
+      align-items:center;
+      gap:12px;
       padding:14px 16px; cursor:pointer; list-style:none; color:#fff;
       font-weight:800; font-size: var(--h-card);
     }
     summary.collab-summary::-webkit-details-marker{ display:none; }
-    .collab-title{ display:flex; align-items:center; gap:10px; }
+    .collab-title{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
     .caret{
       display:inline-flex; align-items:center; justify-content:center;
       width:26px; height:26px; border-radius:8px;
       border:1px solid var(--border);
       background: rgba(255,255,255,.06);
-      margin-left:10px; font-size:12px; color:#fff;
+      font-size:12px; color:#fff;
       transition: transform .15s ease;
     }
     details[open] .caret{ transform: rotate(90deg); }
     .collab-body{ padding: 0 16px 14px; }
+
+    /* ---------- Embed slot (Install on Webfuse button) left of title ---------- */
+    .embed-slot{
+      display:flex; align-items:center; justify-content:flex-start;
+      min-height:28px; max-height:28px; overflow:hidden;
+    }
+    .embed-slot > *{ height:28px; max-height:28px; }
+    .embed-slot iframe{ border-radius:8px; border:1px solid var(--border); }
 
     /* ---------- Cards (lighter for readability) ---------- */
     .card{
@@ -114,31 +122,44 @@
 
     /* Use Case / ICP headings: smaller, thinner, darker, embedded look */
     .section-heading{
-      margin:0 0 10px;
+      margin:0 0 8px;
       color: var(--ink-muted);          /* slightly darker */
-      font-weight:700;                  /* thinner than before */
+      font-weight:650;                  /* a bit thinner */
       font-size: var(--h-section);      /* smaller now */
       letter-spacing:.2px;
       text-align:center;
-      opacity: .95;
+      opacity:.95;
     }
 
     /* Two-up layouts */
     .two-col{ display:grid; gap:16px; grid-template-columns: 1fr 1fr; }
     @media (max-width: 920px){ .two-col{ grid-template-columns: 1fr; } }
 
-    /* Centered paragraph blocks that stretch full width */
-    .centered-block{ display:grid; gap:10px; align-items:center; justify-items:center; }
-    .centered-block p{
-      margin:.35rem 0; text-align:center; width:100%;
-      line-height:1.7;
-      font-weight:640;                   /* keep content strong for readability */
+    /* Purple bullet list, left aligned, tighter spacing */
+    .dot-list{ display:grid; gap:8px; }
+    .dot-item{
+      display:grid;
+      grid-template-columns: 14px 1fr;
+      align-items:start;
+      column-gap:10px;
+    }
+    .dot{
+      width:8px; height:8px; margin-top:.46rem;
+      border-radius:50%;
+      background: var(--brand);
+      box-shadow: 0 0 0 2px rgba(124,92,255,.20);
+    }
+    .dot-item p{
+      margin:.10rem 0;                  /* tighter */
+      line-height:1.45;                 /* tighter */
       color:#f3f6ff;
+      font-weight:700;                  /* bold content */
+      text-align:left;
     }
 
-    /* Ordered list numbers purple (applies to content from MD) */
+    /* Ordered list numbers purple (applies to MD content) */
     .card ol{ counter-reset: step; margin: 10px 0 0 22px; }
-    .card ol li{ margin:.45rem 0; line-height:1.6; }
+    .card ol li{ margin:.35rem 0; line-height:1.6; }
     .card ol li::marker{ color: var(--brand); font-weight:800; }
 
     /* Markdown general text in cards */
@@ -158,7 +179,6 @@
 
     /* Gentle glow for any embedded iframe button */
     .embed-slot iframe{
-      border-radius:10px; border:1px solid var(--ink-dim);
       box-shadow:0 0 0 0 rgba(255,255,255,.18);
       animation:pulseGlow 2.8s ease-in-out infinite;
     }
@@ -197,6 +217,9 @@
     <!-- Collapsible Demo Link Generator (loads minimised) -->
     <details class="collapsible" id="demo-link-collapsible">
       <summary class="collab-summary">
+        <span class="embed-slot">
+          <!-- keeps left alignment even if empty -->
+        </span>
         <span class="collab-title">
           <iconify-icon icon="mdi:link-variant" width="18" height="18"></iconify-icon>
           <span>Demo Link Generator</span>
@@ -232,17 +255,18 @@
     const ghRawUrl = (path) =>
       `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${encodeURIComponent(GITHUB_BRANCH)}/${path}`;
 
-    // Try to fetch a file; return an encoded absolute URL if it exists, else null
+    // Return an ABSOLUTE, properly encoded URL if it exists, else null
     async function resolveIfExists(path){
       try{
-        const encoded = encodeURI(path);
-        const r = await fetch(encoded, { method:'GET' });
-        if (r.ok) return encoded;        // return encoded URL so <video> doesn't 404 on spaces
+        // Make absolute from site root to avoid "folder/folder/..." duplication
+        const abs = new URL(path.startsWith('/') ? path : `/${path}`, location.origin).toString();
+        const r = await fetch(abs, { method:'GET' });
+        if (r.ok) return abs;
       }catch{}
       return null;
     }
 
-    // Look for media in /src/ (explicitly prioritise recording.mp4)
+    // Look for media in /src/ (prioritise recording.mp4)
     async function findSpaceMedia(entryRoot){
       const candidates = [
         `${entryRoot}/src/recording.mp4`,
@@ -258,10 +282,18 @@
         `${entryRoot}/src/preview.jpg`,
       ];
       for (const p of candidates){
-        const hit = await resolveIfExists(p);
+        const hit = await findEncoded(hitOrEncodeSpaces(p));
         if (hit) return hit;
       }
       return null;
+
+      function hitOrEncodeSpaces(pth){
+        // Keep “/” but encode spaces only; new URL handles full encoding when resolving
+        return pth.replace(/ /g, '%20');
+      }
+      async function findEncoded(pth){
+        return await resolveIfExists(pth);
+      }
     }
 
     function renderMediaHTML(url){
@@ -330,9 +362,14 @@
       return chunks.length ? chunks : (text ? [text] : []);
     }
 
-    function renderParagraphBlock(textArray){
-      const html = textArray.map(t => `<p>${esc(t)}</p>`).join("");
-      return `<div class="centered-block">${html}</div>`;
+    function renderDotList(items){
+      const html = items.map(t => `
+        <div class="dot-item">
+          <span class="dot"></span>
+          <p>${esc(t)}</p>
+        </div>
+      `).join("");
+      return `<div class="dot-list">${html}</div>`;
     }
 
     /* ---------- Render one entry (collapsible like widget) ---------- */
@@ -353,15 +390,15 @@
           return await r2.text();
         }
         const rel = path.replace(`${BASE_PATH}/`,"");
-        const r = await fetch(encodeURI(rel));
+        const r = await fetch(rel);
         if (!r.ok) throw new Error(`Failed to fetch ${rel}`);
         return await r.text();
       }
 
       // Load markdown + optional embed button
       let infoMd="", instructionsMd="", iframeHtml="";
-      try{ infoMd        = await fetchText(`${entryRoot}/demo-space-info.md`); } catch(e){ console.warn('info md fetch failed:', e); }
-      try{ instructionsMd= await fetchText(`${entryRoot}/instructions.md`);   } catch(e){ console.warn('instructions md fetch failed:', e); }
+      try{ infoMd        = await fetchText(`${entryRoot}/demo-space-info.md`); } catch(e){ /* optional */ }
+      try{ instructionsMd= await fetchText(`${entryRoot}/instructions.md`);   } catch(e){ /* optional */ }
       try{ iframeHtml    = await fetchText(`${entryRoot}/embed.html`);        } catch(e){ /* optional */ }
 
       const { useCase, icp, useBullets, icpBullets } = parseInfoMarkdown(infoMd);
@@ -372,8 +409,11 @@
       const mediaUrl  = await findSpaceMedia(entryRoot);
       const mediaHtml = mediaUrl ? renderMediaHTML(mediaUrl) : "";
 
-      const useBlock = renderParagraphBlock(useBullets.length ? useBullets : paragraphize(useCase));
-      const icpBlock = renderParagraphBlock(icpBullets.length ? icpBullets : paragraphize(icp));
+      // Use Case / ICP data rendered as purple bullet lists (left aligned, tight)
+      const useItems = useBullets.length ? useBullets : paragraphize(useCase);
+      const icpItems = icpBullets.length ? icpBullets : paragraphize(icp);
+      const useBlock = renderDotList(useItems);
+      const icpBlock = renderDotList(icpItems);
 
       const node = document.createElement("details");
       node.className = "collapsible";
@@ -381,10 +421,8 @@
 
       node.innerHTML = `
         <summary class="collab-summary">
-          <span class="collab-title">
-            <span>${esc(title)}</span>
-          </span>
           <span class="embed-slot">${iframeHtml || ""}</span>
+          <span class="collab-title">${esc(title)}</span>
           <span class="caret">▶</span>
         </summary>
 
@@ -403,7 +441,7 @@
             </div>
           </div>
 
-          <!-- Setup & How to Demo side-by-side. We only print the MD content (including its own headings). -->
+          <!-- Setup & How to Demo side-by-side (only MD content; numbering styled purple) -->
           <div class="two-col">
             <div class="card">
               ${marked.parse(setupHtml || "")}
