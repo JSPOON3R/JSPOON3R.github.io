@@ -269,17 +269,7 @@
     // Look for media in /src/ (prioritise recording.mp4)
     async function findSpaceMedia(entryRoot){
       const candidates = [
-        `${entryRoot}/src/recording.mp4`,
-        `${entryRoot}/src/demo.mp4`,
-        `${entryRoot}/src/overview.mp4`,
-        `${entryRoot}/src/teaser.mp4`,
-        `${entryRoot}/src/preview.webm`,
-        `${entryRoot}/src/demo.mov`,
-        `${entryRoot}/src/overview.mov`,
-        `${entryRoot}/src/teaser.mov`,
-        `${entryRoot}/src/preview.gif`,
-        `${entryRoot}/src/preview.png`,
-        `${entryRoot}/src/preview.jpg`,
+        `${entryRoot}/src/recording.mp4`
       ];
       for (const p of candidates){
         const hit = await findEncoded(hitOrEncodeSpaces(p));
