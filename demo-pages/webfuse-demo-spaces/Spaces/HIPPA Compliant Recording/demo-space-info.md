@@ -1,9 +1,9 @@
 # Use Case
-- Customer Inbound
-- Phone Escalation
-- Custom Flow
+- HIPPA/other kinds of data compliance
+- PI-free recordings
+- Data security and privacy protection
 
 # ICP
-- Support/Sales
-- Existing Telephony Flows
-- Join Customer "where they are"
+- Orgs with heavy compliance regulation
+- Finance/Health
+- Wants to Audit sessions without risking data breach 

@@ -1,1 +1,0 @@
-Place any assets the demo space needs here (images, JSON, scripts, etc.).
