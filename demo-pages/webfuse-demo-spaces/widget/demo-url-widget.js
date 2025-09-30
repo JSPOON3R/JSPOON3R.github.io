@@ -67,7 +67,7 @@
   tilesEl.innerHTML = config.tiles.map(t => `
     <button class="duh-tile" data-id="${t.id}" aria-pressed="false">
       <span class="duh-icon">
-        <iconify-icon icon="${t.icon || 'fa6-solid:link'}" width="20" height="20"></iconify-icon>
+        <iconify-icon icon="${t.icon || 'fa6-solid:link'}" width="40" height="40"></iconify-icon>
       </span>
       <span class="duh-label">${t.label}</span>
     </button>
