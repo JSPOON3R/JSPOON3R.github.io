@@ -241,6 +241,15 @@
       display: grid;
       gap: 16px;
       grid-template-columns: 1fr 1fr;
+      row-gap: 24px;
+    }
+
+    .two-col>.card {
+      margin: 0;
+    }
+
+    .two-col+.two-col {
+      margin-top: 24px;
     }
 
     @media (max-width: 920px) {
