@@ -6,4 +6,4 @@
 # ICP
 - Support/Sales
 - Agents need to collect inbound info
-- Agents don;t want to use Webfuse dashboard
+- Agents don't want to use Webfuse dashboard

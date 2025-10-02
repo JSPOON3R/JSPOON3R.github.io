@@ -201,11 +201,6 @@
       min-width: 0;
     }
 
-    .card a {
-      word-break: break-all;
-      /* anchors often render the full URL */
-    }
-
     .two-col {
       display: grid;
       gap: 16px;
@@ -320,6 +315,7 @@
     }
 
     .card a {
+      word-break: break-all;
       text-decoration: underline;
     }
 
@@ -399,17 +395,20 @@
       color: #ff6b6b
     }
 
-    .copy-btn{
-  margin-left: 8px;
-  padding: 2px 8px;
-  font-size: 12px;
-  border-radius: 6px;
-  border: 1px solid var(--border);
-  background: rgba(255,255,255,.08);
-  color: var(--ink);
-  cursor: pointer;
-}
-.copy-btn:hover { background: rgba(255,255,255,.14); }
+    .copy-btn {
+      margin-left: 8px;
+      padding: 2px 8px;
+      font-size: 12px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, .08);
+      color: var(--ink);
+      cursor: pointer;
+    }
+
+    .copy-btn:hover {
+      background: rgba(255, 255, 255, .14);
+    }
   </style>
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
