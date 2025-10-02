@@ -16,197 +16,400 @@
   <title>Sales Team Demo Spaces</title>
 
   <style>
-    :root{
-      --bg:#0b0d12;
-      --bg-soft:#11141b;
-      --panel:#141826;
-      --panel-hi:#1a2030;               /* slightly lighter for readability */
-      --panel-card:rgba(255,255,255,.08);
-      --ink:#e7ecf5;
-      --ink-dim:#c8cfdb;
-      --ink-muted:#b4bccb;
-      --brand:#7c5cff;
-      --brand-2:#24c7d6;
-      --accent:#00e5a8;
-      --border:rgba(255,255,255,.16);
-      --shadow:0 10px 30px rgba(0,0,0,.35);
-      --radius:14px;
-      --maxw:1280px;
-      --divider:rgba(255,255,255,.10);
-      --h-card:18px;                    /* widget/section title size (white) */
-      --h-section:16px;                 /* Use Case / ICP headings (smaller) */
+    :root {
+      --bg: #0b0d12;
+      --bg-soft: #11141b;
+      --panel: #141826;
+      --panel-hi: #1a2030;
+      /* slightly lighter for readability */
+      --panel-card: rgba(255, 255, 255, .08);
+      --ink: #e7ecf5;
+      --ink-dim: #c8cfdb;
+      --ink-muted: #b4bccb;
+      --brand: #7c5cff;
+      --brand-2: #24c7d6;
+      --accent: #00e5a8;
+      --border: rgba(255, 255, 255, .16);
+      --shadow: 0 10px 30px rgba(0, 0, 0, .35);
+      --radius: 14px;
+      --maxw: 1280px;
+      --divider: rgba(255, 255, 255, .10);
+      --h-card: 18px;
+      /* widget/section title size (white) */
+      --h-section: 16px;
+      /* Use Case / ICP headings (smaller) */
     }
 
-    *{ box-sizing:border-box }
+    * {
+      box-sizing: border-box
+    }
 
-    html, body{ height:100% }
+    html,
+    body {
+      height: 100%
+    }
 
-    body{
-      margin:0;
+    body {
+      margin: 0;
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
-      color:var(--ink);
+      color: var(--ink);
       background:
-        radial-gradient(1200px 800px at 20% -10%, rgba(124,92,255,.22), transparent 60%),
-        radial-gradient(1000px 600px at 110% 10%, rgba(36,199,214,.16), transparent 60%),
+        radial-gradient(1200px 800px at 20% -10%, rgba(124, 92, 255, .22), transparent 60%),
+        radial-gradient(1000px 600px at 110% 10%, rgba(36, 199, 214, .16), transparent 60%),
         var(--bg);
       background-attachment: fixed;
       background-repeat: no-repeat;
     }
 
-    a{ color:var(--brand-2); text-decoration:none }
+    a {
+      color: var(--brand-2);
+      text-decoration: none
+    }
 
-    .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 28px }
+    .wrap {
+      max-width: var(--maxw);
+      margin: 0 auto;
+      padding: 0 28px
+    }
 
-    header{ position:relative; padding:84px 0 8px; } /* extra top space */
+    header {
+      position: relative;
+      padding: 84px 0 8px;
+    }
 
-    h1{
+    /* extra top space */
+
+    h1 {
       font-size: clamp(36px, 4vw, 48px);
-      line-height:1.15; margin:20px 0; text-align:center;
+      line-height: 1.15;
+      margin: 20px 0;
+      text-align: center;
     }
 
-    .gradient-ink{
-      background:linear-gradient(90deg, var(--brand), var(--brand-2));
-      -webkit-background-clip:text; background-clip:text;
-      -webkit-text-fill-color:transparent; color:transparent;
+    .gradient-ink {
+      background: linear-gradient(90deg, var(--brand), var(--brand-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      color: transparent;
     }
 
-    .hint{ text-align:center; color:var(--ink-dim); font-size:14px; margin:8px 0 0 }
+    .hint {
+      text-align: center;
+      color: var(--ink-dim);
+      font-size: 14px;
+      margin: 8px 0 0
+    }
 
-    .hint-2{ font-size:.8rem; text-align:center; color:var(--ink-muted); margin:8px 0 0; }
+    .hint-2 {
+      font-size: .8rem;
+      text-align: center;
+      color: var(--ink-muted);
+      margin: 8px 0 0;
+    }
 
-    main.wrap{ padding:18px 28px 48px }
+    main.wrap {
+      padding: 18px 28px 48px
+    }
 
     /* ---------- Collapsible (shared style for widget + space sections) ---------- */
-    details.collapsible{
-      border:1px solid var(--border);
+    details.collapsible {
+      border: 1px solid var(--border);
       border-radius: var(--radius);
       box-shadow: var(--shadow);
       margin: 16px 0 22px;
     }
-    summary.collab-summary{
-      display:grid;
-      grid-template-columns: auto 1fr auto; /* embed button | title | caret */
-      align-items:center;
-      gap:12px;
-      padding:14px 16px; cursor:pointer; list-style:none; color:#fff;
-      font-weight:800; font-size: var(--h-card);
+
+    summary.collab-summary {
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      /* embed button | title | caret */
+      align-items: center;
+      gap: 12px;
+      padding: 14px 16px;
+      cursor: pointer;
+      list-style: none;
+      color: #fff;
+      font-weight: 800;
+      font-size: var(--h-card);
     }
-    summary.collab-summary::-webkit-details-marker{ display:none; }
-    .collab-title{ white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
-    .caret{
-      display:inline-flex; align-items:center; justify-content:center;
-      width:26px; height:26px; border-radius:8px;
-      border:1px solid var(--border);
-      background: rgba(255,255,255,.06);
-      font-size:12px; color:#fff;
+
+    summary.collab-summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .collab-title {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .caret {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: rgba(255, 255, 255, .06);
+      font-size: 12px;
+      color: #fff;
       transition: transform .15s ease;
     }
-    details[open] .caret{ transform: rotate(90deg); }
-    .collab-body{ padding: 0 16px 14px; }
+
+    details[open] .caret {
+      transform: rotate(90deg);
+    }
+
+    .collab-body {
+      padding: 0 16px 14px;
+    }
 
     /* ---------- Embed slot (Install on Webfuse button) left of title ---------- */
-    .embed-slot{
-      display:flex; align-items:center; justify-content:flex-start;
-      min-height:28px; max-height:28px; overflow:hidden;
+    .embed-slot {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 28px;
+      max-height: 28px;
+      overflow: hidden;
     }
-    .embed-slot > *{ height:28px; max-height:28px; }
-    .embed-slot iframe{ border-radius:8px; border:1px solid var(--border); }
+
+    .embed-slot>* {
+      height: 28px;
+      max-height: 28px;
+    }
+
+    .embed-slot iframe {
+      border-radius: 8px;
+      border: 1px solid var(--border);
+    }
 
     /* ---------- Cards (lighter for readability) ---------- */
-    .card{
-      background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
-      border:1px solid var(--border);
+    .card {
+      background: linear-gradient(180deg, rgba(255, 255, 255, .12), rgba(255, 255, 255, .06));
+      border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding:18px;
+      padding: 18px;
       box-shadow: var(--shadow);
-      margin-top:16px;
+      margin-top: 16px;
+      overflow-wrap: anywhere;
+      /* preferred */
+      word-break: break-word;
+      /* fallback */
+      min-width: 0;
     }
 
+    .card a {
+      word-break: break-all;
+      /* anchors often render the full URL */
+    }
+
+    .two-col {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      /* <-- minmax(0,1fr) */
+      align-items: stretch;
+    }
+
+    .two-col>.card {
+      height: 100%;
+    }
+
+    .card code,
+    .card pre,
+    .kbd {
+      white-space: pre-wrap;
+      /* wrap long code/urls from MD */
+      word-break: break-word;
+    }
+
+
     /* Use Case / ICP headings: smaller, thinner, darker, embedded look */
-    .section-heading{
-      margin:0 0 8px;
-      color: var(--ink-muted);          /* slightly darker */
-      font-weight:650;                  /* a bit thinner */
-      font-size: var(--h-section);      /* smaller now */
-      letter-spacing:.2px;
-      text-align:center;
-      opacity:.95;
+    .section-heading {
+      margin: 0 0 8px;
+      color: var(--ink-muted);
+      /* slightly darker */
+      font-weight: 650;
+      /* a bit thinner */
+      font-size: var(--h-section);
+      /* smaller now */
+      letter-spacing: .2px;
+      text-align: center;
+      opacity: .95;
     }
 
     /* Two-up layouts */
-    .two-col{ display:grid; gap:16px; grid-template-columns: 1fr 1fr; }
-    @media (max-width: 920px){ .two-col{ grid-template-columns: 1fr; } }
+    .two-col {
+      display: grid;
+      gap: 16px;
+      grid-template-columns: 1fr 1fr;
+    }
+
+    @media (max-width: 920px) {
+      .two-col {
+        grid-template-columns: 1fr;
+      }
+    }
 
     /* Purple bullet list, left aligned, tighter spacing */
-    .dot-list{ display:grid; gap:8px; }
-    .dot-item{
-      display:grid;
+    .dot-list {
+      display: grid;
+      gap: 8px;
+    }
+
+    .dot-item {
+      display: grid;
       grid-template-columns: 14px 1fr;
-      align-items:start;
-      column-gap:10px;
+      align-items: start;
+      column-gap: 10px;
     }
-    .dot{
-      width:8px; height:8px; margin-top:.46rem;
-      border-radius:50%;
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      margin-top: .46rem;
+      border-radius: 50%;
       background: var(--brand);
-      box-shadow: 0 0 0 2px rgba(124,92,255,.20);
+      box-shadow: 0 0 0 2px rgba(124, 92, 255, .20);
     }
-    .dot-item p{
-      margin:.10rem 0;                  /* tighter */
-      line-height:1.45;                 /* tighter */
-      color:#f3f6ff;
-      font-weight:700;                  /* bold content */
-      text-align:left;
+
+    .dot-item p {
+      margin: .10rem 0;
+      /* tighter */
+      line-height: 1.45;
+      /* tighter */
+      color: #f3f6ff;
+      font-weight: 700;
+      /* bold content */
+      text-align: left;
     }
 
     /* Ordered list numbers purple (applies to MD content) */
-    .card ol{ counter-reset: step; margin: 10px 0 0 22px; }
-    .card ol li{ margin:.35rem 0; line-height:1.6; }
-    .card ol li::marker{ color: var(--brand); font-weight:800; }
+    .card ol {
+      counter-reset: step;
+      margin: 10px 0 0 22px;
+    }
+
+    .card ol li {
+      margin: .35rem 0;
+      line-height: 1.6;
+    }
+
+    .card ol li::marker {
+      color: var(--brand);
+      font-weight: 800;
+    }
 
     /* Markdown general text in cards */
-    .card :where(p, li){ color:var(--ink); font-size:1rem; line-height:1.7; }
-    .card :where(ul,ol){ margin:8px 0 10px 20px; padding:0; }
-    .card li+li{ margin-top:4px; }
-    .card a{ text-decoration: underline; }
+    .card :where(p, li) {
+      color: var(--ink);
+      font-size: 1rem;
+      line-height: 1.7;
+    }
 
-    .kbd, code{
+    .card :where(ul, ol) {
+      margin: 8px 0 10px 20px;
+      padding: 0;
+    }
+
+    .card li+li {
+      margin-top: 4px;
+    }
+
+    .card a {
+      text-decoration: underline;
+    }
+
+    .kbd,
+    code {
       font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-      font-size:.95rem; color:#cfe1ff;
-      background: linear-gradient(180deg, rgba(124,92,255,.22), rgba(36,199,214,.12)), #0f1330;
-      border:1px solid rgba(124,92,255,.45);
-      padding:.18rem .42rem; border-radius:6px;
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,.03);
+      font-size: .95rem;
+      color: #cfe1ff;
+      background: linear-gradient(180deg, rgba(124, 92, 255, .22), rgba(36, 199, 214, .12)), #0f1330;
+      border: 1px solid rgba(124, 92, 255, .45);
+      padding: .18rem .42rem;
+      border-radius: 6px;
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .03);
     }
 
     #demo-link {
-      font-size:1.4rem;
+      font-size: 1.4rem;
     }
 
     /* Gentle glow for any embedded iframe button */
-    .embed-slot iframe{
-      box-shadow:0 0 0 0 rgba(255,255,255,.18);
-      animation:pulseGlow 2.8s ease-in-out infinite;
+    .embed-slot iframe {
+      box-shadow: 0 0 0 0 rgba(255, 255, 255, .18);
+      animation: pulseGlow 2.8s ease-in-out infinite;
     }
-    @keyframes pulseGlow{
-      0%,100%{ box-shadow:0 0 0 0 rgba(255,255,255,.18); }
-      50%{ box-shadow:0 0 16px 6px rgba(255,255,255,.14); }
+
+    @keyframes pulseGlow {
+
+      0%,
+      100% {
+        box-shadow: 0 0 0 0 rgba(255, 255, 255, .18);
+      }
+
+      50% {
+        box-shadow: 0 0 16px 6px rgba(255, 255, 255, .14);
+      }
     }
-    @media (prefers-reduced-motion: reduce){
-      .embed-slot iframe{ animation:none; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .embed-slot iframe {
+        animation: none;
+      }
     }
 
     /* Media */
-    .media-card{
-      background: linear-gradient(180deg, rgba(255,255,255,.12), rgba(255,255,255,.06));
-      border:1px solid var(--border); border-radius: var(--radius);
-      padding:18px; box-shadow: var(--shadow); margin-top:16px;
+    .media-card {
+      background: linear-gradient(180deg, rgba(255, 255, 255, .12), rgba(255, 255, 255, .06));
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 18px;
+      box-shadow: var(--shadow);
+      margin-top: 16px;
     }
-    .media-wrap{ border:1px solid var(--border); border-radius:12px; background:#0f1422; padding:10px; }
-    .media-wrap video, .media-wrap img{ display:block; width:100%; height:auto; border-radius:8px; }
 
-    .loading, .error{ color:var(--ink-dim); font-size:14px; padding:10px 0 }
-    .error{ color:#ff6b6b }
+    .media-wrap {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #0f1422;
+      padding: 10px;
+    }
+
+    .media-wrap video,
+    .media-wrap img {
+      display: block;
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    .loading,
+    .error {
+      color: var(--ink-dim);
+      font-size: 14px;
+      padding: 10px 0
+    }
+
+    .error {
+      color: #ff6b6b
+    }
+
+    .copy-btn{
+  margin-left: 8px;
+  padding: 2px 8px;
+  font-size: 12px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,.08);
+  color: var(--ink);
+  cursor: pointer;
+}
+.copy-btn:hover { background: rgba(255,255,255,.14); }
   </style>
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -217,8 +420,8 @@
     <h1>Sales Team: <span class="gradient-ink">Demo Space Portal</span></h1>
     <p class="hint">Import & configure pre-built Webfuse demos for the Commercial Team</p>
     <p class="hint-2"> Visit the
-  <a href="https://www.webfuse.com/marketplace" class="demo-link gradient-ink">Webfuse Marketplace</a> for more
-</p>
+      <a href="https://www.webfuse.com/marketplace" class="demo-link gradient-ink">Webfuse Marketplace</a> for more
+    </p>
   </header>
 
   <main class="wrap">
@@ -246,58 +449,58 @@
 
   <script>
     const IS_PAGES = location.hostname === "demo.surfly.com";
-    const GITHUB_OWNER  = IS_PAGES ? "" : "JSPOON3R";
-    const GITHUB_REPO   = IS_PAGES ? "" : "JSPOON3R.github.io";
+    const GITHUB_OWNER = IS_PAGES ? "" : "JSPOON3R";
+    const GITHUB_REPO = IS_PAGES ? "" : "JSPOON3R.github.io";
     const GITHUB_BRANCH = "main";
-    const BASE_PATH     = "demo-pages/webfuse-demo-spaces";
+    const BASE_PATH = "demo-pages/webfuse-demo-spaces";
 
     // Ensure the Demo Link Generator starts collapsed
-    (function ensureCollapsed(){
+    (function ensureCollapsed() {
       const d = document.getElementById('demo-link-collapsible');
       if (d) d.removeAttribute('open');
     })();
 
     // Helpers
-    const esc = (s) => (s || "").replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+    const esc = (s) => (s || "").replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]));
     const ghApiUrl = (path) =>
       `https://api.github.com/repos/${GITHUB_OWNER}/${GITHUB_REPO}/contents/${encodeURIComponent(path)}?ref=${encodeURIComponent(GITHUB_BRANCH)}`;
     const ghRawUrl = (path) =>
       `https://raw.githubusercontent.com/${GITHUB_OWNER}/${GITHUB_REPO}/${encodeURIComponent(GITHUB_BRANCH)}/${path}`;
 
     // Return an ABSOLUTE, properly encoded URL if it exists, else null
-    async function resolveIfExists(path){
-      try{
+    async function resolveIfExists(path) {
+      try {
         // Make absolute from site root to avoid "folder/folder/..." duplication
         const abs = new URL(path.startsWith('/') ? path : `/${path}`, location.origin).toString();
-        const r = await fetch(abs, { method:'GET' });
+        const r = await fetch(abs, { method: 'GET' });
         if (r.ok) return abs;
-      }catch{}
+      } catch { }
       return null;
     }
 
     // Look for media in /src/ (prioritise recording.mp4)
-    async function findSpaceMedia(entryRoot){
+    async function findSpaceMedia(entryRoot) {
       const candidates = [
         `${entryRoot}/src/recording.mp4`
       ];
-      for (const p of candidates){
+      for (const p of candidates) {
         const hit = await findEncoded(hitOrEncodeSpaces(p));
         if (hit) return hit;
       }
       return null;
 
-      function hitOrEncodeSpaces(pth){
+      function hitOrEncodeSpaces(pth) {
         // Keep “/” but encode spaces only; new URL handles full encoding when resolving
         return pth.replace(/ /g, '%20');
       }
-      async function findEncoded(pth){
+      async function findEncoded(pth) {
         return await resolveIfExists(pth);
       }
     }
 
-    function renderMediaHTML(url){
+    function renderMediaHTML(url) {
       const ext = (url.split('.').pop() || '').toLowerCase();
-      if (['mp4','webm','mov'].includes(ext)){
+      if (['mp4', 'webm', 'mov'].includes(ext)) {
         const mime = ext === 'webm' ? 'video/webm' : 'video/mp4';
         return `
           <div class="media-card">
@@ -317,51 +520,78 @@
       `;
     }
 
+    //render markdown copy buttons
+    function addCopyButtonsInCards(root = document) {
+      root.querySelectorAll('.card a[href]').forEach(a => {
+        // Only add for long/naked urls (tweak threshold as you like)
+        const isLong = a.textContent.length > 48 || a.textContent === a.getAttribute('href');
+        if (!isLong) return;
+
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = 'copy-btn';
+        btn.textContent = 'Copy';
+
+        btn.addEventListener('click', async () => {
+          try {
+            await navigator.clipboard.writeText(a.href);
+            btn.textContent = 'Copied!';
+            setTimeout(() => (btn.textContent = 'Copy'), 1500);
+          } catch {
+            btn.textContent = 'Copy failed';
+            setTimeout(() => (btn.textContent = 'Copy'), 1500);
+          }
+        });
+
+        a.insertAdjacentElement('afterend', btn);
+      });
+    }
+
     /* ---------- Parse info markdown (Use Case & ICP only) ---------- */
-    function parseInfoMarkdown(md){
-      const out = { useCase:"", icp:"", useBullets:[], icpBullets:[] };
+    function parseInfoMarkdown(md) {
+      const out = { useCase: "", icp: "", useBullets: [], icpBullets: [] };
       if (!md) return out;
       const lines = md.split(/\r?\n/);
       let section = "use";
-      for (const line of lines){
+      for (const line of lines) {
         if (/^\s*#{1,6}\s*Use\s*Case\b/i.test(line)) { section = "use"; continue; }
-        if (/^\s*#{1,6}\s*ICP\b/i.test(line))       { section = "icp"; continue; }
+        if (/^\s*#{1,6}\s*ICP\b/i.test(line)) { section = "icp"; continue; }
 
         const bullet = line.match(/^\s*[-*]\s+(.*)$/)?.[1];
-        if (bullet){
+        if (bullet) {
           if (section === "use") out.useBullets.push(bullet.trim());
           else if (section === "icp") out.icpBullets.push(bullet.trim());
-        }else{
+        } else {
           if (section === "use") out.useCase += line + "\n";
           else if (section === "icp") out.icp += line + "\n";
         }
       }
       out.useCase = out.useCase.trim();
-      out.icp     = out.icp.trim();
+      out.icp = out.icp.trim();
       return out;
     }
 
     /* ---------- Split instructions into Setup & How to Demo ---------- */
-    function splitInstructions(md){
-      if (!md) return { setupHtml:"", demoHtml:"" };
+    function splitInstructions(md) {
+      if (!md) return { setupHtml: "", demoHtml: "" };
       const parts = md.split(/\r?\n(?=##\s+)/);
-      let setup="", demo="";
-      for (const block of parts){
-        if (/^##\s*Set\s*Up\b/i.test(block))       setup = block;
+      let setup = "", demo = "";
+      for (const block of parts) {
+        if (/^##\s*Set\s*Up\b/i.test(block)) setup = block;
         if (/^##\s*How\s*to\s*Demo\b/i.test(block)) demo = block;
       }
       return {
         setupHtml: setup ? marked.parse(setup) : "",
-        demoHtml:  demo  ? marked.parse(demo)  : ""
+        demoHtml: demo ? marked.parse(demo) : ""
       };
     }
 
-    function paragraphize(text){
-      const chunks=(text||"").trim().split(/\n{2,}/).map(s=>s.trim()).filter(Boolean);
+    function paragraphize(text) {
+      const chunks = (text || "").trim().split(/\n{2,}/).map(s => s.trim()).filter(Boolean);
       return chunks.length ? chunks : (text ? [text] : []);
     }
 
-    function renderDotList(items){
+    function renderDotList(items) {
       const html = items.map(t => `
         <div class="dot-item">
           <span class="dot"></span>
@@ -372,40 +602,40 @@
     }
 
     /* ---------- Render one entry (collapsible like widget) ---------- */
-    async function renderEntry(entryName){
+    async function renderEntry(entryName) {
       const entryRoot = `${BASE_PATH}/Spaces/${entryName}`;
 
-      async function fetchText(path){
-        if (GITHUB_OWNER && GITHUB_REPO){
+      async function fetchText(path) {
+        if (GITHUB_OWNER && GITHUB_REPO) {
           const api = ghApiUrl(path);
           const r = await fetch(api);
           if (!r.ok) throw new Error(`Failed to fetch ${path} from GitHub API`);
           const j = await r.json();
-          if (j && j.encoding === "base64" && typeof j.content === "string"){
-            return atob(j.content.replace(/\n/g,""));
+          if (j && j.encoding === "base64" && typeof j.content === "string") {
+            return atob(j.content.replace(/\n/g, ""));
           }
           const r2 = await fetch(ghRawUrl(path));
           if (!r2.ok) throw new Error(`Failed to fetch raw ${path}`);
           return await r2.text();
         }
-        const rel = path.replace(`${BASE_PATH}/`,"");
+        const rel = path.replace(`${BASE_PATH}/`, "");
         const r = await fetch(rel);
         if (!r.ok) throw new Error(`Failed to fetch ${rel}`);
         return await r.text();
       }
 
       // Load markdown + optional embed button
-      let infoMd="", instructionsMd="", iframeHtml="";
-      try{ infoMd        = await fetchText(`${entryRoot}/demo-space-info.md`); } catch(e){ /* optional */ }
-      try{ instructionsMd= await fetchText(`${entryRoot}/instructions.md`);   } catch(e){ /* optional */ }
-      try{ iframeHtml    = await fetchText(`${entryRoot}/embed.html`);        } catch(e){ /* optional */ }
+      let infoMd = "", instructionsMd = "", iframeHtml = "";
+      try { infoMd = await fetchText(`${entryRoot}/demo-space-info.md`); } catch (e) { /* optional */ }
+      try { instructionsMd = await fetchText(`${entryRoot}/instructions.md`); } catch (e) { /* optional */ }
+      try { iframeHtml = await fetchText(`${entryRoot}/embed.html`); } catch (e) { /* optional */ }
 
       const { useCase, icp, useBullets, icpBullets } = parseInfoMarkdown(infoMd);
       const { setupHtml, demoHtml } = splitInstructions(instructionsMd);
 
-      const title = entryName.replace(/[-_]/g," ");
+      const title = entryName.replace(/[-_]/g, " ");
 
-      const mediaUrl  = await findSpaceMedia(entryRoot);
+      const mediaUrl = await findSpaceMedia(entryRoot);
       const mediaHtml = mediaUrl ? renderMediaHTML(mediaUrl) : "";
 
       // Use Case / ICP data rendered as purple bullet lists (left aligned, tight)
@@ -455,46 +685,47 @@
     }
 
     /* ---------- Discover entries ---------- */
-    async function discoverEntries(){
+    async function discoverEntries() {
       const status = document.getElementById("status");
       const entriesHost = document.getElementById("entries");
-      try{
+      try {
         let folders = [];
 
-        if (GITHUB_OWNER && GITHUB_REPO){
+        if (GITHUB_OWNER && GITHUB_REPO) {
           const api = ghApiUrl(`${BASE_PATH}/Spaces`);
           const r = await fetch(api);
-          if (r.ok){
+          if (r.ok) {
             const list = await r.json();
             folders = (Array.isArray(list) ? list : []).filter(x => x.type === "dir").map(x => x.name);
-          }else{
+          } else {
             throw new Error("GitHub API listing failed");
           }
-        }else{
-          try{
+        } else {
+          try {
             const r = await fetch("Spaces/index.json");
-            if (r.ok){
+            if (r.ok) {
               const j = await r.json();
               folders = Array.isArray(j.folders) ? j.folders : [];
             }
-          }catch{}
+          } catch { }
           if (folders.length === 0) folders = ["Webfuse-Workspace-Import"];
         }
 
         status.remove();
 
-        for (const folder of folders){
-          try{
+        for (const folder of folders) {
+          try {
             const node = await renderEntry(folder);
             entriesHost.appendChild(node);
-          }catch(e){
+            addCopyButtonsInCards(node);
+          } catch (e) {
             const err = document.createElement("div");
             err.className = "error";
             err.textContent = `Failed to load "${folder}": ${e.message}`;
             entriesHost.appendChild(err);
           }
         }
-      }catch(e){
+      } catch (e) {
         status.className = "error";
         status.textContent = "Failed to load spaces: " + e.message;
       }
@@ -502,4 +733,5 @@
     discoverEntries();
   </script>
 </body>
+
 </html>

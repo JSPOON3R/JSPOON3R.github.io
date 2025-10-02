@@ -44,7 +44,7 @@
 .duh-tiles{
   display:grid; gap:14px;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  margin-top: 10px;
+  margin-top: 20px;
 }
 .duh-tile{
   border:1px solid var(--border);
