@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Godigit Cobrowse</title>
+    <link rel="shortcut icon" type="image/x-icon" href="https://d2h44aw7l5xdvz.cloudfront.net/assets/img/fav.ico">
     <style>
         body {
             background:
@@ -26,16 +27,28 @@
 <body>
     <div id="name-container" style="text-align: center;">
         <label for="name-input" style="font-size: 24px; color: black;">Enter your name</label><br><br>
-        <input id="name-input" type="text" style="padding: 12px; width: 280px; font-size: 18px; border: 1px solid #000; border-radius: 6px;"><br><br>
-        <button id="name-submit" style="padding: 12px 24px; background-color: #FFBB00; border: none; border-radius: 6px; font-size: 18px; color: black;">Submit</button>
+        <input id="name-input" type="text"
+            style="padding: 12px; width: 280px; font-size: 18px; border: 1px solid #000; border-radius: 6px;"><br><br>
+        <button id="name-submit"
+            style="padding: 12px 24px; background-color: #FFBB00; border: none; border-radius: 6px; font-size: 18px; color: black;">Submit</button>
         <div id="name-error" style="color: red; font-size: 14px; margin-top: 10px;"></div>
     </div>
     <script>
+        // Load Surfly
+        (function (s, u, r, f, l, y) {
+            s[f] = s[f] || { init: function () { s[f].q = arguments } };
+            l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+            l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+        })
+            (window, document, 'script', 'Surfly');
+
         // https://docs.surfly.com/surfly/javascript-api/quickstart
         // Get the query parameter from the URL
         const urlParams = new URLSearchParams(window.location.search);
         const queryParameter = urlParams.get('url');
-        let customerName = ""
+        let customerName = "";
+
+
         document.getElementById("name-submit").addEventListener("click", function () {
             const nameInput = document.getElementById("name-input").value.trim();
             const errorBox = document.getElementById("name-error");
@@ -50,13 +63,6 @@
             startCorbowsing();
         });
 
-            // Surfly snippet
-            (function (s, u, r, f, l, y) {
-                s[f] = s[f] || { init: function () { s[f].q = arguments } };
-                l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
-                l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
-            })
-            (window, document, 'script', 'Surfly');
 
         // The preferred way is to set session options from the Surfly web interface,
         // so in most cases you only need to provide a widget key below,
