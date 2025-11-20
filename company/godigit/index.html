@@ -68,7 +68,7 @@
             style="padding: 12px 24px; background-color: #FFBB00; border: none; border-radius: 6px; font-size: 18px; color: black;">Submit</button>
         <div id="name-error" style="color: red; font-size: 14px; margin-top: 10px;"></div>
     </div>
-    <div id="agent-wait-overlay">
+    <div id="agent-wait-overlay" style="display: none;">
         Please wait for the agent to join you
     </div>
     <script>
@@ -131,14 +131,23 @@
 
         };
 
-        // Hide the custom overlay when the Agent joins the call. 
+        // Display the overlay when the Session content has loaded
         // This prevents the customer from starting before the agent arrives
+        function showAgentWaitOverlay() {
+            var overlay = document.getElementById("agent-wait-overlay");
+            if (overlay) {
+                overlay.style.display = "flex";
+            }
+        }
+        // Hide the overlay when the Agent joins the call. 
         function hideAgentWaitOverlay() {
             var overlay = document.getElementById("agent-wait-overlay");
             if (overlay) {
                 overlay.style.display = "none";
             }
         }
+
+
 
         function startCorbowsing() {
             // Surfly.init() must be called before any other API call
@@ -147,6 +156,10 @@
                     Surfly.session()
                         .on("session_created", function (session, event) {
                             // Opportunity to alert other systems here if needed
+                        })
+                        .on("session_loaded", function (session, event) {
+                            // Opportunity to alert other systems here if needed
+                            showAgentWaitOverlay();
                         })
                         .on('participant_joined', function (session, event) {
                             console.log('Agent has joined with client index: ', event.clientIndex);
