@@ -91,10 +91,6 @@
         };
 
         function startCorbowsing() {
-            //allow a second call to init if this has already run previously by removing Surfly first
-            if (Surfly) {
-                delete Surfly;
-            }
             // Surfly.init() must be called before any other API call
             Surfly.init(settings, function (init) {
                 if (init.success && !Surfly.isInsideSession) {
