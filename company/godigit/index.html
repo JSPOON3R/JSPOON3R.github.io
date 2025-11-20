@@ -95,6 +95,60 @@
 
         };
 
+        // Display the overlay when the Session content has loaded
+        // This prevents the customer from starting before the agent arrives
+        function ensureAgentWaitOverlayStyles() {
+            if (document.getElementById("agent-wait-overlay-styles")) {
+                return;
+            }
+            var style = document.createElement("style");
+            style.id = "agent-wait-overlay-styles";
+            style.textContent = `
+                @keyframes pulseOpacity {
+                    0% { opacity: 0.9; }
+                    50% { opacity: 0.8; }
+                    100% { opacity: 0.9; }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
+        function showAgentWaitOverlay() {
+            ensureAgentWaitOverlayStyles();
+            var overlay = document.getElementById("agent-wait-overlay");
+            if (!overlay) {
+                overlay = document.createElement("div");
+                overlay.id = "agent-wait-overlay";
+                overlay.textContent = "Please wait for the agent to join you";
+                overlay.style.position = "fixed";
+                overlay.style.top = "0";
+                overlay.style.left = "0";
+                overlay.style.width = "100%";
+                overlay.style.height = "100%";
+                overlay.style.background = "linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9))";
+                overlay.style.display = "flex";
+                overlay.style.alignItems = "center";
+                overlay.style.justifyContent = "center";
+                overlay.style.textAlign = "center";
+                overlay.style.fontSize = "3rem";
+                overlay.style.color = "black";
+                overlay.style.zIndex = "999999999999";
+                overlay.style.animation = "pulseOpacity 2s ease-in-out infinite";
+                document.body.appendChild(overlay);
+            } else {
+                overlay.style.display = "flex";
+            }
+        }
+        // Hide the overlay when the Agent joins the call. 
+        function hideAgentWaitOverlay() {
+            var overlay = document.getElementById("agent-wait-overlay");
+            if (overlay) {
+                overlay.style.display = "none";
+            }
+        }
+
+
+
         function startCorbowsing() {
             // Surfly.init() must be called before any other API call
             Surfly.init(settings, function (init) {
@@ -104,55 +158,12 @@
                             // Opportunity to alert other systems here if needed
                         })
                         .on("session_loaded", function (session, event) {
-                        {
-                            // Inject and show the agent wait overlay when the session content has loaded
-                            var existingStyle = document.getElementById("agent-wait-overlay-styles");
-                            if (!existingStyle) {
-                                var style = document.createElement("style");
-                                style.id = "agent-wait-overlay-styles";
-                                style.textContent = `
-                                    @keyframes pulseOpacity {
-                                        0% { opacity: 1; }
-                                        50% { opacity: 0.6; }
-                                        100% { opacity: 1; }
-                                    }
-                                `;
-                                document.head.appendChild(style);
-                            }
-
-                            var overlay = document.getElementById("agent-wait-overlay");
-                            if (!overlay) {
-                                overlay = document.createElement("div");
-                                overlay.id = "agent-wait-overlay";
-                                overlay.textContent = "Please wait for the agent to join you";
-                                overlay.style.position = "fixed";
-                                overlay.style.top = "0";
-                                overlay.style.left = "0";
-                                overlay.style.width = "100%";
-                                overlay.style.height = "100%";
-                                overlay.style.background = "linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9))";
-                                overlay.style.display = "flex";
-                                overlay.style.alignItems = "center";
-                                overlay.style.justifyContent = "center";
-                                overlay.style.textAlign = "center";
-                                overlay.style.fontSize = "3rem";
-                                overlay.style.color = "black";
-                                overlay.style.zIndex = "999";
-                                overlay.style.animation = "pulseOpacity 2s ease-in-out infinite";
-                                document.body.appendChild(overlay);
-                            } else {
-                                overlay.style.display = "flex";
-                            }
-                        }
+                            // Opportunity to alert other systems here if needed
+                            showAgentWaitOverlay();
                         })
                         .on('participant_joined', function (session, event) {
-                        {
                             console.log('Agent has joined with client index: ', event.clientIndex);
-                            var overlay = document.getElementById("agent-wait-overlay");
-                            if (overlay) {
-                                overlay.style.display = "none";
-                            }
-                        }
+                            hideAgentWaitOverlay();
                         })
                         .startLeader(null,
                             {
