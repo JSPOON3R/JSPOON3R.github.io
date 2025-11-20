@@ -79,6 +79,7 @@
             session_autorestore_enabled: false,
             start_with_invite_modal: false,
             videochat_enabled: true,
+            hide_element_by_selector: "#registration-search",
             start_with_videochat_on: true,
             follower_redirect_url: "https://www.godigit.com",
             leader_redirect_url: "https://www.godigit.com",
@@ -91,7 +92,9 @@
 
         function startCorbowsing() {
             //allow a second call to init if this has already run previously by removing Surfly first
-            delete Surfly;
+            if (Surfly) {
+                delete Surfly;
+            }
             // Surfly.init() must be called before any other API call
             Surfly.init(settings, function (init) {
                 if (init.success && !Surfly.isInsideSession) {
