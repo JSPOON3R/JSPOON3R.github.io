@@ -11,33 +11,57 @@
                 linear-gradient(rgba(255, 255, 255, 0.9),
                     rgba(255, 255, 255, 0.9)),
                 url("https://www.godigit.com/content/dam/godigit/directportal/website-header/resources-icons.webp");
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
+            background-repeat: no-repeat;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
         }
     </style>
 </head>
 
 <body>
+    <div id="name-container" style="text-align: center;">
+        <label for="name-input" style="font-size: 24px; color: black;">Enter your name</label><br><br>
+        <input id="name-input" type="text" style="padding: 12px; width: 280px; font-size: 18px; border: 1px solid #000; border-radius: 6px;"><br><br>
+        <button id="name-submit" style="padding: 12px 24px; background-color: #FFBB00; border: none; border-radius: 6px; font-size: 18px; color: black;">Submit</button>
+        <div id="name-error" style="color: red; font-size: 14px; margin-top: 10px;"></div>
+    </div>
     <script>
+        // https://docs.surfly.com/surfly/javascript-api/quickstart
         // Get the query parameter from the URL
         const urlParams = new URLSearchParams(window.location.search);
         const queryParameter = urlParams.get('url');
+        let customerName = ""
+        document.getElementById("name-submit").addEventListener("click", function () {
+            const nameInput = document.getElementById("name-input").value.trim();
+            const errorBox = document.getElementById("name-error");
 
-        // Surfly snippet
-        (function (s, u, r, f, l, y) {
-            s[f] = s[f] || { init: function () { s[f].q = arguments } };
-            l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
-            l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
-        })
+            if (nameInput === "") {
+                errorBox.innerText = "Please enter your name.";
+                return;
+            }
+
+            errorBox.innerText = "";
+            customerName = nameInput;
+            startCorbowsing();
+        });
+
+            // Surfly snippet
+            (function (s, u, r, f, l, y) {
+                s[f] = s[f] || { init: function () { s[f].q = arguments } };
+                l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+                l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+            })
             (window, document, 'script', 'Surfly');
 
         // The preferred way is to set session options from the Surfly web interface,
         // so in most cases you only need to provide a widget key below,
         // but you can also override any options here
+        // https://docs.surfly.com/surfly/session-options/
         var settings = {
             widget_key: "99671227762b43c2a96daa066ee006e2",
             hide_until_agent_joins: false,
@@ -50,6 +74,8 @@
             start_with_invite_modal: false,
             videochat_enabled: true,
             start_with_videochat_on: true,
+            follower_redirect_url: "https://www.godigit.com",
+            leader_redirect_url: "https://www.godigit.com",
             tags: [
                 "custom-website-landing-page"
             ],
@@ -57,20 +83,27 @@
 
         };
 
-        // Surfly.init() must be called before any other API call
-        Surfly.init(settings, function (init) {
-            if (init.success && !Surfly.isInsideSession) {
-                Surfly.session()
-                    .on("session_created", function (session, event) {
-                        // display the PIN of the current session
-                        document.querySelector("#sessidtarget").innerText = session.pin;
-                        // Display the query parameter in the HTML
-                        const resultElement = document.getElementById('result');
-                        resultElement.innerText = `Query Parameter: ${queryParameter}`;
-                    })
-                    .startLeader();
-            }
-        });
+        function startCorbowsing() {
+            //allow a second call to init if this has already run previously by removing Surfly first
+            delete Surfly;
+            // Surfly.init() must be called before any other API call
+            Surfly.init(settings, function (init) {
+                if (init.success && !Surfly.isInsideSession) {
+                    Surfly.session()
+                        .on("session_created", function (session, event) {
+                            // display the PIN of the current session
+                            document.querySelector("#sessidtarget").innerText = session.pin;
+                            // Display the query parameter in the HTML
+                            const resultElement = document.getElementById('result');
+                            resultElement.innerText = `Query Parameter: ${queryParameter}`;
+                        })
+                        .startLeader(null,
+                            {
+                                "Customer": customerName
+                            });
+                }
+            });
+        }
     </script>
 
 </body>
