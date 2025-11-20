@@ -23,39 +23,6 @@
             color: #000;
             font: normal 400 2.4rem / 120% "Muli", "Helvetica Neue", Helvetica, Arial, sans-serif;
         }
-
-        #agent-wait-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background:
-                linear-gradient(rgba(255, 255, 255, 0.9),
-                    rgba(255, 255, 255, 0.9));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            font-size: 3rem;
-            color: black;
-            z-index: 999;
-            animation: pulseOpacity 2s ease-in-out infinite;
-        }
-
-        @keyframes pulseOpacity {
-            0% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0.6;
-            }
-
-            100% {
-                opacity: 1;
-            }
-        }
     </style>
 </head>
 
@@ -67,9 +34,6 @@
         <button id="name-submit"
             style="padding: 12px 24px; background-color: #FFBB00; border: none; border-radius: 6px; font-size: 18px; color: black;">Submit</button>
         <div id="name-error" style="color: red; font-size: 14px; margin-top: 10px;"></div>
-    </div>
-    <div id="agent-wait-overlay" style="display: none;">
-        Please wait for the agent to join you
     </div>
     <script>
 
@@ -133,9 +97,45 @@
 
         // Display the overlay when the Session content has loaded
         // This prevents the customer from starting before the agent arrives
+        function ensureAgentWaitOverlayStyles() {
+            if (document.getElementById("agent-wait-overlay-styles")) {
+                return;
+            }
+            var style = document.createElement("style");
+            style.id = "agent-wait-overlay-styles";
+            style.textContent = `
+                @keyframes pulseOpacity {
+                    0% { opacity: 1; }
+                    50% { opacity: 0.6; }
+                    100% { opacity: 1; }
+                }
+            `;
+            document.head.appendChild(style);
+        }
+
         function showAgentWaitOverlay() {
+            ensureAgentWaitOverlayStyles();
             var overlay = document.getElementById("agent-wait-overlay");
-            if (overlay) {
+            if (!overlay) {
+                overlay = document.createElement("div");
+                overlay.id = "agent-wait-overlay";
+                overlay.textContent = "Please wait for the agent to join you";
+                overlay.style.position = "fixed";
+                overlay.style.top = "0";
+                overlay.style.left = "0";
+                overlay.style.width = "100%";
+                overlay.style.height = "100%";
+                overlay.style.background = "linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9))";
+                overlay.style.display = "flex";
+                overlay.style.alignItems = "center";
+                overlay.style.justifyContent = "center";
+                overlay.style.textAlign = "center";
+                overlay.style.fontSize = "3rem";
+                overlay.style.color = "black";
+                overlay.style.zIndex = "999";
+                overlay.style.animation = "pulseOpacity 2s ease-in-out infinite";
+                document.body.appendChild(overlay);
+            } else {
                 overlay.style.display = "flex";
             }
         }
