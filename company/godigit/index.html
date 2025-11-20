@@ -1,32 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Surfly - Thomas</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Godigit Cobrowse</title>
     <style>
         body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
+            background:
+                linear-gradient(rgba(255, 255, 255, 0.9),
+                    rgba(255, 255, 255, 0.9)),
+                url("https://www.godigit.com/content/dam/godigit/directportal/website-header/resources-icons.webp");
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
         }
+    </style>
+</head>
 
-</style>
-</head>    
 <body>
     <script>
         // Get the query parameter from the URL
         const urlParams = new URLSearchParams(window.location.search);
-        const queryParameter = urlParams.get('link');
+        const queryParameter = urlParams.get('url');
 
         // Surfly snippet
-        (function(s,u,r,f,l,y){s[f]=s[f]||{init:function(){s[f].q=arguments}};
-        l=u.createElement(r);y=u.getElementsByTagName(r)[0];l.async=1;
-        l.src='https://surfly.com/surfly.js';y.parentNode.insertBefore(l,y);})
-        (window,document,'script','Surfly');
+        (function (s, u, r, f, l, y) {
+            s[f] = s[f] || { init: function () { s[f].q = arguments } };
+            l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+            l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+        })
+            (window, document, 'script', 'Surfly');
 
         // The preferred way is to set session options from the Surfly web interface,
         // so in most cases you only need to provide a widget key below,
@@ -34,36 +41,38 @@
         var settings = {
             widget_key: "99671227762b43c2a96daa066ee006e2",
             hide_until_agent_joins: false,
-            block_until_agent_joins: false,
+            block_until_agent_joins: true,
             admission_enabled: true,
             start_with_loading_screen: false,
             hide_session_ui: false,
             url: `${queryParameter}`,
             session_autorestore_enabled: false,
+            start_with_invite_modal: false,
             videochat_enabled: true,
-        start_with_videochat_on: true,
-        tags: [
-            "custom-website-landing-page"
-        ],
-        blocklist: "[{\"pattern\": \"^https?://[\\\\w\\\\.]*facebook\\\\.com\",\"redirect\": \"https://demo.surfly.com/blocked.html\"}]"
+            start_with_videochat_on: true,
+            tags: [
+                "custom-website-landing-page"
+            ],
+            blocklist: "[{\"pattern\": \"^https?://[\\\\w\\\\.]*facebook\\\\.com\",\"redirect\": \"https://demo.surfly.com/blocked.html\"}]"
 
         };
 
         // Surfly.init() must be called before any other API call
-        Surfly.init(settings, function(init) {
-        if (init.success && !Surfly.isInsideSession) {
-            Surfly.session()
-            .on("session_created", function(session, event) {
-                // display the PIN of the current session
-                document.querySelector("#sessidtarget").innerText = session.pin;
-                // Display the query parameter in the HTML
-                const resultElement = document.getElementById('result');
-                resultElement.innerText = `Query Parameter: ${queryParameter}`;
-            })
-            .startLeader();
-        }
+        Surfly.init(settings, function (init) {
+            if (init.success && !Surfly.isInsideSession) {
+                Surfly.session()
+                    .on("session_created", function (session, event) {
+                        // display the PIN of the current session
+                        document.querySelector("#sessidtarget").innerText = session.pin;
+                        // Display the query parameter in the HTML
+                        const resultElement = document.getElementById('result');
+                        resultElement.innerText = `Query Parameter: ${queryParameter}`;
+                    })
+                    .startLeader();
+            }
         });
     </script>
 
 </body>
+
 </html>
