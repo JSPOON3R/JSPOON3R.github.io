@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Surfly Session Joiner</title>
+  <title>Dynamic Link Example HTML</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body {
@@ -68,7 +68,6 @@
   </div>
 
   <script>
-    // 👉 Replace with your Apps Script Web App URL
     const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzOBnSDnUGPgbtt78e8mXOC-eYo0gAMb0ZT_fGADDAsSCHVKzJl6_74KV49zIqOYxaCqg/exec';
 
     function getUuidFromQuery() {
@@ -142,6 +141,7 @@
       var settings = {
         // Optionally add your widget key if needed:
         widget_key: '99671227762b43c2a96daa066ee006e2',
+        url: "https://durable.co/",
         tags: [
           String(uuid)  // ensure tag is a string
         ]
