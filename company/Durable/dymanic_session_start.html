@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Surfly Session Joiner</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      padding: 2rem;
+      background: #f5f5f7;
+      color: #222;
+    }
+    .card {
+      max-width: 480px;
+      margin: 0 auto;
+      background: #fff;
+      border-radius: 12px;
+      padding: 1.5rem 1.75rem;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    }
+    h1 {
+      font-size: 1.3rem;
+      margin-top: 0;
+    }
+    #status {
+      margin: 0.75rem 0 1.25rem;
+      font-size: 0.95rem;
+    }
+    button {
+      border: none;
+      border-radius: 999px;
+      padding: 0.6rem 1.4rem;
+      font-size: 0.95rem;
+      cursor: pointer;
+      background: #000;
+      color: #fff;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    button[disabled] {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+    .secondary {
+      background: transparent;
+      color: #333;
+      border: 1px solid #ddd;
+    }
+    .small {
+      font-size: 0.8rem;
+      color: #777;
+      margin-top: 1rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Join your Surfly session</h1>
+    <p id="status">Checking for an existing session…</p>
+
+    <button id="actionBtn" style="display:none;">
+      <span id="btnLabel">Join Session</span>
+    </button>
+
+    <p class="small" id="debug"></p>
+  </div>
+
+  <script>
+    // 👉 Replace with your Apps Script Web App URL
+    const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzOBnSDnUGPgbtt78e8mXOC-eYo0gAMb0ZT_fGADDAsSCHVKzJl6_74KV49zIqOYxaCqg/exec';
+
+    function getUuidFromQuery() {
+      const params = new URLSearchParams(window.location.search);
+      return params.get('uuid');
+    }
+
+    async function init() {
+      const statusEl = document.getElementById('status');
+      const btn = document.getElementById('actionBtn');
+      const btnLabel = document.getElementById('btnLabel');
+      const debugEl = document.getElementById('debug');
+
+      const uuid = getUuidFromQuery();
+
+      if (!uuid) {
+        statusEl.textContent = 'Missing uuid in query string. Please open this link from Calendly (or provide ?uuid=...).';
+        btn.style.display = 'none';
+        return;
+      }
+
+      debugEl.textContent = 'UUID: ' + uuid;
+
+      try {
+        // Ask Apps Script if there is already an open session for this uuid (by tag)
+        const res = await fetch(APPS_SCRIPT_URL + '?uuid=' + encodeURIComponent(uuid));
+        const data = await res.json();
+
+        console.log('Apps Script response:', data);
+
+        if (data.hasSession && data.link) {
+          statusEl.textContent = 'An existing Surfly session was found. You can join it.';
+          btnLabel.textContent = 'Join Session';
+          btn.onclick = function () {
+            window.location.href = data.link;
+          };
+        } else {
+          statusEl.textContent = 'No existing Surfly session found. You can start a new one.';
+          btnLabel.textContent = 'Join Session';
+
+          btn.onclick = function () {
+            btn.disabled = true;
+            // btnLabel.textContent = 'Starting session…';
+            btnLabel.textContent = 'Join Session';
+            startNewSurflySession(uuid);
+          };
+        }
+
+        btn.style.display = 'inline-flex';
+
+      } catch (err) {
+        console.error(err);
+        statusEl.textContent = 'Error checking sessions. Please try again later.';
+        debugEl.textContent = 'Error: ' + err;
+      }
+    }
+
+    /**
+     * Start a new Surfly session using the JS API.
+     * Uses the uuid as a tag, so it’s linked to the Calendly booking.
+     */
+    function startNewSurflySession(uuid) {
+      // Loader stub from Surfly docs
+      (function (s, u, r, f, l, y) {
+        s[f] = s[f] || { init: function () { s[f].q = arguments; } };
+        l = u.createElement(r); y = u.getElementsByTagName(r)[0]; l.async = 1;
+        l.src = 'https://surfly.com/surfly.js'; y.parentNode.insertBefore(l, y);
+      })(window, document, 'script', 'Surfly');
+
+      var SurflySession;
+      var settings = {
+        // Optionally add your widget key if needed:
+        widget_key: 'aefc8ed4cd3543448ec5a01d03ffa212',
+        tags: [
+          uuid  // ← use Calendly UUID as the tag
+        ]
+      };
+
+      Surfly.init(settings, function (initResult) {
+        if (initResult.success && !Surfly.isInsideSession) {
+          console.log('Surfly init success');
+
+          SurflySession = Surfly.session().create()
+            .on('session_created', function (session, event) {
+              console.log('Session created:', session, event);
+              SurflySession.startLeader();
+            })
+            .on('participant_joined', function (session, event) {
+              console.log('Participant', event.clientIndex, 'joined the session');
+
+              // Example: transfer host & control when the 2nd participant joins
+              if (event.clientIndex !== 0) {
+                SurflySession.makeHost(1);
+                SurflySession.transferTabControl(1);
+              } else {
+                console.log(event.clientIndex + ' joined the session - host not changed');
+              }
+            });
+        } else {
+          console.error('Surfly init failed or already inside a session:', initResult);
+          const statusEl = document.getElementById('status');
+          const btn = document.getElementById('actionBtn');
+          const btnLabel = document.getElementById('btnLabel');
+          statusEl.textContent = 'Failed to start Surfly session.';
+          btn.disabled = false;
+          btnLabel.textContent = 'Try again';
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
