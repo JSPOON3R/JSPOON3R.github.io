@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <link rel="icon" href="/assets/favicon.ico" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EnergyFlow – Switch Your Energy</title>
+
+    <!-- jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        :root {
+            /* Brand palette (matched to provided logo) */
+            --primary: #118FCE;
+            --primary-dark: #0B6FA8;
+            --accent: #E6A04A;
+
+            /* Neutrals */
+            --bg: #F6FAFD;
+            --surface: #FFFFFF;
+            --text: #0F172A;
+            --muted: #5B667A;
+            --border: #E6EEF6;
+
+            /* Effects */
+            --shadow: 0 18px 40px rgba(15, 23, 42, 0.10);
+            --radius: 14px;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 65px 20px;
+        }
+
+        header .brand {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 38px;
+            font-weight: 600;
+        }
+
+        header p {
+            opacity: 0.9;
+            font-size: 18px;
+            margin:0;
+        }
+
+        main {
+            max-width: 900px;
+            margin: -34px auto 60px;
+            padding: 0 20px;
+            flex: 1;
+        }
+
+        .card {
+            background: var(--surface);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 36px;
+            border: 1px solid rgba(230, 238, 246, 0.9);
+        }
+
+        .progress-wrapper {
+            margin-bottom: 28px;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: var(--border);
+            border-radius: 999px;
+            overflow: hidden;
+        }
+
+        .progress {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent), var(--primary));
+            transition: width 0.4s ease;
+        }
+
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 12px;
+            font-size: 12px;
+            letter-spacing: 0.02em;
+            color: rgba(255, 255, 255, 0.85);
+        }
+
+        .step {
+            display: none;
+        }
+
+        .step.active {
+            display: block;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin: 0 0 10px;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+        }
+
+        .subtitle {
+            color: var(--muted);
+            margin: 0 0 26px;
+        }
+
+        .error-banner {
+            display: none;
+            background: rgba(230, 160, 74, 0.14);
+            border: 1px solid rgba(230, 160, 74, 0.35);
+            color: #7A4E00;
+            padding: 12px 14px;
+            border-radius: 12px;
+            margin: 0 0 18px;
+            font-size: 14px;
+        }
+
+        .error-banner strong {
+            color: #5A3A00;
+        }
+
+        .error-banner a {
+            color: inherit;
+            text-decoration: underline;
+        }
+
+        .input-error {
+            border-color: rgba(230, 160, 74, 0.85) !important;
+            box-shadow: 0 0 0 4px rgba(230, 160, 74, 0.18) !important;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--text);
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            font-size: 15px;
+            background: #fff;
+            color: var(--text);
+            transition: border-color 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        input::placeholder {
+            color: rgba(91, 102, 122, 0.75);
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: rgba(17, 143, 206, 0.9);
+            box-shadow: 0 0 0 4px rgba(17, 143, 206, 0.15);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 18px;
+        }
+
+        .actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 12px;
+            margin-top: 26px;
+        }
+
+        button {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 13px 22px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.06s ease, background 0.15s ease, box-shadow 0.15s ease;
+            box-shadow: 0 10px 22px rgba(17, 143, 206, 0.22);
+        }
+
+        button:hover {
+            background: var(--primary-dark);
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        button:focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(230, 160, 74, 0.25), 0 10px 22px rgba(17, 143, 206, 0.22);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 1px solid rgba(17, 143, 206, 0.35);
+            box-shadow: none;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(17, 143, 206, 0.06);
+        }
+
+        .btn-secondary:focus-visible {
+            box-shadow: 0 0 0 4px rgba(17, 143, 206, 0.15);
+        }
+
+        /* Ensure the logo remains readable on top of the gradient */
+        header img {
+            padding: 6px 8px;
+            width: 150px;
+        }
+
+        .landing {
+            text-align: center;
+            padding: 26px 10px 10px;
+        }
+
+        .landing h2 {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .landing p {
+            font-size: 16px;
+            color: var(--muted);
+            max-width: 640px;
+            margin: 16px auto 28px;
+        }
+
+        .confirmation {
+            text-align: center;
+        }
+
+        .confirmation h2 {
+            color: var(--primary);
+        }
+
+        footer {
+            text-align: center;
+            color: var(--muted);
+            font-size: 13px;
+            margin-top: 40px;
+        }
+
+        /* Subtle separators and better footer links */
+        footer a:hover {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
+        /* Mobile polish */
+        @media (max-width: 680px) {
+            .card {
+                padding: 22px;
+            }
+
+            .grid-2 {
+                grid-template-columns: 1fr;
+                gap: 14px;
+            }
+
+            header .brand {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            header img {
+                height: 52px !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="brand" style="display: flex; align-items: center; gap: 16px;">
+            <img src="https://l-nsolar.co.uk/wp-content/uploads/2024/04/LN_Solar_Logo-02-removebg-preview.png"
+                alt="EnergyFlow Logo" style="height: 100px; width: auto;" />
+            <div>
+                <h1>EnergyFlow</h1>
+                <p>Trusted residential electricity & gas provider</p>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="card">
+            <div class="error-banner" id="errorBanner" role="alert" aria-live="polite">
+                <strong>Missing information:</strong> Please complete the highlighted fields to continue.
+            </div>
+
+            <div class="progress-wrapper">
+                <div class="progress-bar">
+                    <div class="progress" id="progress"></div>
+                </div>
+                <div class="step-indicator">
+                    <span>Start</span>
+                    <span>Your Details</span>
+                    <span>Property</span>
+                    <span>Payment</span>
+                    <span>Complete</span>
+                </div>
+            </div>
+
+            <!-- STEP 0 -->
+            <section class="step active">
+                <div class="landing">
+                    <h2>Switch your energy in minutes</h2>
+                    <p>
+                        Join over 500,000 households saving on electricity and gas.
+                        Our plans are flexible, transparent, and backed by 100% renewable options.
+                    </p>
+                    <button onclick="nextStep()">Get started</button>
+                </div>
+            </section>
+
+            <!-- STEP 1 -->
+            <section class="step">
+                <h2>Your details</h2>
+                <p class="subtitle">We’ll use this to set up your account</p>
+
+                <div class="form-group">
+                    <label>Full name</label>
+                    <input id="fullName" type="text" autocomplete="name" placeholder="Jane Smith">
+                </div>
+
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Email address</label>
+                        <input id="email" type="email" autocomplete="email" placeholder="jane@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Phone number</label>
+                        <input id="phone" type="tel" autocomplete="tel" placeholder="+44 20 1234 5678">
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button class="btn-secondary" type="button" onclick="prevStep()">Back</button>
+                    <button type="button" onclick="nextStep()">Continue</button>
+                </div>
+            </section>
+
+            <!-- STEP 2 -->
+            <section class="step">
+                <h2>Supply address</h2>
+                <p class="subtitle">Where should we supply your energy?</p>
+
+                <div class="form-group">
+                    <label>Street address</label>
+                    <input id="address" type="text" autocomplete="street-address" placeholder="12 High Street">
+                </div>
+
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Postcode</label>
+                        <input id="postcode" type="text" autocomplete="postal-code" placeholder="NW1 9LS">
+                    </div>
+                    <div class="form-group">
+                        <label>Energy plan</label>
+                        <select id="plan">
+                            <option>Green Saver</option>
+                            <option>Fixed Home 12</option>
+                            <option>Flex Anytime</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button class="btn-secondary" type="button" onclick="prevStep()">Back</button>
+                    <button type="button" onclick="nextStep()">Continue</button>
+                </div>
+            </section>
+
+            <!-- STEP 3 -->
+            <section class="step">
+                <h2>Billing details</h2>
+                <p class="subtitle">Secure direct debit setup</p>
+
+                <div class="form-group">
+                    <label>Cardholder name</label>
+                    <input id="cardName" type="text" autocomplete="cc-name" placeholder="Jane Smith">
+                </div>
+
+                <div class="grid-2">
+                    <div class="form-group">
+                        <label>Card number</label>
+                        <input id="cardNumber" type="text" inputmode="numeric" autocomplete="cc-number"
+                            placeholder="1234 5678 9012 3456">
+                    </div>
+                    <div class="form-group">
+                        <label>Expiry / CVV</label>
+                        <input id="expiry" type="text" inputmode="numeric" autocomplete="cc-exp"
+                            placeholder="MM/YY · CVV">
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button class="btn-secondary" type="button" onclick="prevStep()">Back</button>
+                    <button type="button" onclick="submitForm()">Submit application</button>
+                </div>
+            </section>
+
+            <!-- STEP 4 -->
+            <section class="step">
+                <div class="confirmation">
+                    <h2>You're all set</h2>
+                    <p>Your energy switch is underway.</p>
+                    <p>A signed copy of your agreement has been downloaded.</p>
+                </div>
+            </section>
+
+        </div>
+
+        <footer>
+            <div style="max-width: 900px; margin: 0 auto; padding: 34px 20px;">
+                <div style="display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr; gap: 22px; align-items: start;">
+                    <div>
+                        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 10px;">
+                            <div style="width: 10px; height: 10px; border-radius: 999px; background: var(--primary);">
+                            </div>
+                            <strong style="color: var(--text);">EnergyFlow Ltd</strong>
+                        </div>
+                        <div>45 Camden Road, London NW1 9LS</div>
+                        <div style="margin-top: 8px;">Registered in England &amp; Wales No. 12345678</div>
+                        <div style="margin-top: 12px;">© <span id="year"></span> EnergyFlow. All rights reserved.</div>
+                    </div>
+
+                    <div>
+                        <strong style="color: var(--text);">Contact</strong><br />
+                        <div style="margin-top: 10px;">
+                            <a href="#" style="color: var(--muted); text-decoration: none;">Help Center</a><br />
+                            <a href="mailto:support@energyflow.com"
+                                style="color: var(--muted); text-decoration: none;">support@energyflow.com</a><br />
+                            <a href="#" style="color: var(--muted); text-decoration: none;">Live chat (demo)</a>
+                        </div>
+                    </div>
+
+                    <div>
+                        <strong style="color: var(--text);">Company</strong><br />
+                        <div style="margin-top: 10px;">
+                            <a href="#" style="color: var(--muted); text-decoration: none;">About</a><br />
+                            <a href="#" style="color: var(--muted); text-decoration: none;">Careers</a><br />
+                            <a href="#" style="color: var(--muted); text-decoration: none;">Press</a>
+                        </div>
+                    </div>
+
+                    <div>
+                        <strong style="color: var(--text);">Social</strong><br />
+                        <div style="margin-top: 10px;">
+                            <a href="#" style="color: var(--muted); text-decoration: none;">X (Twitter)</a><br />
+                            <a href="#" style="color: var(--muted); text-decoration: none;">LinkedIn</a><br />
+                            <a href="#" style="color: var(--muted); text-decoration: none;">Instagram</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div
+                    style="margin-top: 18px; padding-top: 18px; border-top: 1px solid var(--border); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px;">
+                    <div>
+                        <a href="#" style="color: var(--muted); text-decoration: none;">Terms &amp; Conditions</a>
+                        <span style="opacity: 0.6;"> · </span>
+                        <a href="#" style="color: var(--muted); text-decoration: none;">Privacy Policy</a>
+                        <span style="opacity: 0.6;"> · </span>
+                        <a href="#" style="color: var(--muted); text-decoration: none;">Cookie Policy</a>
+                    </div>
+                    <div>Made for demo display only</div>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        const steps = document.querySelectorAll(".step");
+        const progress = document.getElementById("progress");
+        let current = 0;
+        const errorBanner = document.getElementById("errorBanner");
+
+        function clearErrors() {
+            errorBanner.style.display = "none";
+            document.querySelectorAll(".input-error").forEach(el => el.classList.remove("input-error"));
+        }
+
+        function setErrors(fields) {
+            errorBanner.style.display = "block";
+            fields.forEach(el => el.classList.add("input-error"));
+            // scroll banner into view for quick feedback
+            errorBanner.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        function validateStep(stepIndex) {
+            const missing = [];
+            clearErrors();
+
+            // Step indices: 0 landing, 1 details, 2 address, 3 billing, 4 confirmation
+            if (stepIndex === 1) {
+                if (!fullName.value.trim()) missing.push(fullName);
+                if (!email.value.trim()) missing.push(email);
+            }
+
+            if (stepIndex === 2) {
+                if (!address.value.trim()) missing.push(address);
+                if (!postcode.value.trim()) missing.push(postcode);
+            }
+
+            if (stepIndex === 3) {
+                if (!cardName.value.trim()) missing.push(cardName);
+                if (!cardNumber.value.trim()) missing.push(cardNumber);
+                if (!expiry.value.trim()) missing.push(expiry);
+            }
+
+            if (missing.length) {
+                setErrors(missing);
+                return false;
+            }
+            return true;
+        }
+
+        function updateProgress() {
+            progress.style.width = (current / (steps.length - 1)) * 100 + "%";
+        }
+
+        function showStep(i) {
+            clearErrors();
+            steps.forEach((s, idx) => s.classList.toggle("active", idx === i));
+            updateProgress();
+        }
+
+        function nextStep() {
+            // Validate the current step before allowing navigation forward
+            if (!validateStep(current)) return;
+            current = Math.min(current + 1, steps.length - 1);
+            showStep(current);
+        }
+
+        function prevStep() {
+            current = Math.max(current - 1, 0);
+            showStep(current);
+        }
+
+        async function getLogoDataURL() {
+            const logoEl = document.querySelector("header img");
+            if (!logoEl || !logoEl.src) return null;
+
+            return new Promise((resolve) => {
+                const img = new Image();
+                img.crossOrigin = "anonymous";
+                img.onload = () => {
+                    try {
+                        const canvas = document.createElement("canvas");
+                        const targetH = 44; // PDF header logo height (larger)
+                        const scale = targetH / img.height;
+                        canvas.width = Math.round(img.width * scale);
+                        canvas.height = targetH;
+                        const ctx = canvas.getContext("2d");
+                        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                        resolve(canvas.toDataURL("image/png"));
+                    } catch (e) {
+                        resolve(null);
+                    }
+                };
+                img.onerror = () => resolve(null);
+                img.src = logoEl.src;
+            });
+        }
+
+        async function submitForm() {
+            // Validate current step before submitting
+            if (!validateStep(current)) return;
+
+            const data = {
+                name: fullName.value,
+                email: email.value,
+                phone: phone.value,
+                address: address.value,
+                postcode: postcode.value,
+                plan: plan.value
+            };
+
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Add brand logo to PDF header (fallback to text if blocked)
+            const logoDataUrl = await getLogoDataURL();
+            if (logoDataUrl) {
+                // Add logo at top-left, larger
+                doc.addImage(logoDataUrl, "PNG", 14, 12, 70, 20);
+            } else {
+                // Fallback: render brand name if image can't be loaded due to CORS
+                doc.setTextColor(17, 143, 206);
+                doc.setFontSize(22);
+                doc.text("EnergyFlow", 14, 22);
+                doc.setTextColor(0, 0, 0);
+            }
+
+            // Title
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(16);
+            doc.text("Energy Supply Agreement", 14, 44);
+
+            // Intro
+            doc.setFont("helvetica", "normal");
+            doc.setFontSize(11);
+            doc.text(
+                "This Energy Supply Agreement is entered into between EnergyFlow Ltd and the customer listed below.",
+                14,
+                54,
+                { maxWidth: 182 }
+            );
+
+            // Customer details (values in bold)
+            let y = 70;
+            const lh = 7;
+
+            doc.setFont("helvetica", "normal");
+            doc.text("Customer Name:", 14, y);
+            doc.setFont("helvetica", "bold");
+            doc.text(data.name || "—", 55, y);
+            y += lh;
+
+            doc.setFont("helvetica", "normal");
+            doc.text("Email:", 14, y);
+            doc.setFont("helvetica", "bold");
+            doc.text(data.email || "—", 55, y);
+            y += lh;
+
+            doc.setFont("helvetica", "normal");
+            doc.text("Phone:", 14, y);
+            doc.setFont("helvetica", "bold");
+            doc.text(data.phone || "—", 55, y);
+            y += lh + 4;
+
+            doc.setFont("helvetica", "normal");
+            doc.text("Supply Address:", 14, y);
+            y += lh;
+            doc.setFont("helvetica", "bold");
+            const addr = (data.address || "").trim();
+            const pc = (data.postcode || "").trim();
+            const addrLines = doc.splitTextToSize([addr, pc].filter(Boolean).join("\n"), 160);
+            doc.text(addrLines.length ? addrLines : ["—"], 14, y);
+            y += (addrLines.length ? addrLines.length : 1) * lh + 4;
+
+            doc.setFont("helvetica", "normal");
+            doc.text("Selected Plan:", 14, y);
+            doc.setFont("helvetica", "bold");
+            doc.text(data.plan || "—", 55, y);
+            y += lh + 8;
+
+            doc.setFont("helvetica", "normal");
+            doc.text(
+                "By signing below, the customer agrees to EnergyFlow's terms of supply, billing arrangements, and privacy policy.",
+                14,
+                y,
+                { maxWidth: 182 }
+            );
+
+            // Signature lines (aligned with new margins and spacing)
+            doc.line(14, 180, 94, 180);
+            doc.text("Customer Signature", 14, 188);
+
+            doc.line(114, 180, 194, 180);
+            doc.text("Date", 114, 188);
+
+            doc.save("EnergyFlow_Agreement.pdf");
+
+            nextStep();
+        }
+
+        document.getElementById("year").textContent = new Date().getFullYear();
+        showStep(current);
+    </script>
+
+</body>
+
+</html>
