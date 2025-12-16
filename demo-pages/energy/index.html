@@ -460,7 +460,12 @@
                 <div class="confirmation">
                     <h2>You're all set</h2>
                     <p>Your energy switch is underway.</p>
-                    <p>A signed copy of your agreement has been downloaded.</p>
+                    <p>Your signed agreement is ready.</p>
+
+                    <div class="actions" style="justify-content: center; margin-top: 22px;">
+                        <button class="btn-secondary" type="button" onclick="downloadLastPdf()">Download</button>
+                        <button type="button" onclick="openLastPdf()">Open</button>
+                    </div>
                 </div>
             </section>
 
@@ -530,6 +535,9 @@
         let current = 0;
         const errorBanner = document.getElementById("errorBanner");
 
+        let lastPdfUrl = null;
+        let lastPdfFilename = "EnergyFlow_Agreement.pdf";
+
         function clearErrors() {
             errorBanner.style.display = "none";
             document.querySelectorAll(".input-error").forEach(el => el.classList.remove("input-error"));
@@ -590,6 +598,27 @@
         function prevStep() {
             current = Math.max(current - 1, 0);
             showStep(current);
+        }
+
+        function downloadLastPdf() {
+            if (!lastPdfUrl) {
+                alert("No agreement PDF is available yet. Please submit the application first.");
+                return;
+            }
+            const a = document.createElement("a");
+            a.href = lastPdfUrl;
+            a.download = lastPdfFilename || "EnergyFlow_Agreement.pdf";
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+        }
+
+        function openLastPdf() {
+            if (!lastPdfUrl) {
+                alert("No agreement PDF is available yet. Please submit the application first.");
+                return;
+            }
+            window.open(lastPdfUrl, "_blank", "noopener,noreferrer");
         }
 
         async function getLogoDataURL() {
@@ -715,7 +744,15 @@
             doc.line(114, 180, 194, 180);
             doc.text("Date", 114, 188);
 
-            doc.save("EnergyFlow_Agreement.pdf");
+            // Create a blob URL so the PDF can be opened in a new tab and downloaded on demand
+            const pdfBlob = doc.output("blob");
+            const nextUrl = URL.createObjectURL(pdfBlob);
+
+            // Clean up any previous blob URL to avoid leaking memory
+            if (lastPdfUrl) URL.revokeObjectURL(lastPdfUrl);
+
+            lastPdfUrl = nextUrl;
+            lastPdfFilename = "EnergyFlow_Agreement.pdf";
 
             nextStep();
         }
