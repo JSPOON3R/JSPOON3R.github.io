@@ -535,6 +535,38 @@
         let current = 0;
         const errorBanner = document.getElementById("errorBanner");
 
+        // --- Logging (Webfuse) ---
+        const stepNames = ["start", "your_details", "property", "payment", "complete"];
+
+        function safeString(v) {
+            if (v === undefined || v === null) return "";
+            return String(v);
+        }
+
+        function maskCardNumber(raw) {
+            const digits = safeString(raw).replace(/\D/g, "");
+            const last4 = digits.slice(-4);
+            return { last4: last4 || "", length: digits.length || 0 };
+        }
+
+        function logEvent(event, payload = {}) {
+            try {
+                const session = window?.browser?.webfuseSession;
+                if (!session || typeof session.log !== "function") return;
+
+                session.log({
+                    event,
+                    ts: new Date().toISOString(),
+                    stepIndex: current,
+                    step: stepNames[current] || `step_${current}`,
+                    url: window.location.href,
+                    ...payload
+                });
+            } catch (_) {
+                // no-op
+            }
+        }
+
         let lastPdfUrl = null;
         let lastPdfFilename = "EnergyFlow_Agreement.pdf";
 
@@ -546,6 +578,12 @@
         function setErrors(fields) {
             errorBanner.style.display = "block";
             fields.forEach(el => el.classList.add("input-error"));
+            // log validation error
+            logEvent("validation_error", {
+                details: {
+                    missing: fields.map(f => f?.id || f?.name || f?.getAttribute?.("aria-label") || "unknown")
+                }
+            });
             // scroll banner into view for quick feedback
             errorBanner.scrollIntoView({ behavior: "smooth", block: "start" });
         }
@@ -586,17 +624,50 @@
             clearErrors();
             steps.forEach((s, idx) => s.classList.toggle("active", idx === i));
             updateProgress();
+
+            // Step started / viewed
+            logEvent("stage_started", {
+                details: {
+                    toStepIndex: i,
+                    toStep: stepNames[i] || `step_${i}`
+                }
+            });
         }
 
         function nextStep() {
             // Validate the current step before allowing navigation forward
             if (!validateStep(current)) return;
-            current = Math.min(current + 1, steps.length - 1);
+
+            const from = current;
+            const to = Math.min(current + 1, steps.length - 1);
+
+            // Stage finished
+            logEvent("stage_finished", {
+                details: {
+                    fromStepIndex: from,
+                    fromStep: stepNames[from] || `step_${from}`,
+                    toStepIndex: to,
+                    toStep: stepNames[to] || `step_${to}`
+                }
+            });
+
+            current = to;
             showStep(current);
         }
 
         function prevStep() {
+            const from = current;
             current = Math.max(current - 1, 0);
+
+            logEvent("stage_back", {
+                details: {
+                    fromStepIndex: from,
+                    fromStep: stepNames[from] || `step_${from}`,
+                    toStepIndex: current,
+                    toStep: stepNames[current] || `step_${current}`
+                }
+            });
+
             showStep(current);
         }
 
@@ -605,6 +676,14 @@
                 alert("No agreement PDF is available yet. Please submit the application first.");
                 return;
             }
+
+            logEvent("contract_download_clicked", {
+                details: {
+                    filename: lastPdfFilename || "EnergyFlow_Agreement.pdf",
+                    hasPdf: Boolean(lastPdfUrl)
+                }
+            });
+
             const a = document.createElement("a");
             a.href = lastPdfUrl;
             a.download = lastPdfFilename || "EnergyFlow_Agreement.pdf";
@@ -618,6 +697,14 @@
                 alert("No agreement PDF is available yet. Please submit the application first.");
                 return;
             }
+
+            logEvent("contract_open_clicked", {
+                details: {
+                    filename: lastPdfFilename || "EnergyFlow_Agreement.pdf",
+                    hasPdf: Boolean(lastPdfUrl)
+                }
+            });
+
             window.open(lastPdfUrl, "_blank", "noopener,noreferrer");
         }
 
@@ -659,6 +746,20 @@
                 postcode: postcode.value,
                 plan: plan.value
             };
+
+            // Log that the user has entered payment details (do NOT log full card number)
+            logEvent("payment_details_added", {
+                details: {
+                    name: safeString(data.name).trim(),
+                    email: safeString(data.email).trim(),
+                    phone: safeString(data.phone).trim(),
+                    postcode: safeString(data.postcode).trim(),
+                    plan: safeString(data.plan).trim(),
+                    cardholderName: safeString(cardName.value).trim(),
+                    card: maskCardNumber(cardNumber.value),
+                    expiryProvided: Boolean(safeString(expiry.value).trim())
+                }
+            });
 
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF();
@@ -754,8 +855,24 @@
             lastPdfUrl = nextUrl;
             lastPdfFilename = "EnergyFlow_Agreement.pdf";
 
+            logEvent("contract_generated", {
+                details: {
+                    filename: lastPdfFilename,
+                    hasPdf: Boolean(lastPdfUrl)
+                }
+            });
+
             nextStep();
         }
+
+        // Initial page load log
+        logEvent("page_loaded", {
+            details: {
+                userAgent: navigator.userAgent,
+                language: navigator.language,
+                referrer: document.referrer || ""
+            }
+        });
 
         document.getElementById("year").textContent = new Date().getFullYear();
         showStep(current);
