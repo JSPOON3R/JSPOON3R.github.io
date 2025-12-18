@@ -550,21 +550,14 @@
         }
 
         function logEvent(event, payload = {}) {
-            try {
-                const session = window?.browser?.webfuseSession;
-                if (!session || typeof session.log !== "function") return;
-
-                session.log({
-                    event,
-                    ts: new Date().toISOString(),
-                    stepIndex: current,
-                    step: stepNames[current] || `step_${current}`,
-                    url: window.location.href,
-                    ...payload
-                });
-            } catch (_) {
-                // no-op
-            }
+            browser.webfuseSession.log({
+                event,
+                ts: new Date().toISOString(),
+                stepIndex: current,
+                step: stepNames[current] || `step_${current}`,
+                url: window.location.href,
+                ...payload
+            });
         }
 
         let lastPdfUrl = null;
