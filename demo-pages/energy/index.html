@@ -535,7 +535,7 @@
         let current = 0;
         const errorBanner = document.getElementById("errorBanner");
 
-        // --- Logging (Webfuse) ---
+        // --- Logging (forward to content script) ---
         const stepNames = ["start", "your_details", "property", "payment", "complete"];
 
         function safeString(v) {
@@ -550,14 +550,20 @@
         }
 
         function logEvent(event, payload = {}) {
-            browser.webfuseSession.log({
-                event,
-                ts: new Date().toISOString(),
-                stepIndex: current,
-                step: stepNames[current] || `step_${current}`,
-                url: window.location.href,
-                ...payload
-            });
+            window.postMessage(
+                {
+                    type: "energyflow_audit_log",
+                    entry: {
+                        event,
+                        ts: new Date().toISOString(),
+                        stepIndex: current,
+                        step: stepNames[current] || `step_${current}`,
+                        url: window.location.href,
+                        ...payload
+                    }
+                },
+                "*"
+            );
         }
 
         let lastPdfUrl = null;
