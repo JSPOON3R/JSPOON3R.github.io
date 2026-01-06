@@ -696,6 +696,8 @@
               <div class="waitingAnim" aria-hidden="true"></div>
               <div class="waitingText" data-i18n="waiting_calls">Waiting for incoming calls</div>
             </div>
+            <div style="margin-top:12px" id="queueNotice"></div>
+            <div class="list" id="queueList"></div>
           </div>
         </section>
 
@@ -707,7 +709,10 @@
                 <h1 class="title" data-i18n="history_title">History</h1>
                 <div class="subtitle" data-i18n="history_subtitle">Sessions returned by the REST API.</div>
               </div>
-              <button class="primary" id="refreshHistoryBtn" data-i18n="refresh">Refresh</button>
+              <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                <button class="primary" id="auditLogBtn" type="button">Audit Log preview</button>
+                <button class="primary" id="refreshHistoryBtn" data-i18n="refresh">Refresh</button>
+              </div>
             </div>
 
             <div class="filters">
@@ -1300,6 +1305,10 @@
       });
 
       // -------- Queue --------
+      const queueNotice = document.getElementById('queueNotice');
+      const queueList = document.getElementById('queueList');
+      const queueWaiting = document.getElementById('queueWaiting');
+
       function fmtTime(isoOrMs){
         try{
           if (typeof isoOrMs === 'number') return new Date(isoOrMs).toLocaleString();
@@ -1308,14 +1317,125 @@
         }catch(e){ return String(isoOrMs || ''); }
       }
 
-      async function pollQueue(){
-        try{
-          // Still poll so the page stays "live"; we just show a waiting indicator.
-          await apiGetQueue();
-        }catch(err){
-          console.error(err);
+      function renderQueue(items){
+        const list = Array.isArray(items) ? items : [];
+        const incoming = list.filter(x => x && x.status === 'incoming');
+        const missed = list.filter(x => x && x.status === 'missed');
+
+        queueNotice.innerHTML = '';
+        queueList.innerHTML = '';
+
+        // Show waiting animation only when there is no incoming
+        if (queueWaiting) queueWaiting.style.display = (incoming.length === 0) ? 'flex' : 'none';
+
+        if (incoming.length > 0){
+          const it = incoming[0];
+
+          const box = document.createElement('div');
+          box.className = 'item';
+
+          box.innerHTML = `
+            <div class="itemTop">
+              <div>
+                <div class="itemTitle">${escapeHtml(t('incoming_session'))}</div>
+                <div class="itemMeta">
+                  <span class="pill warn">${escapeHtml(t('incoming'))}</span>
+                  <span class="mono" style="margin-left:8px;">${escapeHtml(it.session_id || '')}</span>
+                </div>
+              </div>
+              <div class="itemMeta">${escapeHtml(fmtTime(it.start_time || it.received_at_ms))}</div>
+            </div>
+
+            <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+              <span class="pill good">${escapeHtml(t('pin'))}: <span class="mono">${escapeHtml(it.pin || '')}</span></span>
+              ${it.meta ? `<span class="pill">${escapeHtml(t('meta'))}: <span class="mono">${escapeHtml(it.meta)}</span></span>` : ''}
+              <button class="primary" id="answerBtn" style="padding:10px 14px; border-radius:14px; font-size:13px;" ${it.leader_link ? '' : 'disabled'}>
+                ${escapeHtml(t('answer'))}
+              </button>
+            </div>
+
+            <div class="subtle" style="margin-top:10px;">
+              ${escapeHtml(t('tags_label'))}: ${(it.tags && it.tags.length) ? it.tags.map(tg => `<span class=\"mono\">${escapeHtml(tg)}</span>`).join(', ') : '(none)'}
+            </div>
+
+            <details style="margin-top:10px;">
+              <summary><span class="mono">${escapeHtml(t('webhook'))} ${escapeHtml(it.session_id || '')}</span> — ${escapeHtml(t('details'))}</summary>
+              <pre class="subtle mono" style="margin:10px 0 0 0;">${escapeHtml(JSON.stringify(it, null, 2))}</pre>
+            </details>
+          `;
+
+          queueNotice.appendChild(box);
+
+          const answerBtn = document.getElementById('answerBtn');
+          if (answerBtn && it.leader_link){
+            answerBtn.addEventListener('click', async () => {
+              try{
+                await openActiveSession(it.leader_link, it.session_id, it.follower_link);
+              }catch(e){
+                console.error(e);
+              }
+            });
+          }
+        } else {
+          const empty = document.createElement('div');
+          empty.className = 'subtle';
+          empty.textContent = t('queue_none_incoming');
+          queueNotice.appendChild(empty);
+        }
+
+        if (missed.length > 0){
+          missed.slice(0, 10).forEach(it => {
+            const div = document.createElement('div');
+            div.className = 'item';
+            div.innerHTML = `
+              <div class="itemTop">
+                <div>
+                  <div class="itemTitle">${escapeHtml(t('missed_call'))}</div>
+                  <div class="itemMeta">
+                    <span class="pill bad">${escapeHtml(t('missed'))}</span>
+                    <span class="mono" style="margin-left:8px;">${escapeHtml(it.session_id || '')}</span>
+                  </div>
+                </div>
+                <div class="itemMeta">${escapeHtml(fmtTime(it.start_time || it.received_at_ms))}</div>
+              </div>
+
+              <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+                <span class="pill">${escapeHtml(t('pin'))}: <span class="mono">${escapeHtml(it.pin || '')}</span></span>
+                ${it.meta ? `<span class="pill">${escapeHtml(t('meta'))}: <span class="mono">${escapeHtml(it.meta)}</span></span>` : ''}
+              </div>
+
+              <details style="margin-top:10px;">
+                <summary><span class="mono">${escapeHtml(it.session_id || '')}</span> — ${escapeHtml(t('details'))}</summary>
+                <pre class="subtle mono" style="margin:10px 0 0 0;">${escapeHtml(JSON.stringify(it, null, 2))}</pre>
+              </details>
+            `;
+            queueList.appendChild(div);
+          });
+        } else {
+          const div = document.createElement('div');
+          div.className = 'subtle';
+          div.style.marginTop = '10px';
+          div.textContent = t('queue_none_missed');
+          queueList.appendChild(div);
         }
       }
+
+      async function pollQueue(){
+        try{
+          const items = await apiGetQueue();
+          renderQueue(items);
+        }catch(err){
+          console.error(err);
+          if (queueWaiting) queueWaiting.style.display = 'flex';
+          queueNotice.innerHTML = '';
+          queueList.innerHTML = '';
+          const div = document.createElement('div');
+          div.className = 'subtle';
+          div.textContent = 'Queue error: ' + ((err && err.message) ? err.message : String(err));
+          queueNotice.appendChild(div);
+        }
+      }
+
       setInterval(pollQueue, 5000);
 
       // -------- History --------
@@ -1443,6 +1563,16 @@
       }
 
       refreshHistoryBtn.addEventListener('click', refreshHistory);
+      const auditLogBtn = document.getElementById('auditLogBtn');
+      if (auditLogBtn){
+        auditLogBtn.addEventListener('click', () => {
+          window.open(
+            'https://script.google.com/a/macros/surfly.com/s/AKfycbwQ41_D562k_6AlxqgdDXcCvou46NhDrmDdO5qU3nt2efgk4U8W-IEUk0W2sttoKF4Ntg/exec?name=John',
+            '_blank',
+            'noopener'
+          );
+        });
+      }
 
       let filterTimer = null;
       [filterSessionId, filterAgentId, filterTag].forEach(el => {
