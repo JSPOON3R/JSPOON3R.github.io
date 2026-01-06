@@ -12,6 +12,7 @@
     <!-- Surfly JS & Gscript backend (load once) -->
     <script>
         const BACKEND_BASE = "https://script.google.com/macros/s/AKfycbxK7eWwsn8I1kdPuIJTCLya_P-QxZF-O8jaJLBa38Ww94Q87Wp68_LWOWipJEi6slXewg/exec";
+        const widgetKey = "fb8879c3023249d8b89edcddd7db6d27"
 
         async function backendFetch(action, { method = "GET", body = null } = {}) {
             if (!BACKEND_BASE || typeof BACKEND_BASE !== "string") {
@@ -117,7 +118,7 @@
             await window.__surflyReady;
             return new Promise((resolve) => {
                 try {
-                    Surfly.init({ widget_key: "99671227762b43c2a96daa066ee006e2" }, (init) => {
+                    Surfly.init({ widget_key: widgetKey }, (init) => {
                         console.log("init:", init);
                         resolve(init);
                     });
@@ -346,9 +347,9 @@
             background: var(--panel);
             border: 1px solid var(--panelBorder);
             border-radius: 20px;
-            padding: 20px 20px 18px 20px;
             box-shadow: 0 22px 70px var(--shadow);
             backdrop-filter: blur(10px);
+            padding: 22px 22px 20px;
         }
 
         /* Active session: full width, no card/panel */
@@ -394,7 +395,8 @@
 
         .subtitle {
             margin-top: 6px;
-            font-size: 12px;
+            font-size: 13px;
+            line-height: 1.35;
             color: var(--muted);
             font-weight: 650;
         }
@@ -424,19 +426,9 @@
         }
 
         /* crisper typography + spacing */
-        .card {
-            padding: 22px 22px 20px;
-        }
-
-        .subtitle {
-            font-size: 13px;
-            line-height: 1.35;
-        }
 
         /* slightly nicer controls */
-        input[type="text"],
-        textarea,
-        select {
+        :is(input[type="text"], textarea, select) {
             transition: border-color 140ms ease, box-shadow 140ms ease, background 140ms ease;
         }
 
@@ -456,10 +448,6 @@
             background: rgba(255, 255, 255, 0.95);
         }
 
-        /* slightly more depth on list items */
-        .item {
-            box-shadow: 0 10px 30px rgba(15, 25, 45, 0.06);
-        }
 
         .row {
             display: grid;
@@ -508,13 +496,6 @@
             content: "▾";
         }
 
-        .subtle {
-            font-size: 12px;
-            color: var(--muted);
-            margin-top: 8px;
-            word-break: break-word;
-            font-weight: 650;
-        }
 
         .chips {
             display: flex;
@@ -682,13 +663,6 @@
             gap: 10px;
         }
 
-        .item {
-            border: 1px solid rgba(14, 22, 48, 0.10);
-            background: rgba(255, 255, 255, 0.62);
-            border-radius: 14px;
-            padding: 12px;
-        }
-
         .itemTop {
             display: flex;
             justify-content: space-between;
@@ -696,18 +670,66 @@
             gap: 12px;
         }
 
-        .itemTitle {
-            font-weight: 1000;
-            font-size: 13px;
-            color: rgba(14, 22, 48, 0.92);
-        }
+        /* --- Nicer item cards (Docs + lists) --- */
+.item {
+  border: 1px solid rgba(14, 22, 48, 0.10);
+  background: rgba(255, 255, 255, 0.72);
+  border-radius: 16px;
+  padding: 14px;
+  box-shadow: 0 10px 30px rgba(15, 25, 45, 0.06);
+  transition: transform 120ms ease, box-shadow 140ms ease, border-color 140ms ease, background 140ms ease;
+}
 
-        .itemMeta {
-            font-size: 12px;
-            color: var(--muted);
-            margin-top: 4px;
-            font-weight: 700;
-        }
+.item:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 40px rgba(15, 25, 45, 0.10);
+  border-color: rgba(59, 108, 255, 0.18);
+  background: rgba(255, 255, 255, 0.80);
+}
+
+.itemTitle {
+  font-weight: 1000;
+  font-size: 14px;
+  letter-spacing: -0.2px;
+  color: rgba(14, 22, 48, 0.92);
+}
+
+.itemMeta {
+  font-size: 12px;
+  color: rgba(14, 22, 48, 0.62);
+  margin-top: 6px;
+  font-weight: 750;
+}
+
+.subtle {
+  font-size: 13px;
+  color: rgba(14, 22, 48, 0.68);
+  margin-top: 8px;
+  font-weight: 650;
+  line-height: 1.55;
+}
+
+.item .subtle {
+  margin-top: 10px;
+}
+
+/* Docs lists read cleaner */
+#tab-docs ol {
+  margin: 10px 0 0 18px;
+  padding: 0;
+}
+#tab-docs li {
+  margin: 8px 0;
+  line-height: 1.55;
+}
+
+/* Links feel consistent */
+a { color: inherit; }
+a:hover { text-decoration: underline; }
+
+/* Small improvement for code-ish lines */
+.mono { font-size: 12.5px; }
+
 
         .filters {
             display: grid;
@@ -1286,7 +1308,7 @@
                                     <button class="miniBtn" id="navToggleBtn" data-i18n="navigate">Navigate</button>
                                     <div class="navExpand" id="navExpand">
                                         <input class="navUrl" id="navUrl" type="text" value="https://"
-                                            data-i18n-placeholder="enter_url" /> placeholder="Enter URL (later)" />
+                                            data-i18n-placeholder="enter_url" /> 
                                         <button class="miniBtn primary" id="navGoBtn" disabled
                                             data-i18n="go">Go</button>
                                     </div>
