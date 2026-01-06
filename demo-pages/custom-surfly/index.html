@@ -7,7 +7,7 @@
 
     <!-- Surfly JS & Gscript backend (load once) -->
     <script>
-        const BACKEND_BASE = "https://script.google.com/macros/s/AKfycbzDSSzc1SmYWTjva1n3UqBJdhOiAfy6nI_Hfwmln0yIN9LhW9jINLm1UOmDDOfZqs4C8A/exec";
+        const BACKEND_BASE = "https://script.google.com/macros/s/AKfycbxK7eWwsn8I1kdPuIJTCLya_P-QxZF-O8jaJLBa38Ww94Q87Wp68_LWOWipJEi6slXewg/exec";
 
         async function backendFetch(action, { method = "GET", body = null } = {}) {
             if (!BACKEND_BASE || typeof BACKEND_BASE !== "string") {
@@ -61,6 +61,24 @@
 
         async function apiPatchCompanyOptions(patch) {
             return backendFetch("updateCompanyOptions", { method: "POST", body: patch });
+        }
+
+        async function apiListAgents() {
+            const res = await backendFetch("listAgents", { method: "GET" });
+            return Array.isArray(res.agents) ? res.agents : (Array.isArray(res) ? res : []);
+        }
+
+        async function apiCreateAgent(payload) {
+            return backendFetch("createAgent", { method: "POST", body: payload });
+        }
+
+        async function apiDeleteAgent(agentId) {
+            const url = `${BACKEND_BASE}?action=deleteAgent&agent_id=${encodeURIComponent(agentId)}`;
+            const resp = await fetch(url, { method: "POST" });
+            const json = await resp.json().catch(() => ({}));
+            if (!resp.ok) throw new Error(`Backend HTTP ${resp.status}`);
+            if (json && json.ok === false) throw new Error(json.error || "Backend error");
+            return json;
         }
 
         async function apiEndSession(sessionId) {
@@ -830,7 +848,11 @@
                 <button class="active" data-tab="session" data-i18n="nav_session">Session</button>
                 <button data-tab="queue" data-i18n="nav_queue">Queue</button>
                 <button data-tab="history" data-i18n="nav_history">History</button>
+                <button data-tab="agents" data-i18n="nav_agents">Agents</button>
                 <button data-tab="settings" data-i18n="nav_settings">Settings</button>
+                <div style="height:1px; background: rgba(14,22,48,0.10); margin: 8px 6px;"></div>
+                <button data-tab="docs" data-i18n="nav_docs">Documentation</button>
+                <div style="height:1px; background: rgba(14,22,48,0.10); margin: 8px 6px;"></div>
                 <button data-tab="active" id="navActiveBtn" style="display:none;" data-i18n="nav_active">Active
                     session</button>
             </div>
@@ -978,6 +1000,60 @@
 
                     <div class="subtle" id="historyStatus"></div>
                     <div class="list" id="historyList"></div>
+                </div>
+            </section>
+
+            <!-- Agents -->
+            <section class="tab" id="tab-agents">
+                <div class="card">
+                    <div class="titleRow">
+                        <div>
+                            <h1 class="title" data-i18n="agents_title">Agents</h1>
+                            <div class="subtitle" data-i18n="agents_subtitle">Manage agents in your Surfly company.
+                            </div>
+                        </div>
+                        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                            <span class="pill" id="agentsPill" style="display:none;"></span>
+                            <button class="miniBtn" id="refreshAgentsBtn" type="button"
+                                data-i18n="refresh">Refresh</button>
+                        </div>
+                    </div>
+
+                    <div class="list" id="agentsList"></div>
+
+                    <details style="margin-top:14px;">
+                        <summary data-i18n="agents_add_new">Add new agent</summary>
+                        <div style="margin-top:12px;" class="row">
+                            <div>
+                                <label for="newAgentUsername" data-i18n="agents_username">Username</label>
+                                <input id="newAgentUsername" type="text" />
+                            </div>
+                            <div>
+                                <label for="newAgentEmail" data-i18n="agents_email">Email</label>
+                                <input id="newAgentEmail" type="text" />
+                            </div>
+                        </div>
+
+                        <div style="margin-top:12px;" class="row">
+                            <div>
+                                <label for="newAgentPassword" data-i18n="agents_password">Password</label>
+                                <input id="newAgentPassword" type="text" />
+                            </div>
+                            <div>
+                                <label for="newAgentRole" data-i18n="agents_role">Role</label>
+                                <select id="newAgentRole">
+                                    <option value="manager">manager</option>
+                                    <option value="admin">admin</option>
+                                    <option value="agent">agent</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="actions">
+                            <button class="primary" id="createAgentBtn" type="button" data-i18n="agents_create">Create
+                                agent</button>
+                        </div>
+                    </details>
                 </div>
             </section>
 
@@ -1150,6 +1226,110 @@
                     </div>
                 </div>
             </section>
+            <!-- Documentation -->
+            <section class="tab" id="tab-docs">
+                <div class="card">
+                    <div class="titleRow">
+                        <div>
+                            <h1 class="title" data-i18n="docs_title">Documentation</h1>
+                            <div class="subtitle" data-i18n="docs_subtitle">Quick reference for how this Custom UI
+                                works.</div>
+                        </div>
+                    </div>
+
+                    <div style="max-width: 980px;">
+                        <div class="item" style="margin-top:10px;">
+                            <div class="itemTitle" data-i18n="docs_api_title">Key REST API endpoints</div>
+                            <div class="itemMeta" data-i18n="docs_api_meta">
+                                This UI calls your Apps Script backend, which calls Surfly’s REST API.
+                            </div>
+
+                            <div class="subtle">
+                                <div class="mono">POST /v2/sessions/</div>
+                                <div data-i18n="docs_api_sessions_post">
+                                    Create a new session. The response contains session info and (often) leader/follower
+                                    links.
+                                </div>
+
+                                <div style="height:10px;"></div>
+
+                                <div class="mono">POST /v2/sessions/{session_id}/end/</div>
+                                <div data-i18n="docs_api_sessions_end">
+                                    End a session by session_id.
+                                </div>
+
+                                <div style="height:10px;"></div>
+
+                                <div class="mono">GET /v2/sessions/</div>
+                                <div data-i18n="docs_api_sessions_list">
+                                    List recent sessions for History.
+                                </div>
+
+                                <div style="height:10px;"></div>
+
+                                <a href="https://docs.surfly.com/api/v2/" target="_blank" rel="noopener"
+                                    style="color:inherit; text-decoration:underline; font-weight:900;"
+                                    data-i18n="docs_api_link">Open REST API docs</a>
+                            </div>
+                        </div>
+
+                        <div class="item" style="margin-top:12px;">
+                            <div class="itemTitle" data-i18n="docs_js_title">Why we use the JavaScript API for
+                                leader/follower links</div>
+                            <div class="itemMeta" data-i18n="docs_js_meta">Webhook and REST responses can include a join
+                                link.</div>
+
+                            <div class="subtle" data-i18n="docs_js_body">
+                                When we receive a leader/follower link (from the Start Session response or from the
+                                Queue webhook),
+                                we do NOT set iframe.src directly. Instead, we join via the Surfly JavaScript API and
+                                render into our
+                                designated iframe. This gives us a controllable session handle so we can add custom
+                                controls (like Navigate)
+                                and keep the UI consistent.
+                            </div>
+
+                            <div class="subtle mono" style="margin-top:10px;">
+                                Surfly.session({}, LINK).startLeader("#activeFrame");
+                            </div>
+
+                            <div class="subtle mono" style="margin-top:6px;">
+                                surflySession.relocate("https://example.com");
+                            </div>
+
+                            <div style="margin-top:10px;">
+                                <a href="https://docs.surfly.com/category/javascript-api/" target="_blank"
+                                    rel="noopener" style="color:inherit; text-decoration:underline; font-weight:900;"
+                                    data-i18n="docs_js_link">Open JavaScript API docs</a>
+                                <span style="opacity:.6;"> · </span>
+                                <a href="https://demo.surfly.com/demo-pages/feature/session_builder.html"
+                                    target="_blank" rel="noopener"
+                                    style="color:inherit; text-decoration:underline; font-weight:900;"
+                                    data-i18n="docs_builder_link">Session start snippet builder</a>
+                            </div>
+                        </div>
+
+                        <div class="item" style="margin-top:12px;">
+                            <div class="itemTitle" data-i18n="docs_queue_title">Queue via Webhook</div>
+                            <div class="itemMeta" data-i18n="docs_queue_meta">Incoming calls are delivered to your
+                                backend.</div>
+
+                            <div class="subtle" data-i18n="docs_queue_body">
+                                The Queue tab polls your Apps Script backend (getQueue). The backend stores the incoming
+                                webhook payload,
+                                so the UI can show new incoming calls. When you click Answer, we join using the follower
+                                link (not the leader link).
+                            </div>
+
+                            <div style="margin-top:10px;">
+                                <a href="https://docs.surfly.com/surfly/webhooks" target="_blank" rel="noopener"
+                                    style="color:inherit; text-decoration:underline; font-weight:900;"
+                                    data-i18n="docs_webhooks_link">Open Webhooks docs</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </main>
     </div>
 
@@ -1272,6 +1452,48 @@
                 settings_saved: "Saved",
                 settings_save_failed: "Save failed",
                 settings_load_failed: "Load failed",
+                nav_agents: "Agents",
+                agents_title: "Agents",
+                agents_subtitle: "Manage agents in your Surfly company.",
+                agents_loading: "Loading…",
+                agents_loaded: "Loaded",
+                agents_load_failed: "Failed to load agents.",
+                agents_none: "No agents found.",
+                agents_delete: "Delete",
+                agents_deleting: "Deleting…",
+                agents_deleted: "Deleted",
+                agents_delete_failed: "Delete failed",
+                agents_add_new: "Add new agent",
+                agents_username: "Username",
+                agents_email: "Email",
+                agents_password: "Password",
+                agents_role: "Role",
+                agents_create: "Create agent",
+                agents_creating: "Creating…",
+                agents_created: "Created",
+                agents_create_failed: "Create failed",
+                nav_docs: "Documentation",
+
+                docs_title: "Documentation",
+                docs_subtitle: "Quick reference for how this Custom UI works.",
+
+                docs_api_title: "Key REST API endpoints",
+                docs_api_meta: "This UI calls your Apps Script backend, which calls Surfly’s REST API.",
+                docs_api_sessions_post: "Create a new session. The response contains session info and (often) leader/follower links.",
+                docs_api_sessions_end: "End a session by session_id.",
+                docs_api_sessions_list: "List recent sessions for History.",
+                docs_api_link: "Open REST API docs",
+
+                docs_js_title: "Why we use the JavaScript API for leader/follower links",
+                docs_js_meta: "Webhook and REST responses can include a join link.",
+                docs_js_body: "When we receive a leader/follower link (from the Start Session response or from the Queue webhook), we do NOT set iframe.src directly. Instead, we join via the Surfly JavaScript API and render into our designated iframe. This gives us a controllable session handle so we can add custom controls (like Navigate) and keep the UI consistent.",
+                docs_js_link: "Open JavaScript API docs",
+                docs_builder_link: "Session start snippet builder",
+
+                docs_queue_title: "Queue via Webhook",
+                docs_queue_meta: "Incoming calls are delivered to your backend.",
+                docs_queue_body: "The Queue tab polls your Apps Script backend (getQueue). The backend stores the incoming webhook payload, so the UI can show new incoming calls. When you click Answer, we join using the follower link (not the leader link).",
+                docs_webhooks_link: "Open Webhooks docs",
             },
 
             he: {
@@ -1388,6 +1610,47 @@
                 settings_saved: "נשמר",
                 settings_save_failed: "השמירה נכשלה",
                 settings_load_failed: "הטעינה נכשלה",
+                nav_agents: "סוכנים",
+                agents_title: "סוכנים",
+                agents_subtitle: "ניהול סוכנים בחברה שלך ב-Surfly.",
+                agents_loading: "טוען…",
+                agents_loaded: "נטען",
+                agents_load_failed: "טעינת הסוכנים נכשלה.",
+                agents_none: "לא נמצאו סוכנים.",
+                agents_delete: "מחק",
+                agents_deleting: "מוחק…",
+                agents_deleted: "נמחק",
+                agents_delete_failed: "מחיקה נכשלה",
+                agents_add_new: "הוסף סוכן חדש",
+                agents_username: "שם משתמש",
+                agents_email: "אימייל",
+                agents_password: "סיסמה",
+                agents_role: "תפקיד",
+                agents_create: "צור סוכן",
+                agents_creating: "יוצר…",
+                agents_created: "נוצר",
+                agents_create_failed: "יצירה נכשלה",
+                nav_docs: "תיעוד",
+                docs_title: "תיעוד",
+                docs_subtitle: "מדריך קצר לאופן שבו ממשק ה-Custom UI עובד.",
+
+                docs_api_title: "נקודות קצה מרכזיות ב-REST API",
+                docs_api_meta: "הממשק קורא ל-Apps Script (Backend), והוא קורא ל-REST API של Surfly.",
+                docs_api_sessions_post: "יצירת סשן חדש. התגובה כוללת פרטי סשן ולעיתים גם קישורי leader/follower.",
+                docs_api_sessions_end: "סיום סשן לפי session_id.",
+                docs_api_sessions_list: "רשימת סשנים אחרונים עבור לשונית History.",
+                docs_api_link: "פתח תיעוד REST API",
+
+                docs_js_title: "למה אנחנו משתמשים ב-JavaScript API כדי להצטרף עם leader/follower link",
+                docs_js_meta: "וובהוק ותגובות REST יכולות לכלול קישור הצטרפות.",
+                docs_js_body: "כשאנחנו מקבלים קישור leader/follower (מתגובת Start Session או מוובהוק של Queue), אנחנו לא משנים iframe.src ישירות. במקום זאת, אנחנו מצטרפים דרך Surfly JavaScript API ומרנדרים לתוך ה-iframe הייעודי. כך מתקבל session handle שניתן לשלוט בו — כדי להוסיף בקרות מותאמות (כמו Navigate) ולשמור על UI עקבי.",
+                docs_js_link: "פתח תיעוד JavaScript API",
+                docs_builder_link: "בונה Snippet להפעלת סשן",
+
+                docs_queue_title: "תור באמצעות Webhook",
+                docs_queue_meta: "שיחות נכנסות מגיעות ל-backend שלך.",
+                docs_queue_body: "לשונית Queue מבצעת polling ל-Apps Script (getQueue). ה-backend שומר את payload של הוובהוק כדי שה-UI יציג שיחות חדשות. בלחיצה על Answer אנחנו מצטרפים באמצעות follower link (ולא leader link).",
+                docs_webhooks_link: "פתח תיעוד Webhooks",
             }
         };
 
@@ -1584,7 +1847,7 @@
             const original = companyOptionsOriginal || {};
 
             // masking: join pills with comma delimiter (per your requirement)
-            const maskingStr = Array.from(globalMaskingSet).join(', ');
+            const maskingStr = Array.from(globalMaskingSet).join(',');
             if (String(original.hide_element_by_selector || '') !== String(maskingStr || '')) {
                 patch.hide_element_by_selector = maskingStr;
             }
@@ -1679,13 +1942,21 @@
             document.getElementById('tab-session').classList.toggle('active', name === 'session');
             document.getElementById('tab-queue').classList.toggle('active', name === 'queue');
             document.getElementById('tab-history').classList.toggle('active', name === 'history');
+            document.getElementById('tab-agents').classList.toggle('active', name === 'agents');
             document.getElementById('tab-settings').classList.toggle('active', name === 'settings');
             document.getElementById('tab-active').classList.toggle('active', name === 'active');
+            document.getElementById('tab-docs').classList.toggle('active', name === 'docs');
             // Auto-load company options when opening Settings (once)
             if (name === 'settings') {
                 if (!window.__companyOptionsLoadedOnce) {
                     window.__companyOptionsLoadedOnce = true;
                     loadCompanyOptionsIntoModal();
+                }
+            }
+            if (name === 'agents') {
+                if (!window.__agentsLoadedOnce) {
+                    window.__agentsLoadedOnce = true;
+                    refreshAgents();
                 }
             }
         }
@@ -2110,6 +2381,127 @@
         }
 
         setInterval(pollQueue, 5000);
+
+        // -------- Agents --------
+        const agentsList = document.getElementById('agentsList');
+        const refreshAgentsBtn = document.getElementById('refreshAgentsBtn');
+        const agentsPill = document.getElementById('agentsPill');
+
+        const newAgentUsername = document.getElementById('newAgentUsername');
+        const newAgentEmail = document.getElementById('newAgentEmail');
+        const newAgentPassword = document.getElementById('newAgentPassword');
+        const newAgentRole = document.getElementById('newAgentRole');
+        const createAgentBtn = document.getElementById('createAgentBtn');
+
+        function setAgentsPill(tone, text) {
+            if (!agentsPill) return;
+            agentsPill.style.display = 'inline-flex';
+            agentsPill.className = 'pill ' + (tone === 'good' ? 'good' : tone === 'warn' ? 'warn' : 'bad');
+            agentsPill.textContent = text;
+        }
+        function hideAgentsPill() {
+            if (!agentsPill) return;
+            agentsPill.style.display = 'none';
+            agentsPill.textContent = '';
+        }
+
+        function renderAgents(list) {
+            if (!agentsList) return;
+            agentsList.innerHTML = '';
+
+            const agents = Array.isArray(list) ? list : [];
+            if (agents.length === 0) {
+                const empty = document.createElement('div');
+                empty.className = 'subtle';
+                empty.textContent = t('agents_none');
+                agentsList.appendChild(empty);
+                return;
+            }
+
+            agents.forEach(a => {
+                const item = document.createElement('div');
+                item.className = 'item';
+
+                const agentId = a.agent_id ?? '';
+                const name = a.agent_name ?? '';
+                const email = a.agent_email ?? '';
+                const role = a.role ?? '';
+
+                item.innerHTML = `
+                  <div class="itemTop">
+                    <div>
+                      <div class="itemTitle"><span class="mono">${escapeHtml(String(agentId))}</span> — ${escapeHtml(String(name))}</div>
+                      <div class="itemMeta">${escapeHtml(String(email))} • <span class="mono">${escapeHtml(String(role))}</span></div>
+                    </div>
+                    <div>
+                      <button class="miniBtn danger" type="button" data-agent-id="${escapeHtml(String(agentId))}">
+                        ${escapeHtml(t('agents_delete'))}
+                      </button>
+                    </div>
+                  </div>
+                `;
+
+                const btn = item.querySelector('button[data-agent-id]');
+                if (btn) {
+                    btn.addEventListener('click', async () => {
+                        const id = btn.getAttribute('data-agent-id');
+                        if (!id) return;
+                        try {
+                            setAgentsPill('warn', t('agents_deleting'));
+                            await apiDeleteAgent(id);
+                            setAgentsPill('good', t('agents_deleted'));
+                            await refreshAgents();
+                            setTimeout(hideAgentsPill, 900);
+                        } catch (e) {
+                            console.error(e);
+                            setAgentsPill('bad', t('agents_delete_failed'));
+                        }
+                    });
+                }
+
+                agentsList.appendChild(item);
+            });
+        }
+
+        async function refreshAgents() {
+            try {
+                setAgentsPill('warn', t('agents_loading'));
+                const agents = await apiListAgents();
+                renderAgents(agents);
+                setAgentsPill('good', t('agents_loaded'));
+                setTimeout(hideAgentsPill, 900);
+            } catch (e) {
+                console.error(e);
+                setAgentsPill('bad', t('agents_load_failed'));
+            }
+        }
+
+        async function createAgentFromForm() {
+            const payload = {
+                username: (newAgentUsername.value || '').trim(),
+                agent_email: (newAgentEmail.value || '').trim(),
+                password: (newAgentPassword.value || '').trim(),
+                role: (newAgentRole.value || '').trim(),
+            };
+
+            try {
+                setAgentsPill('warn', t('agents_creating'));
+                await apiCreateAgent(payload);
+                setAgentsPill('good', t('agents_created'));
+                newAgentUsername.value = '';
+                newAgentEmail.value = '';
+                newAgentPassword.value = '';
+                newAgentRole.value = 'agent';
+                await refreshAgents();
+                setTimeout(hideAgentsPill, 900);
+            } catch (e) {
+                console.error(e);
+                setAgentsPill('bad', t('agents_create_failed'));
+            }
+        }
+
+        if (refreshAgentsBtn) refreshAgentsBtn.addEventListener('click', refreshAgents);
+        if (createAgentBtn) createAgentBtn.addEventListener('click', createAgentFromForm);
 
         // -------- History --------
         const historyStatus = document.getElementById('historyStatus');
