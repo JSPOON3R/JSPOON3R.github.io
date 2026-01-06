@@ -1,0 +1,1502 @@
+<!doctype html>
+<html>
+  <head>
+    <base target="_top" />
+    <meta charset="utf-8" />
+
+    <!-- Surfly JS & Gscript backend (load once) -->
+    <script>
+    const BACKEND_BASE = "https://script.google.com/macros/s/AKfycbwzx6uhnJao_jEki8qbgvxgOjZ93NZP-_GGiHmVZcv-H9BLsFxr65n1fbdvv0znTByYZA/exec";
+
+    async function backendFetch(action, { method = "GET", body = null } = {}) {
+      if (!BACKEND_BASE || BACKEND_BASE.includes("PASTE_YOUR_APPS_SCRIPT_EXEC_URL_HERE")) {
+        throw new Error("BACKEND_BASE is not set. Paste your Apps Script /exec URL into BACKEND_BASE.");
+      }
+      const url = `${BACKEND_BASE}?action=${encodeURIComponent(action)}`;
+      const opts = { method, headers: {} };
+      if (body !== null) {
+        opts.headers["Content-Type"] = "application/json";
+        opts.body = JSON.stringify(body);
+      }
+      const resp = await fetch(url, opts);
+      // Apps Script often returns 200 even on errors; normalize here
+      const json = await resp.json().catch(() => ({}));
+      if (!resp.ok) throw new Error(`Backend HTTP ${resp.status}`);
+      if (json && json.ok === false) throw new Error(json.error || "Backend error");
+      return json;
+    }
+
+    async function apiCreateSession(payload) {
+      return backendFetch("createSession", { method: "POST", body: payload });
+    }
+
+    async function apiListSessions() {
+      return backendFetch("listSessions", { method: "GET" });
+    }
+
+    async function apiGetQueue() {
+      const res = await backendFetch("getQueue", { method: "GET" });
+      return Array.isArray(res.items) ? res.items : [];
+    }
+
+    async function apiEndSession(sessionId) {
+      if (!sessionId) throw new Error("Missing sessionId");
+      const url = `${BACKEND_BASE}?action=endSession&session_id=${encodeURIComponent(sessionId)}`;
+      const resp = await fetch(url, { method: "POST" });
+      const json = await resp.json().catch(() => ({}));
+      if (!resp.ok) throw new Error(`Backend HTTP ${resp.status}`);
+      if (json && json.ok === false) throw new Error(json.error || "Backend error");
+      return json;
+    }
+
+      (function (s, u, r, f, l, y) {
+        s[f] = s[f] || { init: function () { s[f].q = arguments; } };
+        l = u.createElement(r);
+        y = u.getElementsByTagName(r)[0];
+        l.async = 1;
+        l.src = "https://surfly.com/surfly.js";
+        y.parentNode.insertBefore(l, y);
+      })(window, document, "script", "Surfly");
+
+      // Promise that resolves once Surfly is available
+      window.__surflyReady = new Promise((resolve) => {
+        (function wait() {
+          if (window.Surfly && typeof window.Surfly.init === "function") return resolve();
+          setTimeout(wait, 50);
+        })();
+      });
+
+      // Init once
+      window.__surflyInitOnce = (async () => {
+        await window.__surflyReady;
+        return new Promise((resolve) => {
+          try {
+            Surfly.init({ widget_key: "99671227762b43c2a96daa066ee006e2" }, (init) => {
+              console.log("init:", init);
+              resolve(init);
+            });
+          } catch (e) {
+            console.error("Surfly init failed:", e);
+            resolve({ success: false, error: String(e) });
+          }
+        });
+      })();
+    </script>
+
+    <style>
+      :root{
+        --text:#0e1630;
+        --muted:rgba(14,22,48,0.65);
+        --panel:rgba(255,255,255,0.74);
+        --panelBorder:rgba(255,255,255,0.70);
+        --shadow:rgba(15,25,45,0.10);
+        --inputBg:rgba(255,255,255,0.70);
+        --inputBorder:rgba(14,22,48,0.12);
+        --accent:#3b6cff;
+        --accent2:#7c5cff;
+        --good:#1f9d66;
+        --warn:#d9831f;
+        --bad:#d84b4b;
+      }
+
+      *{box-sizing:border-box;}
+      body{
+        margin:0;
+        font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, Helvetica, sans-serif;
+        color:var(--text);
+        overflow:hidden;
+      }
+
+      .bg{
+        position:fixed;
+        inset:0;
+        background:
+          radial-gradient(900px 700px at 20% 15%, rgba(59,108,255,0.30), transparent 60%),
+          radial-gradient(900px 700px at 85% 25%, rgba(124,92,255,0.26), transparent 60%),
+          radial-gradient(900px 700px at 40% 85%, rgba(60,220,255,0.20), transparent 60%),
+          linear-gradient(180deg, #f6f8ff, #eef3ff);
+        z-index:-3;
+      }
+
+      .waves{
+        position:fixed;
+        inset:-10%;
+        z-index:-2;
+        opacity:0.78;
+        pointer-events:none;
+        animation: drift 18s ease-in-out infinite alternate;
+      }
+
+      @keyframes drift{
+        from{ transform: translate3d(0,0,0) scale(1.02); }
+        to{ transform: translate3d(-18px, 10px, 0) scale(1.05); }
+      }
+
+      .app{ display:flex; height:100vh; width:100vw; }
+
+      .sidebar{
+        width:10vw;
+        min-width:170px;
+        max-width:260px;
+        backdrop-filter: blur(10px);
+        background: rgba(255,255,255,0.46);
+        border-right: 1px solid rgba(14,22,48,0.10);
+        padding:14px 10px;
+        display:flex;
+        flex-direction:column;
+        gap:10px;
+      }
+
+      .brand{
+        font-weight:900;
+        letter-spacing:0.2px;
+        padding:10px 10px 14px 10px;
+        border-bottom:1px solid rgba(14,22,48,0.10);
+        margin-bottom:6px;
+      }
+
+      .nav{display:flex; flex-direction:column; gap:6px;}
+      .nav button{
+        width:100%;
+        text-align:left;
+        padding:10px 10px;
+        background:transparent;
+        border:1px solid transparent;
+        color:var(--text);
+        border-radius:12px;
+        cursor:pointer;
+        font-size:13px;
+        font-weight:700;
+      }
+      .nav button:hover{ background: rgba(255,255,255,0.55); }
+      .nav button.active{
+        background: rgba(59,108,255,0.12);
+        border-color: rgba(59,108,255,0.20);
+      }
+
+      .content{
+        width:90vw;
+        height:100vh;
+        overflow:auto;
+        padding:22px;
+        display:flex;
+        justify-content:center;
+        align-items:flex-start;
+      }
+
+      .tab{ width:100%; display:none; justify-content:center; }
+      .tab.active{ display:flex; }
+
+      .card{
+        margin-top:22px;
+        width:min(1100px, 100%);
+        background: var(--panel);
+        border: 1px solid var(--panelBorder);
+        border-radius: 20px;
+        padding: 20px 20px 18px 20px;
+        box-shadow: 0 22px 70px var(--shadow);
+        backdrop-filter: blur(10px);
+      }
+
+      /* Active session: full width, no card/panel */
+      .tabActiveFull{ width:100%; display:none; }
+      .tabActiveFull.active{ display:block; }
+      .activeFullWrap{ width:100%; padding:0; margin-top:0; }
+
+      .titleRow{
+        display:flex;
+        align-items:flex-end;
+        justify-content:space-between;
+        gap:12px;
+        margin-bottom:12px;
+      }
+      .title{
+        font-size: 28px;
+        font-weight: 1000;
+        letter-spacing: -0.9px;
+        line-height: 1.05;
+        margin: 0;
+        background: linear-gradient(90deg, rgba(14,22,48,0.96), rgba(59,108,255,0.92), rgba(124,92,255,0.90));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .subtitle{
+        margin-top:6px;
+        font-size: 12px;
+        color: var(--muted);
+        font-weight: 650;
+      }
+
+      label{ display:block; font-size:12px; color:var(--muted); margin-bottom:6px; font-weight:700; }
+
+      input[type="text"], textarea, select{
+        width:100%;
+        background: var(--inputBg);
+        border: 1px solid var(--inputBorder);
+        color: var(--text);
+        border-radius: 14px;
+        padding: 10px 12px;
+        outline:none;
+      }
+      textarea{ resize: vertical; }
+
+      .row{
+        display:grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap:14px;
+      }
+      @media (max-width: 900px){
+        .row{ grid-template-columns: 1fr; }
+        .sidebar{ min-width: 150px; }
+      }
+
+      details{
+        border:1px solid rgba(14,22,48,0.10);
+        border-radius:14px;
+        background: rgba(255,255,255,0.62);
+        padding:10px 12px;
+      }
+      summary{
+        cursor:pointer;
+        font-size:13px;
+        font-weight:900;
+        color: rgba(14,22,48,0.90);
+        list-style:none;
+        display:flex;
+        align-items:center;
+        gap:10px;
+      }
+      summary::-webkit-details-marker{ display:none; }
+      summary::before{ content:"▸"; opacity:0.85; }
+      details[open] summary::before{ content:"▾"; }
+
+      .subtle{
+        font-size:12px;
+        color: var(--muted);
+        margin-top:8px;
+        white-space:pre-wrap;
+        word-break:break-word;
+        font-weight:650;
+      }
+
+      .chips{ display:flex; flex-wrap:wrap; gap:8px; margin-top:10px; }
+      .chip{
+        display:inline-flex;
+        align-items:center;
+        gap:8px;
+        padding:6px 10px;
+        border-radius:999px;
+        border:1px solid rgba(14,22,48,0.10);
+        background: rgba(255,255,255,0.68);
+        font-size:12px;
+        font-weight:800;
+      }
+      .chip button{
+        border:none;
+        background:transparent;
+        cursor:pointer;
+        font-size:14px;
+        line-height:1;
+        color: var(--bad);
+      }
+
+      .toggles{
+        display:grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap:12px 14px;
+        margin-top:12px;
+      }
+      .toggleRow{
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:12px;
+        padding:12px 12px;
+        border:1px solid rgba(14,22,48,0.10);
+        border-radius:14px;
+        background: rgba(255,255,255,0.62);
+      }
+      .toggleLabel{
+        font-size:13px;
+        font-weight:900;
+        color: rgba(14,22,48,0.90);
+      }
+      .switch{
+        position:relative;
+        width:46px;
+        height:26px;
+        flex:0 0 auto;
+      }
+      .switch input{ opacity:0; width:0; height:0; }
+      .slider{
+        position:absolute; inset:0;
+        border-radius:999px;
+        background: rgba(14,22,48,0.10);
+        border:1px solid rgba(14,22,48,0.10);
+        transition:180ms ease;
+      }
+      .slider::after{
+        content:"";
+        position:absolute;
+        width:20px; height:20px;
+        top:50%; left:3px;
+        transform: translateY(-50%);
+        border-radius:999px;
+        background: rgba(255,255,255,0.95);
+        box-shadow: 0 8px 20px rgba(15,25,45,0.10);
+        transition:180ms ease;
+      }
+      .switch input:checked + .slider{
+        background: linear-gradient(90deg, rgba(59,108,255,0.85), rgba(124,92,255,0.80));
+        border-color: rgba(59,108,255,0.20);
+      }
+      .switch input:checked + .slider::after{ left:22px; }
+
+      .actions{
+        display:flex;
+        gap:10px;
+        margin-top:16px;
+        align-items:center;
+        flex-wrap: wrap;
+      }
+      .primary{
+        background: linear-gradient(90deg, var(--accent), var(--accent2));
+        color:white;
+        border:none;
+        border-radius:16px;
+        padding:12px 16px;
+        font-weight:1000;
+        cursor:pointer;
+        font-size:14px;
+        box-shadow: 0 14px 36px rgba(59,108,255,0.18);
+      }
+      .primary:disabled{ opacity:0.6; cursor:not-allowed; }
+
+      .pill{
+        display:inline-flex;
+        align-items:center;
+        gap:8px;
+        border:1px solid rgba(14,22,48,0.10);
+        background: rgba(255,255,255,0.70);
+        border-radius:999px;
+        padding:7px 10px;
+        font-size:12px;
+        font-weight:900;
+        color: rgba(14,22,48,0.80);
+      }
+      .pill.good{ color: var(--good); }
+      .pill.warn{ color: var(--warn); }
+      .pill.bad{ color: var(--bad); }
+
+      .list{ margin-top:12px; display:flex; flex-direction:column; gap:10px; }
+      .item{ border:1px solid rgba(14,22,48,0.10); background: rgba(255,255,255,0.62); border-radius:14px; padding:12px; }
+      .itemTop{ display:flex; justify-content:space-between; align-items:flex-start; gap:12px; }
+      .itemTitle{ font-weight:1000; font-size:13px; color: rgba(14,22,48,0.92); }
+      .itemMeta{ font-size:12px; color: var(--muted); margin-top:4px; font-weight:700; }
+
+      .filters{
+        display:grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap:10px;
+        margin-top:10px;
+      }
+      @media (max-width: 1000px){
+        .filters{ grid-template-columns: 1fr 1fr; }
+      }
+
+      .mono{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+
+      /* Active session topbar + iframe */
+      .activeShell{ width: 100%; }
+      .activeTopbar{
+        height: 54px;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        padding: 0 12px;
+        border-radius: 16px 16px 0 0;
+        border: 1px solid rgba(14,22,48,0.10);
+        border-bottom: 0;
+        background: rgba(255,255,255,0.85);
+      }
+      .activeTopLeft, .activeTopRight{
+        display:flex;
+        align-items:center;
+        gap:10px;
+        flex-wrap: wrap;
+      }
+
+      .activeFrameWrap{
+        border: 1px solid rgba(14,22,48,0.10);
+        border-top: 0;
+        border-radius: 0 0 16px 16px;
+        overflow: hidden;
+        background: white;
+      }
+
+      .activeFrame{
+        width: 100%;
+        height: calc(100vh - 22px - 54px - 22px);
+        min-height: 70vh;
+        border: 0;
+        display:block;
+        background: white;
+      }
+
+      .miniBtn{
+        padding:10px 12px;
+        border-radius:14px;
+        border:1px solid rgba(14,22,48,0.10);
+        background: rgba(255,255,255,0.85);
+        cursor:pointer;
+        font-weight:950;
+      }
+      .miniBtn.primary{
+        border:none;
+        background: linear-gradient(90deg, var(--accent), var(--accent2));
+        color:white;
+        box-shadow: 0 14px 36px rgba(59,108,255,0.14);
+      }
+      .miniBtn.danger{
+        border:none;
+        background: linear-gradient(90deg, rgba(216,75,75,0.95), rgba(124,92,255,0.70));
+        color:white;
+      }
+
+      .navInline{ display:flex; align-items:center; gap:10px; }
+      .navExpand{ display:none; align-items:center; gap:10px; }
+      .navExpand.open{ display:flex; }
+      .navUrl{ width: min(520px, 40vw); }
+
+      /* ----------------------------
+         RTL / Hebrew mode
+      ---------------------------- */
+      html[dir="rtl"] body{ direction: rtl; }
+      html[dir="rtl"] .app{ flex-direction: row-reverse; }
+      html[dir="rtl"] .sidebar{
+        border-right: 0;
+        border-left: 1px solid rgba(14,22,48,0.10);
+      }
+      html[dir="rtl"] .nav button{ text-align: right; }
+      html[dir="rtl"] label,
+      html[dir="rtl"] input[type="text"],
+      html[dir="rtl"] textarea,
+      html[dir="rtl"] select{ text-align: right; }
+      html[dir="rtl"] .titleRow{ flex-direction: row-reverse; }
+      html[dir="rtl"] .itemTop{ flex-direction: row-reverse; }
+      html[dir="rtl"] .actions{ flex-direction: row-reverse; }
+      html[dir="rtl"] summary{ flex-direction: row-reverse; }
+      html[dir="rtl"] summary::before{ content:"◂"; }
+      html[dir="rtl"] details[open] summary::before{ content:"▾"; }
+      html[dir="rtl"] .chips,
+      html[dir="rtl"] .navInline,
+      html[dir="rtl"] .activeTopLeft,
+      html[dir="rtl"] .activeTopRight{
+        flex-direction: row-reverse;
+      }
+      html[dir="rtl"] .mono{
+        direction:ltr;
+        unicode-bidi: embed;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="bg"></div>
+
+    <svg class="waves" viewBox="0 0 1200 800" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+          <stop offset="0" stop-color="rgba(59,108,255,0.22)"/>
+          <stop offset="1" stop-color="rgba(124,92,255,0.18)"/>
+        </linearGradient>
+        <linearGradient id="g2" x1="1" x2="0" y1="0" y2="1">
+          <stop offset="0" stop-color="rgba(60,220,255,0.18)"/>
+          <stop offset="1" stop-color="rgba(59,108,255,0.10)"/>
+        </linearGradient>
+      </defs>
+
+      <path d="M0,520 C220,470 360,610 560,570 C740,535 860,430 1040,470 C1120,488 1160,505 1200,520 L1200,800 L0,800 Z" fill="url(#g1)">
+        <animate attributeName="d" dur="12s" repeatCount="indefinite"
+          values="
+          M0,520 C220,470 360,610 560,570 C740,535 860,430 1040,470 C1120,488 1160,505 1200,520 L1200,800 L0,800 Z;
+          M0,560 C220,510 360,610 560,550 C740,495 860,470 1040,500 C1120,520 1160,540 1200,560 L1200,800 L0,800 Z;
+          M0,520 C220,470 360,610 560,570 C740,535 860,430 1040,470 C1120,488 1160,505 1200,520 L1200,800 L0,800 Z
+          "/>
+      </path>
+
+      <path d="M0,600 C260,560 360,690 580,650 C800,610 900,520 1080,560 C1140,572 1170,585 1200,600 L1200,800 L0,800 Z" fill="url(#g2)" opacity="0.95">
+        <animate attributeName="d" dur="14s" repeatCount="indefinite"
+          values="
+          M0,600 C260,560 360,690 580,650 C800,610 900,520 1080,560 C1140,572 1170,585 1200,600 L1200,800 L0,800 Z;
+          M0,640 C260,600 360,700 580,630 C800,560 900,580 1080,610 C1140,625 1170,635 1200,640 L1200,800 L0,800 Z;
+          M0,600 C260,560 360,690 580,650 C800,610 900,520 1080,560 C1140,572 1170,585 1200,600 L1200,800 L0,800 Z
+          "/>
+      </path>
+    </svg>
+
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand" data-i18n="brand">Surfly UI</div>
+        <div class="nav">
+          <button class="active" data-tab="session" data-i18n="nav_session">Session</button>
+          <button data-tab="queue" data-i18n="nav_queue">Queue</button>
+          <button data-tab="history" data-i18n="nav_history">History</button>
+          <button data-tab="settings" data-i18n="nav_settings">Settings</button>
+          <button data-tab="active" id="navActiveBtn" style="display:none;" data-i18n="nav_active">Active session</button>
+        </div>
+      </aside>
+
+      <main class="content">
+        <!-- Session -->
+        <section class="tab active" id="tab-session">
+          <div class="card">
+            <div class="titleRow">
+              <div>
+                <h1 class="title" data-i18n="session_title">Session</h1>
+                <div class="subtitle" data-i18n="session_subtitle">Create a new session via the REST API.</div>
+              </div>
+            </div>
+
+            <label for="startUrl" data-i18n="start_url">Start URL</label>
+            <textarea id="startUrl" rows="3">https://www.wikipedia.org</textarea>
+
+            <div style="margin-top:14px" class="row">
+              <div>
+                <details>
+                  <summary data-i18n="masking">Masking</summary>
+                  <div style="margin-top:10px">
+                    <label for="masking" data-i18n="css_selectors">CSS selectors</label>
+                    <textarea id="masking" rows="3" data-i18n-placeholder="masking_ph" placeholder=".credit-card, #ssn, input[name='password']"></textarea>
+                    <div class="subtle" data-i18n="masking_hint">Empty masking sends an empty string.</div>
+                  </div>
+                </details>
+              </div>
+
+              <div>
+                <details>
+                  <summary data-i18n="tags">Tags</summary>
+                  <div style="margin-top:10px">
+                    <label for="tagsInput" data-i18n="add_tags">Add tags (press Enter)</label>
+                    <input id="tagsInput" type="text" data-i18n-placeholder="tags_ph" placeholder="vip, onboarding, case-123" />
+                    <div class="chips" id="tagChips"></div>
+                  </div>
+                </details>
+              </div>
+            </div>
+
+            <div class="toggles">
+              <div class="toggleRow">
+                <div class="toggleLabel" data-i18n="video">Video</div>
+                <label class="switch">
+                  <input type="checkbox" id="videochat_enabled" checked />
+                  <span class="slider"></span>
+                </label>
+              </div>
+
+              <div class="toggleRow">
+                <div class="toggleLabel" data-i18n="start_with_video">Start with video</div>
+                <label class="switch">
+                  <input type="checkbox" id="start_with_videochat_on" />
+                  <span class="slider"></span>
+                </label>
+              </div>
+
+              <div class="toggleRow">
+                <div class="toggleLabel" data-i18n="fullscreen_video">Fullscreen video</div>
+                <label class="switch">
+                  <input type="checkbox" id="start_with_fullscreen_videochat" />
+                  <span class="slider"></span>
+                </label>
+              </div>
+
+              <div class="toggleRow">
+                <div class="toggleLabel" data-i18n="control_switching">Control switching</div>
+                <label class="switch">
+                  <input type="checkbox" id="allow_control_switching" checked />
+                  <span class="slider"></span>
+                </label>
+              </div>
+            </div>
+
+            <div class="actions">
+              <button class="primary" id="startBtn" data-i18n="start_session_btn">Start Session</button>
+              <span class="pill" id="startPill" style="display:none;"></span>
+            </div>
+
+            <div id="sessionDetailsMount"></div>
+          </div>
+        </section>
+
+        <!-- Queue -->
+        <section class="tab" id="tab-queue">
+          <div class="card">
+            <div class="titleRow">
+              <div>
+                <h1 class="title" data-i18n="queue_title">Queue</h1>
+                <div class="subtitle" data-i18n="queue_subtitle">Incoming webhooks show up here. Incoming becomes missed after 2 minutes.</div>
+              </div>
+            </div>
+
+            <div style="margin-top:12px" id="queueNotice"></div>
+            <div class="list" id="queueList"></div>
+          </div>
+        </section>
+
+        <!-- History -->
+        <section class="tab" id="tab-history">
+          <div class="card">
+            <div class="titleRow">
+              <div>
+                <h1 class="title" data-i18n="history_title">History</h1>
+                <div class="subtitle" data-i18n="history_subtitle">Sessions returned by the REST API.</div>
+              </div>
+              <button class="primary" id="refreshHistoryBtn" data-i18n="refresh">Refresh</button>
+            </div>
+
+            <div class="filters">
+              <div>
+                <label for="filterSessionId" data-i18n="filter_session_id">Session ID contains</label>
+                <input id="filterSessionId" type="text" data-i18n-placeholder="filter_session_ph" placeholder="e.g. 12345" />
+              </div>
+              <div>
+                <label for="filterAgentId" data-i18n="filter_agent_id">Agent ID contains</label>
+                <input id="filterAgentId" type="text" data-i18n-placeholder="filter_agent_ph" placeholder="e.g. agent_..." />
+              </div>
+              <div>
+                <label for="filterTag" data-i18n="filter_tag">Tag contains</label>
+                <input id="filterTag" type="text" data-i18n-placeholder="filter_tag_ph" placeholder="e.g. vip" />
+              </div>
+              <div>
+                <label>&nbsp;</label>
+                <div class="pill" id="historyPill" style="justify-content:center;"></div>
+              </div>
+            </div>
+
+            <div class="subtle" id="historyStatus"></div>
+            <div class="list" id="historyList"></div>
+          </div>
+        </section>
+
+        <!-- Settings -->
+        <section class="tab" id="tab-settings">
+          <div class="card">
+            <div class="titleRow">
+              <div>
+                <h1 class="title" data-i18n="settings_title">Settings</h1>
+                <div class="subtitle" data-i18n="settings_subtitle">Basic UI settings (more later).</div>
+              </div>
+            </div>
+
+            <div style="max-width:420px;">
+              <label for="uiLang" data-i18n="ui_language">UI language</label>
+              <select id="uiLang">
+                <option value="en" data-i18n="lang_en">English</option>
+                <option value="he" data-i18n="lang_he">Hebrew</option>
+              </select>
+            </div>
+          </div>
+        </section>
+
+        <!-- Active session -->
+        <section class="tabActiveFull" id="tab-active">
+          <div class="activeFullWrap">
+            <div class="activeShell">
+              <div class="activeTopbar" id="activeTopbar">
+                <div class="activeTopLeft">
+                  <span class="pill" id="activePill"></span>
+                  <span class="pill mono" id="activeSessionIdPill" style="display:none;"></span>
+
+                  <div class="navInline">
+                    <button class="miniBtn" id="navToggleBtn" data-i18n="navigate">Navigate</button>
+                    <div class="navExpand" id="navExpand">
+                      <input class="navUrl" id="navUrl" type="text" data-i18n-placeholder="enter_url" placeholder="Enter URL (later)" />
+                      <button class="miniBtn primary" id="navGoBtn" disabled data-i18n="go">Go</button>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="activeTopRight">
+                  <button class="miniBtn danger" id="endSessionBtn" disabled data-i18n="end_session">End session</button>
+                </div>
+              </div>
+
+              <div class="activeFrameWrap">
+                <iframe
+                  id="activeFrame"
+                  class="activeFrame"
+                  src="about:blank"
+                  allow="camera; microphone; display-capture; autoplay; clipboard-read; clipboard-write; fullscreen; geolocation"
+                  allowfullscreen
+                ></iframe>
+              </div>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      // ----------------------------
+      // i18n + RTL
+      // ----------------------------
+      const I18N = {
+        en: {
+          brand: "Surfly UI",
+          nav_session: "Session",
+          nav_queue: "Queue",
+          nav_history: "History",
+          nav_settings: "Settings",
+          nav_active: "Active session",
+
+          session_title: "Session",
+          session_subtitle: "Create a new session via the REST API.",
+          start_url: "Start URL",
+          masking: "Masking",
+          css_selectors: "CSS selectors",
+          masking_hint: "Empty masking sends an empty string.",
+          masking_ph: ".credit-card, #ssn, input[name='password']",
+
+          tags: "Tags",
+          add_tags: "Add tags (press Enter)",
+          tags_ph: "vip, onboarding, case-123",
+
+          video: "Video",
+          start_with_video: "Start with video",
+          fullscreen_video: "Fullscreen video",
+          control_switching: "Control switching",
+          start_session_btn: "Start Session",
+
+          queue_title: "Queue",
+          queue_subtitle: "Incoming webhooks show up here. Incoming becomes missed after 2 minutes.",
+          queue_none_incoming: "No incoming sessions right now.",
+          queue_none_missed: "No missed calls yet.",
+          incoming_session: "Incoming session",
+          missed_call: "Missed call",
+          incoming: "incoming",
+          missed: "missed",
+          answer: "Answer",
+          tags_label: "Tags",
+          pin: "PIN",
+          meta: "Meta",
+          webhook: "Webhook",
+          details: "details",
+
+          history_title: "History",
+          history_subtitle: "Sessions returned by the REST API.",
+          refresh: "Refresh",
+          filter_session_id: "Session ID contains",
+          filter_agent_id: "Agent ID contains",
+          filter_tag: "Tag contains",
+          filter_session_ph: "e.g. 12345",
+          filter_agent_ph: "e.g. agent_...",
+          filter_tag_ph: "e.g. vip",
+          history_ready: "Ready",
+          history_loading: "Loading…",
+          history_loaded: "Loaded",
+          history_error: "Error",
+          history_loading_status: "Loading sessions…",
+          history_failed: "Failed to load sessions.",
+          history_showing: (shown, total) => `Showing ${shown} of ${total} sessions.`,
+          no_sessions_match: "No sessions match your filters.",
+          agent_label: "Agent",
+
+          settings_title: "Settings",
+          settings_subtitle: "Basic UI settings (more later).",
+          ui_language: "UI language",
+          lang_en: "English",
+          lang_he: "Hebrew",
+
+          idle: "Idle",
+          live: "Live",
+          joining: "Joining…",
+          join_failed: "Join failed",
+          no_link: "No link",
+          ending: "Ending…",
+          end_failed: "End failed",
+          created: "Created",
+          creating: "Creating…",
+          error: "Error",
+          session_word: "Session",
+
+          navigate: "Navigate",
+          enter_url: "Enter URL (later)",
+          go: "Go",
+          end_session: "End session"
+        },
+
+        he: {
+          brand: "ממשק Surfly",
+          nav_session: "סשן",
+          nav_queue: "תור",
+          nav_history: "היסטוריה",
+          nav_settings: "הגדרות",
+          nav_active: "סשן פעיל",
+
+          session_title: "סשן",
+          session_subtitle: "יצירת סשן חדש באמצעות REST API.",
+          start_url: "כתובת התחלה",
+          masking: "הסתרה",
+          css_selectors: "סלקטורים ב-CSS",
+          masking_hint: "אם ריק — נשלחת מחרוזת ריקה.",
+          masking_ph: ".credit-card, #ssn, input[name='password']",
+
+          tags: "תגיות",
+          add_tags: "הוספת תגיות (Enter)",
+          tags_ph: "vip, onboarding, case-123",
+
+          video: "וידאו",
+          start_with_video: "התחלה עם וידאו",
+          fullscreen_video: "וידאו במסך מלא",
+          control_switching: "החלפת שליטה",
+          start_session_btn: "התחל סשן",
+
+          queue_title: "תור",
+          queue_subtitle: "וובהוקים נכנסים מופיעים כאן. אחרי 2 דקות זה מסומן כשיחה שלא נענתה.",
+          queue_none_incoming: "אין כרגע סשנים נכנסים.",
+          queue_none_missed: "אין עדיין שיחות שלא נענו.",
+          incoming_session: "סשן נכנס",
+          missed_call: "שיחה שלא נענתה",
+          incoming: "נכנס",
+          missed: "הוחמצה",
+          answer: "ענה",
+          tags_label: "תגיות",
+          pin: "קוד",
+          meta: "מידע",
+          webhook: "וובהוק",
+          details: "פרטים",
+
+          history_title: "היסטוריה",
+          history_subtitle: "סשנים המוחזרים מה-REST API.",
+          refresh: "רענן",
+          filter_session_id: "מזהה סשן כולל",
+          filter_agent_id: "מזהה סוכן כולל",
+          filter_tag: "תג כולל",
+          filter_session_ph: "לדוגמה: 12345",
+          filter_agent_ph: "לדוגמה: agent_...",
+          filter_tag_ph: "לדוגמה: vip",
+          history_ready: "מוכן",
+          history_loading: "טוען…",
+          history_loaded: "נטען",
+          history_error: "שגיאה",
+          history_loading_status: "טוען סשנים…",
+          history_failed: "טעינת הסשנים נכשלה.",
+          history_showing: (shown, total) => `מציג ${shown} מתוך ${total} סשנים.`,
+          no_sessions_match: "אין סשנים התואמים למסננים.",
+          agent_label: "סוכן",
+
+          settings_title: "הגדרות",
+          settings_subtitle: "הגדרות ממשק בסיסיות (עוד בהמשך).",
+          ui_language: "שפת ממשק",
+          lang_en: "אנגלית",
+          lang_he: "עברית",
+
+          idle: "ממתין",
+          live: "פעיל",
+          joining: "מצטרף…",
+          join_failed: "הצטרפות נכשלה",
+          no_link: "אין קישור",
+          ending: "מסיים…",
+          end_failed: "סיום נכשל",
+          created: "נוצר",
+          creating: "יוצר…",
+          error: "שגיאה",
+          session_word: "סשן",
+
+          navigate: "ניווט",
+          enter_url: "הזן כתובת (בהמשך)",
+          go: "עבור",
+          end_session: "סיים סשן"
+        }
+      };
+
+      let UI_LANG = 'en';
+      function t(key, ...args){
+        const dict = I18N[UI_LANG] || I18N.en;
+        const val = dict[key];
+        if (typeof val === 'function') return val(...args);
+        return (val !== undefined) ? val : (I18N.en[key] !== undefined ? I18N.en[key] : key);
+      }
+
+      function applyUiLanguage(lang){
+        UI_LANG = (lang === 'he') ? 'he' : 'en';
+        document.documentElement.lang = UI_LANG;
+        document.documentElement.dir = (UI_LANG === 'he') ? 'rtl' : 'ltr';
+
+        document.querySelectorAll('[data-i18n]').forEach(el => {
+          const key = el.getAttribute('data-i18n');
+          el.textContent = t(key);
+        });
+
+        document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
+          const key = el.getAttribute('data-i18n-placeholder');
+          el.setAttribute('placeholder', t(key));
+        });
+
+        if (!currentActive.sessionId && !currentActive.leaderLink) {
+          setActivePill('idle', 'neutral');
+        }
+
+        historyPill.textContent = t('history_ready');
+        pollQueue();
+        refreshHistory();
+
+        try{ localStorage.setItem('surfly_ui_lang', UI_LANG); }catch(e){}
+      }
+
+      function loadUiLanguage(){
+        let saved = 'en';
+        try{ saved = localStorage.getItem('surfly_ui_lang') || 'he'; }catch(e){}
+        const uiLangSelect = document.getElementById('uiLang');
+        uiLangSelect.value = saved;
+        uiLangSelect.addEventListener('change', () => applyUiLanguage(uiLangSelect.value));
+        applyUiLanguage(saved);
+      }
+
+      // -------- Tabs --------
+      const navButtons = Array.from(document.querySelectorAll('.nav button'));
+      const navActiveBtn = document.getElementById('navActiveBtn');
+
+      function showTab(name){
+        navButtons.forEach(b => b.classList.toggle('active', b.dataset.tab === name));
+        document.getElementById('tab-session').classList.toggle('active', name === 'session');
+        document.getElementById('tab-queue').classList.toggle('active', name === 'queue');
+        document.getElementById('tab-history').classList.toggle('active', name === 'history');
+        document.getElementById('tab-settings').classList.toggle('active', name === 'settings');
+        document.getElementById('tab-active').classList.toggle('active', name === 'active');
+      }
+
+      navButtons.forEach(btn => btn.addEventListener('click', () => showTab(btn.dataset.tab)));
+
+      // -------- Active session state (Surfly leader join) --------
+      const activeFrame = document.getElementById('activeFrame');
+      const activePill = document.getElementById('activePill');
+      const activeSessionIdPill = document.getElementById('activeSessionIdPill');
+      const endSessionBtn = document.getElementById('endSessionBtn');
+
+      const navToggleBtn = document.getElementById('navToggleBtn');
+      const navExpand = document.getElementById('navExpand');
+      const navUrl = document.getElementById('navUrl');
+      const navGoBtn = document.getElementById('navGoBtn');
+
+      let currentActive = { sessionId: '', leaderLink: '', followerLink: '' };
+      let surflySession = null; // <- the controllable handle (startLeader() return)
+
+      function setActiveNavVisible(visible){
+        navActiveBtn.style.display = visible ? 'block' : 'none';
+      }
+
+      function setActivePill(stateKey, tone){
+        activePill.className = 'pill' + (tone === 'good' ? ' good' : tone === 'warn' ? ' warn' : tone === 'bad' ? ' bad' : '');
+        activePill.textContent = t(stateKey);
+      }
+
+      function clearActiveSessionUI(){
+        currentActive = { sessionId: '', leaderLink: '', followerLink: '' };
+
+        // Clear frame
+        activeFrame.src = 'about:blank';
+
+        // Clear handle
+        surflySession = null;
+
+        setActivePill('idle', 'neutral');
+
+        activeSessionIdPill.style.display = 'none';
+        activeSessionIdPill.textContent = '';
+
+        endSessionBtn.disabled = true;
+
+        navExpand.classList.remove('open');
+        navUrl.value = '';
+        navGoBtn.disabled = true;
+
+        setActiveNavVisible(false);
+      }
+
+      async function joinAsLeaderIntoIframe(leaderLink){
+        // Ensure Surfly is loaded+initialized once
+        const init = await window.__surflyInitOnce;
+
+        // If init reports failure, still try joining, but show a visible state if it errors.
+        try{
+          // IMPORTANT: join as leader AND render into iframe by passing selector string
+          // (per your requirement)
+          surflySession = Surfly.session({}, leaderLink).startLeader("#activeFrame");
+          return true;
+        }catch(e){
+          console.error("startLeader failed:", e);
+          surflySession = null;
+          return false;
+        }
+      }
+
+      async function openActiveSession(leaderLink, sessionId, followerLink){
+        if (!leaderLink){
+          setActivePill('no_link', 'bad');
+          setActiveNavVisible(true);
+          showTab('active');
+          return;
+        }
+
+        currentActive = {
+          sessionId: String(sessionId || ''),
+          leaderLink: String(leaderLink || ''),
+          followerLink: String(followerLink || '')
+        };
+
+        // Reset any previous handle
+        surflySession = null;
+
+        // UI state
+        setActiveNavVisible(true);
+        showTab('active');
+        setActivePill('joining', 'warn');
+
+        if (sessionId){
+          activeSessionIdPill.style.display = 'inline-flex';
+          activeSessionIdPill.textContent = `${t('session_word')} ${sessionId}`;
+        } else {
+          activeSessionIdPill.style.display = 'none';
+        }
+
+        // Join via Surfly into the iframe (DO NOT set iframe.src to leader link directly)
+        const ok = await joinAsLeaderIntoIframe(leaderLink);
+
+        if (ok){
+          setActivePill('live', 'good');
+          endSessionBtn.disabled = !currentActive.sessionId;
+
+          // Enable navigate UI only once we have a session handle
+          navGoBtn.disabled = !(surflySession && navUrl.value.trim().length > 0);
+        } else {
+          setActivePill('join_failed', 'bad');
+          endSessionBtn.disabled = false; // allow end (REST) if session id exists
+        }
+      }
+
+      // End session (REST API call via backend)
+      endSessionBtn.addEventListener('click', async () => {
+        if (!currentActive.sessionId) return;
+
+        endSessionBtn.disabled = true;
+        setActivePill('ending', 'warn');
+
+        try {
+          await apiEndSession(currentActive.sessionId);
+          clearActiveSessionUI();
+          showTab('session');
+        } catch (e) {
+          console.error(e);
+          setActivePill('end_failed', 'bad');
+          endSessionBtn.disabled = false;
+        }
+      });
+
+      // Navigate UI (expand/collapse)
+      navToggleBtn.addEventListener('click', () => navExpand.classList.toggle('open'));
+
+      navUrl.addEventListener('input', () => {
+        const canGo = !!(surflySession && navUrl.value.trim().length > 0);
+        navGoBtn.disabled = !canGo;
+      });
+
+      // Navigate action uses surflySession.relocate("new_url")
+      navGoBtn.addEventListener('click', () => {
+        const url = navUrl.value.trim();
+        if (!url || !surflySession) return;
+        try{
+          surflySession.relocate(url);
+        }catch(e){
+          console.error("relocate failed:", e);
+        }
+      });
+
+      // -------- Tags chips --------
+      const tagsInput = document.getElementById('tagsInput');
+      const tagChips = document.getElementById('tagChips');
+      const tags = new Set();
+
+      function renderTags(){
+        tagChips.innerHTML = '';
+        Array.from(tags).forEach(tg => {
+          const chip = document.createElement('span');
+          chip.className = 'chip';
+          chip.textContent = tg;
+
+          const x = document.createElement('button');
+          x.type = 'button';
+          x.textContent = '×';
+          x.title = 'Remove';
+          x.addEventListener('click', () => { tags.delete(tg); renderTags(); });
+
+          chip.appendChild(x);
+          tagChips.appendChild(chip);
+        });
+      }
+
+      function addTagsFromString(s){
+        (s || '')
+          .split(/[,\n]/g)
+          .map(x => x.trim())
+          .filter(Boolean)
+          .forEach(x => tags.add(x));
+        renderTags();
+      }
+
+      tagsInput.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter'){
+          e.preventDefault();
+          addTagsFromString(tagsInput.value);
+          tagsInput.value = '';
+        }
+      });
+
+      tagsInput.addEventListener('blur', () => {
+        if (tagsInput.value.trim()){
+          addTagsFromString(tagsInput.value);
+          tagsInput.value = '';
+        }
+      });
+
+      // -------- Session (create) --------
+      const startBtn = document.getElementById('startBtn');
+      const startPill = document.getElementById('startPill');
+      const sessionDetailsMount = document.getElementById('sessionDetailsMount');
+
+      function normalizeMaskingToString(s){
+        const cleaned = (s || '')
+          .split(/[,\n]/g)
+          .map(x => x.trim())
+          .filter(Boolean);
+        if (cleaned.length === 0) return "";
+        return cleaned.join(', ');
+      }
+
+      function setStartBusy(isBusy, textKey){
+        startBtn.disabled = isBusy;
+        startPill.style.display = 'inline-flex';
+        startPill.className = 'pill ' + (isBusy ? 'warn' : 'good');
+        startPill.textContent = t(textKey || (isBusy ? 'creating' : 'created'));
+      }
+
+      function renderSessionDetails(sessionId, json){
+        sessionDetailsMount.innerHTML = '';
+
+        const details = document.createElement('details');
+        details.style.marginTop = '12px';
+
+        const summary = document.createElement('summary');
+        const labelId = sessionId || '(unknown)';
+        summary.innerHTML = `<span class="mono">${escapeHtml(t('session_word'))} ${escapeHtml(labelId)}</span> — ${escapeHtml(t('details'))}`;
+        details.appendChild(summary);
+
+        const pre = document.createElement('pre');
+        pre.className = 'subtle mono';
+        pre.textContent = JSON.stringify(json, null, 2);
+        pre.style.margin = '10px 0 0 0';
+
+        details.appendChild(pre);
+        sessionDetailsMount.appendChild(details);
+      }
+
+      startBtn.addEventListener('click', async () => {
+        setStartBusy(true, 'creating');
+
+        const payload = {
+          url: document.getElementById('startUrl').value,
+          tags: Array.from(tags),
+          hide_element_by_selector: normalizeMaskingToString(document.getElementById('masking').value),
+          videochat_enabled: document.getElementById('videochat_enabled').checked,
+          start_with_videochat_on: document.getElementById('start_with_videochat_on').checked,
+          start_with_fullscreen_videochat: document.getElementById('start_with_fullscreen_videochat').checked,
+          allow_control_switching: document.getElementById('allow_control_switching').checked
+        };
+
+        try {
+          const res = await apiCreateSession(payload);
+          setStartBusy(false, 'created');
+
+          // Apps Script backend returns Surfly session object directly
+          const leader = res && res.leader_link ? res.leader_link : '';
+          const follower = res && res.follower_link ? res.follower_link : '';
+          const sessionId = (res && (res.session_id || res.id)) ? (res.session_id || res.id) : '';
+
+          renderSessionDetails(sessionId, res);
+          await openActiveSession(leader, sessionId, follower);
+        } catch (e) {
+          console.error(e);
+          startBtn.disabled = false;
+          startPill.style.display = 'inline-flex';
+          startPill.className = 'pill bad';
+          startPill.textContent = t('error');
+          renderSessionDetails('error', { error: String(e.message || e) });
+        }
+      });
+
+      // -------- Queue --------
+      const queueNotice = document.getElementById('queueNotice');
+      const queueList = document.getElementById('queueList');
+
+      function fmtTime(isoOrMs){
+        try{
+          if (typeof isoOrMs === 'number') return new Date(isoOrMs).toLocaleString();
+          if (!isoOrMs) return '';
+          return new Date(isoOrMs).toLocaleString();
+        }catch(e){ return String(isoOrMs || ''); }
+      }
+
+      function renderQueue(items){
+        const incoming = items.filter(x => x.status === 'incoming');
+        const missed = items.filter(x => x.status === 'missed');
+
+        queueNotice.innerHTML = '';
+        queueList.innerHTML = '';
+
+        if (incoming.length > 0){
+          const it = incoming[0];
+
+          const box = document.createElement('div');
+          box.className = 'item';
+
+          box.innerHTML = `
+            <div class="itemTop">
+              <div>
+                <div class="itemTitle">${escapeHtml(t('incoming_session'))}</div>
+                <div class="itemMeta">
+                  <span class="pill warn">${escapeHtml(t('incoming'))}</span>
+                  <span class="mono" style="margin-left:8px;">${escapeHtml(it.session_id || '')}</span>
+                </div>
+              </div>
+              <div class="itemMeta">${escapeHtml(fmtTime(it.start_time || it.received_at_ms))}</div>
+            </div>
+
+            <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+              <span class="pill good">${escapeHtml(t('pin'))}: <span class="mono">${escapeHtml(it.pin || '')}</span></span>
+              ${it.meta ? `<span class="pill">${escapeHtml(t('meta'))}: <span class="mono">${escapeHtml(it.meta)}</span></span>` : ''}
+              <button class="primary" id="answerBtn" style="padding:10px 14px; border-radius:14px; font-size:13px;" ${it.leader_link ? '' : 'disabled'}>
+                ${escapeHtml(t('answer'))}
+              </button>
+            </div>
+
+            <div class="subtle" style="margin-top:10px;">
+              ${escapeHtml(t('tags_label'))}: ${(it.tags && it.tags.length) ? it.tags.map(tt => `<span class="mono">${escapeHtml(tt)}</span>`).join(', ') : '(none)'}
+            </div>
+
+            <details style="margin-top:10px;">
+              <summary><span class="mono">${escapeHtml(t('webhook'))} ${escapeHtml(it.session_id || '')}</span> — ${escapeHtml(t('details'))}</summary>
+              <pre class="subtle mono" style="margin:10px 0 0 0;">${escapeHtml(JSON.stringify(it, null, 2))}</pre>
+            </details>
+          `;
+
+          queueNotice.appendChild(box);
+
+          const answerBtn = document.getElementById('answerBtn');
+          if (answerBtn && it.leader_link){
+            answerBtn.addEventListener('click', async () => {
+              await openActiveSession(it.leader_link, it.session_id, it.follower_link);
+            });
+          }
+        } else {
+          const empty = document.createElement('div');
+          empty.className = 'subtle';
+          empty.textContent = t('queue_none_incoming');
+          queueNotice.appendChild(empty);
+        }
+
+        if (missed.length > 0){
+          missed.slice(0, 10).forEach(it => {
+            const div = document.createElement('div');
+            div.className = 'item';
+            div.innerHTML = `
+              <div class="itemTop">
+                <div>
+                  <div class="itemTitle">${escapeHtml(t('missed_call'))}</div>
+                  <div class="itemMeta">
+                    <span class="pill bad">${escapeHtml(t('missed'))}</span>
+                    <span class="mono" style="margin-left:8px;">${escapeHtml(it.session_id || '')}</span>
+                  </div>
+                </div>
+                <div class="itemMeta">${escapeHtml(fmtTime(it.start_time || it.received_at_ms))}</div>
+              </div>
+
+              <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+                <span class="pill">${escapeHtml(t('pin'))}: <span class="mono">${escapeHtml(it.pin || '')}</span></span>
+                ${it.meta ? `<span class="pill">${escapeHtml(t('meta'))}: <span class="mono">${escapeHtml(it.meta)}</span></span>` : ''}
+              </div>
+
+              <details style="margin-top:10px;">
+                <summary><span class="mono">${escapeHtml(it.session_id || '')}</span> — ${escapeHtml(t('details'))}</summary>
+                <pre class="subtle mono" style="margin:10px 0 0 0;">${escapeHtml(JSON.stringify(it, null, 2))}</pre>
+              </details>
+            `;
+            queueList.appendChild(div);
+          });
+        } else {
+          const div = document.createElement('div');
+          div.className = 'subtle';
+          div.style.marginTop = '10px';
+          div.textContent = t('queue_none_missed');
+          queueList.appendChild(div);
+        }
+      }
+
+      async function pollQueue(){
+        try{
+          const items = await apiGetQueue();
+          renderQueue(Array.isArray(items) ? items : []);
+        }catch(err){
+          console.error(err);
+          queueNotice.innerHTML = '';
+          const div = document.createElement('div');
+          div.className = 'subtle';
+          div.textContent = 'Queue error: ' + (err && err.message ? err.message : String(err));
+          queueNotice.appendChild(div);
+        }
+      }
+      setInterval(pollQueue, 5000);
+
+      // -------- History --------
+      const historyStatus = document.getElementById('historyStatus');
+      const historyList = document.getElementById('historyList');
+      const historyPill = document.getElementById('historyPill');
+
+      const filterSessionId = document.getElementById('filterSessionId');
+      const filterAgentId = document.getElementById('filterAgentId');
+      const filterTag = document.getElementById('filterTag');
+      const refreshHistoryBtn = document.getElementById('refreshHistoryBtn');
+
+      function getField(obj, keys){
+        for (const k of keys){
+          if (obj && obj[k] !== undefined && obj[k] !== null) return obj[k];
+        }
+        return '';
+      }
+
+      function matchesFilter(value, needle){
+        if (!needle) return true;
+        return String(value || '').toLowerCase().includes(String(needle).toLowerCase());
+      }
+
+      function normalizeSessionsResponse(res){
+        if (Array.isArray(res)) return res;
+        if (res && Array.isArray(res.data)) return res.data;
+        if (res && Array.isArray(res.results)) return res.results;
+        if (res && Array.isArray(res.sessions)) return res.sessions;
+        return [];
+      }
+
+      function renderHistory(res){
+        const sessions = normalizeSessionsResponse(res);
+
+        const sNeedle = filterSessionId.value.trim();
+        const aNeedle = filterAgentId.value.trim();
+        const tNeedle = filterTag.value.trim();
+
+        const filtered = sessions.filter(s => {
+          const id = getField(s, ['session_id', 'id']);
+          const agent = getField(s, ['agent_id', 'agent', 'agentId']);
+          const tagsVal = Array.isArray(s.tags) ? s.tags.join(', ') : getField(s, ['tags']);
+          return matchesFilter(id, sNeedle)
+            && matchesFilter(agent, aNeedle)
+            && matchesFilter(tagsVal, tNeedle);
+        });
+
+        historyList.innerHTML = '';
+        historyStatus.textContent = t('history_showing', filtered.length, sessions.length);
+        historyPill.className = 'pill good';
+        historyPill.textContent = t('history_loaded');
+
+        filtered.slice(0, 50).forEach(s => {
+          const id = getField(s, ['session_id', 'id']);
+          const agent = getField(s, ['agent_id', 'agent', 'agentId']);
+          const time = getField(s, ['start_time', 'created_at', 'created', 'time']);
+
+          const div = document.createElement('div');
+          div.className = 'item';
+
+          div.innerHTML = `
+            <div class="itemTop">
+              <div>
+                <div class="itemTitle"><span class="mono">${escapeHtml(String(id || ''))}</span></div>
+                <div class="itemMeta">${escapeHtml(t('agent_label'))}: <span class="mono">${escapeHtml(String(agent || ''))}</span></div>
+              </div>
+              <div class="itemMeta">${escapeHtml(String(time ? fmtTime(time) : ''))}</div>
+            </div>
+
+            <details style="margin-top:10px;">
+              <summary><span class="mono">${escapeHtml(String(id || ''))}</span> — ${escapeHtml(t('details'))}</summary>
+              <pre class="subtle mono" style="margin:10px 0 0 0;">${escapeHtml(JSON.stringify(s, null, 2))}</pre>
+            </details>
+          `;
+          historyList.appendChild(div);
+        });
+
+        if (filtered.length === 0){
+          const empty = document.createElement('div');
+          empty.className = 'subtle';
+          empty.textContent = t('no_sessions_match');
+          historyList.appendChild(empty);
+        }
+      }
+
+      async function refreshHistory(){
+        historyPill.className = 'pill warn';
+        historyPill.textContent = t('history_loading');
+        historyStatus.textContent = t('history_loading_status');
+        historyList.innerHTML = '';
+
+        try{
+          const res = await apiListSessions();
+          renderHistory(res);
+        }catch(err){
+          console.error(err);
+          historyPill.className = 'pill bad';
+          historyPill.textContent = t('history_error');
+          historyStatus.textContent = t('history_failed');
+          const div = document.createElement('div');
+          div.className = 'subtle';
+          div.textContent = 'Error: ' + (err && err.message ? err.message : String(err));
+          historyList.appendChild(div);
+        }
+      }
+
+      refreshHistoryBtn.addEventListener('click', refreshHistory);
+
+      let filterTimer = null;
+      [filterSessionId, filterAgentId, filterTag].forEach(el => {
+        el.addEventListener('input', () => {
+          clearTimeout(filterTimer);
+          filterTimer = setTimeout(refreshHistory, 350);
+        });
+      });
+
+      // -------- Utils --------
+      function escapeHtml(s){
+        return String(s || '')
+          .replaceAll('&', '&amp;')
+          .replaceAll('<', '&lt;')
+          .replaceAll('>', '&gt;')
+          .replaceAll('"', '&quot;')
+          .replaceAll("'", '&#039;');
+      }
+
+      // Init
+      loadUiLanguage();
+      clearActiveSessionUI();
+      historyPill.textContent = t('history_ready');
+      pollQueue();
+      refreshHistory();
+
+      // Expose hooks
+      window.SurflyUI = {
+        openActiveSession,
+        endActiveSession: () => endSessionBtn.click(),
+        clearActiveSessionUI,
+        getActive: () => ({ ...currentActive }),
+        getSurflySession: () => surflySession
+      };
+    </script>
+  </body>
+</html>
