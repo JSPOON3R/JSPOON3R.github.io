@@ -9,11 +9,18 @@
     const BACKEND_BASE = "https://script.google.com/macros/s/AKfycbwtsjY3_FN6an4yhDi7fNhQ3LeuUzMudGrxg-0fyiMB2xLDrrrTEoPdQWzuDgWmKhTzHw/exec";
 
     async function backendFetch(action, { method = "GET", body = null } = {}) {
-      if (!BACKEND_BASE || BACKEND_BASE.includes("https://script.google.com/macros/s/AKfycbwtsjY3_FN6an4yhDi7fNhQ3LeuUzMudGrxg-0fyiMB2xLDrrrTEoPdQWzuDgWmKhTzHw/exec")) {
+      if (!BACKEND_BASE || typeof BACKEND_BASE !== "string") {
         throw new Error("BACKEND_BASE is not set. Paste your Apps Script /exec URL into BACKEND_BASE.");
       }
+      const trimmedBase = BACKEND_BASE.trim();
+      if (!trimmedBase) {
+        throw new Error("BACKEND_BASE is not set. Paste your Apps Script /exec URL into BACKEND_BASE.");
+      }
+      if (trimmedBase.includes("<") || trimmedBase.includes(">") || trimmedBase.includes("YOUR") || trimmedBase.includes("PASTE")) {
+        throw new Error("BACKEND_BASE looks like a placeholder. Paste your Apps Script /exec URL into BACKEND_BASE.");
+      }
 
-      const url = `${BACKEND_BASE}?action=${encodeURIComponent(action)}`;
+      const url = `${trimmedBase}?action=${encodeURIComponent(action)}`;
       const opts = { method, headers: {} };
 
       // IMPORTANT: avoid CORS preflight by NOT using application/json.
