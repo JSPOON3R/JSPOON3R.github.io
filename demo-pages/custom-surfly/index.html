@@ -12,15 +12,23 @@
       if (!BACKEND_BASE || BACKEND_BASE.includes("PASTE_YOUR_APPS_SCRIPT_EXEC_URL_HERE")) {
         throw new Error("BACKEND_BASE is not set. Paste your Apps Script /exec URL into BACKEND_BASE.");
       }
+
       const url = `${BACKEND_BASE}?action=${encodeURIComponent(action)}`;
       const opts = { method, headers: {} };
+
+      // IMPORTANT: avoid CORS preflight by NOT using application/json.
+      // Send the JSON as form-urlencoded under `payload=` so the request stays "simple".
       if (body !== null) {
-        opts.headers["Content-Type"] = "application/json";
-        opts.body = JSON.stringify(body);
+        const form = new URLSearchParams();
+        form.set("payload", JSON.stringify(body));
+        opts.body = form.toString();
+        opts.headers["Content-Type"] = "application/x-www-form-urlencoded;charset=UTF-8";
       }
+
       const resp = await fetch(url, opts);
-      // Apps Script often returns 200 even on errors; normalize here
       const json = await resp.json().catch(() => ({}));
+
+      // Apps Script often returns 200 even on errors; normalize here
       if (!resp.ok) throw new Error(`Backend HTTP ${resp.status}`);
       if (json && json.ok === false) throw new Error(json.error || "Backend error");
       return json;
@@ -947,7 +955,7 @@
 
       function loadUiLanguage(){
         let saved = 'en';
-        try{ saved = localStorage.getItem('surfly_ui_lang') || 'he'; }catch(e){}
+        try{ saved = localStorage.getItem('surfly_ui_lang') || 'en'; }catch(e){}
         const uiLangSelect = document.getElementById('uiLang');
         uiLangSelect.value = saved;
         uiLangSelect.addEventListener('change', () => applyUiLanguage(uiLangSelect.value));
