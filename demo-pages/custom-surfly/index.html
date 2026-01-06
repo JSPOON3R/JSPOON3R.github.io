@@ -60,7 +60,7 @@
         }
 
         async function apiPatchCompanyOptions(patch) {
-            return backendFetch("patchCompanyOptions", { method: "POST", body: patch });
+            return backendFetch("updateCompanyOptions", { method: "POST", body: patch });
         }
 
         async function apiEndSession(sessionId) {
