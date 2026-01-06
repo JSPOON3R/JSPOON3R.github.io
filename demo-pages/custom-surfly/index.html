@@ -718,84 +718,6 @@
         }
 
         /* ----------------------------
-   Modal
----------------------------- */
-        .modalOverlay {
-            position: fixed;
-            inset: 0;
-            z-index: 9999;
-            background: rgba(14, 22, 48, 0.35);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 18px;
-        }
-
-        .modalCard {
-            width: min(980px, calc(100vw - 32px));
-            max-height: calc(100vh - 32px);
-            overflow: hidden;
-            background: rgba(255, 255, 255, 0.92);
-            border: 1px solid rgba(255, 255, 255, 0.70);
-            border-radius: 18px;
-            box-shadow: 0 30px 90px rgba(15, 25, 45, 0.22);
-            backdrop-filter: blur(10px);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .modalHeader {
-            display: flex;
-            align-items: flex-start;
-            justify-content: space-between;
-            gap: 12px;
-            padding: 14px 14px 10px 14px;
-            border-bottom: 1px solid rgba(14, 22, 48, 0.10);
-        }
-
-        .modalTitle {
-            font-weight: 1000;
-            font-size: 14px;
-        }
-
-        .modalSub {
-            margin-top: 4px;
-            font-size: 12px;
-            color: var(--muted);
-            font-weight: 700;
-        }
-
-        .modalBody {
-            padding: 14px;
-            overflow: auto;
-        }
-
-        .modalFooter {
-            padding: 12px 14px;
-            border-top: 1px solid rgba(14, 22, 48, 0.10);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-
-        .modalDivider {
-            height: 1px;
-            background: rgba(14, 22, 48, 0.10);
-            margin: 10px 0;
-        }
-
-        .modalSection {
-            margin-bottom: 8px;
-        }
-
-        html[dir="rtl"] .modalHeader,
-        html[dir="rtl"] .modalFooter {
-            flex-direction: row-reverse;
-        }
-
-        /* ----------------------------
          RTL / Hebrew mode
       ---------------------------- */
         html[dir="rtl"] body {
@@ -1062,130 +984,112 @@
             <!-- Settings -->
             <section class="tab" id="tab-settings">
                 <div class="card">
-                    <div style="max-width:900px;">
-                        <button class="primary" id="openSettingsModalBtn" type="button"
-                            data-i18n="open_settings_modal">Open Settings</button>
+                    <div class="titleRow">
+                        <div>
+                            <h1 class="title" data-i18n="nav_settings">Settings</h1>
+                            <div class="subtitle" data-i18n="settings_modal_hint">
+                                Company options are loaded from the backend and can be updated here.
+                            </div>
+                        </div>
 
-                        <div class="subtle" style="margin-top:10px;" data-i18n="settings_modal_hint">
-                            Company options are loaded from the backend and can be updated here.
+                        <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+                            <span class="pill" id="settingsSavePill" style="display:none;"></span>
+                            <button class="miniBtn" id="reloadCompanyOptionsBtn" type="button"
+                                data-i18n="reload">Reload</button>
+                            <button class="miniBtn primary" id="saveCompanyOptionsBtn" type="button"
+                                data-i18n="save">Save</button>
                         </div>
                     </div>
 
-                    <!-- Settings modal -->
-                    <div id="settingsModal" class="modalOverlay" style="display:none;" aria-hidden="true">
-                        <div class="modalCard" role="dialog" aria-modal="true" aria-labelledby="settingsModalTitle">
-                            <div class="modalHeader">
+                    <div style="max-width:980px;">
+                        <!-- UI language (independent) -->
+                        <div style="margin-bottom:14px;">
+                            <label for="uiLang" data-i18n="ui_language">UI language</label>
+                            <select id="uiLang">
+                                <option value="en" data-i18n="lang_en">English</option>
+                                <option value="he" data-i18n="lang_he">Hebrew</option>
+                            </select>
+                        </div>
+
+                        <div style="height:1px; background: rgba(14,22,48,0.10); margin: 10px 0;"></div>
+
+                        <!-- Global masking pills -->
+                        <div style="margin-bottom:14px;">
+                            <label data-i18n="global_masking">Global masking (CSS selectors)</label>
+                            <div class="row" style="grid-template-columns: 1fr auto; align-items:end;">
                                 <div>
-                                    <div class="modalTitle" id="settingsModalTitle" data-i18n="settings_modal_title">
-                                        Company options</div>
-                                    <div class="modalSub" data-i18n="settings_modal_subtitle">Loaded from Surfly
-                                        company/options. Save will only send modified fields.</div>
-                                </div>
-                                <button class="miniBtn" id="closeSettingsModalBtn" type="button"
-                                    data-i18n="close">Close</button>
-                            </div>
-
-                            <div class="modalBody">
-                                <!-- UI language (independent) -->
-                                <div class="modalSection">
-                                    <label for="uiLang" data-i18n="ui_language">UI language</label>
-                                    <select id="uiLang">
-                                        <option value="en" data-i18n="lang_en">English</option>
-                                        <option value="he" data-i18n="lang_he">Hebrew</option>
-                                    </select>
-                                </div>
-
-                                <div class="modalDivider"></div>
-
-                                <!-- Global masking pills -->
-                                <div class="modalSection">
-                                    <label data-i18n="global_masking">Global masking (CSS selectors)</label>
-                                    <div class="row" style="grid-template-columns: 1fr auto; align-items:end;">
-                                        <div>
-                                            <input id="globalMaskingInput" type="text"
-                                                data-i18n-placeholder="global_masking_ph" placeholder=".credit-card" />
-                                            <div class="subtle" data-i18n="global_masking_hint">Add selectors one at a
-                                                time. Saved to API as a comma-separated string.</div>
-                                        </div>
-                                        <div style="display:flex; gap:10px;">
-                                            <button class="miniBtn primary" id="globalMaskingAddBtn" type="button"
-                                                data-i18n="add">Add</button>
-                                            <button class="miniBtn" id="globalMaskingClearBtn" type="button"
-                                                data-i18n="clear">Clear</button>
-                                        </div>
+                                    <input id="globalMaskingInput" type="text" data-i18n-placeholder="global_masking_ph"
+                                        placeholder=".credit-card" />
+                                    <div class="subtle" data-i18n="global_masking_hint">
+                                        Add selectors one at a time. Saved to API as a comma-separated string.
                                     </div>
-                                    <div class="chips" id="globalMaskingChips"></div>
                                 </div>
-
-                                <!-- Blocklist textarea -->
-                                <div class="modalSection" style="margin-top:14px;">
-                                    <div
-                                        style="display:flex; justify-content:space-between; gap:10px; align-items:flex-end; flex-wrap:wrap;">
-                                        <label for="blocklist" data-i18n="blocklist">Configure block list</label>
-                                        <button class="miniBtn" id="blocklistClearBtn" type="button"
-                                            data-i18n="clear">Clear</button>
-                                    </div>
-                                    <textarea id="blocklist" rows="6" class="mono" data-i18n-placeholder="blocklist_ph"
-                                        placeholder='[{"pattern":"^https?://...","redirect":"https://www.google.com"}]'></textarea>
-                                    <div class="subtle" data-i18n="blocklist_hint">Paste the JSON string/array expected
-                                        by Surfly.</div>
-                                </div>
-
-                                <!-- Regions -->
-                                <div class="modalSection" style="margin-top:14px;">
-                                    <label for="regions" data-i18n="regions">Server region(s)</label>
-                                    <select id="regions" multiple size="6" style="width:100%;">
-                                        <option value="us-west">us-west</option>
-                                        <option value="us-east">us-east</option>
-                                        <option value="eu-west">eu-west</option>
-                                        <option value="eu-central">eu-central</option>
-                                        <option value="ap-southeast">ap-southeast</option>
-                                        <option value="ap-northeast">ap-northeast</option>
-                                    </select>
-                                    <div class="subtle" data-i18n="regions_hint">Select one or more regions (API uses an
-                                        array).</div>
-                                </div>
-
-                                <!-- Show pin / block until agent joins -->
-                                <div class="modalSection" style="margin-top:14px;">
-                                    <label data-i18n="show_pin">Show pin to customer (inbound JS)</label>
-                                    <div style="display:flex; gap:14px; flex-wrap:wrap;">
-                                        <label
-                                            style="display:flex; gap:8px; align-items:center; font-weight:800; color:rgba(14,22,48,0.88);">
-                                            <input type="radio" name="showPin" id="showPinYes" value="true" />
-                                            <span data-i18n="yes">Yes</span>
-                                        </label>
-                                        <label
-                                            style="display:flex; gap:8px; align-items:center; font-weight:800; color:rgba(14,22,48,0.88);">
-                                            <input type="radio" name="showPin" id="showPinNo" value="false" />
-                                            <span data-i18n="no">No</span>
-                                        </label>
-                                    </div>
-                                    <div class="subtle" data-i18n="show_pin_hint">Maps to <span
-                                            class="mono">block_until_agent_joins</span> (true/false).</div>
-                                </div>
-
-                                <div class="modalDivider" style="margin-top:16px;"></div>
-
-                                <div class="subtle" style="opacity:0.65;">
-                                    <span data-i18n="options_fraction">This is a small fraction of the available
-                                        options.</span>
-                                    <a href="https://docs.surfly.com/surfly/session-options/" target="_blank"
-                                        rel="noopener"
-                                        style="color:inherit; text-decoration:underline; font-weight:900;"
-                                        data-i18n="session_options_link">Session Options</a>
-                                </div>
-                            </div>
-
-                            <div class="modalFooter">
-                                <span class="pill" id="settingsSavePill" style="display:none;"></span>
                                 <div style="display:flex; gap:10px;">
-                                    <button class="miniBtn" id="reloadCompanyOptionsBtn" type="button"
-                                        data-i18n="reload">Reload</button>
-                                    <button class="miniBtn primary" id="saveCompanyOptionsBtn" type="button"
-                                        data-i18n="save">Save</button>
+                                    <button class="miniBtn primary" id="globalMaskingAddBtn" type="button"
+                                        data-i18n="add">Add</button>
+                                    <button class="miniBtn" id="globalMaskingClearBtn" type="button"
+                                        data-i18n="clear">Clear</button>
                                 </div>
                             </div>
+                            <div class="chips" id="globalMaskingChips"></div>
+                        </div>
+
+                        <!-- Blocklist textarea -->
+                        <div style="margin-bottom:14px;">
+                            <div
+                                style="display:flex; justify-content:space-between; gap:10px; align-items:flex-end; flex-wrap:wrap;">
+                                <label for="blocklist" data-i18n="blocklist">Configure block list</label>
+                                <button class="miniBtn" id="blocklistClearBtn" type="button"
+                                    data-i18n="clear">Clear</button>
+                            </div>
+                            <textarea id="blocklist" rows="6" class="mono" data-i18n-placeholder="blocklist_ph"
+                                placeholder='[{"pattern":"^https?://...","redirect":"https://www.google.com"}]'></textarea>
+                            <div class="subtle" data-i18n="blocklist_hint">Paste the JSON string/array expected by
+                                Surfly.</div>
+                        </div>
+
+                        <!-- Regions -->
+                        <div style="margin-bottom:14px;">
+                            <label for="regions" data-i18n="regions">Server region(s)</label>
+                            <select id="regions" multiple size="6" style="width:100%;">
+                                <option value="us-west">us-west</option>
+                                <option value="us-east">us-east</option>
+                                <option value="eu-west">eu-west</option>
+                                <option value="eu-central">eu-central</option>
+                                <option value="ap-southeast">ap-southeast</option>
+                                <option value="ap-northeast">ap-northeast</option>
+                            </select>
+                            <div class="subtle" data-i18n="regions_hint">Select one or more regions (API uses an array).
+                            </div>
+                        </div>
+
+                        <!-- Show pin / block until agent joins -->
+                        <div style="margin-bottom:14px;">
+                            <label data-i18n="show_pin">Show pin to customer (inbound JS)</label>
+                            <div style="display:flex; gap:14px; flex-wrap:wrap;">
+                                <label
+                                    style="display:flex; gap:8px; align-items:center; font-weight:800; color:rgba(14,22,48,0.88);">
+                                    <input type="radio" name="showPin" id="showPinYes" value="true" />
+                                    <span data-i18n="yes">Yes</span>
+                                </label>
+                                <label
+                                    style="display:flex; gap:8px; align-items:center; font-weight:800; color:rgba(14,22,48,0.88);">
+                                    <input type="radio" name="showPin" id="showPinNo" value="false" />
+                                    <span data-i18n="no">No</span>
+                                </label>
+                            </div>
+                            <div class="subtle" data-i18n="show_pin_hint">
+                                Maps to <span class="mono">block_until_agent_joins</span> (true/false).
+                            </div>
+                        </div>
+
+                        <div style="height:1px; background: rgba(14,22,48,0.10); margin: 10px 0;"></div>
+
+                        <div class="subtle" style="opacity:0.65;">
+                            <span data-i18n="options_fraction">This is a small fraction of the available options.</span>
+                            <a href="https://docs.surfly.com/surfly/session-options/" target="_blank" rel="noopener"
+                                style="color:inherit; text-decoration:underline; font-weight:900;"
+                                data-i18n="session_options_link">Session Options</a>
                         </div>
                     </div>
                 </div>
@@ -1298,8 +1202,6 @@
                 no_sessions_match: "No sessions match your filters.",
                 agent_label: "Agent",
 
-                settings_title: "Settings",
-                settings_subtitle: "Basic UI settings (more later).",
                 ui_language: "UI language",
                 lang_en: "English",
                 lang_he: "Hebrew",
@@ -1320,11 +1222,7 @@
                 enter_url: "Enter URL (later)",
                 go: "Go",
                 end_session: "End session",
-                open_settings_modal: "Open Settings",
                 settings_modal_hint: "Company options are loaded from the backend and can be updated here.",
-                settings_modal_title: "Company options",
-                settings_modal_subtitle: "Loaded from Surfly company/options. Save will only send modified fields.",
-                close: "Close",
                 add: "Add",
                 clear: "Clear",
                 reload: "Reload",
@@ -1420,8 +1318,6 @@
                 no_sessions_match: "אין סשנים התואמים למסננים.",
                 agent_label: "סוכן",
 
-                settings_title: "הגדרות",
-                settings_subtitle: "הגדרות ממשק בסיסיות (עוד בהמשך).",
                 ui_language: "שפת ממשק",
                 lang_en: "אנגלית",
                 lang_he: "עברית",
@@ -1442,11 +1338,7 @@
                 enter_url: "הזן כתובת (בהמשך)",
                 go: "עבור",
                 end_session: "סיים סשן",
-                open_settings_modal: "פתח הגדרות",
                 settings_modal_hint: "אפשרויות החברה נטענות מהשרת וניתן לעדכן אותן כאן.",
-                settings_modal_title: "אפשרויות חברה",
-                settings_modal_subtitle: "נטען מ־company/options. שמירה תשלח רק שדות ששונו.",
-                close: "סגור",
                 add: "הוסף",
                 clear: "נקה",
                 reload: "טען מחדש",
@@ -1523,11 +1415,8 @@
         }
 
         // ----------------------------
-        // Company Options (Settings modal)
+        // Company Options (Settings panel)
         // ----------------------------
-        const settingsModal = document.getElementById('settingsModal');
-        const openSettingsModalBtn = document.getElementById('openSettingsModalBtn');
-        const closeSettingsModalBtn = document.getElementById('closeSettingsModalBtn');
         const reloadCompanyOptionsBtn = document.getElementById('reloadCompanyOptionsBtn');
         const saveCompanyOptionsBtn = document.getElementById('saveCompanyOptionsBtn');
         const settingsSavePill = document.getElementById('settingsSavePill');
@@ -1558,19 +1447,6 @@
             if (!settingsSavePill) return;
             settingsSavePill.style.display = 'none';
             settingsSavePill.textContent = '';
-        }
-
-        function openSettingsModal() {
-            if (!settingsModal) return;
-            settingsModal.style.display = 'flex';
-            settingsModal.setAttribute('aria-hidden', 'false');
-            document.body.style.overflow = 'hidden';
-        }
-        function closeSettingsModal() {
-            if (!settingsModal) return;
-            settingsModal.style.display = 'none';
-            settingsModal.setAttribute('aria-hidden', 'true');
-            document.body.style.overflow = '';
         }
 
         function parseCommaList(str) {
@@ -1752,23 +1628,6 @@
             }
         }
 
-        if (openSettingsModalBtn) {
-            openSettingsModalBtn.addEventListener('click', async () => {
-                openSettingsModal();
-                await loadCompanyOptionsIntoModal();
-            });
-        }
-        if (closeSettingsModalBtn) closeSettingsModalBtn.addEventListener('click', closeSettingsModal);
-
-        if (settingsModal) {
-            settingsModal.addEventListener('click', (e) => {
-                if (e.target === settingsModal) closeSettingsModal();
-            });
-            window.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape' && settingsModal.style.display !== 'none') closeSettingsModal();
-            });
-        }
-
         if (reloadCompanyOptionsBtn) reloadCompanyOptionsBtn.addEventListener('click', loadCompanyOptionsIntoModal);
         if (saveCompanyOptionsBtn) saveCompanyOptionsBtn.addEventListener('click', saveCompanyOptionsFromModal);
 
@@ -1802,6 +1661,13 @@
             document.getElementById('tab-history').classList.toggle('active', name === 'history');
             document.getElementById('tab-settings').classList.toggle('active', name === 'settings');
             document.getElementById('tab-active').classList.toggle('active', name === 'active');
+            // Auto-load company options when opening Settings (once)
+            if (name === 'settings') {
+                if (!window.__companyOptionsLoadedOnce) {
+                    window.__companyOptionsLoadedOnce = true;
+                    loadCompanyOptionsIntoModal();
+                }
+            }
         }
 
         navButtons.forEach(btn => btn.addEventListener('click', () => showTab(btn.dataset.tab)));
@@ -2382,9 +2248,6 @@
         // Init
         loadUiLanguage();
         clearActiveSessionUI();
-        historyPill.textContent = t('history_ready');
-        pollQueue();
-        refreshHistory();
 
         // Expose hooks
         window.SurflyUI = {
