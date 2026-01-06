@@ -4,6 +4,9 @@
 <head>
     <base target="_top" />
     <meta charset="utf-8" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="icon" type="image/svg+xml"
+        href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><text y=".9em" font-size="90">⚙️</text></svg>'>
 
     <!-- Surfly JS & Gscript backend (load once) -->
     <script>
@@ -209,7 +212,7 @@
             margin-bottom: 6px;
             display: flex;
             flex-direction: column;
-            align-items: flex-start;
+            align-items: center;
             gap: 10px;
         }
 
@@ -221,7 +224,13 @@
         }
 
         .brandText {
-            font-weight: 1000;
+            width: 100%;
+            text-align: center;
+            font-weight: 500;
+            /* thinner */
+            opacity: 0.55;
+            /* faint */
+            letter-spacing: 0.4px;
         }
 
         .waitingWrap {
@@ -267,10 +276,6 @@
             }
         }
 
-        html[dir="rtl"] .brand {
-            align-items: flex-end;
-        }
-
         .nav {
             display: flex;
             flex-direction: column;
@@ -297,6 +302,21 @@
         .nav button.active {
             background: rgba(59, 108, 255, 0.12);
             border-color: rgba(59, 108, 255, 0.20);
+        }
+
+        .nav button i {
+            width: 18px;
+            display: inline-block;
+            opacity: .75;
+        }
+
+        html[dir="rtl"] .nav button i {
+            margin-left: 8px;
+            margin-right: 0;
+        }
+
+        .nav button i {
+            margin-right: 8px;
         }
 
         .content {
@@ -355,12 +375,17 @@
         }
 
         .title {
-            font-size: 28px;
+            font-size: 32px;
+            /* was 28px */
+            background: linear-gradient(90deg,
+                    rgba(35, 55, 95, 0.92),
+                    /* lighter than #0e1630 */
+                    rgba(59, 108, 255, 0.92),
+                    rgba(124, 92, 255, 0.90));
             font-weight: 1000;
             letter-spacing: -0.9px;
             line-height: 1.05;
             margin: 0;
-            background: linear-gradient(90deg, rgba(14, 22, 48, 0.96), rgba(59, 108, 255, 0.92), rgba(124, 92, 255, 0.90));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -448,7 +473,6 @@
             font-size: 12px;
             color: var(--muted);
             margin-top: 8px;
-            white-space: pre-wrap;
             word-break: break-word;
             font-weight: 650;
         }
@@ -556,6 +580,18 @@
             margin-top: 16px;
             align-items: center;
             flex-wrap: wrap;
+        }
+
+        #historyList .item {
+            border-left: 6px solid rgba(59, 108, 255, .25);
+        }
+
+        #historyList .item:nth-child(3n+2) {
+            border-left-color: rgba(124, 92, 255, .22);
+        }
+
+        #historyList .item:nth-child(3n) {
+            border-left-color: rgba(60, 220, 255, .22);
         }
 
         .primary {
@@ -845,16 +881,23 @@
                 <div class="brandText" data-i18n="brand">Custom UI</div>
             </div>
             <div class="nav">
-                <button class="active" data-tab="session" data-i18n="nav_session">Session</button>
-                <button data-tab="queue" data-i18n="nav_queue">Queue</button>
-                <button data-tab="history" data-i18n="nav_history">History</button>
-                <button data-tab="agents" data-i18n="nav_agents">Agents</button>
-                <button data-tab="settings" data-i18n="nav_settings">Settings</button>
+
+                <button class="active" data-tab="session"><i class="bi bi-play-circle"></i> <span
+                        data-i18n="nav_session">Session</span></button>
+                <button data-tab="queue"><i class="bi bi-inbox"></i> <span data-i18n="nav_queue">Queue</span></button>
+                <button data-tab="history"><i class="bi bi-clock-history"></i> <span
+                        data-i18n="nav_history">History</span></button>
+                <button data-tab="agents"><i class="bi bi-people"></i> <span
+                        data-i18n="nav_agents">Agents</span></button>
+                <button data-tab="settings"><i class="bi bi-gear"></i> <span
+                        data-i18n="nav_settings">Settings</span></button>
                 <div style="height:1px; background: rgba(14,22,48,0.10); margin: 8px 6px;"></div>
-                <button data-tab="docs" data-i18n="nav_docs">Documentation</button>
+                <button data-tab="docs"><i class="bi bi-journal-text"></i> <span
+                        data-i18n="nav_docs">Documentation</span></button>
                 <div style="height:1px; background: rgba(14,22,48,0.10); margin: 8px 6px;"></div>
                 <button data-tab="active" id="navActiveBtn" style="display:none;" data-i18n="nav_active">Active
                     session</button>
+
             </div>
         </aside>
 
@@ -971,7 +1014,8 @@
                             <div class="subtitle" data-i18n="history_subtitle">Sessions returned by the REST API.</div>
                         </div>
                         <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
-                            <button class="primary" id="auditLogBtn" type="button">Audit Log preview</button>
+                            <button class="primary" id="auditLogBtn" type="button">Audit Log preview (latest
+                                session)</button>
                             <button class="primary" id="refreshHistoryBtn" data-i18n="refresh">Refresh</button>
                         </div>
                     </div>
@@ -1064,7 +1108,7 @@
                         <div>
                             <h1 class="title" data-i18n="nav_settings">Settings</h1>
                             <div class="subtitle" data-i18n="settings_modal_hint">
-                                Company options are loaded from the backend and can be updated here.
+                                Global company options can be updated here.
                             </div>
                         </div>
 
@@ -1173,9 +1217,6 @@
                                     <input type="radio" name="showPin" id="showPinNo" value="false" />
                                     <span data-i18n="no">No</span>
                                 </label>
-                            </div>
-                            <div class="subtle" data-i18n="show_pin_hint">
-                                Maps to <span class="mono">block_until_agent_joins</span> (true/false).
                             </div>
                         </div>
 
