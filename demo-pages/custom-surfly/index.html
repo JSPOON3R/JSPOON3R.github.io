@@ -294,16 +294,21 @@
             border-radius: 12px;
             cursor: pointer;
             font-size: 13px;
-            font-weight: 700;
+            font-weight: 800;
+            transition: background 140ms ease, border-color 140ms ease, transform 120ms ease, box-shadow 140ms ease;
         }
 
         .nav button:hover {
-            background: rgba(255, 255, 255, 0.55);
+            background: rgba(255, 255, 255, 0.58);
+            border-color: rgba(14, 22, 48, 0.08);
+            transform: translateY(-1px);
+            box-shadow: 0 10px 26px rgba(15, 25, 45, 0.06);
         }
 
         .nav button.active {
-            background: rgba(59, 108, 255, 0.12);
-            border-color: rgba(59, 108, 255, 0.20);
+            background: linear-gradient(90deg, rgba(59, 108, 255, 0.14), rgba(124, 92, 255, 0.10));
+            border-color: rgba(59, 108, 255, 0.22);
+            box-shadow: 0 12px 30px rgba(59, 108, 255, 0.08);
         }
 
         .nav button i {
@@ -617,18 +622,40 @@
         .primary {
             background: linear-gradient(90deg, var(--accent), var(--accent2));
             color: white;
-            border: none;
+            border: 0;
             border-radius: 16px;
             padding: 12px 16px;
             font-weight: 1000;
             cursor: pointer;
             font-size: 14px;
+            letter-spacing: -0.1px;
             box-shadow: 0 14px 36px rgba(59, 108, 255, 0.18);
+            transition: transform 120ms ease, box-shadow 160ms ease, filter 160ms ease;
+            user-select: none;
+        }
+
+        .primary:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 18px 46px rgba(59, 108, 255, 0.22);
+            filter: brightness(1.02);
+        }
+
+        .primary:active {
+            transform: translateY(0px) scale(0.99);
+            box-shadow: 0 12px 30px rgba(59, 108, 255, 0.18);
+        }
+
+        .primary:focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(59, 108, 255, 0.16), 0 18px 46px rgba(59, 108, 255, 0.18);
         }
 
         .primary:disabled {
-            opacity: 0.6;
+            opacity: 0.55;
             cursor: not-allowed;
+            transform: none;
+            filter: none;
+            box-shadow: 0 10px 24px rgba(15, 25, 45, 0.08);
         }
 
         .pill {
@@ -713,22 +740,158 @@
   margin-top: 10px;
 }
 
-/* Docs lists read cleaner */
+/* ----------------------------
+   Docs (make it feel less dull)
+---------------------------- */
+#tab-docs .card {
+  position: relative;
+  overflow: hidden;
+}
+
+#tab-docs .card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(600px 260px at 10% 0%, rgba(59,108,255,0.18), transparent 60%),
+    radial-gradient(520px 240px at 90% 10%, rgba(124,92,255,0.16), transparent 58%),
+    radial-gradient(520px 260px at 40% 100%, rgba(60,220,255,0.12), transparent 62%);
+  opacity: 0.9;
+}
+
+#tab-docs .card > * {
+  position: relative;
+}
+
+/* A bit more editorial spacing */
+#tab-docs .titleRow {
+  margin-bottom: 16px;
+}
+
+#tab-docs .subtitle {
+  max-width: 72ch;
+}
+
+/* Make docs items feel like sections */
+#tab-docs .item {
+  position: relative;
+  padding: 16px;
+  border-radius: 18px;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.84), rgba(255,255,255,0.66));
+  border: 1px solid rgba(14,22,48,0.10);
+}
+
+#tab-docs .item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  padding: 1px;
+  background: linear-gradient(90deg, rgba(59,108,255,0.26), rgba(124,92,255,0.22), rgba(60,220,255,0.18));
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+  opacity: 0.9;
+}
+
+#tab-docs .itemTitle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 15px;
+  letter-spacing: -0.25px;
+}
+
+#tab-docs .itemTitle::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, rgba(59,108,255,0.95), rgba(124,92,255,0.90));
+  box-shadow: 0 10px 24px rgba(59,108,255,0.22);
+  flex: 0 0 auto;
+}
+
+#tab-docs .itemMeta {
+  margin-top: 8px;
+}
+
+#tab-docs .subtle {
+  max-width: 82ch;
+}
+
+/* Lists: nicer bullets + spacing */
 #tab-docs ol {
   margin: 10px 0 0 18px;
   padding: 0;
 }
+
+#tab-docs a { font-size: 13px; line-height: 1; }
+
 #tab-docs li {
-  margin: 8px 0;
-  line-height: 1.55;
+  margin: 10px 0;
+  line-height: 1.6;
 }
 
-/* Links feel consistent */
+#tab-docs li::marker {
+  color: rgba(59,108,255,0.65);
+  font-weight: 900;
+}
+
+/* Code-ish lines: look like code blocks (only in docs) */
+#tab-docs .mono {
+  font-size: 12.5px;
+  letter-spacing: 0;
+}
+
+#tab-docs .subtle.mono {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 14px;
+  background: rgba(14,22,48,0.06);
+  border: 1px solid rgba(14,22,48,0.08);
+  color: rgba(14,22,48,0.80);
+  overflow-x: auto;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.65);
+}
+
+/* Make link row feel like buttons */
+#tab-docs a {
+  display: inline-flex;
+  background: linear-gradient(90deg, var(--accent), var(--accent2));
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(59,108,255,0.18);
+  color: white;
+  text-decoration: none;
+  font-weight: 950;
+  transition: transform 120ms ease, box-shadow 140ms ease, border-color 140ms ease, background 140ms ease;
+}
+
+#tab-docs a:hover {
+  transform: translateY(-1px);
+  border-color: rgba(59,108,255,0.30);
+  background: rgba(255,255,255,0.80);
+  box-shadow: 0 12px 28px rgba(15,25,45,0.10);
+  text-decoration: none;
+}
+
+#tab-docs a::after {
+  content: "↗";
+  font-size: 12px;
+  opacity: 0.7;
+}
+
+/* Keep global links consistent elsewhere */
 a { color: inherit; }
 a:hover { text-decoration: underline; }
-
-/* Small improvement for code-ish lines */
-.mono { font-size: 12.5px; }
 
 
         .filters {
@@ -794,22 +957,51 @@ a:hover { text-decoration: underline; }
             padding: 10px 12px;
             border-radius: 14px;
             border: 1px solid rgba(14, 22, 48, 0.10);
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.88);
             cursor: pointer;
             font-weight: 950;
+            color: rgba(14, 22, 48, 0.92);
+            box-shadow: 0 10px 24px rgba(15, 25, 45, 0.06);
+            transition: transform 120ms ease, box-shadow 160ms ease, border-color 160ms ease, background 160ms ease;
+            user-select: none;
+        }
+
+        .miniBtn:hover {
+            transform: translateY(-1px);
+            border-color: rgba(59, 108, 255, 0.18);
+            box-shadow: 0 14px 34px rgba(15, 25, 45, 0.10);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .miniBtn:active {
+            transform: translateY(0px) scale(0.99);
+            box-shadow: 0 10px 24px rgba(15, 25, 45, 0.08);
+        }
+
+        .miniBtn:focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(59, 108, 255, 0.14), 0 14px 34px rgba(15, 25, 45, 0.10);
+        }
+
+        .miniBtn:disabled {
+            opacity: 0.55;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: 0 10px 24px rgba(15, 25, 45, 0.06);
         }
 
         .miniBtn.primary {
             border: none;
             background: linear-gradient(90deg, var(--accent), var(--accent2));
             color: white;
-            box-shadow: 0 14px 36px rgba(59, 108, 255, 0.14);
+            box-shadow: 0 14px 36px rgba(59, 108, 255, 0.16);
         }
 
         .miniBtn.danger {
             border: none;
             background: linear-gradient(90deg, rgba(216, 75, 75, 0.95), rgba(124, 92, 255, 0.70));
             color: white;
+            box-shadow: 0 14px 36px rgba(216, 75, 75, 0.12);
         }
 
         .navInline {
@@ -1398,12 +1590,12 @@ a:hover { text-decoration: underline; }
 
                             <div style="margin-top:10px;">
                                 <a href="https://docs.surfly.com/category/javascript-api/" target="_blank"
-                                    rel="noopener" style="color:inherit; text-decoration:underline; font-weight:900;"
+                                    rel="noopener" style="text-decoration:underline; font-weight:900;"
                                     data-i18n="docs_js_link">Open JavaScript API docs</a>
                                 <span style="opacity:.6;"> · </span>
                                 <a href="https://demo.surfly.com/demo-pages/feature/session_builder.html"
                                     target="_blank" rel="noopener"
-                                    style="color:inherit; text-decoration:underline; font-weight:900;"
+                                    style="text-decoration:underline; font-weight:900;"
                                     data-i18n="docs_builder_link">Session start snippet builder</a>
                             </div>
                         </div>
@@ -1431,7 +1623,7 @@ a:hover { text-decoration: underline; }
 
                                 <div style="margin-top:10px;">
                                     <a href="https://docs.surfly.com/api/v2/" target="_blank" rel="noopener"
-                                        style="color:inherit; text-decoration:underline; font-weight:900;"
+                                        style="text-decoration:underline; font-weight:900;"
                                         data-i18n="docs_api_link">Open REST API docs</a>
                                 </div>
                             </div>
@@ -1450,7 +1642,7 @@ a:hover { text-decoration: underline; }
 
                             <div style="margin-top:10px;">
                                 <a href="https://docs.surfly.com/surfly/webhooks" target="_blank" rel="noopener"
-                                    style="color:inherit; text-decoration:underline; font-weight:900;"
+                                    style="text-decoration:underline; font-weight:900;"
                                     data-i18n="docs_webhooks_link">Open Webhooks docs</a>
                             </div>
                         </div>
