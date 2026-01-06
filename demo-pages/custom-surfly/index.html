@@ -161,7 +161,49 @@
         padding:10px 10px 14px 10px;
         border-bottom:1px solid rgba(14,22,48,0.10);
         margin-bottom:6px;
+        display:flex;
+        flex-direction:column;
+        align-items:flex-start;
+        gap:10px;
       }
+      .brandLogo{
+        width: 100%;
+        max-width: 180px;
+        height: auto;
+        display:block;
+      }
+      .brandText{
+        font-weight: 1000;
+      }
+      .waitingWrap{
+        margin-top: 18px;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        gap:12px;
+        padding:18px;
+        border:1px dashed rgba(14,22,48,0.18);
+        border-radius:16px;
+        background: rgba(255,255,255,0.55);
+      }
+      .waitingText{
+        font-weight: 950;
+        color: rgba(14,22,48,0.75);
+      }
+      .waitingAnim{
+        width: 14px;
+        height: 14px;
+        border-radius: 999px;
+        background: rgba(59,108,255,0.55);
+        box-shadow: 0 0 0 0 rgba(59,108,255,0.45);
+        animation: pulseDot 1.4s ease-in-out infinite;
+      }
+      @keyframes pulseDot{
+        0%{ transform: scale(0.95); box-shadow: 0 0 0 0 rgba(59,108,255,0.35); }
+        70%{ transform: scale(1.05); box-shadow: 0 0 0 12px rgba(59,108,255,0.00); }
+        100%{ transform: scale(0.95); box-shadow: 0 0 0 0 rgba(59,108,255,0.00); }
+      }
+      html[dir="rtl"] .brand{ align-items:flex-end; }
 
       .nav{display:flex; flex-direction:column; gap:6px;}
       .nav button{
@@ -546,7 +588,10 @@
 
     <div class="app">
       <aside class="sidebar">
-        <div class="brand" data-i18n="brand">Surfly UI</div>
+        <div class="brand">
+          <img class="brandLogo" src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/refs/heads/main/resources-common/images/Your-Logo-here.png" alt="Logo" />
+          <div class="brandText" data-i18n="brand">Custom UI</div>
+        </div>
         <div class="nav">
           <button class="active" data-tab="session" data-i18n="nav_session">Session</button>
           <button data-tab="queue" data-i18n="nav_queue">Queue</button>
@@ -643,12 +688,14 @@
             <div class="titleRow">
               <div>
                 <h1 class="title" data-i18n="queue_title">Queue</h1>
-                <div class="subtitle" data-i18n="queue_subtitle">Incoming webhooks show up here. Incoming becomes missed after 2 minutes.</div>
+                <div class="subtitle" data-i18n="queue_subtitle">Waiting for incoming calls.</div>
               </div>
             </div>
 
-            <div style="margin-top:12px" id="queueNotice"></div>
-            <div class="list" id="queueList"></div>
+            <div class="waitingWrap" id="queueWaiting">
+              <div class="waitingAnim" aria-hidden="true"></div>
+              <div class="waitingText" data-i18n="waiting_calls">Waiting for incoming calls</div>
+            </div>
           </div>
         </section>
 
@@ -731,12 +778,13 @@
               </div>
 
               <div class="activeFrameWrap">
-                <iframe
+              <iframe
                   id="activeFrame"
                   class="activeFrame"
                   src="about:blank"
                   allow="camera; microphone; display-capture; autoplay; clipboard-read; clipboard-write; fullscreen; geolocation"
                   allowfullscreen
+                  sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads allow-top-navigation-by-user-activation"
                 ></iframe>
               </div>
             </div>
@@ -751,7 +799,7 @@
       // ----------------------------
       const I18N = {
         en: {
-          brand: "Surfly UI",
+          brand: "Custom UI",
           nav_session: "Session",
           nav_queue: "Queue",
           nav_history: "History",
@@ -777,7 +825,11 @@
           start_session_btn: "Start Session",
 
           queue_title: "Queue",
-          queue_subtitle: "Incoming webhooks show up here. Incoming becomes missed after 2 minutes.",
+          queue_subtitle: "Waiting for incoming calls.",
+          waiting_calls: "Waiting for incoming calls",
+          start_time: "Start",
+          end_time: "End",
+          participants: "Participants",
           queue_none_incoming: "No incoming sessions right now.",
           queue_none_missed: "No missed calls yet.",
           incoming_session: "Incoming session",
@@ -835,7 +887,7 @@
         },
 
         he: {
-          brand: "ממשק Surfly",
+          brand: "ממשק מותאם",
           nav_session: "סשן",
           nav_queue: "תור",
           nav_history: "היסטוריה",
@@ -861,7 +913,11 @@
           start_session_btn: "התחל סשן",
 
           queue_title: "תור",
-          queue_subtitle: "וובהוקים נכנסים מופיעים כאן. אחרי 2 דקות זה מסומן כשיחה שלא נענתה.",
+          queue_subtitle: "ממתין לשיחות נכנסות.",
+          waiting_calls: "ממתין לשיחות נכנסות",
+          start_time: "התחלה",
+          end_time: "סיום",
+          participants: "משתתפים",
           queue_none_incoming: "אין כרגע סשנים נכנסים.",
           queue_none_missed: "אין עדיין שיחות שלא נענו.",
           incoming_session: "סשן נכנס",
@@ -1244,9 +1300,6 @@
       });
 
       // -------- Queue --------
-      const queueNotice = document.getElementById('queueNotice');
-      const queueList = document.getElementById('queueList');
-
       function fmtTime(isoOrMs){
         try{
           if (typeof isoOrMs === 'number') return new Date(isoOrMs).toLocaleString();
@@ -1255,112 +1308,12 @@
         }catch(e){ return String(isoOrMs || ''); }
       }
 
-      function renderQueue(items){
-        const incoming = items.filter(x => x.status === 'incoming');
-        const missed = items.filter(x => x.status === 'missed');
-
-        queueNotice.innerHTML = '';
-        queueList.innerHTML = '';
-
-        if (incoming.length > 0){
-          const it = incoming[0];
-
-          const box = document.createElement('div');
-          box.className = 'item';
-
-          box.innerHTML = `
-            <div class="itemTop">
-              <div>
-                <div class="itemTitle">${escapeHtml(t('incoming_session'))}</div>
-                <div class="itemMeta">
-                  <span class="pill warn">${escapeHtml(t('incoming'))}</span>
-                  <span class="mono" style="margin-left:8px;">${escapeHtml(it.session_id || '')}</span>
-                </div>
-              </div>
-              <div class="itemMeta">${escapeHtml(fmtTime(it.start_time || it.received_at_ms))}</div>
-            </div>
-
-            <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
-              <span class="pill good">${escapeHtml(t('pin'))}: <span class="mono">${escapeHtml(it.pin || '')}</span></span>
-              ${it.meta ? `<span class="pill">${escapeHtml(t('meta'))}: <span class="mono">${escapeHtml(it.meta)}</span></span>` : ''}
-              <button class="primary" id="answerBtn" style="padding:10px 14px; border-radius:14px; font-size:13px;" ${it.leader_link ? '' : 'disabled'}>
-                ${escapeHtml(t('answer'))}
-              </button>
-            </div>
-
-            <div class="subtle" style="margin-top:10px;">
-              ${escapeHtml(t('tags_label'))}: ${(it.tags && it.tags.length) ? it.tags.map(tt => `<span class="mono">${escapeHtml(tt)}</span>`).join(', ') : '(none)'}
-            </div>
-
-            <details style="margin-top:10px;">
-              <summary><span class="mono">${escapeHtml(t('webhook'))} ${escapeHtml(it.session_id || '')}</span> — ${escapeHtml(t('details'))}</summary>
-              <pre class="subtle mono" style="margin:10px 0 0 0;">${escapeHtml(JSON.stringify(it, null, 2))}</pre>
-            </details>
-          `;
-
-          queueNotice.appendChild(box);
-
-          const answerBtn = document.getElementById('answerBtn');
-          if (answerBtn && it.leader_link){
-            answerBtn.addEventListener('click', async () => {
-              await openActiveSession(it.leader_link, it.session_id, it.follower_link);
-            });
-          }
-        } else {
-          const empty = document.createElement('div');
-          empty.className = 'subtle';
-          empty.textContent = t('queue_none_incoming');
-          queueNotice.appendChild(empty);
-        }
-
-        if (missed.length > 0){
-          missed.slice(0, 10).forEach(it => {
-            const div = document.createElement('div');
-            div.className = 'item';
-            div.innerHTML = `
-              <div class="itemTop">
-                <div>
-                  <div class="itemTitle">${escapeHtml(t('missed_call'))}</div>
-                  <div class="itemMeta">
-                    <span class="pill bad">${escapeHtml(t('missed'))}</span>
-                    <span class="mono" style="margin-left:8px;">${escapeHtml(it.session_id || '')}</span>
-                  </div>
-                </div>
-                <div class="itemMeta">${escapeHtml(fmtTime(it.start_time || it.received_at_ms))}</div>
-              </div>
-
-              <div style="margin-top:10px; display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
-                <span class="pill">${escapeHtml(t('pin'))}: <span class="mono">${escapeHtml(it.pin || '')}</span></span>
-                ${it.meta ? `<span class="pill">${escapeHtml(t('meta'))}: <span class="mono">${escapeHtml(it.meta)}</span></span>` : ''}
-              </div>
-
-              <details style="margin-top:10px;">
-                <summary><span class="mono">${escapeHtml(it.session_id || '')}</span> — ${escapeHtml(t('details'))}</summary>
-                <pre class="subtle mono" style="margin:10px 0 0 0;">${escapeHtml(JSON.stringify(it, null, 2))}</pre>
-              </details>
-            `;
-            queueList.appendChild(div);
-          });
-        } else {
-          const div = document.createElement('div');
-          div.className = 'subtle';
-          div.style.marginTop = '10px';
-          div.textContent = t('queue_none_missed');
-          queueList.appendChild(div);
-        }
-      }
-
       async function pollQueue(){
         try{
-          const items = await apiGetQueue();
-          renderQueue(Array.isArray(items) ? items : []);
+          // Still poll so the page stays "live"; we just show a waiting indicator.
+          await apiGetQueue();
         }catch(err){
           console.error(err);
-          queueNotice.innerHTML = '';
-          const div = document.createElement('div');
-          div.className = 'subtle';
-          div.textContent = 'Queue error: ' + (err && err.message ? err.message : String(err));
-          queueNotice.appendChild(div);
         }
       }
       setInterval(pollQueue, 5000);
@@ -1419,7 +1372,15 @@
         filtered.slice(0, 50).forEach(s => {
           const id = getField(s, ['session_id', 'id']);
           const agent = getField(s, ['agent_id', 'agent', 'agentId']);
-          const time = getField(s, ['start_time', 'created_at', 'created', 'time']);
+          const start = getField(s, ['start_time', 'created_at', 'created', 'time', 'started_at']);
+          const end = getField(s, ['end_time', 'ended_at', 'stopped_at', 'end']);
+          const participants = getField(s, ['participant_count', 'participants', 'participants_count', 'participantCount']);
+
+          const startMs = start ? Date.parse(start) : NaN;
+          const endMs = end ? Date.parse(end) : NaN;
+          const durMs = (isFinite(startMs) && isFinite(endMs)) ? Math.max(0, endMs - startMs) : NaN;
+          const durMin = isFinite(durMs) ? Math.max(1, Math.round(durMs / 60000)) : 0;
+          const durationLabel = durMin ? `${durMin} minute session` : `Session`;
 
           const div = document.createElement('div');
           div.className = 'item';
@@ -1427,10 +1388,21 @@
           div.innerHTML = `
             <div class="itemTop">
               <div>
-                <div class="itemTitle"><span class="mono">${escapeHtml(String(id || ''))}</span></div>
-                <div class="itemMeta">${escapeHtml(t('agent_label'))}: <span class="mono">${escapeHtml(String(agent || ''))}</span></div>
+                <div class="itemTitle">${escapeHtml(durationLabel)}</div>
+                <div class="itemMeta">
+                  ${escapeHtml(t('session_word'))}: <span class="mono">${escapeHtml(String(id || ''))}</span>
+                  &nbsp;•&nbsp;
+                  ${escapeHtml(t('agent_label'))}: <span class="mono">${escapeHtml(String(agent || ''))}</span>
+                </div>
+                <div class="itemMeta">
+                  ${escapeHtml(t('start_time'))}: <span class="mono">${escapeHtml(start ? fmtTime(start) : '')}</span>
+                  &nbsp;•&nbsp;
+                  ${escapeHtml(t('end_time'))}: <span class="mono">${escapeHtml(end ? fmtTime(end) : '')}</span>
+                  &nbsp;•&nbsp;
+                  ${escapeHtml(t('participants'))}: <span class="mono">${escapeHtml(String(participants || ''))}</span>
+                </div>
               </div>
-              <div class="itemMeta">${escapeHtml(String(time ? fmtTime(time) : ''))}</div>
+              <div class="itemMeta"></div>
             </div>
 
             <details style="margin-top:10px;">
