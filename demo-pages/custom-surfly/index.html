@@ -3,6 +3,7 @@
 
 <head>
     <base target="_top" />
+    <title>Custom UI</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="icon" type="image/svg+xml"
@@ -218,7 +219,7 @@
 
         .brandLogo {
             width: 100%;
-            max-width: 180px;
+            max-width: 140px;
             height: auto;
             display: block;
         }
@@ -420,6 +421,44 @@
 
         textarea {
             resize: vertical;
+        }
+
+        /* crisper typography + spacing */
+        .card {
+            padding: 22px 22px 20px;
+        }
+
+        .subtitle {
+            font-size: 13px;
+            line-height: 1.35;
+        }
+
+        /* slightly nicer controls */
+        input[type="text"],
+        textarea,
+        select {
+            transition: border-color 140ms ease, box-shadow 140ms ease, background 140ms ease;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus,
+        select:focus {
+            border-color: rgba(59, 108, 255, 0.35);
+            box-shadow: 0 0 0 4px rgba(59, 108, 255, 0.12);
+        }
+
+        /* button hover feels better */
+        .primary:hover {
+            filter: brightness(1.03);
+        }
+
+        .miniBtn:hover {
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        /* slightly more depth on list items */
+        .item {
+            box-shadow: 0 10px 30px rgba(15, 25, 45, 0.06);
         }
 
         .row {
@@ -876,7 +915,7 @@
         <aside class="sidebar">
             <div class="brand">
                 <img class="brandLogo"
-                    src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/refs/heads/main/resources-common/images/Your-Logo-here.png"
+                    src="https://raw.githubusercontent.com/JSPOON3R/JSPOON3R.github.io/refs/heads/main/resources-common/icons/white-sticker.png"
                     alt="Logo" />
                 <div class="brandText" data-i18n="brand">Custom UI</div>
             </div>
@@ -979,6 +1018,8 @@
 
                     <div class="actions">
                         <button class="primary" id="startBtn" data-i18n="start_session_btn">Start Session</button>
+                        <button class="miniBtn" id="openActiveFromSessionBtn" type="button" data-i18n="open_active">Open
+                            Active session</button>
                         <span class="pill" id="startPill" style="display:none;"></span>
                     </div>
 
@@ -1244,8 +1285,8 @@
                                 <div class="navInline">
                                     <button class="miniBtn" id="navToggleBtn" data-i18n="navigate">Navigate</button>
                                     <div class="navExpand" id="navExpand">
-                                        <input class="navUrl" id="navUrl" type="text" data-i18n-placeholder="enter_url"
-                                            placeholder="Enter URL (later)" />
+                                        <input class="navUrl" id="navUrl" type="text" value="https://"
+                                            data-i18n-placeholder="enter_url" /> placeholder="Enter URL (later)" />
                                         <button class="miniBtn primary" id="navGoBtn" disabled
                                             data-i18n="go">Go</button>
                                     </div>
@@ -1280,60 +1321,55 @@
 
                     <div style="max-width: 980px;">
                         <div class="item" style="margin-top:10px;">
-                            <div class="itemTitle" data-i18n="docs_api_title">Key REST API endpoints</div>
-                            <div class="itemMeta" data-i18n="docs_api_meta">
-                                This UI calls your Apps Script backend, which calls Surfly’s REST API.
-                            </div>
+                            <div class="itemTitle" data-i18n="docs_overview_title">What this demo is</div>
+                            <div class="itemMeta" data-i18n="docs_overview_meta">This is a reference UI you can copy and
+                                adapt.</div>
 
-                            <div class="subtle">
-                                <div class="mono">POST /v2/sessions/</div>
-                                <div data-i18n="docs_api_sessions_post">
-                                    Create a new session. The response contains session info and (often) leader/follower
-                                    links.
-                                </div>
-
-                                <div style="height:10px;"></div>
-
-                                <div class="mono">POST /v2/sessions/{session_id}/end/</div>
-                                <div data-i18n="docs_api_sessions_end">
-                                    End a session by session_id.
-                                </div>
-
-                                <div style="height:10px;"></div>
-
-                                <div class="mono">GET /v2/sessions/</div>
-                                <div data-i18n="docs_api_sessions_list">
-                                    List recent sessions for History.
-                                </div>
-
-                                <div style="height:10px;"></div>
-
-                                <a href="https://docs.surfly.com/api/v2/" target="_blank" rel="noopener"
-                                    style="color:inherit; text-decoration:underline; font-weight:900;"
-                                    data-i18n="docs_api_link">Open REST API docs</a>
+                            <div class="subtle" data-i18n="docs_overview_body">
+                                This is a Custom UI demo for Surfly. It shows the broad building blocks you typically
+                                need:
+                                (1) a small backend that securely stores your API key, (2) a front-end that calls that
+                                backend,
+                                and (3) Surfly’s JavaScript API to render sessions into your own iframe so you can add
+                                custom controls.
+                                This demo uses Google Apps Script as the backend because it’s quick to deploy, but you
+                                can replace it with any server.
                             </div>
                         </div>
 
                         <div class="item" style="margin-top:12px;">
-                            <div class="itemTitle" data-i18n="docs_js_title">Why we use the JavaScript API for
-                                leader/follower links</div>
-                            <div class="itemMeta" data-i18n="docs_js_meta">Webhook and REST responses can include a join
-                                link.</div>
+                            <div class="itemTitle" data-i18n="docs_flow_title">High-level flow</div>
+                            <div class="subtle">
+                                <ol style="margin: 8px 0 0 18px;">
+                                    <li data-i18n="docs_flow_1">Configure a backend endpoint (Apps Script or your own
+                                        server) with your Surfly API key.</li>
+                                    <li data-i18n="docs_flow_2">The UI calls the backend to create sessions, list
+                                        history, and manage settings/agents.</li>
+                                    <li data-i18n="docs_flow_3">A webhook posts incoming calls to the backend, which
+                                        stores a short queue for the UI to poll.</li>
+                                    <li data-i18n="docs_flow_4">When you answer/start, the UI uses the Surfly JavaScript
+                                        API to join inside the Active Session iframe.</li>
+                                </ol>
+                            </div>
+                        </div>
+
+                        <div class="item" style="margin-top:12px;">
+                            <div class="itemTitle" data-i18n="docs_js_title">Why we use the JavaScript API for join
+                                links</div>
+                            <div class="itemMeta" data-i18n="docs_js_meta">The join link is used to start inside our own
+                                Active Session frame.</div>
 
                             <div class="subtle" data-i18n="docs_js_body">
-                                When we receive a leader/follower link (from the Start Session response or from the
-                                Queue webhook),
-                                we do NOT set iframe.src directly. Instead, we join via the Surfly JavaScript API and
-                                render into our
-                                designated iframe. This gives us a controllable session handle so we can add custom
-                                controls (like Navigate)
-                                and keep the UI consistent.
+                                When we receive a leader/follower link (from “Start Session” or from the Queue webhook),
+                                we don’t just set iframe.src.
+                                Instead, we join via Surfly’s JavaScript API so the session is controllable in code
+                                (e.g. relocate/navigate, custom controls,
+                                consistent UI state, and a clean “Active session” area).
                             </div>
 
                             <div class="subtle mono" style="margin-top:10px;">
                                 Surfly.session({}, LINK).startLeader("#activeFrame");
                             </div>
-
                             <div class="subtle mono" style="margin-top:6px;">
                                 surflySession.relocate("https://example.com");
                             </div>
@@ -1351,15 +1387,43 @@
                         </div>
 
                         <div class="item" style="margin-top:12px;">
+                            <div class="itemTitle" data-i18n="docs_api_title">REST API reference</div>
+                            <div class="itemMeta" data-i18n="docs_api_meta">
+                                Your backend (Apps Script in this demo) calls Surfly’s REST API so your API key stays
+                                server-side.
+                            </div>
+
+                            <div class="subtle">
+                                <div class="mono">POST /v2/sessions/</div>
+                                <div data-i18n="docs_api_sessions_post">Create a new session.</div>
+
+                                <div style="height:10px;"></div>
+
+                                <div class="mono">GET /v2/sessions/</div>
+                                <div data-i18n="docs_api_sessions_list">List sessions for History.</div>
+
+                                <div style="height:10px;"></div>
+
+                                <div class="mono">POST /v2/sessions/{session_id}/end/</div>
+                                <div data-i18n="docs_api_sessions_end">End a session.</div>
+
+                                <div style="margin-top:10px;">
+                                    <a href="https://docs.surfly.com/api/v2/" target="_blank" rel="noopener"
+                                        style="color:inherit; text-decoration:underline; font-weight:900;"
+                                        data-i18n="docs_api_link">Open REST API docs</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="item" style="margin-top:12px;">
                             <div class="itemTitle" data-i18n="docs_queue_title">Queue via Webhook</div>
-                            <div class="itemMeta" data-i18n="docs_queue_meta">Incoming calls are delivered to your
+                            <div class="itemMeta" data-i18n="docs_queue_meta">Inbound calls are delivered to your
                                 backend.</div>
 
                             <div class="subtle" data-i18n="docs_queue_body">
-                                The Queue tab polls your Apps Script backend (getQueue). The backend stores the incoming
-                                webhook payload,
-                                so the UI can show new incoming calls. When you click Answer, we join using the follower
-                                link (not the leader link).
+                                The Queue tab polls your backend (getQueue). The backend stores incoming webhook
+                                payloads briefly so the UI can display new calls.
+                                When you click “Answer”, the UI joins using the follower link.
                             </div>
 
                             <div style="margin-top:10px;">
@@ -1535,6 +1599,14 @@
                 docs_queue_meta: "Incoming calls are delivered to your backend.",
                 docs_queue_body: "The Queue tab polls your Apps Script backend (getQueue). The backend stores the incoming webhook payload, so the UI can show new incoming calls. When you click Answer, we join using the follower link (not the leader link).",
                 docs_webhooks_link: "Open Webhooks docs",
+                docs_overview_title: "What this demo is",
+                docs_overview_meta: "This is a reference UI you can copy and adapt.",
+                docs_overview_body: "This is a Custom UI demo for Surfly. It shows the broad building blocks you typically need: (1) a small backend that securely stores your API key, (2) a front-end that calls that backend, and (3) Surfly’s JavaScript API to render sessions into your own iframe so you can add custom controls. This demo uses Google Apps Script as the backend because it’s quick to deploy, but you can replace it with any server.",
+                docs_flow_title: "High-level flow",
+                docs_flow_1: "Configure a backend endpoint (Apps Script or your own server) with your Surfly API key.",
+                docs_flow_2: "The UI calls the backend to create sessions, list history, and manage settings/agents.",
+                docs_flow_3: "A webhook posts incoming calls to the backend, which stores a short queue for the UI to poll.",
+                docs_flow_4: "When you answer/start, the UI uses the Surfly JavaScript API to join inside the Active Session iframe.",
             },
 
             he: {
@@ -1692,6 +1764,14 @@
                 docs_queue_meta: "שיחות נכנסות מגיעות ל-backend שלך.",
                 docs_queue_body: "לשונית Queue מבצעת polling ל-Apps Script (getQueue). ה-backend שומר את payload של הוובהוק כדי שה-UI יציג שיחות חדשות. בלחיצה על Answer אנחנו מצטרפים באמצעות follower link (ולא leader link).",
                 docs_webhooks_link: "פתח תיעוד Webhooks",
+                docs_overview_title: "מהו הדמו הזה",
+                docs_overview_meta: "זהו UI לדוגמה שאפשר להעתיק ולהתאים.",
+                docs_overview_body: "זהו דמו של Custom UI עבור Surfly. הוא מציג את אבני הבניין הבסיסיות שנדרשות בדרך כלל: (1) Backend קטן שמאחסן את ה-API key בצורה בטוחה, (2) Front-end שקורא ל-Backend, ו-(3) JavaScript API של Surfly שמרנדר סשנים בתוך iframe משלך כדי שתוכל להוסיף בקרות מותאמות. הדמו משתמש ב-Google Apps Script כ-Backend כי זה מהיר לפריסה, אבל אפשר להחליף לכל שרת אחר.",
+                docs_flow_title: "זרימה ברמה גבוהה",
+                docs_flow_1: "הגדר נקודת קצה ב-Backend (Apps Script או שרת שלך) עם ה-API key של Surfly.",
+                docs_flow_2: "ה-UI קורא ל-Backend כדי ליצור סשנים, להציג היסטוריה ולנהל הגדרות/סוכנים.",
+                docs_flow_3: "Webhook שולח שיחות נכנסות ל-Backend, ששומר תור קצר שה-UI מבצע עליו polling.",
+                docs_flow_4: "בעת Answer/Start ה-UI משתמש ב-Surfly JavaScript API כדי להצטרף בתוך iframe של Active Session.",
             }
         };
 
@@ -2044,7 +2124,7 @@
             endSessionBtn.disabled = true;
 
             navExpand.classList.remove('open');
-            navUrl.value = '';
+            navUrl.value = 'https://';
             navGoBtn.disabled = true;
 
             setActiveNavVisible(false);
@@ -2151,10 +2231,24 @@
         // Navigate UI (expand/collapse)
         navToggleBtn.addEventListener('click', () => navExpand.classList.toggle('open'));
 
-        navUrl.addEventListener('input', () => {
-            const canGo = !!(surflySession && navUrl.value.trim().length > 0);
-            navGoBtn.disabled = !canGo;
-        });
+        if (navUrl) {
+            // Prefill once
+            if (!navUrl.value) navUrl.value = 'https://';
+
+            // Normalize on blur
+            navUrl.addEventListener('blur', () => {
+                const v = (navUrl.value || '').trim();
+                if (v && !/^https?:\/\//i.test(v)) navUrl.value = 'https://' + v;
+            });
+
+            // Enable/disable Go while typing
+            navUrl.addEventListener('input', () => {
+                const v = navUrl.value.trim();
+                const hasRealUrl = v.length > 'https://'.length;
+                const canGo = !!(surflySession && hasRealUrl);
+                navGoBtn.disabled = !canGo;
+            });
+        }
 
         // Navigate action uses surflySession.relocate("new_url")
         navGoBtn.addEventListener('click', () => {
@@ -2166,6 +2260,11 @@
                 console.error("relocate failed:", e);
             }
         });
+
+        const openActiveFromSessionBtn = document.getElementById('openActiveFromSessionBtn');
+        if (openActiveFromSessionBtn) {
+            openActiveFromSessionBtn.addEventListener('click', () => showTab('active'));
+        }
 
         // -------- Tags chips --------
         const tagsInput = document.getElementById('tagsInput');
