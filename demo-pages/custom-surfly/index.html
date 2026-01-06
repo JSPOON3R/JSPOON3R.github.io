@@ -6,10 +6,10 @@
 
     <!-- Surfly JS & Gscript backend (load once) -->
     <script>
-    const BACKEND_BASE = "https://script.google.com/macros/s/AKfycbwzx6uhnJao_jEki8qbgvxgOjZ93NZP-_GGiHmVZcv-H9BLsFxr65n1fbdvv0znTByYZA/exec";
+    const BACKEND_BASE = "https://script.google.com/macros/s/AKfycbwtsjY3_FN6an4yhDi7fNhQ3LeuUzMudGrxg-0fyiMB2xLDrrrTEoPdQWzuDgWmKhTzHw/exec";
 
     async function backendFetch(action, { method = "GET", body = null } = {}) {
-      if (!BACKEND_BASE || BACKEND_BASE.includes("PASTE_YOUR_APPS_SCRIPT_EXEC_URL_HERE")) {
+      if (!BACKEND_BASE || BACKEND_BASE.includes("https://script.google.com/macros/s/AKfycbwtsjY3_FN6an4yhDi7fNhQ3LeuUzMudGrxg-0fyiMB2xLDrrrTEoPdQWzuDgWmKhTzHw/exec")) {
         throw new Error("BACKEND_BASE is not set. Paste your Apps Script /exec URL into BACKEND_BASE.");
       }
 
